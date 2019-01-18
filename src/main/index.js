@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import { hidden } from 'ansi-colors';
 
 /**
@@ -19,10 +19,12 @@ function createWindow() {
      * Initial window options
      */
     mainWindow = new BrowserWindow({
-        height: 600,
+        height: 676,
         useContentSize: true,
-        width: 960,
+        width: 975,
         autoHideMenuBar: true,
+        // resizable: true,
+        // frame: false
     })
 
     mainWindow.loadURL(winURL)
@@ -36,13 +38,6 @@ function Max() {
     mainWindow.maximize()
 }
 
-ipcMain.on('message', (event) => {
-    // console.log(arg);
-    event.sender.send('message', () => {
-        Max()
-    });
-    // event.returnValue = 'aaa';
-})
 
 
 app.on('ready', () => {
