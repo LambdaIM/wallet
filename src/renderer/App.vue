@@ -5,11 +5,10 @@
 </template>
 
 <script>
-  export default {
-    name: 'wallet'
-  }
+export default {
+  name: "wallet"
+};
 </script>
 
-<style>
-  /* CSS */
+<style lang="less">
 </style>

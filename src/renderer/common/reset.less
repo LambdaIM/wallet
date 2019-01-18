@@ -1,8 +1,28 @@
-.btn{
-  background-color: #6B9EBC;
+.btn {
   border: none;
   border-radius: 4px;
   height: 40px;
   color: #fff;
   font-size: 16px;
+}
+
+select,
+a,
+button,
+input {
+  outline: none;
+}
+
+button,
+a {
+  &:hover {
+    cursor: url(../assets/img/pointer.png), pointer;
+  }
+}
+
+body,
+html {
+  &:hover {
+    cursor: url(../assets/img/defaultcur.png), default;
+  }
 }

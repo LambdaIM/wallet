@@ -9,13 +9,37 @@ export default new Router({
             path: '/',
             name: 'Login',
             component: () =>
-                import ('@/views/Login.vue')
+                import ('@/views/account/Login.vue')
         },
         {
             path: '/home',
             name: 'Home',
             component: () =>
                 import ('@/views/Home.vue')
+        },
+        {
+            path: '/register',
+            name: 'Register',
+            component: () =>
+                import ('@/views/account/Register.vue')
+        },
+        {
+            path: '/import',
+            name: 'Import',
+            component: () =>
+                import ('@/views/account/Import.vue')
+        },
+        {
+            path: '/settings',
+            name: 'Settings',
+            component: () =>
+                import ('@/views/account/Settings.vue')
+        },
+        {
+            path: '/customer',
+            name: 'Customer',
+            component: () =>
+                import ('@/views/Customer.vue')
         },
         {
             path: '*',
