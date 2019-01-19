@@ -1,37 +1,97 @@
 <template>
   <div class="customer-container">
-    <Header />
-    <div class="table-head-container">
-      <div class="table-head-wrapper">
-        <p class="title">Customer(Order)</p>
-      </div>
-    </div>
+    <Header/>
+    <MyTable title="Customer(Order)" class="tableContainer">
+      <Table :columns="columns" :data="data" slot="content"></Table>
+    </MyTable>
   </div>
 </template>
 
 <script>
 import Header from "@/components/common/layout/Head.vue";
+import MyTable from "@/components/common/useful/Mytable.vue";
 export default {
-components:{
-  Header
-}
-}
+  data() {
+    return {
+      columns: [
+        {
+          title: "GB",
+          key: "gb"
+        },
+        {
+          title: "Price",
+          key: "price"
+        },
+        {
+          title: "Period",
+          key: "period"
+        },
+        {
+          title: "Payment",
+          key: "payment"
+        },
+        {
+          title: "Charged ",
+          key: "charged"
+        },
+        {
+          title: "Status",
+          key: "status",
+          render: (h, params) => {
+            // console.log(params);
+            if (params.row.status == "1") {
+              this.stateType = "md-checkmark";
+            } else {
+              this.stateType = "md-close";
+            }
+            return h("Icon", {
+              props: {
+                type: `${this.stateType}`,
+                size: 32
+              }
+            });
+          }
+        }
+      ],
+      data: [
+        {
+          gb: "5 GB",
+          price: "50 LAMB",
+          period: "30 Days",
+          payment: "50 LAMB",
+          charged: "50 LAMB",
+          status: 1
+        },
+        {
+          gb: "10 GB",
+          price: "50 LAMB",
+          period: "30 Days",
+          payment: "50 LAMB",
+          charged: "50 LAMB",
+          status: 0
+        },
+        {
+          gb: "5 GB",
+          price: "50 LAMB",
+          period: "30 Days",
+          payment: "50 LAMB",
+          charged: "50 LAMB",
+          status: 1
+        }
+      ]
+    };
+  },
+  components: {
+    Header,
+    MyTable
+  }
+};
 </script>
 
 <style lang="less" scoped>
-.customer-container{
-  .table-head-container{
-    margin-top: 20px;
-    width: 100%;
-    height: 30px;
-    .table-head-wrapper{
-      width: 96%;
-      margin: 0 auto;
-      height: 100%;
-      .title{
-        font-size: 18px;
-      }
-    }
+.customer-container {
+  .tableContainer {
+    margin-top: 40px;
   }
 }
 </style>
