@@ -20,6 +20,17 @@
             <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
+<<<<<<< HEAD:src/renderer/views/account/Login.vue
+=======
+        <FormItem>
+          <button type="button" class="btn login-button" @click="handleSubmit('formInline')">Login</button>
+        </FormItem>
+        <FormItem>
+          <span @click="test">sss1</span>
+          <span @click="test2">sss2</span>
+          <span @click="test3">sss333333</span>
+        </FormItem>
+>>>>>>> 3a3460f... add dnode:src/renderer/views/Login.vue
       </Form>
 
       <div class="button-wrapper">
@@ -36,6 +47,16 @@
 </template>
 
 <script>
+<<<<<<< HEAD:src/renderer/views/account/Login.vue
+=======
+const ipcRenderer = require("electron").ipcRenderer;
+// import { DAEMON_CONFIG } from "../../config.js";
+// var dnode = require('dnode');
+// const RPC=require("../rpc.js")
+import RPC from '../rpc.js'
+
+
+>>>>>>> 3a3460f... add dnode:src/renderer/views/Login.vue
 export default {
   data() {
     return {
@@ -68,9 +89,62 @@ export default {
     };
   },
   methods: {
+    test(){
+      RPC('createWallet',{
+        name:'mywallet',
+        password:'123456'
+      })
+      .then((data)=>{
+        console.log(data)
+
+      })
+      .catch((err)=>{
+        console.log(err)
+
+      })
+    },
+    test2(){
+      RPC('getWalletAddress')
+      .then((data)=>{
+        console.log(data)
+
+      })
+      .catch((err)=>{
+        console.log(err)
+
+      })
+    },
+    test3(){
+      RPC('getWallet','123456')
+      .then((data)=>{
+        console.log(data)
+
+      })
+      .catch((err)=>{
+        console.log(err)
+
+      })
+    },
     handleSubmit(name) {
+<<<<<<< HEAD:src/renderer/views/account/Login.vue
       this.$router.push("/home");
       // console.log(ipcRenderer.sendSync('message','world'));
+=======
+      this.$refs[name].validate(valid => {
+        if (valid) {
+          this.$Message.success("Success!");
+        } else {
+          this.$Message.error("Fail!");
+        }
+      });
+      ipcRenderer.send("message");
+      ipcRenderer.on("message",(event)=>{
+        console.log(event);
+      });
+
+      this.$router.push('/home');
+      console.log(ipcRenderer.sendSync('message','world'));
+>>>>>>> 3a3460f... add dnode:src/renderer/views/Login.vue
     }
   }
 };
