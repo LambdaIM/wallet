@@ -24,6 +24,7 @@
 
       <div class="button-wrapper">
         <button class="btn login-button" @click="handleSubmit('formInline')">Login</button>
+        <!-- <button class="btn login-button" @click="test">test</button> -->
       </div>
 
       <div class="bottom-wrapper tc">

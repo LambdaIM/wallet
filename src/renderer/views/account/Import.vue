@@ -147,7 +147,7 @@ export default {
       if (this.show == false) {
         this.way = "By Pravate Key";
       } else {
-        this.way = "By Keystore File";
+        this.way = "By Mnemonic Words";
       }
     },
     validatePass(rule, value, callback) {

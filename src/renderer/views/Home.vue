@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header/>
-    <!-- <span class="back" @click="goBack">返回</span> -->
+
     <div class="account-info-container">
       <Row class-name="account-info-wrapper" type="flex" justify="space-between">
         <Col span="4" class="account-item">
@@ -37,88 +37,59 @@
       </Row>
     </div>
 
-    <div class="table-head-container">
-      <Row class-name="table-head-wrapper">
-        <Col span="8" class-name="table-head-title-wrapper">
-          <div class="table-head-title">
-            <span class="title">Latest Local Transaction Records</span>
-          </div>
-        </Col>
+    <MyTable title="Latest Local Transaction Records" class="mt20 mytable-container">
+      <div class="operation" slot="operation">
+        <div class="search-wrapper">
+          <Input search enter-button placeholder="Enter something..."/>
+        </div>
 
-        <Col span="16" class="operation-wrapper">
-          <div class="operation">
-            <div class="search-wrapper">
-              <Input search enter-button placeholder="Enter something..."/>
-            </div>
+        <div class="repay-wrapper">
+          <Icon type="md-map" size="32" @click="openRepay()"/>
+        </div>
 
-            <div class="repay-wrapper">
-              <Icon type="md-map" size="32" @click="openRepay()"/>
-            </div>
+        <div class="borrow-wrapper">
+          <Icon type="ios-photos-outline" @click="openBorrow()" size="32"/>
+        </div>
 
-            <div class="borrow-wrapper">
-              <Icon type="ios-photos-outline" @click="openBorrow()" size="32"/>
-            </div>
-
-            <div class="send-wrapper">
-              <Icon type="md-swap" @click="openSend()" size="32"/>
-            </div>
-          </div>
-        </Col>
-      </Row>
-    </div>
-
-    <div class="table-content-container mt20">
-      <div class="table-content-wrapper">
-        <Table :columns="columns" :data="data"></Table>
+        <div class="send-wrapper">
+          <Icon type="md-swap" @click="openSend()" size="32"/>
+        </div>
       </div>
-    </div>
+      <Table :columns="columns" :data="data" slot="content"></Table>
+    </MyTable>
 
     <div class="modal-container">
-      <Modal
-        v-model="detailModal"
-        title="detail"
-        :styles="{top: '200px'}"
-      >
+      <Modal v-model="detailModal" title="detail" :styles="{top: '200px'}">
         <p>Content of dialog</p>
         <p>Content of dialog</p>
         <p>Content of dialog</p>
       </Modal>
 
-      <Modal
-        v-model="repayModal"
-        title="repay"
-        :styles="{top: '200px'}"
-      >
+      <Modal v-model="repayModal" title="repay" :styles="{top: '200px'}">
         <p>Content of dialog</p>
         <p>Content of dialog</p>
         <p>Content of dialog</p>
       </Modal>
 
-      <Modal
-        v-model="borrowModal"
-        title="borrow"
-        :styles="{top: '200px'}"
-      >
+      <Modal v-model="borrowModal" title="borrow" :styles="{top: '200px'}">
         <p>Content of dialog</p>
         <p>Content of dialog</p>
         <p>Content of dialog</p>
       </Modal>
 
-      <Modal
-        v-model="sendModal"
-        title="send"
-        :styles="{top: '200px'}"
-      >
+      <Modal v-model="sendModal" title="send" :styles="{top: '200px'}">
         <p>Content of dialog</p>
         <p>Content of dialog</p>
         <p>Content of dialog</p>
       </Modal>
     </div>
+
   </div>
 </template>
 
 <script>
 import Header from "@/components/common/layout/Head.vue";
+import MyTable from "@/components/common/useful/Mytable.vue";
 export default {
   data() {
     return {
@@ -212,12 +183,10 @@ export default {
     };
   },
   components: {
-    Header
+    Header,
+    MyTable
   },
   methods: {
-    goBack() {
-      this.$router.go(-1);
-    },
     openDetail() {
       this.detailModal = true;
     },
@@ -270,27 +239,7 @@ export default {
       }
     }
   }
-  .table-head-container {
-    margin-top: 40px;
-    width: 100%;
-    height: 40px;
-    .table-head-wrapper {
-      width: 96%;
-      height: 100%;
-      margin: 0 auto;
-      .table-head-title-wrapper {
-        height: 100%;
-        .table-head-title {
-          height: 40px;
-          width: 96%;
-          margin: 0 auto;
-          .title {
-            line-height: 40px;
-            font-size: 16px;
-          }
-        }
-      }
-    }
+  .mytable-container {
     .operation-wrapper {
       height: 40px;
       .operation {
