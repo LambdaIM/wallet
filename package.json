@@ -53,7 +53,6 @@
     "dependencies": {
         "axios": "^0.18.0",
         "crypto": "^1.0.1",
-        
         "ethereumjs-util": "^6.0.0",
         "express": "^4.16.4",
         "graceful-fs": "^4.1.15",
@@ -62,7 +61,7 @@
         "randombytes": "^2.0.6",
         "safe-buffer": "^5.1.2",
         "scrypt.js": "^0.3.0",
-        "tendermintelectronkey": "^0.0.2",
+        "tendermintelectronkey": "^0.0.3",
         "uuid": "^3.3.2",
         "vue": "^2.5.16",
         "vue-electron": "^1.0.6",
