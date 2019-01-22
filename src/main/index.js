@@ -6,6 +6,7 @@ import { fork } from 'child_process';
 import { DAEMON_CONFIG } from "../config.js";
 import { join } from "path";
 import { connect } from 'net';
+var log = require('electron-log');
 
 /**
  * Set `__static` path to static files in production
@@ -27,11 +28,14 @@ const winURL = process.env.NODE_ENV === 'development' ?
 
 
     function initRPCServer(callback) {
+        log.info('fork1');
         let RPCServer = fork(DAEMON, [], { env: { RPC_PORT: DAEMON_CONFIG.RPC_PORT } });
+        log.info('fork2');
         process.on('exit', () => {
           RPCServer.kill()
         });
         RPCServer.on('error', () => {
+          log.info('fork3');
           initRPCServer(callback)
         })
         // RPCServer.on('message', (msg) => {

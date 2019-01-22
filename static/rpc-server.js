@@ -2,7 +2,8 @@
 const objectAssign = require('object-assign');
 
 const path =require('path')
-const account=require(path.join(__dirname, "../src/rpcserver/accountkey.js"));
+// const account=require(path.join(__dirname, "../src/rpcserver/accountkey.js"));
+const account=require('rpcserver');
 
 
 

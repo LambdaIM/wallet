@@ -86,10 +86,19 @@ export default {
       console.log(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet`);
       https
         .fetchget(
+          `http://localhost:${DAEMON_CONFIG.RPC_PORT}/`
+        )
+        .then(response => {
+          console.log(response.data)
+          alert(response.data);
+        });
+        console.log(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet`);
+      https
+        .fetchget(
           `http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/123456/admin`
         )
         .then(response => {
-          alert(response);
+          alert(response.data.data);
         });
 
       //  console.log(res);

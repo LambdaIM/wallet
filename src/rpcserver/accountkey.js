@@ -1,6 +1,6 @@
 var TenderKeys =require('tendermintelectronkey')
 var ETHwallet = require('./ETHv3wallet.js');
-var {DAEMON_CONFIG} =require('../config.js')
+var {DAEMON_CONFIG} =require('./config.js')
 var fs = require('graceful-fs')
 
 module.exports=function(app){
