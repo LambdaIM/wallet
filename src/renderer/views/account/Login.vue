@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import RPC from "../../rpc.js";
-  console.log(RPC);
+// import RPC from "../../rpc.js";
+import https from "@/server/https.js";
 export default {
   data() {
     return {
@@ -72,34 +72,21 @@ export default {
   },
   methods: {
     test() {
-      RPC("createWallet", {
-        name: "mywallet",
-        password: "123456"
-      })
-        .then(data => {
-          console.log(data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    test2() {
-      RPC("getWalletAddress")
-        .then(data => {
-          console.log(data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    test3() {
-      RPC("getWallet", "123456")
-        .then(data => {
-          console.log(data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      // RPC("createWallet", {
+      //   name: "mywallet",
+      //   password: "123456"
+      // })
+      //   .then(data => {
+      //     console.log(data);
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+     let res= https.fetchget('/createWallet',{
+       password:'123456',
+       name:'admin'
+     });
+     console.log(res);
     },
     handleSubmit(name) {
       this.$router.push("/home");
