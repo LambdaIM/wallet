@@ -6,20 +6,21 @@ const account=require(path.join(__dirname, "../src/rpcserver/accountkey.js"));
 
 
 
- var obj={
-     abc:function(s, cb){
-       console.log('abc!!!!!'+Date.now())
-       cb('abc!!!!!'+Date.now())
-     }
- }
 
-let api =objectAssign({}, obj,account);
 
-dnode(api).listen(process.env.RPC_PORT, () => {
-  process.send({
-    state: 'init'
-  });
-});
+
+
+var express = require('express')
+var app = express()
+ 
+app.get('/', function (req, res) {
+  res.send('Hello World elect')
+})
+account(app);
+ 
+app.listen(process.env.RPC_PORT)
+
+
 
 process.on('uncaughtException', (err) => {
   Object.assign({}, err);

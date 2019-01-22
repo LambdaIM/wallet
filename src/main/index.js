@@ -31,29 +31,30 @@ const winURL = process.env.NODE_ENV === 'development' ?
         process.on('exit', () => {
           RPCServer.kill()
         });
-        RPCServer.on('message', (msg) => {
-          if (msg.state === 'init') {
-            return callback();
-          } else {
-            RPCServer.removeAllListeners();
-            callback(msg);
-          }
-        });
+        // RPCServer.on('message', (msg) => {
+        //   if (msg.state === 'init') {
+        //     return callback();
+        //   } else {
+        //     RPCServer.removeAllListeners();
+        //     callback(msg);
+        //   }
+        // });
       }
 
       function maybeStartDaemon(callback) {
-        const sock = connect(DAEMON_CONFIG.RPC_PORT);
+        // const sock = connect(DAEMON_CONFIG.RPC_PORT);
       
-        sock.on('connect', () => {
-          sock.end()
-          sock.removeAllListeners()
-          callback()
-        })
+        // sock.on('connect', () => {
+        //   sock.end()
+        //   sock.removeAllListeners()
+        //   callback()
+        // })
       
-        sock.on('error', () => {
-          sock.removeAllListeners()
-          initRPCServer(callback)
-        })
+        // sock.on('error', () => {
+        //   sock.removeAllListeners()
+        //   initRPCServer(callback)
+        // })
+        initRPCServer(callback)
       }
 
 function createWindow() {
