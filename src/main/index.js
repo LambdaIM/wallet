@@ -31,6 +31,9 @@ const winURL = process.env.NODE_ENV === 'development' ?
         process.on('exit', () => {
           RPCServer.kill()
         });
+        RPCServer.on('error', () => {
+          initRPCServer(callback)
+        })
         // RPCServer.on('message', (msg) => {
         //   if (msg.state === 'init') {
         //     return callback();
@@ -42,6 +45,7 @@ const winURL = process.env.NODE_ENV === 'development' ?
       }
 
       function maybeStartDaemon(callback) {
+          //监测服务是否已经启动
         // const sock = connect(DAEMON_CONFIG.RPC_PORT);
       
         // sock.on('connect', () => {
