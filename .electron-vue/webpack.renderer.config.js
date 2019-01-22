@@ -112,6 +112,15 @@ let rendererConfig = {
         __dirname: process.env.NODE_ENV !== 'production',
         __filename: process.env.NODE_ENV !== 'production'
     },
+    // devServer: {
+    //     proxy: {
+    //         '/*': {
+    //             changeOrigin: true, //是否跨域
+    //             secure: false,
+    //             target: 'http://localhost:8084/', //接口地址
+    //         }
+    //     },
+    // },
     plugins: [
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({ filename: 'styles.css' }),

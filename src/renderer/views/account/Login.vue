@@ -38,6 +38,7 @@
 
 <script>
 // import RPC from "../../rpc.js";
+import { DAEMON_CONFIG } from "../../../config.js";
 import https from "@/server/https.js";
 export default {
   data() {
@@ -82,11 +83,16 @@ export default {
       //   .catch(err => {
       //     console.log(err);
       //   });
-     let res= https.fetchget('/createWallet',{
-       password:'123456',
-       name:'admin'
-     });
-     console.log(res);
+      console.log(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet`);
+      https
+        .fetchget(
+          `http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/123456/admin`
+        )
+        .then(response => {
+          alert(response);
+        });
+
+      //  console.log(res);
     },
     handleSubmit(name) {
       this.$router.push("/home");
