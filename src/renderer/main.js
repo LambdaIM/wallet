@@ -5,9 +5,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 import iView from 'iview';
-import './common/reset.less';
-import './common/position.less';
-import './common/media.less';
+import './common/css/reset.less';
+import './common/css/position.less';
+import './common/css/media.less';
 import 'iview/dist/styles/iview.css';
 import './my-theme/index.less';
 

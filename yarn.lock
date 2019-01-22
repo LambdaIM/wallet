@@ -2411,6 +2411,7 @@ detect-indent@^4.0.0:
 detect-libc@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
+  integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
 
 detect-node@^2.0.3:
   version "2.0.4"
@@ -2454,14 +2455,16 @@ dmg-builder@6.5.3:
 
 dnode-protocol@~0.2.2:
   version "0.2.2"
-  resolved "http://registry.npm.taobao.org/dnode-protocol/download/dnode-protocol-0.2.2.tgz#51151d16fc3b5f84815ee0b9497a1061d0d1949d"
+  resolved "https://registry.yarnpkg.com/dnode-protocol/-/dnode-protocol-0.2.2.tgz#51151d16fc3b5f84815ee0b9497a1061d0d1949d"
+  integrity sha1-URUdFvw7X4SBXuC5SXoQYdDRlJ0=
   dependencies:
     jsonify "~0.0.0"
     traverse "~0.6.3"
 
 dnode@^1.2.2:
   version "1.2.2"
-  resolved "http://registry.npm.taobao.org/dnode/download/dnode-1.2.2.tgz#4ac3cfe26e292b3b39b8258ae7d94edc58132efa"
+  resolved "https://registry.yarnpkg.com/dnode/-/dnode-1.2.2.tgz#4ac3cfe26e292b3b39b8258ae7d94edc58132efa"
+  integrity sha1-SsPP4m4pKzs5uCWK59lO3FgTLvo=
   dependencies:
     dnode-protocol "~0.2.2"
     jsonify "~0.0.0"
@@ -3344,11 +3347,7 @@ got@^6.7.1:
     unzip-response "^2.0.1"
     url-parse-lax "^1.0.0"
 
-graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
-  version "4.1.15"
-  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
-
-graceful-fs@^4.1.15:
+graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.15"
   resolved "http://registry.npm.taobao.org/graceful-fs/download/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
 
@@ -4101,7 +4100,8 @@ jsonfile@^4.0.0:
 
 jsonify@~0.0.0:
   version "0.0.0"
-  resolved "http://registry.npm.taobao.org/jsonify/download/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
+  resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
+  integrity sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
 
 jsprim@^1.2.2:
   version "1.4.1"
@@ -4752,6 +4752,7 @@ multispinner@^0.2.1:
 nan@^2.0.5, nan@^2.0.8, nan@^2.0.9, nan@^2.10.0, nan@^2.2.1, nan@^2.9.2:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.12.1.tgz#7b1aa193e9aa86057e3c7bbd0ac448e770925552"
+  integrity sha512-JY7V6lRkStKcKTvHO5NVSQRv+RV+FIL5pvDoLiAtSL9pKlC5x9PKQcZDsq7m4FO4d57mkhC6Z+QhAh3Jdk5JFw==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -4808,6 +4809,7 @@ node-forge@0.7.5:
 node-gyp@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-3.8.0.tgz#540304261c330e80d0d5edce253a68cb3964218c"
+  integrity sha512-3g8lYefrRRzvGeSowdJKAKyks8oUpLEd/DyPV4eMhVlhJ0aNaZqIrNUIPuEWWTAoPqyFkfGrM67MC69baqn6vA==
   dependencies:
     fstream "^1.0.0"
     glob "^7.0.3"
@@ -6695,7 +6697,8 @@ temp-file@^3.3.2:
 
 tenderkeys@^0.0.2:
   version "0.0.2"
-  resolved "http://registry.npm.taobao.org/tenderkeys/download/tenderkeys-0.0.2.tgz#877bc872da65e58ab3b9175adf3ca03fff96472a"
+  resolved "https://registry.yarnpkg.com/tenderkeys/-/tenderkeys-0.0.2.tgz#877bc872da65e58ab3b9175adf3ca03fff96472a"
+  integrity sha512-wlwik4HpRIgG4ncmGvWk/t0EiRbdxXREOly2ZIuJxiq+4l1gBrhRaIKFbim/SFJ57MkClSnGlJ+v1WbrSd6nLQ==
   dependencies:
     bip39 "2.5.0"
     ed25519 "0.0.4"
@@ -6827,7 +6830,8 @@ tough-cookie@~2.4.3:
 
 traverse@~0.6.3:
   version "0.6.6"
-  resolved "http://registry.npm.taobao.org/traverse/download/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
+  resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
+  integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
 
 trim-newlines@^1.0.0:
   version "1.0.0"
@@ -7191,7 +7195,8 @@ wbuf@^1.1.0, wbuf@^1.7.2:
 
 weak@^1.0.0:
   version "1.0.1"
-  resolved "http://registry.npm.taobao.org/weak/download/weak-1.0.1.tgz#ab99aab30706959aa0200cb8cf545bb9cb33b99e"
+  resolved "https://registry.yarnpkg.com/weak/-/weak-1.0.1.tgz#ab99aab30706959aa0200cb8cf545bb9cb33b99e"
+  integrity sha1-q5mqswcGlZqgIAy4z1RbucszuZ4=
   dependencies:
     bindings "^1.2.1"
     nan "^2.0.5"
@@ -7494,6 +7499,7 @@ yargs@^12.0.2, yargs@^12.0.5:
 yargs@^7.0.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-7.1.0.tgz#6ba318eb16961727f5d284f8ea003e8d6154d0c8"
+  integrity sha1-a6MY6xaWFyf10oT46gA+jWFU0Mg=
   dependencies:
     camelcase "^3.0.0"
     cliui "^3.2.0"

@@ -24,7 +24,7 @@
 
       <div class="button-wrapper">
         <button class="btn login-button" @click="handleSubmit('formInline')">Login</button>
-        <!-- <button class="btn login-button" @click="test">test</button> -->
+        <button class="btn login-button" @click="test">test</button>
       </div>
 
       <div class="bottom-wrapper tc">
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import RPC from "../../rpc.js";
+  console.log(RPC);
 export default {
   data() {
     return {
@@ -69,41 +71,35 @@ export default {
     };
   },
   methods: {
-    test(){
-      RPC('createWallet',{
-        name:'mywallet',
-        password:'123456'
+    test() {
+      RPC("createWallet", {
+        name: "mywallet",
+        password: "123456"
       })
-      .then((data)=>{
-        console.log(data)
-
-      })
-      .catch((err)=>{
-        console.log(err)
-
-      })
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
-    test2(){
-      RPC('getWalletAddress')
-      .then((data)=>{
-        console.log(data)
-
-      })
-      .catch((err)=>{
-        console.log(err)
-
-      })
+    test2() {
+      RPC("getWalletAddress")
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
-    test3(){
-      RPC('getWallet','123456')
-      .then((data)=>{
-        console.log(data)
-
-      })
-      .catch((err)=>{
-        console.log(err)
-
-      })
+    test3() {
+      RPC("getWallet", "123456")
+        .then(data => {
+          console.log(data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     handleSubmit(name) {
       this.$router.push("/home");
