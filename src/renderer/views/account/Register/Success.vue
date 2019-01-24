@@ -12,7 +12,7 @@
 
         <div class="word-wrapper">
           <div class="word-content">
-            <span v-for="(item,index) in word" class="word-item">{{item}}</span>
+            <span v-for="(item,index) in words" class="word-item">{{item}}</span>
           </div>
         </div>
 
@@ -32,18 +32,19 @@ import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      word: this.words
+      // word: this.words
+      words:[]
     };
   },
   computed:{
-    ...mapState({
-      words:state=>state.word
-    })
+    // ...mapState({
+    //   words:state=>state.word
+    // })
   },
   methods: {
     async test() {
       let res = await https.fetchget(
-        `http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/123456789/root`
+        `http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/123456789/admin`
       );
       let data = res.data.data;
       this.words = data.split(" ");
