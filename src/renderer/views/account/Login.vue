@@ -23,7 +23,7 @@
       </Form>
 
       <div class="button-wrapper">
-        <button class="btn login-button" @click="handleSubmit('formInline')">Login</button>
+        <button class="btn login-button" @click="handleSubmit()">Login</button>
         <button class="btn login-button" @click="test">test</button>
       </div>
 
@@ -72,7 +72,7 @@ export default {
     };
   },
   methods: {
-    test() {
+    async test() {
       // RPC("createWallet", {
       //   name: "mywallet",
       //   password: "123456"
@@ -83,16 +83,9 @@ export default {
       //   .catch(err => {
       //     console.log(err);
       //   });
-      console.log(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet`);
-      https
-        .fetchget(
-          `http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/123456/admin`
-        )
-        .then(response => {
-          alert(response);
-        });
-
-      //  console.log(res);
+      // console.log(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet`);
+      let res =await https.fetchget(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/123456789/root`)
+      alert(res.data.data);
     },
     handleSubmit(name) {
       this.$router.push("/home");

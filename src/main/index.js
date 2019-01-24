@@ -69,6 +69,7 @@ function createWindow() {
         // resizable: true,
         // frame: false
     })
+    mainWindow.webContents.openDevTools();
 
     mainWindow.loadURL(winURL)
 

@@ -27,9 +27,10 @@ module.exports=function(app){
         console.log('privateKey hex',keyPair.privateKey.toString('hex'))
         console.log('privateKey',keyPair.privateKey)
         var wallet =new ETHwallet(keyPair.privateKey);
+        console.log('walletjson start') 
         var walletjson = wallet.toV3(password)
         walletjson.name=name;
-        console.log('walletjson')
+        console.log('walletjson end')
         console.log(walletjson);
         
         var path= DAEMON_CONFIG.BASE_PATH+'/v3file.json'

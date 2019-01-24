@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="logo-wrapper">
-      <img class="logo" src="../../assets/img/logo.png" alt>
+      <img class="logo" src="../../../assets/img/logo.png" alt>
     </div>
     <div class="login-wrapper">
       <div class="form-title">
@@ -39,7 +39,7 @@
       </Form>
 
       <div class="button-wrapper">
-        <button class="btn login-button" @click="handleSubmit('formInline')">Create</button>
+        <button class="btn login-button" @click="handle">Create</button>
       </div>
 
       <div class="bottom-wrapper tc">
@@ -90,8 +90,9 @@ export default {
     };
   },
   methods: {
-    handleSubmit(name) {
-      this.$router.push("/home");
+    handle() {
+      console.log('click create');
+      this.$router.push("/success");
     },
     validatePass(rule, value, callback) {
       if (value === "") {
@@ -119,7 +120,7 @@ export default {
 <style lang="less" scoped>
 .container {
   position: relative;
-  background: url(../../assets/img/bgs_01.jpg);
+  background: url(../../../assets/img/bgs_01.jpg);
   background-size: cover;
   height: 100%;
   width: 100%;
