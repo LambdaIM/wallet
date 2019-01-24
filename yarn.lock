@@ -446,7 +446,6 @@ aws4@^1.8.0:
 axios@^0.18.0:
   version "0.18.0"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
-  integrity sha1-MtU+SFHv3AoRmTts0AB4nXDAUQI=
   dependencies:
     follow-redirects "^1.3.0"
     is-buffer "^1.1.5"
@@ -2412,7 +2411,6 @@ detect-indent@^4.0.0:
 detect-libc@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
-  integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
 
 detect-node@^2.0.3:
   version "2.0.4"
@@ -2635,6 +2633,10 @@ electron-localshortcut@^3.0.0:
     electron-is-accelerator "^0.1.0"
     keyboardevent-from-electron-accelerator "^1.1.0"
     keyboardevents-areequal "^0.2.1"
+
+electron-log@^2.2.17:
+  version "2.2.17"
+  resolved "http://registry.npm.taobao.org/electron-log/download/electron-log-2.2.17.tgz#e71e2ebb949fc96ded7cdb99eeee7202e48981d2"
 
 electron-osx-sign@0.4.11:
   version "0.4.11"
@@ -4723,7 +4725,6 @@ multispinner@^0.2.1:
 nan@^2.0.8, nan@^2.10.0, nan@^2.2.1, nan@^2.9.2:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.12.1.tgz#7b1aa193e9aa86057e3c7bbd0ac448e770925552"
-  integrity sha512-JY7V6lRkStKcKTvHO5NVSQRv+RV+FIL5pvDoLiAtSL9pKlC5x9PKQcZDsq7m4FO4d57mkhC6Z+QhAh3Jdk5JFw==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -4780,7 +4781,6 @@ node-forge@0.7.5:
 node-gyp@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-3.8.0.tgz#540304261c330e80d0d5edce253a68cb3964218c"
-  integrity sha512-3g8lYefrRRzvGeSowdJKAKyks8oUpLEd/DyPV4eMhVlhJ0aNaZqIrNUIPuEWWTAoPqyFkfGrM67MC69baqn6vA==
   dependencies:
     fstream "^1.0.0"
     glob "^7.0.3"
@@ -5694,7 +5694,6 @@ qs@6.5.2, qs@~6.5.2:
 qs@^6.6.0:
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.6.0.tgz#a99c0f69a8d26bf7ef012f871cdabb0aee4424c2"
-  integrity sha512-KIJqT9jQJDQx5h5uAVPimw6yVg2SekOKu959OCtktD3FjzbpvaPr8i4zzg07DOMz+igA4W/aNM7OV8H37pFYfA==
 
 query-string@^4.1.0:
   version "4.3.4"
@@ -6028,6 +6027,12 @@ rlp@^2.0.0:
   dependencies:
     bn.js "^4.11.1"
     safe-buffer "^5.1.1"
+
+"rpcserver@file:./src/rpcserver":
+  version "0.0.1"
+  dependencies:
+    graceful-fs "^4.1.15"
+    tendermintelectronkey "0.0.3"
 
 run-queue@^1.0.0, run-queue@^1.0.3:
   version "1.0.3"
@@ -6671,10 +6676,9 @@ temp-file@^3.3.2:
     bluebird-lst "^1.0.6"
     fs-extra-p "^7.0.0"
 
-tendermintelectronkey@^0.0.3:
+tendermintelectronkey@0.0.3:
   version "0.0.3"
-  resolved "https://registry.yarnpkg.com/tendermintelectronkey/-/tendermintelectronkey-0.0.3.tgz#eb8d16f282ea6646dfb66286c8ef47eca9aa0041"
-  integrity sha512-Ms5Hb6cZDJH+ueLgNiDhxu0OkNzn8dM4eytNyCQPdJ/71wZE0CeH/FxIcm2dx4tXevf7VpMfqDo8VJay6YwMRg==
+  resolved "https://registry.npmjs.org/tendermintelectronkey/-/tendermintelectronkey-0.0.3.tgz#eb8d16f282ea6646dfb66286c8ef47eca9aa0041"
   dependencies:
     bip39 "2.5.0"
     ripemd160 "2.0.2"
@@ -7453,7 +7457,6 @@ yargs@^12.0.2, yargs@^12.0.5:
 yargs@^7.0.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-7.1.0.tgz#6ba318eb16961727f5d284f8ea003e8d6154d0c8"
-  integrity sha1-a6MY6xaWFyf10oT46gA+jWFU0Mg=
   dependencies:
     camelcase "^3.0.0"
     cliui "^3.2.0"

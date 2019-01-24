@@ -83,9 +83,31 @@ export default {
       //   .catch(err => {
       //     console.log(err);
       //   });
+<<<<<<< HEAD
       // console.log(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet`);
       let res =await https.fetchget(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/123456789/root`)
       alert(res.data.data);
+=======
+      console.log(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet`);
+      https
+        .fetchget(
+          `http://localhost:${DAEMON_CONFIG.RPC_PORT}/`
+        )
+        .then(response => {
+          console.log(response.data)
+          alert(response.data);
+        });
+        console.log(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet`);
+      https
+        .fetchget(
+          `http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/123456/admin`
+        )
+        .then(response => {
+          alert(response.data.data);
+        });
+
+      //  console.log(res);
+>>>>>>> c6848dbba4a41615528e5085f0dd10c8fd915299
     },
     handleSubmit(name) {
       this.$router.push("/home");

@@ -2,7 +2,8 @@
 const objectAssign = require('object-assign');
 
 const path =require('path')
-const account=require(path.join(__dirname, "../src/rpcserver/accountkey.js"));
+// const account=require(path.join(__dirname, "../src/rpcserver/accountkey.js"));
+const account=require('rpcserver');
 
 
 
@@ -34,6 +35,7 @@ app.listen(process.env.RPC_PORT)
 
 process.on('uncaughtException', (err) => {
   Object.assign({}, err);
+  console.log('uncaughtException',err)
   process.send({
     error: err.stack
   }); // 'A Fatal Exception has occured in the genaroshare-daemon RPC server'
