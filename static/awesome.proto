@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package types;
+
+message Account {
+    
+    bytes   address             = 1;
+    uint64  balance             = 2;
+    uint64  nonce               = 3;
+    bytes   rootDealHash        = 4;   
+    bytes   rootTxHash          = 5; 
+}
+

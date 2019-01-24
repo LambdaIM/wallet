@@ -53,14 +53,18 @@
     "dependencies": {
         "axios": "^0.18.0",
         "crypto": "^1.0.1",
+        "electron-better-ipc": "^0.1.2",
         "electron-log": "^2.2.17",
+        "electron-settings": "^3.2.0",
         "ethereumjs-util": "^6.0.0",
         "express": "^4.16.4",
         "graceful-fs": "^4.1.15",
         "iview": "^3.2.0",
         "object-assign": "^4.1.1",
+        "protobufjs": "^6.8.8",
         "qs": "^6.6.0",
         "randombytes": "^2.0.6",
+        "rpcserver": "file:./src/rpcserver/",
         "safe-buffer": "^5.1.2",
         "scrypt.js": "^0.3.0",
         "tendermintelectronkey": "0.0.3",
@@ -69,9 +73,7 @@
         "vue-electron": "^1.0.6",
         "vue-router": "^3.0.1",
         "vuex": "^3.0.1",
-        "vuex-electron": "^1.0.0",
-        "rpcserver":"file:./src/rpcserver/"
-        
+        "vuex-electron": "^1.0.0"
     },
     "devDependencies": {
         "ajv": "^6.5.0",
