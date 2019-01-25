@@ -116,6 +116,57 @@ export default {
           console.log("err", err);
         });
     },
+    test5(){
+      var payacount= new Date().getTime()%5;
+      ipc.callMain('pay', {
+        to:'86947B40EB25A5610C14F49140CB121313122429',
+        amount:payacount*10000
+      })
+      .then((data)=>{
+        console.log(data)
+        txdata=data.data;
+      })
+      .catch((err)=>{
+        
+        console.log(err);
+
+      })
+
+    },
+    test6(){
+      ipc.callMain('Wallettransfer', {
+          'password':'123456',
+          'txdata':txdata
+      })
+      .then((data)=>{
+        console.log(data)
+        
+      })
+      .catch((err)=>{
+        
+        console.log(err);
+
+      })
+      //txdata
+      // 密码
+      // https
+      //   .fetchpost(
+      //     `http://localhost:${DAEMON_CONFIG.RPC_PORT}/Wallettransfer`,
+      //     {
+      //       'password':'123456',
+      //       'txdata':'xxx'
+      //     }
+      //   )
+      //   .then(response => {
+      //     // alert(response.data.data);
+      //     console.log(response.data.data)
+      //   });
+
+    },
+    handleSubmit(name) {
+      this.$router.push("/home");
+      // console.log(ipcRenderer.sendSync('message','world'));
+    }
   }
 };
 </script>

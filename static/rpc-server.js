@@ -4,6 +4,7 @@ const objectAssign = require('object-assign');
 const path =require('path')
 // const account=require(path.join(__dirname, "../src/rpcserver/accountkey.js"));
 const account=require('rpcserver');
+var bodyParser = require('body-parser')
 
 
 
@@ -26,6 +27,10 @@ app.all('*', function (req, res, next) {
 app.get('/', function (req, res) {
   res.send('Hello World elect')
 })
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json
+app.use(bodyParser.json())
 
 account(app);
  

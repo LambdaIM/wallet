@@ -7,7 +7,7 @@
     "main": "./accountkey.js",
     "dependencies": {
         "graceful-fs": "^4.1.15",
-        "tendermintelectronkey": "0.0.3"
+        "tendermintelectronkey": "0.0.5"
         
     }
 }

@@ -80,9 +80,13 @@ var protofilepath=path.join(__static, '/awesome.proto');
 
               var AccountMessage = protoRoot.lookupType(query.dataType);
               var Message=AccountMessage.decode(buf);
+              console.log('nonce');
+              console.log('Message',Message.nonce);
+              console.log('nonce');
               var acountjson={
                 address:Message.address.toString('hex'),
-                balance:parseInt(Message.balance, 10)
+                balance:parseInt(Message.balance, 10),
+                nonce:parseInt(Message.nonce, 10)
               }
             return {data:acountjson,state:true} ;
             

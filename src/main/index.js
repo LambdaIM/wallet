@@ -7,9 +7,11 @@ import { DAEMON_CONFIG } from "../config.js";
 import { join } from "path";
 import { connect } from 'net';
 var log = require('electron-log');
+const settings = require('electron-settings');
 // var rpc=require('./rpc');
 import rpc from './rpc';
-const settings = require('electron-settings');
+import pay from './pay';
+
 
 /**
  * Set `__static` path to static files in production
@@ -95,6 +97,7 @@ function createWindow() {
     });
     // console.log('rpc',rpc)
     rpc();
+    pay();
 }
 
 function Max() {
