@@ -40,6 +40,11 @@
 // import RPC from "../../rpc.js";
 import { DAEMON_CONFIG } from "../../../config.js";
 import https from "@/server/https.js";
+const ipc = require('electron-better-ipc');
+const settings = require('electron-settings');
+
+
+
 export default {
   data() {
     return {
@@ -70,6 +75,9 @@ export default {
         ]
       }
     };
+  },
+  mounted() {
+    
   },
   methods: {
     async test() {
@@ -102,6 +110,49 @@ export default {
         });
 
       //  console.log(res);
+    },
+    test3(){
+      // var pra =JSON.stringify({
+      //   url:'https://www.baidu.com/',
+      //   data:{
+      //     ss:'sddss'
+      //   }
+      // })
+      //http://18.136.176.184:13659/getAccount?address=%22cd8ed969d881c0e0b7b39ba32853db6741c5afb1%22
+      var nodeBaseUrl = settings.get('user.node');
+      var pra ={
+        url:nodeBaseUrl+'abci_query?path=%22/accounts/cd8ed969d881c0e0b7b39ba32853db6741c5afb1%22&data=&height=&prove=',
+        data:{
+          ss:'sddss'
+        }
+      }
+     ipc.callMain('httpget', pra)
+     .then(function(data){
+       console.log('data',data.data.data.result.response)
+       console.log('data',data.data.data.result.response.value)
+      return ipc.callMain('protodecode', {
+         value:data.data.data.result.response.value,
+         dataType:'types.Account'
+       })
+     })
+     .then((value)=>{
+       console.log('解析后的数据',value)
+       
+     })
+
+     .catch(function(err){
+       console.log('err',err)
+     })
+     
+      
+      
+
+
+
+    },
+    test4(){
+      ipc.callMain('openkeystore', {})
+
     },
     handleSubmit(name) {
       this.$router.push("/home");

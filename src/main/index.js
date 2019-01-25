@@ -7,6 +7,9 @@ import { DAEMON_CONFIG } from "../config.js";
 import { join } from "path";
 import { connect } from 'net';
 var log = require('electron-log');
+// var rpc=require('./rpc');
+import rpc from './rpc';
+const settings = require('electron-settings');
 
 /**
  * Set `__static` path to static files in production
@@ -90,6 +93,8 @@ function createWindow() {
     
         });
     });
+    // console.log('rpc',rpc)
+    rpc();
 }
 
 function Max() {
@@ -97,9 +102,22 @@ function Max() {
 }
 
 
+function creatSeting(){
+    
+    if(settings.has('user.node')==false){
+        //http://18.136.176.184:13657/abci_query
+        settings.set('user', {
+            node: 'http://18.136.176.184:13657/'
+          });
+
+    }
+    
+}
+
 
 app.on('ready', () => {
     createWindow();
+    creatSeting();
 })
 
 app.on('window-all-closed', () => {

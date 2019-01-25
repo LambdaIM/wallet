@@ -1,0 +1,214 @@
+syntax = "proto3";
+
+package types;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option (gogoproto.stable_marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.gostring_all) = true;
+option (gogoproto.goproto_stringer_all) = true;
+
+
+message Genesis {
+    repeated Account Accounts = 1 [(gogoproto.nullable) = false];
+    repeated string SeedPeers = 2;
+}
+
+message Account {
+    option  (gogoproto.compare) = true;
+    bytes   address             = 1 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+    uint64  balance             = 2;
+    uint64  nonce               = 3;
+    bytes   rootDealHash        = 4;   
+    bytes   rootTxHash          = 5; 
+}
+
+message BigInt {
+    int32 neg = 1;
+    bytes abs = 2 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+}
+
+message Pledge {
+    bytes    address      = 1 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+    BigInt   sumSectors   = 2;
+    BigInt   usedSectors  = 3;
+    bytes    ip           = 4;
+    repeated string  localDeals = 5;
+    bool     available    = 6;
+}
+
+message PledgeList {
+    repeated Pledge pledgelist = 1;
+}
+
+message TreeNodeList {
+    repeated TreeNode nodelist = 1;
+}
+
+message Storage {
+    BigInt sumSectors      = 1;
+    BigInt usedSectors     = 2;
+    map<string,Pledge> pledge = 3;
+}
+
+message Tx {
+    bytes key         = 1;
+    bytes signature   = 2;
+    TxPayload payload = 3 [(gogoproto.nullable) = false];
+}
+
+message TxPayload {
+    uint64 nonce = 1;
+    oneof payload {
+      TxSend            txSend   = 2;
+      TxPledgeNew       txPledgeNew = 3;
+      TxPledgeDelete    txPledgeDelete = 4;
+      TxOrder           txOrder  = 5;
+      TxDeal            txDeal   = 6;
+      TxParam           txParam  = 7;
+      TxChal            txChal   = 8;
+      TxProof           TxProof  = 9;
+    }
+}
+
+message TxSend {
+    bytes   id    = 1;
+    TxData  txData =2;
+}
+
+message TxData {
+    bytes   from       = 1 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+    bytes   to         = 2 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+    uint64  amount     = 3;
+    uint64  gas        = 4;
+    uint64  createTime = 5;
+}
+
+message TxPledgeNew {
+    bytes   address    = 1 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+    BigInt  sumSectors = 2;
+    bytes   ip         = 3;
+}
+
+message TxPledgeDelete {
+    bytes   address    = 1 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+}
+
+enum OrderType {
+    ANY = 0;
+    BID = 1;
+    ASK = 2;
+}
+
+enum OrderStatus {
+    ORDER_UNKNOWN  = 0;
+    ORDER_INACTIVE = 1;
+    ORDER_ACTIVE   = 2;
+}
+
+enum DealStatus {
+    DEAL_UNKNOWN  = 0;
+    DEAL_ACCEPTED = 1;
+    DEAL_CLOSED   = 2;
+}
+
+enum ChalStatus {
+    Chal_Pending    = 0;
+    Chal_FAILED     = 1;
+    Chal_SUCCESSFUL = 2;
+}
+
+message TxOrder {
+    BigInt  id         = 1;
+    BigInt  dealId     = 2;
+    bytes   address    = 3 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+    uint64  duration   = 4;
+    uint64  price      = 5;
+    uint64  sectors    = 6;
+    uint64  startTime  = 7;
+    OrderType type     = 8;
+    OrderStatus status = 9;
+}
+
+message TxDeal {
+    bytes    id      = 1;
+    DealData data    = 2;
+    FileInfo fileList = 3;
+}
+
+message TreeNode {
+    bytes   hash        = 1;
+    bytes   leftHash    = 2;
+    bytes   rightHash   = 3;
+    bool    isLeaf      = 4;
+    bytes   data        = 5;
+}
+
+message DealData{
+    bytes   consumerAddress = 2 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+    bytes   providerAddress = 3 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+    BigInt  askId       = 4;
+    BigInt  bidId       = 5;
+    uint64  duration    = 6;
+    BigInt  price       = 7;
+    BigInt  totalPayout = 8;
+    uint64  startTime   = 9;
+    uint64  endTime     = 10;
+    bytes   filehash    = 11;
+}
+
+message FileInfo{
+    bytes data =1;
+}
+
+enum Status {
+    UNKNOWN    = 0;
+    SUCCESS    = 1;
+    FAILED     = 2;
+}
+
+message TxChal {
+    bytes   id         = 1;
+    ChalData data    = 2;
+}
+
+message TxParam {
+    bytes    id      = 1;
+    int64   blockSize  = 2;
+    int64   block      = 3;
+    bytes   params     = 4;
+    bytes   rsParams   = 5;
+}
+
+message ChalData {
+    bytes       dealId          = 1;
+    ChalStatus  status          = 2;
+    uint64      createTime      = 3;
+    bytes       chalAddress     = 4 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+    bytes       verifyAddress   = 5 [(gogoproto.customtype)="github.com/LambdaIM/lambdamint/types/base.Bytes",(gogoproto.nullable) = false];
+    bytes       chalParams      = 6;
+    bytes       proof           = 7;
+    uint64      proofTime       = 8;
+}
+
+message TxProof {
+    bytes       id         = 1;
+    TxProofData data       = 2;
+}
+
+message TxProofData{
+    bytes      id          = 1;
+    int64      height      = 2;
+    bytes      vrfSeed     = 3;
+    int64      startTime   = 4;
+    int64      submitTime  = 5;
+    bytes      proofSet    = 6;
+    ChalStatus status      = 7;
+}
+
+message TxDealChal {
+    bytes   dealId             = 1;
+    bytes   lastChalHash       = 2;
+    bytes   chalRootNodeHash   = 3;
+}
