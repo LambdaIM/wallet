@@ -1,69 +1,73 @@
 <template>
   <div class="container">
-    <div class="logo-wrapper">
-      <img class="logo" src="../../../assets/img/logo.png" alt>
-    </div>
-    <div class="login-wrapper">
-      <div class="form-title">
-        <div class="title-wrapper">
-          <p class="title">Create LAMBDA Wallet</p>
-          <!-- <p class="notice">WARNING: Password can NOT be reset or recovered, do remember it!</p> -->
+    <Mybg>
+      <div class="register-container" slot="content">
+        <div class="register-wrapper">
+          <div class="form-title">
+            <div class="title-wrapper">
+              <p class="title">Create Lambda Wallet</p>
+              <!-- <p class="notice">WARNING: Password can NOT be reset or recovered, do remember it!</p> -->
+            </div>
+          </div>
+          <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
+            <FormItem prop="walletName">
+              <Input type="text" v-model="formInline.walletName" placeholder="Wallet Name">
+                <Icon type="ios-person-outline" slot="prepend"></Icon>
+              </Input>
+            </FormItem>
+            <FormItem prop="password">
+              <Input
+                type="password"
+                v-model="formInline.password"
+                placeholder="8-20 characters,letter,number or symbol password"
+              >
+                <Icon type="ios-lock-outline" slot="prepend"></Icon>
+              </Input>
+            </FormItem>
+
+            <FormItem prop="confirmPassword" class="confirmPassword">
+              <Input
+                autocomplete="on"
+                type="password"
+                v-model="formInline.confirmPassword"
+                placeholder="Confirm the password"
+              >
+                <Icon type="ios-lock-outline" slot="prepend"></Icon>
+              </Input>
+            </FormItem>
+          </Form>
+
+          <div class="button-wrapper">
+            <button class="btn login-button" @click="createWallet('formInline')">Create</button>
+          </div>
+
+          <div class="bottom-wrapper tc">
+            <router-link class="bottom-wrapper-item" to="/">Login Wallet</router-link>
+            <span class="line"></span>
+            <router-link class="bottom-wrapper-item" to="/import">Import Wallet</router-link>
+          </div>
         </div>
       </div>
-      <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
-        <FormItem prop="user">
-          <Input type="text" v-model="formInline.user" placeholder="Wallet Name">
-            <Icon type="ios-person-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem prop="password">
-          <Input
-            type="password"
-            v-model="formInline.password"
-            placeholder="8-20 characters,letter,number or symbol"
-          >
-            <Icon type="ios-lock-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-
-        <FormItem prop="confirmPassword" class="confirmPassword">
-          <Input
-            autocomplete="on"
-            type="password"
-            v-model="formInline.confirmPassword"
-            placeholder="Confirm the password"
-          >
-            <Icon type="ios-lock-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-      </Form>
-
-      <div class="button-wrapper">
-        <button class="btn login-button" @click="handle">Create</button>
-      </div>
-
-      <div class="bottom-wrapper tc">
-        <router-link class="bottom-wrapper-item" to="/">Login Wallet</router-link>
-        <span class="line"></span>
-        <router-link class="bottom-wrapper-item" to="/import">Import Wallet</router-link>
-      </div>
-    </div>
+    </Mybg>
   </div>
 </template>
 
 <script>
+import Mybg from "@/components/common/useful/Mybg.vue";
+import { DAEMON_CONFIG } from "../../../../config.js";
+import https from "@/server/https.js";
 export default {
   data() {
     return {
       formInline: {
-        user: "",
+        walletName: "",
         password: ""
       },
       ruleInline: {
-        user: [
+        walletName: [
           {
             required: true,
-            message: "Please fill in the user name",
+            message: "Please fill in the walletName",
             trigger: "blur"
           }
         ],
@@ -75,8 +79,8 @@ export default {
           },
           {
             type: "string",
-            min: 6,
-            message: "The password length cannot be less than 6 bits",
+            min: 8,
+            message: "The password length cannot be less than 8 bits",
             trigger: "blur"
           }
         ],
@@ -89,10 +93,37 @@ export default {
       }
     };
   },
+  components: {
+    Mybg
+  },
   methods: {
-    handle() {
-      console.log('click create');
-      this.$router.push("/success");
+    createWallet(name) {
+      // console.log('clickd');
+      this.$refs[name].validate(valid => {
+        if (valid) {
+          let param = {
+            name: this.formInline.walletName,
+            password: this.formInline.password
+          };
+          try {
+            https
+              .fetchget(
+                `http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/${
+                  param.password
+                }/${param.name}`
+              )
+              .then(res => {
+                let data = res.data.data;
+                console.log(data);
+                this.$store.state.word = data.split(" ");
+                this.$store.state.combineWords = data;
+                this.$router.push('/success');
+              });
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      });
     },
     validatePass(rule, value, callback) {
       if (value === "") {
@@ -119,21 +150,7 @@ export default {
 
 <style lang="less" scoped>
 .container {
-  position: relative;
-  background: url(../../../assets/img/bgs_01.jpg);
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  .logo-wrapper {
-    .logo {
-      margin-left: 30px;
-      margin-top: 20px;
-    }
-  }
-  .login-wrapper {
+  .register-wrapper {
     position: absolute;
     width: 55%;
     height: 80%;
@@ -150,11 +167,6 @@ export default {
           font-size: 20px;
           margin-bottom: 30px;
         }
-        // .notice{
-        //   font-size: 14px;
-        //   color: #fff;
-        //   margin-bottom: 30px;
-        // }
       }
     }
     .form-container {

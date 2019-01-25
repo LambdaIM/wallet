@@ -5,7 +5,7 @@
     </keep-alive>
     <div class="bg-logo-container">
       <keep-alive>
-        <img class="logo" src="../../../assets/img/logo.png" alt>
+        <img @click="goHome" class="logo" src="../../../assets/img/logo.png" alt>
       </keep-alive>
     </div>
     <div class="bg-content-container">
@@ -15,7 +15,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods:{
+    goHome(){
+      this.$router.push('/');
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>

@@ -75,6 +75,16 @@ if (process.env.NODE_ENV === 'production') {
       }
     ]),
   )
+}else{
+  mainConfig.plugins.push(
+    new CopyWebpackPlugin([
+      {
+        from: path.join(__dirname, '../src/rpcserver'),
+        to: path.join(__dirname, '../node_modules'),
+        ignore: ['.*']
+      }
+    ]),
+  )
 }
 
 module.exports = mainConfig

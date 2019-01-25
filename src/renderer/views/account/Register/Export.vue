@@ -27,12 +27,12 @@
               v-for="(item,index) in words"
               class="word-item"
             >{{item}}</span>
-            
+
             <!-- <span v-if="showErr">Didn't get words</span> -->
           </div>
         </div>
-        <div class="button-wrapper">
-          <button class="btn next-button" @click="goback">Export Keystore File</button>
+        <div v-if="showButton" class="button-wrapper">
+          <button class="btn next-button" @click="exportWallet()">Export Keystore File</button>
         </div>
       </div>
     </Mybg>
@@ -44,30 +44,42 @@ import Mybg from "@/components/common/useful/Mybg.vue";
 import { DAEMON_CONFIG } from "../../../..//config.js";
 import { mapState, mapMutations } from "vuex";
 import https from "@/server/https.js";
+const ipc = require("electron-better-ipc");
+const settings = require("electron-settings");
 export default {
   data() {
     return {
       words: [],
       inputWords: [],
+      showButton: false,
       style: {
         display: "block"
       }
     };
   },
-  // computed:{
-  //   ...mapState(['word']),
-  // },
   watch: {
     words: {
       handler() {
         if (this.words.length == 0) {
           this.style.display = "none";
+          let tempCombineWords = this.inputWords.join(" ");
+          console.log(tempCombineWords);
+          let combineWords = this.$store.state.combineWords;
+          console.log(combineWords);
+          if (tempCombineWords == combineWords) {
+            this.showButton = true;
+          } else {
+            this.$Message.error("Confirmed Fail!");
+            setTimeout(() => {
+              this.$router.push("/register");
+            }, 2000);
+          }
         } else {
           this.style.display = "block";
         }
       },
-      deep: true,
-      immediate: true
+      deep: true
+      // immediate: true
     }
   },
   methods: {
@@ -86,24 +98,11 @@ export default {
       this.words = this.shuffle(tempWords);
       // console.log(this.words);
     },
-    goback() {
-      let tempCombineWords = this.inputWords.join(" ");
-      console.log(tempCombineWords);
-      let combineWords = this.$store.state.combineWords;
-      console.log(combineWords);
-      if (tempCombineWords == combineWords) {
-        // console.log("true");
-        // 导出文件的逻辑
-        this.$Message.success('Confirmed Success,the file has been export to your computer');
-        setTimeout(() => {
-          this.$router.push("/");
-        }, 2000);
-      } else {
-        this.$Message.error('Confirmed fail!');
-        setTimeout(() => {
-          this.$router.push("/success");
-        }, 2000);
-      }
+    exportWallet() {
+      ipc.callMain("openkeystore", {});
+      setTimeout(() => {
+        this.$router.push("/");
+      }, 2000);
     },
     shuffle(array) {
       for (let i = array.length - 1; i >= 0; i--) {

@@ -2,7 +2,7 @@ var TenderKeys =require('tendermintelectronkey')
 var ETHwallet = require('./ETHv3wallet.js');
 var {DAEMON_CONFIG} =require('./config.js')
 var fs = require('graceful-fs')
-
+var log = require('electron-log');
 module.exports=function(app){
     app.get('/createWallet/:password/:name',function(req, res){
         // console.log(query);
@@ -61,11 +61,10 @@ module.exports=function(app){
 
     })
     app.get('/getWalletAddress',function(req,res){
+        log.info('getWallet address------');
         var path= DAEMON_CONFIG.BASE_PATH+'/v3file.json'
         var v3file =fs.readFileSync(path);
         var v3file = JSON.parse(v3file);
-        
-        cb(v3file.address)
         res.json({data:{
             address:v3file.address,
             name:v3file.name

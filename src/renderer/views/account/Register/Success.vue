@@ -41,21 +41,8 @@ export default {
     // })
   },
   methods: {
-    async test() {
-      let res = await https.fetchget(
-        `http://localhost:${
-          DAEMON_CONFIG.RPC_PORT
-        }/createWallet/123456789/admin`
-      );
-      let data = res.data.data;
-      console.log(data);
-      this.words = data.split(" ");
-      this.$store.state.combineWords=data;
-      this.$store.state.word = this.words;
-
-      // console.log(this.word);
-      // this.$store.state.word = this.words;
-      // console.log(this.$store.state.word);
+    getWords() {
+      this.words=this.$store.state.word;
     },
     next() {
       this.$router.push("/export");
@@ -65,9 +52,7 @@ export default {
     Mybg
   },
   mounted() {
-    this.test();
-    // console.log(this.word);
-    // console.log(mapState(["word"]));
+    this.getWords();
   }
 };
 </script>
@@ -85,6 +70,9 @@ export default {
     text-align: center;
     .head-wrapper {
       margin-bottom: 40px;
+      // .title{
+      //   color: #1aa9ff;
+      // }
       h2 {
         font-size: 24px;
       }

@@ -1,38 +1,33 @@
 <template>
   <div class="container">
-    <div class="logo-wrapper">
-      <img class="logo" src="../../assets/img/logo.png" alt>
-    </div>
-    <div class="login-wrapper">
-      <div class="form-title">
-        <div class="title-wrapper">
-          <p class="title">LAMBDA Wallet</p>
+    <Mybg>
+      <div class="login-container" slot="content">
+        <div class="login-wrapper">
+          <div class="form-title">
+            <div class="title-wrapper">
+              <p class="title">LAMBDA Wallet</p>
+            </div>
+          </div>
+          <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
+            <FormItem prop="password">
+              <Input type="password" v-model="formInline.password" placeholder="Password">
+                <Icon type="ios-lock-outline" slot="prepend"></Icon>
+              </Input>
+            </FormItem>
+          </Form>
+
+          <div class="button-wrapper">
+            <button class="btn login-button" @click="openWallet('formInline')">Login</button>
+          </div>
+
+          <div class="bottom-wrapper tc">
+            <router-link class="bottom-wrapper-item" to="/register">Create Wallet</router-link>
+            <span class="line"></span>
+            <router-link class="bottom-wrapper-item" to="/import">Import Wallet</router-link>
+          </div>
         </div>
       </div>
-      <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
-        <FormItem prop="user">
-          <Input type="text" v-model="formInline.user" placeholder="Wallet Name">
-            <Icon type="ios-person-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem prop="password">
-          <Input type="password" v-model="formInline.password" placeholder="Password">
-            <Icon type="ios-lock-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-      </Form>
-
-      <div class="button-wrapper">
-        <button class="btn login-button" @click="handleSubmit()">Login</button>
-        <button class="btn login-button" @click="test">test</button>
-      </div>
-
-      <div class="bottom-wrapper tc">
-        <router-link class="bottom-wrapper-item" to="/register">Create Wallet</router-link>
-        <span class="line"></span>
-        <router-link class="bottom-wrapper-item" to="/import">Import Wallet</router-link>
-      </div>
-    </div>
+    </Mybg>
   </div>
 </template>
 
@@ -40,26 +35,16 @@
 // import RPC from "../../rpc.js";
 import { DAEMON_CONFIG } from "../../../config.js";
 import https from "@/server/https.js";
-const ipc = require('electron-better-ipc');
-const settings = require('electron-settings');
-
-
-
+import Mybg from "@/components/common/useful/Mybg.vue";
+const ipc = require("electron-better-ipc");
+const settings = require("electron-settings");
 export default {
   data() {
     return {
       formInline: {
-        user: "",
         password: ""
       },
       ruleInline: {
-        user: [
-          {
-            required: true,
-            message: "Please fill in the user name",
-            trigger: "blur"
-          }
-        ],
         password: [
           {
             required: true,
@@ -76,42 +61,27 @@ export default {
       }
     };
   },
-  mounted() {
-    
+  components: {
+    Mybg
   },
   methods: {
-    async test() {
-      // RPC("createWallet", {
-      //   name: "mywallet",
-      //   password: "123456"
-      // })
-      //   .then(data => {
-      //     console.log(data);
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
-      console.log(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet`);
-      https
-        .fetchget(
-          `http://localhost:${DAEMON_CONFIG.RPC_PORT}/`
-        )
-        .then(response => {
-          console.log(response.data)
-          alert(response.data);
-        });
-        console.log(`http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet`);
-      https
-        .fetchget(
-          `http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/123456/admin`
-        )
-        .then(response => {
-          alert(response.data.data);
-        });
-
-      //  console.log(res);
+    openWallet(name) {
+      this.$refs[name].validate(valid => {
+        if (valid) {
+          let param = {
+            password: this.formInline.password
+          };
+          console.log(param.password);
+          let res = https.fetchget(
+            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/openWallet/${
+              param.password
+            }`
+          );
+          console.log(res.data.data);
+        }
+      });
     },
-    test3(){
+    test3() {
       // var pra =JSON.stringify({
       //   url:'https://www.baidu.com/',
       //   data:{
@@ -119,76 +89,46 @@ export default {
       //   }
       // })
       //http://18.136.176.184:13659/getAccount?address=%22cd8ed969d881c0e0b7b39ba32853db6741c5afb1%22
-      var nodeBaseUrl = settings.get('user.node');
-      var pra ={
-        url:nodeBaseUrl+'abci_query?path=%22/accounts/cd8ed969d881c0e0b7b39ba32853db6741c5afb1%22&data=&height=&prove=',
-        data:{
-          ss:'sddss'
+      var nodeBaseUrl = settings.get("user.node");
+      var pra = {
+        url:
+          nodeBaseUrl +
+          "abci_query?path=%22/accounts/cd8ed969d881c0e0b7b39ba32853db6741c5afb1%22&data=&height=&prove=",
+        data: {
+          ss: "sddss"
         }
-      }
-     ipc.callMain('httpget', pra)
-     .then(function(data){
-       console.log('data',data.data.data.result.response)
-       console.log('data',data.data.data.result.response.value)
-      return ipc.callMain('protodecode', {
-         value:data.data.data.result.response.value,
-         dataType:'types.Account'
-       })
-     })
-     .then((value)=>{
-       console.log('解析后的数据',value)
-       
-     })
+      };
+      ipc
+        .callMain("httpget", pra)
+        .then(function(data) {
+          console.log("data", data.data.data.result.response);
+          console.log("data", data.data.data.result.response.value);
+          return ipc.callMain("protodecode", {
+            value: data.data.data.result.response.value,
+            dataType: "types.Account"
+          });
+        })
+        .then(value => {
+          console.log("解析后的数据", value);
+        })
 
-     .catch(function(err){
-       console.log('err',err)
-     })
-     
-      
-      
-
-
-
+        .catch(function(err) {
+          console.log("err", err);
+        });
     },
-    test4(){
-      ipc.callMain('openkeystore', {})
-
-    },
-    handleSubmit(name) {
-      this.$router.push("/home");
-      // console.log(ipcRenderer.sendSync('message','world'));
-    }
   }
 };
 </script>
 
 <style lang="less" scoped>
 .container {
-  position: relative;
-  background: url(../../assets/img/bgs_01.jpg);
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  .logo-wrapper {
-    .logo {
-      margin-left: 30px;
-      margin-top: 20px;
-    }
-  }
   .login-wrapper {
     position: absolute;
     width: 55%;
     height: 80%;
     left: 50%;
     top: 50%;
-    // border-radius: 25px;
     transform: translate(-50%, -50%);
-    // background: rgba(255, 255, 255,0.3);
-    // border: 1px solid #fff;
-    // color: rgb(199, 21, 21);
     .form-title {
       width: 100%;
       margin-top: 90px;
