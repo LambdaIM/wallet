@@ -1,9 +1,9 @@
 const state ={
-  word:[]
+  word:[],
+  combineWords:''
 }
 
 const mutations={
-
 }
 
 

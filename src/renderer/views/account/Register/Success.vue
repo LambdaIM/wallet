@@ -32,29 +32,33 @@ import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      // word: this.words
-      words:[]
+      words: []
     };
   },
-  computed:{
+  computed: {
     // ...mapState({
-    //   words:state=>state.word
+    //   word: state => state.register.word
     // })
   },
   methods: {
     async test() {
       let res = await https.fetchget(
-        `http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/123456789/admin`
+        `http://localhost:${
+          DAEMON_CONFIG.RPC_PORT
+        }/createWallet/123456789/admin`
       );
       let data = res.data.data;
+      console.log(data);
       this.words = data.split(" ");
-      // console.log(this.words);
-      // this.words=this.word;
-      // this.word=this.words;
+      this.$store.state.combineWords=data;
+      this.$store.state.word = this.words;
+
       // console.log(this.word);
+      // this.$store.state.word = this.words;
+      // console.log(this.$store.state.word);
     },
     next() {
-      this.$router.push("/export");  
+      this.$router.push("/export");
     }
   },
   components: {
@@ -63,6 +67,7 @@ export default {
   mounted() {
     this.test();
     // console.log(this.word);
+    // console.log(mapState(["word"]));
   }
 };
 </script>

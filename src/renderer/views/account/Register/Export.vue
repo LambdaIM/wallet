@@ -2,21 +2,37 @@
   <div class="container">
     <Mybg>
       <div class="content-container" slot="content">
-        <!-- <div class="head-wrapper mt20">
+        <div class="head-wrapper mt20">
           <div class="icon">
-            <Icon type="ios-checkmark-circle-outline" class="icon-item" size="70"/>
+            <Icon type="ios-card-outline" class="icon-item" size="70"/>
           </div>
-          <h2 class="title mt10">Successfully Created</h2>
-          <p>Please do remember the words to backup your wallet !</p>
+          <h2 class="title">Confirm the words</h2>
+          <p>Please click on the words in order to confirm that you are backing up correctly</p>
         </div>
 
         <div class="word-wrapper">
           <div class="word-content">
-            <span v-for="(item,index) in words" class="word-item">{{item}}</span>
+            <span
+              @click="deleteSingleWord(item,index)"
+              v-for="(item,index) in inputWords"
+              class="word-item"
+            >{{item}}</span>
           </div>
-        </div>-->
+        </div>
+
+        <div class="word-wrapper" :style="style">
+          <div class="word-content">
+            <span
+              @click="getSingleWord(item,index)"
+              v-for="(item,index) in words"
+              class="word-item"
+            >{{item}}</span>
+            
+            <!-- <span v-if="showErr">Didn't get words</span> -->
+          </div>
+        </div>
         <div class="button-wrapper">
-          <button class="btn next-button">Next Step</button>
+          <button class="btn next-button" @click="goback">Export Keystore File</button>
         </div>
       </div>
     </Mybg>
@@ -31,19 +47,79 @@ import https from "@/server/https.js";
 export default {
   data() {
     return {
-      words: []
+      words: [],
+      inputWords: [],
+      style: {
+        display: "block"
+      }
     };
   },
+  // computed:{
+  //   ...mapState(['word']),
+  // },
+  watch: {
+    words: {
+      handler() {
+        if (this.words.length == 0) {
+          this.style.display = "none";
+        } else {
+          this.style.display = "block";
+        }
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   methods: {
-    ...mapState({
-      words: state=>state.words
-    })
+    deleteSingleWord(item, index) {
+      // console.log(item,index);
+      this.inputWords.splice(index, 1);
+      this.words.push(item);
+    },
+    getSingleWord(item, index) {
+      // console.log(item);
+      this.inputWords.push(item);
+      this.words.splice(index, 1);
+    },
+    getWords() {
+      let tempWords = this.$store.state.word;
+      this.words = this.shuffle(tempWords);
+      // console.log(this.words);
+    },
+    goback() {
+      let tempCombineWords = this.inputWords.join(" ");
+      console.log(tempCombineWords);
+      let combineWords = this.$store.state.combineWords;
+      console.log(combineWords);
+      if (tempCombineWords == combineWords) {
+        // console.log("true");
+        // 导出文件的逻辑
+        this.$Message.success('Confirmed Success,the file has been export to your computer');
+        setTimeout(() => {
+          this.$router.push("/");
+        }, 2000);
+      } else {
+        this.$Message.error('Confirmed fail!');
+        setTimeout(() => {
+          this.$router.push("/success");
+        }, 2000);
+      }
+    },
+    shuffle(array) {
+      for (let i = array.length - 1; i >= 0; i--) {
+        let randomIndex = Math.floor(Math.random() * (i + 1));
+        let itemAtIndex = array[randomIndex];
+        array[randomIndex] = array[i];
+        array[i] = itemAtIndex;
+      }
+      return array;
+    }
   },
   components: {
     Mybg
   },
   mounted() {
-    console.log(this.words);
+    this.getWords();
   }
 };
 </script>
@@ -97,7 +173,7 @@ export default {
           color: #606060;
           font-size: 14px;
           &:hover {
-            cursor: pointer;
+            cursor: pointer !important;
             &:active {
               box-shadow: 0px 3px 0px #eef2f4, 0px 9px 8px #eef2f4;
               position: relative;
