@@ -16,10 +16,10 @@ module.exports=function(app){
         //然后把 keyPair 以web3格式存储起来
         var address  = tenderKeys.getAddressFromPubKey(keyPair.publicKey.toString('hex'));
 
-        console.log("mnemonic    :" + mnemonic);
-        console.log("private key :" + keyPair.privateKey.toString('base64'));
-        console.log("Public key  :" + keyPair.publicKey.toString('base64'));
-        console.log("address     :" + address);
+        console.log("mnemonic    :  " + mnemonic);
+        console.log("private key :  " + keyPair.privateKey.toString('hex'));
+        console.log("Public key  :  " + keyPair.publicKey.toString('hex'));
+        console.log("address     :  " + address);
         var result={
             mnemonic,
             address
@@ -89,6 +89,7 @@ module.exports=function(app){
             })	
 
     })
+  
     
 }
 
