@@ -1,16 +1,20 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu  } from 'electron'
 import { hidden } from 'ansi-colors';
 
 import { fork } from 'child_process';
-
 import { DAEMON_CONFIG } from "../config.js";
 import { join } from "path";
 import { connect } from 'net';
-var log = require('electron-log');
-const settings = require('electron-settings');
-// var rpc=require('./rpc');
+
+
+
 import rpc from './rpc';
 import pay from './pay';
+
+var log = require('../log').log;
+const settings = require('electron-settings');
+
+log.info('start');
 
 
 /**
@@ -21,6 +25,7 @@ let DAEMON ;
 
 if (process.env.NODE_ENV !== 'development') {
     global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+    
     DAEMON = join(__dirname, "/static/rpc-server.js");
 }else{
     DAEMON = join(__dirname, "../../static/rpc-server.js");
@@ -33,40 +38,18 @@ const winURL = process.env.NODE_ENV === 'development' ?
 
 
     function initRPCServer(callback) {
-        log.info('fork1');
         let RPCServer = fork(DAEMON, [], { env: { RPC_PORT: DAEMON_CONFIG.RPC_PORT } });
-        log.info('fork2');
         process.on('exit', () => {
           RPCServer.kill()
         });
-        RPCServer.on('error', () => {
-          log.info('fork3');
+
+        RPCServer.on('error', (error) => {
+          log.error('error');
           initRPCServer(callback)
         })
-        // RPCServer.on('message', (msg) => {
-        //   if (msg.state === 'init') {
-        //     return callback();
-        //   } else {
-        //     RPCServer.removeAllListeners();
-        //     callback(msg);
-        //   }
-        // });
       }
 
       function maybeStartDaemon(callback) {
-          //监测服务是否已经启动
-        // const sock = connect(DAEMON_CONFIG.RPC_PORT);
-      
-        // sock.on('connect', () => {
-        //   sock.end()
-        //   sock.removeAllListeners()
-        //   callback()
-        // })
-      
-        // sock.on('error', () => {
-        //   sock.removeAllListeners()
-        //   initRPCServer(callback)
-        // })
         initRPCServer(callback)
       }
 
@@ -79,10 +62,14 @@ function createWindow() {
         useContentSize: true,
         width: 975,
         autoHideMenuBar: true,
+        // title:'lamb wallet'
         // resizable: true,
         // frame: false
     })
-    mainWindow.webContents.openDevTools();
+    if (process.env.NODE_ENV == 'development'){
+        mainWindow.webContents.openDevTools();
+    }
+    
 
     mainWindow.loadURL(winURL)
 
@@ -95,7 +82,7 @@ function createWindow() {
     
         });
     });
-    // console.log('rpc',rpc)
+    
     rpc();
     pay();
 }
@@ -117,10 +104,35 @@ function creatSeting(){
     
 }
 
+function creatMenu(){
+    // Create the Application's main menu
+    var template = [{
+        label: "Application",
+        submenu: [
+            { label: "About Application", selector: "orderFrontStandardAboutPanel:" },
+            { type: "separator" },
+            { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
+        ]}, {
+        label: "Edit",
+        submenu: [
+            { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+            { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+            { type: "separator" },
+            { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+            { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+            { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+            { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+        ]}
+    ];
+
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+}
+
 
 app.on('ready', () => {
     createWindow();
     creatSeting();
+    creatMenu();
 })
 
 app.on('window-all-closed', () => {
@@ -135,22 +147,3 @@ app.on('activate', () => {
     }
 })
 
-/**
- * Auto Updater
- *
- * Uncomment the following code below and install `electron-updater` to
- * support auto updating. Code Signing with a valid certificate is required.
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
- */
-
-/*
-import { autoUpdater } from 'electron-updater'
-
-autoUpdater.on('update-downloaded', () => {
-  autoUpdater.quitAndInstall()
-})
-
-app.on('ready', () => {
-  if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
-})
- */

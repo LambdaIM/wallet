@@ -7,7 +7,7 @@
         <Col span="4" class="account-item">
           <div class="item-wrapper">
             <p class="title">Balance</p>
-            <p class="value">50 LAMB</p>
+            <p class="value">{{balance}} LAMB</p>
           </div>
         </Col>
         <Col span="4" class="account-item">
@@ -77,10 +77,51 @@
         <p>Content of dialog</p>
       </Modal>
 
-      <Modal v-model="sendModal" title="send" :styles="{top: '200px'}">
-        <p>Content of dialog</p>
-        <p>Content of dialog</p>
-        <p>Content of dialog</p>
+      <Modal loading v-model="sendModal" title="Send LAMB" :styles="{top: '200px'}"
+       
+       @on-cancel="sendcancel"
+      >
+        <p>
+        <Input style="border: 1px solid #dcdee2" v-model="Fromvalue" readonly>
+        <span slot="prepend">From</span>
+        </Input>
+        </p>
+        <br/>
+        <p>
+        <Input style="border: 1px solid #dcdee2" v-model="Tovalue"  placeholder="an LAMB address" >
+        <span slot="prepend"> To  </span>
+        </Input>
+        </p>
+        <br/>
+        <p>
+          <Input style="border: 1px solid #dcdee2" v-model="LAMBvalue">
+            <span slot="prepend"> Amount  </span>
+            <span slot="append">LAMB</span>
+          </Input>
+
+            <!-- <InputNumber
+            style="width:100%;"
+            :min="0"
+            v-model="LAMBvalue"
+            :formatter="value => `LAMB ${value}`.replace(/B(?=(d{3})+(?!d))/g, ',')"
+            :parser="value => value.replace(/$s?|(,*)/g, '')"></InputNumber> -->
+        
+        </p>
+           <div slot="footer">
+            <Button type="primary" @click="preSendLAMB">Submit</Button>
+        </div>
+        
+
+      </Modal>
+      <Modal @on-ok="sendLAMBTx" v-model="passwordModal" title="wallet password" :styles="{top: '200px'}">
+        <p>
+          <Input v-model="walletPassword" type="password">
+          </Input>
+        </p>
+        <div slot="footer">
+            <Button type="primary" @click="sendLAMBTx">Submit</Button>
+        </div>
+        
       </Modal>
     </div>
 
@@ -90,6 +131,14 @@
 <script>
 import Header from "@/components/common/layout/Head.vue";
 import MyTable from "@/components/common/useful/Mytable.vue";
+import { DAEMON_CONFIG } from "../../config.js";
+import https from "@/server/https.js";
+const ipc = require("electron-better-ipc");
+const settings = require("electron-settings");
+import filters from '../common/js/filter.js'
+import * as Utils from 'web3-utils';
+
+
 export default {
   data() {
     return {
@@ -133,58 +182,51 @@ export default {
             });
           }
         },
-        {
-          title: "Detail",
-          render: (h, params) => {
-            return h("Icon", {
-              props: {
-                type: "ios-arrow-dropdown-circle",
-                size: 32
-              },
-              on: {
-                click: () => {
-                  this.openDetail();
-                }
-              }
-            });
-          }
-        }
+        // {
+        //   title: "Detail",
+        //   render: (h, params) => {
+        //     return h("Icon", {
+        //       props: {
+        //         type: "ios-arrow-dropdown-circle",
+        //         size: 32
+        //       },
+        //       on: {
+        //         click: () => {
+        //           this.openDetail();
+        //         }
+        //       }
+        //     });
+        //   }
+        // }
       ],
       data: [
-        {
-          amount: "+ 0.0001 LAMB ($0)",
-          source: "From fisimtoken4y",
-          type: "Transaction",
-          date: "3 days ago",
-          status: 1
-        },
-        {
-          amount: "- 0.0001 LAMB ($0)",
-          source: "To Givenchy13000",
-          type: "Lend",
-          date: "1 days ago",
-          status: 0
-        },
-        {
-          amount: "+ 0.0001 LAMB ($0)",
-          source: "From fisimtoken4y",
-          type: "Transaction",
-          date: "3 days ago",
-          status: 1
-        },
-        {
-          amount: "+ 0.0001 LAMB ($0)",
-          source: "From fisimtoken4y",
-          type: "Intereste",
-          date: "4 days ago",
-          status: 0
-        }
-      ]
+        
+      ],
+      accountinfo:null,
+      Fromvalue:'',
+      Tovalue:'',
+      LAMBvalue:'',
+      passwordModal:false,
+      walletPassword:null,
+      txlist:[],
+      Interval:null
     };
   },
   components: {
     Header,
     MyTable
+  },
+  mounted() {
+    this.getAccountInfo();
+    var _this=this;
+    this.$data.Interval = setInterval(function(){
+      _this.getAccountInfo();
+    },1000*20)
+    
+  },
+  beforeDestroy(){
+    clearInterval(this.$data.Interval);
+
   },
   methods: {
     openDetail() {
@@ -198,8 +240,270 @@ export default {
     },
     openSend() {
       this.sendModal = true;
+    },
+    getAccountInfo() {
+      var _this=this;
+       https.fetchget(
+            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/getWalletAddress/`
+          )
+          .then(function(res){
+            console.log(res.data.data);
+            if(res.data.data){
+              return res.data.data;
+
+            }else{
+              return null
+            }
+            
+
+          })
+          .then(function(data){
+            console.log(data)
+            var nodeBaseUrl = settings.get("user.node");
+            _this.$data.Fromvalue=data.address;
+            console.log('dispatch')
+            _this.$store.dispatch('setaddress',data.address)
+             
+            
+
+            // _this.$store.commit('setaddress',{address:data.address})
+
+
+
+            var pra = {
+              url:nodeBaseUrl +
+                "abci_query?path=%22/accounts/"+data.address+"%22&data=&height=&prove=",
+                data: {
+                  ss: ""
+                }
+            };
+            
+            return ipc.callMain("httpget", pra)
+
+          })
+          .then(function(res){
+            console.log('res',res)
+            if(res.data.data.result.response.log&&res.data.data.result.response.value==undefined){
+                // _this.$Notice.warning({
+                //     title: 'Your account was not found',
+                //     desc:res.data.data.result.response.log,
+                // });
+                 return ;
+        
+            }
+            return ipc.callMain("protodecode", {
+              value: res.data.data.result.response.value,
+              dataType: "types.Account"
+            });
+
+          })
+          .then(function(res){
+            if(res!=undefined){
+              _this.$data.accountinfo=res.data
+              _this.getpaylist(res.data.address);
+            }
+            
+
+          })
+      
+       
+      
+      
+    },
+    preSendLAMB(){
+      var from =this.$data.Fromvalue;
+      var to =this.$data.Tovalue;
+      var value   =parseFloat(this.$data.LAMBvalue);  
+      var _this = this ;
+      if(to==from){
+        this.$Notice.warning({
+                    title: 'You can\'t transfer LAMB to yourself.',
+                });
+        return ;
+      }
+      if(value<=0||value>this.$data.accountinfo.balance){
+        // need to alert
+        this.$Notice.warning({
+                    title: 'Please check the balance and the amount of transfer.',
+                });
+        return 
+      }
+      console.log(from,to,value)
+      value=value*10000;
+      if(Utils.isAddress(to)==false){
+        // need to alert
+        this.$Notice.warning({
+                    title: 'Check the forwarding address',
+                });
+      
+       return ;
+     }
+
+
+     if(isNaN(value)){
+       this.$Notice.warning({
+                    title: 'Check the amount',
+                });
+      
+       return ;
+     }
+
+
+
+
+      ipc.callMain('pay', {
+        to:to,
+        amount:value
+      })
+      .then(function(data){
+        console.log(data)
+        _this.sendcancel()
+        _this.$data.passwordModal=true;
+
+        
+
+      })
+      .catch(function(err){
+        console.log(err);
+        _this.$Notice.warning({
+                    title: 'error',
+                });
+
+
+      })
+
+      
+
+    },
+    sendcancel(){
+      this.sendModal = false;
+    },
+    sendLAMBTx(){
+      var _this=this;
+
+
+      if(this.$data.walletPassword==null){
+        return ; 
+      }
+      ipc.callMain('Wallettransfer', {
+          'password':encodeURIComponent(this.$data.walletPassword),
+          'txdata':{}
+      })
+      .then(function(data){
+        
+        if(data.state==false){
+          if(data.code =='1001'){
+            _this.$Notice.error({
+                    title: 'Please check your password.'
+                });
+            
+          }else{
+            _this.$Notice.error({
+                    title: 'Transaction failure.'
+                });
+
+          }
+          
+          
+          return ;
+        }
+        if(data.data.data.result.check_tx.log==undefined){
+          console.log('ok')
+          _this.$data.walletPassword='';
+          _this.$Notice.success({
+                    title: 'Transaction success',
+                    desc:'Transaction hash  <br/>'+data.data.data.result.hash
+                });
+          _this.getAccountInfo();
+
+        }else{
+          console.log('fail')
+             _this.$Notice.error({
+                    title: 'Transaction error',
+                    desc:  data.data.data.result.check_tx.log
+                });
+        }
+
+      })
+      .catch(function(err){
+        console.log(err);
+
+      })
+      
+    },
+    getpaylist(address){
+      function checkaddress(address1){
+        if(address1.toUpperCase()==address.toUpperCase()){
+          return ' -  ';
+        }else{
+          return ' +  ';
+        }
+
+      }
+      function showaddress(address1,address2){
+        if(address1.toUpperCase()==address.toUpperCase()){
+          return 'to  '+address2;
+          
+        }else{
+          return 'from  '+address1;
+        }
+
+      }
+      var _this=this;
+      ipc.callMain('httpget', {
+          'url':'http://explorer.lambda.im/api/tx/getTxAccountList',
+          'data':{
+            accountHash:address,
+            pageNum:1,
+            showNum:10
+          }
+      })
+      .then(function(res){
+        console.log('getpaylist',res.data.data);
+        if(res.data.data&&res.data.data.code==200){
+          // _this.$data.txlist=res.data.data.data.txList;
+          _this.$data.data=[];
+          res.data.data.data.txList.forEach(function(item){
+            
+            _this.$data.data.push(  {
+              amount:checkaddress(item.from)+  filters.formatValue(item.value),
+              source: showaddress(item.from,item.to),
+              type: "Transaction",
+              date: filters.formatDate(item.time),
+              status: 1
+            })
+          })
+
+
+          //===
+          // data: [
+            // {
+            //   amount: "+ 0.0001 LAMB ",
+            //   source: "From fisimtoken4y",
+            //   type: "Transaction",
+            //   date: "3 days ago",
+            //   status: 1
+            // }
+          // ],
+          //===
+        }
+
+      })
+      .catch(function(err){
+
+      })
     }
-  }
+  },
+  computed: {
+    balance:function(){
+      if(this.$data.accountinfo&&this.$data.accountinfo.balance){
+        return this.$data.accountinfo.balance/10000
+
+      }else{
+        return 0
+      }
+    }
+  },
 };
 </script>
 

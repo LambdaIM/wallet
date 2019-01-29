@@ -10,14 +10,14 @@
           </div>
           <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
             <FormItem prop="password">
-              <Input type="password" v-model="formInline.password" placeholder="Password">
+              <Input type="password" v-model="formInline.password" placeholder="Password" @on-enter="openWallet('formInline')">
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
               </Input>
             </FormItem>
           </Form>
 
           <div class="button-wrapper">
-            <button class="btn login-button" @click="openWallet('formInline')">Login</button>
+            <button class="btn login-button"    @click="openWallet('formInline')">Login</button>
           </div>
 
           <div class="bottom-wrapper tc">
@@ -64,8 +64,15 @@ export default {
   components: {
     Mybg
   },
+  mounted() {
+    var open = settings.get('isopenfile')
+    if(open){
+      this.$router.push("/home");
+    }
+  },
   methods: {
     openWallet(name) {
+      var _this=this;
       this.$refs[name].validate(valid => {
         if (valid) {
           let param = {
@@ -76,50 +83,26 @@ export default {
             `http://localhost:${DAEMON_CONFIG.RPC_PORT}/openWallet/${
               param.password
             }`
-          );
-          console.log(res.data.data);
+          ).then(function(data){
+            if(data.data&&data.data.data&&data.data.data.publicKey){
+              settings.set('isopenfile',true)
+              _this.$router.push("/home");
+              
+
+            }else{
+              console.log('open fail')
+
+            }
+
+          });
+          
         }
       });
-    },
-    test3() {
-      // var pra =JSON.stringify({
-      //   url:'https://www.baidu.com/',
-      //   data:{
-      //     ss:'sddss'
-      //   }
-      // })
-      //http://18.136.176.184:13659/getAccount?address=%22cd8ed969d881c0e0b7b39ba32853db6741c5afb1%22
-      var nodeBaseUrl = settings.get("user.node");
-      var pra = {
-        url:
-          nodeBaseUrl +
-          "abci_query?path=%22/accounts/cd8ed969d881c0e0b7b39ba32853db6741c5afb1%22&data=&height=&prove=",
-        data: {
-          ss: "sddss"
-        }
-      };
-      ipc
-        .callMain("httpget", pra)
-        .then(function(data) {
-          console.log("data", data.data.data.result.response);
-          console.log("data", data.data.data.result.response.value);
-          return ipc.callMain("protodecode", {
-            value: data.data.data.result.response.value,
-            dataType: "types.Account"
-          });
-        })
-        .then(value => {
-          console.log("解析后的数据", value);
-        })
-
-        .catch(function(err) {
-          console.log("err", err);
-        });
     },
     test5(){
       var payacount= new Date().getTime()%5;
       ipc.callMain('pay', {
-        to:'86947B40EB25A5610C14F49140CB121313122429',
+        to:'EDD4486D610D73F531369C32DA72367D3024F9E8',
         amount:payacount*10000
       })
       .then((data)=>{

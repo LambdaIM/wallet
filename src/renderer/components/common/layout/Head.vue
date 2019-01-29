@@ -20,8 +20,8 @@
             <router-link to="/validator" class="item">Validator</router-link>
           </div>
 
-          <div class="head-menu-item">
-            <router-link to="/settings" class="item"><Icon type="md-settings" size="30"/></router-link>
+          <div class="head-menu-item overtext">
+            <router-link to="/settings" class="item"><Icon  style="    display: inline;" type="md-settings" size="30"/>{{address}}</router-link>
           </div>
         </div>
       </Col>
@@ -30,7 +30,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    address:function(){
+      
+      return this.$store.getters.getaddress;
+    }
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -53,6 +60,11 @@ export default {};
         height: 100%;
         justify-content: space-around;
         align-items: center;
+        .overtext{
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
         .head-menu-item {
           width: 100%;
           text-align: center;

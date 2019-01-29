@@ -61,6 +61,9 @@ if (process.env.NODE_ENV !== 'production') {
 /**
  * Adjust mainConfig for production settings
  */
+
+
+
 if (process.env.NODE_ENV === 'production') {
   mainConfig.plugins.push(
     new BabiliWebpackPlugin(),
@@ -80,7 +83,7 @@ if (process.env.NODE_ENV === 'production') {
     new CopyWebpackPlugin([
       {
         from: path.join(__dirname, '../src/rpcserver'),
-        to: path.join(__dirname, '../node_modules'),
+        to: path.join(__dirname, '../node_modules/rpcserver'),
         ignore: ['.*']
       }
     ]),
