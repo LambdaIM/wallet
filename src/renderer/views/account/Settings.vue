@@ -2,14 +2,14 @@
   <div class="setting-container">
     <Header/>
     <div class="setting-wrapper">
-      <Mycard cardtitle="Wallet Info" class="mb10">
+      <Mycard v-if="walletInfo" cardtitle="Wallet Info" class="mb10">
         <div class="storage-content" slot="card-content">
-          <Row class-name="card-item">
+          <Row  class-name="card-item">
             <Col span="4" class-name="title-wrapper">
               <span class="title">Wallet Name</span>
             </Col>
             <Col span="12" class-name="content-wrapper">
-              <span>Kagzag</span>
+              <span>{{walletInfo.name}}</span>
             </Col>
           </Row>
 
@@ -18,7 +18,12 @@
               <span class="title">Account Address</span>
             </Col>
             <Col span="12" class-name="content-wrapper">
-              <span>buQgSo8QLGtprNT2m4aTi2KpjQHEuHFcWXaw</span>
+              <span>{{walletInfo.address}}</span>
+              
+    <button type="button"
+      v-clipboard:copy="walletInfo.address"
+      v-clipboard:success="onCopy"
+      v-clipboard:error="onError">Copy!</button>
             </Col>
           </Row>
         </div>
@@ -52,7 +57,7 @@
       <Mycard cardtitle="Private Key Info" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
-            <Col span="4" class-name="title-wrapper">
+            <!-- <Col span="4" class-name="title-wrapper">
               <span class="title">Private Key</span>
             </Col>
             <Col span="6" class-name="content-wrapper">
@@ -61,20 +66,20 @@
 
             <Col span="4" class-name="content-wrapper">
               <a>Private Key Visible</a>
-            </Col>
+            </Col> -->
 
             <Col span="4" class-name="content-wrapper">
-              <a>Keystore File Backup</a>
+              <a @click="openkeystore" >Keystore File Backup</a>
             </Col>
           </Row>
 
-          <Row class-name="card-item">
+          <!-- <Row class-name="card-item">
             <Col span="20">
               <p
                 class="notice tc"
               >Wallet Password can’t be recovered, you can only create a new Wallet using Private Key once forgotten</p>
             </Col>
-          </Row>
+          </Row> -->
         </div>
       </Mycard>
 
@@ -128,18 +133,62 @@
 <script>
 import Header from "@/components/common/layout/Head.vue";
 import Mycard from "@/components/common/useful/Mycard.vue";
+
+import https from "@/server/https.js";
+const ipc = require("electron-better-ipc");
+const settings = require("electron-settings");
+import { DAEMON_CONFIG } from "../../../config.js";
+
+
 export default {
   data() {
     return {
       used: 3.04,
       total: 5,
       hidden: "*********************************",
-      progressPercent: ""
+      progressPercent: "",
+      walletInfo:null
+
     };
   },
+  mounted() {
+    this.getAccountInfo();
+  },
   methods: {
+     onCopy: function (e) {
+       this.$Message.info('You just copied: ' + e.text);
+      
+    },
+    onError: function (e) {
+      this.$Message.info('Failed to copy texts');
+      
+    },
     logout() {
+      settings.set('isopenfile',false)
       this.$router.push("/");
+      // console.log('8888')
+    },
+    getAccountInfo() {
+      var _this=this;
+       https.fetchget(
+            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/getWalletAddress/`
+          )
+          .then(function(res){
+            console.log(res.data.data);
+            _this.$data.walletInfo=res.data.data
+            
+            
+
+          })
+       
+     
+      
+       
+      
+      
+    },
+    openkeystore(){
+      ipc.callMain('openkeystore', {})
     }
   },
   computed: {

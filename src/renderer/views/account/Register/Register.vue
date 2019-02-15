@@ -109,7 +109,7 @@ export default {
             https
               .fetchget(
                 `http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/${
-                  param.password
+                  encodeURIComponent(param.password)
                 }/${param.name}`
               )
               .then(res => {

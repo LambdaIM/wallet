@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+const settings = require("electron-settings");
+
 Vue.use(Router)
 
 
@@ -8,6 +10,15 @@ export default new Router({
     routes: [{
         path: '/',
         name: 'Login',
+        beforeEnter: (to, from, next) => {
+            var open = settings.get('isopenfile')
+            console.log('open',open)
+            if(open){
+                next("/home")
+            }else{
+                next()
+            }
+        },
         component: () =>
             import('@/views/account/Login.vue')
     },

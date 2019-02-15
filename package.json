@@ -41,10 +41,10 @@
             ]
         },
         "mac": {
-            "icon": "build/icons/icon.icns"
+            "icon": "build/icons/512LOGO.png"
         },
         "win": {
-            "icon": "build/icons/icon.ico"
+            "icon": "build/icons/logo2.png_256x256.png"
         },
         "linux": {
             "icon": "build/icons"
@@ -62,6 +62,7 @@
         "graceful-fs": "^4.1.15",
         "irisnet-crypto": "https://github.com/irisnet/irisnet-crypto.git",
         "iview": "^3.2.0",
+        "moment": "^2.24.0",
         "object-assign": "^4.1.1",
         "protobufjs": "^6.8.8",
         "qs": "^6.6.0",
@@ -72,10 +73,12 @@
         "tendermintelectronkey": "0.0.5",
         "uuid": "^3.3.2",
         "vue": "^2.5.16",
+        "vue-clipboard2": "^0.2.1",
         "vue-electron": "^1.0.6",
         "vue-router": "^3.0.1",
         "vuex": "^3.0.1",
-        "vuex-electron": "^1.0.0"
+        "vuex-electron": "^1.0.0",
+        "web3-utils": "^1.0.0-beta.46"
     },
     "devDependencies": {
         "ajv": "^6.5.0",
