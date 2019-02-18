@@ -99,6 +99,7 @@ export default {
   methods: {
     createWallet(name) {
       // console.log('clickd');
+      var _this=this;
       this.$refs[name].validate(valid => {
         if (valid) {
           let param = {
@@ -118,7 +119,13 @@ export default {
                 this.$store.state.word = data.split(" ");
                 this.$store.state.combineWords = data;
                 this.$router.push('/success');
-              });
+              })
+              .catch(function(err){
+                _this.$Notice.warning({
+                    title: 'create Wallet fail',
+                });
+
+              }) ;
           } catch (error) {
             console.log(error);
           }

@@ -76,7 +76,7 @@ export default {
       this.$refs[name].validate(valid => {
         if (valid) {
           let param = {
-            password: this.formInline.password
+            password: encodeURIComponent(this.formInline.password)
           };
           console.log(param.password);
           let res = https.fetchget(
@@ -91,10 +91,21 @@ export default {
 
             }else{
               console.log('open fail')
+              _this.$Notice.warning({
+                    title: 'Login fail',
+                });
 
             }
 
-          });
+          })
+          .catch(function(err){
+            _this.$Notice.warning({
+                    title: 'Login fail',
+                });
+
+          })
+
+          ;
           
         }
       });
