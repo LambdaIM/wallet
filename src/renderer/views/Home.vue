@@ -10,7 +10,7 @@
             <p class="value">{{balance}} LAMB</p>
           </div>
         </Col>
-        <Col span="4" class="account-item">
+        <!-- <Col span="4" class="account-item">
           <div class="item-wrapper">
             <p class="title">Lend</p>
             <p class="value">123 LAMB</p>
@@ -33,29 +33,29 @@
             <p class="title">Interest Revenue</p>
             <p class="value">35 LAMB</p>
           </div>
-        </Col>
+        </Col> -->
       </Row>
     </div>
 
-    <MyTable title="Latest Local Transaction Records" class="mt20 mytable-container">
+    <MyTable  title="Latest Local Transaction Records" class="mt20 mytable-container">
       <div class="operation" slot="operation">
         <div class="search-wrapper">
           <Input search enter-button placeholder="Enter something..."/>
         </div>
 
-        <div class="repay-wrapper">
+        <!-- <div class="repay-wrapper">
           <Icon type="md-map" size="32" @click="openRepay()"/>
         </div>
 
         <div class="borrow-wrapper">
           <Icon type="ios-photos-outline" @click="openBorrow()" size="32"/>
-        </div>
+        </div> -->
 
         <div class="send-wrapper">
           <Icon type="md-swap" @click="openSend()" size="32"/>
         </div>
       </div>
-      <Table :columns="columns" :data="data" slot="content"></Table>
+      <Table no-data-text="no Transaction" :columns="columns" :data="data" slot="content"></Table>
     </MyTable>
 
     <div class="modal-container">
@@ -82,19 +82,19 @@
        @on-cancel="sendcancel"
       >
         <p>
-        <Input style="border: 1px solid #dcdee2" v-model="Fromvalue" readonly>
+        <Input  v-model="Fromvalue" readonly>
         <span slot="prepend">From</span>
         </Input>
         </p>
         <br/>
         <p>
-        <Input style="border: 1px solid #dcdee2" v-model="Tovalue"  placeholder="an LAMB address" >
+        <Input  v-model="Tovalue"  placeholder="an LAMB address" >
         <span slot="prepend"> To  </span>
         </Input>
         </p>
         <br/>
         <p>
-          <Input style="border: 1px solid #dcdee2" v-model="LAMBvalue">
+          <Input  v-model="LAMBvalue">
             <span slot="prepend"> Amount  </span>
             <span slot="append">LAMB</span>
           </Input>
@@ -580,4 +580,6 @@ export default {
     }
   }
 }
+
+
 </style>

@@ -20,16 +20,21 @@
             <Col span="12" class-name="content-wrapper">
               <span>{{walletInfo.address}}</span>
               
-    <button type="button"
+    <!-- <button type="button"
       v-clipboard:copy="walletInfo.address"
       v-clipboard:success="onCopy"
-      v-clipboard:error="onError">Copy!</button>
+      v-clipboard:error="onError">Copy!</button> -->
+       <Button
+       v-clipboard:copy="walletInfo.address"
+      v-clipboard:success="onCopy"
+      v-clipboard:error="onError"
+        type="primary" shape="circle" icon="ios-copy"></Button>
             </Col>
           </Row>
         </div>
       </Mycard>
 
-      <Mycard cardtitle="Storage Info" class="mb10">
+      <!-- <Mycard cardtitle="Storage Info" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
             <Col span="3" class-name="title-wrapper">
@@ -52,7 +57,7 @@
             </Col>
           </Row>
         </div>
-      </Mycard>
+      </Mycard> -->
 
       <Mycard cardtitle="Private Key Info" class="mb10">
         <div class="storage-content" slot="card-content">
@@ -83,7 +88,7 @@
         </div>
       </Mycard>
 
-      <Mycard cardtitle="Store Path for File" class="mb10">
+      <!-- <Mycard cardtitle="Store Path for File" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -103,7 +108,7 @@
             </Col>
           </Row>
         </div>
-      </Mycard>
+      </Mycard> -->
 
       <Mycard cardtitle="Version" class="mb20">
         <div class="storage-content" slot="card-content">
@@ -114,9 +119,9 @@
             <Col span="3" class-name="content-wrapper">
               <span>V0.0.1</span>
             </Col>
-            <Col span="3" class-name="content-wrapper">
+            <!-- <Col span="3" class-name="content-wrapper">
               <a>Check Version</a>
-            </Col>
+            </Col> -->
           </Row>
         </div>
       </Mycard>
