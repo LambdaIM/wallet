@@ -67,6 +67,12 @@ export default new Router({
     {
         path: '*',
         redirect: '/'
+    },
+    {
+        path: '/test',
+        name: 'test',
+        component: () =>
+            import('@/views/Test.vue')
     }
     ]
 })

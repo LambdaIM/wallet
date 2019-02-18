@@ -124,6 +124,9 @@
         
       </Modal>
     </div>
+    <div>
+       <router-link to="/test">test  </router-link>
+    </div>
 
   </div>
 </template>
