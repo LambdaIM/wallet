@@ -101,17 +101,19 @@ module.exports=function(app){
         })
 
     })
-    app.get('/ImportWalletByfile',function(req,res){
-        console.log(req.body)
+    app.get('/ImportWalletByfile/:path/',function(req,res){
+        log.info('ImportWalletByfile')
         //1 读取文件
         //2 转为json
         //3 判断是否有 name 和address
         //4 复制文件
         
         
-        var path= req.body.path;
+        var path=decodeURIComponent(req.params.path) ;
+        log.info(path)
         var v3file =fs.readFileSync(path);
         var v3file = JSON.parse(v3file);
+        log.info(v3file)
         if(v3file.address==undefined){
             return res.json({
                 data:true

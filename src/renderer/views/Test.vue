@@ -123,7 +123,21 @@ export default {
     },
     beforeUpload(file){
 
-      console.log(file);
+      
+      console.log(file.path)
+      var path=encodeURIComponent(file.path);
+
+       https.fetchget(
+            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/ImportWalletByfile/${path}/`
+          )
+          .then(function(res){
+            console.log(res)
+
+          })
+          .catch(function(err){
+            console.log(err)
+
+          })
 
       return false;
 
