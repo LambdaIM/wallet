@@ -283,6 +283,9 @@ export default {
           })
           .then(function(res){
             console.log('res',res)
+            if(res.data.data==undefined){
+              return ;
+            }
             if(res.data.data.result.response.log&&res.data.data.result.response.value==undefined){
                 // _this.$Notice.warning({
                 //     title: 'Your account was not found',

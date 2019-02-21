@@ -4,9 +4,58 @@ var Buffer = require('safe-buffer').Buffer;
 var scryptsy = require('scrypt.js');
 var ethUtil = require('ethereumjs-util');
 var uuidv4 = require('uuid/v4');
-var TenderKeys =require('tendermintelectronkey')
+var TenderKeys =require('tendermintelectronkey');
+const bcrypt = require('@webfans/bcrypt');
+const saltRounds = 12;
 
 const createKeccakHash = require('keccak');
+var nacl = require('tweetnacl')
+nacl.util = require('tweetnacl-util')
+
+var tou8 = require('buffer-to-uint8array');
+var toBuffer = require('typedarray-to-buffer');
+
+
+var crypto = require('crypto');
+
+var Amino =require('irisnet-crypto/chains/iris/amino.js')
+
+
+var encryptSymmetric = function (data, prefix, key) {
+  prefix = nacl.util.decodeUTF8(prefix)
+  var nonceLength = 24 - prefix.length
+  var randomNonce = new Uint8Array(nacl.randomBytes(nacl.secretbox.nonceLength))
+  var shortNonce = randomNonce.subarray(0, nonceLength)
+  var nonce = new Uint8Array(24)
+  nonce.set(prefix)
+  nonce.set(shortNonce, prefix.length)
+  var box = nacl.secretbox(data, nonce, key)
+  var result = new Uint8Array(nonceLength + box.length)
+  result.set(shortNonce)
+  result.set(box, nonceLength)
+  return result
+}
+
+var decryptSymmetric = function (data, prefix, key) {
+  try {
+    prefix = nacl.util.decodeUTF8(prefix)
+    var nonceLength = 24 - prefix.length
+    var shortNonce = data.subarray(0, nonceLength)
+    var nonce = new Uint8Array(24)
+    nonce.set(prefix)
+    nonce.set(shortNonce, prefix.length)
+    var result = nacl.secretbox.open(data.subarray(nonceLength), nonce, key)
+  } catch (err) {
+    return
+  }
+  return result
+}
+
+
+
+
+
+
 
 var Wallet = function (priv, pub) {
     // 为啥呢？
@@ -51,62 +100,40 @@ var Wallet = function (priv, pub) {
   // https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition
 Wallet.prototype.toV3 = function (password, opts) {
     // assert(this._privKey, 'This is a public key only wallet')
-  
-    opts = opts || {}
-    var salt = opts.salt || randomBytes(32)
-    var iv = opts.iv || randomBytes(16)
-  
-    var derivedKey
-    var kdf = opts.kdf || 'scrypt'
-    var kdfparams = {
-      dklen: opts.dklen || 32,
-      salt: salt.toString('hex')
+    if(Buffer.isBuffer(opts)){
+      console.log('need Buffer')
+      return ;
+
     }
-  
-    if (kdf === 'pbkdf2') {
-      kdfparams.c = opts.c || 262144
-      kdfparams.prf = 'hmac-sha256'
-      derivedKey = crypto.pbkdf2Sync(Buffer.from(password), salt, kdfparams.c, kdfparams.dklen, 'sha256')
-    } else if (kdf === 'scrypt') {
-      // FIXME: support progress reporting callback
-      kdfparams.n = opts.n || 262144
-      kdfparams.r = opts.r || 8
-      kdfparams.p = opts.p || 1
-      derivedKey = scryptsy(Buffer.from(password), salt, kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
-    } else {
-      throw new Error('Unsupported kdf')
-    }
-    console.log('-----')
-    console.log(opts.cipher || 'aes-128-ctr', derivedKey.slice(0, 16), iv)
+    //需要把这个函数里面的随机数提取出来
+    var usersalt = crypto.randomBytes(16);
+    var salt = bcrypt.genSaltSync(saltRounds,'a',usersalt);
+
+    var hash = bcrypt.hashSync(password, salt);
+
+    let hashs = crypto.createHash('sha256');
+        hashs.update(Buffer.from(hash));
+    let userkey = hashs.digest('hex');
+
+    var userkeyF8 =tou8(Buffer.from(userkey,'hex') ) ;
+    Amino.RegisterConcrete(null,'tendermint/PrivKeyEd25519');
+
+    var prefixPrivKey = Amino.MarshalBinary('tendermint/PrivKeyEd25519',  this._privKey);
+    var praviteFB = tou8(prefixPrivKey);
 
 
-
-    console.log('-----')
-  
-    var cipher = crypto.createCipheriv(opts.cipher || 'aes-128-ctr', derivedKey.slice(0, 16), iv)
+    var  cryptoResult = encryptSymmetric(praviteFB, '',  userkeyF8);
     
-    if (!cipher) {
-      throw new Error('Unsupported cipher')
-    }
-  
-    var ciphertext = runCipherBuffer(cipher, this._privKey)
-    console.log('-----2')
-    var mac = ethUtil.keccak256(Buffer.concat([ derivedKey.slice(16, 32), Buffer.from(ciphertext, 'hex') ]))
-    console.log('-----3')
+    
     return {
-      version: 3,
-      id: uuidv4({ random: opts.uuid || randomBytes(16) }),
       address: this.getAddress().toString('hex'),
       crypto: {
-        ciphertext: ciphertext.toString('hex'),
-        cipherparams: {
-          iv: iv.toString('hex')
-        },
-        cipher: opts.cipher || 'aes-128-ctr',
-        kdf: kdf,
-        kdfparams: kdfparams,
-        mac: mac.toString('hex')
-      }
+        text:toBuffer(cryptoResult).toString('hex'),
+        params: {
+          salt:usersalt.toString('hex') 
+        }
+      },
+      cipher:'bcrypt'
     }
   }
   
@@ -145,39 +172,50 @@ Wallet.prototype.toV3 = function (password, opts) {
   Wallet.fromV3 = function (input, password, nonStrict) {
     
     var json = (typeof input === 'object') ? input : JSON.parse(nonStrict ? input.toLowerCase() : input)
-  
-    if (json.version !== 3) {
-      throw new Error('Not a V3 wallet')
+    // {
+    //   "address": "2BFC8C8C0554102A9683C77943E15F25E74FB259",
+    //   "crypto": {
+    //     "text": "22e6fcf25938a2e86b93a5e134cf11e42d40f07910da61ac68bc107d89cb700338fa37f375a66ceb879006fa0ff97b052306aad901aed33c17da7f2382560cc0a4bd4c8f0fba4575cb4e4825e93542677f71390b287c943ab580b8c314bea6503995a29b215e8687809c4d2644",
+    //     "params": {
+    //       "salt": "a0b1e2a01b216d1ef0fbffa61d359db1"
+    //     }
+    //   },
+    //   "cipher": "bcrypt"
+    // }
+    var usersalt,msghex;
+    try{
+      usersalt = json.crypto.params.salt;
+       msghex = json.crypto.text;
+
     }
-  
-    var derivedKey
-    var kdfparams
-    if (json.crypto.kdf === 'scrypt') {
-      kdfparams = json.crypto.kdfparams
-  
-      // FIXME: support progress reporting callback
-      derivedKey = scryptsy(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.n, kdfparams.r, kdfparams.p, kdfparams.dklen)
-    } else if (json.crypto.kdf === 'pbkdf2') {
-      kdfparams = json.crypto.kdfparams
-  
-      if (kdfparams.prf !== 'hmac-sha256') {
-        throw new Error('Unsupported parameters to PBKDF2')
-      }
-  
-      derivedKey = crypto.pbkdf2Sync(Buffer.from(password), Buffer.from(kdfparams.salt, 'hex'), kdfparams.c, kdfparams.dklen, 'sha256')
-    } else {
-      throw new Error('Unsupported key derivation scheme')
+    catch(ex){
+     console.log(ex)
+
     }
-  
-    var ciphertext = Buffer.from(json.crypto.ciphertext, 'hex')
-  
-    var mac = ethUtil.keccak256(Buffer.concat([ derivedKey.slice(16, 32), ciphertext ]))
-    if (mac.toString('hex') !== json.crypto.mac) {
-      throw new Error('Key derivation failed - possibly wrong passphrase')
+    if(usersalt==undefined||msghex==undefined){
+      return ;
     }
-  
-    var decipher = crypto.createDecipheriv(json.crypto.cipher, derivedKey.slice(0, 16), Buffer.from(json.crypto.cipherparams.iv, 'hex'))
-    var seed = runCipherBuffer(decipher, ciphertext)
+    
+
+    var salt = bcrypt.genSaltSync(saltRounds,'a',Buffer.from(usersalt,'hex') );
+
+    var hash = bcrypt.hashSync(password, salt);
+
+    let hashs = crypto.createHash('sha256');
+        hashs.update(Buffer.from(hash));
+    let userkey = hashs.digest('hex');
+
+    var userkeyF8 =tou8(Buffer.from(userkey,'hex') ) ;
+    var msghexF8 =tou8(Buffer.from(msghex,'hex') ) ;
+    var seed = decryptSymmetric(msghexF8,'', userkeyF8)
+    seed = toBuffer(seed);
+    Amino.RegisterConcrete(null,'tendermint/PrivKeyEd25519');
+
+    var seed = Amino.unMarshalBinary('tendermint/PrivKeyEd25519',  seed);
+
+
+    
+    
     
   
     return new Wallet(seed)
@@ -185,3 +223,4 @@ Wallet.prototype.toV3 = function (password, opts) {
   
 
   module.exports = Wallet
+  
