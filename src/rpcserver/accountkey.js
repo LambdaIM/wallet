@@ -16,10 +16,7 @@ module.exports=function(app){
         var keyPair  = tenderKeys.generateKeyPair(seed);
         
         var address  = tenderKeys.getAddressFromPubKey(keyPair.publicKey.toString('hex'));
-        var result={
-            mnemonic,
-            address
-        }
+        
         password=decodeURIComponent(password);
 
         var wallet =new ETHwallet(keyPair.privateKey);
@@ -69,6 +66,46 @@ module.exports=function(app){
         res.json({
             data:info
         })	
+
+    })
+
+    app.get('/ImportWalletByfile/:path/:name/:password',function(req,res){
+        log.info('ImportWalletByfile')
+        
+        
+        var path=decodeURIComponent(req.params.path) ;
+        var name=decodeURIComponent(req.params.name) ;
+        var password=decodeURIComponent(req.params.password) ;
+
+        log.info(path)
+        var v3file =fs.readFileSync(path,'utf-8');
+        var wallet; 
+        try{
+            log.info(v3file);
+             wallet = ETHwallet.fromV3(v3file,password);
+            
+
+        }catch(ex){
+            wallet=null;
+
+        }
+        if(wallet==null){
+            res.json({
+                data:'Exceptional file format or incorrect wallet password',
+                state:false
+            })
+            return ;
+        }
+        
+        var targetpath= DAEMON_CONFIG.BASE_PATH+'/v3file.json';
+        var readStream = fs.createReadStream(path);
+        var writeStream = fs.createWriteStream(targetpath);
+        readStream.pipe(writeStream);
+
+        res.json({
+            data:'Import wallet successfully',
+            state:true
+        })
 
     })
   

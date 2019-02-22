@@ -12,9 +12,9 @@
       </div>
       <div class="trans-button-wrapper">
         <div class="trans-button-container">
-          <button @click="transWays()" class="btn trans-button">
+          <button  class="btn trans-button">
             {{way}}
-            <Icon type="ios-arrow-forward"/>
+            <!-- <Icon type="ios-arrow-forward"/> -->
           </button>
         </div>
       </div>
@@ -26,11 +26,11 @@
         class="form-container"
         v-if="show==true"
       >
-        <FormItem prop="key">
+        <!-- <FormItem prop="key">
           <Input type="text" v-model="formInline.user" placeholder="Paste Private Key Here">
             <Icon type="ios-person-outline" slot="prepend"></Icon>
           </Input>
-        </FormItem>
+        </FormItem> -->
 
         <FormItem prop="user">
           <Input type="text" v-model="formInline.user" placeholder="Name Your Wallet">
@@ -67,13 +67,14 @@
         v-if="show==false"
       >
         <FormItem prop="key">
-          <Upload multiple action="//jsonplaceholder.typicode.com/posts/">
+          <Upload :before-upload="beforeUpload" :default-file-list="walletfile" action="" >
             <Button class="btn upload-button" icon="ios-cloud-upload-outline">Choose Wallet Files</Button>
           </Upload>
+          
         </FormItem>
 
         <FormItem prop="password">
-          <Input type="password" v-model="formInline.password" placeholder="Old password">
+          <Input type="password" v-model="formInline.password" placeholder="Password">
             <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
@@ -99,11 +100,16 @@
 </template>
 
 <script>
+import { DAEMON_CONFIG } from "../../../config.js";
+const ipc = require("electron-better-ipc");
+import https from "@/server/https.js";
+const settings = require("electron-settings");
 export default {
   data() {
     return {
-      show: true,
-      way: "By Private Key",
+      show: false,
+      way: "By Pravate Key store file ",
+
       formInline: {
         user: "",
         password: ""
@@ -134,18 +140,51 @@ export default {
             validator: this.validateConfirmPass,
             trigger: "blur"
           }
-        ]
-      }
+        ] 
+      },
+      walletfile:[
+                    
+                ]
     };
   },
   methods: {
     handleSubmit(name) {
-      this.$router.push("/home");
+      // this.$router.push("/home");
+      if(this.$data.walletfile.length==0){
+          this.$Message.info('need select  Key store file ');
+        return 
+      }
+      this.$refs[name].validate((valid)=>{
+        if(valid){
+            var path=encodeURIComponent(this.$data.walletfile[0].url);
+            var walletName=encodeURIComponent(this.$data.formInline.user) ;
+            var password=encodeURIComponent(this.$data.formInline.password) ;
+
+            https.fetchget(
+                  `http://localhost:${DAEMON_CONFIG.RPC_PORT}/ImportWalletByfile/${path}/${walletName}/${password}/`
+                )
+                .then((res)=>{
+                  console.log(res)
+                  if(res.data.state==true){
+                    this.$Message.info('Import wallet successfully');
+                    settings.set('isopenfile',true)
+                    this.$router.push("/home");
+                  }else{
+                    this.$Message.info('Exceptional file format or incorrect wallet password');
+                  }
+
+                })
+                .catch((err)=>{
+                  this.$Message.info('Exceptional file format or incorrect wallet password');
+                })
+              }
+
+      })
     },
     transWays() {
       this.show = !this.show;
       if (this.show == false) {
-        this.way = "By Pravate Key";
+        this.way = "By Pravate Key store file ";
       } else {
         this.way = "By Mnemonic Words";
       }
@@ -168,6 +207,16 @@ export default {
       } else {
         callback();
       }
+    },
+    beforeUpload(file){  
+      console.log(file.path)
+
+      this.$data.walletfile=[{
+                        name: file.name,
+                        url: file.path
+                    }];
+
+       return false;
     }
   }
 };
