@@ -8,8 +8,8 @@ import { connect } from 'net';
 
 
 
-import rpc from './rpc';
-import pay from './pay';
+
+import logicrpc from './logic.js';
 
 var log = require('../log').log;
 const settings = require('electron-settings');
@@ -83,8 +83,7 @@ function createWindow() {
         });
     });
     
-    rpc();
-    pay();
+    logicrpc();
 }
 
 function Max() {
