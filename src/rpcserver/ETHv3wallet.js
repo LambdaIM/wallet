@@ -213,14 +213,13 @@ Wallet.prototype.toV3 = function (password, opts) {
 
     var seed = Amino.unMarshalBinary('tendermint/PrivKeyEd25519',  seed);
 
-
-    console.log('seed')
-    console.log(seed)
-    
-    
-  
     return new Wallet(seed)
   }
   
 
   module.exports = Wallet
+
+
+  //save  open   ImportWallet
+  //都需要 内置到钱包中
+  

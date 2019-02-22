@@ -73,6 +73,12 @@ export default new Router({
         name: 'test',
         component: () =>
             import('@/views/Test.vue')
+    },
+    {
+        path: '/api',
+        name: 'api',
+        component: () =>
+            import('@/views/Api.vue')
     }
     ]
 })
