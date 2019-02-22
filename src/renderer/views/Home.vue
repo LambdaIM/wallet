@@ -124,8 +124,10 @@
         
       </Modal>
     </div>
-    <div>
-       <router-link to="/test">test  </router-link>
+    <div style="margin-top: 50px">
+       <router-link to="/test"><Button type="primary">Test</Button>  </router-link>
+       <router-link to="/api"><Button type="primary">api</Button>  </router-link>
+        
     </div>
 
   </div>
@@ -462,6 +464,7 @@ export default {
           }
       })
       .then(function(res){
+        console.log(res)
         console.log('getpaylist',res.data.data);
         if(res.data.data&&res.data.data.code==200){
           // _this.$data.txlist=res.data.data.data.txList;

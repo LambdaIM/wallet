@@ -5,10 +5,12 @@
     <div class="account-info-container">
       <button @click="importtest">测试导入钱包的函数</button>
       <button @click="openwallet">打开创建的钱包</button>
-      <button @click="openImportWalletwallet">打开导入的钱包</button>
+      <button @click="openImportWalletwallet">导入的钱包!!!!!</button>
+      <button @click="sanwallet">扫描钱包</button>
+      <button @click="getwalletlist">钱包列表</button>
       <div>
          
-         <Upload :before-upload="beforeUpload">
+         <Upload :before-upload="beforeUpload" acion="">
             <Button icon="ios-cloud-upload-outline">上传key store文件 </Button>
         </Upload>
       </div>
@@ -34,7 +36,8 @@ import * as Utils from 'web3-utils';
 export default {
   data() {
     return {
-      uploadFile:`http://localhost:${DAEMON_CONFIG.RPC_PORT}/ImportWallet/`
+      uploadFile:`http://localhost:${DAEMON_CONFIG.RPC_PORT}/ImportWallet/`,
+      selectwalletFile:''
 
     };
   },
@@ -59,7 +62,7 @@ export default {
       var mnemonic=encodeURIComponent('sorry opinion city view misery physical eyebrow hunt gift tragic apology empty');
 
        https.fetchget(
-            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/ImportWallet/${password}/${name}/${mnemonic}/`
+            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/ImportWalletByMnemonic/${password}/${name}/${mnemonic}/`
           )
           .then(function(res){
             console.log(res)
@@ -97,11 +100,14 @@ export default {
     openImportWalletwallet(){
       var _this=this;
       //ImportWallet/:password/:name/:mnemonic
-      var password=encodeURIComponent('qq123456');
-      
+      var password=encodeURIComponent('123456');
+      var name=encodeURIComponent("新导入的钱包");
+      var path=encodeURIComponent(this.$data.selectwalletFile);
+
+
 
        https.fetchget(
-            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/openImportWallet/${password}/`
+            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/ImportWalletByfile/${path}/${name}/${password}`
           )
           .then(function(res){
             console.log(res)
@@ -126,9 +132,26 @@ export default {
       
       console.log(file.path)
       var path=encodeURIComponent(file.path);
+      this.$data.selectwalletFile=path;
 
-       https.fetchget(
-            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/ImportWalletByfile/${path}/`
+      //  https.fetchget(
+      //       `http://localhost:${DAEMON_CONFIG.RPC_PORT}/ImportWalletByfile/${path}/`
+      //     )
+      //     .then(function(res){
+      //       console.log(res)
+
+      //     })
+      //     .catch(function(err){
+      //       console.log(err)
+
+      //     })
+
+      return false;
+
+    },
+    sanwallet(){
+      https.fetchget(
+            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/test/`
           )
           .then(function(res){
             console.log(res)
@@ -139,7 +162,20 @@ export default {
 
           })
 
-      return false;
+    },
+    getwalletlist(){
+      https.fetchget(
+            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/walletlist/`
+          )
+          .then(function(res){
+            console.log(res)
+            
+
+          })
+          .catch(function(err){
+            console.log(err)
+
+          })
 
     }
   },

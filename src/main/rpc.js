@@ -3,9 +3,11 @@ const axios =require('axios');
 var protobuf = require("protobufjs");
 const path = require('path');
 const { shell } = require('electron');
-var {DAEMON_CONFIG} =require('../config.js')
+var {DAEMON_CONFIG} =require('../configmain.js')
+var fs = require('graceful-fs')
 
 var log = require('../log').log;
+
 
 
  export default function(){
@@ -69,6 +71,31 @@ var log = require('../log').log;
     
           
     });
+    eipc.answerRenderer('getwalletList',async(query)=>{
+        var walletList = [];
+        console.log('getwalletList');
+        
+        if(fs.existsSync(DAEMON_CONFIG.WalletFile)==false) {
+            fs.mkdirSync(DAEMON_CONFIG.WalletFile);
+        }
+        
+        var list = fs.readdirSync(DAEMON_CONFIG.WalletFile);
+        
+        list.forEach(function(file,index) {
+            file = DAEMON_CONFIG.WalletFile + '/' + file;
+            var v3file =fs.readFileSync(file);
+            var v3file = JSON.parse(v3file);
+            walletList.push({
+                name:v3file.name,
+                address:v3file.address,
+                file:file
+            })
+        })
+        console.log(walletList)
+        return {data:walletList,state:true} ;
+
+
+    })
     
 
 

@@ -18,6 +18,7 @@
 
           <div class="button-wrapper">
             <button class="btn login-button"    @click="openWallet('formInline')">Login</button>
+            <button class="btn login-button"    @click="getwalletList">Login1</button>
           </div>
 
           <div class="bottom-wrapper tc">
@@ -69,6 +70,7 @@ export default {
     if(open){
       this.$router.push("/home");
     }
+    this.getwalletList();
   },
   methods: {
     openWallet(name) {
@@ -98,6 +100,19 @@ export default {
           
         }
       });
+    },
+    getwalletList(){
+      console.log('- -')
+    
+      ipc.callMain('getwalletList',{})
+      .then((data)=>{
+        console.log(data);
+      })
+      .catch((err)=>{
+        console.log('err');
+        console.log(err);
+      })
+
     }
   }
 };
