@@ -119,7 +119,7 @@
           </Input>
         </p>
         <div slot="footer">
-            <Button type="primary" @click="sendLAMBTx">Submit</Button>
+            <Button :loading="loadingsendLAMBTx" type="primary" @click="sendLAMBTx">Submit</Button>
         </div>
         
       </Modal>
@@ -209,7 +209,8 @@ export default {
       passwordModal:false,
       walletPassword:null,
       txlist:[],
-      Interval:null
+      Interval:null,
+      loadingsendLAMBTx:false
     };
   },
   components: {
@@ -353,7 +354,7 @@ export default {
 
 
 
-
+      
       ipc.callMain('pay', {
         to:to,
         amount:value
@@ -361,7 +362,10 @@ export default {
       .then(function(data){
         console.log(data)
         _this.sendcancel()
+        _this.$data.loadingsendLAMBTx=false;
         _this.$data.passwordModal=true;
+        
+        
 
         
 
@@ -388,6 +392,7 @@ export default {
       if(this.$data.walletPassword==null){
         return ; 
       }
+      this.$data.loadingsendLAMBTx=true;
       ipc.callMain('Wallettransfer', {
           'password':encodeURIComponent(this.$data.walletPassword),
           'txdata':{}
@@ -395,7 +400,9 @@ export default {
       .then(function(data){
         
         if(data.state==false){
+          _this.$data.loadingsendLAMBTx=false;
           if(data.code =='1001'){
+            
             _this.$Notice.error({
                     title: 'Please check your password.'
                 });
@@ -412,6 +419,7 @@ export default {
         }
         if(data.data.data.result.check_tx.log==undefined){
           console.log('ok')
+          _this.$data.passwordModal=false;
           _this.$data.walletPassword='';
           _this.$Notice.success({
                     title: 'Transaction success',
@@ -420,6 +428,7 @@ export default {
           _this.getAccountInfo();
 
         }else{
+          _this.$data.loadingsendLAMBTx=false;
           console.log('fail')
              _this.$Notice.error({
                     title: 'Transaction error',
@@ -454,7 +463,7 @@ export default {
       }
       var _this=this;
       ipc.callMain('httpget', {
-          'url':'http://explorer.lambda.im/api/tx/getTxAccountList',
+          'url':DAEMON_CONFIG.explorer+'api/tx/getTxAccountList',
           'data':{
             accountHash:address,
             pageNum:1,

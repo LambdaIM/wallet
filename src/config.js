@@ -12,5 +12,8 @@ let BASE_PATH = path.join(os.homedir(), 'lambWallet');
 
 module.exports.DAEMON_CONFIG  = {
     RPC_PORT:8084,
-    BASE_PATH:BASE_PATH
+    BASE_PATH:BASE_PATH,
+    explorer:'http://explorer.lambda.im/'
+    
+
 };
