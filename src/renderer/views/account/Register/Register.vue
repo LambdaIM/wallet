@@ -2,7 +2,7 @@
   <div class="container">
     <Mybg>
       <div class="register-container" slot="content">
-        <div class="register-wrapper">
+        <div class="register-wrapper" @keyup.enter="createWallet('formInline')">
           <div class="form-title">
             <div class="title-wrapper">
               <p class="title">Create Lambda Wallet</p>
@@ -38,7 +38,7 @@
           </Form>
 
           <div class="button-wrapper">
-            <button class="btn login-button" @click="createWallet('formInline')">Create</button>
+            <button class="btn login-button"  @click="createWallet('formInline')">Create</button>
           </div>
 
           <div class="bottom-wrapper tc">

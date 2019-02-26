@@ -17,7 +17,7 @@
           </Form>
 
           <div class="button-wrapper">
-            <button class="btn login-button"    @click="openWallet('formInline')">Login</button>
+            <button class="btn login-button" @keyup.enter="openWallet('formInline')"   @click="openWallet('formInline')">Login</button>
           </div>
 
           <div class="bottom-wrapper tc">

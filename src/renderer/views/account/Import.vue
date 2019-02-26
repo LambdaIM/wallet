@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" @keyup.enter="handleSubmit('formInline')">
     <div class="logo-wrapper">
       <img class="logo" src="../../assets/img/logo.png" alt>
     </div>
