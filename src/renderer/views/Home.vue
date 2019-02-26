@@ -223,7 +223,7 @@ export default {
     var _this=this;
     this.$data.Interval = setInterval(function(){
       _this.getAccountInfo();
-    },1000*20)
+    },1000*10)
     
   },
   beforeDestroy(){
