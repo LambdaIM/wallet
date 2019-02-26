@@ -25,7 +25,7 @@ import Amino  from 'irisnet-crypto/chains/iris/amino.js'
 
  function getAccountInfo(){
     
-    var path= DAEMON_CONFIG.BASE_PATH+'/v3file.json'
+    var path= DAEMON_CONFIG.BASE_PATH+'/lambda.keyinfo'
     var v3file =fs.readFileSync(path);
     var v3file = JSON.parse(v3file);
     var address = v3file.address;
@@ -131,7 +131,7 @@ export default function(){
 
     eipc.answerRenderer('Wallettransfer',async(query)=>{
       log.info('Wallettransfer')
-      var path= DAEMON_CONFIG.BASE_PATH+'/v3file.json'
+      var path= DAEMON_CONFIG.BASE_PATH+'/lambda.keyinfo'
       var v3file =fs.readFileSync(path,'utf8');
       try {
         var password = query.password;

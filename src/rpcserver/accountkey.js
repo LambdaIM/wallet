@@ -24,7 +24,7 @@ module.exports=function(app){
         walletjson.name=name;
         
         
-        var path= DAEMON_CONFIG.BASE_PATH+'/v3file.json'
+        var path= DAEMON_CONFIG.BASE_PATH+'/lambda.keyinfo'
         if(fs.existsSync(DAEMON_CONFIG.BASE_PATH)==false) {
                 fs.mkdirSync(DAEMON_CONFIG.BASE_PATH);
         }
@@ -37,7 +37,7 @@ module.exports=function(app){
     })
     app.get('/getWalletAddress',function(req,res){
         log.info('getWalletAddress');
-        var path= DAEMON_CONFIG.BASE_PATH+'/v3file.json'
+        var path= DAEMON_CONFIG.BASE_PATH+'/lambda.keyinfo'
         var v3file =fs.readFileSync(path);
         var v3file = JSON.parse(v3file);
 
@@ -50,7 +50,7 @@ module.exports=function(app){
     app.get('/openWallet/:password',function(req,res){
         log.info('openWallet');
         var password = req.params.password;
-        var path= DAEMON_CONFIG.BASE_PATH+'/v3file.json';
+        var path= DAEMON_CONFIG.BASE_PATH+'/lambda.keyinfo';
         var v3file =fs.readFileSync(path,'utf8');
 
         
@@ -97,7 +97,7 @@ module.exports=function(app){
             return ;
         }
         
-        var targetpath= DAEMON_CONFIG.BASE_PATH+'/v3file.json';
+        var targetpath= DAEMON_CONFIG.BASE_PATH+'/lambda.keyinfo';
         var readStream = fs.createReadStream(path);
         var writeStream = fs.createWriteStream(targetpath);
         readStream.pipe(writeStream);

@@ -39,9 +39,9 @@
 
     <MyTable  title="Latest Local Transaction Records" class="mt20 mytable-container">
       <div class="operation" slot="operation">
-        <div class="search-wrapper">
+        <!-- <div class="search-wrapper">
           <Input search enter-button placeholder="Enter something..."/>
-        </div>
+        </div> -->
 
         <!-- <div class="repay-wrapper">
           <Icon type="md-map" size="32" @click="openRepay()"/>
@@ -52,7 +52,8 @@
         </div> -->
 
         <div class="send-wrapper">
-          <Icon type="md-swap" @click="openSend()" size="32"/>
+          <!-- <Icon type="md-swap" @click="openSend()" size="32"/> -->
+          <Button @click="openSend()" icon="md-swap">Transfer</Button>
         </div>
       </div>
       <Table no-data-text="no Transaction" :columns="columns" :data="data" slot="content"></Table>
@@ -453,6 +454,7 @@ export default {
 
       }
       function showaddress(address1,address2){
+        
         if(address1.toUpperCase()==address.toUpperCase()){
           return 'to  '+address2;
           
