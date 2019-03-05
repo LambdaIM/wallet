@@ -56,7 +56,8 @@ module.exports=function(app){
     app.get('/openWallet/:password',function(req,res){
         log.info('openWallet');
         var password = req.params.password;
-        var path= DAEMON_CONFIG.BASE_PATH+'/v3file.json';
+        var path= DAEMON_CONFIG.BASE_PATH+'\\v3file.json';
+        log.info(path);
         var v3file =fs.readFileSync(path,'utf8');
 
         

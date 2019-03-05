@@ -9,16 +9,31 @@
             </div>
           </div>
           <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
+            <FormItem prop="name">
+              <Select v-model="value" clearable size="large">
+                <Option
+                  v-for="(item,index) in walletList"
+                  :value="item.name"
+                  :key="item.index"
+                >{{ item.name}}</Option>
+              </Select>
+            </FormItem>
+
             <FormItem prop="password">
-              <Input type="password" v-model="formInline.password" placeholder="Password" @on-enter="openWallet('formInline')">
+              <Input
+                type="password"
+                v-model="formInline.password"
+                placeholder="Password"
+                @on-enter="openWallet('formInline')"
+              >
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
               </Input>
             </FormItem>
           </Form>
 
           <div class="button-wrapper">
-            <button class="btn login-button"    @click="openWallet('formInline')">Login</button>
-            <button class="btn login-button"    @click="getwalletList">Login1</button>
+            <button class="btn login-button" @click="openWallet('formInline')">Login</button>
+            <!-- <button class="btn login-button"    @click="getwalletList">Login1</button> -->
           </div>
 
           <div class="bottom-wrapper tc">
@@ -59,60 +74,61 @@ export default {
             trigger: "blur"
           }
         ]
-      }
+      },
+      walletList: [],
+      name: "",
+      value: null
     };
   },
   components: {
     Mybg
   },
   mounted() {
-    var open = settings.get('isopenfile')
-    if(open){
+    var open = settings.get("isopenfile");
+    if (open) {
       this.$router.push("/home");
     }
     this.getwalletList();
   },
   methods: {
     openWallet(name) {
-      var _this=this;
+      var _this = this;
       this.$refs[name].validate(valid => {
         if (valid) {
           let param = {
-            password: encodeURIComponent(this.formInline.password) 
+            password: encodeURIComponent(this.formInline.password)
           };
           console.log(param.password);
-          let res = https.fetchget(
-            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/openWallet/${
-              param.password
-            }`
-          ).then(function(data){
-            if(data.data&&data.data.data&&data.data.data.publicKey){
-              settings.set('isopenfile',true)
-              _this.$router.push("/home");
-              
-
-            }else{
-              console.log('open fail')
-
-            }
-
-          });
-          
+          https
+            .fetchget(
+              `http://localhost:${DAEMON_CONFIG.RPC_PORT}/openWallet/${
+                param.password
+              }`
+            )
+            .then(function(data) {
+              console.log(data);
+              // if (data.data && data.data.data && data.data.data.publicKey) {
+              //   settings.set("isopenfile", true);
+              //   _this.$router.push("/home");
+              // } else {
+              //   console.log("open fail");
+              // }
+            });
         }
       });
     },
-    getwalletList(){
-      console.log('- -')
-    
-      ipc.callMain('getwalletList',{})
-      .then((data)=>{
-        console.log(data);
-      })
-      .catch((err)=>{
-        console.log('err');
-        console.log(err);
-      })
-
+    getwalletList() {
+      // console.log("- -");
+      ipc
+        .callMain("getwalletList", {})
+        .then(res => {
+          console.log(res.data);
+          this.walletList = res.data;
+        })
+        .catch(err => {
+          console.log("err");
+          console.log(err);
+        });
     }
   }
 };

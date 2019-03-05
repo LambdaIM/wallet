@@ -255,7 +255,6 @@ export default {
             console.log(res.data.data);
             if(res.data.data){
               return res.data.data;
-
             }else{
               return null
             }

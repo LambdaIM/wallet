@@ -59,7 +59,7 @@ walletManger.prototype.scann=function(){
     var list = fs.readdirSync(dir);
 
     list.forEach((file)=>{
-        file = dir + '/' + file
+        file = dir + '//' + file
         
         var v3file =fs.readFileSync(file,'utf8');
         try{

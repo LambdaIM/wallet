@@ -21,7 +21,10 @@
           </div>
 
           <div class="head-menu-item overtext">
-            <router-link to="/settings" class="item"><Icon  style="    display: inline;" type="md-settings" size="30"/>{{address}}</router-link>
+            <router-link to="/settings" class="item">
+              <Icon style="display: inline;" type="md-settings" size="30"/>
+              {{address}}
+            </router-link>
           </div>
         </div>
       </Col>
@@ -32,11 +35,10 @@
 <script>
 export default {
   computed: {
-    address:function(){
-      
+    address: function() {
       return this.$store.getters.getaddress;
     }
-  },
+  }
 };
 </script>
 
@@ -60,7 +62,7 @@ export default {
         height: 100%;
         justify-content: space-around;
         align-items: center;
-        .overtext{
+        .overtext {
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
