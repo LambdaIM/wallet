@@ -59,7 +59,11 @@ walletManger.prototype.scann=function(){
     var list = fs.readdirSync(dir);
 
     list.forEach((file)=>{
+<<<<<<< HEAD
         file = dir + '//' + file
+=======
+        file =path.join( dir , file);
+>>>>>>> 58ca329b28c5deb931d7872f65d7ddf107d0a344
         
         var v3file =fs.readFileSync(file,'utf8');
         try{
@@ -189,9 +193,9 @@ walletManger.prototype.generateWallet=function(mnemonic,password,name){
     var walletjson = wallet.toV3(password)
     walletjson.name=name;
     
-    var path= DAEMON_CONFIG.WalletFile+'/'+ wallet.getV3Filename()+'.json';
+    var filepath= path.join( DAEMON_CONFIG.WalletFile, wallet.getV3Filename()+'.json');
     
-    var result = fs.writeFileSync(path,JSON.stringify(walletjson))    
+    var result = fs.writeFileSync(filepath,JSON.stringify(walletjson))    
     this.scann();
     return  {
         mnemonic:mnemonic,
@@ -207,7 +211,7 @@ walletManger.prototype.deleteWallet=function(address){
     var list = fs.readdirSync(dir);
     
     list.forEach((file)=>{
-         var filepath = dir + '/' + file
+         var filepath = path.join(dir , file);
         try{
             if(file.indexOf(address)>0){
                 result=fs.unlinkSync(filepath); 
@@ -234,7 +238,7 @@ walletManger.prototype.ImportWalletBykeyStore=function(filepath,password,name){
     v3file.name = name;
 
     wallet = ETHwallet.fromV3(v3file,password);
-    var targetpath= DAEMON_CONFIG.WalletFile+'/'+ wallet.getV3Filename()+'.json';
+    var targetpath=path.join( DAEMON_CONFIG.WalletFile, wallet.getV3Filename()+'.json');
     fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8')
     
     return true;    
