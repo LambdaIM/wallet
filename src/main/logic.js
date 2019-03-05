@@ -9,8 +9,14 @@ import transactionrpc from './transactionrpc';
 
 function creatDir(){
     
+    if(fs.existsSync(DAEMON_CONFIG.BASE_PATH)==false) {
+        fs.mkdirSync(DAEMON_CONFIG.BASE_PATH);
+    }
     if(fs.existsSync(DAEMON_CONFIG.WalletFile)==false) {
         fs.mkdirSync(DAEMON_CONFIG.WalletFile);
+    }
+    if(fs.existsSync(DAEMON_CONFIG.LogFile)==false) {
+        fs.mkdirSync(DAEMON_CONFIG.LogFile);
     }
 }
 
