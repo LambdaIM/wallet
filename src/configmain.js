@@ -13,8 +13,8 @@ let BASE_PATH = path.join(os.homedir(), 'lambWallet');
 module.exports.DAEMON_CONFIG  = {
     RPC_PORT:8084,
     BASE_PATH:BASE_PATH,
-    WalletFile:BASE_PATH+'/Wallet',
-    LogFile:BASE_PATH+'/Log',
+    WalletFile:path.join( BASE_PATH,'Wallet'),
+    LogFile:path.join(BASE_PATH,'Log'),
     LambdaNetwork:'http://39.105.156.36:13657/',
     LambdaExtenNetwork:'http://39.105.156.36:13659/',
                   //http://39.105.156.36:13657/getTransactionByHash?hash=
