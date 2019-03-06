@@ -93,17 +93,15 @@ function Max() {
 
 
 function creatSeting(){
-    settings.set('user', {
-        node: 'http://39.97.129.59:13657/'
-      });
+    
 
-    // if(settings.has('user.node')==false){
-    //     //http://18.136.176.184:13657/abci_query
-    //     settings.set('user', {
-    //         node: 'http://39.97.129.59:13657/'
-    //       });
+    if(settings.has('user.node')==false){
+        //http://18.136.176.184:13657/abci_query
+        settings.set('user', {
+            node: 'http://39.97.129.59:13657/'
+          });
 
-    // }
+    }
     
 }
 

@@ -1,7 +1,16 @@
 <template>
-  <div class="customer-container">
-    <!-- <Header/> -->
-    <div class="setting-wrapper">
+  <div class="customer-container">  
+  <div class="setting-wrapper">
+      <div style="margin: 6px">
+        
+        <Input @on-search="changeValidatorIP" v-model="ValidatorIP" search enter-button="submit" >
+            <span slot="prepend">Validator Url</span>
+          </Input>
+        
+    </div>
+
+ 
+    
       <Mycard v-if="node_info.length>0" cardtitle="Node info" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row v-for="item in node_info" class-name="card-item">
@@ -22,6 +31,8 @@
             </Col>
             <Col span="12" class-name="content-wrapper">
               <span>{{item[1]}}</span>
+              <span style="color:red" v-if="item[0]=='catching_up'&&item[1]==true">Syncing blocks....</span>
+
             </Col>
           </Row>
         </div>
@@ -54,13 +65,17 @@ const settings = require("electron-settings");
 export default {
   data() {
     return {
-      node_info: [],
-      sync_info: [],
-      validator_info: []
+      node_info:[],
+      sync_info:[],
+      validator_info:[],
+      ValidatorIP:''
+
+
     };
   },
   mounted() {
     this.getdata();
+    this.$data.ValidatorIP=settings.get("user.node");
   },
   methods: {
     getdata() {
@@ -70,23 +85,78 @@ export default {
         data: {}
       };
       var _this = this;
+            
+       ipc.callMain("httpget", pra)
+       .then(function(res){
+         console.log(res)
+         if(res.state&&res.data.data.result){
+           _this.dataFormat(res)
+           
 
-      ipc
-        .callMain("httpget", pra)
-        .then(function(res) {
-          console.log(res);
-          if (res.state && res.data.data.result) {
-            _this.$data.node_info = _.pairs(res.data.data.result.node_info);
-            _this.$data.sync_info = _.pairs(res.data.data.result.sync_info);
-            _this.$data.validator_info = _.pairs(
-              res.data.data.result.validator_info
-            );
-          }
-        })
-        .catch(function(err) {
-          console.log(err);
-        });
+         }
+
+       })
+       .catch(function(err){
+         console.log(err)
+
+       })
+
+    },
+    changeValidatorIP(){
+      console.log('changeValidatorIP')
+      //http://39.97.129.59:13657/
+      //http://39.107.96.241:13657/
+      //http://39.105.77.119:13657/
+      
+      
+
+      var nodeBaseUrl =this.$data.ValidatorIP;
+      var pra = {
+              url:nodeBaseUrl +"status",
+              data: {}
+            };
+      var _this=this;
+            
+       ipc.callMain("httpget", pra)
+       .then(function(res){
+         console.log(res)
+         if(res.state&&res.data.data.result){
+           _this.dataFormat(res)
+           settings.set('user', {
+                              node: nodeBaseUrl
+                            });
+
+          _this.$Notice.success({
+                    title: 'Switching Validator success',      
+              });
+           
+
+         }else{
+           _this.$Notice.error({
+                    title: 'Switching Validator fail',
+                    
+                });
+         }
+
+       })
+       .catch(function(err){
+           _this.$Notice.error({
+                    title: 'Switching Validator fail',
+                    
+                });
+
+       })
+
+    },
+    dataFormat(res){
+          this.$data.node_info=_.pairs(res.data.data.result.node_info);
+          this.$data.sync_info=_.pairs(res.data.data.result.sync_info);
+          this.$data.validator_info=_.pairs(res.data.data.result.validator_info);
     }
+  },
+  computed: {
+    
+    
   },
   components: {
     // Header,

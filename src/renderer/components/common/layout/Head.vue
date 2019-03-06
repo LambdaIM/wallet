@@ -18,6 +18,7 @@
           </div>
           <div class="head-menu-item">
             <router-link to="/validator" class="item">Validator</router-link>
+            <!-- ios-checkmark  ios-loading -->
           </div>
 
           <div class="head-menu-item overtext">

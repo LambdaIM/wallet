@@ -412,27 +412,42 @@ export default {
 
             return;
           }
-          if (data.data.data.result.check_tx.log == undefined) {
-            console.log("ok");
-            _this.$data.passwordModal = false;
-            _this.$data.walletPassword = "";
-            _this.$Notice.success({
-              title: "Transaction success",
-              desc: "Transaction hash  <br/>" + data.data.data.result.hash
-            });
-            _this.getAccountInfo();
-          } else {
-            _this.$data.loadingsendLAMBTx = false;
-            console.log("fail");
-            _this.$Notice.error({
-              title: "Transaction error",
-              desc: data.data.data.result.check_tx.log
-            });
-          }
-        })
-        .catch(function(err) {
-          console.log(err);
-        });
+          
+          
+        
+        if(data.data.data.error){
+          _this.$Notice.error({
+                    title: data.data.data.error.message,
+                    desc: data.data.data.error.data
+                });
+          return ;
+        }
+
+        if(data.data.data.result.check_tx.log==undefined){
+          console.log('ok')
+          _this.$data.passwordModal=false;
+          _this.$data.walletPassword='';
+          _this.$Notice.success({
+                    title: 'Transaction success',
+                    desc:'Transaction hash  <br/>'+data.data.data.result.hash
+                });
+          _this.getAccountInfo();
+
+        }else{
+          _this.$data.loadingsendLAMBTx=false;
+          console.log('fail')
+             _this.$Notice.error({
+                    title: 'Transaction error',
+                    desc:  data.data.data.result.check_tx.log
+                });
+        }
+
+      })
+      .catch(function(err){
+        console.log(err);
+
+      })
+      
     },
     getpaylist(address) {
       function checkaddress(address1) {
