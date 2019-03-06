@@ -10,14 +10,14 @@
           <!-- <p class="notice">WARNING: Password can NOT be reset or recovered, do remember it!</p> -->
         </div>
       </div>
-      <div class="trans-button-wrapper">
+      <!-- <div class="trans-button-wrapper">
         <div class="trans-button-container">
           <button  class="btn trans-button">
             {{way}}
-            <!-- <Icon type="ios-arrow-forward"/> -->
+            <Icon type="ios-arrow-forward"/>
           </button>
         </div>
-      </div>
+      </div> -->
 
       <Form
         ref="formInline"

@@ -264,7 +264,10 @@ export default {
             var nodeBaseUrl = settings.get("user.node");
             _this.$data.Fromvalue=data.address;
             console.log('dispatch')
-            _this.$store.dispatch('setaddress',data.address)
+            _this.$store.dispatch('setaddress',{
+              address:data.address,
+              walletName:data.name
+            })
              
             
 

@@ -96,11 +96,12 @@ module.exports=function(app){
             })
             return ;
         }
+        v3file=JSON.parse(v3file);
+        v3file.name=name;
         
         var targetpath= DAEMON_CONFIG.BASE_PATH+'/lambda.keyinfo';
-        var readStream = fs.createReadStream(path);
-        var writeStream = fs.createWriteStream(targetpath);
-        readStream.pipe(writeStream);
+        fs.writeFileSync(targetpath, JSON.stringify(v3file, null, 4), 'utf8')
+        
 
         res.json({
             data:'Import wallet successfully',

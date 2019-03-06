@@ -17,11 +17,11 @@
             <router-link to="/home" class="item">Customer</router-link>
           </div>
           <div class="head-menu-item">
-            <router-link to="/home" class="item">Validator</router-link>
+            <router-link to="/validator" class="item">Validator</router-link>
           </div>
 
           <div class="head-menu-item overtext">
-            <router-link to="/settings" class="item"><Icon  style="    display: inline;" type="md-settings" size="30"/>{{address}}</router-link>
+            <router-link to="/settings" class="item"><Icon  style="    display: inline;" type="md-settings" size="30"/>{{getWalletName}}({{address}})</router-link>
           </div>
         </div>
       </Col>
@@ -35,6 +35,10 @@ export default {
     address:function(){
       
       return this.$store.getters.getaddress;
+    },
+    getWalletName:function(){
+      console.log('-----')
+      return this.$store.getters.getWalletName;
     }
   },
 };

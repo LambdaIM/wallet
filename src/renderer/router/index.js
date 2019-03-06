@@ -65,6 +65,12 @@ export default new Router({
             import('@/views/Customer.vue')
     },
     {
+        path: '/validator',
+        name: 'validator',
+        component: () =>
+            import('@/views/validator/index.vue')
+    },
+    {
         path: '*',
         redirect: '/'
     }
