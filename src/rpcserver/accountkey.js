@@ -3,7 +3,7 @@ var ETHwallet = require('./ETHv3wallet.js');
 var {DAEMON_CONFIG} =require('./configmain.js')
 var fs = require('graceful-fs')
 var log = require('./log').log;
-var walletManger = require('./walletManger.js')
+// var walletManger = require('./walletManger.js')
 
 module.exports=function(app){
     app.get('/createWallet/:password/:name',function(req, res){
@@ -80,8 +80,8 @@ module.exports=function(app){
         var password = req.params.password;
         var name = req.params.name;
         var mnemonic=decodeURIComponent(req.params.mnemonic);
-        var wl =new walletManger();
-        var result   = wl.ImportWalletByMnemonic(mnemonic,password,name);
+        // var wl =new walletManger();
+        // var result   = wl.ImportWalletByMnemonic(mnemonic,password,name);
 
         console.log(result);
 
@@ -135,8 +135,8 @@ module.exports=function(app){
         // var writeStream = fs.createWriteStream(targetpath);
         // readStream.pipe(writeStream);
 
-        var wl =new walletManger();
-        var result = wl.ImportWalletBykeyStore(path,password,name);
+        // var wl =new walletManger();
+        // var result = wl.ImportWalletBykeyStore(path,password,name);
         if(result==true){
             res.json({
                 data:true
@@ -209,8 +209,8 @@ module.exports=function(app){
     })
 
     app.get('/walletlist',function(req,res){
-        var wl =new walletManger();
-        walletList = wl.getWalletList();
+        // var wl =new walletManger();
+        // walletList = wl.getWalletList();
 
         res.json({
             data:walletList

@@ -13,10 +13,10 @@ import resultView from './result.js';
 import isAddress from '../utils/isaddress.js';
 
 
-var WM =new walletManger();
-
+// var WM =new walletManger();
 export default  function(){
-    
+
+    var WM =new walletManger();    
     eipc.answerRenderer('walletList',async(query)=>{
         try{
             var result = WM.getWalletList();
@@ -71,7 +71,7 @@ export default  function(){
         }
 
     })
-
+    // log.info('start createWallet');
     eipc.answerRenderer('createWallet',(query)=>{
         log.info('createWallet');
         var {password,name} =query;

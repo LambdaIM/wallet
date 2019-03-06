@@ -127,9 +127,9 @@ export default {
      },
      async walletList(){
          console.log('importWallet')
-         var password = '123456';
-         var name = '通过文件导入钱包';
-         var mnemonic='sorry opinion city view misery physical eyebrow hunt gift tragic apology empty';
+        //  var password = '123456';
+        //  var name = '通过文件导入钱包';
+        //  var mnemonic='sorry opinion city view misery physical eyebrow hunt gift tragic apology empty';
           try{
             var result = await ipc.callMain("walletList", {})
             console.log(result)

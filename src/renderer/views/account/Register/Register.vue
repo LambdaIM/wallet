@@ -38,7 +38,7 @@
           </Form>
 
           <div class="button-wrapper">
-            <button class="btn login-button" @click="createWallet('formInline')">Create</button>
+            <button class="btn login-button" @click="submit('formInline')">Create</button>
           </div>
 
           <div class="bottom-wrapper tc">
@@ -55,7 +55,9 @@
 <script>
 import Mybg from "@/components/common/useful/Mybg.vue";
 import { DAEMON_CONFIG } from "../../../../config.js";
-import https from "@/server/https.js";
+// import https from "@/server/https.js";
+const ipc = require("electron-better-ipc");
+// const settings = require("electron-settings");
 export default {
   data() {
     return {
@@ -97,34 +99,59 @@ export default {
     Mybg
   },
   methods: {
-    createWallet(name) {
-      // console.log('clickd');
+    submit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          let param = {
-            name: this.formInline.walletName,
-            password: this.formInline.password
-          };
-          try {
-            https
-              .fetchget(
-                `http://localhost:${DAEMON_CONFIG.RPC_PORT}/createWallet/${
-                  encodeURIComponent(param.password)
-                }/${param.name}`
-              )
-              .then(res => {
-                let data = res.data.data;
-                console.log(data);
-                this.$store.state.word = data.split(" ");
-                this.$store.state.combineWords = data;
-                this.$router.push('/success');
-              });
-          } catch (error) {
-            console.log(error);
-          }
+          this.create();
         }
       });
     },
+    async create() {
+      console.log("createWallet");
+      let password = this.formInline.password;
+      let name = this.formInline.walletName;
+      console.log(password,name);
+      // debugger;
+      try {
+        let result = await ipc.callMain("createWallet", {
+          password,
+          name
+        });
+        console.log(result);
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
+    // creaeWallet(name) {
+    //   // console.log('clickd');
+    //   this.$refs[name].validate(valid => {
+    //     if (valid) {
+    //       let param = {
+    //         name: this.formInline.walletName,
+    //         password: this.formInline.password
+    //       };
+    //       try {
+    //         https
+    //           .fetchget(
+    //             `http://localhost:${
+    //               DAEMON_CONFIG.RPC_PORT
+    //             }/createWallet/${encodeURIComponent(param.password)}/${
+    //               param.name
+    //             }`
+    //           )
+    //           .then(res => {
+    //             let data = res.data.data;
+    //             console.log(data);
+    //             this.$store.state.word = data.split(" ");
+    //             this.$store.state.combineWords = data;
+    //             this.$router.push("/success");
+    //           });
+    //       } catch (error) {
+    //         console.log(error);
+    //       }
+    //     }
+    //   });
+    // },
     validatePass(rule, value, callback) {
       if (value === "") {
         callback(new Error("Please enter your password"));

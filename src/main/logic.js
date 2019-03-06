@@ -8,7 +8,8 @@ import transactionrpc from './transactionrpc';
 
 
 function creatDir(){
-    
+    // console.log('sss1') 
+    console.log(DAEMON_CONFIG.BASE_PATH)
     if(fs.existsSync(DAEMON_CONFIG.BASE_PATH)==false) {
         fs.mkdirSync(DAEMON_CONFIG.BASE_PATH);
     }

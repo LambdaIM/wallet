@@ -8,13 +8,17 @@
               <p class="title">LAMBDA Wallet</p>
             </div>
           </div>
+          <p v-for="(item,index) in walletList" :key="index">
+            <span>{{item.name}}</span>
+            <span>{{item.address}}</span>
+          </p>
           <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
             <FormItem prop="name">
-              <Select v-model="value" clearable size="large">
+              <Select v-model="value" @on-change="selectName" clearable size="large">
                 <Option
                   v-for="(item,index) in walletList"
                   :value="item.name"
-                  :key="item.index"
+                  :key="index"
                 >{{ item.name}}</Option>
               </Select>
             </FormItem>
@@ -50,7 +54,7 @@
 <script>
 // import RPC from "../../rpc.js";
 import { DAEMON_CONFIG } from "../../../config.js";
-import https from "@/server/https.js";
+// import https from "@/server/https.js";
 import Mybg from "@/components/common/useful/Mybg.vue";
 const ipc = require("electron-better-ipc");
 const settings = require("electron-settings");
@@ -60,6 +64,7 @@ export default {
       formInline: {
         password: ""
       },
+      index: null,
       ruleInline: {
         password: [
           {
@@ -77,7 +82,8 @@ export default {
       },
       walletList: [],
       name: "",
-      value: null
+      value: null,
+      address: null
     };
   },
   components: {
@@ -91,31 +97,67 @@ export default {
     this.getwalletList();
   },
   methods: {
+    selectName(value) {
+      // console.log($event);
+      for (let index = 0; index < this.walletList.length; index++) {
+        if (value == this.walletList[index].name) {
+          this.address = this.walletList[index].address;
+          console.log(this.address);
+          // this.setDefaultWallet();
+        }
+      }
+    },
     openWallet(name) {
       var _this = this;
       this.$refs[name].validate(valid => {
         if (valid) {
-          let param = {
-            password: encodeURIComponent(this.formInline.password)
-          };
-          console.log(param.password);
-          https
-            .fetchget(
-              `http://localhost:${DAEMON_CONFIG.RPC_PORT}/openWallet/${
-                param.password
-              }`
-            )
-            .then(function(data) {
-              console.log(data);
-              // if (data.data && data.data.data && data.data.data.publicKey) {
-              //   settings.set("isopenfile", true);
-              //   _this.$router.push("/home");
-              // } else {
-              //   console.log("open fail");
-              // }
-            });
+          // let param = {
+          //   password: encodeURIComponent(this.formInline.password)
+          // };
+          // console.log(param.password);
+          // https
+          //   .fetchget(
+          //     `http://localhost:${DAEMON_CONFIG.RPC_PORT}/openWallet/${
+          //       param.password
+          //     }`
+          //   )
+          // .then(function(data) {
+          //   console.log(data);
+          // if (data.data && data.data.data && data.data.data.publicKey) {
+          //   settings.set("isopenfile", true);
+          //   _this.$router.push("/home");
+          // } else {
+          //   console.log("open fail");
+          // }
+          // });
+          // this.login();
+          this.setDefaultWallet();
         }
       });
+    },
+    async login() {
+      console.log("loginDefaultWallet");
+      let pass = this.formInline.password;
+      try {
+        var result = await ipc.callMain("loginDefaultWallet", {
+          password: pass
+        });
+        console.log(result);
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
+    async setDefaultWallet() {
+      try {
+        var result = await ipc.callMain("setDefaultWallet", {
+          address: this.address
+        });
+        console.log(result);
+        this.login();
+      } catch (ex) {
+        // console.log(ex);
+        console.log("密码错误");
+      }
     },
     getwalletList() {
       // console.log("- -");

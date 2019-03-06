@@ -70,7 +70,7 @@ function createWindow() {
         mainWindow.webContents.openDevTools();
     }
     
-
+logicrpc
     mainWindow.loadURL(winURL)
 
     mainWindow.on('closed', () => {
