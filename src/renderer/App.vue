@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header/>
-    
+
     <router-view></router-view>
 
     <Footer/>
@@ -13,12 +13,13 @@ import Footer from "@/components/common/layout/Footer.vue";
 import Header from "@/components/common/layout/Head.vue";
 export default {
   name: "wallet",
-  components:{
+  components: {
     Footer,
     Header
   }
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+
 </style>

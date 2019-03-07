@@ -42,7 +42,7 @@ export default {
     margin: 0 auto;
     .table-head-container{
       width: 100%;
-      margin-bottom: 25px;
+      margin-bottom: 18px;
       .title{
         font-size: 18px;
       }

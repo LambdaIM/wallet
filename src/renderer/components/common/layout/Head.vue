@@ -29,6 +29,7 @@
         </div>
       </Col>
     </Row>
+
   </div>
 </template>
 
@@ -48,23 +49,46 @@ export default {
 
 <style lang="less" scoped>
 .head-container {
+  position: relative;
   width: 100%;
-  height: 70px;
+  height: 100px;
   background: #09334c;
   background-size: cover;
+  // .btn-container{
+  //   .item{
+  //     position: fixed;
+  //     right: 0;
+  //     width: 10px;
+  //     height: 10px;
+  //     background-color: rgb(206, 48, 48);
+  //   }
+  // }
+  // .item1 {
+  //   // width: 25px;
+  //   position: fixed;
+  //   right: 120px;
+  //   top: 2px;
+  // }
+  // .item2 {
+  //   width: 20px;
+  //   position: fixed;
+  //   right: 60px;
+  //   top: 2px;
+  // }
   .head-wrapper {
     width: 100%;
     height: 100px;
     .head-logo-wrapper {
       margin-left: 20px;
-      padding-top: 10px;
-      .head-logo{
+      padding-top: 25px;
+      .head-logo {
         width: 200px;
         height: 50px;
       }
     }
     .head-menu-wrapper {
-      height: 70px;
+      height: 100px;
+      // margin-top: 36px;
       .head-menu {
         display: flex;
         height: 100%;

@@ -1,16 +1,15 @@
 <template>
   <div class="container">
     <!-- <Header/> -->
-
-    <div class="account-info-container">
-      <Row class-name="account-info-wrapper" type="flex" justify="space-between">
+    <!-- <div class="account-info-container"> -->
+      <!-- <Row class-name="account-info-wrapper" type="flex" justify="space-between">
         <Col span="4" class="account-item">
           <div class="item-wrapper">
             <p class="title">Balance</p>
             <p class="value">{{balance}} LAMB</p>
           </div>
         </Col>
-        <!-- <Col span="4" class="account-item">
+        <Col span="4" class="account-item">
           <div class="item-wrapper">
             <p class="title">Lend</p>
             <p class="value">123 LAMB</p>
@@ -33,9 +32,10 @@
             <p class="title">Interest Revenue</p>
             <p class="value">35 LAMB</p>
           </div>
-        </Col>-->
-      </Row>
-    </div>
+        </Col>
+      </Row> -->
+      <p class="balance">Balance: {{balance}} LAMB</p>
+    <!-- </div> -->
 
     <MyTable title="Latest Local Transaction Records" class="mt20 mytable-container">
       <div class="operation" slot="operation">
@@ -67,8 +67,6 @@
         </template>
       </Table>
     </MyTable>
-
-
 
     <div class="modal-container">
       <Modal v-model="detailModal" title="detail" :styles="{top: '200px'}">
@@ -288,7 +286,7 @@ export default {
           });
 
           // _this.$store.commit('setaddress',{address:data.address})
-
+          // console.log(_this.$store.state.address);
           var pra = {
             url:
               nodeBaseUrl +
@@ -452,6 +450,7 @@ export default {
         }
       }
       var _this = this;
+      console.log(address);
       ipc
         .callMain("httpget", {
           url: DAEMON_CONFIG.explorer + "api/tx/getTxAccountList",
@@ -510,6 +509,12 @@ export default {
   min-height: 650px;
   z-index: 5;
   padding-bottom: 100px;
+  .balance{
+    width: 96%;
+    margin: 0 auto; 
+    margin-top: 30px;
+    font-size: 18px;
+  }
   .account-info-container {
     width: 100%;
     height: 90px;
@@ -580,5 +585,6 @@ export default {
       margin: 0 auto;
     }
   }
+
 }
 </style>

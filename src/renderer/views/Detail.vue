@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Header/>
+    <!-- <Header/> -->
     <!-- <MyTable title="Transaction Records" class="mt20 mytable-container">
       <Table no-data-text="no Transaction" :columns="columns" :data="data" slot="content">
         <template slot-scope="{ row, index }" slot="hash">
@@ -34,10 +34,10 @@
       <div class="transaction-content" slot="card-content">
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">TxHash :</span>
+            <span class="title">TxHash:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a @click="checkHash(data[0].txHash)" class="item-value">{{data[0].txHash}}</a>
+            <a @click="checkHash(data[id].txHash)" class="item-value">{{data[id].txHash}}</a>
           </Col>
         </Row>
 
@@ -46,7 +46,7 @@
             <span class="title">Block Height:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a @click="checkHeight(data[0].height)" class="item-value">{{data[0].height}}</a>
+            <a @click="checkHeight(data[id].height)" class="item-value">{{data[id].height}}</a>
           </Col>
         </Row>
 
@@ -55,7 +55,7 @@
             <span class="title">Time:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <span class="item-value">{{data[0].time | formatDate}}</span>
+            <span class="item-value">{{data[id].time | formatDate}}</span>
           </Col>
         </Row>
 
@@ -64,7 +64,7 @@
             <span class="title">From:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a @click="checkAddress(data[0].from)" class="item-value">{{data[0].from}}</a>
+            <a @click="checkAddress(data[id].from)" class="item-value">{{data[id].from}}</a>
           </Col>
         </Row>
 
@@ -73,7 +73,7 @@
             <span class="title">To:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a  @click="checkAddress(data[0].to)" class="item-value">{{data[0].to}}</a>
+            <a @click="checkAddress(data[id].to)" class="item-value">{{data[id].to}}</a>
           </Col>
         </Row>
 
@@ -82,7 +82,7 @@
             <span class="title">Value:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <span class="item-value">{{data[0].value}}</span>
+            <span class="item-value">{{data[id].value | formatValue}}</span>
           </Col>
         </Row>
       </div>
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import Header from "@/components/common/layout/Head.vue";
+// import Header from "@/components/common/layout/Head.vue";
 import Mycard from "@/components/common/useful/Mycard.vue";
 import { DAEMON_CONFIG } from "../../config.js";
 import https from "@/server/https.js";
@@ -138,14 +138,17 @@ export default {
     };
   },
   components: {
-    Mycard,
-    Header
+    Mycard
+    // Header
   },
-  mounted() {
-    this.id = this.$route.params.id;
-    let address = this.$store.state.address;
+  created() {
+    let address = this.$store.getters.getaddress.toLowerCase();
+    // console.log(address);
     this.getpaylist(address);
   },
+  // mounted() {
+    
+  // },
   methods: {
     checkHash(value) {
       // console.log(value);
@@ -163,6 +166,9 @@ export default {
       shell.openExternal(url);
     },
     getpaylist(address) {
+      this.id = this.$route.params.id;
+      console.log(this.id);
+      console.log(address);
       ipc
         .callMain("httpget", {
           url: DAEMON_CONFIG.explorer + "api/tx/getTxAccountList",
@@ -175,9 +181,9 @@ export default {
         .then(res => {
           // console.log("getpaylist", res.data.data);
           if (res.data.data && res.data.data.code == 200) {
-            console.log(res.data.data.data.txList);
+            // console.log(res.data.data.data.txList);
             this.data = res.data.data.data.txList;
-            console.log(this.data);
+            // console.log(this.data);
           }
         })
         .catch(function(err) {});
@@ -188,14 +194,14 @@ export default {
 
 <style lang="less" scoped>
 .container {
-  .transaction-content{
-    .card-item{
+  .transaction-content {
+    .card-item {
       margin-bottom: 20px;
-      .title{
+      .title {
         font-size: 14px;
         font-weight: 600;
       }
-      .item-value{
+      .item-value {
         font-size: 14px;
       }
     }
