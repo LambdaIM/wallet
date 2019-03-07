@@ -21,7 +21,10 @@
           </div>
 
           <div class="head-menu-item overtext">
-            <router-link to="/settings" class="item"><Icon  style="    display: inline;" type="md-settings" size="30"/>{{getWalletName}}({{address}})</router-link>
+            <router-link to="/settings" class="item">
+              <Icon style="    display: inline;" type="md-settings" size="30"/>
+              {{getWalletName}}({{address}})
+            </router-link>
           </div>
         </div>
       </Col>
@@ -32,39 +35,42 @@
 <script>
 export default {
   computed: {
-    address:function(){
-      
+    address: function() {
       return this.$store.getters.getaddress;
     },
-    getWalletName:function(){
-      console.log('-----')
+    getWalletName: function() {
+      console.log("-----");
       return this.$store.getters.getWalletName;
     }
-  },
+  }
 };
 </script>
 
 <style lang="less" scoped>
 .head-container {
   width: 100%;
-  height: 100px;
-  background: url(../../../assets/img/bgs_01.jpg);
+  height: 70px;
+  background: #09334c;
   background-size: cover;
   .head-wrapper {
     width: 100%;
     height: 100px;
     .head-logo-wrapper {
       margin-left: 20px;
-      padding-top: 20px;
+      padding-top: 10px;
+      .head-logo{
+        width: 200px;
+        height: 50px;
+      }
     }
     .head-menu-wrapper {
-      height: 100px;
+      height: 70px;
       .head-menu {
         display: flex;
         height: 100%;
         justify-content: space-around;
         align-items: center;
-        .overtext{
+        .overtext {
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;

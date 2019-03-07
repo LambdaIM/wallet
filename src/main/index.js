@@ -63,7 +63,7 @@ function createWindow() {
         width: 975,
         autoHideMenuBar: true,
         // title:'lamb wallet'
-        // resizable: true,
+        // resizable: false,
         // frame: false
     })
     if (process.env.NODE_ENV == 'development'){

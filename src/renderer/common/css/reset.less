@@ -6,6 +6,14 @@
   font-size: 16px;
 }
 
+.etc{
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
+}
+
 select,
 a,
 button,
@@ -25,4 +33,19 @@ html {
   &:hover {
     cursor: url(../../assets/img/defaultcur.png), default;
   }
+}
+/*滑块*/
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to right, #339cae, #9167d3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #777;
+}
+
+
+/*滑道*/
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
 }

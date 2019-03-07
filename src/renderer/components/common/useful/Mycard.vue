@@ -1,7 +1,7 @@
 <template>
   <div class="card-container">
     <div class="card-wrapper">
-      <Card dis-hover :title="cardtitle">
+      <Card :title="cardtitle" shadow :bordered="false">
        <slot name="card-content"></slot>
       </Card>
     </div>
@@ -18,5 +18,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+  .card-container{
+    width: 100%;
+    margin-bottom: 20px;
+    .card-wrapper{
+      width: 96%;
+      margin: 0 auto;
+    }
+  }
 </style>

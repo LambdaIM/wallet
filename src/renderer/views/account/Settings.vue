@@ -1,10 +1,10 @@
 <template>
   <div class="setting-container">
-    <Header/>
+    <!-- <Header/> -->
     <div class="setting-wrapper">
       <Mycard v-if="walletInfo" cardtitle="Wallet Info" class="mb10">
         <div class="storage-content" slot="card-content">
-          <Row  class-name="card-item">
+          <Row class-name="card-item">
             <Col span="4" class-name="title-wrapper">
               <span class="title">Wallet Name</span>
             </Col>
@@ -19,16 +19,19 @@
             </Col>
             <Col span="12" class-name="content-wrapper">
               <span>{{walletInfo.address}}</span>
-              
-    <!-- <button type="button"
+
+              <!-- <button type="button"
       v-clipboard:copy="walletInfo.address"
       v-clipboard:success="onCopy"
-      v-clipboard:error="onError">Copy!</button> -->
-       <Button
-       v-clipboard:copy="walletInfo.address"
-      v-clipboard:success="onCopy"
-      v-clipboard:error="onError"
-        type="primary" shape="circle" icon="ios-copy"></Button>
+              v-clipboard:error="onError">Copy!</button>-->
+              <Button
+                v-clipboard:copy="walletInfo.address"
+                v-clipboard:success="onCopy"
+                v-clipboard:error="onError"
+                type="primary"
+                shape="circle"
+                icon="ios-copy"
+              ></Button>
             </Col>
           </Row>
         </div>
@@ -57,8 +60,7 @@
             </Col>
           </Row>
         </div>
-      </Mycard> -->
-
+      </Mycard>-->
       <Mycard cardtitle="Private Key Info" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
@@ -71,10 +73,9 @@
 
             <Col span="4" class-name="content-wrapper">
               <a>Private Key Visible</a>
-            </Col> -->
-
+            </Col>-->
             <Col span="4" class-name="content-wrapper">
-              <a @click="openkeystore" >Keystore File Backup</a>
+              <a @click="openkeystore">Keystore File Backup</a>
             </Col>
           </Row>
 
@@ -84,7 +85,7 @@
                 class="notice tc"
               >Wallet Password can’t be recovered, you can only create a new Wallet using Private Key once forgotten</p>
             </Col>
-          </Row> -->
+          </Row>-->
         </div>
       </Mycard>
 
@@ -108,8 +109,7 @@
             </Col>
           </Row>
         </div>
-      </Mycard> -->
-
+      </Mycard>-->
       <Mycard cardtitle="Version" class="mb20">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
@@ -121,7 +121,7 @@
             </Col>
             <!-- <Col span="3" class-name="content-wrapper">
               <a>Check Version</a>
-            </Col> -->
+            </Col>-->
           </Row>
         </div>
       </Mycard>
@@ -136,14 +136,13 @@
 </template>
 
 <script>
-import Header from "@/components/common/layout/Head.vue";
+// import Header from "@/components/common/layout/Head.vue";
 import Mycard from "@/components/common/useful/Mycard.vue";
 
 import https from "@/server/https.js";
 const ipc = require("electron-better-ipc");
 const settings = require("electron-settings");
 import { DAEMON_CONFIG } from "../../../config.js";
-
 
 export default {
   data() {
@@ -152,48 +151,37 @@ export default {
       total: 5,
       hidden: "*********************************",
       progressPercent: "",
-      walletInfo:null
-
+      walletInfo: null
     };
   },
   mounted() {
     this.getAccountInfo();
   },
   methods: {
-     onCopy: function (e) {
-       this.$Message.info('You just copied: ' + e.text);
-      
+    onCopy: function(e) {
+      this.$Message.info("You just copied: " + e.text);
     },
-    onError: function (e) {
-      this.$Message.info('Failed to copy texts');
-      
+    onError: function(e) {
+      this.$Message.info("Failed to copy texts");
     },
     logout() {
-      settings.set('isopenfile',false)
+      settings.set("isopenfile", false);
       this.$router.push("/");
       // console.log('8888')
     },
     getAccountInfo() {
-      var _this=this;
-       https.fetchget(
-            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/getWalletAddress/`
-          )
-          .then(function(res){
-            console.log(res.data.data);
-            _this.$data.walletInfo=res.data.data
-            
-            
-
-          })
-       
-     
-      
-       
-      
-      
+      var _this = this;
+      https
+        .fetchget(
+          `http://localhost:${DAEMON_CONFIG.RPC_PORT}/getWalletAddress/`
+        )
+        .then(function(res) {
+          console.log(res.data.data);
+          _this.$data.walletInfo = res.data.data;
+        });
     },
-    openkeystore(){
-      ipc.callMain('openkeystore', {})
+    openkeystore() {
+      ipc.callMain("openkeystore", {});
     }
   },
   computed: {
@@ -204,7 +192,7 @@ export default {
     }
   },
   components: {
-    Header,
+    // Header,
     Mycard
   }
 };
@@ -212,6 +200,7 @@ export default {
 
 <style lang="less" scoped>
 .setting-container {
+  padding-bottom: 100px;
   .setting-wrapper {
     padding: 20px;
     .card-item {
@@ -235,6 +224,5 @@ export default {
       }
     }
   }
-
 }
 </style>
