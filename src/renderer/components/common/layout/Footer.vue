@@ -104,6 +104,7 @@ export default {
       font-size: 14px;
       color: #fff;
       line-height: 40px;
+      text-align: center;
     }
   }
 }
