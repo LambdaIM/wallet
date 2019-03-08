@@ -52,7 +52,7 @@ export default {
 .head-container {
   position: relative;
   width: 100%;
-  height: 100px;
+  height: 80px;
   background: #09334c;
   background-size: cover;
   // .btn-container{
@@ -78,17 +78,17 @@ export default {
   // }
   .head-wrapper {
     width: 100%;
-    height: 100px;
+    height: 80px;
     .head-logo-wrapper {
       margin-left: 20px;
-      padding-top: 25px;
+      padding-top: 15px;
       .head-logo {
         width: 200px;
         height: 50px;
       }
     }
     .head-menu-wrapper {
-      height: 100px;
+      height: 80px;
       // margin-top: 36px;
       .head-menu {
         display: flex;

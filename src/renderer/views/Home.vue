@@ -2,7 +2,7 @@
   <div class="container">
     <!-- <Header/> -->
     <!-- <div class="account-info-container"> -->
-      <!-- <Row class-name="account-info-wrapper" type="flex" justify="space-between">
+    <!-- <Row class-name="account-info-wrapper" type="flex" justify="space-between">
         <Col span="4" class="account-item">
           <div class="item-wrapper">
             <p class="title">Balance</p>
@@ -33,10 +33,9 @@
             <p class="value">35 LAMB</p>
           </div>
         </Col>
-      </Row> -->
-      <p class="balance">Balance: {{balance}} LAMB</p>
+    </Row>-->
+    <p class="balance">Balance: {{balance}} LAMB</p>
     <!-- </div> -->
-
     <MyTable title="Latest Local Transaction Records" class="mt20 mytable-container">
       <div class="operation" slot="operation">
         <!-- <div class="search-wrapper">
@@ -412,42 +411,43 @@ export default {
 
             return;
           }
-          
-          
-        
-        if(data.data.data.error){
-          _this.$Notice.error({
-                    title: data.data.data.error.message,
-                    desc: data.data.data.error.data
-                });
-          return ;
-        }
 
-        if(data.data.data.result.check_tx.log==undefined){
-          console.log('ok')
-          _this.$data.passwordModal=false;
-          _this.$data.walletPassword='';
-          _this.$Notice.success({
-                    title: 'Transaction success',
-                    desc:'Transaction hash  <br/>'+data.data.data.result.hash
-                });
-          _this.getAccountInfo();
+          if (data.data.data.error) {
+            _this.$Notice.error({
+              title: data.data.data.error.message,
+              desc: data.data.data.error.data
+            });
+            return;
+          }
 
-        }else{
-          _this.$data.loadingsendLAMBTx=false;
-          console.log('fail')
-             _this.$Notice.error({
-                    title: 'Transaction error',
-                    desc:  data.data.data.result.check_tx.log
-                });
-        }
-
-      })
-      .catch(function(err){
-        console.log(err);
-
-      })
-      
+          if (data.data.data.result.check_tx.log == undefined) {
+            console.log("ok");
+            _this.$data.passwordModal = false;
+            _this.$data.walletPassword = "";
+            _this.$Notice.success({
+                      title: 'Transaction success',
+                      // desc:'Transaction hash  <br/>'+data.data.data.result.hash
+                  });
+            console.log(data.data.data.result);
+            // _this.$Modal.success({
+            //   title: "Transaction success",
+            //   width: '700',
+            //   content: "Transaction hash  <br/>" + data.data.data.result.hash,
+            //   okText: "OK",
+            // });
+            _this.getAccountInfo()
+          } else {
+            _this.$data.loadingsendLAMBTx = false;
+            console.log("fail");
+            _this.$Notice.error({
+              title: "Transaction error",
+              desc: data.data.data.result.check_tx.log
+            });
+          }
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     },
     getpaylist(address) {
       function checkaddress(address1) {
@@ -524,9 +524,10 @@ export default {
   min-height: 650px;
   z-index: 5;
   padding-bottom: 100px;
-  .balance{
+  .balance {
     width: 96%;
-    margin: 0 auto; 
+    margin: 0 auto;
+    border-bottom: 1px solid #dcdee2;
     margin-top: 30px;
     font-size: 18px;
   }
@@ -600,6 +601,5 @@ export default {
       margin: 0 auto;
     }
   }
-
 }
 </style>
