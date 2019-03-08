@@ -5,13 +5,15 @@ import { createPersistedState, createSharedMutations } from 'vuex-electron'
 
 import register from './modules/Register'
 import account from './modules/Account'
+import validator from './modules/Validator'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules:{
     register,
-    account
+    account,
+    validator
   },
   plugins: [
     createPersistedState(),

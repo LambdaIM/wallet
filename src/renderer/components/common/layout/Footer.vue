@@ -1,26 +1,84 @@
 <template>
   <div class="footer-container">
-    <div class="footer-wrapper">
+    <div v-if="id!==null"  class="footer-wrapper">
       <!-- <span class="item etc">Validator id: -->
-      <span class="item etc">Validator id:
+      <span    class="item etc">Validator id:
         <Poptip word-wrap trigger="hover" width="300" :content="id">{{id}}</Poptip>
       </span>
       
-      <span class="item">Sync latest_block_height: {{height}}</span>
-      <span class="item">latest_block_time: {{time | formatDate}}</span>
+      <span  class="item">Block height: {{height}}</span>
+      <span  class="item" v-if="isSync==true" >Sync Block.... </span>
+      <span class="item" v-else>Block time: {{time | formatDate}}</span>
+    </div>
+    <div v-else class="footer-wrapper">
+      <span   class="item">Validator connecting ...</span>
     </div>
   </div>
 </template>
 
 <script>
+const ipc = require("electron-better-ipc");
+const settings = require("electron-settings");
 export default {
   data() {
     return {
-      id: "9617c10aa3552d65620afc73b0a00278c9f063ab",
-      height: "48596",
-      time: "2019-03-07T09:02:17.105491169Z"
+      id: null,
+      height: null,
+      time: null,
+      isSync:true
     };
-  }
+  },
+  mounted() {
+    var _this=this;
+    _this.getValidatorInfo();
+    setInterval(function(){
+        _this.getValidatorInfo();
+    },1000*30)
+  },
+  methods: {
+    getValidatorInfo() {
+      var nodeBaseUrl = settings.get("user.node");
+      var pra = {
+        url: nodeBaseUrl + "status",
+        data: {}
+      };
+      var _this = this;
+            
+       ipc.callMain("httpget", pra)
+       .then(function(res){
+         console.log(res)
+         if(res.state&&res.data.data.result){
+           _this.dataFormat(res.data.data.result)
+           if(res.data.data.result.node_info){
+             _this.$store.dispatch("setinfo", res.data.data.result);
+           }
+         }
+
+       })
+       .catch(function(err){
+         _this.$Notice.warning({
+          title: "Validator Network connect timed out, please check your network."
+        });
+
+       })
+
+    },
+    dataFormat(result){
+      try {
+        this.$data.id=result.node_info.id;
+        this.$data.height=result.sync_info.latest_block_height;
+        this.$data.time=result.sync_info.latest_block_time;
+        this.$data.isSync=result.sync_info.catching_up;
+                  
+        
+      } catch (error) {
+        console.log(error)
+        console.log(result)
+        
+      }
+      
+    }
+  },
 };
 </script>
 

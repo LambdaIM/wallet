@@ -37,6 +37,31 @@
         </div>
       </Mycard>
 
+           <Mycard v-if="getstore.length>0" cardtitle="Validator Node info" class="mb10">
+        <div class="storage-content" slot="card-content">
+          <Row v-for="item in getstore"  class-name="card-item">
+            <Col span="4" class-name="title-wrapper">
+              <span class="title">{{item[0]}}</span>
+            </Col>
+            <Col span="12" class-name="content-wrapper">
+              <span>{{item[1]}}</span>
+            </Col>
+          </Row>
+          <Row   class-name="card-item">
+            <Col span="4" class-name="title-wrapper">
+              &nbsp;
+            </Col>
+            <Col span="12" class-name="content-wrapper">
+              <span><router-link to="/validator" class="item">Switch Validator</router-link></span>
+            </Col>
+          </Row>
+          
+          
+
+          
+        </div>
+      </Mycard>
+
       <!-- <Mycard cardtitle="Storage Info" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
@@ -143,6 +168,8 @@ import https from "@/server/https.js";
 const ipc = require("electron-better-ipc");
 const settings = require("electron-settings");
 import { DAEMON_CONFIG } from "../../../config.js";
+import _ from "underscore";
+
 
 export default {
   data() {
@@ -151,7 +178,8 @@ export default {
       total: 5,
       hidden: "*********************************",
       progressPercent: "",
-      walletInfo: null
+      walletInfo: null,
+      node_info:[]
     };
   },
   mounted() {
@@ -165,6 +193,7 @@ export default {
       this.$Message.info("Failed to copy texts");
     },
     logout() {
+      this.$store.dispatch("setaddress", {});
       settings.set("isopenfile", false);
       this.$router.push("/");
       // console.log('8888')
@@ -189,6 +218,17 @@ export default {
       this.progressPercent = (this.used / this.total).toFixed(4) * 100;
       // console.log(this.progressPercent);
       return this.progressPercent;
+    },
+    getstore(){
+      console.log(' - -')
+      try {
+      // this.$data.node_info=this.$store.getters.info.node_info;
+
+        return _.pairs(this.$store.getters.info.node_info);  
+      } catch (error) {
+        return [];
+      }
+      
     }
   },
   components: {

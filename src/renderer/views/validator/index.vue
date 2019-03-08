@@ -49,6 +49,11 @@
           </Row>
         </div>
       </Mycard>
+      <Mycard v-else cardtitle="Validator info" class="mb10">
+        <div class="storage-content" slot="card-content">
+            <Button  loading>Loading...</Button>
+        </div>
+      </Mycard>
     </div>
   </div>
 </template>
@@ -120,7 +125,7 @@ export default {
        ipc.callMain("httpget", pra)
        .then(function(res){
          console.log(res)
-         if(res.state&&res.data.data.result){
+         if(res.state&&res.data.data.result&&res.data.data.result.node_info){
            _this.dataFormat(res)
            settings.set('user', {
                               node: nodeBaseUrl
@@ -149,6 +154,9 @@ export default {
 
     },
     dataFormat(res){
+      
+          this.$store.dispatch("setinfo", res.data.data.result);
+      
           this.$data.node_info=_.pairs(res.data.data.result.node_info);
           this.$data.sync_info=_.pairs(res.data.data.result.sync_info);
           this.$data.validator_info=_.pairs(res.data.data.result.validator_info);
