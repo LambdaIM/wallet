@@ -6,7 +6,7 @@
       </Col>
 
       <Col span="16" offset="2" class-name="head-menu-wrapper">
-        <div class="head-menu">
+        <div v-if="address!=undefined&&address!=''"  class="head-menu">
           <div class="head-menu-item">
             <router-link to="/home" class="item">Home</router-link>
           </div>
@@ -17,7 +17,7 @@
             <router-link to="/home" class="item">Customer</router-link>
           </div>
           <div class="head-menu-item">
-            <router-link to="/validator" class="item">Validator</router-link>
+            <router-link to="/home" class="item">Validator</router-link>
             <!-- ios-checkmark  ios-loading -->
           </div>
 
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+const settings = require("electron-settings");
+
 export default {
   computed: {
     address: function() {
@@ -43,6 +45,10 @@ export default {
     getWalletName: function() {
       console.log("-----");
       return this.$store.getters.getWalletName;
+    },
+    islogin(){
+      console.log(settings.get('isopenfile'))
+      return settings.get('isopenfile')
     }
   }
 };
