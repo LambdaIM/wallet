@@ -53,7 +53,7 @@
           <Button @click="openSend()" icon="md-swap">Transfer</Button>
         </div>
       </div>
-      <Table no-data-text="no Transaction" :columns="columns" :data="data" slot="content">
+      <Table :loading="loading" no-data-text="no Transaction" :columns="columns" :data="data" slot="content">
         <template slot-scope="{ row, index }" slot="action">
           <Button type="primary" size="small" @click="toDetail(row,index)">View Detail</Button>
           <!-- <Button type="error" size="small" @click="remove(index)">Delete</Button> -->
@@ -225,7 +225,8 @@ export default {
       walletPassword: null,
       txlist: [],
       Interval: null,
-      loadingsendLAMBTx: false
+      loadingsendLAMBTx: false,
+      loading:true
     };
   },
   components: {
@@ -297,7 +298,7 @@ export default {
             }
           };
 
-          return ipc.callMain("httpget", pra);
+          return ipc.callMain("httpgetaccount", pra);
         })
         .then(function(res) {
           console.log("res", res);
@@ -467,7 +468,7 @@ export default {
       var _this = this;
       console.log(address);
       ipc
-        .callMain("httpget", {
+        .callMain("httpgettxlist", {
           url: DAEMON_CONFIG.explorer + "api/tx/getTxAccountList",
           data: {
             accountHash: address,
@@ -490,6 +491,7 @@ export default {
                 status: 1
               });
             });
+            _this.$data.loading=false;
 
             //===
             // data: [

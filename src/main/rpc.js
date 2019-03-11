@@ -69,6 +69,61 @@ var log = require('../log').log;
     
           
     });
+
+
+    eipc.answerRenderer('httpgetaccount', async (query) => {
+        log.info('httpget:'+query.url)
+        try {
+            const result = await axios.get(query.url, {
+                params: query.data||{}
+              })
+            return {data:result,state:true} ;
+            
+        } catch (error) {
+            log.error(error)
+            return {data:error,state:false} 
+            
+        }
+        
+    
+          
+    });
+
+    eipc.answerRenderer('httpgetstatus', async (query) => {
+        log.info('httpget:'+query.url)
+        try {
+            const result = await axios.get(query.url, {
+                params: query.data||{}
+              })
+            return {data:result,state:true} ;
+            
+        } catch (error) {
+            log.error(error)
+            return {data:error,state:false} 
+            
+        }
+        
+    
+          
+    });
+
+    eipc.answerRenderer('httpgettxlist', async (query) => {
+        log.info('httpget:'+query.url)
+        try {
+            const result = await axios.get(query.url, {
+                params: query.data||{}
+              })
+            return {data:result,state:true} ;
+            
+        } catch (error) {
+            log.error(error)
+            return {data:error,state:false} 
+            
+        }
+        
+    
+          
+    });
     
 
 
