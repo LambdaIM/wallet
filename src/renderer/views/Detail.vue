@@ -170,7 +170,7 @@ export default {
       console.log(this.id);
       console.log(address);
       ipc
-        .callMain("httpget", {
+        .callMain("httpgettxlist", {
           url: DAEMON_CONFIG.explorer + "api/tx/getTxAccountList",
           data: {
             accountHash: address,

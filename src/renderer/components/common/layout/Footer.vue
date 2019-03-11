@@ -44,7 +44,7 @@ export default {
       };
       var _this = this;
             
-       ipc.callMain("httpget", pra)
+       ipc.callMain("httpgetstatus", pra)
        .then(function(res){
          console.log(res)
          if(res.state&&res.data.data.result){
