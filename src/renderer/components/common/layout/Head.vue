@@ -24,8 +24,17 @@
           <div class="head-menu-item overtext">
             <router-link to="/settings" class="item">
               <Icon style="    display: inline;" type="md-settings" size="30"/>
-              {{getWalletName}}({{address}})
+              
             </router-link>
+          </div>
+          <div v-clipboard:copy="address"
+                v-clipboard:success="onCopy"
+                v-clipboard:error="onError"  class="head-menu-item overtext" style="cursor: pointer">
+            
+              <div class="item">
+                <Icon style="    display: inline;" type="ios-copy" size="20"/>
+               {{address}}
+              </div>
           </div>
         </div>
       </Col>
@@ -38,6 +47,15 @@
 const settings = require("electron-settings");
 
 export default {
+  methods: {
+    onCopy: function(e) {
+      this.$Message.info("You just copied: " + e.text);
+    },
+    onError: function(e) {
+      this.$Message.info("Failed to copy texts");
+    },
+    
+  },
   computed: {
     address: function() {
       return this.$store.getters.getaddress;

@@ -34,9 +34,9 @@
           </div>
         </Col>
     </Row>-->
-    <p class="balance">Balance: {{balance}} LAMB</p>
+    <p class="balance"> Balance: {{balance}} LAMB</p>
     <!-- </div> -->
-    <MyTable title="Latest Local Transaction Records" class="mt20 mytable-container">
+    <MyTable title="Latest  Transaction Records" class="mt20 mytable-container">
       <div class="operation" slot="operation">
         <!-- <div class="search-wrapper">
           <Input search enter-button placeholder="Enter something..."/>

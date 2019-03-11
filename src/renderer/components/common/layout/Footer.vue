@@ -1,9 +1,9 @@
 <template>
   <div class="footer-container">
-    <div v-if="id!==null"  class="footer-wrapper">
+    <div v-if="address!==null"  class="footer-wrapper">
       <!-- <span class="item etc">Validator id: -->
-      <span    class="item etc">Validator id:
-        <Poptip word-wrap trigger="hover" width="300" :content="id">{{id}}</Poptip>
+      <span    class="item etc">Validator:
+        <Poptip word-wrap trigger="hover" width="300" :content="address">{{address}}</Poptip>
       </span>
       
       <span  class="item">Block height: {{height}}</span>
@@ -22,7 +22,7 @@ const settings = require("electron-settings");
 export default {
   data() {
     return {
-      id: null,
+      address: null,
       height: null,
       time: null,
       isSync:true
@@ -65,7 +65,7 @@ export default {
     },
     dataFormat(result){
       try {
-        this.$data.id=result.node_info.id;
+        this.$data.address=result.validator_info.address;
         this.$data.height=result.sync_info.latest_block_height;
         this.$data.time=result.sync_info.latest_block_time;
         this.$data.isSync=result.sync_info.catching_up;
