@@ -80,7 +80,7 @@
         <p>Content of dialog</p>
       </Modal>
 
-      <Modal v-model="borrowModal" title="borrow" :styles="{top: '200px'}">
+      <Modal v-model="borrowModal"  title="borrow" :styles="{top: '200px'}">
         <p>Content of dialog</p>
         <p>Content of dialog</p>
         <p>Content of dialog</p>
@@ -332,6 +332,7 @@ export default {
       var to = this.$data.Tovalue;
       var value = parseFloat(this.$data.LAMBvalue);
       var _this = this;
+      this.$data.walletPassword=null;
       if (to == from) {
         this.$Notice.warning({
           title: "You can't transfer LAMB to yourself."
@@ -384,6 +385,9 @@ export default {
     },
     sendcancel() {
       this.sendModal = false;
+      this.$data.Tovalue = '';
+      this.$data.LAMBvalue = '';
+
     },
     sendLAMBTx() {
       var _this = this;
@@ -405,6 +409,7 @@ export default {
                 title: "Please check your password."
               });
             } else {
+              _this.$data.passwordModal = false;
               _this.$Notice.error({
                 title: "Transaction failure."
               });
@@ -414,6 +419,7 @@ export default {
           }
 
           if (data.data.data.error) {
+            _this.$data.passwordModal = false;
             _this.$Notice.error({
               title: data.data.data.error.message,
               desc: data.data.data.error.data
