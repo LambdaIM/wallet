@@ -22,6 +22,8 @@ const formatSize = (value) =>{
     return `${value} M`
 }
 
+
+
 export default {
     formatValue,
     formatDate,

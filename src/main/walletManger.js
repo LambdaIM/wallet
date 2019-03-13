@@ -332,6 +332,7 @@ walletManger.prototype.Transfer = async function (to, amount, gas) {
     if (errMsg)
         throw errMsg
     var TxPay = TxPayloadMessage.create(TxPayload);
+    log.info('Txpay========>'+JSON.stringify(TxPay))
 
     this.lastpayobj = TxPay;
     this.lastpayArry = TxPayloadMessage.encode(TxPay).finish()

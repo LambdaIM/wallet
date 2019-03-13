@@ -206,13 +206,6 @@ export default {
           }
      },
      async TransferConfirm(){
-         console.log('getDefaultWalletBlance')
-         var  to='480DC2D434EEA9EB95958A86749AC99C5073631C'; 
-         var  amount =1215;
-         var  gas =1;
-         amount=amount*10000;
-         var password = '123456';
-
           try{
             var result = await ipc.callMain("transferConfirm", {
             password
