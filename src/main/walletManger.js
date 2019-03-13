@@ -79,15 +79,13 @@ walletManger.prototype.scann = function () {
 }
 
 walletManger.prototype.getDefaultwalletBasicinfo = function () {
-    if (this.defaultwallet) {
-        return {
-            address: this.defaultwallet.address,
-            name: this.defaultwallet.name
-        };
-
-    } else {
-        throw new Error('not find  defaultwallet')
-    }
+    if(this.defaultwallet==null){
+        throw new Error('not find DefaultWallet')
+     }
+     return {
+        address: this.defaultwallet.address,
+        name: this.defaultwallet.name
+    };
 
 
 
@@ -97,6 +95,9 @@ walletManger.prototype.OpenDefaultwallet = function (password) {
     var wallet, info;
     log.info('OpenDefaultwallet')
     log.info(this.defaultwallet.address)
+    if(this.defaultwallet==null){
+        throw new Error('not find DefaultWallet')
+    }
 
 
     wallet = ETHwallet.fromV3(this.defaultwallet, password);
@@ -126,7 +127,9 @@ walletManger.prototype.setDefaultWallet = function (address) {
         target = addressdefault
     } else {
         if (this.walletList.length == 0) {
-            throw new Error('wallet List is 0')
+            this.defaultwallet = null;
+            return ;
+            
         }
         target = this.walletList[0].address
     }
@@ -141,9 +144,12 @@ walletManger.prototype.setDefaultWallet = function (address) {
         }
     })
     if (objwallet == undefined) {
-        throw new Error('not find wallet')
+        this.defaultwallet = null;
+    }else{
+        this.defaultwallet = objwallet;
+
     }
-    this.defaultwallet = objwallet;
+    
 
 
 }
@@ -244,6 +250,9 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
 
 walletManger.prototype.getDefaultWalletBlance = async function () {
     log.info('getDefaultWalletBlance')
+    if(this.defaultwallet==null){
+       throw new Error('not find DefaultWallet')
+    }
 
     var result = await this._getAccountInfo();
 
