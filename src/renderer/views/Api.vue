@@ -154,7 +154,7 @@ export default {
          
           try{
             var result = await ipc.callMain("setDefaultWallet", {
-              address:'2BFC8C8C0554102A9683C77943E15F25E74FB259'
+              address:'37F56CAA1ADDBBDDA5656F383A1933B55433F448'
             })
             console.log(result)
           }

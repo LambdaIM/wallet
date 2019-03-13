@@ -52,6 +52,8 @@ export default {
       words: [],
       inputWords: [],
       showButton: false,
+      combineWords:'',
+      tempWords:[],
       style: {
         display: "block"
       }
@@ -64,9 +66,7 @@ export default {
           this.style.display = "none";
           let tempCombineWords = this.inputWords.join(" ");
           console.log(tempCombineWords);
-          let combineWords = this.$store.state.combineWords;
-          console.log(combineWords);
-          if (tempCombineWords == combineWords) {
+          if (tempCombineWords == this.combineWords) {
             this.showButton = true;
           } else {
             this.$Message.error("Confirmed Fail!");
@@ -94,9 +94,10 @@ export default {
       this.words.splice(index, 1);
     },
     getWords() {
-      let tempWords = this.$store.state.word;
-      this.words = this.shuffle(tempWords);
-      // console.log(this.words);
+      this.tempWords = this.$store.getters.getWords;
+      this.combineWords=this.$store.getters.getCombineWords;
+      this.words = this.shuffle(this.tempWords);
+      console.log(this.words);
     },
     exportWallet() {
       ipc.callMain("openkeystore", {});

@@ -110,14 +110,21 @@ export default {
       console.log("createWallet");
       let password = this.formInline.password;
       let name = this.formInline.walletName;
-      console.log(password,name);
+      console.log(password, name);
       // debugger;
       try {
-        let result = await ipc.callMain("createWallet", {
+        let res = await ipc.callMain("createWallet", {
           password,
           name
         });
-        console.log(result);
+        console.log(res.result.mnemonic);
+        let word = res.result.mnemonic.split(" ");
+        // console.log(word);
+        let combineWords = res.result.mnemonic;
+        this.$store.dispatch("setCombineWord", combineWords);
+        this.$store.dispatch("setWord", word);
+        // this.$store.state.combineWords = result.mnemonic;
+        this.$router.push("/success");
       } catch (ex) {
         console.log(ex);
       }

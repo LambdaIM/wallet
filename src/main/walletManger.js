@@ -133,7 +133,9 @@ walletManger.prototype.setDefaultWallet = function (address) {
 
 
     var objwallet;
+    log.info(target);
     this.walletList.forEach(function (obj) {
+
         if (target == obj.address) {
             objwallet = obj;
         }
@@ -245,6 +247,7 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
 
     var result = await this._getAccountInfo();
 
+    // log.info(`result  ============>>>>>>>> ${result}`);
     if (result.data.result.response.value == undefined && result.data.result.response.log != undefined) {
         throw new Error(result.data.result.response.log)
     }
@@ -372,7 +375,6 @@ walletManger.prototype.TransferConfirm = async function (password) {
         }
     });
     log.info('end')
-
     return result;
 }
 

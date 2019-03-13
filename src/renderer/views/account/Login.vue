@@ -102,8 +102,9 @@ export default {
       for (let index = 0; index < this.walletList.length; index++) {
         if (value == this.walletList[index].name) {
           this.address = this.walletList[index].address;
-          console.log(this.address);
-          // this.setDefaultWallet();
+          // console.log(this.address);
+
+          this.setDefaultWallet();
         }
       }
     },
@@ -131,7 +132,8 @@ export default {
           // }
           // });
           // this.login();
-          this.setDefaultWallet();
+          this.login();
+          // this.$router.push('/api')
         }
       });
     },
@@ -142,7 +144,13 @@ export default {
         var result = await ipc.callMain("loginDefaultWallet", {
           password: pass
         });
-        console.log(result);
+        console.log("login default wallet", result);
+        if (result.state) {
+          this.$Notice.success({
+            title: "Login success !"
+          });
+          this.$router.push("/home");
+        }
       } catch (ex) {
         console.log(ex);
       }
@@ -152,8 +160,9 @@ export default {
         var result = await ipc.callMain("setDefaultWallet", {
           address: this.address
         });
-        console.log(result);
-        this.login();
+        this.$store.dispatch("setaddress", this.address);
+        console.log("set default success", result);
+        // this.login();
       } catch (ex) {
         // console.log(ex);
         console.log("密码错误");

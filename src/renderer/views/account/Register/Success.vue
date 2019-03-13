@@ -28,7 +28,7 @@
 import Mybg from "@/components/common/useful/Mybg.vue";
 import { DAEMON_CONFIG } from "../../../..//config.js";
 import https from "@/server/https.js";
-import { mapState, mapMutations } from "vuex";
+// import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     getWords() {
-      this.words=this.$store.state.word;
+      this.words=this.$store.getters.getWords;
     },
     next() {
       this.$router.push("/export");
