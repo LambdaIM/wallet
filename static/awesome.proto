@@ -2,10 +2,15 @@ syntax = "proto3";
 
 package types;
 
+message BigInt {
+    int32 neg = 1;
+    bytes abs = 2;
+}
+
 message Account {
     
     bytes   address             = 1;
-    uint64  balance             = 2;
+    BigInt  balance             = 2;
     uint64  nonce               = 3;
     bytes   rootDealHash        = 4;   
     bytes   rootTxHash          = 5; 
@@ -33,7 +38,7 @@ message TxSend {
 message TxData {
     bytes   from       = 1 ;
     bytes   to         = 2 ;
-    uint64  amount     = 3;
+    BigInt  amount     = 3;
     uint64  gas        = 4;
     uint64  createTime = 5;
 }

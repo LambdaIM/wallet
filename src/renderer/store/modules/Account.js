@@ -4,6 +4,7 @@ const state = {
 
 }
 
+console.log('--------***************')
 const mutations = {
   setaddress: function (state, address) {
     console.log('mutations')

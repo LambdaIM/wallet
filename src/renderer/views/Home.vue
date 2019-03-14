@@ -2,7 +2,7 @@
   <div class="container">
     <Header/>
 
-    <p class="balance">Balance: {{balance}} LAMB</p>
+    <p class="balance">Balance: {{balance|formatValue}} </p>
 
     <MyTable title="Latest Local Transaction Records" class="mt20 mytable-container">
       <div class="operation" slot="operation">
@@ -22,6 +22,9 @@
         </template>
       </Table>
     </MyTable>
+    <div>
+          <Button to="/api">API 测试</Button>
+    </div>
 
     <div class="modal-container">
       <Modal
@@ -99,6 +102,9 @@ const settings = require("electron-settings");
 import filters from "../common/js/filter.js";
 import * as Utils from "web3-utils";
 
+
+
+
 export default {
   data() {
     return {
@@ -156,6 +162,8 @@ export default {
     }
   },
   mounted() {
+    this.getBalance();
+    this.transactionList(this.address);
     this.Interval = setInterval(() => {
       this.getBalance();
       this.transactionList(this.address);
@@ -262,8 +270,9 @@ export default {
       // console.log("importWallet");
       try {
         var res = await ipc.callMain("defaultWalletBlance", {});
-        this.address = res.result.address;
-        this.balance = res.result.balance / 10000;
+        this.address = res.data.address;
+        this.$store.dispatch("setaddress", this.address);
+        this.balance = res.data.balance ;
       } catch (ex) {
         console.log(ex);
       }
@@ -287,7 +296,7 @@ export default {
       try {
         var res = await ipc.callMain("transactionList", {});
         // console.log(res);
-        let tempData = res.result.data;
+        let tempData = res.data.data;
         this.data = [];
         if (tempData && tempData.code == 200) {
           tempData.data.txList.forEach(item => {

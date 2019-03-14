@@ -165,7 +165,7 @@ export default {
       try {
         var res = await ipc.callMain("transactionList", {});
         // console.log(res);
-        let tempData = res.result.data;
+        let tempData = res.data.data;
         this.data=tempData.data.txList;
       } catch (ex) {
         console.log(ex);

@@ -168,24 +168,11 @@ export default {
       this.$router.push("/");
       // console.log('8888')
     },
-    getAccountInfo() {
+   async getAccountInfo() {
       var _this=this;
-       https.fetchget(
-            `http://localhost:${DAEMON_CONFIG.RPC_PORT}/getWalletAddress/`
-          )
-          .then(function(res){
-            console.log(res.data.data);
-            _this.$data.walletInfo=res.data.data
-            
-            
-
-          })
+      var res = await ipc.callMain("defaultWalletBasicinfo", {});
+      _this.$data.walletInfo=res.data
        
-     
-      
-       
-      
-      
     },
     openkeystore(){
       ipc.callMain('openkeystore', {})

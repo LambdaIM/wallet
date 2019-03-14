@@ -1,6 +1,11 @@
 import moment from "moment";
+const BigNumber = require('bignumber.js');
+BigNumber.config({ DECIMAL_PLACES: 8 })
+
 const formatValue = (value) => {
-    return `${value / 10000} LAMB`;
+    var bigvalue=new BigNumber(value);
+    var uservalue = bigvalue.div('1e18')
+    return `${uservalue.toFormat() } LAMB`;
 }
 
 const formatDate = (value) => {

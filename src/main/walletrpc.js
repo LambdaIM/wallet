@@ -23,23 +23,23 @@ export default  function(){
             return resultView(result,true)
 
         }catch(ex){
-            return resultView(null,false,ex)
+            throw resultView(null,false,ex)
         }
     })
     eipc.answerRenderer('setDefaultWallet',async(query)=>{
         var address =query.address;
         if(address==undefined){
-            return resultView(null,false,'need address')
+            throw resultView(null,false,'need address')
         }
         if(isAddress(address)==false){
-            return resultView(null,false,'Incorrect address format')
+            throw resultView(null,false,'Incorrect address format')
         }
         try{
             WM.setDefaultWallet(address);
             return resultView(null,true)
 
         }catch(ex){
-            return resultView(null,false,ex)
+            throw resultView(null,false,ex)
         }
     })
 
@@ -47,7 +47,7 @@ export default  function(){
         log.info('loginDefaultWallet')
         var password =query.password;
         if(password == undefined){
-            return resultView(null,false,'need password')
+            throw resultView(null,false,'need password')
         }
         try{
             var info = WM.OpenDefaultwallet(password);
@@ -57,7 +57,7 @@ export default  function(){
             },true)
 
         }catch(ex){
-            return resultView(null,false,ex)
+            throw resultView(null,false,ex)
         }
     })
     eipc.answerRenderer('defaultWalletBasicinfo',async(query)=>{
@@ -67,7 +67,7 @@ export default  function(){
             return resultView(info,true)
 
         }catch(ex){
-            return resultView(null,false,ex)
+            throw resultView(null,false,ex)
         }
 
     })
@@ -76,17 +76,17 @@ export default  function(){
         log.info('createWallet');
         var {password,name} =query;
         if(password==undefined){
-            return resultView(null,false,'need password')
+            throw resultView(null,false,'need password')
         }
         if(name == undefined){
-            return resultView(null,false,'need name')
+            throw resultView(null,false,'need name')
         }
         try{
             var info = WM.creatWallet(password,name);
             return resultView(info,true)
 
         }catch(ex){
-            return resultView(null,false,ex)
+            throw resultView(null,false,ex)
         }
         
     })
@@ -94,13 +94,13 @@ export default  function(){
     eipc.answerRenderer('importWalletBykeyStore',async(query)=>{
         var {filepath,password,name} =query;
         if(filepath==undefined){
-            return resultView(null,false,'need filepath')
+            throw resultView(null,false,'need filepath')
         }
         if(password==undefined){
-            return resultView(null,false,'need password')
+            throw resultView(null,false,'need password')
         }
         if(name == undefined){
-            return resultView(null,false,'need name')
+            throw resultView(null,false,'need name')
         }
 
         try{
@@ -108,7 +108,7 @@ export default  function(){
             return resultView(null,true)
 
         }catch(ex){
-            return resultView(null,false,ex)
+            throw resultView(null,false,ex)
         }
         
     })
@@ -117,13 +117,13 @@ export default  function(){
         var {mnemonic,password,name} =query;
 
         if(mnemonic==undefined){
-            return resultView(null,false,'need mnemonic')
+            throw resultView(null,false,'need mnemonic')
         }
         if(password==undefined){
-            return resultView(null,false,'need password')
+            throw resultView(null,false,'need password')
         }
         if(name == undefined){
-            return resultView(null,false,'need name')
+            throw resultView(null,false,'need name')
         }
 
         try{
@@ -131,7 +131,7 @@ export default  function(){
             return resultView(null,true)
 
         }catch(ex){
-            return resultView(null,false,ex)
+            throw resultView(null,false,ex)
         }
         
     })
@@ -142,7 +142,7 @@ export default  function(){
             var data = await WM.getDefaultWalletBlance();
             return resultView(data,true)
         }catch(ex){
-            return resultView(null,false,ex)
+            throw resultView(null,false,ex)
         }
     })
 
@@ -154,33 +154,33 @@ export default  function(){
         // amount 需要判断  转账金额大小 数据类型
         // gas 目前默认值位1  转账金额大小 数据类型
         if(to==undefined){
-            return resultView(null,false,'need to address')
+            throw resultView(null,false,'need to address')
         }
         if(isAddress(to)==false){
-            return resultView(null,false,'Incorrect address format')
+            throw resultView(null,false,'Incorrect address format')
         }
         
 
         if(amount==undefined){
-            return resultView(null,false,'need amount')
+            throw resultView(null,false,'need amount')
         }
         if(isNaN(parseInt(amount)) ){
-            return resultView(null,false,'Incorrect amount format')
+            throw resultView(null,false,'Incorrect amount format')
         }
 
         if(gas==undefined){
-            return resultView(null,false,'need to gas')
+            throw resultView(null,false,'need to gas')
         }
 
         if(isNaN(parseInt(gas)) ){
-            return resultView(null,false,'Incorrect gas format')
+            throw resultView(null,false,'Incorrect gas format')
         }
         
         try{    
             var data = await WM.Transfer(to,amount,gas)
             return resultView(data,true)
         }catch(ex){
-            return resultView(null,false,ex)
+            throw resultView(null,false,ex)
         }
         
     })
@@ -195,7 +195,7 @@ export default  function(){
             var data = await WM.TransferConfirm(password);   
             return resultView(data,true)
         }catch(ex){
-            return resultView(null,false,ex)
+            throw resultView(null,false,ex)
         }
         
     })

@@ -14,7 +14,7 @@ export default new Vuex.Store({
     account
   },
   plugins: [
-    createPersistedState(),
+    // createPersistedState(),
     // createSharedMutations()  https://github.com/SimulatedGREG/electron-vue/issues/733
   ],
   strict: process.env.NODE_ENV !== 'production'

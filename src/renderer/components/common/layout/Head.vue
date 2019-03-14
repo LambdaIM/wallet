@@ -33,7 +33,30 @@
 </template>
 
 <script>
+const ipc = require('electron-better-ipc');
+
 export default {
+  mounted() {
+    this.WalletBasicinfo();
+  },
+  methods: {
+    async WalletBasicinfo() {
+      // console.log("importWallet");
+      try {
+        var res = await ipc.callMain("defaultWalletBasicinfo", {});
+        
+        this.$store.dispatch("setaddress", res.data.address);
+      } catch (ex) {
+        console.log(ex);
+        console.log('没有找到默认钱包，是否需要重新创建账号');
+        this.$Notice.error({
+                    title: 'No default wallet was found',
+                    desc: 'Please check your configuration file',
+                    duration: 1000
+                });
+      }
+    },
+  },
   computed: {
     address: function() {
       return this.$store.getters.getaddress;

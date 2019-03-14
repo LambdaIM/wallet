@@ -15,7 +15,7 @@ const path = require('path');
 var protofilepath = path.join(__static, '/awesome.proto');
 import Amino from 'irisnet-crypto/chains/iris/amino.js';
 var crypto = require("crypto");
-
+var BigInteger = require('bigi');
 function generatesha256(data) {
 
     let hash = crypto.createHash('sha256');
@@ -57,20 +57,23 @@ walletManger.prototype.scann = function () {
     this.walletList = [];
     var dir = DAEMON_CONFIG.WalletFile;
     var list = fs.readdirSync(dir);
-
     list.forEach((file) => {
-        file = path.join(dir, file);
-        var v3file = fs.readFileSync(file, 'utf8');
-        try {
-            v3file = JSON.parse(v3file);
-            if (v3file.address != undefined) {
-                this.walletList.push(v3file)
+        if(file.indexOf('.keyinfo')>0){
+            file = path.join(dir, file);
+            var v3file = fs.readFileSync(file, 'utf8');
+            try {
+                v3file = JSON.parse(v3file);
+                if (v3file.address != undefined) {
+                    this.walletList.push(v3file)
+                }
+            } catch (err) {
+
+                console.log(err)
+
             }
-        } catch (err) {
-
-            console.log(err)
-
+         
         }
+        
     })
 
 
@@ -116,6 +119,7 @@ walletManger.prototype.setDefaultWallet = function (address) {
     log.info('setDefaultWallet')
     var addressdefault = this.readconfig()
     // addressdefault=addressdefault.toUpperCase();
+    log.info('setDefaultWallet',addressdefault,address)
     var target;
 
 
@@ -132,6 +136,7 @@ walletManger.prototype.setDefaultWallet = function (address) {
             
         }
         target = this.walletList[0].address
+        this.setconfig(target)
     }
 
 
@@ -196,7 +201,7 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name) {
     var walletjson = wallet.toV3(password)
     walletjson.name = name;
 
-    var filepath = path.join(DAEMON_CONFIG.WalletFile, wallet.getV3Filename() + '.json');
+    var filepath = path.join(DAEMON_CONFIG.WalletFile, wallet.getV3Filename() + '.keyinfo');
 
     var result = fs.writeFileSync(filepath, JSON.stringify(walletjson))
     this.scann();
@@ -241,7 +246,7 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
     v3file.name = name;
 
     wallet = ETHwallet.fromV3(v3file, password);
-    var targetpath = path.join(DAEMON_CONFIG.WalletFile, wallet.getV3Filename() + '.json');
+    var targetpath = path.join(DAEMON_CONFIG.WalletFile, wallet.getV3Filename() + '.keyinfo');
     fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8')
 
     return true;
@@ -249,6 +254,8 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
 
 
 walletManger.prototype.getDefaultWalletBlance = async function () {
+    log.info('getDefaultWalletBlance')
+    log.info(this.defaultwallet)
     log.info('getDefaultWalletBlance')
     if(this.defaultwallet==null){
        throw new Error('not find DefaultWallet')
@@ -266,9 +273,12 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
     var buf = Buffer.from(accountInfo, 'base64');
     var AccountMessage = protoRoot.lookupType('types.Account');
     var Message = AccountMessage.decode(buf);
+    
+    var userbalance = BigInteger.fromBuffer(Message.balance.abs)
+
     var acountjson = {
         address: Message.address.toString('hex'),
-        balance: parseInt(Message.balance, 10),
+        balance: userbalance.toString(),
         nonce: parseInt(Message.nonce, 10)
     }
 

@@ -14,8 +14,10 @@ class Transaction {
     
   }
   readconfig(){
+    log.info('defaultwallet num value');
+    log.info(settings.has('defaultwallet'));
 
-    if(settings.has('defaultwallet')!=undefined){
+    if(settings.has('defaultwallet')!=false){
         this.defaultAddress = settings.get('defaultwallet')
         this.defaultAddress=this.defaultAddress.toLocaleLowerCase();
     }
