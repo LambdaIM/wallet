@@ -91,6 +91,7 @@ export default {
   },
   mounted() {
     var open = settings.get("isopenfile");
+    console.log(open);
     if (open) {
       this.$router.push("/home");
     }

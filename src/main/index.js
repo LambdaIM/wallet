@@ -62,7 +62,7 @@ function createWindow() {
         useContentSize: true,
         width: 975,
         autoHideMenuBar: true,
-        // title:'lamb wallet'
+        // title:'lamb wallet',
         // resizable: true,
         // frame: false
     })

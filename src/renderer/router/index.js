@@ -47,6 +47,12 @@ export default new Router({
             import('@/views/account/Register/Export.vue'),
     },
     {
+        path: '/detail/:id',
+        name: 'detail',
+        component: () =>
+            import('@/views/Detail.vue')
+    },
+    {
         path: '/import',
         name: 'Import',
         component: () =>

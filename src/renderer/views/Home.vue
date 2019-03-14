@@ -2,16 +2,7 @@
   <div class="container">
     <Header/>
 
-    <div class="account-info-container">
-      <Row class-name="account-info-wrapper" type="flex" justify="space-between">
-        <Col span="4" class="account-item">
-          <div class="item-wrapper">
-            <p class="title">Balance</p>
-            <p class="value">{{balance}} LAMB</p>
-          </div>
-        </Col>
-      </Row>
-    </div>
+    <p class="balance">Balance: {{balance}} LAMB</p>
 
     <MyTable title="Latest Local Transaction Records" class="mt20 mytable-container">
       <div class="operation" slot="operation">
@@ -24,6 +15,10 @@
           <Poptip word-wrap trigger="hover" width="200" :content="row.source">
             <span class="etc">{{row.source}}</span>
           </Poptip>
+        </template>
+        <template slot-scope="{ row, index }" slot="action">
+          <Button type="primary" size="small" @click="toDetail(row,index)">View Detail</Button>
+          <!-- <Button type="error" size="small" @click="remove(index)">Delete</Button> -->
         </template>
       </Table>
     </MyTable>
@@ -92,14 +87,6 @@
         </div>
       </Modal>
     </div>
-    <div style="margin-top: 50px">
-      <router-link to="/test">
-        <Button type="primary">Test</Button>
-      </router-link>
-      <router-link to="/api">
-        <Button type="primary">api</Button>
-      </router-link>
-    </div>
   </div>
 </template>
 
@@ -116,7 +103,7 @@ export default {
   data() {
     return {
       stateType: null,
-      balance: "",
+      balance: 0,
       address: "",
       sendModal: false,
       columns: [
@@ -140,6 +127,11 @@ export default {
         {
           title: "Status",
           key: "status"
+        },
+        {
+          title: "detail",
+          key: "detail",
+          slot: "action"
         }
       ],
       data: [],
@@ -167,12 +159,18 @@ export default {
     this.Interval = setInterval(() => {
       this.getBalance();
       this.transactionList(this.address);
-    }, 2000*5);
+    }, 2000 * 5);
   },
   beforeDestroy() {
     clearInterval(this.$data.Interval);
   },
   methods: {
+    toDetail(row, index) {
+      console.log(row, index);
+      let id = index;
+      console.log(id);
+      this.$router.push(`/detail/${id}`);
+    },
     openSend() {
       this.sendModal = true;
     },
@@ -255,7 +253,7 @@ export default {
         console.log(res);
         await this.getBalance();
         await this.transactionList();
-        this.passwordModal=false;
+        this.passwordModal = false;
       } catch (ex) {
         console.log(ex);
       }
@@ -312,6 +310,12 @@ export default {
 
 <style lang="less" scoped>
 .container {
+  .balance {
+    width: 96%;
+    margin: 0 auto;
+    margin-top: 30px;
+    font-size: 18px;
+  }
   .account-info-container {
     width: 100%;
     height: 90px;
@@ -347,6 +351,7 @@ export default {
     }
   }
   .mytable-container {
+    padding-bottom: 100px;
     .operation-wrapper {
       height: 40px;
       .operation {
