@@ -5,7 +5,7 @@ export default function(result,state,errormsg,errorcode){
         log.error(errormsg); 
     }
     return {
-        result:result,
+        data:result,
         state:state,
         errorcode:errorcode,
         errormsg:errormsg instanceof Error?errormsg.message:errormsg

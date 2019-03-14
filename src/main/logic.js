@@ -1,8 +1,8 @@
 var fs = require('graceful-fs')
 var {DAEMON_CONFIG} =require('../configmain.js');
+const settings = require('electron-settings');
+const path = require('path');
 
-import rpc from './rpc';
-import pay from './pay';
 import walletrpc from './walletrpc';
 import transactionrpc from './transactionrpc';
 
@@ -21,11 +21,21 @@ function creatDir(){
     }
 }
 
+function initializeSeting(){
+    settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH,'set.json') );
+
+    if(settings.has('user.node')==false){
+        //http://18.136.176.184:13657/abci_query
+        settings.set('user', {
+            node: 'http://18.136.176.184:13657/'
+          });
+
+    }
+}
 
 export default function(){
     creatDir();
-    rpc();
-    pay();
+    initializeSeting();
     walletrpc();
     transactionrpc();
 

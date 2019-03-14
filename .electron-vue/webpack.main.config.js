@@ -70,23 +70,23 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),
-    new CopyWebpackPlugin([
-      {
-        from: path.join(__dirname, '../src/rpcserver'),
-        to: path.join(__dirname, '../node_modules'),
-        ignore: ['.*']
-      }
-    ]),
+    // new CopyWebpackPlugin([
+    //   {
+    //     from: path.join(__dirname, '../src/rpcserver'),
+    //     to: path.join(__dirname, '../node_modules'),
+    //     ignore: ['.*']
+    //   }
+    // ]),
   )
 }else{
   mainConfig.plugins.push(
-    new CopyWebpackPlugin([
-      {
-        from: path.join(__dirname, '../src/rpcserver'),
-        to: path.join(__dirname, '../node_modules/rpcserver'),
-        ignore: ['.*']
-      }
-    ]),
+    // new CopyWebpackPlugin([
+    //   {
+    //     from: path.join(__dirname, '../src/rpcserver'),
+    //     to: path.join(__dirname, '../node_modules/rpcserver'),
+    //     ignore: ['.*']
+    //   }
+    // ]),
   )
 }
 

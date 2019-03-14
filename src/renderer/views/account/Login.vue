@@ -8,10 +8,10 @@
               <p class="title">LAMBDA Wallet</p>
             </div>
           </div>
-          <p v-for="(item,index) in walletList" :key="index">
+          <!-- <p v-for="(item,index) in walletList" :key="index">
             <span>{{item.name}}</span>
             <span>{{item.address}}</span>
-          </p>
+          </p> -->
           <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
             <FormItem prop="name">
               <Select v-model="value" @on-change="selectName" clearable size="large">
@@ -19,7 +19,7 @@
                   v-for="(item,index) in walletList"
                   :value="item.name"
                   :key="index"
-                >{{ item.name}}</Option>
+                >{{ item.name}} &nbsp; &nbsp;    [{{item.address.slice(0,7)}}.....{{item.address.slice(-7)}}]</Option>
               </Select>
             </FormItem>
 
@@ -162,7 +162,7 @@ export default {
         var result = await ipc.callMain("setDefaultWallet", {
           address: this.address
         });
-        this.$store.dispatch("setaddress", this.address);
+        // this.$store.dispatch("setaddress", this.address);
         console.log("set default success", result);
         // this.login();
       } catch (ex) {
@@ -173,7 +173,7 @@ export default {
     getwalletList() {
       // console.log("- -");
       ipc
-        .callMain("getwalletList", {})
+        .callMain("walletList", {})
         .then(res => {
           console.log(res.data);
           this.walletList = res.data;

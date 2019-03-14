@@ -16,7 +16,7 @@ import transactionManager from './transactionManager.js';
             return resultView(result,true)
 
         }catch(ex){
-            return resultView(null,false,ex)
+          throw resultView(null,false,ex)
         }
     })
     eipc.answerRenderer('transactionInfo',async(query)=>{
@@ -29,7 +29,7 @@ import transactionManager from './transactionManager.js';
           return resultView(result,true)
 
       }catch(ex){
-          return resultView(null,false,ex)
+        throw resultView(null,false,ex)
       }
   })
 

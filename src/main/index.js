@@ -12,7 +12,7 @@ import { connect } from 'net';
 import logicrpc from './logic.js';
 
 var log = require('../log').log;
-const settings = require('electron-settings');
+// const settings = require('electron-settings');
 
 log.info('start');
 
@@ -21,15 +21,15 @@ log.info('start');
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
-let DAEMON ;
+// let DAEMON ;
 
-if (process.env.NODE_ENV !== 'development') {
-    global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+// if (process.env.NODE_ENV !== 'development') {
+//     global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
     
-    DAEMON = join(__dirname, "/static/rpc-server.js");
-}else{
-    DAEMON = join(__dirname, "../../static/rpc-server.js");
-}
+//     DAEMON = join(__dirname, "/static/rpc-server.js");
+// }else{
+//     DAEMON = join(__dirname, "../../static/rpc-server.js");
+// }
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development' ?
@@ -37,21 +37,7 @@ const winURL = process.env.NODE_ENV === 'development' ?
     `file://${__dirname}/index.html`
 
 
-    function initRPCServer(callback) {
-        let RPCServer = fork(DAEMON, [], { env: { RPC_PORT: DAEMON_CONFIG.RPC_PORT } });
-        process.on('exit', () => {
-          RPCServer.kill()
-        });
-
-        RPCServer.on('error', (error) => {
-          log.error('error');
-          initRPCServer(callback)
-        })
-      }
-
-      function maybeStartDaemon(callback) {
-        initRPCServer(callback)
-      }
+    
 
 function createWindow() {
     /**
@@ -77,11 +63,7 @@ logicrpc
         mainWindow = null
     })
 
-    maybeStartDaemon(() => {
-        initRPCServer((msg) => {
     
-        });
-    });
     
     logicrpc();
 }
@@ -93,13 +75,13 @@ function Max() {
 
 function creatSeting(){
     
-    if(settings.has('user.node')==false){
-        //http://18.136.176.184:13657/abci_query
-        settings.set('user', {
-            node: 'http://18.136.176.184:13657/'
-          });
+    // if(settings.has('user.node')==false){
+    //     //http://18.136.176.184:13657/abci_query
+    //     settings.set('user', {
+    //         node: 'http://18.136.176.184:13657/'
+    //       });
 
-    }
+    // }
     
 }
 
