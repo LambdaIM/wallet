@@ -149,6 +149,7 @@ export default {
           this.$Notice.success({
             title: "Login success !"
           });
+          settings.set("isopenfile", true);
           this.$router.push("/home");
         }
       } catch (ex) {
