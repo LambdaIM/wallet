@@ -13,10 +13,11 @@ var crypto    = require("crypto");
 
 var log = require('../log').log;
 var {DAEMON_CONFIG} =require('../config.js')
-
+const BigNumber = require('bignumber.js');
 
 import ETHwallet from './ETHv3wallet.js'
 import Amino  from 'irisnet-crypto/chains/iris/amino.js'
+var BigInteger = require('bigi')
 
 
 
@@ -58,24 +59,33 @@ export default function(){
             log.info('start pay data')
               var result = await  getAccountInfo();
               //if not have the account neet to log
-              log.info(result)
+              // log.info(result)
               var accountInfo =result.data.result.response.value;
               const protoRoot = await  protobuf.load(protofilepath);
 
               
               var buf=Buffer.from(accountInfo,'base64');
+
               var AccountMessage = protoRoot.lookupType('types.Account');
               var Message=AccountMessage.decode(buf);
               var acountjson={
                 address:Message.address.toString('hex'),
-                balance:parseInt(Message.balance, 10),
+                
                 nonce:parseInt(Message.nonce, 10)
               }
-                            
+              var BigIntMessage = protoRoot.lookupType('types.BigInt');
+              
+    
+              var bigamount = new BigInteger(query.amount);
+              var BigIntMessageValue = BigIntMessage.create({
+                neg:1,
+                abs:bigamount.toBuffer()
+              })
+              
               var payload = { 
                 from: Buffer.from(acountjson.address,'hex') ,
                 to:Buffer.from(query.to,'hex') ,
-                amount:query.amount ,
+                amount:BigIntMessageValue ,
                 gas: 1,
                 createTime :  +(new Date()).getTime().toString().substr(0,10)
               };
@@ -115,9 +125,12 @@ export default function(){
               if (errMsg)
                 return {data:JSON.stringify(errMsg),state:false} 
               var TxPay = TxPayloadMessage.create(TxPayload);
-            
+
+              
+
               lastpayobj=TxPay;
               lastpayArry= TxPayloadMessage.encode(TxPay).finish();
+              
               return {data:TxPay,state:true} ;
             
         } catch (error) {
@@ -171,6 +184,9 @@ export default function(){
 
       var TxMessagebuffer = TxMessage.encode(TxMessageData).finish();
       var TxMessageJson = TxMessagebuffer.toJSON();  
+      
+
+      
       var  result = await axios.get(txinfourl, {
             params: {
               tx:JSON.stringify(TxMessageJson.data)

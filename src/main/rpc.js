@@ -6,7 +6,8 @@ const { shell } = require('electron');
 var {DAEMON_CONFIG} =require('../config.js')
 
 var log = require('../log').log;
-
+const BigNumber = require('bignumber.js');
+var BigInteger = require('bigi')
 
  export default function(){
      
@@ -52,11 +53,14 @@ var log = require('../log').log;
               var buf=Buffer.from(value,'base64');
               
               var AccountMessage = protoRoot.lookupType(query.dataType);
-              var Message=AccountMessage.decode(buf);
+              
+              var Message=AccountMessage.decode(buf); 
+              var userbalance = BigInteger.fromBuffer(Message.balance.abs)
               
               var acountjson={
                 address:Message.address.toString('hex'),
-                balance:parseInt(Message.balance, 10),
+                balance:userbalance.toString()   ,
+                
                 nonce:parseInt(Message.nonce, 10)
               }
             return {data:acountjson,state:true} ;
