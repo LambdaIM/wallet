@@ -61,6 +61,18 @@
           
         </div>
       </Mycard>
+      <Mycard v-if="getstore.length==0" cardtitle="Validator Node info" class="mb10">
+        <div class="storage-content" slot="card-content">
+          <Row   class-name="card-item">
+            <Col span="4" class-name="title-wrapper">
+              &nbsp;
+            </Col>
+            <Col span="12" class-name="content-wrapper">
+              <span><router-link to="/validator" class="item">Switch Validator</router-link></span>
+            </Col>
+          </Row>
+        </div>
+      </Mycard>
 
       <!-- <Mycard cardtitle="Storage Info" class="mb10">
         <div class="storage-content" slot="card-content">
@@ -142,7 +154,7 @@
               <span class="title">Current Version</span>
             </Col>
             <Col span="3" class-name="content-wrapper">
-              <span>V0.0.1</span>
+              <span>V0.1.1</span>
             </Col>
             <!-- <Col span="3" class-name="content-wrapper">
               <a>Check Version</a>

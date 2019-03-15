@@ -53,6 +53,8 @@
     "dependencies": {
         "@webfans/bcrypt": "^3.0.4",
         "axios": "^0.18.0",
+        "bigi": "^1.4.2",
+        "bignumber.js": "^8.1.1",
         "body-parser": "^1.18.3",
         "buffer-to-uint8array": "^1.1.0",
         "crypto": "^1.0.1",
