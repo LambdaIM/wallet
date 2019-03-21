@@ -34,7 +34,7 @@
           </div>
         </Col>
     </Row>-->
-    <p class="balance"> Balance: {{balance}} LAMB</p>
+    <p class="balance"> Balance: {{balance|formatValue}} </p>
     <!-- </div> -->
     <MyTable title="Latest  Transaction Records" class="mt20 mytable-container">
       <div class="operation" slot="operation">
@@ -149,7 +149,9 @@ import https from "@/server/https.js";
 const ipc = require("electron-better-ipc");
 const settings = require("electron-settings");
 import filters from "../common/js/filter.js";
+import wUtils from "../common/js/utils.js";
 import * as Utils from "web3-utils";
+
 export default {
   data() {
     return {
@@ -339,15 +341,17 @@ export default {
         });
         return;
       }
-      if (value <= 0 || value > this.$data.accountinfo.balance) {
+      
+      if (value <= 0 || value > wUtils.bigToNumber(this.$data.accountinfo.balance) ) {
         // need to alert
         this.$Notice.warning({
           title: "Please check the balance and the amount of transfer."
         });
         return;
       }
+      value = wUtils.numberToBig(value) ;
       console.log(from, to, value);
-      value = value * 10000;
+      
       if (Utils.isAddress(to) == false) {
         // need to alert
         this.$Notice.warning({
@@ -518,7 +522,7 @@ export default {
   computed: {
     balance: function() {
       if (this.$data.accountinfo && this.$data.accountinfo.balance) {
-        return this.$data.accountinfo.balance / 10000;
+        return this.$data.accountinfo.balance ;
       } else {
         return 0;
       }
