@@ -326,6 +326,8 @@ export default {
           if (res != undefined) {
             _this.$data.accountinfo = res.data;
             _this.getpaylist(res.data.address);
+          }else{
+            _this.$data.loading=false;
           }
         });
     },

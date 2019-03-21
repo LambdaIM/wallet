@@ -116,6 +116,9 @@ export default {
       
 
       var nodeBaseUrl =this.$data.ValidatorIP;
+       if(nodeBaseUrl.endsWith('/')==false){
+         nodeBaseUrl+='/';
+       }
       var pra = {
               url:nodeBaseUrl +"status",
               data: {}
