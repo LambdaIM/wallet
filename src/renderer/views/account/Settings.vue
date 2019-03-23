@@ -39,7 +39,7 @@
 
            <Mycard v-if="getstore.length>0" cardtitle="Validator Node info" class="mb10">
         <div class="storage-content" slot="card-content">
-          <Row v-if="item[0]!='version'" v-for="item in getstore"  class-name="card-item">
+          <Row v-if="item[0]!='pub_key'" v-for="item in getstore"  class-name="card-item">
             <Col  span="4" class-name="title-wrapper">
               <span class="title">{{item[0]}}</span>
             </Col>
@@ -236,7 +236,7 @@ export default {
       try {
       // this.$data.node_info=this.$store.getters.info.node_info;
 
-        return _.pairs(this.$store.getters.info.node_info);  
+        return _.pairs(this.$store.getters.info.validator_info);  
       } catch (error) {
         return [];
       }
