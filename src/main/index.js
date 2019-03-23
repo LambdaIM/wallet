@@ -5,6 +5,12 @@ import { fork } from 'child_process';
 import { DAEMON_CONFIG } from "../config.js";
 import { join } from "path";
 import { connect } from 'net';
+const settings = require('electron-settings');
+var fs = require('graceful-fs');
+if(fs.existsSync(DAEMON_CONFIG.BASE_PATH)==false) {
+    fs.mkdirSync(DAEMON_CONFIG.BASE_PATH);
+}
+settings.setPath(join(DAEMON_CONFIG.BASE_PATH,'set.json'));
 
 
 
@@ -12,7 +18,6 @@ import rpc from './rpc';
 import pay from './pay';
 
 var log = require('../log').log;
-const settings = require('electron-settings');
 
 log.info('start');
 
@@ -98,7 +103,7 @@ function creatSeting(){
     if(settings.has('user.node')==false){
         //http://18.136.176.184:13657/abci_query
         settings.set('user', {
-            node: 'http://39.97.129.59:13657/'
+            node: 'http://39.105.87.87:13657/'
           });
 
     }

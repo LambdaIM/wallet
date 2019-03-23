@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import { DAEMON_CONFIG } from "../../config.js";
 const settings = require("electron-settings");
-
+import { join } from "path";
+settings.setPath(join(DAEMON_CONFIG.BASE_PATH,'set.json'));
 Vue.use(Router)
 
 

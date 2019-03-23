@@ -244,6 +244,14 @@ export default {
   beforeDestroy() {
     clearInterval(this.$data.Interval);
   },
+  beforeUpdate() {
+    var open = settings.get('isopenfile')
+    if(open!=true){
+      this.$store.dispatch("setaddress", {});
+      settings.set("isopenfile", false);
+      this.$router.push("/");
+    }
+  },
   methods: {
     toDetail(row, index) {
       console.log(row, index);
