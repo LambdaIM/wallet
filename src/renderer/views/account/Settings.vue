@@ -39,8 +39,8 @@
 
            <Mycard v-if="getstore.length>0" cardtitle="Validator Node info" class="mb10">
         <div class="storage-content" slot="card-content">
-          <Row v-for="item in getstore"  class-name="card-item">
-            <Col span="4" class-name="title-wrapper">
+          <Row v-if="item[0]!='version'" v-for="item in getstore"  class-name="card-item">
+            <Col  span="4" class-name="title-wrapper">
               <span class="title">{{item[0]}}</span>
             </Col>
             <Col span="12" class-name="content-wrapper">

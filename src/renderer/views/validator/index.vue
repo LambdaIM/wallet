@@ -11,9 +11,9 @@
 
  
     
-      <Mycard v-if="node_info.length>0" cardtitle="Node info" class="mb10">
+      <Mycard  v-if="node_info.length>0" cardtitle="Node info" class="mb10">
         <div class="storage-content" slot="card-content">
-          <Row v-for="item in node_info" class-name="card-item">
+          <Row v-if="item[0]!='version'"  v-for="item in node_info" class-name="card-item">
             <Col span="4" class-name="title-wrapper">
               <span class="title">{{item[0]}}</span>
             </Col>
