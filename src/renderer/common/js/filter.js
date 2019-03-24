@@ -9,7 +9,11 @@ const formatValue = (value) => {
 }
 
 const formatDate = (value) => {
-    return moment(value).format("YYYY-MM-DD HH:mm:ss");
+    return moment(value).utc().format("YYYY-MM-DD HH:mm:ss");
+}
+
+const formatDateD = (value) => {
+    return moment(value).utc().add(8, 'h').format("YYYY-MM-DD HH:mm:ss");
 }
 
 const formatStatus = (value) => {
@@ -34,5 +38,6 @@ export default {
     formatDate,
     formatStatus,
     formatSize,
-    formatStringToTime
+    formatStringToTime,
+    formatDateD
 }

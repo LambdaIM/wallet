@@ -30,7 +30,9 @@
               <span class="title">{{item[0]}}</span>
             </Col>
             <Col span="12" class-name="content-wrapper">
-              <span>{{item[1]}}</span>
+              <span v-if="item[0]!='latest_block_time'">{{item[1]}}</span>
+              <span v-else>{{item[1]|formatDateD}}</span>
+
               <span style="color:red" v-if="item[0]=='catching_up'&&item[1]==true">Syncing blocks....</span>
 
             </Col>
