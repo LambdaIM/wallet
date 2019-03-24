@@ -11,7 +11,7 @@ let BASE_PATH = path.join(os.homedir(), 'lambWallet');
 //homedir  系统默认的文件存储路径
 
 module.exports.DAEMON_CONFIG  = {
-    RPC_PORT:8084,
+    RPC_PORT:19067,
     BASE_PATH:BASE_PATH,
     explorer:'http://explorer.lambda.im/'
     
