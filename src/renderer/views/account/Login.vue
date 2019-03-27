@@ -90,12 +90,12 @@ export default {
     Mybg
   },
   mounted() {
-    this.getwalletList();
-    var open = settings.get("isopenfile");
+    // var open = settings.get("isopenfile");
     // console.log(open);
-    if (open) {
-      this.$router.push("/home");
-    }  
+    // if (open) {
+    //   this.$router.push("/home");
+    // }
+    this.getwalletList();
   },
   methods: {
     selectName(value) {
