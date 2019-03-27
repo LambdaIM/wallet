@@ -1,24 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 const settings = require("electron-settings");
+const path = require('path');
+var {DAEMON_CONFIG} =require('../../configmain.js');
 
 Vue.use(Router)
+settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH,'set.json') );
 
 
-export default new Router({
+ var walletRouter = new Router({
     routes: [{
         path: '/',
         name: 'Login',
-        // beforeEnter: (to, from, next) => {
-        //     var open = settings.get('isopenfile')
-        //     console.log('open',open)
-        //     if(open){
-        //         next("/home")
-        //     }else{
-        //         next()
-        //     }
-        // },
         component: () =>
             import('@/views/account/Login.vue')
     },
@@ -88,3 +81,34 @@ export default new Router({
     }
     ]
 })
+
+var notNeedLogin=['Login','Register','Success','Export','Import']
+var _this=this;
+walletRouter.beforeResolve((to, from, next) => {
+    // ...
+    console.log('router')
+    var open = settings.get('isopenfile');
+
+    if(notNeedLogin.indexOf(to.name)==-1){
+        
+        console.log('open',open)
+        console.log(_this)
+        if(open==false){
+            next("/")
+        }else{
+            next()    
+        }
+
+    }else{
+        if(to.name=='Login'&&open==true){
+            next('Home')
+        }else{
+            next()
+        }
+        
+    }
+            
+  })
+
+
+export default  walletRouter
