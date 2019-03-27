@@ -117,48 +117,25 @@ export default {
           password,
           name
         });
-        console.log(res.result.mnemonic);
-        let word = res.result.mnemonic.split(" ");
-        // console.log(word);
-        let combineWords = res.result.mnemonic;
-        this.$store.dispatch("setCombineWord", combineWords);
-        this.$store.dispatch("setWord", word);
-        // this.$store.state.combineWords = result.mnemonic;
-        this.$router.push("/success");
+        console.log(res);
+        if (!res.state) {
+          this.$Notice.error({
+            desc: "Create failed",
+            duration: 1000
+          });
+        } else {
+          let word = res.data.mnemonic.split(" ");
+          // console.log(word);
+          let combineWords = res.data.mnemonic;
+          this.$store.dispatch("setCombineWord", combineWords);
+          this.$store.dispatch("setWord", word);
+          // this.$store.state.combineWords = result.mnemonic;
+          this.$router.push("/success");
+        }
       } catch (ex) {
         console.log(ex);
       }
     },
-    // creaeWallet(name) {
-    //   // console.log('clickd');
-    //   this.$refs[name].validate(valid => {
-    //     if (valid) {
-    //       let param = {
-    //         name: this.formInline.walletName,
-    //         password: this.formInline.password
-    //       };
-    //       try {
-    //         https
-    //           .fetchget(
-    //             `http://localhost:${
-    //               DAEMON_CONFIG.RPC_PORT
-    //             }/createWallet/${encodeURIComponent(param.password)}/${
-    //               param.name
-    //             }`
-    //           )
-    //           .then(res => {
-    //             let data = res.data.data;
-    //             console.log(data);
-    //             this.$store.state.word = data.split(" ");
-    //             this.$store.state.combineWords = data;
-    //             this.$router.push("/success");
-    //           });
-    //       } catch (error) {
-    //         console.log(error);
-    //       }
-    //     }
-    //   });
-    // },
     validatePass(rule, value, callback) {
       if (value === "") {
         callback(new Error("Please enter your password"));

@@ -1,10 +1,10 @@
 const state = {
   address: '',
-  blance: 0
-
+  blance: 0,
+  loginState: false
 }
 
-console.log('--------***************')
+console.log('--------***************');
 const mutations = {
   setaddress: function (state, address) {
     console.log('mutations')
@@ -12,8 +12,11 @@ const mutations = {
   },
   setblance: function (state, blance) {
     state.blance = blance;
+  },
+  setLogin: function (state,loginState) {
+    console.log('setLogin');
+    state.loginState=loginState;
   }
-
 }
 
 
@@ -24,12 +27,16 @@ const actions = {
   },
   setblance: function ({ blance }) {
     commit('setblance', address)
-  }
+  },
+  set: function (context, loginState) {
+    console.log('actions login')
+    context.commit('setLogin', loginState)
+  },
 }
 const getters = {
   getaddress: state => {
     return state.address
-  }
+  },
 }
 
 

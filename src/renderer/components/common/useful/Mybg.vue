@@ -3,11 +3,11 @@
     <keep-alive>
       <div class="bg-img-container"></div>
     </keep-alive>
-    <div class="bg-logo-container">
+    <!-- <div class="bg-logo-container">
       <keep-alive>
         <img @click="goHome" class="logo" src="../../../assets/img/logo.png" alt>
       </keep-alive>
-    </div>
+    </div> -->
     <div class="bg-content-container">
       <slot name="content"></slot>
     </div>

@@ -10,15 +10,15 @@ export default new Router({
     routes: [{
         path: '/',
         name: 'Login',
-        beforeEnter: (to, from, next) => {
-            var open = settings.get('isopenfile')
-            console.log('open',open)
-            if(open){
-                next("/home")
-            }else{
-                next()
-            }
-        },
+        // beforeEnter: (to, from, next) => {
+        //     var open = settings.get('isopenfile')
+        //     console.log('open',open)
+        //     if(open){
+        //         next("/home")
+        //     }else{
+        //         next()
+        //     }
+        // },
         component: () =>
             import('@/views/account/Login.vue')
     },

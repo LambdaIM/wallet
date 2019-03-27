@@ -1,6 +1,5 @@
 <template>
   <div class="setting-container">
-    <Header/>
     <div class="setting-wrapper">
       <Mycard v-if="walletInfo" cardtitle="Wallet Info" class="mb10">
         <div class="storage-content" slot="card-content">
@@ -131,7 +130,6 @@
 </template>
 
 <script>
-import Header from "@/components/common/layout/Head.vue";
 import Mycard from "@/components/common/useful/Mycard.vue";
 
 import https from "@/server/https.js";
@@ -186,7 +184,6 @@ export default {
     }
   },
   components: {
-    Header,
     Mycard
   }
 };

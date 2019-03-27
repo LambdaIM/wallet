@@ -11,7 +11,7 @@
           <!-- <p v-for="(item,index) in walletList" :key="index">
             <span>{{item.name}}</span>
             <span>{{item.address}}</span>
-          </p> -->
+          </p>-->
           <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
             <FormItem prop="name">
               <Select v-model="value" @on-change="selectName" clearable size="large">
@@ -19,7 +19,7 @@
                   v-for="(item,index) in walletList"
                   :value="item.name"
                   :key="index"
-                >{{ item.name}} &nbsp; &nbsp;    [{{item.address.slice(0,7)}}.....{{item.address.slice(-7)}}]</Option>
+                >{{ item.name}} &nbsp; &nbsp; [{{item.address.slice(0,7)}}.....{{item.address.slice(-7)}}]</Option>
               </Select>
             </FormItem>
 
@@ -90,12 +90,12 @@ export default {
     Mybg
   },
   mounted() {
+    this.getwalletList();
     var open = settings.get("isopenfile");
-    console.log(open);
+    // console.log(open);
     if (open) {
       this.$router.push("/home");
-    }
-    this.getwalletList();
+    }  
   },
   methods: {
     selectName(value) {
@@ -110,31 +110,9 @@ export default {
       }
     },
     openWallet(name) {
-      var _this = this;
       this.$refs[name].validate(valid => {
         if (valid) {
-          // let param = {
-          //   password: encodeURIComponent(this.formInline.password)
-          // };
-          // console.log(param.password);
-          // https
-          //   .fetchget(
-          //     `http://localhost:${DAEMON_CONFIG.RPC_PORT}/openWallet/${
-          //       param.password
-          //     }`
-          //   )
-          // .then(function(data) {
-          //   console.log(data);
-          // if (data.data && data.data.data && data.data.data.publicKey) {
-          //   settings.set("isopenfile", true);
-          //   _this.$router.push("/home");
-          // } else {
-          //   console.log("open fail");
-          // }
-          // });
-          // this.login();
           this.login();
-          // this.$router.push('/api')
         }
       });
     },
@@ -142,15 +120,17 @@ export default {
       console.log("loginDefaultWallet");
       let pass = this.formInline.password;
       try {
-        var result = await ipc.callMain("loginDefaultWallet", {
+        var res = await ipc.callMain("loginDefaultWallet", {
           password: pass
         });
-        console.log("login default wallet", result);
-        if (result.state) {
+        console.log("login default wallet", res);
+        if (res.state) {
           this.$Notice.success({
             title: "Login success !"
           });
-          settings.set("isopenfile", true);
+          let login=settings.set("isopenfile", true);
+          console.log(login);
+          this.$store.dispatch("set", login);
           this.$router.push("/home");
         }
       } catch (ex) {
@@ -159,11 +139,13 @@ export default {
     },
     async setDefaultWallet() {
       try {
-        var result = await ipc.callMain("setDefaultWallet", {
+        var res = await ipc.callMain("setDefaultWallet", {
           address: this.address
         });
         // this.$store.dispatch("setaddress", this.address);
-        console.log("set default success", result);
+        // console.log("set default success", res);
+        if (!res.state)  return;
+
         // this.login();
       } catch (ex) {
         // console.log(ex);
@@ -175,7 +157,8 @@ export default {
       ipc
         .callMain("walletList", {})
         .then(res => {
-          console.log(res.data);
+          // console.log(res);
+          if (!res.state) return;
           this.walletList = res.data;
         })
         .catch(err => {

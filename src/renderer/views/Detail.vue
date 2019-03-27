@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <Header/>
     <Mycard cardtitle="Transaction" class="mt20">
       <div class="transaction-content" slot="card-content">
         <Row class-name="card-item">
@@ -62,7 +61,6 @@
 </template>
 
 <script>
-import Header from "@/components/common/layout/Head.vue";
 import Mycard from "@/components/common/useful/Mycard.vue";
 import { DAEMON_CONFIG } from "../../config.js";
 import https from "@/server/https.js";
@@ -110,7 +108,6 @@ export default {
   },
   components: {
     Mycard,
-    Header
   },
   created() {
     let address = this.$store.getters.getaddress.toLowerCase();

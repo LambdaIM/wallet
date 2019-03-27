@@ -1,6 +1,5 @@
 <template>
   <div class="customer-container">
-    <Header/>
     <MyTable title="Customer(Order)" class="tableContainer">
       <Table :columns="columns" :data="data" slot="content"></Table>
     </MyTable>
@@ -8,7 +7,6 @@
 </template>
 
 <script>
-import Header from "@/components/common/layout/Head.vue";
 import MyTable from "@/components/common/useful/Mytable.vue";
 export default {
   data() {
@@ -82,7 +80,6 @@ export default {
     };
   },
   components: {
-    Header,
     MyTable
   }
 };

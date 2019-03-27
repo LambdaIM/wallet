@@ -5,7 +5,7 @@
         <img src="../../../assets/img/logo.png" class="head-logo" alt="lambda">
       </Col>
 
-      <Col span="16" offset="2" class-name="head-menu-wrapper">
+      <Col span="16" offset="2" v-if="login==true" class-name="head-menu-wrapper">
         <div class="head-menu">
           <div class="head-menu-item">
             <router-link to="/home" class="item">Home</router-link>
@@ -23,8 +23,20 @@
           <div class="head-menu-item overtext">
             <router-link to="/settings" class="item">
               <Icon style="display: inline;" type="md-settings" size="30"/>
-              {{address}}
             </router-link>
+          </div>
+
+          <div
+            v-clipboard:copy="address"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError"
+            class="head-menu-item overtext"
+            style="cursor: pointer"
+          >
+            <div class="item">
+              <Icon style="    display: inline;" type="ios-copy" size="20"/>
+              {{address}}
+            </div>
           </div>
         </div>
       </Col>
@@ -33,34 +45,54 @@
 </template>
 
 <script>
-const ipc = require('electron-better-ipc');
-
+const ipc = require("electron-better-ipc");
+const settings = require("electron-settings");
+import {mapState} from 'vuex';
 export default {
-  mounted() {
+  data() {
+    return {
+      // log: false
+    };
+  },
+  created() {
+    // this.isLogin();
     this.WalletBasicinfo();
   },
   methods: {
+    onCopy(e) {
+      this.$Message.info("You just copied: " + e.text);
+    },
+    onError(e) {
+      this.$Message.info("Failed to copy texts");
+    },
     async WalletBasicinfo() {
       // console.log("importWallet");
       try {
-        var res = await ipc.callMain("defaultWalletBasicinfo", {});
-        
+        let res = await ipc.callMain("defaultWalletBasicinfo", {});
+        console.log(res);
+        if (!res.state) return;
         this.$store.dispatch("setaddress", res.data.address);
       } catch (ex) {
         console.log(ex);
-        console.log('没有找到默认钱包，是否需要重新创建账号');
+        console.log("没有找到默认钱包，是否需要重新创建账号");
         this.$Notice.error({
-                    title: 'No default wallet was found',
-                    desc: 'Please check your configuration file',
-                    duration: 1000
-                });
+          title: "No default wallet was found",
+          desc: "Please check your configuration file",
+          duration: 1000
+        });
       }
-    },
+    }
   },
   computed: {
     address: function() {
       return this.$store.getters.getaddress;
-    }
+    },
+    ...mapState({
+      login:state=>state.account.loginState
+    })
+    // login:function(){
+    //   return this.$store.getters.getLogin;
+    // }
   }
 };
 </script>

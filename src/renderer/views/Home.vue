@@ -1,7 +1,5 @@
 <template>
   <div class="container">
-    <Header/>
-
     <p class="balance">Balance: {{balance|formatValue}} </p>
 
     <MyTable title="Latest Local Transaction Records" class="mt20 mytable-container">
@@ -153,7 +151,6 @@ export default {
     };
   },
   components: {
-    Header,
     MyTable
   },
   computed: {
@@ -174,9 +171,9 @@ export default {
   },
   methods: {
     toDetail(row, index) {
-      console.log(row, index);
+      // console.log(row, index);
       let id = index;
-      console.log(id);
+      // console.log(id);
       this.$router.push(`/detail/${id}`);
     },
     openSend() {
@@ -258,7 +255,8 @@ export default {
         var res = await ipc.callMain("transferConfirm", {
           password
         });
-        console.log(res);
+        // console.log(res);
+        if(!res.state) return;
         await this.getBalance();
         await this.transactionList();
         this.passwordModal = false;
@@ -270,6 +268,7 @@ export default {
       // console.log("importWallet");
       try {
         var res = await ipc.callMain("defaultWalletBlance", {});
+        if(!res.state) return;
         this.address = res.data.address;
         this.$store.dispatch("setaddress", this.address);
         this.balance = res.data.balance ;
@@ -294,8 +293,9 @@ export default {
         }
       }
       try {
-        var res = await ipc.callMain("transactionList", {});
+        let res = await ipc.callMain("transactionList", {});
         // console.log(res);
+        if (!res.state) return;
         let tempData = res.data.data;
         this.data = [];
         if (tempData && tempData.code == 200) {
