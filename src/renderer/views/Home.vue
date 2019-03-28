@@ -22,6 +22,11 @@
     </MyTable>
     <div>
           <Button to="/api">API 测试</Button>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
     </div>
 
     <div class="modal-container">
@@ -99,6 +104,7 @@ const ipc = require("electron-better-ipc");
 const settings = require("electron-settings");
 import filters from "../common/js/filter.js";
 import * as Utils from "web3-utils";
+import wUtils from "../common/js/utils.js";
 
 
 
@@ -147,7 +153,8 @@ export default {
       passwordModal: false,
       walletPassword: null,
       txlist: [],
-      Interval: null
+      Interval: null,
+      transactiondata:null
     };
   },
   components: {
@@ -162,8 +169,8 @@ export default {
     this.getBalance();
     this.transactionList(this.address);
     this.Interval = setInterval(() => {
-      this.getBalance();
-      this.transactionList(this.address);
+      // this.getBalance();
+      // this.transactionList(this.address);
     }, 2000 * 5);
   },
   beforeDestroy() {
@@ -179,12 +186,12 @@ export default {
     openSend() {
       this.sendModal = true;
     },
-    async transfer() {
+    async transfer(amount) {
       let to = this.Tovalue;
-      let amount = this.LAMBvalue;
+      // let amount = this.LAMBvalue;
       let gas = 1;
-      amount = amount * 10000;
-
+      // amount = amount * 10000;
+      this.$data.transactiondata=null;
       try {
         let res = await ipc.callMain("transfer", {
           to,
@@ -193,6 +200,7 @@ export default {
         });
         // console.log(res);
         if (res.state) {
+          this.$data.transactiondata=res.data
           this.sendcancel();
           this.confirmModal = true;
         }
@@ -210,15 +218,14 @@ export default {
         });
         return;
       }
-      if (value <= 0 || value > this.balance) {
+      if (value <= 0 || value > wUtils.bigToNumber(this.balance) ) {
         // need to alert
         this.$Notice.warning({
           title: "Please check the balance and the amount of transfer."
         });
         return;
       }
-
-      value = value * 10000;
+      value = wUtils.numberToBig(value) ;
       if (Utils.isAddress(to) == false) {
         // need to alert
         this.$Notice.warning({
@@ -234,7 +241,7 @@ export default {
         });
         return;
       }
-      this.transfer();
+      this.transfer(value);
     },
     sendcancel() {
       this.sendModal = false;
@@ -253,12 +260,16 @@ export default {
       let password = this.walletPassword;
       try {
         var res = await ipc.callMain("transferConfirm", {
-          password
+          password:password,
+          transactiondata:this.$data.transactiondata
         });
         // console.log(res);
         if(!res.state) return;
+        //todo  返回的错误信息需要提示
+        this.$Message.info('ok');
+        console.log(res)
         await this.getBalance();
-        await this.transactionList();
+        await this.transactionList(this.address);
         this.passwordModal = false;
       } catch (ex) {
         console.log(ex);
@@ -272,6 +283,7 @@ export default {
         this.address = res.data.address;
         this.$store.dispatch("setaddress", this.address);
         this.balance = res.data.balance ;
+        console.log(this.balance);
       } catch (ex) {
         console.log(ex);
       }

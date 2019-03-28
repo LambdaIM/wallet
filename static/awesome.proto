@@ -26,6 +26,10 @@ message TxPayload {
     uint64 nonce = 1;
     oneof payload {
       TxSend            txSend   = 2;
+      TxPledgeNew       txPledgeNew = 3;
+      TxOrder           txOrder  = 5;
+
+     
       
     }
 }
@@ -43,3 +47,38 @@ message TxData {
     uint64  createTime = 5;
 }
 
+
+
+enum OrderType {
+    SELL = 0;
+    BUY  = 1;
+}
+
+enum OrderStatus {
+    ORDER_INACTIVE = 0;
+    ORDER_ACTIVE   = 1;
+}
+message OrderData {
+    bytes       address     = 1 ;
+    uint64      duration    = 2;
+    BigInt      price       = 3;
+    BigInt      size        = 4;
+    uint64      createTime  = 5;
+    OrderType   type        = 6;
+    OrderStatus status      = 7;
+    string      ip          = 8;
+    BigInt      sellSize    = 9;
+}
+
+
+message TxPledgeNew {
+    bytes   address             = 1;
+    BigInt  sumSectors          = 2;
+    bytes   ip                  = 3;
+    uint64  pledgeTime          = 4;
+    bytes   validatorAddress    = 5;
+}
+message TxOrder {
+    bytes     id   = 1;
+    OrderData data = 2;
+}

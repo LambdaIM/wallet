@@ -5,6 +5,9 @@ const path = require('path');
 
 import walletrpc from './walletrpc';
 import transactionrpc from './transactionrpc';
+import minerrpc from './minerrpc';
+
+import httpProxyrpc from './httpProxyrpc';
 
 
 function creatDir(){
@@ -31,6 +34,14 @@ function initializeSeting(){
           });
 
     }
+
+    if(settings.has('user.nodeextend')==false){
+        //http://18.136.176.184:13657/abci_query
+        settings.set('user', {
+            nodeextend: 'http://18.136.176.184:13659/'
+          });
+
+    }
 }
 
 export default function(){
@@ -38,5 +49,11 @@ export default function(){
     initializeSeting();
     walletrpc();
     transactionrpc();
+    minerrpc();
+    console.log('httpProxyrpc')
+    console.log(httpProxyrpc)
+
+    // log.info(httpProxyrpc)
+    httpProxyrpc();
 
 }

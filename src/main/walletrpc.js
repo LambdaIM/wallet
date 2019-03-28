@@ -189,10 +189,11 @@ export default  function(){
 
     eipc.answerRenderer('transferConfirm',async(query)=>{
         log.info('transferConfirm rpc')
-        var {password} = query;
+        var {password,transactiondata} = query;
         log.info(password);
+        log.info(transactiondata);
         try{
-            var data = await WM.TransferConfirm(password);   
+            var data = await WM.TransferConfirm(password,transactiondata);   
             return resultView(data,true)
         }catch(ex){
             throw resultView(null,false,ex)

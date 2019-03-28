@@ -19,6 +19,7 @@
 <script>
 const ipc = require("electron-better-ipc");
 const settings = require("electron-settings");
+var  { DAEMON_CONFIG }  = require("../../../../config.js");
 export default {
   data() {
     return {
@@ -37,7 +38,9 @@ export default {
   },
   methods: {
     getValidatorInfo() {
-      var nodeBaseUrl = settings.get("user.node");
+      // console.log(DAEMON_CONFIG)
+      var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork;
+      console.log(nodeBaseUrl);
       var pra = {
         url: nodeBaseUrl + "status",
         data: {}
@@ -46,7 +49,7 @@ export default {
             
        ipc.callMain("httpgetstatus", pra)
        .then(function(res){
-         console.log(res)
+        //  console.log(res)
          if(res.state&&res.data.data.result){
            _this.dataFormat(res.data.data.result)
            if(res.data.data.result.node_info){

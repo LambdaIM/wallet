@@ -18,9 +18,14 @@ var crypto = require("crypto");
 var BigInteger = require('bigi');
 import bigInter from './bigInter';
 import defaultAddress from './defaultAddress';
-import generatesha256 from './generatesha256';
 
+function generatesha256(data) {
 
+    let hash = crypto.createHash('sha256');
+    hash.update(data);
+    return hash.digest();
+
+}
 
 
 var walletManger = function (dir) {
@@ -313,9 +318,6 @@ walletManger.prototype.Transfer = async function (to, amount, gas) {
         gas: gas,
         createTime: +(new Date()).getTime().toString().substr(0, 10)
     };
-
-    
-    
     var TxDataMessage = protoRoot.lookupType('types.TxData');
     log.info('payload')
     log.info(payload)
@@ -326,20 +328,24 @@ walletManger.prototype.Transfer = async function (to, amount, gas) {
 
     var TxData = TxDataMessage.create(payload);
     var TxDatabuffer = TxDataMessage.encode(TxData).finish();
-    var TxSendMessage = protoRoot.lookupType('types.TxSend');
+    
 
+    // //==
+    var TxSendMessage = protoRoot.lookupType('types.TxSend');
     var sendload = {
         id: generatesha256(TxDatabuffer),
         txData: TxData
     }
-
     errMsg = TxSendMessage.verify(sendload);
     log.error(errMsg)
     if (errMsg)
         throw errMsg
 
     var TxSend = TxSendMessage.create(sendload);
-    var TxSendbuffer = TxSendMessage.encode(TxSend).finish()
+    var TxSendbuffer = TxDataMessage.encode(TxSend).finish();
+    log.info('TxSendbuffer')
+    log.info(TxSend)
+    log.info(TxSendbuffer.toString('hex'))
     return {
         dataType:'types.TxSend',
         hexdata:TxSendbuffer.toString('hex'),
@@ -363,12 +369,14 @@ walletManger.prototype.Transfer = async function (to, amount, gas) {
     // this.lastpayobj = TxPay;
     // this.lastpayArry = TxPayloadMessage.encode(TxPay).finish()
 
-    // return true;
+    // return {
+    //   dataType:'types.TxPayload',
+    //   hexdata:this.lastpayArry.toString('hex')
+    // };
 }
 
 walletManger.prototype.TransferConfirm = async function (password,transactiondata) {
     log.info('transferConfirm')
-    //==
     const protoRoot = await protobuf.load(protofilepath);
 
     var transactiondataMessage=protoRoot.lookupType(transactiondata.dataType);
@@ -379,48 +387,47 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
     var transactionObject = transactiondataMessage.decode(transactionBufer) ;
     console.log('transactionBufer',transactionBufer)
     console.log('transactionObject',transactionObject)
-    
 
-    var TxPayloadMessage = protoRoot.lookupType('types.TxPayload');
+    //==
+    
+    var TxSendMessage = transactiondataMessage;
+
+
     var TxPayload = {
         payload: sendType
     }
     TxPayload[sendType]=transactionObject
-      
+    log.info('- -');
+    log.info(TxPayload);
+
+    var TxPayloadMessage = protoRoot.lookupType('types.TxPayload');
     var acountjson = await this.getDefaultWalletBlance();
-    TxPayload.nonce = acountjson.nonce + 1;
-    log.info('TxPayload')
-    log.info(TxPayload)
+    var nonce = acountjson.nonce;
+
+    TxPayload.nonce = nonce + 1;
     errMsg = TxPayloadMessage.verify(TxPayload);
     log.error(errMsg)
     if (errMsg)
         throw errMsg
     var TxPay = TxPayloadMessage.create(TxPayload);
-    var TxPayBufer = TxPayloadMessage.encode(TxPay).finish()
-    console.log('TxPay--')
-    console.log(TxPay)
-    console.log(TxPayBufer)
-    console.log(TxPayBufer.toString('hex'))
-    var bf1=Buffer.from('080f2a680a2006b623ff16c14964a99763462151e8e7f50e8a87ce05cc9039bc8e79673acd4112440a1458f5173838d50d5fab4a06489c84ebe85f73782210e9021a0c080112080de0b6b3a7640000220608011202040028dee891e5053801420b3139322e3136382e312e31','hex')
-    var bf2=Buffer.from('080f2a6a0a2006b623ff16c14964a99763462151e8e7f50e8a87ce05cc9039bc8e79673acd4112460a1458f5173838d50d5fab4a06489c84ebe85f73782210e9021a0c080112080de0b6b3a7640000220608011202040028dee891e50530003801420b3139322e3136382e312e31','hex')
-    var obj1= TxPayloadMessage.decode(bf1)
-    var obj2=TxPayloadMessage.decode(bf2)
-    log.info(obj1)
-    log.info(obj2)
-    console.log('TxPay--')
+    log.info('Txpay========>'+JSON.stringify(TxPay))
+
+    var  TxSendObject = TxPay;
+    var  TxSendBufer= TxPayloadMessage.encode(TxPay).finish()
+
     //==
+    
     var TxMessage = protoRoot.lookupType('types.Tx');
     var walletInfo = this.OpenDefaultwallet(password);
     var tenderKeys = new TenderKeys();
-    console.log('walletInfo.address')
-    console.log(walletInfo.address)
-    var sindata = tenderKeys.signBuffer(walletInfo.privateKey.toString('hex'), TxPayBufer);//   lastpayobj
+    console.log(this.lastpayArry)
+    var sindata = tenderKeys.signBuffer(walletInfo.privateKey.toString('hex'), TxSendBufer);//   lastpayobj
     Amino.RegisterConcrete(null, 'tendermint/PubKeyEd25519')
 
     var TxMessageload = {
         key: Amino.MarshalBinary('tendermint/PubKeyEd25519', Buffer.from(walletInfo.publicKey, 'hex')),
         signature: sindata,
-        payload: TxPay
+        payload: TxSendObject
     }
 
     var errMsg = TxMessage.verify(TxMessageload);
@@ -433,11 +440,11 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
     //https://github.com/irisnet/irisnet-crypto/search?q=pubKey&unscoped_q=pubKey
     var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork;
     var txinfourl = nodeBaseUrl + 'broadcast_tx_commit';
-
+    log.info(' - -');
+    log.info(JSON.stringify(TxMessageData) )
     var TxMessagebuffer = TxMessage.encode(TxMessageData).finish();
-    var TxMessageHex = '0x'+TxMessagebuffer.toString('hex');
+    var TxMessageHex ='0x'+ TxMessagebuffer.toString('hex');
     log.info('start')
-    log.info(txinfourl)
     log.info(TxMessageHex)
     var result = await axios.get(txinfourl, {
         params: {
@@ -445,10 +452,15 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
         }
     });
     log.info('end')
-    log.info(result)
     return result;
 }
 
+//   // Encode a message to an Uint8Array (browser) or Buffer (node)
+//   var buffer = AwesomeMessage.encode(message).finish();
+//   // ... do something with buffer
 
+//   // Decode an Uint8Array (browser) or Buffer (node) to a message
+//   var message = AwesomeMessage.decode(buffer);
+//   // ... do something with message
 
 export default walletManger
