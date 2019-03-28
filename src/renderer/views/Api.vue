@@ -37,10 +37,69 @@
     <Divider dashed />
     <p>一条转账记录的详情</p>
     <p><Button @click="transactionInfo">transactionInfo</Button></p>
+    <p>获取挂单列表</p>
+    <p><Button @click="getOrderListByAddress">getOrderListByAddress</Button></p>
+    <p>获取匹配订单列表</p>
+    <p><Button @click="getMatchListByAddress">getMatchListByAddress</Button></p>
+    <p>获取矿工质押列表</p>
+    <p><Button @click="pledgeMiner"> 获取矿工质押列表 </Button></p>
+    <p>矿工挂单</p>
+    <p><Button @click="pledgeOrder"> 生成挂单数据 </Button>
+    <Button @click="TransferConfirm"> 签名并发送请求 </Button></p>
+<!-- height, err := orderActor.Save(address, duration, price, size, ip)
+    orderData := &types.OrderData{
+		Address:    address,
+		Duration:   uint64(duration),
+		Price:      abci.NewBigInt().SetBigInt(price),
+		Size_:      abci.NewBigInt().SetInt64(esEncodeFileStat.Size()),
+		CreateTime: uint64(time.Now().Unix()),
+		Type:       types.OrderType_BUY,
+		Status:     types.OrderStatus_ORDER_ACTIVE,
+	}
+	orderDataBytes, err := proto.Marshal(orderData)
+	if err != nil {
+		return nil, -1, err
+	}
+	orderDataHash := utils.SHA256(orderDataBytes)
+	txOrder := &types.TxOrder{
+		Id:   orderDataHash,
+		Data: orderData,
+	}
+	result, err := a.txClient.BroadcastTxCommit(txOrder) -->
+
+
+
+    <p>矿工质押</p>
+    <p><Button @click="pledgeNewspace">质押  </Button>
+    <Button @click="TransferConfirm"> 签名并发送请求 </Button>
+    </p>
+    <!-- result, err := txclient.BroadcastTxCommit(&types.TxPledgeNew{
+		Address:          key.GetPubKey().Address().Bytes(),
+		SumSectors:       abci.NewBigInt().SetBigInt(sectorsSum),
+		PledgeTime:       uint64(time.Now().Unix()),
+		ValidatorAddress: validatorBytes,
+	})
     
+    message TxPledgeNew {
+    bytes   address             = 1;
+    BigInt  sumSectors          = 2;
+    bytes   ip                  = 3;
+    uint64  pledgeTime          = 4;
+    bytes   validatorAddress    = 5;
+}
+} -->
+    <p>取消挂单</p>
+    <p><Button >取消挂单  </Button></p>
+    <p>取消质押</p>
+    <p><Button >取消质押  </Button></p>
       
 
     </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 
 
   </div>
@@ -51,6 +110,9 @@
 import Header from "@/components/common/layout/Head.vue";
 import MyTable from "@/components/common/useful/Mytable.vue";
 const ipc = require("electron-better-ipc");
+
+import utils from "@/common/js/utils.js";
+
 
 
 
@@ -71,6 +133,12 @@ export default {
   },
   beforeDestroy(){
     
+
+  },
+  data:function(){
+    return {
+    transactiondata:null
+    }
 
   },
   methods:{
@@ -191,15 +259,16 @@ export default {
      async transfer(){
          console.log('getDefaultWalletBlance')
          var  to='480DC2D434EEA9EB95958A86749AC99C5073631C'; 
-         var  amount =1215;
+         var  amount =1;
          var  gas =1;
-         amount=amount*10000
+         amount = utils.numberToBig(amount) ;
 
           try{
             var result = await ipc.callMain("transfer", {
             to,amount,gas
             })
             console.log(result)
+            this.$data.transactiondata=result.data;
           }
           catch(ex){
             console.log(ex);
@@ -207,9 +276,13 @@ export default {
      },
      async TransferConfirm(){
           try{
+            var password='qq123456';
+
             var result = await ipc.callMain("transferConfirm", {
-            password
+            password:password,
+            transactiondata:this.$data.transactiondata
             })
+            console.log('交易返回的结果')
             console.log(result)
           }
           catch(ex){
@@ -235,6 +308,76 @@ export default {
               hash:'997921421340592295cc8ae0479aabb4474b16017b6985aac2ddb5bbf6bf444a'
             })
             console.log(result)
+          }
+          catch(ex){
+            console.log(ex);
+          }
+     },
+     async getOrderListByAddress(){
+       console.log('**********')
+          try{
+            var result = await ipc.callMain("getOrderListByAddress", {
+              pageNum:1,
+              showNum:10
+            })
+            console.log(result)
+          }
+          catch(ex){
+            console.log(ex);
+          }
+     },
+     async getMatchListByAddress(){
+       console.log('**********')
+          try{
+            var result = await ipc.callMain("getMatchListByAddress", {
+              pageNum:1,
+              showNum:10
+            })
+            console.log(result)
+          }
+          catch(ex){
+            console.log(ex);
+          }
+     },
+     async pledgeMiner(){
+       console.log('**********')
+          try{
+            var result = await ipc.callMain("pledgeMiner", {
+            })
+            console.log(result)
+          }
+          catch(ex){
+            console.log(ex);
+          }
+     },
+     async pledgeOrder(){
+       console.log('**********')
+          try{
+            var result = await ipc.callMain("askpledgeOrder", {
+              duration:361,
+              price:utils.numberToBig(1),
+              size:String(1024),   //最小单位是1m 
+              // type:0,     //SELL = 0;BUY  = 1;
+              status:1, //ORDER_INACTIVE = 0; ORDER_ACTIVE   = 1;
+              ip:'192.168.1.1',
+              sellSize:String(0)
+            })
+            console.log(result)
+            this.$data.transactiondata=result.data;
+          }
+          catch(ex){
+            console.log(ex);
+          }
+     },
+     async pledgeNewspace(){
+       console.log('**********')
+          try{
+            var result = await ipc.callMain("pledgeNewspace", {
+              sumSectors:String(1*1024*1024),//质押空间bigint 问题 最小单位1t
+              validatorAddress:'BAD01004F5D4D22D31F468ED297E7D75C1D6915E',
+            })
+            console.log(result)
+            this.$data.transactiondata=result.data;
           }
           catch(ex){
             console.log(ex);
