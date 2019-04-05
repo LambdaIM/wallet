@@ -2,16 +2,16 @@
   <div class="footer-container">
     <div v-if="address!==null"  class="footer-wrapper">
       <!-- <span class="item etc">Validator id: -->
-      <span    class="item etc">Validator:
+      <span    class="item etc">{{ $t("foot.menu1") }}:
         <Poptip word-wrap trigger="hover" width="300" :content="address">{{address}}</Poptip>
       </span>
       
-      <span  class="item">Block height: {{height}}</span>
-      <span  class="item" v-if="isSync==true" >Sync Block.... </span>
-      <span class="item" v-else>Block time: {{time | formatDateD}}</span>
+      <span  class="item">{{ $t("foot.menu2") }}: {{height}}</span>
+      <span  class="item" v-if="isSync==true" >{{ $t("foot.menu4") }} </span>
+      <span class="item" v-else>{{ $t("foot.menu3") }}: {{time | formatDateD}}</span>
     </div>
     <div v-else class="footer-wrapper">
-      <span   class="item">Validator connecting ...</span>
+      <span   class="item">{{ $t("foot.menu5") }}</span>
     </div>
   </div>
 </template>

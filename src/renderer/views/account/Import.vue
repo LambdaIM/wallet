@@ -6,7 +6,7 @@
     <div class="login-wrapper">
       <div class="form-title">
         <div class="title-wrapper">
-          <p class="title">Import LAMBDA Wallet</p>
+          <p class="title">{{ $t("Import.t1") }}</p>
           <!-- <p class="notice">WARNING: Password can NOT be reset or recovered, do remember it!</p> -->
         </div>
       </div>
@@ -68,32 +68,32 @@
       >
         <FormItem prop="key">
           <Upload :before-upload="beforeUpload" :default-file-list="walletfile" action="" >
-            <Button class="btn upload-button" icon="ios-cloud-upload-outline">Choose Wallet Files</Button>
+            <Button class="btn upload-button" icon="ios-cloud-upload-outline">{{$t('Import.t2')}}</Button>
           </Upload>
           
         </FormItem>
 
         <FormItem prop="password">
-          <Input type="password" v-model="formInline.password" placeholder="Password">
+          <Input type="password" v-model="formInline.password" :placeholder="$t('Import.t3')">
             <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
 
         <FormItem prop="key">
-          <Input type="text" v-model="formInline.user" placeholder="Name your wallet">
+          <Input type="text" v-model="formInline.user" :placeholder="$t('Import.t4')">
             <Icon type="ios-person-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
       </Form>
 
       <div class="button-wrapper">
-        <button class="btn login-button" @click="handleSubmit('formInline')">Import</button>
+        <button class="btn login-button" @click="handleSubmit('formInline')">{{$t('Import.t8')}}</button>
       </div>
 
       <div class="bottom-wrapper tc">
-        <router-link class="bottom-wrapper-item" to="/">Login Wallet</router-link>
+        <router-link class="bottom-wrapper-item" to="/">{{$t('Import.t6')}}</router-link>
         <span class="line"></span>
-        <router-link class="bottom-wrapper-item" to="/register">Create Wallet</router-link>
+        <router-link class="bottom-wrapper-item" to="/register">{{$t('Import.t7')}}</router-link>
       </div>
     </div>
   </div>

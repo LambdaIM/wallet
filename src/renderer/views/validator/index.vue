@@ -3,15 +3,15 @@
   <div class="setting-wrapper">
       <div style="margin: 6px">
         
-        <Input @on-search="changeValidatorIP" v-model="ValidatorIP" search enter-button="submit" >
-            <span slot="prepend">Validator Url</span>
+        <Input @on-search="changeValidatorIP" v-model="ValidatorIP" search :enter-button="$t('Validator.t2')" >
+            <span slot="prepend">{{ $t('Validator.t1') }}</span>
           </Input>
         
     </div>
 
  
     
-      <Mycard  v-if="node_info.length>0" cardtitle="Node info" class="mb10">
+      <Mycard  v-if="node_info.length>0" :cardtitle="$t('Validator.t3')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row v-if="item[0]=='network'"  v-for="item in node_info" class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -23,7 +23,7 @@
           </Row>
         </div>
       </Mycard>
-      <Mycard v-if="sync_info.length>0" cardtitle="Sync info" class="mb10">
+      <Mycard v-if="sync_info.length>0" :cardtitle="$t('Validator.t6')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row v-for="item in sync_info" class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -33,13 +33,13 @@
               <span v-if="item[0]!='latest_block_time'">{{item[1]}}</span>
               <span v-else>{{item[1]|formatDateD}}</span>
 
-              <span style="color:red" v-if="item[0]=='catching_up'&&item[1]==true">Syncing blocks....</span>
+              <span style="color:red" v-if="item[0]=='catching_up'&&item[1]==true">{{$t('Validator.t4')}}</span>
 
             </Col>
           </Row>
         </div>
       </Mycard>
-      <Mycard v-if="validator_info.length>0" cardtitle="Validator info" class="mb10">
+      <Mycard v-if="validator_info.length>0" :cardtitle="$t('Validator.t5')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row v-if="item[0]!='pub_key'" v-for="item in validator_info" class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -51,7 +51,7 @@
           </Row>
         </div>
       </Mycard>
-      <Mycard v-else cardtitle="Validator info" class="mb10">
+      <Mycard v-else :cardtitle="$t('Validator.t6')" class="mb10">
         <div class="storage-content" slot="card-content">
             <Button  loading>Loading...</Button>
         </div>
@@ -137,13 +137,13 @@ export default {
                             });
 
           _this.$Notice.success({
-                    title: 'Switching Validator success',      
+                    title: _this.$t('Validator.action.pass1'),      
               });
            
 
          }else{
            _this.$Notice.error({
-                    title: 'Switching Validator fail',
+                    title: _this.$t('Validator.action.pass2'),
                     
                 });
          }
@@ -151,7 +151,7 @@ export default {
        })
        .catch(function(err){
            _this.$Notice.error({
-                    title: 'Switching Validator fail',
+                    title: _this.$t('Validator.action.pass2'),
                     
                 });
 

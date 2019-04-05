@@ -34,9 +34,9 @@
           </div>
         </Col>
     </Row>-->
-    <p class="balance"> Balance: {{balance|formatValue}} </p>
+    <p class="balance"> {{ $t("home.t1") }}: {{balance|formatValue}} <span style="color:green"><a @click="openvalidator">{{ $t("home.t4") }}</a></span></p>
     <!-- </div> -->
-    <MyTable title="Latest  Transaction Records" class="mt20 mytable-container">
+    <MyTable :title="$t('home.t2')" class="mt20 mytable-container">
       <div class="operation" slot="operation">
         <!-- <div class="search-wrapper">
           <Input search enter-button placeholder="Enter something..."/>
@@ -50,12 +50,12 @@
         </div>-->
         <div class="send-wrapper">
           <!-- <Icon type="md-swap" @click="openSend()" size="32"/> -->
-          <Button @click="openSend()" icon="md-swap">Transfer</Button>
+          <Button @click="openSend()" icon="md-swap">{{ $t("home.t3") }}</Button>
         </div>
       </div>
-      <Table :loading="loading" no-data-text="no Transaction" :columns="columns" :data="data" slot="content">
+      <Table :loading="loading" :no-data-text="$t('home.table.t7')" :columns="columns" :data="data" slot="content">
         <template slot-scope="{ row, index }" slot="action">
-          <Button type="primary" size="small" @click="toDetail(row,index)">View Detail</Button>
+          <Button type="primary" size="small" @click="toDetail(row,index)">{{ $t("home.t5") }}</Button>
           <!-- <Button type="error" size="small" @click="remove(index)">Delete</Button> -->
         </template>
 
@@ -89,25 +89,25 @@
       <Modal
         loading
         v-model="sendModal"
-        title="Send LAMB"
+        :title="$t('home.m1.t1')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
         <p>
           <Input v-model="Fromvalue" readonly>
-            <span slot="prepend">From</span>
+            <span slot="prepend">{{$t('home.m1.t2')}}</span>
           </Input>
         </p>
         <br>
         <p>
-          <Input v-model="Tovalue" placeholder="an LAMB address">
-            <span slot="prepend">To</span>
+          <Input v-model="Tovalue" :placeholder="$t('home.m1.t6')">
+            <span slot="prepend">{{$t('home.m1.t3')}}</span>
           </Input>
         </p>
         <br>
         <p>
           <Input v-model="LAMBvalue">
-            <span slot="prepend">Amount</span>
+            <span slot="prepend">{{$t('home.m1.t4')}}</span>
             <span slot="append">LAMB</span>
           </Input>
 
@@ -119,20 +119,20 @@
           :parser="value => value.replace(/$s?|(,*)/g, '')"></InputNumber>-->
         </p>
         <div slot="footer">
-          <Button type="primary" @click="preSendLAMB">Submit</Button>
+          <Button type="primary" @click="preSendLAMB">{{$t('home.m1.t5')}}</Button>
         </div>
       </Modal>
       <Modal
         @on-ok="sendLAMBTx"
         v-model="passwordModal"
-        title="wallet password"
+        :title="$t('home.m2.t1')"
         :styles="{top: '200px'}"
       >
         <p>
           <Input v-model="walletPassword" type="password"></Input>
         </p>
         <div slot="footer">
-          <Button :loading="loadingsendLAMBTx" type="primary" @click="sendLAMBTx">Submit</Button>
+          <Button :loading="loadingsendLAMBTx" type="primary" @click="sendLAMBTx">{{$t('home.m2.t2')}}</Button>
         </div>
       </Modal>
     </div>
@@ -151,6 +151,8 @@ const settings = require("electron-settings");
 import filters from "../common/js/filter.js";
 import wUtils from "../common/js/utils.js";
 import * as Utils from "web3-utils";
+const { shell } = require("electron");
+
 
 export default {
   data() {
@@ -162,24 +164,24 @@ export default {
       sendModal: false,
       columns: [
         {
-          title: "Amount",
+          title: this.$t('home.table.t1'),
           key: "amount"
         },
         {
-          title: "Source",
+          title: this.$t('home.table.t2'),
           key: "source",
           slot: "source"
         },
         {
-          title: "Date",
+          title: this.$t('home.table.t3'),
           key: "date"
         },
         {
-          title: "Type",
+          title: this.$t('home.table.t4'),
           key: "type"
         },
         {
-          title: "Status",
+          title: this.$t('home.table.t5'),
           key: "status",
           render: (h, params) => {
             // console.log(params);
@@ -197,7 +199,7 @@ export default {
           }
         },
         {
-          title: "detail",
+          title: this.$t('home.table.t6'),
           key: "detail",
           slot: "action"
         }
@@ -347,7 +349,7 @@ export default {
       this.$data.walletPassword=null;
       if (to == from) {
         this.$Notice.warning({
-          title: "You can't transfer LAMB to yourself."
+          title: _this.$t('home.action.t1')
         });
         return;
       }
@@ -355,7 +357,7 @@ export default {
       if (value <= 0 || value > wUtils.bigToNumber(this.$data.accountinfo.balance) ) {
         // need to alert
         this.$Notice.warning({
-          title: "Please check the balance and the amount of transfer."
+          title: _this.$t('home.action.t2')
         });
         return;
       }
@@ -365,7 +367,7 @@ export default {
       if (Utils.isAddress(to) == false) {
         // need to alert
         this.$Notice.warning({
-          title: "Check the forwarding address"
+          title: _this.$t('home.action.t3')
         });
 
         return;
@@ -373,7 +375,7 @@ export default {
 
       if (isNaN(value)) {
         this.$Notice.warning({
-          title: "Check the amount"
+          title: _this.$t('home.action.t4')
         });
 
         return;
@@ -420,12 +422,12 @@ export default {
             _this.$data.loadingsendLAMBTx = false;
             if (data.code == "1001") {
               _this.$Notice.error({
-                title: "Please check your password."
+                title: _this.$t('home.action.t5')
               });
             } else {
               _this.$data.passwordModal = false;
               _this.$Notice.error({
-                title: "Transaction failure."
+                title: _this.$t('home.action.t6')
               });
             }
 
@@ -446,7 +448,7 @@ export default {
             _this.$data.passwordModal = false;
             _this.$data.walletPassword = "";
             _this.$Notice.success({
-                      title: 'Transaction success',
+                      title: _this.$t('home.action.t7'),
                       // desc:'Transaction hash  <br/>'+data.data.data.result.hash
                   });
             console.log(data.data.data.result);
@@ -461,7 +463,7 @@ export default {
             _this.$data.loadingsendLAMBTx = false;
             console.log("fail");
             _this.$Notice.error({
-              title: "Transaction error",
+              title: _this.$t('home.action.t8'),
               desc: data.data.data.result.check_tx.log
             });
           }
@@ -527,7 +529,12 @@ export default {
           }
         })
         .catch(function(err) {});
-    }
+    },
+    openvalidator(value) {
+      // console.log(value);
+      let url = `http://validator.lambda.im/#/`;
+      shell.openExternal(url);
+    },
   },
   computed: {
     balance: function() {
