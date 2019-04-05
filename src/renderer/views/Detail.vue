@@ -30,11 +30,11 @@
         </template>
       </Table>
     </MyTable>-->
-    <Mycard cardtitle="Transaction" class="mt20">
+    <Mycard :cardtitle="$t('transactiondetails.t1')" class="mt20">
       <div class="transaction-content" slot="card-content">
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">TxHash:</span>
+            <span class="title">{{$t('transactiondetails.t2')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a @click="checkHash(data[id].txHash)" class="item-value">{{data[id].txHash}}</a>
@@ -43,7 +43,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">Block Height:</span>
+            <span class="title">{{$t('transactiondetails.t3')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a @click="checkHeight(data[id].height)" class="item-value">{{data[id].height}}</a>
@@ -52,7 +52,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">Time:</span>
+            <span class="title">{{$t('transactiondetails.t4')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{data[id].time | formatDate}}</span>
@@ -61,7 +61,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">From:</span>
+            <span class="title">{{$t('transactiondetails.t5')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a @click="checkAddress(data[id].from)" class="item-value">{{data[id].from}}</a>
@@ -70,7 +70,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">To:</span>
+            <span class="title">{{$t('transactiondetails.t6')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a @click="checkAddress(data[id].to)" class="item-value">{{data[id].to}}</a>
@@ -79,7 +79,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">Value:</span>
+            <span class="title">{{$t('transactiondetails.t7')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{data[id].value | formatValue}}</span>

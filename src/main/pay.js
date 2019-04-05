@@ -202,4 +202,48 @@ export default function(){
       }
 
     })
+
+
+    eipc.answerRenderer('Walletsign',async(query)=>{
+      log.info('Wallettransfer')
+      var path= DAEMON_CONFIG.BASE_PATH+'/lambda.keyinfo'
+      var v3file =fs.readFileSync(path,'utf8');
+      var content=query.content;
+      var contentBuffer=Buffer.from(content)
+      try {
+        var password = query.password;
+        password=decodeURIComponent(password);
+        var wallet = ETHwallet.fromV3(v3file,password);
+      } catch (error) {
+        log.error(error)
+        log.error('password error or not find wallet')
+        return {data:'password error or not find wallet',state:false,code:'1001'} 
+      }
+      
+      try {
+      var tenderKeys = new TenderKeys();
+
+      var sindata = tenderKeys.signBuffer(wallet._privKey.toString('hex'),contentBuffer);//   lastpayobj
+
+      console.log(wallet);
+
+      var TxMessageload={
+          key: wallet.pubKey ,
+          content: content ,
+          signature:sindata.toString('hex')
+      }
+      
+      log.info(TxMessageload)
+            
+      return {data:TxMessageload,state:true} 
+        
+      } catch (error) {
+        log.error(error)
+          return {data:JSON.stringify(error),state:false} 
+      }
+
+    })
+
+    
+    
 }

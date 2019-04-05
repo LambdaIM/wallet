@@ -5,25 +5,25 @@
         <div class="login-wrapper">
           <div class="form-title">
             <div class="title-wrapper">
-              <p class="title">LAMBDA Wallet</p>
+              <p class="title">{{ $t("login.t1") }}</p>
             </div>
           </div>
           <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
             <FormItem prop="password">
-              <Input type="password" v-model="formInline.password" placeholder="Password" @on-enter="openWallet('formInline')">
+              <Input type="password" v-model="formInline.password" :placeholder="$t('login.t2')" @on-enter="openWallet('formInline')">
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
               </Input>
             </FormItem>
           </Form>
 
           <div class="button-wrapper">
-            <button class="btn login-button" @keyup.enter="openWallet('formInline')"   @click="openWallet('formInline')">Login</button>
+            <button class="btn login-button" @keyup.enter="openWallet('formInline')"   @click="openWallet('formInline')">{{ $t("login.t3") }}</button>
           </div>
 
           <div class="bottom-wrapper tc">
-            <router-link class="bottom-wrapper-item" to="/register">Create Wallet</router-link>
+            <router-link class="bottom-wrapper-item" to="/register">{{ $t("login.t4") }}</router-link>
             <span class="line"></span>
-            <router-link class="bottom-wrapper-item" to="/import">Import Wallet</router-link>
+            <router-link class="bottom-wrapper-item" to="/import">{{ $t("login.t5") }}</router-link>
           </div>
         </div>
       </div>
@@ -48,13 +48,13 @@ export default {
         password: [
           {
             required: true,
-            message: "Please fill in the password.",
+            message: this.$t('login.action.pass1'),
             trigger: "blur"
           },
           {
             type: "string",
             min: 6,
-            message: "The password length cannot be less than 6 bits",
+            message: this.$t('login.action.pass2'),
             trigger: "blur"
           }
         ]
@@ -92,7 +92,7 @@ export default {
             }else{
               console.log('open fail')
               _this.$Notice.warning({
-                    title: 'Login fail',
+                    title: _this.$t('login.action.pass3'),
                 });
 
             }
@@ -100,7 +100,7 @@ export default {
           })
           .catch(function(err){
             _this.$Notice.warning({
-                    title: 'Login fail',
+                    title: _this.$t('login.action.pass3'),
                 });
 
           })

@@ -2,11 +2,11 @@
   <div class="setting-container">
     <!-- <Header/> -->
     <div class="setting-wrapper">
-      <Mycard v-if="walletInfo" cardtitle="Wallet Info" class="mb10">
+      <Mycard v-if="walletInfo" :cardtitle="$t('seting.Wallet_Info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
             <Col span="4" class-name="title-wrapper">
-              <span class="title">Wallet Name</span>
+              <span class="title">{{ $t("seting.Wallet_Info") }}</span>
             </Col>
             <Col span="12" class-name="content-wrapper">
               <span>{{walletInfo.name}}</span>
@@ -15,7 +15,7 @@
 
           <Row class-name="card-item">
             <Col span="4" class-name="title-wrapper">
-              <span class="title">Account Address</span>
+              <span class="title">{{ $t("seting.Wallet_Name") }}</span>
             </Col>
             <Col span="12" class-name="content-wrapper">
               <span>{{walletInfo.address}}</span>
@@ -34,10 +34,28 @@
               ></Button>
             </Col>
           </Row>
+          <Row class-name="card-item">
+            <Col span="4" class-name="title-wrapper">
+              <span class="title">切换语言</span>
+            </Col>
+            <Col span="12" class-name="content-wrapper">
+                         <Dropdown @on-click="selectlang">
+                              <a href="javascript:void(0)">
+                                  {{lang[langnow]}}
+                                  <Icon type="ios-arrow-down"></Icon>
+                              </a>
+                              <DropdownMenu slot="list">
+                                  <DropdownItem name="en">English</DropdownItem>
+                                  <DropdownItem name="zh">简体中文</DropdownItem>
+                              </DropdownMenu>
+                          </Dropdown>
+                          
+            </Col>
+          </Row>
         </div>
       </Mycard>
 
-           <Mycard v-if="getstore.length>0" cardtitle="Validator Node info" class="mb10">
+           <Mycard v-if="getstore.length>0" :cardtitle="$t('seting.Validator_Node_info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row v-if="item[0]!='pub_key'" v-for="item in getstore"  class-name="card-item">
             <Col  span="4" class-name="title-wrapper">
@@ -52,7 +70,7 @@
               &nbsp;
             </Col>
             <Col span="12" class-name="content-wrapper">
-              <span><router-link to="/validator" class="item">Switch Validator</router-link></span>
+              <span><router-link to="/validator" class="item">{{ $t("seting.Switch_Validator") }}</router-link></span>
             </Col>
           </Row>
           
@@ -61,14 +79,14 @@
           
         </div>
       </Mycard>
-      <Mycard v-if="getstore.length==0" cardtitle="Validator Node info" class="mb10">
+      <Mycard v-if="getstore.length==0" :cardtitle="$t('seting.Validator_Node_info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row   class-name="card-item">
             <Col span="4" class-name="title-wrapper">
               &nbsp;
             </Col>
             <Col span="12" class-name="content-wrapper">
-              <span><router-link to="/validator" class="item">Switch Validator</router-link></span>
+              <span><router-link to="/validator" class="item">{{ $t("seting.Switch_Validator") }}</router-link></span>
             </Col>
           </Row>
         </div>
@@ -98,7 +116,7 @@
           </Row>
         </div>
       </Mycard>-->
-      <Mycard cardtitle="Private Key Info" class="mb10">
+      <Mycard :cardtitle="$t('seting.Privat_Key_Info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
             <!-- <Col span="4" class-name="title-wrapper">
@@ -112,7 +130,7 @@
               <a>Private Key Visible</a>
             </Col>-->
             <Col span="4" class-name="content-wrapper">
-              <a @click="openkeystore">Keystore File Backup</a>
+              <a @click="openkeystore">{{ $t("seting.Keystore_File_Backup") }}</a>
             </Col>
           </Row>
 
@@ -147,11 +165,11 @@
           </Row>
         </div>
       </Mycard>-->
-      <Mycard cardtitle="Version" class="mb20">
+      <Mycard :cardtitle="$t('seting.Version')" class="mb20">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
             <Col span="4" class-name="title-wrapper">
-              <span class="title">Current Version</span>
+              <span class="title">{{ $t("seting.Current_Version") }}</span>
             </Col>
             <Col span="3" class-name="content-wrapper">
               <span>V0.1.1</span>
@@ -165,7 +183,7 @@
 
       <div class="logout-container">
         <div class="logout-wrapper">
-          <button class="btn logout-button" @click="logout">Logout</button>
+          <button class="btn logout-button" @click="logout">{{ $t("seting.Logout") }}</button>
         </div>
       </div>
     </div>
@@ -191,13 +209,21 @@ export default {
       hidden: "*********************************",
       progressPercent: "",
       walletInfo: null,
-      node_info:[]
+      node_info:[],
+      lang:{
+        zh:'简体中文',
+        en:'English'
+      },
+      langnow:this.$i18n.locale
     };
   },
   mounted() {
     this.getAccountInfo();
   },
   methods: {
+    tlang:function(key){
+      return  this.$t(key)
+    },
     onCopy: function(e) {
       this.$Message.info("You just copied: " + e.text);
     },
@@ -223,6 +249,15 @@ export default {
     },
     openkeystore() {
       ipc.callMain("openkeystore", {});
+    },
+    selectlang(item){
+      console.log(item);
+      this.$i18n.locale  = item;
+      this.$data.langnow = item;
+      settings.set('set', {
+                              language: item
+                            });
+      window.location.reload();
     }
   },
   computed: {

@@ -8,16 +8,20 @@
       <Col span="16" offset="2" class-name="head-menu-wrapper">
         <div v-if="address!=undefined&&address!=''"  class="head-menu">
           <div class="head-menu-item">
-            <router-link to="/home" class="item">Home</router-link>
+            <router-link to="/home" class="item">{{ $t("head.menu1") }}</router-link>
           </div>
           <div class="head-menu-item">
-            <router-link to="/home" class="item">Miner</router-link>
+            <router-link to="/home" class="item">{{ $t("head.menu2") }}</router-link>
+          </div>
+          <!-- <div class="head-menu-item">
+            <router-link to="/home" class="item">{{ $t("head.menu3") }}</router-link>
+          </div> -->
+          <div class="head-menu-item">
+            <router-link to="/home" class="item">{{ $t("head.menu4") }}</router-link>
+            <!-- ios-checkmark  ios-loading -->
           </div>
           <div class="head-menu-item">
-            <router-link to="/home" class="item">Customer</router-link>
-          </div>
-          <div class="head-menu-item">
-            <router-link to="/home" class="item">Validator</router-link>
+            <router-link to="/sign" class="item">{{ $t("head.menu5") }} </router-link>
             <!-- ios-checkmark  ios-loading -->
           </div>
 
@@ -37,6 +41,21 @@
               </div>
           </div>
         </div>
+        <div class="head-menu" v-else>
+          <div class="head-menu-item" style="text-align: right;    margin-right: 40px">
+                  <Dropdown @on-click="selectlang">
+                              <a href="javascript:void(0)" style="color:white">
+                                  {{lang[langnow]}}
+                                  <!-- 1111 -->
+                                  <Icon type="ios-arrow-down"></Icon>
+                              </a>
+                              <DropdownMenu slot="list">
+                                  <DropdownItem name="en">English</DropdownItem>
+                                  <DropdownItem name="zh">简体中文</DropdownItem>
+                              </DropdownMenu>
+                          </Dropdown>
+          </div>
+        </div>
       </Col>
     </Row>
 
@@ -47,13 +66,29 @@
 const settings = require("electron-settings");
 
 export default {
+  data(){
+    return {
+      lang:{
+        zh:'简体中文',
+        en:'English'
+      },
+      langnow:this.$i18n.locale
+    }
+  },
   methods: {
     onCopy: function(e) {
-      this.$Message.info("You just copied: " + e.text);
+      this.$Message.info(this.$t('head.action.pass1') + e.text);
     },
     onError: function(e) {
-      this.$Message.info("Failed to copy texts");
+      this.$Message.info(this.$t('head.action.pass2'));
     },
+    selectlang(item){
+      console.log(item);
+      this.$i18n.locale  = item;
+      this.$data.langnow = item;
+      settings.set('set', {language: item});
+      window.location.reload();
+    }
     
   },
   computed: {

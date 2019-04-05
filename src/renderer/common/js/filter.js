@@ -9,11 +9,14 @@ const formatValue = (value) => {
 }
 
 const formatDate = (value) => {
+    //浏览器的时间是utc 时间，但是时区和区块链的不一致，显示需要处理时区
     return moment(value).utc().format("YYYY-MM-DD HH:mm:ss");
 }
 
 const formatDateD = (value) => {
-    return moment(value).utc().add(8, 'h').format("YYYY-MM-DD HH:mm:ss");
+    //区块链上的时间 是标准utc 显示需要处理时区
+    // return moment(value).utc().add(8, 'h').format("YYYY-MM-DD HH:mm:ss");
+    return moment(value).utc().utcOffset(480).format("YYYY-MM-DD HH:mm:ss");
 }
 
 const formatStatus = (value) => {
