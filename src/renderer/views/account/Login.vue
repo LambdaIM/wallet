@@ -130,7 +130,7 @@ export default {
           });
           let login=settings.set("isopenfile", true);
           console.log(login);
-          this.$store.dispatch("set", login);
+          this.$store.dispatch("set", true);
           this.$router.push("/home");
         }
       } catch (ex) {

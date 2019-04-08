@@ -58,6 +58,10 @@ export default {
     // this.isLogin();
     this.WalletBasicinfo();
   },
+  mounted() {
+   let login=settings.get("isopenfile");
+   this.$store.dispatch("set", login); 
+  },
   methods: {
     onCopy(e) {
       this.$Message.info("You just copied: " + e.text);
@@ -88,7 +92,10 @@ export default {
       return this.$store.getters.getaddress;
     },
     ...mapState({
-      login:state=>state.account.loginState
+      login:state=>{
+        console.log('---******')
+        return state.account.loginState
+        }
     })
     // login:function(){
     //   return this.$store.getters.getLogin;

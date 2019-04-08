@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Header/>
+    
 
     <div class="account-info-container" style="margin: 20px">
         <Divider>rpc 接口和调用说明</Divider>

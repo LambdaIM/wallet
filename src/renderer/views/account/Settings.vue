@@ -163,6 +163,7 @@ export default {
     },
     logout() {
       settings.set('isopenfile',false)
+      this.$store.dispatch("set", false); 
       this.$router.push("/");
       // console.log('8888')
     },
