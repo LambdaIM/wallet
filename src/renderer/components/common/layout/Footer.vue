@@ -8,7 +8,7 @@
       
       <span  class="item">Block height: {{height}}</span>
       <span  class="item" v-if="isSync==true" >Sync Block.... </span>
-      <span class="item" v-else>Block time: {{time | formatDateD}}</span>
+      <span class="item" v-else>Block time: {{time | formatDate}}</span>
     </div>
     <div v-else class="footer-wrapper">
       <span   class="item">Validator connecting ...</span>

@@ -5,7 +5,8 @@
     <MyTable title="Latest Local Transaction Records" class="mt20 mytable-container">
       <div class="operation" slot="operation">
         <div class="send-wrapper">
-          <Icon type="md-swap" @click="openSend()" size="32"/>
+          <!-- <Icon type="md-swap" @click="openSend()" size="32"/> -->
+          <Button @click="openSend()" icon="md-swap">Transfer</Button>
         </div>
       </div>
       <Table :columns="columns" :data="data" slot="content">
@@ -105,6 +106,7 @@ const settings = require("electron-settings");
 import filters from "../common/js/filter.js";
 import * as Utils from "web3-utils";
 import wUtils from "../common/js/utils.js";
+import eventhub from "../common/js/event.js";
 
 
 
@@ -248,7 +250,10 @@ export default {
     },
     confirm() {
       this.confirmModal = false;
-      this.passwordModal = true;
+      // this.passwordModal = true;
+      eventhub.$emit('TransferConfirm',this.$data.transactiondata);
+
+
     },
     sendLAMBTx() {
       if (this.walletPassword == null) {

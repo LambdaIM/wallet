@@ -15,8 +15,8 @@ module.exports.DAEMON_CONFIG  = {
     BASE_PATH:BASE_PATH,
     WalletFile:path.join( BASE_PATH,'Wallet'),
     LogFile:path.join(BASE_PATH,'Log'),
-    LambdaNetwork:'http://192.168.1.9:13657/',
-    LambdaExtenNetwork:'http://192.168.1.9:13659/',
+    LambdaNetwork:'http://39.106.139.11:13657/',
+    LambdaExtenNetwork:'http://39.106.139.11:13659/',
                   //http://39.105.156.36:13657/getTransactionByHash?hash=
                   //http://47.92.7.19:13659/getTransactionByHash?hash=
     LambdaExplorer:'http://explorer.lambda.im/'
