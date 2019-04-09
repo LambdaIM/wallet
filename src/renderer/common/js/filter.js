@@ -9,7 +9,12 @@ const formatValue = (value) => {
 }
 
 const formatDate = (value) => {
-    return moment(value).format("YYYY-MM-DD HH:mm:ss");
+    console.log(value)
+    //具体时间格式待定 
+    //1 区块返回的时间
+    //2 合约返回的时间
+    //3 浏览器返回的时间
+    return moment(value).utc().utcOffset(0).format("YYYY-MM-DD HH:mm:ss");
 }
 
 const formatStatus = (value) => {
