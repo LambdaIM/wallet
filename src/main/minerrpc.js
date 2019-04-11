@@ -22,31 +22,7 @@ export default function(){
         try{
             var result={};
             
-            var nodeBaseUrl = DAEMON_CONFIG.LambdaExtenNetwork;
-            var address = defaultAddress();
-            var pageNum = query.pageNum||1;
-            var showNum = query.showNum||10;
-            
-            var addressinfourl = `${nodeBaseUrl}getMatchListByAddress?address="${address}"&pageNum="${pageNum}"&showNum="${showNum}"`
-
-            log.info(addressinfourl);
-
-            var result  = await axios.get(addressinfourl);
-
-            
-            return resultView(result,true)
-
-        }catch(ex){
-          throw resultView(null,false,ex)
-        }
-    })
-
-    eipc.answerRenderer('getMatchListByAddress',async(query)=>{
-        //66591f471aeff5afd63cbd2d2656e38442aacc29
-        // http://39.105.156.36:13659/getOrderListByAddress?address=%2266591f471aeff5afd63cbd2d2656e38442aacc29%22&pageNum=%221%22&showNum=%2210%22
-        try{
-            var nodeBaseUrl = DAEMON_CONFIG.LambdaExtenNetwork;
-
+            var nodeBaseUrl = DAEMON_CONFIG.LambdaExtenNetwork();
             var address = defaultAddress();
             var pageNum = query.pageNum||1;
             var showNum = query.showNum||10;
@@ -65,12 +41,36 @@ export default function(){
         }
     })
 
+    eipc.answerRenderer('getMatchListByAddress',async(query)=>{
+        //66591f471aeff5afd63cbd2d2656e38442aacc29
+        // http://39.105.156.36:13659/getOrderListByAddress?address=%2266591f471aeff5afd63cbd2d2656e38442aacc29%22&pageNum=%221%22&showNum=%2210%22
+        try{
+            var nodeBaseUrl = DAEMON_CONFIG.LambdaExtenNetwork();
+
+            var address = defaultAddress();
+            var pageNum = query.pageNum||1;
+            var showNum = query.showNum||10;
+            
+            var addressinfourl = `${nodeBaseUrl}getMatchListByAddress?address="${address}"&pageNum="${pageNum}"&showNum="${showNum}"`
+
+            log.info(addressinfourl);
+
+            var result  = await axios.get(addressinfourl);
+
+            
+            return resultView(result,true)
+
+        }catch(ex){
+          throw resultView(null,false,ex)
+        }
+    })
+
 
     eipc.answerRenderer('pledgeMiner',async(query)=>{
       //66591f471aeff5afd63cbd2d2656e38442aacc29
       // http://39.105.156.36:13659/getOrderListByAddress?address=%2266591f471aeff5afd63cbd2d2656e38442aacc29%22&pageNum=%221%22&showNum=%2210%22
       try{
-         var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork;
+         var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();
 
           var address = defaultAddress();
           var pageNum = query.pageNum||1;
@@ -83,7 +83,7 @@ export default function(){
           var {data}  = await axios.get(addressinfourl);
           // console.log(data)
           if(data.result.response.code!=undefined){
-            throw new Error(result.response.log) ;
+            throw new Error(data.result.response.log) ;
           }
           var value = data.result.response.value;
            value = Base64.decode(value);
@@ -101,7 +101,7 @@ export default function(){
     //66591f471aeff5afd63cbd2d2656e38442aacc29
     // http://39.105.156.36:13659/getOrderListByAddress?address=%2266591f471aeff5afd63cbd2d2656e38442aacc29%22&pageNum=%221%22&showNum=%2210%22
     try{
-        var nodeBaseUrl = DAEMON_CONFIG.LambdaExtenNetwork;
+        // var nodeBaseUrl = DAEMON_CONFIG.LambdaExtenNetwork();
         const protoRoot = await protobuf.load(protofilepath);
 
         var address = defaultAddress();
@@ -127,13 +127,13 @@ export default function(){
           duration:duration,
           price:price,
           size:size,
-          // type:typeP,
+          // type:typeP, //加上这个字段就会签名异常
           status:status,
           ip:ip,
-          // createTime:+(new Date()).getTime().toString().substr(0, 10),
-          createTime:1554281566,
+          createTime:+(new Date()).getTime().toString().substr(0, 10),
+          // createTime:1554281566,
           
-          // sellSize:sellSize
+          sellSize :sellSize
         }
 
         var errMsg = OrderDataMessage.verify(payload);
@@ -188,7 +188,7 @@ eipc.answerRenderer('pledgeNewspace',async(query)=>{
   //66591f471aeff5afd63cbd2d2656e38442aacc29
   // http://39.105.156.36:13659/getOrderListByAddress?address=%2266591f471aeff5afd63cbd2d2656e38442aacc29%22&pageNum=%221%22&showNum=%2210%22
   try{
-      var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork;
+      var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();
       const protoRoot = await protobuf.load(protofilepath);
 
       var address = defaultAddress();

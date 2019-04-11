@@ -295,7 +295,7 @@ walletManger.prototype._getAccountInfo = function () {
     console.log('_getAccountInfo')
 
     var address = this.defaultwallet.address;
-    var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork;
+    var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();
     var addressinfourl = nodeBaseUrl + 'abci_query?path=%22/accounts/' + address + '%22&data=&height=&prove='
 
     log.info(addressinfourl);
@@ -438,7 +438,7 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
     }
     var TxMessageData = TxMessage.create(TxMessageload);
     //https://github.com/irisnet/irisnet-crypto/search?q=pubKey&unscoped_q=pubKey
-    var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork;
+    var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();
     var txinfourl = nodeBaseUrl + 'broadcast_tx_commit';
     log.info(' - -');
     log.info(JSON.stringify(TxMessageData) )

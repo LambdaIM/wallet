@@ -201,6 +201,10 @@ export default  function(){
         
     })
 
+    eipc.answerRenderer('openkeystore', async (query) => {
+        shell.showItemInFolder(DAEMON_CONFIG.BASE_PATH);
+    });
+
     // eipc.answerRenderer('ViewDefaultWalletPrivatekey',async(query)=>{
     //     log.info('loginDefaultWallet')
     //     var password =query.password;
@@ -215,6 +219,29 @@ export default  function(){
     //         return resultView(null,false,ex)
     //     }
     // })
+
+
+    eipc.answerRenderer('Walletsign',async(query)=>{
+        log.info('Wallettransfer')
+        var path= DAEMON_CONFIG.BASE_PATH+'/lambda.keyinfo'
+        var v3file =fs.readFileSync(path,'utf8');
+        var content=query.content;
+        var password = query.password;
+
+        try{
+            var TxMessageload = await WM.SignData(password,content);   
+        
+        log.info(TxMessageload)
+              
+        return {data:TxMessageload,state:true} 
+          
+        } catch (error) {
+          log.error(error)
+            return {data:JSON.stringify(error),state:false} 
+        }
+  
+      })
+  
 
 
 

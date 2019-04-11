@@ -19,23 +19,35 @@
             <Col span="12" class-name="content-wrapper">
               <span>{{walletInfo.address}}</span>
               
-    <button type="button"
+    <Button 
       v-clipboard:copy="walletInfo.address"
       v-clipboard:success="onCopy"
-      v-clipboard:error="onError">Copy!</button>
+      v-clipboard:error="onError"
+      type="primary"
+      shape="circle"
+      icon="ios-copy"
+      ></Button>
+            <!-- <Button
+                v-clipboard:copy="walletInfo.address"
+                v-clipboard:success="onCopy"
+                v-clipboard:error="onError"
+                type="primary"
+                shape="circle"
+                icon="ios-copy"
+              ></Button> -->
             </Col>
           </Row>
         </div>
       </Mycard>
 
-      <Mycard cardtitle="Storage Info" class="mb10">
-        <div class="storage-content" slot="card-content">
+      <Mycard  cardtitle="Storage Info" class="mb10">
+        <div v-if="pledgeMinerData!=null" class="storage-content" slot="card-content">
           <Row class-name="card-item">
             <Col span="3" class-name="title-wrapper">
               <span class="title">Storage</span>
             </Col>
             <Col span="12" class-name="content-wrapper">
-              <span>Used {{used}} GB / {{total}} GB</span>
+              <span>Used {{pledgeMinerData.use_size/(1024*1024)}} TB / {{pledgeMinerData.size/(1024*1024)}} TB</span>
               <p>
                 <Progress :percent="calProgress" :stroke-width="5"/>
               </p>
@@ -47,7 +59,7 @@
               <span class="title">Pledge</span>
             </Col>
             <Col span="12" class-name="content-wrapper">
-              <span>30 LAMB</span>
+              <span>{{pledgeMinerData.money|formatValue}} LAMB</span>
             </Col>
           </Row>
         </div>
@@ -81,8 +93,44 @@
           </Row> -->
         </div>
       </Mycard>
+                 <Mycard v-if="getstore.length>0" cardtitle="Validator Node info" class="mb10">
+        <div class="storage-content" slot="card-content">
+          <Row v-if="item[0]!='pub_key'" v-for="item in getstore"  class-name="card-item">
+            <Col  span="4" class-name="title-wrapper">
+              <span class="title">{{item[0]}}</span>
+            </Col>
+            <Col span="12" class-name="content-wrapper">
+              <span>{{item[1]}}</span>
+            </Col>
+          </Row>
+          <Row   class-name="card-item">
+            <Col span="4" class-name="title-wrapper">
+              &nbsp;
+            </Col>
+            <Col span="12" class-name="content-wrapper">
+              <span><router-link to="/validator" class="item">Switch Validator</router-link></span>
+            </Col>
+          </Row>
+          
+          
 
-      <Mycard cardtitle="Store Path for File" class="mb10">
+          
+        </div>
+      </Mycard>
+      <Mycard v-if="getstore.length==0" cardtitle="Validator Node info" class="mb10">
+        <div class="storage-content" slot="card-content">
+          <Row   class-name="card-item">
+            <Col span="4" class-name="title-wrapper">
+              &nbsp;
+            </Col>
+            <Col span="12" class-name="content-wrapper">
+              <span><router-link to="/validator" class="item">Switch Validator</router-link></span>
+            </Col>
+          </Row>
+        </div>
+      </Mycard>
+
+      <!-- <Mycard cardtitle="Store Path for File" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -102,7 +150,7 @@
             </Col>
           </Row>
         </div>
-      </Mycard>
+      </Mycard> -->
 
       <Mycard cardtitle="Version" class="mb20">
         <div class="storage-content" slot="card-content">
@@ -136,6 +184,7 @@ import https from "@/server/https.js";
 const ipc = require("electron-better-ipc");
 const settings = require("electron-settings");
 import { DAEMON_CONFIG } from "../../../config.js";
+import _ from "underscore";
 
 
 export default {
@@ -145,12 +194,14 @@ export default {
       total: 5,
       hidden: "*********************************",
       progressPercent: "",
-      walletInfo:null
+      walletInfo:null,
+      pledgeMinerData:null
 
     };
   },
   mounted() {
     this.getAccountInfo();
+    this.pledgeMiner();
   },
   methods: {
      onCopy: function (e) {
@@ -175,13 +226,41 @@ export default {
     },
     openkeystore(){
       ipc.callMain('openkeystore', {})
-    }
+    },
+    async pledgeMiner(){
+       console.log('**********')
+          try{
+            var result = await ipc.callMain("pledgeMiner", {
+            })
+            console.log(result)
+            if(result.state==true){
+              this.$data.pledgeMinerData=result.data
+            }else{
+              this.$Message.info('read pledgeMiner info error');
+            }
+            
+          }
+          catch(ex){
+            console.log(ex);
+            this.$Message.info(ex.errormsg);
+          }
+     }
   },
   computed: {
     calProgress() {
-      this.progressPercent = (this.used / this.total).toFixed(4) * 100;
+      this.progressPercent = (this.$data.pledgeMinerData.use_size / this.$data.pledgeMinerData.size).toFixed(4) * 100;
       // console.log(this.progressPercent);
       return this.progressPercent;
+    },
+    getstore(){
+      console.log(' - -')
+      try {
+      // this.$data.node_info=this.$store.getters.info.node_info;
+        return _.pairs(this.$store.getters.info.validator_info);  
+      } catch (error) {
+        return [];
+      }
+      
     }
   },
   components: {

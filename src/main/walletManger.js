@@ -290,7 +290,7 @@ walletManger.prototype._getAccountInfo = function () {
     console.log('_getAccountInfo')
 
     var address = this.defaultwallet.address;
-    var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork;
+    var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();
     var addressinfourl = nodeBaseUrl + 'abci_query?path=%22/accounts/' + address + '%22&data=&height=&prove='
 
     log.info(addressinfourl);
@@ -398,15 +398,15 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
     var TxPay = TxPayloadMessage.create(TxPayload);
     var TxPayBufer = TxPayloadMessage.encode(TxPay).finish()
     console.log('TxPay--')
-    console.log(TxPay)
-    console.log(TxPayBufer)
-    console.log(TxPayBufer.toString('hex'))
-    var bf1=Buffer.from('080f2a680a2006b623ff16c14964a99763462151e8e7f50e8a87ce05cc9039bc8e79673acd4112440a1458f5173838d50d5fab4a06489c84ebe85f73782210e9021a0c080112080de0b6b3a7640000220608011202040028dee891e5053801420b3139322e3136382e312e31','hex')
-    var bf2=Buffer.from('080f2a6a0a2006b623ff16c14964a99763462151e8e7f50e8a87ce05cc9039bc8e79673acd4112460a1458f5173838d50d5fab4a06489c84ebe85f73782210e9021a0c080112080de0b6b3a7640000220608011202040028dee891e50530003801420b3139322e3136382e312e31','hex')
-    var obj1= TxPayloadMessage.decode(bf1)
-    var obj2=TxPayloadMessage.decode(bf2)
-    log.info(obj1)
-    log.info(obj2)
+    // console.log(TxPay)
+    // console.log(TxPayBufer)
+    // console.log(TxPayBufer.toString('hex'))
+    // var bf1=Buffer.from('080f2a680a2006b623ff16c14964a99763462151e8e7f50e8a87ce05cc9039bc8e79673acd4112440a1458f5173838d50d5fab4a06489c84ebe85f73782210e9021a0c080112080de0b6b3a7640000220608011202040028dee891e5053801420b3139322e3136382e312e31','hex')
+    // var bf2=Buffer.from('080f2a6a0a2006b623ff16c14964a99763462151e8e7f50e8a87ce05cc9039bc8e79673acd4112460a1458f5173838d50d5fab4a06489c84ebe85f73782210e9021a0c080112080de0b6b3a7640000220608011202040028dee891e50530003801420b3139322e3136382e312e31','hex')
+    // var obj1= TxPayloadMessage.decode(bf1)
+    // var obj2=TxPayloadMessage.decode(bf2)
+    // log.info(obj1)
+    // log.info(obj2)
     console.log('TxPay--')
     //==
     var TxMessage = protoRoot.lookupType('types.Tx');
@@ -431,7 +431,7 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
     }
     var TxMessageData = TxMessage.create(TxMessageload);
     //https://github.com/irisnet/irisnet-crypto/search?q=pubKey&unscoped_q=pubKey
-    var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork;
+    var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();
     var txinfourl = nodeBaseUrl + 'broadcast_tx_commit';
 
     var TxMessagebuffer = TxMessage.encode(TxMessageData).finish();
@@ -447,6 +447,25 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
     log.info('end')
     log.info(result)
     return result;
+}
+
+
+walletManger.prototype.SignData = async function (password,content){
+
+    var tenderKeys = new TenderKeys();
+    var contentBuffer=Buffer.from(content)
+    var walletInfo = this.OpenDefaultwallet(password);
+    var sindata = tenderKeys.signBuffer(walletInfo.privateKey.toString('hex'),contentBuffer);//   lastpayobj
+
+    
+
+    var TxMessageload={
+        key: walletInfo.publicKey ,
+        content: content ,
+        signature:sindata.toString('hex')
+    }
+    return TxMessageload;
+
 }
 
 

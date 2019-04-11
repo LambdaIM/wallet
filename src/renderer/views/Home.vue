@@ -85,14 +85,7 @@
         </div>
       </Modal>
 
-      <Modal v-model="passwordModal" :styles="{top: '200px'}">
-        <p class="mt40">
-          <Input v-model="walletPassword" type="password"></Input>
-        </p>
-        <div slot="footer">
-          <Button type="primary" @click="sendLAMBTx">Confirm</Button>
-        </div>
-      </Modal>
+ 
     </div>
   </div>
 </template>
@@ -107,8 +100,6 @@ import filters from "../common/js/filter.js";
 import * as Utils from "web3-utils";
 import wUtils from "../common/js/utils.js";
 import eventhub from "../common/js/event.js";
-
-
 
 
 export default {
@@ -174,6 +165,14 @@ export default {
       // this.getBalance();
       // this.transactionList(this.address);
     }, 2000 * 5);
+
+    eventhub.$on("TransactionSuccess", (data) => {
+      console.log('TransactionSuccess');
+      this.getBalance();
+      this.transactionList(this.address);
+     
+    });
+
   },
   beforeDestroy() {
     clearInterval(this.$data.Interval);
@@ -251,34 +250,9 @@ export default {
     confirm() {
       this.confirmModal = false;
       // this.passwordModal = true;
-      eventhub.$emit('TransferConfirm',this.$data.transactiondata);
+      eventhub.$emit('TxConfirm',this.$data.transactiondata);
 
 
-    },
-    sendLAMBTx() {
-      if (this.walletPassword == null) {
-        return;
-      }
-      this.TransferConfirm();
-    },
-    async TransferConfirm() {
-      let password = this.walletPassword;
-      try {
-        var res = await ipc.callMain("transferConfirm", {
-          password:password,
-          transactiondata:this.$data.transactiondata
-        });
-        // console.log(res);
-        if(!res.state) return;
-        //todo  返回的错误信息需要提示
-        this.$Message.info('ok');
-        console.log(res)
-        await this.getBalance();
-        await this.transactionList(this.address);
-        this.passwordModal = false;
-      } catch (ex) {
-        console.log(ex);
-      }
     },
     async getBalance() {
       // console.log("importWallet");
@@ -288,6 +262,7 @@ export default {
         this.address = res.data.address;
         this.$store.dispatch("setaddress", this.address);
         this.balance = res.data.balance ;
+        this.$store.dispatch("setblance", this.balance);
         console.log(this.balance);
       } catch (ex) {
         console.log(ex);
