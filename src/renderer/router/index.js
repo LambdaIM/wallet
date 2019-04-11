@@ -78,7 +78,25 @@ settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH,'set.json') );
         name: 'api',
         component: () =>
             import('@/views/Api.vue')
-    }
+    },
+    {
+        path: '/validator',
+        name: 'validator',
+        component: () =>
+            import('@/views/validator/index.vue')
+    },
+    {
+        path: '/miner',
+        name: 'miner',
+        component: () =>
+            import('@/views/miner/index.vue')
+    },
+    {
+        path: '/sign',
+        name: 'sign',
+        component: () =>
+            import('@/views/sign/index.vue')
+    },
     ]
 })
 

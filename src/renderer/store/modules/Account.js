@@ -25,8 +25,8 @@ const actions = {
     console.log('actions')
     context.commit('setaddress', address)
   },
-  setblance: function ({ blance }) {
-    commit('setblance', address)
+  setblance: function (context, blance ) {
+    context.commit('setblance', blance)
   },
   set: function (context, loginState) {
     console.log('actions login')
@@ -36,6 +36,9 @@ const actions = {
 const getters = {
   getaddress: state => {
     return state.address
+  },
+  getblance: state => {
+    return state.blance
   },
 }
 

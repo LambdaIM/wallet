@@ -354,14 +354,15 @@ export default {
        console.log('**********')
           try{
             var result = await ipc.callMain("askpledgeOrder", {
-              duration:361,
-              price:utils.numberToBig(1),
-              size:String(1024),   //最小单位是1m 
-              // type:0,     //SELL = 0;BUY  = 1;
+              duration:360,
+              price:utils.numberToBig(0.01),
+              size:String(1*1024),   //最小单位是1m 
+              type:0,     //SELL = 0;BUY  = 1;
               status:1, //ORDER_INACTIVE = 0; ORDER_ACTIVE   = 1;
               ip:'192.168.1.1',
-              sellSize:String(0)
+              // sellSize:String(0)
             })
+            console.log('挂单接口返回数据')
             console.log(result)
             this.$data.transactiondata=result.data;
           }

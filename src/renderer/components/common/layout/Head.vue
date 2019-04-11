@@ -14,10 +14,10 @@
             <router-link to="/miner" class="item">Miner</router-link>
           </div>
           <div class="head-menu-item">
-            <router-link to="/customer" class="item">Customer</router-link>
+            <router-link to="/home" class="item">Validator</router-link>
           </div>
           <div class="head-menu-item">
-            <router-link to="/validator" class="item">Validator</router-link>
+            <router-link to="/sign" class="item">Sign</router-link>
           </div>
 
           <div class="head-menu-item overtext">

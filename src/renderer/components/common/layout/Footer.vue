@@ -39,7 +39,7 @@ export default {
   methods: {
     getValidatorInfo() {
       // console.log(DAEMON_CONFIG)
-      var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork;
+      var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();
       console.log(nodeBaseUrl);
       var pra = {
         url: nodeBaseUrl + "status",

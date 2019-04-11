@@ -47,7 +47,7 @@ class Transaction {
 
   }
   async getTransactionInfo(hash){
-    var url =`${DAEMON_CONFIG.LambdaExtenNetwork}getTransactionByHash`;
+    var url =`${DAEMON_CONFIG.LambdaExtenNetwork()}getTransactionByHash`;
     log.info(url);
     var data ={
           hash:hash
