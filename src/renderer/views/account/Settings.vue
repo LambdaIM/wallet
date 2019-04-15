@@ -172,7 +172,7 @@
               <span class="title">{{ $t("seting.Current_Version") }}</span>
             </Col>
             <Col span="3" class-name="content-wrapper">
-              <span>V0.1.1</span>
+              <span>V0.1.8</span>
             </Col>
             <!-- <Col span="3" class-name="content-wrapper">
               <a>Check Version</a>

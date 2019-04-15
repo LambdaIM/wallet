@@ -526,6 +526,8 @@ export default {
             // }
             // ],
             //===
+          }else{
+            _this.$data.loading=false;
           }
         })
         .catch(function(err) {});
