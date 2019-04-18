@@ -231,7 +231,12 @@ walletManger.prototype.deleteWallet = function (address) {
 }
 
 walletManger.prototype.ImportWalletByMnemonic = function (mnemonic, password, name) {
-    return this.generateWallet(mnemonic, password, name)
+    var mnemonicList = mnemonic.match(/[a-z]+[\-\']?[a-z]*/ig);
+    if(mnemonicList==null||mnemonicList.length<12){
+        throw new Error('make sure  inputting 12 words or more ') 
+    }
+    var mnemonicStr = mnemonicList.join(" ");
+    return this.generateWallet(mnemonicStr, password, name)
 }
 
 
@@ -244,6 +249,10 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
     v3file.name = name;
 
     wallet = ETHwallet.fromV3(v3file, password);
+    if(wallet == undefined){
+        throw new Error('Import failed,Please check the wallet file and password') 
+    }
+    
     var targetpath = path.join(DAEMON_CONFIG.WalletFile, wallet.getV3Filename() + '.keyinfo');
     fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8')
 

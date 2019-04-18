@@ -127,7 +127,7 @@ export default  function(){
         }
 
         try{
-            WM.ImportWalletByMnemonic(mnemonic,password,name);
+             WM.ImportWalletByMnemonic(mnemonic,password,name);
             return resultView(null,true)
 
         }catch(ex){
