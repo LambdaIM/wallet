@@ -56,11 +56,21 @@ export default {
   },
   created() {
     // this.isLogin();
-    this.WalletBasicinfo();
+    
   },
   mounted() {
    let login=settings.get("isopenfile");
    this.$store.dispatch("set", login); 
+   if(login){
+     this.WalletBasicinfo();
+   }
+  },
+  beforeUpdate(){
+    let login=settings.get("isopenfile");
+   this.$store.dispatch("set", login); 
+   if(login){
+     this.WalletBasicinfo();
+   }
   },
   methods: {
     onCopy(e) {
@@ -70,12 +80,13 @@ export default {
       this.$Message.info("Failed to copy texts");
     },
     async WalletBasicinfo() {
-      // console.log("importWallet");
+      console.log("WalletBasicinfo");
       try {
         let res = await ipc.callMain("defaultWalletBasicinfo", {});
         console.log(res);
         if (!res.state) return;
         this.$store.dispatch("setaddress", res.data.address);
+        console.log("WalletBasicinfo",res.data.address);
       } catch (ex) {
         console.log(ex);
         console.log("没有找到默认钱包，是否需要重新创建账号");

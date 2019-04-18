@@ -10,38 +10,79 @@
           <!-- <p class="notice">WARNING: Password can NOT be reset or recovered, do remember it!</p> -->
         </div>
       </div>
-      <div class="trans-button-wrapper">
+      <!-- <div class="trans-button-wrapper">
         <div class="trans-button-container">
           <button @click="transWays()" class="btn trans-button">
             {{way}}
             <Icon type="ios-arrow-forward"/>
           </button>
         </div>
+      </div> -->
+      <div class="demo-tabs-style2">
+    <Tabs value="name1" >
+
+      <TabPane label="by keyStore file" name="name1">
+          <Form
+            ref="formbyfile"
+            :model="formInline"
+            :rules="ruleInline"
+            class="form-container"
+            
+          >
+            <FormItem prop="keystorefile">
+              <Upload :before-upload="beforeUpload" :default-file-list="formInline.keystorefile" action="">
+                <Button class="btn upload-button" icon="ios-cloud-upload-outline">Choose Wallet Files</Button>
+              </Upload>
+            </FormItem>
+
+            <FormItem prop="password">
+              <Input type="password" v-model="formInline.password" placeholder="Old password">
+                <Icon type="ios-lock-outline" slot="prepend"></Icon>
+              </Input>
+            </FormItem>
+
+            <FormItem prop="walletName">
+              <Input type="text" v-model="formInline.walletName" placeholder="Name your wallet">
+                <Icon type="ios-person-outline" slot="prepend"></Icon>
+              </Input>
+            </FormItem>
+          </Form>
+          <div class="button-wrapper">
+        <button class="btn login-button" @click="handleSubmit('formbyfile')">Import</button>
       </div>
 
-      <Form
-        ref="formInline"
-        :model="formInline"
-        :rules="ruleInline"
-        class="form-container"
-        v-if="show==true"
-      >
-        <FormItem prop="key">
-          <Input type="text" v-model="formInline.user" placeholder="Paste Private Key Here">
-            <Icon type="ios-person-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
 
-        <FormItem prop="user">
-          <Input type="text" v-model="formInline.user" placeholder="Name Your Wallet">
+        </TabPane>
+
+        <TabPane label="by mnemonic word " name="name2">
+          <Form
+        ref="formInMnemonic"
+        :model="Mnemonic"
+        :rules="ruleMnemonic"
+        class="form-container"
+        
+      >
+        <FormItem prop="word">
+          <Input
+            type="textarea"
+            v-model="Mnemonic.word"
+            placeholder="8-20 characters,letter,number or symbol"
+          >
+            <Icon type="ios-lock-outline" slot="prepend"></Icon>
+          </Input>
+        </FormItem>
+        <FormItem prop="walletname">
+          <Input type="text" v-model="Mnemonic.walletname" placeholder="Name Your Wallet">
             <Icon type="ios-person-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
-        <FormItem prop="password">
+        
+        <FormItem prop="password" >
           <Input
+            autocomplete="on"
             type="password"
-            v-model="formInline.password"
-            placeholder="8-20 characters,letter,number or symbol"
+            v-model="Mnemonic.password"
+            placeholder="password"
           >
             <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
@@ -51,43 +92,24 @@
           <Input
             autocomplete="on"
             type="password"
-            v-model="formInline.confirmPassword"
+            v-model="Mnemonic.confirmPassword"
             placeholder="Confirm the password"
           >
             <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
       </Form>
-
-      <Form
-        ref="formInline"
-        :model="formInline"
-        :rules="ruleInline"
-        class="form-container"
-        v-if="show==false"
-      >
-        <FormItem prop="key">
-          <Upload multiple action="//jsonplaceholder.typicode.com/posts/">
-            <Button class="btn upload-button" icon="ios-cloud-upload-outline">Choose Wallet Files</Button>
-          </Upload>
-        </FormItem>
-
-        <FormItem prop="password">
-          <Input type="password" v-model="formInline.password" placeholder="Old password">
-            <Icon type="ios-lock-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-
-        <FormItem prop="key">
-          <Input type="text" v-model="formInline.user" placeholder="Name your wallet">
-            <Icon type="ios-person-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-      </Form>
-
       <div class="button-wrapper">
-        <button class="btn login-button" @click="handleSubmit('formInline')">Import</button>
+        <button class="btn login-button" @click="handleSubmit('formInMnemonic')">Import</button>
       </div>
+
+        </TabPane>
+        
+    </Tabs>
+      </div>
+
+
+      
 
       <div class="bottom-wrapper tc">
         <router-link class="bottom-wrapper-item" to="/">Login Wallet</router-link>
@@ -95,24 +117,38 @@
         <router-link class="bottom-wrapper-item" to="/register">Create Wallet</router-link>
       </div>
     </div>
+    
   </div>
 </template>
 
 <script>
+const ipc = require("electron-better-ipc");
+
 export default {
   data() {
     return {
       show: true,
-      way: "By Private Key",
+      
       formInline: {
-        user: "",
-        password: ""
+        keystorefile:[],
+        password: "",
+        walletName: ""
       },
-      ruleInline: {
-        user: [
+      Mnemonic:{
+
+      },
+      ruleMnemonic:{
+        word:[
           {
             required: true,
-            message: "Please fill in the user name",
+            message: "Please fill in the Mnemonic word",
+            trigger: "blur"
+          }
+        ],
+        walletname: [
+          {
+            required: true,
+            message: "Please fill in the wallet name",
             trigger: "blur"
           }
         ],
@@ -120,12 +156,6 @@ export default {
           {
             required: true,
             message: "Please fill in the password.",
-            trigger: "blur"
-          },
-          {
-            type: "string",
-            min: 6,
-            message: "The password length cannot be less than 6 bits",
             trigger: "blur"
           }
         ],
@@ -135,12 +165,52 @@ export default {
             trigger: "blur"
           }
         ]
+
+      },
+      ruleInline: {
+        walletName: [
+          {
+            required: true,
+            message: "Please fill in the wallet name",
+            trigger: "blur"
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: "Please fill in the password.",
+            trigger: "blur"
+          }
+        ],
+        keystorefile: [
+          {
+            required: true,
+            type: "array",
+            message: "Please select the keystore file ",
+            trigger: "blur"
+          }
+        ]
       }
     };
   },
+  mounted() {
+    console.log('8 8 8 8')
+  },
   methods: {
     handleSubmit(name) {
-      this.$router.push("/home");
+      // this.$router.push("/home");
+      this.$refs[name].validate(valid => {
+        if (valid) {
+          if(name == 'formbyfile'){
+            this.importfile();
+          }else{
+            this.importWord();
+
+          }
+           
+          
+        }
+      });
     },
     transWays() {
       this.show = !this.show;
@@ -168,9 +238,88 @@ export default {
       } else {
         callback();
       }
+    },
+    validateConfirmPass(rule, value, callback) {
+      if (value === "") {
+        callback(new Error("Please enter your password again"));
+      } else if (value !== this.Mnemonic.password) {
+        callback(new Error("The two input passwords do not match!"));
+      } else {
+        callback();
+      }
+    },
+    beforeUpload(file){  
+      console.log(file.path)
+      this.$data.formInline.keystorefile=[{
+                        name: file.name,
+                        url: file.path
+                    }];
+       return false;
+    },
+    async importfile(){
+      console.log(this.$data.formInline);
+
+      var password = this.$data.formInline.password;
+      var name = this.$data.formInline.walletName;
+      var filepath = this.$data.formInline.keystorefile[0].url;
+      try{
+        var res = await ipc.callMain("importWalletBykeyStore", {
+          filepath,
+          password,
+          name
+        });
+
+
+      }catch(ex){
+        console.log(ex);
+        this.$Notice.error({
+            title: ex.errormsg
+          });
+      }
+      
+
+        console.log(res)
+        if (res.state) {
+          this.$Notice.success({
+            title: "import Wallet !"
+          });
+          this.$router.push("/");
+        }else{
+
+        }
+      
+    },
+    async importWord(){
+        console.log( this.$data.Mnemonic)
+        var {word ,walletname,password} = this.$data.Mnemonic
+        try{
+            var res = await ipc.callMain("ImportWalletByMnemonic", {
+              mnemonic:word,
+              password:password,
+              name:walletname
+            });
+            console.log(res);
+
+
+          }catch(ex){
+            console.log(ex);
+            this.$Notice.error({
+                title: ex.errormsg
+              });
+          }
+
+          if (res&&res.state) {
+          this.$Notice.success({
+            title: "import Wallet  Success!"
+          });
+          this.$router.push("/");
+          }else{
+
+          }
+        
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
@@ -259,5 +408,15 @@ export default {
       }
     }
   }
+
+  
+
+
 }
+
+
+
+  
+
+
 </style>

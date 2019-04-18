@@ -160,6 +160,7 @@ export default {
           // console.log(res);
           if (!res.state) return;
           this.walletList = res.data;
+          console.log(this.walletList);
         })
         .catch(err => {
           console.log("err");
