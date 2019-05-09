@@ -1,6 +1,6 @@
 import moment from "moment";
 const BigNumber = require('bignumber.js');
-BigNumber.config({ DECIMAL_PLACES: 8 })
+BigNumber.config({ DECIMAL_PLACES: 8,ROUNDING_MODE: BigNumber.ROUND_DOWN })
 
 const formatValue = (value) => {
     var bigvalue=new BigNumber(value);
