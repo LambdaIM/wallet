@@ -14,12 +14,22 @@
           </p>-->
           <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
             <FormItem prop="name">
-              <Select v-model="value" @on-change="selectName" clearable size="large">
+              <Select :placeholder="selectplaceholder" v-model="value" @on-change="selectName" clearable size="large">
                 <Option
                   v-for="(item,index) in walletList"
                   :value="item.name"
                   :key="index"
-                >{{ item.name}} &nbsp; &nbsp; [{{item.address.slice(0,7)}}.....{{item.address.slice(-7)}}]</Option>
+                  :label="item.name"
+                >
+                
+                <div>
+                  {{ item.name}}
+                </div>
+                <div>
+                 {{item.address}} 
+                </div>
+                
+                </Option>
               </Select>
             </FormItem>
 
@@ -28,7 +38,8 @@
                 type="password"
                 v-model="formInline.password"
                 placeholder="Password"
-                @on-enter="openWallet('formInline')"
+                 @on-enter="openWallet('formInline')"
+                
               >
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
               </Input>
@@ -36,7 +47,7 @@
           </Form>
 
           <div class="button-wrapper">
-            <button class="btn login-button" @click="openWallet('formInline')">Login</button>
+            <button  class="btn login-button" @click="openWallet('formInline')">Login</button>
             <!-- <button class="btn login-button"    @click="getwalletList">Login1</button> -->
           </div>
 
@@ -83,7 +94,8 @@ export default {
       walletList: [],
       name: "",
       value: null,
-      address: null
+      address: null,
+      selectplaceholder:'please select'
     };
   },
   components: {
@@ -104,6 +116,7 @@ export default {
         if (value == this.walletList[index].name) {
           this.address = this.walletList[index].address;
           // console.log(this.address);
+          // this.$data.selectplaceholder = value;
 
           this.setDefaultWallet();
         }
