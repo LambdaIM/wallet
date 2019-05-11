@@ -100,6 +100,7 @@ import filters from "../common/js/filter.js";
 import * as Utils from "web3-utils";
 import wUtils from "../common/js/utils.js";
 import eventhub from "../common/js/event.js";
+import _ from "underscore"
 
 
 export default {
@@ -112,7 +113,45 @@ export default {
       columns: [
         {
           title: "Type",
-          key: "txType"
+          key: "txType",
+            filters: [
+              {
+                label: "txSend",
+                value: "txSend"
+              },
+              {
+                label: "txPledgeNew",
+                value: "txPledgeNew"
+              },
+              {
+                label: "txPledgeRevert",
+                value: "txPledgeRevert"
+              },
+              {
+                label: "txOrder",
+                value: "txOrder"
+              },
+              {
+                label: "txDeal",
+                value: "txDeal"
+              },
+              {
+                label: "txProof",
+                value: "txProof"
+              },
+              {
+                label: "txCancelOrder",
+                value: "txCancelOrder"
+              },
+              {
+                label: "txValidatorUpdate",
+                value: "txValidatorUpdate"
+              }
+            ],
+            filterRemote:function(value, row){
+              eventhub.$emit('TxType',value[0]);
+            },
+            filterMultiple: false
         },
         {
           title: "Amount",
@@ -148,7 +187,8 @@ export default {
       walletPassword: null,
       txlist: [],
       Interval: null,
-      transactiondata:null
+      transactiondata:null,
+      txType:null
     };
   },
   components: {
@@ -164,18 +204,30 @@ export default {
     
 
     this.getBalance();
-    this.transactionList();
+    this.transactionList(1);
+    
     this.Interval = setInterval(() => {
       this.getBalance();
-      this.transactionList();
+      this.transactionList(1);
     }, 2000 * 5);
 
     eventhub.$on("TransactionSuccess", (data) => {
       console.log('TransactionSuccess');
       this.getBalance();
-      this.transactionList();
+      this.transactionList(1);
      
     });
+
+    eventhub.$on("TxType", (data) => {
+      console.log('TxType',data);
+      this.$data.txType=data;
+      
+      this.transactionList(1)
+      
+     
+    });
+
+    
 
   },
   beforeDestroy() {
@@ -272,8 +324,8 @@ export default {
         console.log(ex);
       }
     },
-    async transactionList() {
-      // console.log("getDefaultWalletBlance");
+    async transactionList(pagenum) {
+      console.log("transactionList");
       var address=this.address;
       function checkaddress(address1) {
         if (address1.toUpperCase() == address.toUpperCase()) {
@@ -295,13 +347,23 @@ export default {
         }
       }
       try {
-        let res = await ipc.callMain("transactionList", {});
+        // txType: txPledgeNew
+        let param = {
+          pageNum: pagenum,
+          showNum: 10
+        };
+        if (this.txType != null || this.txType != "") {
+          param.txType = this.txType;
+        }
+        
+        let res = await ipc.callMain("transactionList", param);
         // console.log(res);
         if (!res.state) return;
         let tempData = res.data.data;
+        this.$data.data=null;
         this.data = [];
         console.log(tempData);
-        if (tempData && tempData.code == 200) {
+        if (tempData && tempData.code == 200&&tempData.data.txList!=null) {
           tempData.data.txList.forEach(item => {
             this.data.push({
               amount: item.value==""?"--":(checkaddress(item.from) + filters.formatValue(item.value)),
