@@ -32,9 +32,9 @@ class Transaction {
     var address =this.defaultAddress;
     console.log(address);
 
-    var url =`${DAEMON_CONFIG.LambdaExplorer}api/tx/getTxAccountList`;
+    var url =`${DAEMON_CONFIG.LambdaExplorer}api/tx/getTxList`;
     var data ={
-        accountHash:address,
+        address:address,
         pageNum:1,
         showNum:10
       }
@@ -42,15 +42,17 @@ class Transaction {
     const result = await axios.get(url, {
         params: data
       })
+      
     
     return result;
 
   }
-  async getTransactionInfo(hash){
-    var url =`${DAEMON_CONFIG.LambdaExtenNetwork()}getTransactionByHash`;
+  async getTransactionInfo(hash,txType){
+    var url =`${DAEMON_CONFIG.LambdaExplorer}/api/tx/txDetailByType`;
     log.info(url);
     var data ={
-          hash:hash
+          txHash:hash,
+          txType: txType
         }
   
       const result = await axios.get(url, {

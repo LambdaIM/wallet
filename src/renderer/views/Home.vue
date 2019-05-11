@@ -111,6 +111,10 @@ export default {
       sendModal: false,
       columns: [
         {
+          title: "Type",
+          key: "txType"
+        },
+        {
           title: "Amount",
           key: "amount"
         },
@@ -123,14 +127,11 @@ export default {
           title: "Date",
           key: "date"
         },
-        {
-          title: "Type",
-          key: "type"
-        },
-        {
-          title: "Status",
-          key: "status"
-        },
+        
+        // {
+        //   title: "Status",
+        //   key: "status"
+        // },
         {
           title: "detail",
           key: "detail",
@@ -158,18 +159,21 @@ export default {
       console.log(value);
     }
   },
-  mounted() {
+ async mounted() {
+    this.address= await this.WalletBasicinfo();
+    
+
     this.getBalance();
-    this.transactionList(this.address);
+    this.transactionList();
     this.Interval = setInterval(() => {
-      // this.getBalance();
-      // this.transactionList(this.address);
+      this.getBalance();
+      this.transactionList();
     }, 2000 * 5);
 
     eventhub.$on("TransactionSuccess", (data) => {
       console.log('TransactionSuccess');
       this.getBalance();
-      this.transactionList(this.address);
+      this.transactionList();
      
     });
 
@@ -179,10 +183,10 @@ export default {
   },
   methods: {
     toDetail(row, index) {
-      // console.log(row, index);
+      console.log(row, index);
       let id = index;
       // console.log(id);
-      this.$router.push(`/detail/${id}`);
+      this.$router.push(`/detail/${row.txHash}/${row.txType}`);
     },
     openSend() {
       this.sendModal = true;
@@ -259,8 +263,8 @@ export default {
       try {
         var res = await ipc.callMain("defaultWalletBlance", {});
         if(!res.state) return;
-        this.address = res.data.address;
-        this.$store.dispatch("setaddress", this.address);
+        // this.address = res.data.address;
+        // this.$store.dispatch("setaddress", this.address);
         this.balance = res.data.balance ;
         this.$store.dispatch("setblance", this.balance);
         console.log(this.balance);
@@ -268,8 +272,9 @@ export default {
         console.log(ex);
       }
     },
-    async transactionList(address) {
+    async transactionList() {
       // console.log("getDefaultWalletBlance");
+      var address=this.address;
       function checkaddress(address1) {
         if (address1.toUpperCase() == address.toUpperCase()) {
           return " -  ";
@@ -279,7 +284,12 @@ export default {
       }
       function showaddress(address1, address2) {
         if (address1.toUpperCase() == address.toUpperCase()) {
-          return "to  " + address2;
+          if(address2!=""){
+            return "to  " + address2;
+          }else{
+            return "to  " + "--";
+          }
+          
         } else {
           return "from  " + address1;
         }
@@ -290,20 +300,35 @@ export default {
         if (!res.state) return;
         let tempData = res.data.data;
         this.data = [];
+        console.log(tempData);
         if (tempData && tempData.code == 200) {
           tempData.data.txList.forEach(item => {
             this.data.push({
-              amount: checkaddress(item.from) + filters.formatValue(item.value),
+              amount: item.value==""?"--":(checkaddress(item.from) + filters.formatValue(item.value)),
               source: showaddress(item.from, item.to),
-              type: "Transaction",
+              txType: item.txType,
               date: filters.formatDate(item.time),
-              status: 1
+              status: 1,
+              txHash:item.txHash
             });
           });
         }
       } catch (ex) {
         console.log(ex);
       }
+    },
+    async WalletBasicinfo() {
+      var result=null;
+      try {
+        let res = await ipc.callMain("defaultWalletBasicinfo", {});
+        console.log(res);
+        if (!res.state) return;
+         result = res.data.address;
+      } catch (ex) {
+
+      }
+      
+      return result;
     }
   }
 };

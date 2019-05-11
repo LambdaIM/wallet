@@ -1,13 +1,21 @@
 <template>
   <div class="container">
     <Mycard cardtitle="Transaction" class="mt20">
-      <div class="transaction-content" slot="card-content">
+      <div v-if="data!=null" class="transaction-content" slot="card-content">
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">TxHash:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a @click="checkHash(data[id].txHash)" class="item-value">{{data[id].txHash}}</a>
+            <a @click="checkHash(data.txHash,txType)" class="item-value">{{data.txHash}}</a>
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            <span class="title">TxType:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+            {{txType}}
           </Col>
         </Row>
 
@@ -16,7 +24,7 @@
             <span class="title">Block Height:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a @click="checkHeight(data[id].height)" class="item-value">{{data[id].height}}</a>
+            <a @click="checkHeight(data.height)" class="item-value">{{data.height}}</a>
           </Col>
         </Row>
 
@@ -25,7 +33,7 @@
             <span class="title">Time:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <span class="item-value">{{data[id].time | formatDate}}</span>
+            <span class="item-value">{{data.time | formatDate}}</span>
           </Col>
         </Row>
 
@@ -34,7 +42,7 @@
             <span class="title">From:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a @click="checkAddress(data[id].from)" class="item-value">{{data[id].from}}</a>
+            <a @click="checkAddress(data.from)" class="item-value">{{data.from}}</a>
           </Col>
         </Row>
 
@@ -43,7 +51,7 @@
             <span class="title">To:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a @click="checkAddress(data[id].to)" class="item-value">{{data[id].to}}</a>
+            <a @click="checkAddress(data.to)" class="item-value">{{data.to}}</a>
           </Col>
         </Row>
 
@@ -52,7 +60,7 @@
             <span class="title">Value:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <span class="item-value">{{data[id].value | formatValue}}</span>
+            <span class="item-value">{{data.value | formatValue}}</span>
           </Col>
         </Row>
       </div>
@@ -102,16 +110,17 @@ export default {
           key: "value"
         }
       ],
-      data: [],
-      id: ""
+      data: null,
+      id: "",
+      txType:''
     };
   },
   components: {
     Mycard,
   },
   created() {
-    let address = this.$store.getters.getaddress.toLowerCase();
-    this.transactionList(address);
+    // let address = this.$store.getters.getaddress.toLowerCase();
+    this.transactionInfo();
     // console.log(address);
     // this.getpaylist(address);
   },
@@ -119,9 +128,9 @@ export default {
 
   // },
   methods: {
-    checkHash(value) {
+    checkHash(value,txType) {
       // console.log(value);
-      let url = `http://explorer.lambda.im/#/txhashdetail/${value}`;
+      let url = `http://explorer.lambda.im/#/txhashdetail/${value}/${txType}`;
       shell.openExternal(url);
     },
     checkAddress(value) {
@@ -157,13 +166,21 @@ export default {
     //     })
     //     .catch(function(err) {});
     // }
-    async transactionList(address) {
-      this.id = this.$route.params.id;
+    async transactionInfo() {
+     let hash = this.$route.params.id;
+     let txType = this.$route.params.txType;
+     this.$data.txType=txType;
       try {
-        var res = await ipc.callMain("transactionList", {});
+        var res = await ipc.callMain("transactionInfo", {
+          hash,
+          txType
+        });
         // console.log(res);
         let tempData = res.data.data;
-        this.data=tempData.data.txList;
+        if(tempData.code==200){
+        this.$data.data=tempData.data;
+        }
+        
       } catch (ex) {
         console.log(ex);
       }

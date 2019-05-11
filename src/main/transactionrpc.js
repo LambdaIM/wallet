@@ -20,11 +20,11 @@ import transactionManager from './transactionManager.js';
         }
     })
     eipc.answerRenderer('transactionInfo',async(query)=>{
-      var {hash} = query;
+      var {hash,txType} = query;
 
       try{
          var transaction = new  transactionManager();
-         var result = await  transaction.getTransactionInfo(hash) 
+         var result = await  transaction.getTransactionInfo(hash,txType) 
           
           return resultView(result,true)
 
