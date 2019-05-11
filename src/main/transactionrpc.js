@@ -11,7 +11,7 @@ import transactionManager from './transactionManager.js';
     eipc.answerRenderer('transactionList',async(query)=>{
         try{
            var transaction = new  transactionManager();
-           var result = await  transaction.getTransactionList() 
+           var result = await  transaction.getTransactionList(query) 
             
             return resultView(result,true)
 

@@ -23,7 +23,7 @@ class Transaction {
     }
 
   }
-  async getTransactionList(){
+  async getTransactionList(query){
     if(this.defaultAddress==null){
         throw new Error('need address')
 
@@ -33,12 +33,16 @@ class Transaction {
     console.log(address);
 
     var url =`${DAEMON_CONFIG.LambdaExplorer}api/tx/getTxList`;
+    log.info(query)
     var data ={
         address:address,
-        pageNum:1,
-        showNum:10
+        pageNum:query.pageNum,
+        showNum:query.showNum
       }
 
+      if(query.txType!=undefined){
+        data.txType=query.txType;
+      }
     const result = await axios.get(url, {
         params: data
       })

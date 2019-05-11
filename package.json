@@ -78,6 +78,7 @@
         "tendermintelectronkey": "0.0.5",
         "tweetnacl-util": "^0.15.0",
         "typedarray-to-buffer": "^3.1.5",
+        "underscore": "^1.9.1",
         "uuid": "^3.3.2",
         "vue": "^2.5.16",
         "vue-clipboard2": "^0.2.1",
