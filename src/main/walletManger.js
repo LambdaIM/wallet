@@ -255,7 +255,7 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
     
     var targetpath = path.join(DAEMON_CONFIG.WalletFile, wallet.getV3Filename() + '.keyinfo');
     fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8')
-
+    this.scann();
     return true;
 }
 
