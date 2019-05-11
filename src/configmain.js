@@ -13,7 +13,7 @@ const settings = require("electron-settings");
 //homedir  系统默认的文件存储路径
 
 
-var defaultip='39.106.139.11'
+var defaultip='39.105.87.87'
 
 module.exports.DAEMON_CONFIG  = {
     RPC_PORT:8084,
