@@ -9,7 +9,7 @@
           <Button @click="openSend()" icon="md-swap">Transfer</Button>
         </div>
       </div>
-      <Table :columns="columns" :data="data" slot="content">
+      <Table :columns="columns" :data="data" slot="content" >
         <template slot-scope="{ row, index }" slot="source">
           <Poptip word-wrap trigger="hover" width="200" :content="row.source">
             <span class="etc">{{row.source}}</span>
