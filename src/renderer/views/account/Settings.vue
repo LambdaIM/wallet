@@ -9,6 +9,7 @@
             </Col>
             <Col span="12" class-name="content-wrapper">
               <span>{{walletInfo.name}}</span>
+               <Button @click="modal2 = true" type="primary" shape="circle" icon="ios-create"></Button>
             </Col>
           </Row>
 
@@ -173,6 +174,20 @@
           <button class="btn logout-button" @click="logout">Logout</button>
         </div>
       </div>
+
+
+          <Modal v-model="modal2" width="360">
+            <p slot="header" >
+                <span>Edit name</span>
+            </p>
+            <div style="text-align:center">
+                <p>  <Input v-model="editvalue" :placeholder="walletInfo.name"  /></p>
+                
+            </div>
+            <div slot="footer">
+                <Button type="primary" size="large" long  @click="editName">Submit</Button>
+            </div>
+      </Modal>
     </div>
   </div>
 </template>
@@ -195,7 +210,9 @@ export default {
       hidden: "*********************************",
       progressPercent: "",
       walletInfo:null,
-      pledgeMinerData:null
+      pledgeMinerData:null,
+      modal2:false,
+      editvalue:""
 
     };
   },
@@ -244,7 +261,17 @@ export default {
             console.log(ex);
             this.$Message.info(ex.errormsg);
           }
-     }
+     },
+    async editName(){
+      console.log('********** editName')
+      var name=this.$data.editvalue;
+      var res = await ipc.callMain("editWalletName", {name});
+
+      console.log(res)
+      
+      // _this.$data.walletInfo=res.data
+
+    }
   },
   computed: {
     calProgress() {
