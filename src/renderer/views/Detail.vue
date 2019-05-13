@@ -51,7 +51,8 @@
             <span class="title">To:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a @click="checkAddress(data.to)" class="item-value">{{data.to}}</a>
+            <a v-if="!!data.to" @click="checkAddress(data.to)" class="item-value">{{data.to}}</a>
+            <span else>--</span>
           </Col>
         </Row>
 
@@ -79,37 +80,6 @@ import * as Utils from "web3-utils";
 export default {
   data() {
     return {
-      columns: [
-        {
-          title: "TxHash",
-          key: "txHash",
-          slot: "hash"
-        },
-        {
-          title: "Block Height",
-          key: "height",
-          slot: "height"
-        },
-        {
-          title: "Time",
-          key: "time",
-          slot: "time"
-        },
-        {
-          title: "From",
-          key: "from",
-          slot: "from"
-        },
-        {
-          title: "To",
-          key: "to",
-          slot: "to"
-        },
-        {
-          title: "Value",
-          key: "value"
-        }
-      ],
       data: null,
       id: "",
       txType:''

@@ -21,6 +21,9 @@
         </template>
       </Table>
     </MyTable>
+          <div class="tc " >
+            <Page :total="sum" show-elevator @on-change="changePage"></Page>
+          </div>
     <div>
           <Button to="/api">API 测试</Button>
           <br/>
@@ -76,6 +79,7 @@
             <Col span="4" class-name="key">Amount:</Col>
             <Col span="20" class-name="value">{{LAMBvalue}}</Col>
           </Row>
+          
         </div>
         <!-- <p>
           <Input v-model="walletPassword" type="password"></Input>
@@ -188,7 +192,9 @@ export default {
       txlist: [],
       Interval: null,
       transactiondata:null,
-      txType:null
+      txType:null,
+      sum:null,
+      pageNumber:1
     };
   },
   components: {
@@ -204,17 +210,17 @@ export default {
     
 
     this.getBalance();
-    this.transactionList(1);
+    this.transactionList();
     
     this.Interval = setInterval(() => {
       this.getBalance();
-      this.transactionList(1);
+      this.transactionList();
     }, 2000 * 5);
 
     eventhub.$on("TransactionSuccess", (data) => {
       console.log('TransactionSuccess');
       this.getBalance();
-      this.transactionList(1);
+      this.transactionList();
      
     });
 
@@ -222,7 +228,7 @@ export default {
       console.log('TxType',data);
       this.$data.txType=data;
       
-      this.transactionList(1)
+      this.transactionList()
       
      
     });
@@ -339,7 +345,7 @@ export default {
           if(address2!=""){
             return "to  " + address2;
           }else{
-            return "to  " + "--";
+            return  "--";
           }
           
         } else {
@@ -349,7 +355,7 @@ export default {
       try {
         // txType: txPledgeNew
         let param = {
-          pageNum: pagenum,
+          pageNum: this.$data.pageNumber,
           showNum: 10
         };
         if (this.txType != null || this.txType != "") {
@@ -364,6 +370,7 @@ export default {
         this.data = [];
         console.log(tempData);
         if (tempData && tempData.code == 200&&tempData.data.txList!=null) {
+          this.$data.sum=tempData.data.count;
           tempData.data.txList.forEach(item => {
             this.data.push({
               amount: item.value==""?"--":(checkaddress(item.from) + filters.formatValue(item.value)),
@@ -391,6 +398,10 @@ export default {
       }
       
       return result;
+    },
+    async changePage(pageNumber){
+        this.$data.pageNumber=pageNumber;
+        this.transactionList();
     }
   }
 };
@@ -439,7 +450,7 @@ export default {
     }
   }
   .mytable-container {
-    padding-bottom: 100px;
+    padding-bottom: 30px;
     .operation-wrapper {
       height: 40px;
       .operation {
