@@ -479,25 +479,40 @@ walletManger.prototype.SignData = async function (password,content){
 
 walletManger.prototype.editDefaultName=async function  (name){
    this.defaultwallet.name=name;
-   log.info("-*********-");
-   log.info(this.defaultwallet);
+   var filepath = this.findFile(this.defaultwallet.address);
+   if(filepath==''){
+    throw new Error('not find DefaultWallet')
+   }
+   var result = fs.writeFileSync(filepath, JSON.stringify(this.defaultwallet))
+   this.scann();
+
+
 }
-walletManger.prototype.scann = function (address) {
+walletManger.prototype.findFile = function (address) {
     this.walletList = [];
     var dir = DAEMON_CONFIG.WalletFile;
     var list = fs.readdirSync(dir);
-    var file=''
+    var fileName=''
     list.forEach((file) => {
-        if(file.indexOf(address)>0){
-            file = file;
+        if(file.indexOf('.keyinfo')>0){
+            file = path.join(dir, file);
+            var v3file = fs.readFileSync(file, 'utf8');
+            try {
+                v3file = JSON.parse(v3file);
+                if (v3file.address == address) {
+                    fileName=file;
+                  
+                }
+            } catch (err) {
+
+                
+
+            }
+         
         }
         
     })
-    return file;
-
-
-
-
+    return fileName;
 }
 
 

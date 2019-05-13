@@ -181,7 +181,7 @@
                 <span>Edit name</span>
             </p>
             <div style="text-align:center">
-                <p>  <Input v-model="editvalue" :placeholder="walletInfo.name"  /></p>
+                <p v-if="walletInfo!=null">  <Input v-model="editvalue" :placeholder="walletInfo.name"  /></p>
                 
             </div>
             <div slot="footer">
@@ -265,9 +265,23 @@ export default {
     async editName(){
       console.log('********** editName')
       var name=this.$data.editvalue;
-      var res = await ipc.callMain("editWalletName", {name});
+      try{
+        var res = await ipc.callMain("editWalletName", {name});
 
       console.log(res)
+      if(res.state){
+        this.$Message.info('Modified success');
+        this.$data.modal2=false;
+        this.getAccountInfo();
+      }else{
+        this.$Message.info('Modification failed');
+
+      }
+
+      }catch(ex){
+        this.$Message.info('Modification failed');
+      }
+      
       
       // _this.$data.walletInfo=res.data
 
