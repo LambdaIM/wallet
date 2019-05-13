@@ -223,8 +223,7 @@ export default  function(){
 
     eipc.answerRenderer('Walletsign',async(query)=>{
         log.info('Wallettransfer')
-        var path= DAEMON_CONFIG.BASE_PATH+'/lambda.keyinfo'
-        var v3file =fs.readFileSync(path,'utf8');
+        
         var content=query.content;
         var password = query.password;
 
@@ -234,6 +233,21 @@ export default  function(){
         log.info(TxMessageload)
               
         return {data:TxMessageload,state:true} 
+          
+        } catch (error) {
+          log.error(error)
+            return {data:JSON.stringify(error),state:false} 
+        }
+  
+      })
+
+      eipc.answerRenderer('editWalletName',async(query)=>{
+        log.info('Wallettransfer')
+        var name=query.name;
+        try{
+            var TxMessageload = await WM.editDefaultName(name);   
+            log.info(TxMessageload)
+            return {data:TxMessageload,state:true} 
           
         } catch (error) {
           log.error(error)

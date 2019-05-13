@@ -477,6 +477,30 @@ walletManger.prototype.SignData = async function (password,content){
 
 }
 
+walletManger.prototype.editDefaultName=async function  (name){
+   this.defaultwallet.name=name;
+   log.info("-*********-");
+   log.info(this.defaultwallet);
+}
+walletManger.prototype.scann = function (address) {
+    this.walletList = [];
+    var dir = DAEMON_CONFIG.WalletFile;
+    var list = fs.readdirSync(dir);
+    var file=''
+    list.forEach((file) => {
+        if(file.indexOf(address)>0){
+            file = file;
+        }
+        
+    })
+    return file;
+
+
+
+
+}
+
+
 
 
 export default walletManger
