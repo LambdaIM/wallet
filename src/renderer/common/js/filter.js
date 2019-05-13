@@ -3,6 +3,9 @@ const BigNumber = require('bignumber.js');
 BigNumber.config({ DECIMAL_PLACES: 8,ROUNDING_MODE: BigNumber.ROUND_DOWN })
 
 const formatValue = (value) => {
+    if(value=="" || value == undefined || value == null){
+        return '--'
+    }
     var bigvalue=new BigNumber(value);
     var uservalue = bigvalue.div('1e18')
     return `${uservalue.toFormat() } LAMB`;
