@@ -170,13 +170,26 @@ export default {
           title: "Date",
           key: "date"
         },
-        
-        // {
-        //   title: "Status",
-        //   key: "status"
-        // },
         {
-          title: "detail",
+          title: "Status",
+          key: "status",
+          render: (h, params) => {
+              // console.log(params);
+              if (params.row.status == "1") {
+                this.stateType = "md-checkmark";
+              } else {
+                this.stateType = "md-close";
+              }
+              return h("Icon", {
+                props: {
+                  type: `${this.stateType}`,
+                  size: 32
+                }
+              });
+            }
+        },
+        {
+          title: "Detail",
           key: "detail",
           slot: "action"
         }
