@@ -1,14 +1,14 @@
 <template>
   <div class="footer-container">
-    <div v-if="address!==null"  class="footer-wrapper">
+    <div v-if="getstore.address!==null"  class="footer-wrapper">
       <!-- <span class="item etc">Validator id: -->
       <span    class="item etc">Validator:
-        <Poptip word-wrap trigger="hover" width="300" :content="address">{{address}}</Poptip>
+        <Poptip word-wrap trigger="hover" width="300" :content="address">{{getstore.address}}</Poptip>
       </span>
       
-      <span  class="item">Block height: {{height}}</span>
-      <span  class="item" v-if="isSync==true" >Sync Block.... </span>
-      <span class="item" v-else>Block time: {{time | formatDate}}</span>
+      <span  class="item">Block height: {{getstore.height}}</span>
+      <span  class="item" v-if="getstore.isSync==true" >Sync Block.... </span>
+      <span class="item" v-else>Block time: {{getstore.time | formatDate}}</span>
     </div>
     <div v-else class="footer-wrapper">
       <span   class="item">Validator connecting ...</span>
@@ -34,7 +34,7 @@ export default {
     _this.getValidatorInfo();
     setInterval(function(){
         _this.getValidatorInfo();
-    },1000*30)
+    },1000*10)
   },
   methods: {
     getValidatorInfo() {
@@ -51,7 +51,7 @@ export default {
        .then(function(res){
         //  console.log(res)
          if(res.state&&res.data.data.result){
-           _this.dataFormat(res.data.data.result)
+          //  _this.dataFormat(res.data.data.result)
            if(res.data.data.result.node_info){
              _this.$store.dispatch("setinfo", res.data.data.result);
            }
@@ -64,17 +64,37 @@ export default {
        })
     },
     dataFormat(result){
-      try {
-        this.$data.address=result.validator_info.address;
-        this.$data.height=result.sync_info.latest_block_height;
-        this.$data.time=result.sync_info.latest_block_time;
-        this.$data.isSync=result.sync_info.catching_up;
+      return {
+        address:result.validator_info.address,
+        height:result.sync_info.latest_block_height,
+        time:result.sync_info.latest_block_time,
+        isSync:result.sync_info.catching_up,
+      }
+      // try {
+      //   this.$data.address=result.validator_info.address;
+      //   this.$data.height=result.sync_info.latest_block_height;
+      //   this.$data.time=result.sync_info.latest_block_time;
+      //   this.$data.isSync=result.sync_info.catching_up;
+
                   
         
-      } catch (error) {
-        console.log(error)
-        console.log(result)
+      // } catch (error) {
+      //   console.log(error)
+      //   console.log(result)
         
+      // }
+      
+    }
+  },
+  computed: {
+    getstore(){
+      console.log(' - -')
+      try {
+      // this.$data.node_info=this.$store.getters.info.node_info;
+        return this.dataFormat(this.$store.getters.info);
+        // return _.pairs(this.$store.getters.info.validator_info);  
+      } catch (error) {
+        return [];
       }
       
     }

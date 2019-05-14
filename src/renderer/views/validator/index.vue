@@ -165,6 +165,7 @@ export default {
          console.log(res)
          if(res.state&&res.data.data.result&&res.data.data.result.node_info){
            _this.dataFormat(res)
+           _this.$store.dispatch("setinfo", res.data.data.result);
            settings.set('validator', {
                               ip: ValidatorIP
                             });
