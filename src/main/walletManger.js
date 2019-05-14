@@ -158,6 +158,7 @@ walletManger.prototype.setDefaultWallet = function (address) {
 }
 
 walletManger.prototype.getWalletList = function () {
+    this.scann();
     var result = [];
 
     this.walletList.forEach(function (item) {
@@ -192,7 +193,10 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name) {
     var keyPair = tenderKeys.generateKeyPair(seed);
 
     var address = tenderKeys.getAddressFromPubKey(keyPair.publicKey.toString('hex'));
-
+    var file = this.findFile(address);
+    if(file!=null){
+        throw new Error('Import failed,address already exists') 
+    }
 
 
     var wallet = new ETHwallet(keyPair.privateKey);
@@ -249,9 +253,17 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
     v3file.name = name;
 
     wallet = ETHwallet.fromV3(v3file, password);
+
     if(wallet == undefined){
         throw new Error('Import failed,Please check the wallet file and password') 
     }
+
+    
+    var file = this.findFile(wallet.getAddress());
+    if(file!=null){
+        throw new Error('Import failed,address already exists') 
+    }
+
     
     var targetpath = path.join(DAEMON_CONFIG.WalletFile, wallet.getV3Filename() + '.keyinfo');
     fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8')
@@ -480,7 +492,7 @@ walletManger.prototype.SignData = async function (password,content){
 walletManger.prototype.editDefaultName=async function  (name){
    this.defaultwallet.name=name;
    var filepath = this.findFile(this.defaultwallet.address);
-   if(filepath==''){
+   if(filepath==null){
     throw new Error('not find DefaultWallet')
    }
    var result = fs.writeFileSync(filepath, JSON.stringify(this.defaultwallet))
@@ -492,7 +504,7 @@ walletManger.prototype.findFile = function (address) {
     this.walletList = [];
     var dir = DAEMON_CONFIG.WalletFile;
     var list = fs.readdirSync(dir);
-    var fileName=''
+    var fileName=null;
     list.forEach((file) => {
         if(file.indexOf('.keyinfo')>0){
             file = path.join(dir, file);

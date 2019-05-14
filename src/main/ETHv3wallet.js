@@ -208,6 +208,10 @@ Wallet.prototype.toV3 = function (password, opts) {
     var userkeyF8 =tou8(Buffer.from(userkey,'hex') ) ;
     var msghexF8 =tou8(Buffer.from(msghex,'hex') ) ;
     var seed = decryptSymmetric(msghexF8,'', userkeyF8)
+    if(seed==false){
+      throw new Error('Wallet password error');
+    }
+    
     seed = toBuffer(seed);
     Amino.RegisterConcrete(null,'tendermint/PrivKeyEd25519');
 

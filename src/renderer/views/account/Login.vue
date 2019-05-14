@@ -85,8 +85,8 @@ export default {
           },
           {
             type: "string",
-            min: 6,
-            message: "The password length cannot be less than 6 bits",
+            min: 1,
+            message: "The password length cannot be less than 1 bits",
             trigger: "blur"
           }
         ]
@@ -147,7 +147,10 @@ export default {
           this.$router.push("/home");
         }
       } catch (ex) {
-        console.log(ex);
+        
+        this.$Notice.error({
+            title: ex.errormsg
+          });
       }
     },
     async setDefaultWallet() {
@@ -173,7 +176,7 @@ export default {
           // console.log(res);
           if (!res.state) return;
           this.walletList = res.data;
-          console.log(this.walletList);
+          
         })
         .catch(err => {
           console.log("err");
