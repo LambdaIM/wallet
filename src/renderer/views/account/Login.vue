@@ -5,7 +5,7 @@
         <div class="login-wrapper">
           <div class="form-title">
             <div class="title-wrapper">
-              <p class="title">LAMBDA Wallet</p>
+              <p class="title">{{ $t("login.LAMBDA_Wallet") }}</p>
             </div>
           </div>
           <!-- <p v-for="(item,index) in walletList" :key="index">
@@ -37,7 +37,7 @@
               <Input
                 type="password"
                 v-model="formInline.password"
-                placeholder="Password"
+                :placeholder="$t('login.Password')"
                  @on-enter="openWallet('formInline')"
                 
               >
@@ -47,14 +47,14 @@
           </Form>
 
           <div class="button-wrapper">
-            <button  class="btn login-button" @click="openWallet('formInline')">Login</button>
+            <button  class="btn login-button" @click="openWallet('formInline')">{{ $t("login.Login") }}</button>
             <!-- <button class="btn login-button"    @click="getwalletList">Login1</button> -->
           </div>
 
           <div class="bottom-wrapper tc">
-            <router-link class="bottom-wrapper-item" to="/register">Create Wallet</router-link>
+            <router-link class="bottom-wrapper-item" to="/register">{{ $t("login.Create_Wallet") }}</router-link>
             <span class="line"></span>
-            <router-link class="bottom-wrapper-item" to="/import">Import Wallet</router-link>
+            <router-link class="bottom-wrapper-item" to="/import">{{ $t("login.Import_Wallet") }}</router-link>
           </div>
         </div>
       </div>
@@ -80,13 +80,13 @@ export default {
         password: [
           {
             required: true,
-            message: "Please fill in the password.",
+            message: this.$t('login.action.Please_fill_in_the_password'),
             trigger: "blur"
           },
           {
             type: "string",
             min: 1,
-            message: "The password length cannot be less than 1 bits",
+            message: this.$t('login.action.password_cannot_less'),
             trigger: "blur"
           }
         ]
@@ -95,7 +95,7 @@ export default {
       name: "",
       value: null,
       address: null,
-      selectplaceholder:'please select'
+      selectplaceholder:this.$t('login.select_Wallet')
     };
   },
   components: {
@@ -139,7 +139,7 @@ export default {
         console.log("login default wallet", res);
         if (res.state) {
           this.$Notice.success({
-            title: "Login success !"
+            title: this.$t('login.action.Login_success')
           });
           let login=settings.set("isopenfile", true);
           console.log(login);

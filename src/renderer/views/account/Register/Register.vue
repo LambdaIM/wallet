@@ -5,13 +5,13 @@
         <div class="register-wrapper">
           <div class="form-title">
             <div class="title-wrapper">
-              <p class="title">Create Lambda Wallet</p>
+              <p class="title">{{ $t("create.Create_Lambda_Wallet") }}</p>
               <!-- <p class="notice">WARNING: Password can NOT be reset or recovered, do remember it!</p> -->
             </div>
           </div>
           <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
             <FormItem prop="walletName">
-              <Input type="text" v-model="formInline.walletName" placeholder="Wallet Name">
+              <Input type="text" v-model="formInline.walletName" :placeholder="$t('create.Wallet_Name')">
                 <Icon type="ios-person-outline" slot="prepend"></Icon>
               </Input>
             </FormItem>
@@ -19,7 +19,7 @@
               <Input
                 type="password"
                 v-model="formInline.password"
-                placeholder="8-20 characters,letter,number or symbol password"
+                :placeholder="$t('create.characters_symbol')"
               >
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
               </Input>
@@ -30,7 +30,7 @@
                 autocomplete="on"
                 type="password"
                 v-model="formInline.confirmPassword"
-                placeholder="Confirm the password"
+                :placeholder="$t('create.Confirm_password')"
               >
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
               </Input>
@@ -38,13 +38,13 @@
           </Form>
 
           <div class="button-wrapper">
-            <button class="btn login-button" @click="submit('formInline')">Create</button>
+            <button class="btn login-button" @click="submit('formInline')">{{ $t("create.Create") }}</button>
           </div>
 
           <div class="bottom-wrapper tc">
-            <router-link class="bottom-wrapper-item" to="/">Login Wallet</router-link>
+            <router-link class="bottom-wrapper-item" to="/">{{ $t("create.Login_Wallet") }}</router-link>
             <span class="line"></span>
-            <router-link class="bottom-wrapper-item" to="/import">Import Wallet</router-link>
+            <router-link class="bottom-wrapper-item" to="/import">{{ $t("create.Import_Wallet") }}</router-link>
           </div>
         </div>
       </div>
@@ -69,20 +69,20 @@ export default {
         walletName: [
           {
             required: true,
-            message: "Please fill in the walletName",
+            message: this.$t("create.action.fill_walletName"),
             trigger: "blur"
           }
         ],
         password: [
           {
             required: true,
-            message: "Please fill in the password.",
+            message: this.$t("create.action.fill_password"),
             trigger: "blur"
           },
           {
             type: "string",
             min: 8,
-            message: "The password length cannot be less than 8 bits",
+            message: this.$t("create.action.password_length"),
             trigger: "blur"
           }
         ],
@@ -120,7 +120,7 @@ export default {
         console.log(res);
         if (!res.state) {
           this.$Notice.error({
-            desc: "Create failed",
+            desc: this.$t("create.action.create_fail"),
             duration: 1000
           });
         } else {
@@ -138,7 +138,7 @@ export default {
     },
     validatePass(rule, value, callback) {
       if (value === "") {
-        callback(new Error("Please enter your password"));
+        callback(new Error(this.$t("create.action.enter_password")));
       } else {
         if (this.formInline.confirmPassword !== "") {
           this.$refs.formInline.validateField("confirmPassword");
@@ -148,9 +148,9 @@ export default {
     },
     validateConfirmPass(rule, value, callback) {
       if (value === "") {
-        callback(new Error("Please enter your password again"));
+        callback(new Error(this.$t("create.action.enter_password_again")));
       } else if (value !== this.formInline.password) {
-        callback(new Error("The two input passwords do not match!"));
+        callback(new Error(this.$t("create.action.passwords_match")));
       } else {
         callback();
       }
