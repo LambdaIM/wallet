@@ -2,16 +2,16 @@
   <div class="footer-container">
     <div v-if="getstore.address!==null"  class="footer-wrapper">
       <!-- <span class="item etc">Validator id: -->
-      <span    class="item etc">Validator:
+      <span    class="item etc">{{ $t("foot.validator") }}:
         <Poptip word-wrap trigger="hover" width="300" :content="address">{{getstore.address}}</Poptip>
       </span>
       
-      <span  class="item">Block height: {{getstore.height}}</span>
-      <span  class="item" v-if="getstore.isSync==true" >Sync Block.... </span>
-      <span class="item" v-else>Block time: {{getstore.time | formatDate}}</span>
+      <span  class="item">{{ $t("foot.block_height") }}: {{getstore.height}}</span>
+      <span  class="item" v-if="getstore.isSync==true" >{{ $t("foot.sync_block") }}</span>
+      <span class="item" v-else>{{ $t("foot.block_time") }}: {{getstore.time | formatDate}}</span>
     </div>
     <div v-else class="footer-wrapper">
-      <span   class="item">Validator connecting ...</span>
+      <span   class="item">{{ $t("foot.validator_connecting") }}</span>
     </div>
   </div>
 </template>
@@ -59,7 +59,7 @@ export default {
        })
        .catch(function(err){
          _this.$Notice.warning({
-          title: "Validator Network connect timed out, please check your network."
+          title: _this.$t("foot.action.Validator_time_out")
         });
        })
     },

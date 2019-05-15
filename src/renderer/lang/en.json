@@ -9,7 +9,9 @@
 
       "action":{
         "You_just_copied":"You just copied:",
-        "Failed_to_copy_texts":"Failed to copy texts"
+        "Failed_to_copy_texts":"Failed to copy texts",
+        "No_wallet_found":"No default wallet was found",
+        "configuration_file":"Please check your configuration file"
       }
     },
     "foot": {
@@ -17,7 +19,11 @@
       "block_height": "Block height",
       "block_time": "Block time",
       "sync_block": "Sync Block....",
-      "validator_connecting": "Validator connecting ..."
+      "validator_connecting": "Validator connecting ...",
+      "action":{
+        "Validator_time_out":"Validator Network connect timed out, please check your network."
+
+      }
     },
     "seting": {
       "Wallet_Info": "Wallet Info",
@@ -32,7 +38,13 @@
       "Version": "Version",
       "Current_Version": "Current Version",
       "Logout": "Logout",
-      "switch_lang" : "Language"
+      "switch_lang" : "Language",
+      "edit_name":"Edit name",
+      "Submit":"Submit",
+      "action":{
+        "Modified_success":"Modified success",
+        "Modification_failed":"Modification failed"
+      }
     },
     "login":{
         "LAMBDA_Wallet":"LAMBDA Wallet",
@@ -105,15 +117,16 @@
       }
     },
     "Validator": {
-      "t1": "Validator",
-      "t2": "submit",
-      "t3": "Node info",
-      "t4": "Sync Block....",
-      "t5": "Validator info",
-      "t6": "Sync info",
+      "ip": "Validator IP",
+      "submit": "submit",
+      "Node_info": "Node info",
+      "Sync_Block": "Sync Block....",
+      "Validator_info": "Validator info",
+      "Sync_info": "Sync info",
+      "Validator_node":"Please enter the IP address of the  Validator node",
       "action":{
-        "pass1":"Switching Validator success",
-        "pass2":"Switching Validator fail"
+        "Switching_success":"Switching Validator success",
+        "Switching_fail":"Switching Validator fail"
       }
     },
     "home":{
@@ -165,14 +178,15 @@
       "t7":"Value"
   },
   "Sign":{
-    "t1":"Data signature",
-    "t2":"address",
-    "t3":"content",
-    "t4":"Signature data",
-    "t5":"submit",
+    "Data_signature":"Data signature",
+    "address":"address",
+    "content":"content",
+    "Signature_data":"Signature result",
+    "submit":"submit",
+    "Enter_password":"Enter the wallet password",
     "action":{
-        "pass1":"Copy success",
-        "pass2":"Copy failed"
+        "Copy_success":"Copy success",
+        "Copy_failed":"Copy failed"
     }
   }
 }
