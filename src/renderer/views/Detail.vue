@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <Mycard cardtitle="Transaction" class="mt20">
+    <Mycard :cardtitle="$t('transactiondetails.Transaction')" class="mt20">
       <div v-if="data!=null" class="transaction-content" slot="card-content">
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">TxHash:</span>
+            <span class="title">{{$t('transactiondetails.TxHash')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a @click="checkHash(data.txHash,txType)" class="item-value">{{data.txHash}}</a>
@@ -12,7 +12,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">TxType:</span>
+            <span class="title">{{$t('transactiondetails.Type')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{txType}}
@@ -21,7 +21,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">Block Height:</span>
+            <span class="title">{{$t('transactiondetails.Block_Height')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a @click="checkHeight(data.height)" class="item-value">{{data.height}}</a>
@@ -30,7 +30,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">Time:</span>
+            <span class="title">{{$t('transactiondetails.Time')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{data.time | formatDate}}</span>
@@ -39,7 +39,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">From:</span>
+            <span class="title">{{$t('transactiondetails.From')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a @click="checkAddress(data.from)" class="item-value">{{data.from}}</a>
@@ -48,17 +48,17 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">To:</span>
+            <span class="title">{{$t('transactiondetails.To')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a v-if="!!data.to" @click="checkAddress(data.to)" class="item-value">{{data.to}}</a>
-            <span else>--</span>
+            <a v-if="!!data.to==true" @click="checkAddress(data.to)" class="item-value">{{data.to}}</a>
+            <span v-else>--</span>
           </Col>
         </Row>
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">Value:</span>
+            <span class="title">{{$t('transactiondetails.Value')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{data.value | formatValue}}</span>
