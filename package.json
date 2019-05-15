@@ -1,7 +1,7 @@
 {
     "name": "wallet",
     "version": "0.0.1",
-    "author": "kerinlin <18296613547@qq.com>",
+    "author": "lambda wallet developer <544262408@qq.com>",
     "description": "An electron-vue project",
     "license": null,
     "main": "./dist/electron/main.js",
@@ -83,6 +83,7 @@
         "vue": "^2.5.16",
         "vue-clipboard2": "^0.2.1",
         "vue-electron": "^1.0.6",
+        "vue-i18n": "^8.11.2",
         "vue-router": "^3.0.1",
         "vuex": "^3.0.1",
         "vuex-electron": "^1.0.0",

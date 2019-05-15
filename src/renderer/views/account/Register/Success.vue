@@ -6,8 +6,8 @@
           <div class="icon">
             <Icon type="ios-checkmark-circle-outline" class="icon-item" size="70"/>
           </div>
-          <h2 class="title mt10">Successfully Created</h2>
-          <p>Please do remember the words to backup your wallet !</p>
+          <h2 class="title mt10">{{$t('success.Successfully_Created')}}</h2>
+          <p>{{$t('success.remember_backup_wallet')}}</p>
         </div>
 
         <div class="word-wrapper">
@@ -17,7 +17,7 @@
         </div>
 
         <div class="button-wrapper">
-          <button class="btn next-button" @click="next">Next Step</button>
+          <button class="btn next-button" @click="next">{{$t('success.Next_Step')}}</button>
         </div>
       </div>
     </Mybg>

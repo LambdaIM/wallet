@@ -1,0 +1,178 @@
+    
+{
+    "head": {
+      "home": "Home",
+      "miner": "Miner",
+      "customer": "Customer",
+      "validator": "Validator",
+      "sign": "Sign",
+
+      "action":{
+        "You_just_copied":"You just copied:",
+        "Failed_to_copy_texts":"Failed to copy texts"
+      }
+    },
+    "foot": {
+      "validator": "Validator",
+      "block_height": "Block height",
+      "block_time": "Block time",
+      "sync_block": "Sync Block....",
+      "validator_connecting": "Validator connecting ..."
+    },
+    "seting": {
+      "Wallet_Info": "Wallet Info",
+      "Wallet_Name": "Wallet Name",
+      "Account_Address": "Account Address",
+      "Validator_Node_info": "Validator Node info",
+      "address": "address",
+      "voting_power": "voting_power",
+      "Switch_Validator": "Switch Validator",
+      "Privat_Key_Info": "Private Key Info",
+      "Keystore_File_Backup": "Keystore File Backup",
+      "Version": "Version",
+      "Current_Version": "Current Version",
+      "Logout": "Logout",
+      "switch_lang" : "Language"
+    },
+    "login":{
+        "LAMBDA_Wallet":"LAMBDA Wallet",
+        "Password":"Password",
+        "Login":"Login",
+        "Create_Wallet":"Create Wallet",
+        "Import_Wallet":"Import Wallet",
+        "select_Wallet":"please select Wallet",
+        "action":{
+          "Please_fill_in_the_password":"Please fill in the password.",
+          "password_cannot_less":"The password length cannot be less than 6 bits",
+          "Login_fail":"Login fail",
+          "Login_success":"Login success"
+  
+        }
+      },
+      "create":{
+        "Create_Lambda_Wallet":"Create Lambda Wallet",
+        "Wallet_Name":"Wallet Name",
+        "characters_symbol":"8-20 characters,letter,number or symbol password",
+        "Confirm_password":"Confirm the password",
+        "Create":"Create",
+        "Login_Wallet":"Login Wallet",
+        "Import_Wallet":"Import Wallet",
+        "action":{
+          "fill_walletName":"Please fill in the walletName",
+          "fill_password":"Please fill in the password.",
+          "password_length":"The password length cannot be less than 8 bits",
+          "create_fail":"create Wallet fail",
+          "enter_password":"Please enter your password",
+          "enter_password_again":"Please enter your password again",
+          "passwords_match":"The two input passwords do not match!"
+        }
+    },
+    "success":{
+      "Successfully_Created":"Successfully Created",
+      "remember_backup_wallet":"Please do remember the words to backup your wallet !",
+      "Next_Step":"Next Step"
+    },
+    "Confirm":{
+      "Confirm_words":"Confirm the words",
+      "click_words_to_confirm":"Please click on the words in order to confirm that you are backing up correctly",
+      "Export_Keystore_File":"Export Keystore File",
+      "action":{
+        "Confirmed_Fail":"Confirmed Fail!"
+
+      }
+    },
+    "Import":{
+      "Import_LAMBDA_Wallet":"Import LAMBDA Wallet",
+      "by_keyStore_file":"by keyStore file",
+      "by_mnemonic_word":"by mnemonic word",
+      "Choose_Wallet_Files":"Choose Wallet Files",
+      "Password":"Password",
+      "Name_you_wallet":"Name your wallet",
+      "Login_Wallet":"Login Wallet",
+      "Create_Wallet":"Create Wallet",
+      "Import":"Import",
+      "characters_symbol":"8-20 characters,letter,number or symbol",
+      "Confirm_password":"Confirm the password",
+      "action":{
+        "fill_Mnemonic_word":"Please fill in the Mnemonic word",
+        "fill_wallet_name":"Please fill in the wallet name",
+        "fill_password":"Please fill in the password",
+        "fill_keystore":"Please select the keystore file",
+        "enter_password":"Please enter your password",
+        "enter_password_again":"Please enter your password again",
+        "passwords_not_match":"The two input passwords do not match!",
+        "import_Wallet_success":"import Wallet success!"
+      }
+    },
+    "Validator": {
+      "t1": "Validator",
+      "t2": "submit",
+      "t3": "Node info",
+      "t4": "Sync Block....",
+      "t5": "Validator info",
+      "t6": "Sync info",
+      "action":{
+        "pass1":"Switching Validator success",
+        "pass2":"Switching Validator fail"
+      }
+    },
+    "home":{
+      "t1":"Balance",
+      "t2":"Latest  Transaction Records",
+      "t3":"Transfer",
+      "t4":"The profits of miners'mining are related to the withdrawal amount in the storage miners' system. Details are referred to the pledge system",
+      "t5":"View Detail",
+      "table":{
+        "t1":"Amount",
+        "t2":"Source",
+        "t3":"Date",
+        "t4":"Type",
+        "t5":"Status",
+        "t6":"detail",
+        "t7":"no Transaction"
+      },
+      "m1":{
+        "t1":"Send LAMB",
+        "t2":"From",
+        "t3":"To",
+        "t4":"Amount",
+        "t5":"Submit",
+        "t6":"an LAMB address"
+      },
+      "m2":{
+        "t1":"wallet password",
+        "t2":"Submit"
+      },
+      "action":{
+        "t1":"You can't transfer LAMB to yourself.",
+        "t2":"Please check the balance and the amount of transfer.",
+        "t3":"Check the forwarding address",
+        "t4":"Check the amount",
+        "t5":"Please check your password.",
+        "t6":"Transaction failure.",
+        "t7":"Transaction success",
+        "t8":"Transaction error"
+      }
+    },
+    "transactiondetails":{
+      "t1":"Transaction",
+      "t2":"TxHash",
+      "t3":"Block Height",
+      "t4":"Time",
+      "t8": "Type",
+      "t5":"From",
+      "t6":"To",
+      "t7":"Value"
+  },
+  "Sign":{
+    "t1":"Data signature",
+    "t2":"address",
+    "t3":"content",
+    "t4":"Signature data",
+    "t5":"submit",
+    "action":{
+        "pass1":"Copy success",
+        "pass2":"Copy failed"
+    }
+  }
+}

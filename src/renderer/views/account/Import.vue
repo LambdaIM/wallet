@@ -6,7 +6,7 @@
     <div class="login-wrapper">
       <div class="form-title">
         <div class="title-wrapper">
-          <p class="title">Import LAMBDA Wallet</p>
+          <p class="title">{{$t('Import.Import_LAMBDA_Wallet')}}</p>
           <!-- <p class="notice">WARNING: Password can NOT be reset or recovered, do remember it!</p> -->
         </div>
       </div>
@@ -21,7 +21,7 @@
       <div class="demo-tabs-style2">
     <Tabs value="name1"  >
 
-      <TabPane label="by keyStore file" name="name1">
+      <TabPane :label="$t('Import.by_keyStore_file')" name="name1">
           <Form
             ref="formbyfile"
             :model="formInline"
@@ -31,30 +31,30 @@
           >
             <FormItem prop="keystorefile">
               <Upload :before-upload="beforeUpload" :default-file-list="formInline.keystorefile" action="">
-                <Button class="btn upload-button" icon="ios-cloud-upload-outline">Choose Wallet Files</Button>
+                <Button class="btn upload-button" icon="ios-cloud-upload-outline">{{$t('Import.Choose_Wallet_Files')}}</Button>
               </Upload>
             </FormItem>
 
             <FormItem prop="password">
-              <Input type="password" v-model="formInline.password" placeholder="Old password">
+              <Input type="password" v-model="formInline.password" :placeholder="$t('Import.Password')">
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
               </Input>
             </FormItem>
 
             <FormItem prop="walletName">
-              <Input type="text" v-model="formInline.walletName" placeholder="Name your wallet">
+              <Input type="text" v-model="formInline.walletName" :placeholder="$t('Import.Name_you_wallet')">
                 <Icon type="ios-person-outline" slot="prepend"></Icon>
               </Input>
             </FormItem>
           </Form>
           <div class="button-wrapper">
-        <button class="btn login-button" @click="handleSubmit('formbyfile')">Import</button>
+        <button class="btn login-button" @click="handleSubmit('formbyfile')">{{$t('Import.Import')}}</button>
       </div>
 
 
         </TabPane>
 
-        <TabPane label="by mnemonic word " name="name2">
+        <TabPane :label="$t('Import.by_mnemonic_word')" name="name2">
           <Form
         ref="formInMnemonic"
         :model="Mnemonic"
@@ -66,13 +66,13 @@
           <Input
             type="textarea"
             v-model="Mnemonic.word"
-            placeholder="8-20 characters,letter,number or symbol"
+            :placeholder="$t('Import.characters_symbol')"
           >
             <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
         <FormItem prop="walletname">
-          <Input type="text" v-model="Mnemonic.walletname" placeholder="Name Your Wallet">
+          <Input type="text" v-model="Mnemonic.walletname" :placeholder="$t('Import.Name_you_wallet')">
             <Icon type="ios-person-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
@@ -82,7 +82,7 @@
             autocomplete="on"
             type="password"
             v-model="Mnemonic.password"
-            placeholder="password"
+            :placeholder="$t('Import.Password')"
           >
             <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
@@ -93,14 +93,14 @@
             autocomplete="on"
             type="password"
             v-model="Mnemonic.confirmPassword"
-            placeholder="Confirm the password"
+            :placeholder="$t('Import.Confirm_password')"
           >
             <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
       </Form>
       <div class="button-wrapper">
-        <button class="btn login-button" @click="handleSubmit('formInMnemonic')">Import</button>
+        <button class="btn login-button" @click="handleSubmit('formInMnemonic')">{{$t('Import.Import')}}</button>
       </div>
 
         </TabPane>
@@ -112,9 +112,9 @@
       
 
       <div class="bottom-wrapper tc">
-        <router-link class="bottom-wrapper-item" to="/">Login Wallet</router-link>
+        <router-link class="bottom-wrapper-item" to="/">{{$t('Import.Login_Wallet')}}</router-link>
         <span class="line"></span>
-        <router-link class="bottom-wrapper-item" to="/register">Create Wallet</router-link>
+        <router-link class="bottom-wrapper-item" to="/register">{{$t('Import.Create_Wallet')}}</router-link>
       </div>
     </div>
     
@@ -141,21 +141,21 @@ export default {
         word:[
           {
             required: true,
-            message: "Please fill in the Mnemonic word",
+            message: this.$t("Import.action.fill_Mnemonic_word"),
             trigger: "blur"
           }
         ],
         walletname: [
           {
             required: true,
-            message: "Please fill in the wallet name",
+            message: this.$t("Import.action.fill_wallet_name"),
             trigger: "blur"
           }
         ],
         password: [
           {
             required: true,
-            message: "Please fill in the password.",
+            message: this.$t("Import.action.fill_password"),
             trigger: "blur"
           }
         ],
@@ -171,14 +171,14 @@ export default {
         walletName: [
           {
             required: true,
-            message: "Please fill in the wallet name",
+            message: this.$t("Import.action.fill_wallet_name"),
             trigger: "blur"
           }
         ],
         password: [
           {
             required: true,
-            message: "Please fill in the password.",
+            message: this.$t("Import.action.fill_password"),
             trigger: "blur"
           }
         ],
@@ -186,7 +186,7 @@ export default {
           {
             required: true,
             type: "array",
-            message: "Please select the keystore file ",
+            message: this.$t("Import.action.fill_keystore"),
             trigger: "blur"
           }
         ]
@@ -194,7 +194,7 @@ export default {
     };
   },
   mounted() {
-    console.log('8 8 8 8')
+    
   },
   methods: {
     handleSubmit(name) {
@@ -212,17 +212,9 @@ export default {
         }
       });
     },
-    transWays() {
-      this.show = !this.show;
-      if (this.show == false) {
-        this.way = "By Pravate Key";
-      } else {
-        this.way = "By Mnemonic Words";
-      }
-    },
     validatePass(rule, value, callback) {
       if (value === "") {
-        callback(new Error("Please enter your password"));
+        callback(new Error(this.$t("Import.action.enter_password")));
       } else {
         if (this.formInline.confirmPassword !== "") {
           this.$refs.formInline.validateField("confirmPassword");
@@ -232,18 +224,18 @@ export default {
     },
     validateConfirmPass(rule, value, callback) {
       if (value === "") {
-        callback(new Error("Please enter your password again"));
+        callback(new Error(this.$t("Import.action.enter_password_again")));
       } else if (value !== this.formInline.password) {
-        callback(new Error("The two input passwords do not match!"));
+        callback(new Error(this.$t("Import.action.passwords_not_match")));
       } else {
         callback();
       }
     },
     validateConfirmPass(rule, value, callback) {
       if (value === "") {
-        callback(new Error("Please enter your password again"));
+        callback(new Error(this.$t("Import.action.enter_password_again")));
       } else if (value !== this.Mnemonic.password) {
-        callback(new Error("The two input passwords do not match!"));
+        callback(new Error(this.$t("Import.action.passwords_not_match")));
       } else {
         callback();
       }
@@ -281,7 +273,7 @@ export default {
         console.log(res)
         if (res.state) {
           this.$Notice.success({
-            title: "import Wallet !"
+            title: this.$t("Import.action.import_Wallet_success")
           });
           this.$router.push("/");
         }else{
@@ -310,7 +302,7 @@ export default {
 
           if (res&&res.state) {
           this.$Notice.success({
-            title: "import Wallet  Success!"
+            title: this.$t("Import.action.import_Wallet_success")
           });
           this.$router.push("/");
           }else{

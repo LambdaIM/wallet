@@ -6,8 +6,8 @@
           <div class="icon">
             <Icon type="ios-card-outline" class="icon-item" size="70"/>
           </div>
-          <h2 class="title">Confirm the words</h2>
-          <p>Please click on the words in order to confirm that you are backing up correctly</p>
+          <h2 class="title">{{ $t("Confirm.Confirm") }}</h2>
+          <p>{{ $t("Confirm.click_words_to_confirm") }}</p>
         </div>
 
         <div class="word-wrapper">
@@ -32,7 +32,7 @@
           </div>
         </div>
         <div v-if="showButton" class="button-wrapper">
-          <button class="btn next-button" @click="exportWallet()">Export Keystore File</button>
+          <button class="btn next-button" @click="exportWallet()">{{ $t("Confirm.Export_Keystore_File") }}</button>
         </div>
       </div>
     </Mybg>
@@ -69,7 +69,7 @@ export default {
           if (tempCombineWords == this.combineWords) {
             this.showButton = true;
           } else {
-            this.$Message.error("Confirmed Fail!");
+            this.$Message.error(this.$t("Confirm.action.Confirmed_Fail") );
             setTimeout(() => {
               this.$router.push("/register");
             }, 2000);
