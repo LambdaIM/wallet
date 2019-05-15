@@ -1,11 +1,11 @@
 <template>
   <div class="setting-container">
     <div class="setting-wrapper">
-      <Mycard v-if="walletInfo" cardtitle="Wallet Info" class="mb10">
+      <Mycard v-if="walletInfo" :cardtitle="$t('seting.Wallet_Info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row  class-name="card-item">
             <Col span="4" class-name="title-wrapper">
-              <span class="title">Wallet Name</span>
+              <span class="title">{{$t("seting.Wallet_Name")}}</span>
             </Col>
             <Col span="12" class-name="content-wrapper">
               <span>{{walletInfo.name}}</span>
@@ -15,7 +15,7 @@
 
           <Row class-name="card-item">
             <Col span="4" class-name="title-wrapper">
-              <span class="title">Account Address</span>
+              <span class="title">{{$t("seting.Account_Address")}}</span>
             </Col>
             <Col span="12" class-name="content-wrapper">
               <span>{{walletInfo.address}}</span>
@@ -66,7 +66,7 @@
         </div>
       </Mycard>
 
-      <Mycard cardtitle="Private Key Info" class="mb10">
+      <Mycard :cardtitle="$t('seting.Privat_Key_Info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
             <!-- <Col span="4" class-name="title-wrapper">
@@ -81,7 +81,7 @@
             </Col> -->
 
             <Col span="4" class-name="content-wrapper">
-              <a @click="openkeystore" >Keystore File Backup</a>
+              <a @click="openkeystore" >{{$t("Keystore_File_Backup")}}</a>
             </Col>
           </Row>
 
@@ -109,7 +109,7 @@
               &nbsp;
             </Col>
             <Col span="12" class-name="content-wrapper">
-              <span><router-link to="/validator" class="item">Switch Validator</router-link></span>
+              <span><router-link to="/validator" class="item">{{$t("seting.Switch_Validator")}}</router-link></span>
             </Col>
           </Row>
           
@@ -125,7 +125,7 @@
               &nbsp;
             </Col>
             <Col span="12" class-name="content-wrapper">
-              <span><router-link to="/validator" class="item">Switch Validator</router-link></span>
+              <span><router-link to="/validator" class="item">{{$t("seting.Switch_Validator")}}</router-link></span>
             </Col>
           </Row>
         </div>
@@ -153,39 +153,39 @@
         </div>
       </Mycard> -->
 
-      <Mycard cardtitle="Version" class="mb20">
+      <Mycard :cardtitle="$t('seting.Version')" class="mb20">
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
             <Col span="4" class-name="title-wrapper">
-              <span class="title">Current Version</span>
+              <span class="title">{{$t("Current_Version")}}</span>
             </Col>
             <Col span="3" class-name="content-wrapper">
               <span>V0.0.1</span>
             </Col>
-            <Col span="3" class-name="content-wrapper">
+            <!-- <Col span="3" class-name="content-wrapper">
               <a>Check Version</a>
-            </Col>
+            </Col> -->
           </Row>
         </div>
       </Mycard>
 
       <div class="logout-container">
         <div class="logout-wrapper">
-          <button class="btn logout-button" @click="logout">Logout</button>
+          <button class="btn logout-button" @click="logout">{{$t('seting.Logout')}}</button>
         </div>
       </div>
 
 
           <Modal v-model="modal2" width="360">
             <p slot="header" >
-                <span>Edit name</span>
+                <span>{{$t('seting.edit_name')}}</span>
             </p>
             <div style="text-align:center">
                 <p v-if="walletInfo!=null">  <Input v-model="editvalue" :placeholder="walletInfo.name"  /></p>
                 
             </div>
             <div slot="footer">
-                <Button type="primary" size="large" long  @click="editName">Submit</Button>
+                <Button type="primary" size="large" long  @click="editName">{{$t('seting.Submit')}}</Button>
             </div>
       </Modal>
     </div>
@@ -218,7 +218,7 @@ export default {
   },
   mounted() {
     this.getAccountInfo();
-    this.pledgeMiner();
+    // this.pledgeMiner();
   },
   methods: {
      onCopy: function (e) {
@@ -270,16 +270,16 @@ export default {
 
       console.log(res)
       if(res.state){
-        this.$Message.info('Modified success');
+        this.$Message.info(this.$t("seting.action.Modified_success"));
         this.$data.modal2=false;
         this.getAccountInfo();
       }else{
-        this.$Message.info('Modification failed');
+        this.$Message.info(this.$t("seting.action.Modification_failed"));
 
       }
 
       }catch(ex){
-        this.$Message.info('Modification failed');
+        this.$Message.info(this.$t("seting.action.Modification_failed"));
       }
       
       

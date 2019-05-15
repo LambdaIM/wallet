@@ -8,16 +8,16 @@
       <Col span="16" offset="2" v-if="login==true" class-name="head-menu-wrapper">
         <div class="head-menu">
           <div class="head-menu-item">
-            <router-link to="/home" class="item">Home</router-link>
+            <router-link to="/home" class="item">{{ $t("head.home") }}</router-link>
           </div>
           <div class="head-menu-item">
-            <router-link to="/miner" class="item">Miner</router-link>
+            <router-link to="/miner" class="item">{{ $t("head.miner") }}</router-link>
           </div>
           <div class="head-menu-item">
-            <router-link to="/home" class="item">Validator</router-link>
+            <router-link to="/home" class="item">{{ $t("head.validator") }}</router-link>
           </div>
           <div class="head-menu-item">
-            <router-link to="/sign" class="item">Sign</router-link>
+            <router-link to="/sign" class="item">{{ $t("head.sign") }}</router-link>
           </div>
 
           <div class="head-menu-item overtext">
@@ -74,10 +74,10 @@ export default {
   },
   methods: {
     onCopy(e) {
-      this.$Message.info("You just copied: " + e.text);
+      this.$Message.info(this.$t("head.action.You_just_copied") + e.text);
     },
     onError(e) {
-      this.$Message.info("Failed to copy texts");
+      this.$Message.info(this.$t("head.action.Failed_to_copy_texts"));
     },
     async WalletBasicinfo() {
       console.log("WalletBasicinfo");
@@ -91,8 +91,8 @@ export default {
         console.log(ex);
         console.log("没有找到默认钱包，是否需要重新创建账号");
         this.$Notice.error({
-          title: "No default wallet was found",
-          desc: "Please check your configuration file",
+          title: this.$t("head.action.No_wallet_found"),
+          desc: this.$t("head.action.configuration_file"),
           duration: 1000
         });
       }

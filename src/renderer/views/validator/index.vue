@@ -18,14 +18,14 @@
         </Col>
     </Row> -->
         <Form ref="formInline"  :model="formInline" :rules="ruleInline" :label-width="120" label-position="left">
-        <FormItem prop="ValidatorIP" label="Validator IP">
-            <Input type="text"  v-model="formInline.ValidatorIP" placeholder="Validator Basic Url">
+        <FormItem prop="ValidatorIP" :label="$t('Validator.ip')">
+            <Input type="text"  v-model="formInline.ValidatorIP" :placeholder="$t('Validator_node')">
                 
             </Input>
         </FormItem>
         
         <FormItem>
-            <Button type="primary" @click="handleSubmit('formInline')">Submit</Button>
+            <Button type="primary" @click="handleSubmit('formInline')">{{$t('Validator.submit')}}</Button>
         </FormItem>
     </Form>
         
@@ -36,7 +36,7 @@
 
  
     
-      <Mycard  v-if="node_info.length>0" cardtitle="Node info" class="mb10">
+      <Mycard  v-if="node_info.length>0" :cardtitle="$t('Validator.Node_info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row v-if="item[0]=='network'"  v-for="item in node_info" class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -48,7 +48,7 @@
           </Row>
         </div>
       </Mycard>
-      <Mycard v-if="sync_info.length>0" cardtitle="Sync info" class="mb10">
+      <Mycard v-if="sync_info.length>0" :cardtitle="$t('Validator.Sync_info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row v-for="item in sync_info" class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -58,13 +58,13 @@
               <span v-if="item[0]!='latest_block_time'">{{item[1]}}</span>
               <span v-else>{{item[1]|formatDate}}</span>
 
-              <span style="color:red" v-if="item[0]=='catching_up'&&item[1]==true">Syncing blocks....</span>
+              <span style="color:red" v-if="item[0]=='catching_up'&&item[1]==true">{{$t("Validator.Sync_Block")}}</span>
 
             </Col>
           </Row>
         </div>
       </Mycard>
-      <Mycard v-if="validator_info.length>0" cardtitle="Validator info" class="mb10">
+      <Mycard v-if="validator_info.length>0" :cardtitle="$t('Validator.Validator_info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row v-if="item[0]!='pub_key'" v-for="item in validator_info" class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -170,19 +170,19 @@ export default {
                               ip: ValidatorIP
                             });
           _this.$Notice.success({
-                    title: 'Switching Validator success',      
+                    title: _this.$t("Validator.action.Switching_success"),      
               });
            
          }else{
            _this.$Notice.error({
-                    title: 'Switching Validator fail',
+                    title: _this.$t("Validator.action.Switching_fail"),
                     
                 });
          }
        })
        .catch(function(err){
            _this.$Notice.error({
-                    title: 'Switching Validator fail',
+                    title: _this.$t("Validator.action.Switching_fail"),
                     
                 });
        })

@@ -1,11 +1,11 @@
 <template>
   <div class="customer-container">
-       <Mycard cardtitle="Sign" class="mt20">
+       <Mycard :cardtitle="$t('Sign.Data_signature')" class="mt20">
       <div class="content" slot="card-content">
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">address:</span>
+            <span class="title">{{$t('Sign.address')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a  class="item-value"> {{address}} </a>
@@ -13,7 +13,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">content:</span>
+            <span class="title">{{$t('Sign.content')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a  class="item-value"> <Input v-model="content" type="textarea" placeholder="" /> </a>
@@ -24,12 +24,12 @@
             &nbsp;&nbsp;
           </Col>
           <Col span="10" class-name="content-wrapper">
-            <Button @click="Datacollection" type="primary">submit</Button>
+            <Button @click="Datacollection" type="primary">{{$t('Sign.submit')}}</Button>
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">Signature result:</span>
+            <span class="title">{{$t('Sign.Signature_data')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a  class="item-value"> <Input type="textarea"  :autosize="{minRows: 2,maxRows: 10}"  v-model="jsondata"  style="width: 400px" readonly/> 
@@ -86,14 +86,14 @@
     <Modal
         @on-ok="Datacollection"
         v-model="passwordModal"
-        title="Enter the wallet password"
+        :title="$t('Sign.Enter_password')"
         :styles="{top: '200px'}"
       >
         <p>
           <Input v-model="walletPassword" type="password"></Input>
         </p>
         <div slot="footer">
-          <Button  type="primary" @click="walletsign">submit</Button>
+          <Button  type="primary" @click="walletsign">{{$t('Sign.submit')}}</Button>
         </div>
       </Modal>
   </div>
