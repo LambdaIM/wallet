@@ -168,14 +168,14 @@
       }
     },
     "transactiondetails":{
-      "t1":"Transaction",
-      "t2":"TxHash",
-      "t3":"Block Height",
-      "t4":"Time",
-      "t8": "Type",
-      "t5":"From",
-      "t6":"To",
-      "t7":"Value"
+      "Transaction":"Transaction",
+      "TxHash":"TxHash",
+      "Block_Height":"Block Height",
+      "Time":"Time",
+      "Type": "Type",
+      "From":"From",
+      "To":"To",
+      "Value":"Value"
   },
   "Sign":{
     "Data_signature":"Data signature",
