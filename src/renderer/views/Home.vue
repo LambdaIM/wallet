@@ -1,12 +1,16 @@
 <template>
   <div class="container">
-    <p class="balance">Balance: {{balance|formatValue}} </p>
+    <p class="balance">{{$t('home.Balance')}}: {{balance|formatValue}} 
+        <span style="color:green">
+        <a @click="openvalidator">{{ $t("home.profits_pledge_system") }}</a>
+      </span>
+    </p>
 
-    <MyTable title="Latest Local Transaction Records" class="mt20 mytable-container">
+    <MyTable :title="$t('home.Latest_Transaction')" class="mt20 mytable-container">
       <div class="operation" slot="operation">
         <div class="send-wrapper">
           <!-- <Icon type="md-swap" @click="openSend()" size="32"/> -->
-          <Button @click="openSend()" icon="md-swap">Transfer</Button>
+          <Button @click="openSend()" icon="md-swap">{{$t('home.Transfer')}}</Button>
         </div>
       </div>
       <Table :columns="columns" :data="data" slot="content" >
@@ -16,7 +20,7 @@
           </Poptip>
         </template>
         <template slot-scope="{ row, index }" slot="action">
-          <Button type="primary" size="small" @click="toDetail(row,index)">View Detail</Button>
+          <Button type="primary" size="small" @click="toDetail(row,index)">{{ $t("home.View_Detail") }}</Button>
           <!-- <Button type="error" size="small" @click="remove(index)">Delete</Button> -->
         </template>
       </Table>
@@ -37,47 +41,47 @@
       <Modal
         loading
         v-model="sendModal"
-        title="Send LAMB"
+        :title="$t('home.Modal1.Send_LAMB')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
         <p>
           <Input v-model="address" readonly>
-            <span slot="prepend">From</span>
+            <span slot="prepend">{{$t('home.Modal1.From')}}</span>
           </Input>
         </p>
         <br>
         <p>
-          <Input v-model="Tovalue" placeholder="an LAMB address">
-            <span slot="prepend">To</span>
+          <Input v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
+            <span slot="prepend">{{$t('home.Modal1.To')}}</span>
           </Input>
         </p>
         <br>
         <p>
           <Input v-model="LAMBvalue">
-            <span slot="prepend">Amount</span>
-            <span slot="append">LAMB</span>
+            <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
+            <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
           </Input>
         </p>
         <div slot="footer">
-          <Button type="primary" @click="preSendLAMB">Submit</Button>
+          <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
         </div>
       </Modal>
 
       <Modal v-model="confirmModal" :styles="{top: '200px'}">
         <div class="modal-header" slot="header">
-          <h2>Transfer</h2>
+          <h2>{{$t('home.Modal1.Transfer')}}</h2>
           <Row class-name="item">
-            <Col span="4" class-name="key">From:</Col>
+            <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
             <Col span="20" class-name="value">{{address}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">To:</Col>
+            <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
             <Col span="20" class-name="value">{{Tovalue}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">Amount:</Col>
-            <Col span="20" class-name="value">{{LAMBvalue}}</Col>
+            <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+            <Col span="20" class-name="value">{{LAMBvalue}} LAMB</Col>
           </Row>
           
         </div>
@@ -85,7 +89,7 @@
           <Input v-model="walletPassword" type="password"></Input>
         </p>-->
         <div slot="footer">
-          <Button type="primary" @click="confirm">Confirm</Button>
+          <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
         </div>
       </Modal>
 
@@ -116,7 +120,7 @@ export default {
       sendModal: false,
       columns: [
         {
-          title: "Type",
+          title: this.$t("home.table.Type"),
           key: "txType",
             filters: [
               {
@@ -158,20 +162,20 @@ export default {
             filterMultiple: false
         },
         {
-          title: "Amount",
+          title: this.$t("home.table.Amount"),
           key: "amount"
         },
         {
-          title: "Source",
+          title: this.$t("home.table.Source"),
           key: "source",
           slot: "source"
         },
         {
-          title: "Date",
+          title: this.$t("home.table.Date"),
           key: "date"
         },
         {
-          title: "Status",
+          title: this.$t("home.table.Status"),
           key: "status",
           render: (h, params) => {
               // console.log(params);
@@ -189,7 +193,7 @@ export default {
             }
         },
         {
-          title: "Detail",
+          title: this.$t("home.table.detail"),
           key: "detail",
           slot: "action"
         }
@@ -415,7 +419,12 @@ export default {
     async changePage(pageNumber){
         this.$data.pageNumber=pageNumber;
         this.transactionList();
-    }
+    },
+      openvalidator(value) {
+        // console.log(value);
+        let url = DAEMON_CONFIG.pledgeurl;
+        shell.openExternal(url);
+      }
   }
 };
 </script>

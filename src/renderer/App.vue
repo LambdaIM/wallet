@@ -3,12 +3,12 @@
     <Header/>
 
     <router-view></router-view>
-    <Modal  title="Please enter your wallet password" v-model="passwordModal" :styles="{top: '200px'}">
+    <Modal  :title="$t('apppage.Modal1.Please_enter_password')" v-model="passwordModal" :styles="{top: '200px'}">
         <p>
           <Input v-model="walletPassword" type="password"></Input>
         </p>
         <div slot="footer">
-          <Button :loading="loadingsendLAMBTx" type="primary" @click="TransferConfirm">Confirm</Button>
+          <Button :loading="loadingsendLAMBTx" type="primary" @click="TransferConfirm">{{$t('apppage.Modal1.Confirm')}}</Button>
         </div>
       </Modal>
 
@@ -64,12 +64,12 @@ export default {
             _this.$data.loadingsendLAMBTx = false;
             if (data.code == "1001") {
               _this.$Notice.error({
-                title: "Please check your password."
+                title: _this.$t("apppage.action.check_password")
               });
             } else {
               _this.$data.passwordModal = false;
               _this.$Notice.error({
-                title: "Transaction failure."
+                title: _this.$t("apppage.action.Transaction_failure")
               });
             }
             return;
@@ -85,9 +85,9 @@ export default {
           if (data.data.data.result.check_tx.log == undefined) {
             console.log("ok");
             _this.$data.passwordModal = false;
-            _this.$data.walletPassword = "";
+            _this.$data.walletPassword = null;
             _this.$Notice.success({
-                      title: 'Transaction success',
+                      title: _this.$t("apppage.action.Transaction_success"),
                       // desc:'Transaction hash  <br/>'+data.data.data.result.hash
                   });
             console.log(data.data.data.result);
@@ -98,18 +98,23 @@ export default {
             //   okText: "OK",
             // });
             // _this.getAccountInfo()
-            eventhub.$emit('TransactionSuccess');
+            eventHub.$emit('TransactionSuccess');
           } else {
             _this.$data.loadingsendLAMBTx = false;
             console.log("fail");
             _this.$Notice.error({
-              title: "Transaction error",
+              title: _this.$t("apppage.action.Transaction_error"),
               desc: data.data.data.result.check_tx.log
             });
           }
         })
         .catch(function(err) {
           console.log(err);
+          _this.$data.loadingsendLAMBTx=false;
+          _this.$Notice.error({
+              title: err.errormsg||'error',
+              
+            });
         });
 
     },

@@ -130,41 +130,36 @@
       }
     },
     "home":{
-      "t1":"Balance",
-      "t2":"Latest  Transaction Records",
-      "t3":"Transfer",
-      "t4":"The profits of miners'mining are related to the withdrawal amount in the storage miners' system. Details are referred to the pledge system",
-      "t5":"View Detail",
+      "Balance":"Balance",
+      "Latest_Transaction":"Latest  Transaction Records",
+      "Transfer":"Transfer",
+      "profits_pledge_system":"The profits of miners'mining are related to the withdrawal amount in the storage miners' system. Details are referred to the pledge system",
+      "View_Detail":"View Detail",
       "table":{
-        "t1":"Amount",
-        "t2":"Source",
-        "t3":"Date",
-        "t4":"Type",
-        "t5":"Status",
-        "t6":"detail",
-        "t7":"no Transaction"
+        "Amount":"Amount",
+        "Source":"Source",
+        "Date":"Date",
+        "Type":"Type",
+        "Status":"Status",
+        "detail":"Detail",
+        "no_Transaction":"no Transaction"
       },
-      "m1":{
-        "t1":"Send LAMB",
-        "t2":"From",
-        "t3":"To",
-        "t4":"Amount",
-        "t5":"Submit",
-        "t6":"an LAMB address"
-      },
-      "m2":{
-        "t1":"wallet password",
-        "t2":"Submit"
+      "Modal1":{
+        "Send_LAMB":"Send LAMB",
+        "From":"From",
+        "To":"To",
+        "Amount":"Amount",
+        "Submit":"Submit",
+        "LAMB_address":"an LAMB address",
+        "Transfer":"Transfer",
+        "Confirm":"Confirm",
+        "LAMB":"LAMB"
       },
       "action":{
-        "t1":"You can't transfer LAMB to yourself.",
-        "t2":"Please check the balance and the amount of transfer.",
-        "t3":"Check the forwarding address",
-        "t4":"Check the amount",
-        "t5":"Please check your password.",
-        "t6":"Transaction failure.",
-        "t7":"Transaction success",
-        "t8":"Transaction error"
+        "not_transfer_LAMB_to_yourself":"You can't transfer LAMB to yourself.",
+        "check_balance_amount_transfer":"Please check the balance and the amount of transfer.",
+        "Check_forwarding_address":"Check the forwarding address",
+        "Check_the_amount":"Check the amount"
       }
     },
     "transactiondetails":{
@@ -187,6 +182,18 @@
     "action":{
         "Copy_success":"Copy success",
         "Copy_failed":"Copy failed"
+    }
+  },
+  "apppage":{
+    "Modal1":{
+      "Please_enter_password":"Please enter your wallet password",
+      "Confirm":"Confirm"
+    },
+    "action":{
+      "check_password":"Please check your password",
+      "Transaction_failure":"Transaction failure.",
+      "Transaction_success":"Transaction success",
+      "Transaction_error":"Transaction error"
     }
   }
 }

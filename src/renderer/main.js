@@ -34,8 +34,8 @@ Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 
-// var language = settings.get('set.language')||'en';
-var language = 'en';
+var language = settings.get('set.language')||'en';
+// var language = 'en';
 // console.log(language);
 Vue.use(VueI18n)
 const i18n = new VueI18n({

@@ -1,161 +1,194 @@
 {
-    "head": {
-      "menu1": "Home",
-      "menu2": "Miner",
-      "menu3": "Customer",
-      "menu4": "Validator",
-      "menu5": "Sign",
-
-      "action":{
-        "pass1":"You just copied:",
-        "pass2":"Failed to copy texts"
+  "head": {
+      "home": "首页",
+      "miner": "矿工",
+      "customer": "顾客",
+      "validator": "验证节点",
+      "sign": "签名",
+      "action": {
+          "You_just_copied": "您刚刚复制了：",
+          "Failed_to_copy_texts": "无法复制文本",
+          "No_wallet_found": "找不到默认钱包",
+          "configuration_file": "请检查配置文件"
       }
-    },
-    "foot": {
-      "menu1": "Validator",
-      "menu2": "Block height",
-      "menu3": "Block time",
-      "menu4": "Sync Block....",
-      "menu5": "Validator connecting ..."
-    },
-    "seting": {
-      "Wallet_Info": "Wallet Info",
-      "Wallet_Name": "Wallet Name",
-      "Account_Address": "Account Address",
-      "Validator_Node_info": "Validator Node info",
-      "address": "address",
-      "voting_power": "voting_power",
-      "Switch_Validator": "Switch Validator",
-      "Privat_Key_Info": "Private Key Info",
-      "Keystore_File_Backup": "Keystore File Backup",
-      "Version": "Version",
-      "Current_Version": "Current Version",
-      "Logout": "Logout",
-      "switch-lang" : "Language"
-    },
-    "Validator": {
-      "t1": "Validator",
-      "t2": "submit",
-      "t3": "Node info",
-      "t4": "Sync Block....",
-      "t5": "Validator info",
-      "t6": "Sync info",
-      "action":{
-        "pass1":"Switching Validator success",
-        "pass2":"Switching Validator fail"
-      }
-    },
-    "login":{
-      "t1":"LAMBDA Wallet",
-      "t2":"Password",
-      "t3":"Login",
-      "t4":"Create Wallet",
-      "t5":"Import Wallet",
-      "action":{
-        "pass1":"Please fill in the password.",
-        "pass2":"The password length cannot be less than 6 bits",
-        "pass3":"Login fail"
-
-      }
-    },
-    "create":{
-      "t1":"Create Lambda Wallet",
-      "t2":"Wallet Name",
-      "t3":"8-20 characters,letter,number or symbol password",
-      "t4":"Confirm the password",
-      "t5":"Create",
-      "t6":"Login Wallet",
-      "t7":"Import Wallet",
-      "action":{
-        "pass1":"Please fill in the walletName",
-        "pass2":"Please fill in the password.",
-        "pass3":"The password length cannot be less than 8 bits",
-        "pass4":"create Wallet fail",
-        "pass5":"Please enter your password",
-        "pass6":"Please enter your password again",
-        "pass7":"The two input passwords do not match!"
-      }
-    },
-    "Import":{
-      "t1":"Import LAMBDA Wallet",
-      "t2":"Choose Wallet Files",
-      "t3":"Password",
-      "t4":"Name your wallet",
-      "t6":"Login Wallet",
-      "t7":"Create Wallet",
-      "t8":"Import"
-    },
-    "success":{
-      "t1":"Successfully Created",
-      "t2":"Please do remember the words to backup your wallet !",
-      "t3":"Next Step"
-    },
-    "Confirm":{
-      "t1":"Confirm the words",
-      "t2":"Please click on the words in order to confirm that you are backing up correctly",
-      "t3":"Export Keystore File",
-      "action":{
-        "pass1":"Confirmed Fail!"
-
-      }
-    },
-    "home":{
-      "t1":"Balance",
-      "t2":"Latest  Transaction Records",
-      "t3":"Transfer",
-      "t4":"The profits of miners'mining are related to the withdrawal amount in the storage miners' system. Details are referred to the pledge system",
-      "t5":"View Detail",
-      "table":{
-        "t1":"Amount",
-        "t2":"Source",
-        "t3":"Date",
-        "t4":"Type",
-        "t5":"Status",
-        "t6":"detail",
-        "t7":"no Transaction"
-      },
-      "m1":{
-        "t1":"Send LAMB",
-        "t2":"From",
-        "t3":"To",
-        "t4":"Amount",
-        "t5":"Submit",
-        "t6":"an LAMB address"
-      },
-      "m2":{
-        "t1":"wallet password",
-        "t2":"Submit"
-      },
-      "action":{
-        "t1":"You can't transfer LAMB to yourself.",
-        "t2":"Please check the balance and the amount of transfer.",
-        "t3":"Check the forwarding address",
-        "t4":"Check the amount",
-        "t5":"Please check your password.",
-        "t6":"Transaction failure.",
-        "t7":"Transaction success",
-        "t8":"Transaction error"
-      }
-    },
-    "transactiondetails":{
-      "t1":"Transaction",
-      "t2":"TxHash",
-      "t3":"Block Height",
-      "t4":"Time",
-      "t8": "Type",
-      "t5":"From",
-      "t6":"To",
-      "t7":"Value"
   },
-  "Sign":{
-    "t1":"Data signature",
-    "t2":"address",
-    "t3":"content",
-    "t4":"Signature data",
-    "t5":"submit",
-    "action":{
-        "pass1":"Copy success",
-        "pass2":"Copy failed"
-    }
+  "foot": {
+      "validator": "验证节点",
+      "block_height": "块高",
+      "block_time": "同步时间",
+      "sync_block": "同步块…",
+      "validator_connecting": "正在连接验证节点…",
+      "action": {
+          "Validator_time_out": "验证节点网络连接超时，请检查您的网络。"
+      }
+  },
+  "seting": {
+      "Wallet_Info": "钱包信息",
+      "Wallet_Name": "钱包名称",
+      "Account_Address": "帐户地址",
+      "Validator_Node_info": "验证节点信息",
+      "address": "地址",
+      "voting_power": "voting power",
+      "Switch_Validator": "切换验证节点",
+      "Privat_Key_Info": "私钥信息",
+      "Keystore_File_Backup": "密钥存储文件备份",
+      "Version": "版本",
+      "Current_Version": "现行版本",
+      "Logout": "注销",
+      "switch_lang": "语言",
+      "edit_name": "编辑名称",
+      "Submit": "提交",
+      "action": {
+          "Modified_success": "修改成功",
+          "Modification_failed": "修改失败"
+      }
+  },
+  "login": {
+      "LAMBDA_Wallet": "拉姆达钱包",
+      "Password": "密码",
+      "Login": "登录",
+      "Create_Wallet": "创建钱包",
+      "Import_Wallet": "进口钱包",
+      "select_Wallet": "请选择钱包",
+      "action": {
+          "Please_fill_in_the_password": "请填写密码。",
+          "password_cannot_less": "密码长度不能小于6位",
+          "Login_fail": "登录失败",
+          "Login_success": "登录成功"
+      }
+  },
+  "create": {
+      "Create_Lambda_Wallet": "创建lambda钱包",
+      "Wallet_Name": "钱包名称",
+      "characters_symbol": "8-20个字符、字母、数字或符号密码",
+      "Confirm_password": "确认密码",
+      "Create": "创造",
+      "Login_Wallet": "登录钱包",
+      "Import_Wallet": "进口钱包",
+      "action": {
+          "fill_walletName": "请填一下钱包的名字",
+          "fill_password": "请填写密码。",
+          "password_length": "密码长度不能小于8位",
+          "create_fail": "创建钱包失败",
+          "enter_password": "请输入密码",
+          "enter_password_again": "请再次输入密码",
+          "passwords_match": "两个输入密码不匹配！"
+      }
+  },
+  "success": {
+      "Successfully_Created": "已成功创建",
+      "remember_backup_wallet": "请记住备份钱包的字样！",
+      "Next_Step": "下一步"
+  },
+  "Confirm": {
+      "Confirm_words": "确认单词",
+      "click_words_to_confirm": "请单击这些词以确认您正在正确备份",
+      "Export_Keystore_File": "导出密钥库文件",
+      "action": {
+          "Confirmed_Fail": "确认失败！"
+      }
+  },
+  "Import": {
+      "Import_LAMBDA_Wallet": "导入lambda钱包",
+      "by_keyStore_file": "按密钥库文件",
+      "by_mnemonic_word": "用助记词",
+      "Choose_Wallet_Files": "选择钱包文件",
+      "Password": "密码",
+      "Name_you_wallet": "给你的钱包命名",
+      "Login_Wallet": "登录钱包",
+      "Create_Wallet": "创建钱包",
+      "Import": "进口",
+      "characters_symbol": "8-20个字符、字母、数字或符号",
+      "Confirm_password": "确认密码",
+      "action": {
+          "fill_Mnemonic_word": "请填写助记词",
+          "fill_wallet_name": "请填一下钱包的名字",
+          "fill_password": "请填写密码",
+          "fill_keystore": "请选择密钥库文件",
+          "enter_password": "请输入密码",
+          "enter_password_again": "请再次输入密码",
+          "passwords_not_match": "两个输入密码不匹配！",
+          "import_Wallet_success": "导入钱包成功！"
+      }
+  },
+  "Validator": {
+      "ip": "验证程序IP",
+      "submit": "提交",
+      "Node_info": "节点信息",
+      "Sync_Block": "同步块…",
+      "Validator_info": "验证程序信息",
+      "Sync_info": "同步信息",
+      "Validator_node": "请输入验证程序节点的IP地址",
+      "action": {
+          "Switching_success": "切换验证程序成功",
+          "Switching_fail": "切换验证程序失败"
+      }
+  },
+  "home": {
+      "Balance": "余额",
+      "Latest_Transaction": "最新交易记录",
+      "Transfer": "交易",
+      "profits_pledge_system": "挖矿奖励与质押系统的提现额度有关。详情请参阅质押系统。",
+      "View_Detail": "查看细节",
+      "table": {
+          "Amount": "金额",
+          "Source": "对方",
+          "Date": "日期",
+          "Type": "类型",
+          "Status": "状态",
+          "detail": "细节",
+          "no_Transaction": "无交易"
+      },
+      "Modal1": {
+          "Send_LAMB": "发送 lambda",
+          "From": "发送方",
+          "To": "接收方",
+          "Amount": "金额",
+          "Submit": "提交",
+          "LAMB_address": "lambda 地址",
+          "Transfer": "交易",
+          "Confirm": "确认",
+          "LAMB": "LAMB"
+      },
+      "action": {
+          "not_transfer_LAMB_to_yourself": "你不能把LAMB发送给自己。",
+          "check_balance_amount_transfer": "请核对余额和转账金额。",
+          "Check_forwarding_address": "检查转发地址",
+          "Check_the_amount": "核对金额"
+      }
+  },
+  "transactiondetails": {
+      "Transaction": "交易",
+      "TxHash": "交易Hash",
+      "Block_Height": "块高",
+      "Time": "时间",
+      "Type": "类型",
+      "From": "发送",
+      "To": "接受",
+      "Value": "金额"
+  },
+  "Sign": {
+      "Data_signature": "数据签名",
+      "address": "地址",
+      "content": "内容",
+      "Signature_data": "签名结果",
+      "submit": "提交",
+      "Enter_password": "输入钱包密码",
+      "action": {
+          "Copy_success": "复制成功",
+          "Copy_failed": "复制失败"
+      }
+  },
+  "apppage": {
+      "Modal1": {
+          "Please_enter_password": "请输入您的钱包密码",
+          "Confirm": "确认"
+      },
+      "action": {
+          "check_password": "请检查您的密码",
+          "Transaction_failure": "事务失败。",
+          "Transaction_success": "事务成功",
+          "Transaction_error": "事务处理错误"
+      }
   }
 }
