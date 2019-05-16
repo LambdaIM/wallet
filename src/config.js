@@ -26,4 +26,6 @@ module.exports.DAEMON_CONFIG  = {
     //     return `http://${settings.get('validator.ip')||defaultip}:13659/`
     // },
     // LambdaExplorer:'http://explorer.lambda.im/'
+    pledgeurl: "http://validator.lambdastorage.com/",
+    explore:'http://explorer.lambdastorage.com/'
 };

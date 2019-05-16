@@ -81,7 +81,7 @@
             </Col> -->
 
             <Col span="4" class-name="content-wrapper">
-              <a @click="openkeystore" >{{$t("Keystore_File_Backup")}}</a>
+              <a @click="openkeystore" >{{$t("seting.Keystore_File_Backup")}}</a>
             </Col>
           </Row>
 
@@ -94,7 +94,7 @@
           </Row> -->
         </div>
       </Mycard>
-                 <Mycard v-if="getstore.length>0" cardtitle="Validator Node info" class="mb10">
+                 <Mycard v-if="getstore.length>0" :cardtitle="$t('seting.Validator_Node_info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row v-if="item[0]!='pub_key'" v-for="item in getstore"  class-name="card-item">
             <Col  span="4" class-name="title-wrapper">
@@ -118,7 +118,7 @@
           
         </div>
       </Mycard>
-      <Mycard v-if="getstore.length==0" cardtitle="Validator Node info" class="mb10">
+      <Mycard v-if="getstore.length==0" :cardtitle="$t('seting.Validator_Node_info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row   class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -157,7 +157,7 @@
         <div class="storage-content" slot="card-content">
           <Row class-name="card-item">
             <Col span="4" class-name="title-wrapper">
-              <span class="title">{{$t("Current_Version")}}</span>
+              <span class="title">{{$t("seting.Current_Version")}}</span>
             </Col>
             <Col span="3" class-name="content-wrapper">
               <span>V0.0.1</span>
