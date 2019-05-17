@@ -13,7 +13,7 @@
           <Button @click="openSend()" icon="md-swap">{{$t('home.Transfer')}}</Button>
         </div>
       </div>
-      <Table :columns="columns" :data="data" slot="content" >
+      <Table :loading="loading"  :columns="columns" :data="data" slot="content" >
         <template slot-scope="{ row, index }" slot="source">
           <Poptip word-wrap trigger="hover" width="200" :content="row.source">
             <span class="etc">{{row.source}}</span>
@@ -211,7 +211,8 @@ export default {
       transactiondata:null,
       txType:null,
       sum:null,
-      pageNumber:1
+      pageNumber:1,
+      loading:true
     };
   },
   components: {
@@ -369,6 +370,7 @@ export default {
           return "from  " + address1;
         }
       }
+      this.$data.loading=true;
       try {
         // txType: txPledgeNew
         let param = {
@@ -399,8 +401,10 @@ export default {
             });
           });
         }
+        this.$data.loading=false;
       } catch (ex) {
         console.log(ex);
+        this.$data.loading=false;
       }
     },
     async WalletBasicinfo() {
