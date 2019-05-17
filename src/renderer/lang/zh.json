@@ -44,11 +44,11 @@
       }
   },
   "login": {
-      "LAMBDA_Wallet": "拉姆达钱包",
+      "LAMBDA_Wallet": "Lambda 钱包",
       "Password": "密码",
       "Login": "登录",
       "Create_Wallet": "创建钱包",
-      "Import_Wallet": "进口钱包",
+      "Import_Wallet": "导入钱包",
       "select_Wallet": "请选择钱包",
       "action": {
           "Please_fill_in_the_password": "请填写密码。",
@@ -62,9 +62,9 @@
       "Wallet_Name": "钱包名称",
       "characters_symbol": "8-20个字符、字母、数字或符号密码",
       "Confirm_password": "确认密码",
-      "Create": "创造",
+      "Create": "确定",
       "Login_Wallet": "登录钱包",
-      "Import_Wallet": "进口钱包",
+      "Import_Wallet": "导入钱包",
       "action": {
           "fill_walletName": "请填一下钱包的名字",
           "fill_password": "请填写密码。",
@@ -77,11 +77,11 @@
   },
   "success": {
       "Successfully_Created": "已成功创建",
-      "remember_backup_wallet": "请记住备份钱包的字样！",
+      "remember_backup_wallet": "请记住备份钱包的助记词！",
       "Next_Step": "下一步"
   },
   "Confirm": {
-      "Confirm_words": "确认单词",
+      "Confirm_words": "确认助记词语",
       "click_words_to_confirm": "请单击这些词以确认您正在正确备份",
       "Export_Keystore_File": "导出密钥库文件",
       "action": {
@@ -90,14 +90,14 @@
   },
   "Import": {
       "Import_LAMBDA_Wallet": "导入lambda钱包",
-      "by_keyStore_file": "按密钥库文件",
-      "by_mnemonic_word": "用助记词",
-      "Choose_Wallet_Files": "选择钱包文件",
+      "by_keyStore_file": "用配置文件导入",
+      "by_mnemonic_word": "用助记词导入",
+      "Choose_Wallet_Files": "选择配置文件(*.keyinfo)",
       "Password": "密码",
       "Name_you_wallet": "给你的钱包命名",
       "Login_Wallet": "登录钱包",
       "Create_Wallet": "创建钱包",
-      "Import": "进口",
+      "Import": "确定",
       "characters_symbol": "8-20个字符、字母、数字或符号",
       "Confirm_password": "确认密码",
       "action": {
