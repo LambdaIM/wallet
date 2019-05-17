@@ -59,7 +59,7 @@
         </div>
       </Mycard>
 
-      <Mycard  cardtitle="Storage Info" class="mb10">
+      <!-- <Mycard  cardtitle="Storage Info" class="mb10">
         <div v-if="pledgeMinerData!=null" class="storage-content" slot="card-content">
           <Row class-name="card-item">
             <Col span="3" class-name="title-wrapper">
@@ -82,7 +82,7 @@
             </Col>
           </Row>
         </div>
-      </Mycard>
+      </Mycard> -->
 
       <Mycard :cardtitle="$t('seting.Privat_Key_Info')" class="mb10">
         <div class="storage-content" slot="card-content">

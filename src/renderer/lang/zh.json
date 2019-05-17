@@ -113,7 +113,7 @@
       }
   },
   "Validator": {
-      "ip": "验证程序IP",
+      "ip": "验证节点IP",
       "submit": "提交",
       "Node_info": "节点信息",
       "Sync_Block": "同步块…",
