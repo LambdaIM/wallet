@@ -41,6 +41,7 @@
       "switch_lang" : "Language",
       "edit_name":"Edit name",
       "Submit":"Submit",
+      "switch-lang":"Switch language",
       "action":{
         "Modified_success":"Modified success",
         "Modification_failed":"Modification failed"

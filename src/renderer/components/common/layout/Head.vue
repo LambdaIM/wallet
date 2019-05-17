@@ -40,6 +40,24 @@
           </div>
         </div>
       </Col>
+      <Col v-else  span="16" offset="2" class-name="head-menu-wrapper">
+        <div class="head-menu">
+            <div class="head-menu-item" style="text-align: right;    margin-right: 80px">
+               <Dropdown @on-click="selectlang">
+                              <a href="javascript:void(0)" style="color:white">
+                                  {{lang[langnow]}}
+                                  <!-- 1111 -->
+                                  <Icon type="ios-arrow-down"></Icon>
+                              </a>
+                              <DropdownMenu slot="list">
+                                  <DropdownItem name="en">English</DropdownItem>
+                                  <DropdownItem name="zh">简体中文</DropdownItem>
+                              </DropdownMenu>
+                          </Dropdown>
+            </div>
+        </div>
+      </Col>
+      
     </Row>
   </div>
 </template>
@@ -52,6 +70,11 @@ export default {
   data() {
     return {
       // log: false
+      lang:{
+        zh:'简体中文',
+        en:'English'
+      },
+      langnow:this.$i18n.locale
     };
   },
   created() {
@@ -96,6 +119,13 @@ export default {
           duration: 1000
         });
       }
+    },
+    selectlang(item){
+      console.log(item);
+      this.$i18n.locale  = item;
+      this.$data.langnow = item;
+      settings.set('set', {language: item});
+      window.location.reload();
     }
   },
   computed: {
