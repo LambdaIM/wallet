@@ -6,7 +6,7 @@
           <div class="icon">
             <Icon type="ios-card-outline" class="icon-item" size="70"/>
           </div>
-          <h2 class="title">{{ $t("Confirm.Confirm") }}</h2>
+          <h2 class="title">{{ $t("Confirm.Confirm_words") }}</h2>
           <p>{{ $t("Confirm.click_words_to_confirm") }}</p>
         </div>
 
