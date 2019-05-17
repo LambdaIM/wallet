@@ -38,6 +38,24 @@
               ></Button> -->
             </Col>
           </Row>
+                   <Row class-name="card-item">
+            <Col span="4" class-name="title-wrapper">
+              <span class="title">{{ $t("seting.switch-lang") }}</span>
+            </Col>
+            <Col span="12" class-name="content-wrapper">
+                         <Dropdown @on-click="selectlang">
+                              <a href="javascript:void(0)">
+                                  {{lang[langnow]}}
+                                  <Icon type="ios-arrow-down"></Icon>
+                              </a>
+                              <DropdownMenu slot="list">
+                                  <DropdownItem name="en">English</DropdownItem>
+                                  <DropdownItem name="zh">简体中文</DropdownItem>
+                              </DropdownMenu>
+                          </Dropdown>
+                          
+            </Col>
+          </Row>
         </div>
       </Mycard>
 
@@ -212,7 +230,12 @@ export default {
       walletInfo:null,
       pledgeMinerData:null,
       modal2:false,
-      editvalue:""
+      editvalue:"",
+      lang:{
+        zh:'简体中文',
+        en:'English'
+      },
+      langnow:this.$i18n.locale
 
     };
   },
@@ -285,6 +308,15 @@ export default {
       
       // _this.$data.walletInfo=res.data
 
+    },
+     selectlang(item){
+      console.log(item);
+      this.$i18n.locale  = item;
+      this.$data.langnow = item;
+      settings.set('set', {
+                              language: item
+                            });
+      window.location.reload();
     }
   },
   computed: {

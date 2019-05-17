@@ -38,6 +38,7 @@
       "switch_lang": "语言",
       "edit_name": "编辑名称",
       "Submit": "提交",
+      "switch-lang":"切换语言",
       "action": {
           "Modified_success": "修改成功",
           "Modification_failed": "修改失败"
