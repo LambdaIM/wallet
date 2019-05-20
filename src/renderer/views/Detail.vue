@@ -77,6 +77,10 @@ const { shell } = require("electron");
 const ipc = require("electron-better-ipc");
 import filters from "../common/js/filter.js";
 import * as Utils from "web3-utils";
+
+
+
+
 export default {
   data() {
     return {
@@ -100,17 +104,20 @@ export default {
   methods: {
     checkHash(value,txType) {
       // console.log(value);
-      let url = `http://explorer.lambda.im/#/txhashdetail/${value}/${txType}`;
+      var explorer =DAEMON_CONFIG.explore;
+      let url = `${explorer}#/txhashdetail/${value}/${txType}`;
       shell.openExternal(url);
     },
     checkAddress(value) {
       // console.log(value);
-      let url = `http://explorer.lambda.im/#/address/${value}`;
+      var explorer =DAEMON_CONFIG.explore;
+      let url = `${explorer}/#/address/${value}`;
       shell.openExternal(url);
     },
     checkHeight(value) {
       // console.log(value);
-      let url = `http://explorer.lambda.im/#/blockdetail/${value}`;
+      var explorer =DAEMON_CONFIG.explore;
+      let url = `${explorer}/#/blockdetail/${value}`;
       shell.openExternal(url);
     },
     // getpaylist(address) {
