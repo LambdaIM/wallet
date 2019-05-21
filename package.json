@@ -51,8 +51,8 @@
         }
     },
     "dependencies": {
-        "@webfans/bcrypt": "^3.0.4",
         "axios": "^0.18.0",
+        "bcryptjs": "https://github.com/qqqzhch/bcrypt.js.git",
         "bigi": "^1.4.2",
         "bignumber.js": "^8.1.1",
         "body-parser": "^1.18.3",

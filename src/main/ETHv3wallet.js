@@ -5,7 +5,7 @@ var scryptsy = require('scrypt.js');
 var ethUtil = require('ethereumjs-util');
 var uuidv4 = require('uuid/v4');
 var TenderKeys =require('tendermintelectronkey');
-const bcrypt = require('@webfans/bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 12;
 
 const createKeccakHash = require('keccak');
@@ -107,7 +107,7 @@ Wallet.prototype.toV3 = function (password, opts) {
     }
     //需要把这个函数里面的随机数提取出来
     var usersalt = crypto.randomBytes(16);
-    var salt = bcrypt.genSaltSync(saltRounds,'a',usersalt);
+    var salt = bcrypt.genSaltSync(saltRounds,'',usersalt);
 
     var hash = bcrypt.hashSync(password, salt);
 
@@ -196,8 +196,9 @@ Wallet.prototype.toV3 = function (password, opts) {
       return ;
     }
     
+    console.log(crypto.randomBytes(16))
 
-    var salt = bcrypt.genSaltSync(saltRounds,'a',Buffer.from(usersalt,'hex') );
+    var salt = bcrypt.genSaltSync(saltRounds,'',Buffer.from(usersalt,'hex') );
 
     var hash = bcrypt.hashSync(password, salt);
 
