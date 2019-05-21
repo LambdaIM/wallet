@@ -10,7 +10,8 @@ import './common/css/position.less';
 import './common/css/media.less';
 import 'iview/dist/styles/iview.css';
 import './my-theme/index.less';
-import locale from 'iview/dist/locale/en-US';
+import locale_en from 'iview/dist/locale/en-US';
+import locale_zh from 'iview/dist/locale/zh-CN';
 
 import filters from './common/js/filter.js';
 import VueClipboard from 'vue-clipboard2';
@@ -26,8 +27,7 @@ const {  remote } = require('electron');
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
 })
-console.log(locale);
-Vue.use(iView, { locale });
+
 Vue.use(VueClipboard)
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
@@ -42,6 +42,12 @@ const i18n = new VueI18n({
   locale: language, // set locale
   messages:messages, // set locale messages
 })
+if(language=='en'){
+  Vue.use(iView, { locale_en });
+}else{
+  Vue.use(iView, { locale_zh });
+}
+
 
 /* eslint-disable no-new */
 new Vue({

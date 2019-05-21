@@ -11,7 +11,7 @@
             <router-link to="/home" class="item">{{ $t("head.home") }}</router-link>
           </div>
           <div class="head-menu-item">
-            <router-link to="/miner" class="item">{{ $t("head.miner") }}</router-link>
+            <router-link to="/home" class="item">{{ $t("head.miner") }}</router-link>
           </div>
           <div class="head-menu-item">
             <router-link to="/home" class="item">{{ $t("head.validator") }}</router-link>

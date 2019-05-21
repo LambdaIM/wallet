@@ -11,10 +11,10 @@ import { connect } from 'net';
 
 import logicrpc from './logic.js';
 
-var log = require('../log').log;
+// var log = require('../log').log;
 // const settings = require('electron-settings');
 
-log.info('start');
+// log.info('start');
 
 
 /**
@@ -43,6 +43,7 @@ function createWindow() {
     /**
      * Initial window options
      */
+    logicrpc();
     mainWindow = new BrowserWindow({
         height: 676,
         useContentSize: true,
@@ -56,7 +57,7 @@ function createWindow() {
         mainWindow.webContents.openDevTools();
     }
     
-logicrpc
+     
     mainWindow.loadURL(winURL)
 
     mainWindow.on('closed', () => {
@@ -65,7 +66,7 @@ logicrpc
 
     
     
-    logicrpc();
+    
 }
 
 function Max() {

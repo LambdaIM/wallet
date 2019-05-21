@@ -29,7 +29,7 @@
             <Page :total="sum" show-elevator @on-change="changePage"></Page>
           </div>
     <div>
-          <Button to="/api">API 测试</Button>
+          <!-- <Button to="/api">API 测试</Button> -->
           <br/>
           <br/>
           <br/>
@@ -108,7 +108,8 @@ import filters from "../common/js/filter.js";
 import * as Utils from "web3-utils";
 import wUtils from "../common/js/utils.js";
 import eventhub from "../common/js/event.js";
-import _ from "underscore"
+import _ from "underscore";
+const { shell } = require("electron");
 
 
 export default {
@@ -370,7 +371,7 @@ export default {
           return "from  " + address1;
         }
       }
-      this.$data.loading=true;
+      // this.$data.loading=false;
       try {
         // txType: txPledgeNew
         let param = {
