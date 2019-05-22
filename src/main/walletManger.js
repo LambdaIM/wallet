@@ -12,7 +12,7 @@ const axios = require('axios');
 var protobuf = require("protobufjs");
 const path = require('path');
 
-var protofilepath = path.join(__static, '/awesome.proto');
+
 import Amino from 'irisnet-crypto/chains/iris/amino.js';
 var crypto = require("crypto");
 var BigInteger = require('bigi');
@@ -33,6 +33,8 @@ var walletManger = function (dir) {
 
     this.lastpayobj = null;
     this.lastpayArry = null;
+    var protofilepath = path.join(__static, '/awesome.proto');
+    this.protofilepath=protofilepath;
 
     this.scann();
     this.setDefaultWallet();
@@ -287,7 +289,7 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
         throw new Error(result.data.result.response.log)
     }
     var accountInfo = result.data.result.response.value;
-    const protoRoot = await protobuf.load(protofilepath);
+    const protoRoot = await protobuf.load(this.protofilepath);
 
     var buf = Buffer.from(accountInfo, 'base64');
     var AccountMessage = protoRoot.lookupType('types.Account');
@@ -325,7 +327,7 @@ walletManger.prototype.Transfer = async function (to, amount, gas) {
 
     
     // bigInter()
-    const protoRoot = await protobuf.load(protofilepath);
+    const protoRoot = await protobuf.load(this.protofilepath);
     log.info(amount)
     var payload = {
         from: Buffer.from(defaultAddress(), 'hex'),
@@ -390,7 +392,7 @@ walletManger.prototype.Transfer = async function (to, amount, gas) {
 walletManger.prototype.TransferConfirm = async function (password,transactiondata) {
     log.info('transferConfirm')
     //==
-    const protoRoot = await protobuf.load(protofilepath);
+    const protoRoot = await protobuf.load(this.protofilepath);
 
     var transactiondataMessage=protoRoot.lookupType(transactiondata.dataType);
     var transactionBufer=Buffer.from(transactiondata.hexdata,'hex');

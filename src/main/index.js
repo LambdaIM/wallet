@@ -6,7 +6,16 @@ import { DAEMON_CONFIG } from "../config.js";
 import { join } from "path";
 import { connect } from 'net';
 
+/**
+ * Set `__static` path to static files in production
+ * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
+ */
+// let DAEMON ;
 
+if (process.env.NODE_ENV !== 'development') {
+    
+    global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')   
+}
 
 
 import logicrpc from './logic.js';
@@ -17,19 +26,8 @@ import logicrpc from './logic.js';
 // log.info('start');
 
 
-/**
- * Set `__static` path to static files in production
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
- */
-// let DAEMON ;
 
-// if (process.env.NODE_ENV !== 'development') {
-//     global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
-    
-//     DAEMON = join(__dirname, "/static/rpc-server.js");
-// }else{
-//     DAEMON = join(__dirname, "../../static/rpc-server.js");
-// }
+
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development' ?
