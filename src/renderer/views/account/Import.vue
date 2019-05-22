@@ -124,6 +124,7 @@
 
 <script>
 const ipc = require("electron-better-ipc");
+import fs from 'fs'
 
 export default {
   data() {
@@ -243,8 +244,19 @@ export default {
     },
     beforeUpload(file){  
       console.log(file.path)
+      var v3file = fs.readFileSync(file.path, 'utf8');
+      var address =''
+      try {
+          v3file = JSON.parse(v3file);
+          address = v3file.address;
+      } catch (err) {
+
+          
+
+      }
+
       this.$data.formInline.keystorefile=[{
-                        name: file.name,
+                        name: `${address}`||file.name,
                         url: file.path
                     }];
        return false;
@@ -272,7 +284,7 @@ export default {
       
 
         console.log(res)
-        if (res.state) {
+        if (res&&res.state) {
           this.$Notice.success({
             title: this.$t("Import.action.import_Wallet_success")
           });
