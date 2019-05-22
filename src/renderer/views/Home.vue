@@ -296,14 +296,14 @@ export default {
       let value = parseFloat(this.LAMBvalue);
       if (to == from) {
         this.$Notice.warning({
-          title: "You can't transfer LAMB to yourself."
+          title:this.$t('home.action.not_transfer_LAMB_to_yourself')
         });
         return;
       }
       if (value <= 0 || value > wUtils.bigToNumber(this.balance) ) {
         // need to alert
         this.$Notice.warning({
-          title: "Please check the balance and the amount of transfer."
+          title: this.$t('home.action.check_balance_amount_transfer')
         });
         return;
       }
@@ -311,7 +311,7 @@ export default {
       if (Utils.isAddress(to) == false) {
         // need to alert
         this.$Notice.warning({
-          title: "Check the forwarding address"
+          title:this.$t('home.action.Check_forwarding_address') 
         });
 
         return;
@@ -319,7 +319,7 @@ export default {
 
       if (isNaN(value)) {
         this.$Notice.warning({
-          title: "Check the amount"
+          title: this.$t('home.action.Check_the_amount')
         });
         return;
       }

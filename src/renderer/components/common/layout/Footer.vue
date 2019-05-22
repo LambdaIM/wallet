@@ -3,7 +3,7 @@
     <div v-if="getstore.address!==null"  class="footer-wrapper">
       <!-- <span class="item etc">Validator id: -->
       <span    class="item etc">{{ $t("foot.validator") }}:
-        <Poptip word-wrap trigger="hover" width="300" :content="address">{{getstore.address}}</Poptip>
+        <Poptip word-wrap trigger="hover" width="300" :content="getstore.address">{{getstore.address}}</Poptip>
       </span>
       
       <span  class="item">{{ $t("foot.block_height") }}: {{getstore.height}}</span>

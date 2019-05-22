@@ -400,8 +400,8 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
     log.info(transactiondata)
 
     var transactionObject = transactiondataMessage.decode(transactionBufer) ;
-    console.log('transactionBufer',transactionBufer)
-    console.log('transactionObject',transactionObject)
+    // console.log('transactionBufer',transactionBufer)
+    // console.log('transactionObject',transactionObject)
     
 
     var TxPayloadMessage = protoRoot.lookupType('types.TxPayload');

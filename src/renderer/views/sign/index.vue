@@ -128,7 +128,8 @@ export default {
             password: this.$data.walletPassword
           })
       }catch(ex){
-        this.$Message.info("Wallet sign error" ); 
+        console.log(ex)
+        this.$Message.error(ex.errormsg); 
       }
       
       console.log(result)
@@ -137,20 +138,6 @@ export default {
          this.$data.signature=result.data.signature;
          this.$data.jsondata=JSON.stringify(result.data)
          this.$data.passwordModal=false;
-       }else{
-         var data=result;
-         if (data.code == "1001") {
-              this.$Notice.error({
-                title: 'Please check your password.'
-              });
-            } else {
-              // _this.$data.passwordModal = false;
-              this.$Notice.error({
-                title: 'Transaction failure.'
-              });
-            }
-      
-          
        }
     },
     Datacollection: async function(){
@@ -158,10 +145,10 @@ export default {
       
     },
     onCopy: function(e) {
-      this.$Message.info(this.$t('Sign.action.pass1') );
+      this.$Message.info(this.$t('Sign.action.Copy_success') );
     },
     onError: function(e) {
-      this.$Message.info("Sign.action.pass2");
+      this.$Message.info(this.$t("Sign.action.Copy_failed"));
     },
   },
   computed: {

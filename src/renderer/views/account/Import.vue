@@ -34,6 +34,11 @@
                 <Button class="btn upload-button" icon="ios-cloud-upload-outline">{{$t('Import.Choose_Wallet_Files')}}</Button>
               </Upload>
             </FormItem>
+            <FormItem prop="walletName">
+              <Input type="text" v-model="formInline.walletName" :placeholder="$t('Import.Name_you_wallet')">
+                <Icon type="ios-person-outline" slot="prepend"></Icon>
+              </Input>
+            </FormItem>
 
             <FormItem prop="password">
               <Input type="password" v-model="formInline.password" :placeholder="$t('Import.Password')">
@@ -41,11 +46,7 @@
               </Input>
             </FormItem>
 
-            <FormItem prop="walletName">
-              <Input type="text" v-model="formInline.walletName" :placeholder="$t('Import.Name_you_wallet')">
-                <Icon type="ios-person-outline" slot="prepend"></Icon>
-              </Input>
-            </FormItem>
+            
           </Form>
           <div class="button-wrapper">
         <button class="btn login-button" @click="handleSubmit('formbyfile')">{{$t('Import.Import')}}</button>
