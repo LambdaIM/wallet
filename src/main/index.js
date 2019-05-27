@@ -99,7 +99,7 @@ function creatMenu(){
 
 app.on('ready', () => {
     createWindow();
-    creatSeting();
+    
     creatMenu();
 })
 
