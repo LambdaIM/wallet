@@ -233,9 +233,7 @@ export default  function(){
         log.info(TxMessageload)
         return resultView(TxMessageload,true)  
         } catch (error) {
-          log.error('---')
-          log.error(error)
-          log.error('---')
+
           throw resultView(null,false,error)
             
         }
@@ -247,11 +245,11 @@ export default  function(){
         var name=query.name;
         try{
             var TxMessageload = await WM.editDefaultName(name);   
-            log.info(TxMessageload)
+            
             return resultView(TxMessageload,true)  
           
         } catch (error) {
-          log.error(error)
+          
           throw resultView(null,false,error)
         }
   

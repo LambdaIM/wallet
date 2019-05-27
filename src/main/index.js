@@ -72,18 +72,6 @@ function Max() {
 }
 
 
-function creatSeting(){
-    
-    // if(settings.has('user.node')==false){
-    //     //http://18.136.176.184:13657/abci_query
-    //     settings.set('user', {
-    //         node: 'http://18.136.176.184:13657/'
-    //       });
-
-    // }
-    
-}
-
 function creatMenu(){
     // Create the Application's main menu
     var template = [{

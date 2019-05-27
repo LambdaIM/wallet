@@ -58,7 +58,7 @@ var decryptSymmetric = function (data, prefix, key) {
 
 
 var Wallet = function (priv, pub) {
-    // 为啥呢？
+    // why？
     if (priv && pub) {
       throw new Error('Cannot supply both a private and a public key to the constructor')
     }
