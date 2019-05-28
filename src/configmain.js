@@ -16,7 +16,6 @@ const settings = require("electron-settings");
 var defaultip='39.105.87.87'
 
 module.exports.DAEMON_CONFIG  = {
-    RPC_PORT:8084,
     BASE_PATH:BASE_PATH,
     WalletFile:path.join( BASE_PATH,'Wallet'),
     LogFile:path.join(BASE_PATH,'Log'),

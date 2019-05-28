@@ -116,22 +116,35 @@ export default {
   },
   mounted() {
     this.getdata();
+    this.getValidatorIp();
     this.$data.formInline = {
-      ValidatorIP:DAEMON_CONFIG.ValidatorIp(),
+      ValidatorIP:'',
       
     }
 
   },
   methods: {
+    getValidatorIp(){
+        ipc.callMain("getValidatorIp", {})
+        .then((result)=>{
+          if(result.state==true){
+            this.$data.formInline = {
+              ValidatorIP:result.data.ip         
+            }
+
+          }
+          
+
+        })
+        .catch(ex=>{
+          
+
+        })
+    },
     getdata() {
-      var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();;
-      var pra = {
-        url: nodeBaseUrl + "status",
-        data: {}
-      };
       var _this = this;
             
-       ipc.callMain("httpgetstatus", pra)
+       ipc.callMain("blockchainstate", {})
        .then(function(res){
          console.log(res)
          if(res.state&&res.data.data.result){

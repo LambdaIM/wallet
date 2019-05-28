@@ -38,16 +38,9 @@ export default {
   },
   methods: {
     getValidatorInfo() {
-      // console.log(DAEMON_CONFIG)
-      var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();
-      console.log(nodeBaseUrl);
-      var pra = {
-        url: nodeBaseUrl + "status",
-        data: {}
-      };
       var _this = this;
             
-       ipc.callMain("httpgetstatus", pra)
+       ipc.callMain("blockchainstate", {})
        .then(function(res){
         //  console.log(res)
          if(res.state&&res.data.data.result){
