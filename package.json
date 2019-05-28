@@ -1,8 +1,8 @@
 {
-    "name": "wallet",
-    "version": "0.0.1",
+    "name": "Wallet",
+    "version": "0.1.9",
     "author": "lambda wallet developer <544262408@qq.com>",
-    "description": "An electron-vue project",
+    "description": "lambda wallet",
     "license": null,
     "main": "./dist/electron/main.js",
     "scripts": {
@@ -17,7 +17,7 @@
         "postinstall": ""
     },
     "build": {
-        "productName": "wallet",
+        "productName": "Wallet",
         "appId": "com.example.yourapp",
         "directories": {
             "output": "build"
