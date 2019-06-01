@@ -3,7 +3,7 @@
     <div v-if="getstore.address!==null"  class="footer-wrapper">
       <!-- <span class="item etc">Validator id: -->
       <span    class="item etc">{{ $t("foot.validator") }}:
-        <Poptip word-wrap trigger="hover" width="300" :content="getstore.address">{{getstore.address}}</Poptip>
+        <Poptip word-wrap trigger="hover" width="300" :content="getIPAndAddress">{{getstore.address}}</Poptip>
       </span>
       
       <span  class="item">{{ $t("foot.block_height") }}: {{getstore.height}}</span>
@@ -26,17 +26,35 @@ export default {
       address: null,
       height: null,
       time: null,
-      isSync:true
+      isSync:true,
+      ValidatorIP:''
     };
   },
   mounted() {
     var _this=this;
+    _this.getValidatorIp();
     _this.getValidatorInfo();
     setInterval(function(){
+          _this.getValidatorIp();
         _this.getValidatorInfo();
     },1000*10)
   },
   methods: {
+    getValidatorIp(){
+        ipc.callMain("getValidatorIp", {})
+        .then((result)=>{
+          if(result.state==true){
+            this.$data.ValidatorIP = result.data.ip;         
+
+          }
+          
+
+        })
+        .catch(ex=>{
+          
+
+        })
+    },
     getValidatorInfo() {
       var _this = this;
             
@@ -88,6 +106,18 @@ export default {
         // return _.pairs(this.$store.getters.info.validator_info);  
       } catch (error) {
         return [];
+      }
+      
+    },
+    getIPAndAddress(){
+      console.log(' - -')
+      try {
+      // this.$data.node_info=this.$store.getters.info.node_info;
+       var result =  this.dataFormat(this.$store.getters.info);
+       return  this.ValidatorIP+"   "+result.address;
+        // return _.pairs(this.$store.getters.info.validator_info);  
+      } catch (error) {
+        return "";
       }
       
     }
