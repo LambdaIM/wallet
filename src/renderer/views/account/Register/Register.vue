@@ -81,7 +81,7 @@ export default {
           },
           {
             type: "string",
-            min: 8,
+            min: 6,
             message: this.$t("create.action.password_length"),
             trigger: "blur"
           }

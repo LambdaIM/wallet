@@ -73,7 +73,7 @@
         "action":{
           "fill_walletName":"Please fill in the walletName",
           "fill_password":"Please fill in the password.",
-          "password_length":"The password length cannot be less than 8 bits",
+          "password_length":"The password length cannot be less than 6 bits",
           "create_fail":"create Wallet fail",
           "enter_password":"Please enter your password",
           "enter_password_again":"Please enter your password again",
