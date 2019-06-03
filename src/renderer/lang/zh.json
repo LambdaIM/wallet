@@ -61,7 +61,7 @@
   "create": {
       "Create_Lambda_Wallet": "创建lambda钱包",
       "Wallet_Name": "钱包名称",
-      "characters_symbol": "8-20个字符、字母、数字或符号密码",
+      "characters_symbol": "6-20个字符、字母、数字或符号密码",
       "Confirm_password": "确认密码",
       "Create": "确定",
       "Login_Wallet": "登录钱包",

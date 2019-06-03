@@ -65,7 +65,7 @@
       "create":{
         "Create_Lambda_Wallet":"Create Lambda Wallet",
         "Wallet_Name":"Wallet Name",
-        "characters_symbol":"8-20 characters,letter,number or symbol password",
+        "characters_symbol":"6-20 characters,letter,number or symbol password",
         "Confirm_password":"Confirm the password",
         "Create":"Create",
         "Login_Wallet":"Login Wallet",
