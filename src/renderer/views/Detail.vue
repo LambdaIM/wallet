@@ -33,7 +33,7 @@
             <span class="title">{{$t('transactiondetails.Time')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <span class="item-value">{{data.time | formatDate}}</span>
+            <span class="item-value">{{data.create_time | formatDate}}</span>
           </Col>
         </Row>
 

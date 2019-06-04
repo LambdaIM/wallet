@@ -56,7 +56,7 @@
             </Col>
             <Col span="12" class-name="content-wrapper">
               <span v-if="item[0]!='latest_block_time'">{{item[1]}}</span>
-              <span v-else>{{item[1]|formatDate}}</span>
+              <span v-else>{{item[1]|blockFormatDate}}</span>
 
               <span style="color:red" v-if="item[0]=='catching_up'&&item[1]==true">{{$t("Validator.Sync_Block")}}</span>
 

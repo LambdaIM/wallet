@@ -8,7 +8,7 @@
       
       <span  class="item">{{ $t("foot.block_height") }}: {{getstore.height}}</span>
       <span  class="item" v-if="getstore.isSync==true" >{{ $t("foot.sync_block") }}</span>
-      <span class="item" v-else>{{ $t("foot.block_time") }}: {{getstore.time | formatDate}}</span>
+      <span class="item" v-else>{{ $t("foot.block_time") }}: {{getstore.time | blockFormatDate}}</span>
     </div>
     <div v-else class="footer-wrapper">
       <span   class="item">{{ $t("foot.validator_connecting") }}</span>
@@ -75,6 +75,7 @@ export default {
        })
     },
     dataFormat(result){
+
       return {
         address:result.validator_info.address,
         height:result.sync_info.latest_block_height,

@@ -396,7 +396,7 @@ export default {
               amount: item.value==""?"--":(checkaddress(item.from) + filters.formatValue(item.value)),
               source: showaddress(item.from, item.to),
               txType: item.txType,
-              date: filters.formatDate(item.time),
+              date: filters.formatDate(item.create_time),
               status: 1,
               txHash:item.txHash
             });
