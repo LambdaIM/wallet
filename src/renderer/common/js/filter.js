@@ -16,6 +16,9 @@ const formatDate = (value) => {
     //1 区块返回的时间
     //2 合约返回的时间
     //3 浏览器返回的时间
+    if(value==undefined){
+        return '--'
+    }
     return moment(value).utc().utcOffset(0).format("YYYY-MM-DD HH:mm:ss");
 }
 
@@ -24,6 +27,9 @@ const blockFormatDate = (value) => {
     //1 区块返回的时间
     //2 合约返回的时间
     //3 浏览器返回的时间
+    if(value==undefined){
+        return '--'
+    }
     return moment(value).utc().utcOffset(8).format("YYYY-MM-DD HH:mm:ss");
 }
 
