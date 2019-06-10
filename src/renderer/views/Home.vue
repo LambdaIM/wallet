@@ -14,10 +14,18 @@
         </div>
       </div>
       <Table :loading="loading"  :columns="columns" :data="data" slot="content" >
-        <template slot-scope="{ row, index }" slot="source">
-          <Poptip word-wrap trigger="hover" width="200" :content="row.source">
-            <span class="etc">{{row.source}}</span>
+        <template slot-scope="{ row, index }" slot="from">
+          <Poptip word-wrap trigger="hover" width="200" :content="row.from">
+            <span class="etc">{{row.from}}</span>
           </Poptip>
+        </template>
+        <template slot-scope="{ row, index }" slot="to">
+          <Poptip v-if="row.to!='--'" word-wrap trigger="hover" width="200" :content="row.to">
+            <span class="etc">{{row.to}}</span>
+          </Poptip>
+          <span v-else>
+            {{row.to}}
+          </span>
         </template>
         <template slot-scope="{ row, index }" slot="action">
           <Button type="primary" size="small" @click="toDetail(row,index)">{{ $t("home.View_Detail") }}</Button>
@@ -167,9 +175,14 @@ export default {
           key: "amount"
         },
         {
-          title: this.$t("home.table.Source"),
-          key: "source",
-          slot: "source"
+          title: this.$t("home.table.From"),
+          key: "from",
+          slot: "from"
+        },
+        {
+          title: this.$t("home.table.To"),
+          key: "to",
+          slot: "to"
         },
         {
           title: this.$t("home.table.Date"),
@@ -359,17 +372,15 @@ export default {
           return " +  ";
         }
       }
-      function showaddress(address1, address2) {
-        if (address1.toUpperCase() == address.toUpperCase()) {
-          if(address2!=""){
-            return "to  " + address2;
-          }else{
-            return  "--";
-          }
-          
-        } else {
-          return "from  " + address1;
+      
+      function subAddress(address){
+        if(address){
+          return address.substr(0,8)+"..."
+
+        }else{
+          return '--'
         }
+
       }
       // this.$data.loading=false;
       try {
@@ -394,7 +405,8 @@ export default {
           tempData.data.txList.forEach(item => {
             this.data.push({
               amount: item.value==""?"--":(checkaddress(item.from) + filters.formatValue(item.value)),
-              source: showaddress(item.from, item.to),
+              from:item.from,
+              to:item.to||'--',
               txType: item.txType,
               date: filters.formatDate(item.create_time),
               status: 1,

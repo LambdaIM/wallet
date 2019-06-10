@@ -130,14 +130,15 @@
       "Latest_Transaction": "最新交易记录",
       "Transfer": "交易",
       "profits_pledge_system": "挖矿奖励与质押系统的提现额度有关。详情请参阅质押系统。",
-      "View_Detail": "查看细节",
+      "View_Detail": "查看详情",
       "table": {
           "Amount": "金额",
-          "Source": "对方",
+          "From":"发送",
+          "To":"接受",
           "Date": "日期",
           "Type": "类型",
           "Status": "状态",
-          "detail": "细节",
+          "detail": "详情",
           "no_Transaction": "无交易"
       },
       "Modal1": {
