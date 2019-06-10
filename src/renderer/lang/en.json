@@ -139,6 +139,8 @@
       "table":{
         "Amount":"Amount",
         "Source":"Source",
+        "From":"From",
+        "To":"To",
         "Date":"Date",
         "Type":"Type",
         "Status":"Status",
