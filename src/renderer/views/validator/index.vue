@@ -56,7 +56,7 @@
             </Col>
             <Col span="12" class-name="content-wrapper">
               <span v-if="item[0]!='latest_block_time'">{{item[1]}}</span>
-              <span v-else>{{item[1]|formatDate}}</span>
+              <span v-else>{{item[1]|blockFormatDate}}</span>
 
               <span style="color:red" v-if="item[0]=='catching_up'&&item[1]==true">{{$t("Validator.Sync_Block")}}</span>
 
@@ -116,22 +116,35 @@ export default {
   },
   mounted() {
     this.getdata();
+    this.getValidatorIp();
     this.$data.formInline = {
-      ValidatorIP:DAEMON_CONFIG.ValidatorIp(),
+      ValidatorIP:'',
       
     }
 
   },
   methods: {
+    getValidatorIp(){
+        ipc.callMain("getValidatorIp", {})
+        .then((result)=>{
+          if(result.state==true){
+            this.$data.formInline = {
+              ValidatorIP:result.data.ip         
+            }
+
+          }
+          
+
+        })
+        .catch(ex=>{
+          
+
+        })
+    },
     getdata() {
-      var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();;
-      var pra = {
-        url: nodeBaseUrl + "status",
-        data: {}
-      };
       var _this = this;
             
-       ipc.callMain("httpgetstatus", pra)
+       ipc.callMain("blockchainstate", {})
        .then(function(res){
          console.log(res)
          if(res.state&&res.data.data.result){

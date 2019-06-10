@@ -178,7 +178,7 @@
               <span class="title">{{$t("seting.Current_Version")}}</span>
             </Col>
             <Col span="3" class-name="content-wrapper">
-              <span>V0.0.1</span>
+              <span>V{{versionNumber}}</span>
             </Col>
             <!-- <Col span="3" class-name="content-wrapper">
               <a>Check Version</a>
@@ -235,7 +235,8 @@ export default {
         zh:'简体中文',
         en:'English'
       },
-      langnow:this.$i18n.locale
+      langnow:this.$i18n.locale,
+      versionNumber:'0.1.9'
 
     };
   },

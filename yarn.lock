@@ -224,13 +224,6 @@
     "@webassemblyjs/wast-parser" "1.7.11"
     "@xtuc/long" "4.2.1"
 
-"@webfans/bcrypt@^3.0.4":
-  version "3.0.4"
-  resolved "https://registry.npmjs.org/@webfans/bcrypt/-/bcrypt-3.0.4.tgz#8fd53791afd5ad04b6856787a9fd3b8a91948314"
-  dependencies:
-    nan "2.12.1"
-    node-pre-gyp "0.12.0"
-
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -1371,12 +1364,9 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-bcrypt@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.npmjs.org/bcrypt/-/bcrypt-3.0.4.tgz#1c881379ddf21bcade56e3172669d27152d90d50"
-  dependencies:
-    nan "2.12.1"
-    node-pre-gyp "0.12.0"
+"bcryptjs@https://github.com/qqqzhch/bcrypt.js.git":
+  version "2.4.4"
+  resolved "https://github.com/qqqzhch/bcrypt.js.git#6ee0169d948cc4f90cf8570ea087188079718908"
 
 bech32@^1.1.3:
   version "1.1.3"
@@ -5062,7 +5052,7 @@ multispinner@^0.2.1:
     lodash.merge "^3.3.2"
     log-update "^1.0.2"
 
-nan@2.12.1, nan@^2.0.8, nan@^2.10.0, nan@^2.2.1, nan@^2.9.2:
+nan@^2.0.8, nan@^2.10.0, nan@^2.2.1, nan@^2.9.2:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.12.1.tgz#7b1aa193e9aa86057e3c7bbd0ac448e770925552"
 
@@ -5172,21 +5162,6 @@ node-libs-browser@^2.0.0:
 node-loader@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/node-loader/-/node-loader-0.6.0.tgz#c797ef51095ed5859902b157f6384f6361e05ae8"
-
-node-pre-gyp@0.12.0:
-  version "0.12.0"
-  resolved "https://registry.npmjs.org/node-pre-gyp/-/node-pre-gyp-0.12.0.tgz#39ba4bb1439da030295f899e3b520b7785766149"
-  dependencies:
-    detect-libc "^1.0.2"
-    mkdirp "^0.5.1"
-    needle "^2.2.1"
-    nopt "^4.0.1"
-    npm-packlist "^1.1.6"
-    npmlog "^4.0.2"
-    rc "^1.2.7"
-    rimraf "^2.6.1"
-    semver "^5.3.0"
-    tar "^4"
 
 node-pre-gyp@^0.10.0:
   version "0.10.3"

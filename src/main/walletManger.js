@@ -12,7 +12,7 @@ const axios = require('axios');
 var protobuf = require("protobufjs");
 const path = require('path');
 
-var protofilepath = path.join(__static, '/awesome.proto');
+
 import Amino from 'irisnet-crypto/chains/iris/amino.js';
 var crypto = require("crypto");
 var BigInteger = require('bigi');
@@ -33,6 +33,8 @@ var walletManger = function (dir) {
 
     this.lastpayobj = null;
     this.lastpayArry = null;
+    var protofilepath = path.join(__static, '/awesome.proto');
+    this.protofilepath=protofilepath;
 
     this.scann();
     this.setDefaultWallet();
@@ -139,7 +141,7 @@ walletManger.prototype.setDefaultWallet = function (address) {
 
 
     var objwallet;
-    log.info(target);
+    
     this.walletList.forEach(function (obj) {
 
         if (target == obj.address) {
@@ -274,8 +276,7 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
 
 walletManger.prototype.getDefaultWalletBlance = async function () {
     log.info('getDefaultWalletBlance')
-    log.info(this.defaultwallet)
-    log.info('getDefaultWalletBlance')
+    
     if(this.defaultwallet==null){
        throw new Error('not find DefaultWallet')
     }
@@ -287,7 +288,7 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
         throw new Error(result.data.result.response.log)
     }
     var accountInfo = result.data.result.response.value;
-    const protoRoot = await protobuf.load(protofilepath);
+    const protoRoot = await protobuf.load(this.protofilepath);
 
     var buf = Buffer.from(accountInfo, 'base64');
     var AccountMessage = protoRoot.lookupType('types.Account');
@@ -325,8 +326,8 @@ walletManger.prototype.Transfer = async function (to, amount, gas) {
 
     
     // bigInter()
-    const protoRoot = await protobuf.load(protofilepath);
-    log.info(amount)
+    const protoRoot = await protobuf.load(this.protofilepath);
+    
     var payload = {
         from: Buffer.from(defaultAddress(), 'hex'),
         to: Buffer.from(to, 'hex'),
@@ -338,8 +339,8 @@ walletManger.prototype.Transfer = async function (to, amount, gas) {
     
     
     var TxDataMessage = protoRoot.lookupType('types.TxData');
-    log.info('payload')
-    log.info(payload)
+    
+    
     var errMsg = TxDataMessage.verify(payload);
     log.error(errMsg)
     if (errMsg)
@@ -390,16 +391,16 @@ walletManger.prototype.Transfer = async function (to, amount, gas) {
 walletManger.prototype.TransferConfirm = async function (password,transactiondata) {
     log.info('transferConfirm')
     //==
-    const protoRoot = await protobuf.load(protofilepath);
+    const protoRoot = await protobuf.load(this.protofilepath);
 
     var transactiondataMessage=protoRoot.lookupType(transactiondata.dataType);
     var transactionBufer=Buffer.from(transactiondata.hexdata,'hex');
     var sendType=transactiondata.sendType;
-    log.info(transactiondata)
+    
 
     var transactionObject = transactiondataMessage.decode(transactionBufer) ;
-    console.log('transactionBufer',transactionBufer)
-    console.log('transactionObject',transactionObject)
+    // console.log('transactionBufer',transactionBufer)
+    // console.log('transactionObject',transactionObject)
     
 
     var TxPayloadMessage = protoRoot.lookupType('types.TxPayload');
@@ -410,15 +411,15 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
       
     var acountjson = await this.getDefaultWalletBlance();
     TxPayload.nonce = acountjson.nonce + 1;
-    log.info('TxPayload')
-    log.info(TxPayload)
+    
+    
     errMsg = TxPayloadMessage.verify(TxPayload);
     log.error(errMsg)
     if (errMsg)
         throw errMsg
     var TxPay = TxPayloadMessage.create(TxPayload);
     var TxPayBufer = TxPayloadMessage.encode(TxPay).finish()
-    console.log('TxPay--')
+    
     // console.log(TxPay)
     // console.log(TxPayBufer)
     // console.log(TxPayBufer.toString('hex'))
@@ -428,7 +429,7 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
     // var obj2=TxPayloadMessage.decode(bf2)
     // log.info(obj1)
     // log.info(obj2)
-    console.log('TxPay--')
+    
     //==
     var TxMessage = protoRoot.lookupType('types.Tx');
     var walletInfo = this.OpenDefaultwallet(password);
@@ -458,15 +459,15 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
     var TxMessagebuffer = TxMessage.encode(TxMessageData).finish();
     var TxMessageHex = '0x'+TxMessagebuffer.toString('hex');
     log.info('start')
-    log.info(txinfourl)
-    log.info(TxMessageHex)
+    
+    
     var result = await axios.get(txinfourl, {
         params: {
             tx: TxMessageHex
         }
     });
     log.info('end')
-    log.info(result)
+    
     return result;
 }
 

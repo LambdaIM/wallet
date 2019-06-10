@@ -231,12 +231,11 @@ export default  function(){
             var TxMessageload = await WM.SignData(password,content);   
         
         log.info(TxMessageload)
-              
-        return {data:TxMessageload,state:true} 
-          
+        return resultView(TxMessageload,true)  
         } catch (error) {
-          log.error(error)
-            return {data:JSON.stringify(error),state:false} 
+
+          throw resultView(null,false,error)
+            
         }
   
       })
@@ -246,12 +245,12 @@ export default  function(){
         var name=query.name;
         try{
             var TxMessageload = await WM.editDefaultName(name);   
-            log.info(TxMessageload)
-            return {data:TxMessageload,state:true} 
+            
+            return resultView(TxMessageload,true)  
           
         } catch (error) {
-          log.error(error)
-            return {data:JSON.stringify(error),state:false} 
+          
+          throw resultView(null,false,error)
         }
   
       })

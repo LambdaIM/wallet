@@ -65,7 +65,7 @@
       "create":{
         "Create_Lambda_Wallet":"Create Lambda Wallet",
         "Wallet_Name":"Wallet Name",
-        "characters_symbol":"8-20 characters,letter,number or symbol password",
+        "characters_symbol":"6-20 characters,letter,number or symbol password",
         "Confirm_password":"Confirm the password",
         "Create":"Create",
         "Login_Wallet":"Login Wallet",
@@ -73,7 +73,7 @@
         "action":{
           "fill_walletName":"Please fill in the walletName",
           "fill_password":"Please fill in the password.",
-          "password_length":"The password length cannot be less than 8 bits",
+          "password_length":"The password length cannot be less than 6 bits",
           "create_fail":"create Wallet fail",
           "enter_password":"Please enter your password",
           "enter_password_again":"Please enter your password again",

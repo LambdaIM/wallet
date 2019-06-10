@@ -112,16 +112,17 @@ export default function(){
         var ip = query.ip;   //这个ip现在是必须要填写的
         var status =query.status;
         var typeP =query.type;
-        log.info(priceP)
-        log.info(sizeP)
-        log.info(sellSizeP)
+
+        
+
         var price = bigInter(protoRoot,priceP);
         var size = bigInter(protoRoot,sizeP);
         var sellSize = bigInter(protoRoot,sellSizeP);
         
         var OrderDataMessage = protoRoot.lookupType('types.OrderData');
-        log.info('address')
-        log.info(address)
+
+        
+
         var payload={
           address:Buffer.from(address,'hex'),
           duration:duration,
@@ -149,10 +150,8 @@ export default function(){
         // log.info(tt)
 
         var TxOrderMessage = protoRoot.lookupType('types.TxOrder');
-        log.info('- -')
-        log.info(TxOrderData)
-        log.info(TxOrderDatabuffer.toString('hex'))
-        log.info('- -')
+
+        
         var TxOrderload = {
             id: generatesha256(TxOrderDatabuffer),
             data: TxOrderData
@@ -164,13 +163,10 @@ export default function(){
             throw errMsg
 
         var TxOrder = TxOrderMessage.create(TxOrderload);
-        log.info('TxOrder')
-        log.info(TxOrder)
+        
 
         var TxOrderbuffer = TxOrderMessage.encode(TxOrder).finish()
-        log.info('TxOrderbuffer');
-        log.info(TxOrderbuffer)
-
+        
         
 
         return resultView({
@@ -215,7 +211,7 @@ eipc.answerRenderer('pledgeNewspace',async(query)=>{
 
       var TxData = TxDataMessage.create(payload);
 
-      console.log('TxData',TxData);
+      
 
       var TxMessagebuffer = TxDataMessage.encode(TxData).finish();
       // var result={};

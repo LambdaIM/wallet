@@ -6,30 +6,28 @@ import { DAEMON_CONFIG } from "../config.js";
 import { join } from "path";
 import { connect } from 'net';
 
-
-
-
-import logicrpc from './logic.js';
-
-var log = require('../log').log;
-// const settings = require('electron-settings');
-
-log.info('start');
-
-
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 // let DAEMON ;
 
-// if (process.env.NODE_ENV !== 'development') {
-//     global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+if (process.env.NODE_ENV !== 'development') {
     
-//     DAEMON = join(__dirname, "/static/rpc-server.js");
-// }else{
-//     DAEMON = join(__dirname, "../../static/rpc-server.js");
-// }
+    global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')   
+}
+
+
+import logicrpc from './logic.js';
+
+// var log = require('../log').log;
+// const settings = require('electron-settings');
+
+// log.info('start');
+
+
+
+
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development' ?
@@ -43,6 +41,7 @@ function createWindow() {
     /**
      * Initial window options
      */
+    logicrpc();
     mainWindow = new BrowserWindow({
         height: 676,
         useContentSize: true,
@@ -56,7 +55,7 @@ function createWindow() {
         mainWindow.webContents.openDevTools();
     }
     
-logicrpc
+     
     mainWindow.loadURL(winURL)
 
     mainWindow.on('closed', () => {
@@ -65,25 +64,13 @@ logicrpc
 
     
     
-    logicrpc();
+    
 }
 
 function Max() {
     mainWindow.maximize()
 }
 
-
-function creatSeting(){
-    
-    // if(settings.has('user.node')==false){
-    //     //http://18.136.176.184:13657/abci_query
-    //     settings.set('user', {
-    //         node: 'http://18.136.176.184:13657/'
-    //       });
-
-    // }
-    
-}
 
 function creatMenu(){
     // Create the Application's main menu
@@ -112,7 +99,7 @@ function creatMenu(){
 
 app.on('ready', () => {
     createWindow();
-    creatSeting();
+    
     creatMenu();
 })
 

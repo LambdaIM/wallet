@@ -67,12 +67,12 @@ settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH,'set.json') );
         path: '*',
         redirect: '/'
     },
-    {
-        path: '/test',
-        name: 'test',
-        component: () =>
-            import('@/views/Test.vue')
-    },
+    // {
+    //     path: '/test',
+    //     name: 'test',
+    //     component: () =>
+    //         import('@/views/Test.vue')
+    // },
     {
         path: '/api',
         name: 'api',
@@ -85,12 +85,12 @@ settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH,'set.json') );
         component: () =>
             import('@/views/validator/index.vue')
     },
-    {
-        path: '/miner',
-        name: 'miner',
-        component: () =>
-            import('@/views/miner/index.vue')
-    },
+    // {
+    //     path: '/miner',
+    //     name: 'miner',
+    //     component: () =>
+    //         import('@/views/miner/index.vue')
+    // },
     {
         path: '/sign',
         name: 'sign',

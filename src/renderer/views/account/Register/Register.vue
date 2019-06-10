@@ -38,7 +38,7 @@
           </Form>
 
           <div class="button-wrapper">
-            <button class="btn login-button" @click="submit('formInline')">{{ $t("create.Create") }}</button>
+            <button  :loading="loading" class="btn login-button" @click="submit('formInline')">{{ $t("create.Create") }}</button>
           </div>
 
           <div class="bottom-wrapper tc">
@@ -81,7 +81,7 @@ export default {
           },
           {
             type: "string",
-            min: 8,
+            min: 6,
             message: this.$t("create.action.password_length"),
             trigger: "blur"
           }
@@ -91,7 +91,8 @@ export default {
             validator: this.validateConfirmPass,
             trigger: "blur"
           }
-        ]
+        ],
+        loading:false
       }
     };
   },
@@ -112,6 +113,7 @@ export default {
       let name = this.formInline.walletName;
       console.log(password, name);
       // debugger;
+      this.$data.loading=true;
       try {
         let res = await ipc.callMain("createWallet", {
           password,
@@ -134,7 +136,13 @@ export default {
         }
       } catch (ex) {
         console.log(ex);
+        this.$Notice.error({
+            desc: this.$t("create.action.create_fail"),
+            duration: 1000
+          });
+
       }
+      this.$data.loading=false;
     },
     validatePass(rule, value, callback) {
       if (value === "") {
