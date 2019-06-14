@@ -73,7 +73,7 @@
         "action":{
           "fill_walletName":"Please fill in the walletName",
           "fill_password":"Please fill in the password.",
-          "password_length":"The password length cannot be less than 6 bits",
+          "password_length":"The password length cannot be less than 6 bits or more than 20 bits",
           "create_fail":"create Wallet fail",
           "enter_password":"Please enter your password",
           "enter_password_again":"Please enter your password again",
@@ -104,10 +104,10 @@
       "Login_Wallet":"Login Wallet",
       "Create_Wallet":"Create Wallet",
       "Import":"Import",
-      "characters_symbol":"8-20 characters,letter,number or symbol",
+      "characters_symbol":"Please fill in the Mnemonic words",
       "Confirm_password":"Confirm the password",
       "action":{
-        "fill_Mnemonic_word":"Please fill in the Mnemonic word",
+        "fill_Mnemonic_word":"Please fill in the Mnemonic words",
         "fill_wallet_name":"Please fill in the wallet name",
         "fill_password":"Please fill in the password",
         "fill_keystore":"Please select the keystore file",

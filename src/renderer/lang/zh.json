@@ -69,7 +69,7 @@
       "action": {
           "fill_walletName": "请填一下钱包的名字",
           "fill_password": "请填写密码。",
-          "password_length": "密码长度不能小于6位",
+          "password_length": "密码长度不能小于6位,大于20位",
           "create_fail": "创建钱包失败",
           "enter_password": "请输入密码",
           "enter_password_again": "请再次输入密码",
@@ -99,7 +99,7 @@
       "Login_Wallet": "登录钱包",
       "Create_Wallet": "创建钱包",
       "Import": "确定",
-      "characters_symbol": "8-20个字符、字母、数字或符号",
+      "characters_symbol": "请输入助记词",
       "Confirm_password": "确认密码",
       "action": {
           "fill_Mnemonic_word": "请填写助记词",
