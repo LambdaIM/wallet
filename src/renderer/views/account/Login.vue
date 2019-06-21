@@ -17,7 +17,7 @@
               <Select :placeholder="selectplaceholder" v-model="value" @on-change="selectName" clearable size="large">
                 <Option
                   v-for="(item,index) in walletList"
-                  :value="item.name"
+                  :value="item.address"
                   :key="index"
                   :label="item.name"
                 >
@@ -111,9 +111,9 @@ export default {
   },
   methods: {
     selectName(value) {
-      // console.log($event);
+      // console.log(value);
       for (let index = 0; index < this.walletList.length; index++) {
-        if (value == this.walletList[index].name) {
+        if (value == this.walletList[index].address) {
           this.address = this.walletList[index].address;
           // console.log(this.address);
           // this.$data.selectplaceholder = value;
