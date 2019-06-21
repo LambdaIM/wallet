@@ -25,7 +25,7 @@
         </FormItem>
         
         <FormItem>
-            <Button type="primary" @click="handleSubmit('formInline')">{{$t('Validator.submit')}}</Button>
+            <Button :loading="loadingbtn" type="primary" @click="handleSubmit('formInline')">{{$t('Validator.submit')}}</Button>
         </FormItem>
     </Form>
         
@@ -111,7 +111,8 @@ export default {
                         { required: true, message: 'Please fill in the Validator IP.', trigger: 'blur' },
                         {  type: 'string', pattern: /(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})(\.(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})){3}/g , message: 'Must be IP'}
                     ]
-      }
+      },
+      loadingbtn:false
     };
   },
   mounted() {
@@ -172,10 +173,11 @@ export default {
               data: {}
             };
       var _this=this;
+      this.$data.loadingbtn=true;
             
        ipc.callMain("httpgetstatus", pra)
        .then(function(res){
-         console.log(res)
+         _this.$data.loadingbtn=false;
          if(res.state&&res.data.data.result&&res.data.data.result.node_info){
            _this.dataFormat(res)
            _this.$store.dispatch("setinfo", res.data.data.result);
@@ -194,6 +196,7 @@ export default {
          }
        })
        .catch(function(err){
+         _this.$data.loadingbtn=false;
            _this.$Notice.error({
                     title: _this.$t("Validator.action.Switching_fail"),
                     

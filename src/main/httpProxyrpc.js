@@ -1,7 +1,13 @@
 var log = require('../log').log;
 const eipc = require('electron-better-ipc');
-const axios =require('axios');
+const axiosM =require('axios');
 var {DAEMON_CONFIG} =require('../configmain.js')
+
+const axios = axiosM.create();
+ 
+// Override timeout default for the library
+// Now all requests using this instance will wait 2.5 seconds before timing out
+axios.defaults.timeout = 1000*15;
 
 export default function(){
 
