@@ -24,10 +24,11 @@ message Tx {
 
 message TxPayload {
     uint64 nonce = 1;
+    string type  = 2;
     oneof payload {
-      TxSend            txSend   = 2;
-      TxPledgeNew       txPledgeNew = 3;
-      TxOrder           txOrder  = 5;
+      TxSend            txSend   = 3;
+      TxPledgeNew       txPledgeNew = 4;
+      TxOrder           txOrder  = 6;
 
      
       

@@ -363,9 +363,10 @@ walletManger.prototype.Transfer = async function (to, amount, gas) {
     var TxSend = TxSendMessage.create(sendload);
     var TxSendbuffer = TxSendMessage.encode(TxSend).finish()
     return {
-        dataType:'types.TxSend',
+        dataType:'types.TxSend', //proto 中类型
         hexdata:TxSendbuffer.toString('hex'),
-        sendType: 'txSend'
+        sendType: 'txSend', //payload 中的key
+        Type:"txsend" //TxPayload 中的 type 属性
       };
 
     // var TxPayloadMessage = protoRoot.lookupType('types.TxPayload');
@@ -396,6 +397,7 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
     var transactiondataMessage=protoRoot.lookupType(transactiondata.dataType);
     var transactionBufer=Buffer.from(transactiondata.hexdata,'hex');
     var sendType=transactiondata.sendType;
+    var Type =transactiondata.Type;
     
 
     var transactionObject = transactiondataMessage.decode(transactionBufer) ;
@@ -405,7 +407,8 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
 
     var TxPayloadMessage = protoRoot.lookupType('types.TxPayload');
     var TxPayload = {
-        payload: sendType
+        payload: sendType,
+        type:Type    //type 这压力测试版本的链新增的一个交易属性 这个版本钱包现在支付交易接口里面加上其他的还没有加
     }
     TxPayload[sendType]=transactionObject
       
