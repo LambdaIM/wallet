@@ -30,7 +30,8 @@ var configData = {
     LambdaExtenNetwork:function(){
         return `http://${settings.get('validator.ip')||defaultip}:13659/`
     },           
-    LambdaExplorer:'http://explorer.lambda.im/',
+    // LambdaExplorer:'http://explorer.lambda.im/',
+    LambdaExplorer:'http://39.106.112.201:8080/',
     setUP:function(){
         if(fs.existsSync(this.BASE_PATH)==false) {
             fs.mkdirSync(this.BASE_PATH);
