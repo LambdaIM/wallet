@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Spin size="large" fix v-if="loading == true"></Spin>
     <Mycard
       :cardtitle="$t('transactiondetails.Transaction')"
       class="mt20"
@@ -145,7 +146,8 @@
       return {
         data: null,
         id: "",
-        txType: ""
+        txType: "",
+        loading: false
       };
     },
     components: {
@@ -203,7 +205,7 @@
       //     .catch(function(err) {});
       // }
       async transactionInfo() {
-        this.$Spin.show();
+        this.loading=true;
         let hash = this.$route.params.id;
         let txType = this.$route.params.txType;
         this.$data.txType = txType;
@@ -215,10 +217,10 @@
           let tempData = res.data.data;
           if (tempData.data.length != 0 && tempData.code == 200) {
             this.$data.data = tempData.data;
-            this.$Spin.hide();
+            this.loading=false;
           }
         } catch (ex) {
-          this.$Spin.hide();
+          this.loading=false;
           console.log(ex);
         }
       }
@@ -228,6 +230,7 @@
 
 <style lang="less" scoped>
   .container {
+    position: relative;
     .transaction-content {
       .card-item {
         margin-bottom: 20px;
