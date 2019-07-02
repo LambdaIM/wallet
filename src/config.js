@@ -16,5 +16,6 @@ const settings = require("electron-settings");
 module.exports.DAEMON_CONFIG  = {
     BASE_PATH:BASE_PATH,
     pledgeurl: "http://validator.lambdastorage.com/",
-    explore:'http://explorer.lambdastorage.com/'
+    // explore:'http://explorer.lambdastorage.com/'
+    explore:'http://39.106.112.201:8080/'
 };
