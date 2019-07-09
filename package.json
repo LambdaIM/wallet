@@ -24,7 +24,15 @@
     "lint-staged": {
         "src/renderer/**/*.{js,vue}": [
             "prettier ",
-            "  ./node_modules/.bin/eslint -c ./.eslintrc.render.json --fix"
+            "./node_modules/.bin/eslint -c ./.eslintrc.render.json --fix"
+        ],
+        "src/main/**/*.{js}": [
+            "prettier ",
+            "./node_modules/.bin/eslint -c ./.eslintrc.main.json --fix"
+        ],
+        "src/utils/**/*.{js}": [
+            "prettier ",
+            "./node_modules/.bin/eslint -c ./.eslintrc.main.json --fix"
         ]
     },
     "build": {
@@ -74,6 +82,9 @@
         "electron-better-ipc": "^0.1.2",
         "electron-log": "^2.2.17",
         "electron-settings": "^3.2.0",
+        "eslint-plugin-import": "^2.18.0",
+        "eslint-plugin-node": "^9.1.0",
+        "eslint-plugin-promise": "^4.2.1",
         "ethereumjs-util": "^6.0.0",
         "express": "^4.16.4",
         "graceful-fs": "^4.1.15",
