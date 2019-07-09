@@ -21,14 +21,14 @@
                   :key="index"
                   :label="item.name"
                 >
-                
+
                 <div>
                   {{ item.name}}
                 </div>
                 <div>
-                 {{item.address}} 
+                 {{item.address}}
                 </div>
-                
+
                 </Option>
               </Select>
             </FormItem>
@@ -39,7 +39,7 @@
                 v-model="formInline.password"
                 :placeholder="$t('login.Password')"
                  @on-enter="openWallet('formInline')"
-                
+
               >
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
               </Input>
@@ -64,16 +64,16 @@
 
 <script>
 // import RPC from "../../rpc.js";
-import { DAEMON_CONFIG } from "../../../config.js";
+import { DAEMON_CONFIG } from '../../../config.js'
 // import https from "@/server/https.js";
-import Mybg from "@/components/common/useful/Mybg.vue";
-const ipc = require("electron-better-ipc");
-const settings = require("electron-settings");
+import Mybg from '@/components/common/useful/Mybg.vue'
+const ipc = require('electron-better-ipc')
+const settings = require('electron-settings')
 export default {
-  data() {
+  data () {
     return {
       formInline: {
-        password: ""
+        password: ''
       },
       index: null,
       ruleInline: {
@@ -81,110 +81,108 @@ export default {
           {
             required: true,
             message: this.$t('login.action.Please_fill_in_the_password'),
-            trigger: "blur"
+            trigger: 'blur'
           },
           {
-            type: "string",
+            type: 'string',
             min: 1,
             message: this.$t('login.action.password_cannot_less'),
-            trigger: "blur"
+            trigger: 'blur'
           }
         ]
       },
       walletList: [],
-      name: "",
+      name: '',
       value: null,
       address: null,
-      selectplaceholder:this.$t('login.select_Wallet')
-    };
+      selectplaceholder: this.$t('login.select_Wallet')
+    }
   },
   components: {
     Mybg
   },
-  mounted() {
+  mounted () {
     // var open = settings.get("isopenfile");
     // console.log(open);
     // if (open) {
     //   this.$router.push("/home");
     // }
-    this.getwalletList();
+    this.getwalletList()
   },
   methods: {
-    selectName(value) {
+    selectName (value) {
       // console.log(value);
       for (let index = 0; index < this.walletList.length; index++) {
         if (value == this.walletList[index].address) {
-          this.address = this.walletList[index].address;
+          this.address = this.walletList[index].address
           // console.log(this.address);
           // this.$data.selectplaceholder = value;
 
-          this.setDefaultWallet();
+          this.setDefaultWallet()
         }
       }
     },
-    openWallet(name) {
+    openWallet (name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.login();
+          this.login()
         }
-      });
+      })
     },
-    async login() {
-      console.log("loginDefaultWallet");
-      let pass = this.formInline.password;
+    async login () {
+      console.log('loginDefaultWallet')
+      let pass = this.formInline.password
       try {
-        var res = await ipc.callMain("loginDefaultWallet", {
+        var res = await ipc.callMain('loginDefaultWallet', {
           password: pass
-        });
-        console.log("login default wallet", res);
+        })
+        console.log('login default wallet', res)
         if (res.state) {
           this.$Notice.success({
             title: this.$t('login.action.Login_success')
-          });
-          let login=settings.set("isopenfile", true);
-          console.log(login);
-          this.$store.dispatch("set", true);
-          this.$router.push("/home");
+          })
+          let login = settings.set('isopenfile', true)
+          console.log(login)
+          this.$store.dispatch('set', true)
+          this.$router.push('/home')
         }
       } catch (ex) {
-        
         this.$Notice.error({
-            title: ex.errormsg
-          });
+          title: ex.errormsg
+        })
       }
     },
-    async setDefaultWallet() {
+    async setDefaultWallet () {
       try {
-        var res = await ipc.callMain("setDefaultWallet", {
+        var res = await ipc.callMain('setDefaultWallet', {
           address: this.address
-        });
+        })
         // this.$store.dispatch("setaddress", this.address);
         // console.log("set default success", res);
-        if (!res.state)  return;
+        if (!res.state) return
 
         // this.login();
       } catch (ex) {
         // console.log(ex);
-        console.log("密码错误");
+        console.log('密码错误')
       }
     },
-    getwalletList() {
+    getwalletList () {
       // console.log("- -");
       ipc
-        .callMain("walletList", {})
+        .callMain('walletList', {})
         .then(res => {
           // console.log(res);
-          if (!res.state) return;
-          this.walletList = res.data;
-          
+          if (!res.state) return
+          this.walletList = res.data
         })
         .catch(err => {
-          console.log("err");
-          console.log(err);
-        });
+          console.log('err')
+          console.log(err)
+        })
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
