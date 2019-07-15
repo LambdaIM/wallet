@@ -182,7 +182,7 @@ export default {
            _this.dataFormat(res)
            _this.$store.dispatch("setinfo", res.data.data.result);
            settings.set('validator', {
-                              ip: ValidatorIP
+                              ipv1: ValidatorIP
                             });
           _this.$Notice.success({
                     title: _this.$t("Validator.action.Switching_success"),      
