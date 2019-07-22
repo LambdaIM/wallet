@@ -15,7 +15,7 @@ var fs = require('graceful-fs')
 //homedir  系统默认的文件存储路径
 
 
-var defaultip='39.105.124.220'
+var defaultip='47.94.83.222'
 
 var configData = {
     BASE_PATH:BASE_PATH,
@@ -31,7 +31,7 @@ var configData = {
         return `http://${settings.get('validator.ipv1')||defaultip}:13659/`
     },           
     // LambdaExplorer:'http://explorer.lambda.im/',
-    LambdaExplorer:'http://47.94.197.75:8080/',
+    LambdaExplorer:'http://explorer.lambdastorage.com/',
     setUP:function(){
         if(fs.existsSync(this.BASE_PATH)==false) {
             fs.mkdirSync(this.BASE_PATH);
