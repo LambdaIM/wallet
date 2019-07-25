@@ -117,6 +117,7 @@ import * as Utils from "web3-utils";
 import wUtils from "../common/js/utils.js";
 import eventhub from "../common/js/event.js";
 import _ from "underscore";
+import { setTimeout, clearTimeout } from 'timers';
 const { shell } = require("electron");
 
 
@@ -247,7 +248,7 @@ export default {
     this.Interval = setInterval(() => {
       this.getBalance();
       this.transactionList();
-    }, 2000 * 5);
+    }, 1000 * 15);
 
     eventhub.$on("TransactionSuccess", (data) => {
       console.log('TransactionSuccess');
@@ -348,19 +349,27 @@ export default {
 
 
     },
-    async getBalance() {
+     getBalance() {
       // console.log("importWallet");
-      try {
-        var res = await ipc.callMain("defaultWalletBlance", {});
-        if(!res.state) return;
-        // this.address = res.data.address;
-        // this.$store.dispatch("setaddress", this.address);
-        this.balance = res.data.balance ;
-        this.$store.dispatch("setblance", this.balance);
-        console.log(this.balance);
-      } catch (ex) {
-        console.log(ex);
+      if(this.$data.timeid!=undefined){
+        clearTimeout(this.$data.timeid);
       }
+
+      this.$data.timeid=setTimeout(async ()=>{
+         try {
+            var res = await ipc.callMain("defaultWalletBlance", {});
+            if(!res.state) return;
+            // this.address = res.data.address;
+            // this.$store.dispatch("setaddress", this.address);
+            this.balance = res.data.balance ;
+            this.$store.dispatch("setblance", this.balance);
+            console.log(this.balance);
+          } catch (ex) {
+            console.log(ex);
+          }
+
+      },1000)
+      
     },
     async transactionList(pagenum) {
       console.log("transactionList");
