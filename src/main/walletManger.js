@@ -20,12 +20,18 @@ import bigInter from './bigInter';
 import defaultAddress from './defaultAddress';
 import generatesha256 from './generatesha256';
 
+const cosmos = require('cosmos-lib');
+
+
+
 
 
 
 var walletManger = function (dir) {
     //遍历文件夹
     //
+    
+  
 
     this.walletList = [];
     this.defaultwallet = null;
@@ -180,9 +186,12 @@ walletManger.prototype.getWalletList = function () {
 
 
 walletManger.prototype.creatWallet = function (password, name) {
-    var tenderKeys = new TenderKeys();
+    // var tenderKeys = new TenderKeys();
 
-    var mnemonic = tenderKeys.generateRandomMnemonic();
+    var mnemonic = cosmos.crypto.generateRandomMnemonic();
+
+    log.info(mnemonic);
+    
     return this.generateWallet(mnemonic, password, name)
 
 
@@ -190,22 +199,35 @@ walletManger.prototype.creatWallet = function (password, name) {
 walletManger.prototype.generateWallet = function (mnemonic, password, name) {
     var tenderKeys = new TenderKeys();
 
+    const keys = cosmos.crypto.getKeysFromMnemonic(mnemonic);
+    // var seed = tenderKeys.generateSeed(mnemonic);
+    // var keyPair = tenderKeys.generateKeyPair(seed);
 
-    var seed = tenderKeys.generateSeed(mnemonic);
-    var keyPair = tenderKeys.generateKeyPair(seed);
-
-    var address = tenderKeys.getAddressFromPubKey(keyPair.publicKey.toString('hex'));
+    // var address = tenderKeys.getAddressFromPubKey(keyPair.publicKey.toString('hex'));
+    const address = cosmos.address.getAddress(keys.publicKey);
     var file = this.findFile(address);
     if(file!=null){
         throw new Error('Import failed,address already exists') 
     }
+    // keys.publicKey
+    // keys.privateKey
+    var cospublicKey=cosmos.publicKey.getPublicKey(keys.publicKey);
+    var walletjson=cosmos.privateKey.ExportprivateKey(keys.privateKey,password)
 
+    // var wallet = new ETHwallet(keyPair.privateKey);
+    // var walletjson = {
 
-    var wallet = new ETHwallet(keyPair.privateKey);
-    var walletjson = wallet.toV3(password)
+    // }
+    // {
+    //     salt:usersalt,
+    //     pravteKey:PravteKey
+    //   }
     walletjson.name = name;
+    walletjson.address= address;
+    walletjson.salt=walletjson.salt.toString('base64')
+    walletjson.pravteKey=walletjson.pravteKey.toString('base64')
 
-    var filepath = path.join(DAEMON_CONFIG.WalletFile, wallet.getV3Filename() + '.keyinfo');
+    var filepath = path.join(DAEMON_CONFIG.WalletFile, address + '.keyinfo');
 
     var result = fs.writeFileSync(filepath, JSON.stringify(walletjson))
     this.scann();

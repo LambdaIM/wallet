@@ -57,6 +57,7 @@
         "bignumber.js": "^8.1.1",
         "body-parser": "^1.18.3",
         "buffer-to-uint8array": "^1.1.0",
+        "cosmos-lib": "http://github.com/qqqzhch/cosmos-lib.git",
         "crypto": "^1.0.1",
         "electron-better-ipc": "^0.1.2",
         "electron-log": "^2.2.17",
