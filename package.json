@@ -65,6 +65,7 @@
         "ethereumjs-util": "^6.0.0",
         "express": "^4.16.4",
         "graceful-fs": "^4.1.15",
+        "husky": "^3.0.2",
         "irisnet-crypto": "https://github.com/qqqzhch/irisnet-crypto.git",
         "iview": "^3.2.0",
         "js-base64": "^2.5.1",
