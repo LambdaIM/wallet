@@ -31,7 +31,9 @@ export default  function(){
         if(address==undefined){
             throw resultView(null,false,'need address')
         }
-        if(isAddress(address)==false){
+        // if(isAddress(address)==false){
+        //暂时注释地址合法的判断
+        if(address==false){
             throw resultView(null,false,'Incorrect address format')
         }
         try{

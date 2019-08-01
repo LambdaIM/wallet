@@ -108,13 +108,14 @@ walletManger.prototype.OpenDefaultwallet = function (password) {
         throw new Error('not find DefaultWallet')
     }
 
-
-    wallet = ETHwallet.fromV3(this.defaultwallet, password);
+    var  pravteKey=cosmos.keyStore.checkJson(this.defaultwallet, password)
+    
+    // wallet = ETHwallet.fromV3(this.defaultwallet, password);
     info = {
-        publicKey: wallet.pubKey,
-        address: wallet.getAddress(),
+        publicKey: this.defaultwallet.publicKey,
+        address: this.defaultwallet.address,
         name: this.defaultwallet.name,
-        privateKey: wallet._privKey,
+        privateKey: pravteKey,
     }
 
     return info;
@@ -211,8 +212,9 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name) {
     }
     // keys.publicKey
     // keys.privateKey
-    var cospublicKey=cosmos.publicKey.getPublicKey(keys.publicKey);
-    var walletjson=cosmos.privateKey.ExportprivateKey(keys.privateKey,password)
+    // var cospublicKey=cosmos.publicKey.getPublicKey(keys.publicKey);
+    // var walletjson=cosmos.privateKey.ExportprivateKey(keys.privateKey,password)
+    var walletjson = cosmos.keyStore.toJson(keys,password,name);
 
     // var wallet = new ETHwallet(keyPair.privateKey);
     // var walletjson = {
@@ -222,10 +224,10 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name) {
     //     salt:usersalt,
     //     pravteKey:PravteKey
     //   }
-    walletjson.name = name;
-    walletjson.address= address;
-    walletjson.salt=walletjson.salt.toString('base64')
-    walletjson.pravteKey=walletjson.pravteKey.toString('base64')
+    // walletjson.name = name;
+    // walletjson.address= address;
+    // walletjson.salt=walletjson.salt.toString('base64');
+    // walletjson.pravteKey=walletjson.pravteKey.toString('base64');
 
     var filepath = path.join(DAEMON_CONFIG.WalletFile, address + '.keyinfo');
 
@@ -275,15 +277,15 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
     var v3file = fs.readFileSync(filepath, 'utf8');
     v3file = JSON.parse(v3file);
     v3file.name = name;
+    var  pravteKey=cosmos.keyStore.checkJson(v3file, password)
+    // wallet = ETHwallet.fromV3(v3file, password);
 
-    wallet = ETHwallet.fromV3(v3file, password);
-
-    if(wallet == undefined){
+    if(pravteKey == undefined){
         throw new Error('Import failed,Please check the wallet file and password') 
     }
 
     
-    var file = this.findFile(wallet.getAddress());
+    var file = this.findFile(v3file.address);
     if(file!=null){
         throw new Error('Import failed,address already exists') 
     }
