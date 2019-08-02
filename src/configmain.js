@@ -15,20 +15,23 @@ var fs = require('graceful-fs')
 //homedir  系统默认的文件存储路径
 
 
-var defaultip='47.94.83.222'
+var defaultip='39.106.139.11'
 
 var configData = {
     BASE_PATH:BASE_PATH,
     WalletFile:path.join( BASE_PATH,'Wallet'),
     LogFile:path.join(BASE_PATH,'Log'),
     ValidatorIp:function(){
-        return settings.get('validator.ipv1')||defaultip;
+        // return settings.get('validator.ipv1')||defaultip;
+        return defaultip;
     }   ,
     LambdaNetwork:function(){
-        return `http://${settings.get('validator.ipv1')||defaultip}:13657/`;
+        // return `http://${settings.get('validator.ipv1')||defaultip}:13659/`;
+        return `http://${defaultip}:13659`;
     },
     LambdaExtenNetwork:function(){
-        return `http://${settings.get('validator.ipv1')||defaultip}:13659/`
+        // return `http://${settings.get('validator.ipv1')||defaultip}:13657/`
+        return `http://${defaultip}:13657`
     },           
     // LambdaExplorer:'http://explorer.lambda.im/',
     LambdaExplorer:'http://explorer.lambdastorage.com/',

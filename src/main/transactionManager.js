@@ -2,6 +2,7 @@ const axios =require('axios');
 const settings = require("electron-settings");
 var {DAEMON_CONFIG} =require('../configmain.js')
 var log = require('../log').log;
+import CosmosAPI from "@lunie/cosmos-api"
 
 
 
@@ -10,6 +11,7 @@ class Transaction {
   constructor() {
     this.defaultAddress=null;
     this.readconfig();
+    this.CosmosAPI= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork())
     
     
   }
@@ -19,7 +21,8 @@ class Transaction {
 
     if(settings.has('defaultwallet')!=false){
         this.defaultAddress = settings.get('defaultwallet')
-        this.defaultAddress=this.defaultAddress.toLocaleLowerCase();
+        // this.defaultAddress=this.defaultAddress.toLocaleLowerCase();
+        
     }
 
   }
@@ -28,27 +31,34 @@ class Transaction {
         throw new Error('need address')
 
     }
-    
-    var address =this.defaultAddress;
-    console.log(address);
+    console.log('getTransactionList')
+    var result = await this.CosmosAPI.get.bankTxs(this.defaultAddress);
+    var resultList=[];
+    result.forEach(function(item){
+      resultList=resultList.concat(item.txs)
+    })
+    console.log(result)
+    console.log('getTransactionList')
+    // var address =this.defaultAddress;
+    // console.log(address);
 
-    var url =`${DAEMON_CONFIG.LambdaExplorer}api/tx/getTxList`;
-    log.info(query)
-    var data ={
-        address:address,
-        pageNum:query.pageNum,
-        showNum:query.showNum
-      }
+    // var url =`${DAEMON_CONFIG.LambdaExplorer}api/tx/getTxList`;
+    // log.info(query)
+    // var data ={
+    //     address:address,
+    //     pageNum:query.pageNum,
+    //     showNum:query.showNum
+    //   }
 
-      if(query.txType!=undefined){
-        data.txType=query.txType;
-      }
-    const result = await axios.get(url, {
-        params: data
-      })
+    //   if(query.txType!=undefined){
+    //     data.txType=query.txType;
+    //   }
+    // const result = await axios.get(url, {
+    //     params: data
+    //   })
       
     
-    return result;
+    return {data:resultList};
 
   }
   async getTransactionInfo(hash,txType){

@@ -158,9 +158,10 @@ export default  function(){
         if(to==undefined){
             throw resultView(null,false,'need to address')
         }
-        if(isAddress(to)==false){
-            throw resultView(null,false,'Incorrect address format')
-        }
+        //需要寻找新的考验地址格式
+        // if(isAddress(to)==false){
+        //     throw resultView(null,false,'Incorrect address format')
+        // }
         
 
         if(amount==undefined){

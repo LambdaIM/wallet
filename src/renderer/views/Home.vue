@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <p class="balance">{{$t('home.Balance')}}: {{balance|formatValue}} 
+    <p class="balance">{{$t('home.Balance')}}: {{balance}} LAMB
         <span style="color:green">
         <a @click="openvalidator">{{ $t("home.profits_pledge_system") }}</a>
       </span>
@@ -246,8 +246,8 @@ export default {
     this.transactionList();
     
     this.Interval = setInterval(() => {
-      this.getBalance();
-      this.transactionList();
+      // this.getBalance();
+      // this.transactionList();
     }, 1000 * 15);
 
     eventhub.$on("TransactionSuccess", (data) => {
@@ -314,22 +314,23 @@ export default {
         });
         return;
       }
-      if (value <= 0 || value > wUtils.bigToNumber(this.balance) ) {
+      if (value <= 0 || value > this.balance ) {
         // need to alert
         this.$Notice.warning({
           title: this.$t('home.action.check_balance_amount_transfer')
         });
         return;
       }
-      value = wUtils.numberToBig(value) ;
-      if (Utils.isAddress(to) == false) {
-        // need to alert
-        this.$Notice.warning({
-          title:this.$t('home.action.Check_forwarding_address') 
-        });
+      // value = wUtils.numberToBig(value) ;
+      // 还需要新的校验地址方法
+      // if (Utils.isAddress(to) == false) {
+      //   // need to alert
+      //   this.$Notice.warning({
+      //     title:this.$t('home.action.Check_forwarding_address') 
+      //   });
 
-        return;
-      }
+      //   return;
+      // }
 
       if (isNaN(value)) {
         this.$Notice.warning({
@@ -409,17 +410,19 @@ export default {
         this.$data.data=null;
         this.data = [];
         console.log(tempData);
-        if (tempData && tempData.code == 200&&tempData.data.txList!=null) {
-          this.$data.sum=tempData.data.count;
-          tempData.data.txList.forEach(item => {
+        if (tempData) {
+          // this.$data.sum=tempData.data.count;
+          //  item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom
+          tempData.forEach(item => {
             this.data.push({
-              amount: item.value==""?"--":(checkaddress(item.from) + filters.formatValue(item.value)),
-              from:item.from,
-              to:item.to||'--',
+              // amount: item.value==""?"--":(checkaddress(item.tx.value.msg[0].value.from_address) + item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom  ,
+              amount:item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom,
+              from:item.tx.value.msg[0].value.from_address,
+              to:item.tx.value.msg[0].value.to_address||'--',
               txType: item.txType,
-              date: filters.formatDate(item.create_time),
-              status: 1,
-              txHash:item.txHash
+              date: filters.formatDate(item.timestamp),
+              status: item.logs[0].success,
+              txHash:item.txhash
             });
           });
         }
