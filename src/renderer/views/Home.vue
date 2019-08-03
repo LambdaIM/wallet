@@ -1,9 +1,12 @@
 <template>
   <div class="container">
-    <p class="balance">{{$t('home.Balance')}}: {{balance}} LAMB
-        <span style="color:green">
+    <p class="balance">
+      账户余额: {{Totalblance}} LAMB
+      可用资产: {{balance}} LAMB
+      奖励 :{{DistributionReward}} LAMB
+        <!-- <span style="color:green">
         <a @click="openvalidator">{{ $t("home.profits_pledge_system") }}</a>
-      </span>
+      </span> -->
     </p>
 
     <MyTable :title="$t('home.Latest_Transaction')" class="mt20 mytable-container">
@@ -227,7 +230,9 @@ export default {
       txType:null,
       sum:null,
       pageNumber:1,
-      loading:true
+      loading:true,
+      Totalblance:0,
+      DistributionReward:0
     };
   },
   components: {
@@ -362,8 +367,15 @@ export default {
             if(!res.state) return;
             // this.address = res.data.address;
             // this.$store.dispatch("setaddress", this.address);
-            this.balance = res.data.balance ;
+            this.balance = res.data.Liquid.balance - 0 ;
+            var DistributionReward = res.data.DistributionReward.rewards||0;
+            var Totalblance = res.data.Delegation+this.balance + DistributionReward;
             this.$store.dispatch("setblance", this.balance);
+            this.$store.dispatch("setTotalblance",res.data.Delegation+this.balance + DistributionReward);
+            this.$store.dispatch("setDistributionReward", DistributionReward) ;
+            this.$data.Totalblance = Totalblance  ;
+            this.$data.DistributionReward = DistributionReward ;
+
             console.log(this.balance);
           } catch (ex) {
             console.log(ex);

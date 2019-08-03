@@ -201,7 +201,7 @@ walletManger.prototype.getWalletList = function () {
 walletManger.prototype.creatWallet = function (password, name) {
     // var tenderKeys = new TenderKeys();
 
-    var mnemonic = cosmos.crypto.generateRandomMnemonic();
+    var mnemonic = cosmos.crypto.generateRandomMnemonic(256);
 
     log.info(mnemonic);
     
@@ -368,16 +368,25 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
 
 }
 
-walletManger.prototype._getAccountInfo = function () {
+walletManger.prototype.getDelegationsBalance =async  function () {
     console.log('_getAccountInfo')
 
     var address = this.defaultwallet.address;
-    var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();
-    var addressinfourl = nodeBaseUrl + 'abci_query?path=%22/accounts/' + address + '%22&data=&height=&prove='
+    var delegationsList  = await this.CosmosAPI.get.delegations(address);
+    var result=0;
 
-    log.info(addressinfourl);
+    delegationsList.forEach((item)=>{
+        result+=item.shares;
+    })
+    return result;
+}
 
-    return axios.get(addressinfourl)
+walletManger.prototype.getDistributionRewards = async function (){
+    var address = this.defaultwallet.address;
+    var result =  await this.CosmosAPI.get.delegatorRewards(address);
+
+    return result;
+
 }
 
 walletManger.prototype.Transfer = async function (to, amount, gas) {
@@ -606,6 +615,7 @@ walletManger.prototype.getSigner=  function (config, submitType = "", { address,
       console.log('signMessage end')
       console.log(signature)
       console.log(Buffer.from(publicKey, "base64"))
+      console.log('signMessage end')
       return {
         signature,
         publicKey: publicKey

@@ -141,8 +141,15 @@ export default  function(){
 
     eipc.answerRenderer('defaultWalletBlance',async(query)=>{
         try{
-            var data = await WM.getDefaultWalletBlance();
-            return resultView(data,true)
+            var Liquid  = await WM.getDefaultWalletBlance();
+            var Delegation = await WM.getDelegationsBalance();
+            var DistributionReward = await WM.getDistributionRewards();
+            
+            return resultView({
+                Liquid:Liquid,
+                Delegation:Delegation,
+                DistributionReward:DistributionReward
+            },true)
         }catch(ex){
             throw resultView(null,false,ex)
         }

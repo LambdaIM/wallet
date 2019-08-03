@@ -80,9 +80,7 @@ export default class ActionManager {
     if (this.messageType === transaction.WITHDRAW) {
       this.message = this.createWithdrawTransaction()
     }
-    console.log('this.message')
-    console.log(this.message)
-    console.log('this.message')
+    
     const { included, hash } = await this.message.send(
       {
         gas: String(gasEstimate),
