@@ -8,15 +8,10 @@
         <a @click="openvalidator">{{ $t("home.profits_pledge_system") }}</a>
       </span> -->
     </p>
-
-    <MyTable :title="$t('home.Latest_Transaction')" class="mt20 mytable-container">
-      <div class="operation" slot="operation">
-        <div class="send-wrapper">
-          <!-- <Icon type="md-swap" @click="openSend()" size="32"/> -->
-          <Button @click="openSend()" icon="md-swap">{{$t('home.Transfer')}}</Button>
-        </div>
-      </div>
-      <Table :loading="loading"  :columns="columns" :data="data" slot="content" >
+    <div style="width:95%;    margin: 0 auto;">
+    <Tabs>
+        <TabPane label="最新交易记录" >
+                <Table :loading="loading"  :columns="columns" :data="data"  >
         <template slot-scope="{ row, index }" slot="from">
           <Poptip word-wrap trigger="hover" width="200" :content="row.from">
             <span class="etc">{{row.from}}</span>
@@ -35,9 +30,24 @@
           <!-- <Button type="error" size="small" @click="remove(index)">Delete</Button> -->
         </template>
       </Table>
-    </MyTable>
+        </TabPane>
+        <TabPane label="资产">
+           <Table :columns="columnsToken" ></Table>
+        </TabPane>
+          
+                  <Button slot="extra" @click="openSend()">
+                      {{$t('home.Transfer')}}
+                      <Icon type="md-swap"></Icon>
+                  </Button>
+                  
+         </Dropdown>
+        
+    </Tabs>
+    </div>
+               
+  
           <div class="tc " >
-            <Page :total="sum" show-elevator @on-change="changePage"></Page>
+            <!-- <Page :total="sum" show-elevator @on-change="changePage"></Page> -->
           </div>
     <div>
           <!-- <Button to="/api">API 测试</Button> -->
@@ -232,7 +242,21 @@ export default {
       pageNumber:1,
       loading:true,
       Totalblance:0,
-      DistributionReward:0
+      DistributionReward:0,
+      columnsToken:[
+                    {
+                        title: '名称',
+                        key: 'name'
+                    },
+                    {
+                        title: '金额',
+                        key: 'name'
+                    },
+                    {
+                        title: '操作',
+                        key: 'name'
+                    },
+      ]
     };
   },
   components: {
@@ -477,6 +501,7 @@ export default {
     margin: 0 auto;
     margin-top: 30px;
     font-size: 18px;
+    margin-bottom: 20px;
   }
   .account-info-container {
     width: 100%;

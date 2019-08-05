@@ -2,6 +2,7 @@ var log = require('../log').log;
 const eipc = require('electron-better-ipc');
 const axiosM =require('axios');
 var {DAEMON_CONFIG} =require('../configmain.js')
+import CosmosAPI from "@lunie/cosmos-api"
 
 const axios = axiosM.create();
  
@@ -29,15 +30,23 @@ export default function(){
           
     });
     eipc.answerRenderer('blockchainstate', async (query) => {
-        var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();
-        console.log(nodeBaseUrl);
-        var url= nodeBaseUrl + "status";
+        log.info('blockchainstate')
+        
         
         try {
-            const result = await axios.get(url, {
-                params: {}
-              })
-            return {data:result,state:true} ;
+            var CosmosAPIobj= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork())
+            log.info('blockchainstate2')
+            var nodeInfo = await CosmosAPIobj.get.nodeVersion();
+            log.info('blockchainstate3')
+            var nodeSyncing = await CosmosAPIobj.get.nodeSyncing();
+            var blockLatest = await CosmosAPIobj.get.nodeBlocklatest();
+            log.info(nodeInfo)
+            log.info('blockchainstate')
+            return {data:{
+                nodeInfo:nodeInfo,
+                nodeSyncing:nodeSyncing,
+                blockLatest:blockLatest
+            },state:true} ;
             
         } catch (error) {
             log.error(error)

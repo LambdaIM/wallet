@@ -38,7 +38,7 @@
     
       <Mycard  v-if="node_info.length>0" :cardtitle="$t('Validator.Node_info')" class="mb10">
         <div class="storage-content" slot="card-content">
-          <Row v-if="item[0]=='network'"  v-for="item in node_info" class-name="card-item">
+          <Row   v-for="item in node_info" class-name="card-item">
             <Col span="4" class-name="title-wrapper">
               <span class="title">{{item[0]}}</span>
             </Col>
@@ -64,7 +64,7 @@
           </Row>
         </div>
       </Mycard>
-      <Mycard v-if="validator_info.length>0" :cardtitle="$t('Validator.Validator_info')" class="mb10">
+      <!-- <Mycard v-if="validator_info.length>0" :cardtitle="$t('Validator.Validator_info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row v-if="item[0]!='pub_key'" v-for="item in validator_info" class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -75,12 +75,12 @@
             </Col>
           </Row>
         </div>
-      </Mycard>
-      <Mycard v-else cardtitle="Validator info" class="mb10">
+      </Mycard> -->
+      <!-- <Mycard v-else cardtitle="Validator info" class="mb10">
         <div class="storage-content" slot="card-content">
             <Button  loading>Loading...</Button>
         </div>
-      </Mycard>
+      </Mycard> -->
     </div>
   </div>
 </template>
@@ -148,8 +148,8 @@ export default {
        ipc.callMain("blockchainstate", {})
        .then(function(res){
          console.log(res)
-         if(res.state&&res.data.data.result){
-           _this.dataFormat(res)
+         if(res.state&&res.data){
+           _this.dataFormat(res.data)
            
          }
        })
@@ -166,10 +166,10 @@ export default {
       
       
       var ValidatorIP =this.$data.formInline.ValidatorIP;
-      var nodeBaseUrl=`http://${ValidatorIP}:13657/`
+      var nodeBaseUrl=`http://${ValidatorIP}:13659/`
        
       var pra = {
-              url:nodeBaseUrl +"status",
+              url:nodeBaseUrl +"node_info",
               data: {}
             };
       var _this=this;
@@ -178,9 +178,9 @@ export default {
        ipc.callMain("httpgetstatus", pra)
        .then(function(res){
          _this.$data.loadingbtn=false;
-         if(res.state&&res.data.data.result&&res.data.data.result.node_info){
-           _this.dataFormat(res)
-           _this.$store.dispatch("setinfo", res.data.data.result);
+         if(res.state&&res.data.data&&res.data.data){
+          //  _this.dataFormat(res)
+          //  _this.$store.dispatch("setinfo", res.data.data.result);
            settings.set('validator', {
                               ipv1: ValidatorIP
                             });
@@ -203,13 +203,13 @@ export default {
                 });
        })
     },
-    dataFormat(res){
+    dataFormat(data){
+          console.log('dataFormat')
+          this.$store.dispatch("setinfo", data);
       
-          this.$store.dispatch("setinfo", res.data.data.result);
-      
-          this.$data.node_info=_.pairs(res.data.data.result.node_info);
-          this.$data.sync_info=_.pairs(res.data.data.result.sync_info);
-          this.$data.validator_info=_.pairs(res.data.data.result.validator_info);
+          this.$data.node_info=_.pairs(data.nodeInfo);
+          this.$data.sync_info=_.pairs({nodeSyncing:data.nodeSyncing});
+          // this.$data.validator_info=_.pairs(res.data.data.result.validator_info);
     },
     handleSubmit(name) {
       console.log(name);

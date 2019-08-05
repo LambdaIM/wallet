@@ -57,15 +57,14 @@ export default {
     },
     getValidatorInfo() {
       var _this = this;
-            
+         console.log('blockchainstate')   
        ipc.callMain("blockchainstate", {})
        .then(function(res){
-        //  console.log(res)
-         if(res.state&&res.data.data.result){
+         
+         if(res.state&&res.data){
           //  _this.dataFormat(res.data.data.result)
-           if(res.data.data.result.node_info){
-             _this.$store.dispatch("setinfo", res.data.data.result);
-           }
+          _this.$store.dispatch("setinfo", res.data);
+           
          }
        })
        .catch(function(err){
@@ -77,10 +76,10 @@ export default {
     dataFormat(result){
 
       return {
-        address:result.validator_info.address,
-        height:result.sync_info.latest_block_height,
-        time:result.sync_info.latest_block_time,
-        isSync:result.sync_info.catching_up,
+        address:result.nodeInfo.moniker||result.nodeInfo.id,
+        height:result.blockLatest.block_meta.header.height,
+        time:result.blockLatest.block_meta.header.time,
+        isSync:result.nodeSyncing,
       }
       // try {
       //   this.$data.address=result.validator_info.address;
