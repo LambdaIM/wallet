@@ -8,7 +8,7 @@
         <a @click="openvalidator">{{ $t("home.profits_pledge_system") }}</a>
       </span> -->
     </p>
-    <div style="width:95%;    margin: 0 auto;">
+    <div style="width:94%;    margin: 0 auto;">
     <Tabs>
         <TabPane label="最新交易记录" >
                 <Table :loading="loading"  :columns="columns" :data="data"  >
@@ -281,8 +281,8 @@ export default {
 
     eventhub.$on("TransactionSuccess", (data) => {
       console.log('TransactionSuccess');
-      this.getBalance();
-      this.transactionList();
+      // this.getBalance();
+      // this.transactionList();
      
     });
 
@@ -392,7 +392,12 @@ export default {
             // this.address = res.data.address;
             // this.$store.dispatch("setaddress", this.address);
             this.balance = res.data.Liquid.balance - 0 ;
-            var DistributionReward = res.data.DistributionReward.rewards||0;
+            var DistributionReward=0; 
+            if(res.data.DistributionReward!=null){
+               DistributionReward = res.data.DistributionReward.rewards||0;
+
+            }
+            
             var Totalblance = res.data.Delegation+this.balance + DistributionReward;
             this.$store.dispatch("setblance", this.balance);
             this.$store.dispatch("setTotalblance",res.data.Delegation+this.balance + DistributionReward);

@@ -33,7 +33,7 @@
         </div>
         <div class="head-menu-item">
           <router-link
-            to="/home"
+            to="/staking"
             class="item"
           >{{ $t("head.validator") }}</router-link>
         </div>

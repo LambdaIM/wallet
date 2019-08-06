@@ -35,8 +35,8 @@ export default {
     _this.getValidatorIp();
     _this.getValidatorInfo();
     setInterval(function(){
-          _this.getValidatorIp();
-        _this.getValidatorInfo();
+          // _this.getValidatorIp();
+        // _this.getValidatorInfo();
     },1000*10)
   },
   methods: {

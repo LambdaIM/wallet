@@ -74,15 +74,7 @@ export default {
             }
             return;
           }
-          if (data.data.data.error) {
-            _this.$data.passwordModal = false;
-            _this.$Notice.error({
-              title: data.data.data.error.message,
-              desc: data.data.data.error.data
-            });
-            return;
-          }
-          if (data.data.data.result.check_tx.log == undefined) {
+          if(data.data.logs[0].success){
             console.log("ok");
             _this.$data.passwordModal = false;
             _this.$data.walletPassword = null;
@@ -90,23 +82,50 @@ export default {
                       title: _this.$t("apppage.action.Transaction_success"),
                       // desc:'Transaction hash  <br/>'+data.data.data.result.hash
                   });
-            console.log(data.data.data.result);
-            // _this.$Modal.success({
-            //   title: "Transaction success",
-            //   width: '700',
-            //   content: "Transaction hash  <br/>" + data.data.data.result.hash,
-            //   okText: "OK",
-            // });
+            console.log(data.data.txhash);
+            _this.$Modal.success({
+              title: "Transaction success",
+              width: '700',
+              content: "Transaction hash  <br/>" + data.data.txhash,
+              okText: "OK",
+            });
             // _this.getAccountInfo()
             eventHub.$emit('TransactionSuccess');
-          } else {
-            _this.$data.loadingsendLAMBTx = false;
-            console.log("fail");
-            _this.$Notice.error({
-              title: _this.$t("apppage.action.Transaction_error"),
-              desc: data.data.data.result.check_tx.log
-            });
-          }
+
+            }
+          // if (data.data.data.error) {
+          //   _this.$data.passwordModal = false;
+          //   _this.$Notice.error({
+          //     title: data.data.data.error.message,
+          //     desc: data.data.data.error.data
+          //   });
+          //   return;
+          // }
+          // if (data.data.data.result.check_tx.log == undefined) {
+          //   console.log("ok");
+          //   _this.$data.passwordModal = false;
+          //   _this.$data.walletPassword = null;
+          //   _this.$Notice.success({
+          //             title: _this.$t("apppage.action.Transaction_success"),
+          //             // desc:'Transaction hash  <br/>'+data.data.data.result.hash
+          //         });
+          //   console.log(data.data.data.result);
+          //   // _this.$Modal.success({
+          //   //   title: "Transaction success",
+          //   //   width: '700',
+          //   //   content: "Transaction hash  <br/>" + data.data.data.result.hash,
+          //   //   okText: "OK",
+          //   // });
+          //   // _this.getAccountInfo()
+          //   eventHub.$emit('TransactionSuccess');
+          // } else {
+          //   _this.$data.loadingsendLAMBTx = false;
+          //   console.log("fail");
+          //   _this.$Notice.error({
+          //     title: _this.$t("apppage.action.Transaction_error"),
+          //     desc: data.data.data.result.check_tx.log
+          //   });
+          // }
         })
         .catch(function(err) {
           console.log(err);

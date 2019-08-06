@@ -11,7 +11,7 @@ class Transaction {
   constructor() {
     this.defaultAddress=null;
     this.readconfig();
-    this.CosmosAPI= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork())
+    this.CosmosAPI= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork(),'lambda-hub-test')
     
     
   }
@@ -35,7 +35,7 @@ class Transaction {
     var result = await this.CosmosAPI.get.bankTxs(this.defaultAddress);
     var resultList=[];
     result.forEach(function(item){
-      resultList=resultList.concat(item.txs)
+      resultList=resultList.concat(item)
     })
     console.log(result)
     console.log('getTransactionList')

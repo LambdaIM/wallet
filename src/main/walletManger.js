@@ -49,7 +49,7 @@ var walletManger = function (dir) {
     this.scann();
     this.setDefaultWallet();
 
-    this.CosmosAPI= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork())
+    this.CosmosAPI= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork(),'lambda-hub-test')
     this.actionManager=new ActionManager()
     this.actionManager.setContext({url:DAEMON_CONFIG.LambdaNetwork(),userAddress:this.defaultwallet.address})
     
@@ -348,6 +348,10 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
     
     // var userbalance = BigInteger.fromBuffer(Message.balance.abs)
     var balanceLamb = 0;
+    log.info('----------');
+    log.info(result);
+    log.info(result.coins);
+    log.info('----------');
     result.coins.forEach((item)=>{
         if(item.denom=='lamb'){
             balanceLamb=item.amount
@@ -374,10 +378,14 @@ walletManger.prototype.getDelegationsBalance =async  function () {
     var address = this.defaultwallet.address;
     var delegationsList  = await this.CosmosAPI.get.delegations(address);
     var result=0;
+    console.log('delegationsList')
+    console.log(delegationsList)
+    if(delegationsList!=null){
+        delegationsList.forEach((item)=>{
+            result+=item.shares;
+        })
 
-    delegationsList.forEach((item)=>{
-        result+=item.shares;
-    })
+    } 
     return result;
 }
 
@@ -485,7 +493,7 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
         // denom: this.bondDenom
         denom: 'lamb'
       }
-      this.gasEstimate =100; //需要接口读取
+      this.gasEstimate =250000; //需要接口读取
       const feeProperties = {
         gasEstimate: this.gasEstimate,
         gasPrice: gasPrice,
@@ -505,11 +513,11 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
           feeProperties,
           signerFn
         )
-        this.txHash = hash
+        var result = await included();
         
         
    
-      return this.txHash;
+      return result;
 
     // //============
     // //==
@@ -597,24 +605,25 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
 
 walletManger.prototype.getSigner=  function (config, submitType = "", { address, password }){
     console.log('getSigner')
+    console.log(this.defaultwallet)
+    
     var  pravteKey=cosmos.keyStore.checkJson(this.defaultwallet, password)
-    var  publicKey =this.defaultwallet.publicKey;
+    var  publicKey = cosmos.publicKey.getBytes(this.defaultwallet.publicKey) ;
     console.log('校验密码ok')
     console.log(publicKey)
     return signMessage => {
-        // console.log('signMessage')
-        // console.log(typeof signMessage)
-        // console.log( signMessage)
-        // console.log('pravteKey')
-        // console.log(pravteKey)
-        // console.log('pravteKey')
+        console.log('signMessage')
+        console.log(typeof signMessage)
+        console.log( signMessage)
+        console.log('pravteKey')
+        console.log(pravteKey)
+        console.log('pravteKey')
       const signature = cosmos.crypto.sign(
         Buffer.from(signMessage) ,
         pravteKey
       )
       console.log('signMessage end')
-      console.log(signature)
-      console.log(Buffer.from(publicKey, "base64"))
+      console.log(signature.toString('base64'))
       console.log('signMessage end')
       return {
         signature,
