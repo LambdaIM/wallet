@@ -396,6 +396,26 @@ walletManger.prototype.getDistributionRewards = async function (){
     return result;
 
 }
+walletManger.prototype.TransferDelegation = async function (to, amount, gas,isdege) {
+    
+        if (isdege) {
+          return {
+            type: transaction.DELEGATE,
+            validatorAddress: to,
+            amount: amount,
+            denom: 'lamb'
+          }
+        } else {
+          
+        //   return {
+        //     type: transaction.REDELEGATE,
+        //     validatorSourceAddress: validatorSrc.operator_address,
+        //     validatorDestinationAddress: this.validator.operator_address,
+        //     amount: uatoms(this.amount),
+        //     denom: this.denom
+        //   }
+        }
+}
 
 walletManger.prototype.Transfer = async function (to, amount, gas) {
 

@@ -196,6 +196,48 @@ export default  function(){
     })
 
 
+    eipc.answerRenderer('transferDelegation',async(query)=>{
+        var {to,amount,gas,isdege} = query;
+        // to 需要判断 账号的格式是否合理呵护规则
+        // amount 需要判断  转账金额大小 数据类型
+        // gas 目前默认值位1  转账金额大小 数据类型
+        if(to==undefined){
+            throw resultView(null,false,'need to address')
+        }
+        //需要寻找新的考验地址格式
+        // if(isAddress(to)==false){
+        //     throw resultView(null,false,'Incorrect address format')
+        // }
+        
+
+        if(amount==undefined){
+            throw resultView(null,false,'need amount')
+        }
+        if(isNaN(parseInt(amount)) ){
+            throw resultView(null,false,'Incorrect amount format')
+        }
+
+        if(gas==undefined){
+            throw resultView(null,false,'need to gas')
+        }
+
+        if(isNaN(parseInt(gas)) ){
+            throw resultView(null,false,'Incorrect gas format')
+        }
+        if(isdege==undefined){
+            isdege=true
+        }
+        
+        try{    
+            var data = await WM.TransferDelegation(to,amount,gas,isdege)
+            return resultView(data,true)
+        }catch(ex){
+            throw resultView(null,false,ex)
+        }
+        
+    })
+
+
 
     eipc.answerRenderer('transferConfirm',async(query)=>{
         log.info('transferConfirm rpc')

@@ -9,6 +9,8 @@ import minerrpc from './minerrpc';
 
 import httpProxyrpc from './httpProxyrpc';
 
+import validatorsRpc from './validatorsRpc';
+
 
 export default function(){
     
@@ -17,5 +19,6 @@ export default function(){
     transactionrpc();
     minerrpc();
     httpProxyrpc();
+    validatorsRpc();
 
 }

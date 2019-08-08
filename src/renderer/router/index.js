@@ -70,6 +70,12 @@ settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH,'set.json') );
             import('@/views/Staking.vue')
     },
     {
+        path: '/stakinginfo/:operator_address',
+        name: 'Stakinginfo',
+        component: () =>
+            import('@/views/Stakinginfo.vue')
+    },
+    {
         path: '*',
         redirect: '/'
     },
