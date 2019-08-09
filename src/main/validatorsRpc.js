@@ -56,6 +56,23 @@ import CosmosAPI from "@lunie/cosmos-api"
       throw resultView(null,false,ex)
     }
   })
+  eipc.answerRenderer('delegatorRewardsFromValidator',async(query)=>{
+    var operator_address=query.operator_address;
+    var validatorAddr=query.validatorAddr;
+
+    try{
+      
+      var result = await  cosmosapi.get.delegatorRewardsFromValidator(operator_address,validatorAddr);
+        
+        return resultView(result,true)
+
+    }catch(ex){
+      throw resultView(null,false,ex)
+    }
+  })
+
+
+  
   eipc.answerRenderer('myUndelegations',async(query)=>{
     var operator_address=query.operator_address;
 

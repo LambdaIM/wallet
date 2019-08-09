@@ -236,6 +236,23 @@ export default  function(){
         }
         
     })
+    eipc.answerRenderer('withdrawal',async(query)=>{
+        var {to,amount,gas,isdege} = query;
+        
+        
+
+        if(amount==undefined){
+            throw resultView(null,false,'need amount')
+        }
+        
+        try{    
+            var data = await WM.TransferWithdrawal(to,amount,gas,isdege)
+            return resultView(data,true)
+        }catch(ex){
+            throw resultView(null,false,ex)
+        }
+        
+    })
 
 
 

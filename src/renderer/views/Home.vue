@@ -34,13 +34,20 @@
         <TabPane label="资产">
            <Table :columns="columnsToken" ></Table>
         </TabPane>
-          
-                  <Button slot="extra" @click="openSend()">
+              <span slot="extra">
+                  <Button  @click="openSend()">
                       {{$t('home.Transfer')}}
                       <Icon type="md-swap"></Icon>
                   </Button>
-                  
-         </Dropdown>
+                  &nbsp; &nbsp; 
+
+                  <Button slot="extra" @click="openwithdrawalModal()">
+                      提取奖励
+                      <Icon type="md-swap"></Icon>
+                  </Button>
+                          
+               </span>   
+         
         
     </Tabs>
     </div>
@@ -96,7 +103,7 @@
             <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
             <Col span="20" class-name="value">{{address}}</Col>
           </Row>
-          <Row class-name="item">
+          <Row v-if="Tovalue" class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
             <Col span="20" class-name="value">{{Tovalue}}</Col>
           </Row>
@@ -111,6 +118,24 @@
         </p>-->
         <div slot="footer">
           <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
+        </div>
+      </Modal>
+
+      <Modal
+        loading
+        v-model="withdrawalModal"
+        title="提取奖励"
+        :styles="{top: '200px'}"
+        @on-cancel="sendcancel"
+      >
+        <p>
+          <Input readonly v-model="DistributionReward">
+            <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
+            <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
+          </Input>
+        </p>
+        <div slot="footer">
+          <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
         </div>
       </Modal>
 
@@ -256,7 +281,8 @@ export default {
                         title: '操作',
                         key: 'name'
                     },
-      ]
+      ],
+      withdrawalModal:false
     };
   },
   components: {
@@ -302,6 +328,9 @@ export default {
     clearInterval(this.$data.Interval);
   },
   methods: {
+    openwithdrawalModal(){
+      this.$data.withdrawalModal=true;
+    },
     toDetail(row, index) {
       console.log(row, index);
       let id = index;
@@ -311,14 +340,14 @@ export default {
     openSend() {
       this.sendModal = true;
     },
-    async transfer(amount) {
+    async transfer(amount,txType) {
       let to = this.Tovalue;
       // let amount = this.LAMBvalue;
       let gas = 1;
       // amount = amount * 10000;
       this.$data.transactiondata=null;
       try {
-        let res = await ipc.callMain("transfer", {
+        let res = await ipc.callMain(txType, {
           to,
           amount,
           gas
@@ -367,7 +396,29 @@ export default {
         });
         return;
       }
-      this.transfer(value);
+      this.transfer(value,"transfer");
+    },
+    prewithdrawalLAMB() {
+      this.LAMBvalue=this.$data.DistributionReward;
+      let value = parseFloat(this.LAMBvalue);
+      
+      // if (value <= 0 || value > this.$data.DistributionReward ) {
+      //   // need to alert
+      //   this.$Notice.warning({
+      //     title: this.$t('home.action.check_balance_amount_transfer')
+      //   });
+      //   return;
+      // }
+  
+
+      if (isNaN(value)) {
+        this.$Notice.warning({
+          title: this.$t('home.action.Check_the_amount')
+        });
+        return;
+      }
+      this.$data.withdrawalModal=false;
+      this.transfer(value,'withdrawal');
     },
     sendcancel() {
       this.sendModal = false;

@@ -78,7 +78,7 @@ export default class ActionManager {
     // })
 
     if (this.messageType === transaction.WITHDRAW) {
-      this.message = this.createWithdrawTransaction()
+      this.message = await this.createWithdrawTransaction()
     }
     
     const { included, hash } = await this.message.send(
@@ -93,11 +93,8 @@ export default class ActionManager {
     return { included, hash }
   }
 
-  createWithdrawTransaction() {
-    const addresses = getTop5RewardsValidators(
-      this.context.bondDenom,
-      this.context.rewards
-    )
+ async createWithdrawTransaction() {
+    const addresses = await getTop5RewardsValidators(this.context.userAddress,this.cosmos)
     return this.createMultiMessage(
       transaction.WITHDRAW,
       this.context.userAddress,
@@ -127,13 +124,39 @@ function toMicroAtomString(amount) {
 }
 
 // // limitation of the block, so we pick the top 5 rewards and inform the user.
-function getTop5RewardsValidators(bondDenom, rewardsObject) {
+async function getTop5RewardsValidators(operator_address,cosmos) {
   // Compares the amount in a [address1, {denom: amount}] array
-  const byBalanceOfDenom = denom => (a, b) => b[1][denom] - a[1][denom]
-  const validatorList = Object.entries(rewardsObject)
-    .sort(byBalanceOfDenom(bondDenom))
-    .slice(0, 5) // Just the top 5
-    .map(([address]) => address)
+  //1 获取我的质押列表
+  //2 获取我的收益列表
+  //3 选择前5条数据 因为出块大小限制
+  console.log('this.context.userAddress')
+  
+  // return;
+  var delegationsList = await  cosmos.get.delegations(operator_address);
+   delegationsList.forEach(async (item)=>{
+    var Rewards =await  cosmos.get.delegatorRewardsFromValidator(operator_address,item.validator_address);
+    item.Rewards=coinListFormart(Rewards);
+  })
 
+  const byBalanceOfDenom = denom => (a, b) => b.Rewards - a.Rewards
+  const validatorList = delegationsList
+    .sort(byBalanceOfDenom)
+    .slice(0, 5) // Just the top 5
+    .map((item) => item.validator_address)
+    console.log(validatorList)
+    console.log('this.context.userAddress')
   return validatorList
+}
+
+
+function coinListFormart(list){
+  var result =0
+  list.forEach((item)=>{
+    if(item.denom=='lamb'){
+      result = item.amount
+    }
+    result.push(item.amount+item.denom)
+  })
+  return result
+
 }

@@ -416,6 +416,16 @@ walletManger.prototype.TransferDelegation = async function (to, amount, gas,isde
           }
         }
 }
+walletManger.prototype.TransferWithdrawal = async function (to, amount, gas,isdege) {
+      return {
+        type: transaction.WITHDRAW,
+        amount: amount,
+        denom: 'lamb'
+      }
+}
+
+
+
 
 walletManger.prototype.Transfer = async function (to, amount, gas) {
 
@@ -526,7 +536,7 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
         password
       })
       ///
-      var txHash ;
+        var txHash ;
         this.actionManager.setMessage(type, transactionProperties)
         const { included, hash } = await this.actionManager.send(
           memo,

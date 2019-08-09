@@ -119,6 +119,11 @@ export default {
           
         },
         {
+          title: "我的收益",
+          key: "reward",
+          
+        },
+        {
           title: "质押地址",
           key: "operator_address",
           slot:'operator_address'
@@ -227,6 +232,8 @@ export default {
         if (res.state) {
           this.$data.mydelegationsList=res.data;
           this.validatorsListForMe();
+          
+
         }
         // if(poolres.state){
         //   this.$data.pool=poolres.data
@@ -244,6 +251,7 @@ export default {
                 this.$data.validatorsList.forEach((item)=>{
                       if(item.operator_address==myitem.validator_address){
                         myitem=Object.assign({},myitem,item)
+                        myitem.reward='--'
                         list.push(myitem)
                        }
             
@@ -251,9 +259,40 @@ export default {
             })
         this.$data.mydelegationsList=list;
         console.log(this.$data.mydelegationsList)
+        this.getMyRewardsList();
         
-      },
-      async getmyUnListData(){
+    },
+    getMyRewardsList(){
+       this.$data.mydelegationsList.forEach(async(item)=>{
+         try {
+           let res = await ipc.callMain("delegatorRewardsFromValidator", {
+              operator_address:this.address,
+              validatorAddr:item.validator_address
+            });
+            if (res.state) {
+              console.log(res.data)
+              item.reward=this.coinListFormart(res.data) ;
+              // item.reward='---11111';
+            }
+           
+         } catch (error) {
+           console.log(error)
+           
+         }
+
+       })
+       console.log('==============')
+       console.log(this.$data.mydelegationsList)
+    },
+    coinListFormart(list){
+      var result =[]
+      list.forEach((item)=>{
+        result.push(item.amount+item.denom)
+      })
+      return result.join(',')
+
+    },
+    async getmyUnListData(){
         console.log('myUndelegations')
       try {
         let res = await ipc.callMain("myUndelegations", {
