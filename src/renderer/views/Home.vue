@@ -394,13 +394,19 @@ export default {
             this.balance = res.data.Liquid.balance - 0 ;
             var DistributionReward=0; 
             if(res.data.DistributionReward!=null){
-               DistributionReward = res.data.DistributionReward.rewards||0;
+              res.data.DistributionReward.forEach((item)=>{
+                if(item.denom=='lamb'){
+                   DistributionReward = item.amount||0;
+
+                }
+              })
+               
 
             }
             
-            var Totalblance = res.data.Delegation+this.balance + DistributionReward;
+            var Totalblance = (res.data.Delegation-0)+this.balance + (DistributionReward-0);
             this.$store.dispatch("setblance", this.balance);
-            this.$store.dispatch("setTotalblance",res.data.Delegation+this.balance + DistributionReward);
+            this.$store.dispatch("setTotalblance",Totalblance);
             this.$store.dispatch("setDistributionReward", DistributionReward) ;
             this.$data.Totalblance = Totalblance  ;
             this.$data.DistributionReward = DistributionReward ;
@@ -455,16 +461,18 @@ export default {
           // this.$data.sum=tempData.data.count;
           //  item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom
           tempData.forEach(item => {
-            this.data.push({
-              // amount: item.value==""?"--":(checkaddress(item.tx.value.msg[0].value.from_address) + item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom  ,
-              amount:item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom,
-              from:item.tx.value.msg[0].value.from_address,
-              to:item.tx.value.msg[0].value.to_address||'--',
-              txType: item.txType,
-              date: filters.formatDate(item.timestamp),
-              status: item.logs[0].success,
-              txHash:item.txhash
-            });
+            if(item.error==undefined){
+              this.data.push({
+                // amount: item.value==""?"--":(checkaddress(item.tx.value.msg[0].value.from_address) + item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom  ,
+                amount:item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom,
+                from:item.tx.value.msg[0].value.from_address,
+                to:item.tx.value.msg[0].value.to_address||'--',
+                txType: item.txType,
+                date: filters.formatDate(item.timestamp),
+                status: item.logs[0].success,
+                txHash:item.txhash
+              });
+            }
           });
         }
         this.$data.loading=false;

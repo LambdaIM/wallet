@@ -34,9 +34,12 @@ class Transaction {
     console.log('getTransactionList')
     var result = await this.CosmosAPI.get.bankTxs(this.defaultAddress);
     var resultList=[];
-    result.forEach(function(item){
-      resultList=resultList.concat(item)
-    })
+    if( result instanceof Array){
+      result.forEach(function(item){
+        resultList=resultList.concat(item)
+      })
+    }
+    
     console.log(result)
     console.log('getTransactionList')
     // var address =this.defaultAddress;

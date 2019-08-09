@@ -380,7 +380,7 @@ walletManger.prototype.getDelegationsBalance =async  function () {
     var result=0;
     console.log('delegationsList')
     console.log(delegationsList)
-    if(delegationsList!=null){
+    if( delegationsList instanceof Array){
         delegationsList.forEach((item)=>{
             result+=item.shares;
         })
@@ -399,6 +399,7 @@ walletManger.prototype.getDistributionRewards = async function (){
 walletManger.prototype.TransferDelegation = async function (to, amount, gas,isdege) {
     
         if (isdege) {
+            //质押
           return {
             type: transaction.DELEGATE,
             validatorAddress: to,
@@ -406,14 +407,13 @@ walletManger.prototype.TransferDelegation = async function (to, amount, gas,isde
             denom: 'lamb'
           }
         } else {
-          
-        //   return {
-        //     type: transaction.REDELEGATE,
-        //     validatorSourceAddress: validatorSrc.operator_address,
-        //     validatorDestinationAddress: this.validator.operator_address,
-        //     amount: uatoms(this.amount),
-        //     denom: this.denom
-        //   }
+            //取消质押
+          return {
+            type: transaction.UNDELEGATE,
+            validatorAddress: to,
+            amount: amount,
+            denom: 'lamb'
+          }
         }
 }
 

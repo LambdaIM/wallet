@@ -61,10 +61,15 @@ export default {
        ipc.callMain("blockchainstate", {})
        .then(function(res){
          
-         if(res.state&&res.data){
+         if(res.state&&res.data&&res.data.nodeInfo&&res.data.nodeInfo.error==undefined){
           //  _this.dataFormat(res.data.data.result)
           _this.$store.dispatch("setinfo", res.data);
            
+         }else{
+           console.log('连接的验证节点异常')
+         _this.$Notice.warning({
+          title: '连接的验证节点异常'
+        });  
          }
        })
        .catch(function(err){
@@ -74,6 +79,7 @@ export default {
        })
     },
     dataFormat(result){
+
 
       return {
         address:result.nodeInfo.moniker||result.nodeInfo.id,
