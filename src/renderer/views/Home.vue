@@ -480,7 +480,7 @@ export default {
               this.data.push({
                 // amount: item.value==""?"--":(checkaddress(item.tx.value.msg[0].value.from_address) + item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom  ,
                 amount:this.getamount(item) ,
-                from:item.tx.value.msg[0].value.from_address,
+                from:this.getSendAddress(item),
                 to:item.tx.value.msg[0].value.to_address||'--',
                 txType: item.tags[0].value,
                 date: filters.formatDate(item.timestamp),
@@ -520,17 +520,40 @@ export default {
     },
     getamount(item){
       var msg0=item.tx.value.msg[0];
+      var result='--'
       if(msg0.value!=undefined&&msg0.value.amount!=undefined){
         if(msg0.value.amount instanceof Array){
-          return msg0.value.amount[0].amount+msg0.value.amount[0].denom
+          result= msg0.value.amount[0].amount+msg0.value.amount[0].denom
         }else{
-          return msg0.value.amount.amount+msg0.value.amount.denom
+          result= msg0.value.amount.amount+msg0.value.amount.denom
         }
         
       }else{
-        return '--'
-      }
+        item.tags.forEach((item)=>{
+          if(item.key=='rewards'){
+            result = item.value
+          }
+        })
         
+      }
+      return result;
+        
+    },
+    getSendAddress(item){
+      var result ='--' 
+      if(item.tx.value.msg[0].value.from_address!=undefined){
+        result = item.tx.value.msg[0].value.from_address;
+      }else{
+        item.tags.forEach((item)=>{
+          if(item.key=='delegator'){
+            result = item.value
+          }
+        })
+
+      }
+
+      return result;
+    
     }
   }
 };

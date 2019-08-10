@@ -127,6 +127,50 @@
           <span class="item-value">{{amount}}</span>
           </Col>
         </Row>
+
+        <Row class-name="card-item">
+          <Col
+            span="4"
+            class-name="title-wrapper"
+          >
+          <span class="title">gas used:</span>
+          </Col>
+          <Col
+            span="20"
+            class-name="content-wrapper"
+          >
+          <span class="item-value">{{data.gas_used}}</span>
+          </Col>
+        </Row>
+
+        <Row class-name="card-item">
+          <Col
+            span="4"
+            class-name="title-wrapper"
+          >
+          <span class="title">gas_wanted:</span>
+          </Col>
+          <Col
+            span="20"
+            class-name="content-wrapper"
+          >
+          <span class="item-value">{{data.gas_wanted}}</span>
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col
+            span="4"
+            class-name="title-wrapper"
+          >
+          <span class="title">备注:</span>
+          </Col>
+          <Col
+            span="20"
+            class-name="content-wrapper"
+          >
+          <span class="item-value">{{memo}}</span>
+          </Col>
+        </Row>
       </div>
     </Mycard>
   </div>
@@ -214,7 +258,8 @@
             hash,
             txType
           });
-          
+            console.log(res.data)
+
             this.$data.data = res.data;
             this.loading=false;
           
@@ -226,8 +271,21 @@
     },
     computed: {
       sender(){
-        var msg = this.$data.data.tx.value.msg;
-        return msg[0].value.from_address
+        var item = this.$data.data;
+          
+        var result ='--' 
+        if(item.tx.value.msg[0].value.from_address!=undefined){
+          result = item.tx.value.msg[0].value.from_address;
+        }else{
+          item.tags.forEach((item)=>{
+            if(item.key=='delegator'){
+              result = item.value
+            }
+          })
+
+        }
+
+      return result;
 
       },
       to(){
@@ -237,16 +295,30 @@
       amount(){
         var msg = this.$data.data.tx.value.msg;
         console.log('msg')
-        console.log(msg[0].value)
+        var result='--'
         if(msg[0].value.amount==undefined){
-          return ;
-        }
-        if(msg[0].value.amount instanceof Array){
-          return msg[0].value.amount[0].amount+msg[0].value.amount[0].denom
+          this.$data.data.tags.forEach((item)=>{
+          if(item.key=='rewards'){
+            result = item.value
+           }
+          })
+          
         }else{
-          return msg[0].value.amount.amount+msg[0].value.amount.denom
+          if(msg[0].value.amount instanceof Array){
+          result = msg[0].value.amount[0].amount+msg[0].value.amount[0].denom
+        }else{
+          result = msg[0].value.amount.amount+msg[0].value.amount.denom
+        }
+
         }
         
+        return result;
+        
+      },
+      memo(){
+        var memo = this.$data.data.tx.value.memo;
+        return memo;
+
       }
     },
   };
