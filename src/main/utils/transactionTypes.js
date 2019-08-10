@@ -6,7 +6,9 @@ const transactionTypes = {
   SUBMIT_PROPOSAL: `MsgSubmitProposal`,
   VOTE: `MsgVote`,
   DEPOSIT: `MsgDeposit`,
-  WITHDRAW: `MsgWithdrawDelegationReward`
+  WITHDRAW: `MsgWithdrawDelegationReward`,
+  AssetPledge:`MsgAssetPledge`,
+  AssetDrop:`MsgAssetDrop`
 }
 
 export default transactionTypes

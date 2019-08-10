@@ -423,6 +423,39 @@ walletManger.prototype.TransferWithdrawal = async function (to, amount, gas,isde
         denom: 'lamb'
       }
 }
+walletManger.prototype.AssetPledge = async function (amount,asset, gas,isdege) {
+    if(isdege){
+        return {
+            type: transaction.AssetPledge,
+            amounts: {
+                amount: amount,
+                denom: 'lamb'
+              }
+            ,
+            asset: {
+                amount: asset,
+                denom: 'sto'
+              }
+            
+          }
+
+    }else{
+        return {
+            type: transaction.AssetDrop,
+            amounts: {
+                amount: amount,
+                denom: 'lamb'
+              }
+            ,
+            asset: {
+                amount: asset,
+                denom: 'sto'
+              }
+            
+          }
+    }
+    
+}
 
 
 

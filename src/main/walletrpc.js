@@ -254,6 +254,27 @@ export default  function(){
         
     })
 
+    eipc.answerRenderer('AssetPledge',async(query)=>{
+        var {asset,amount,gas,isdege} = query;
+        
+        
+
+        if(amount==undefined){
+            throw resultView(null,false,'need amount')
+        }
+        if(asset==undefined){
+            throw resultView(null,false,'need asset')
+        }
+        
+        try{    
+            var data = await WM.AssetPledge(amount,asset,gas,isdege)
+            return resultView(data,true)
+        }catch(ex){
+            throw resultView(null,false,ex)
+        }
+        
+    })
+
 
 
     eipc.answerRenderer('transferConfirm',async(query)=>{

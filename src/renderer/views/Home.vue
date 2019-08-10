@@ -45,6 +45,10 @@
                       提取奖励
                       <Icon type="md-swap"></Icon>
                   </Button>
+                  <Button slot="extra" @click="preAssetPledge()">
+                      兑换资产
+                      <Icon type="md-swap"></Icon>
+                  </Button>
                           
                </span>   
          
@@ -326,6 +330,29 @@ export default {
         console.log(ex);
       }
     },
+    async transferAsset(amount,asset,isdege) {
+      let to = this.Tovalue;
+      // let amount = this.LAMBvalue;
+      let gas = 1;
+      // amount = amount * 10000;
+      this.$data.transactiondata=null;
+      try {
+        let res = await ipc.callMain('AssetPledge', {
+          asset,
+          amount,
+          gas,
+          isdege
+        });
+        // console.log(res);
+        if (res.state) {
+          this.$data.transactiondata=res.data
+          this.sendcancel();
+          this.confirmModal = true;
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
     preSendLAMB() {
       let from = this.address;
       let to = this.Tovalue;
@@ -383,6 +410,28 @@ export default {
       }
       this.$data.withdrawalModal=false;
       this.transfer(value,'withdrawal');
+    },
+    preAssetPledge() {
+      // this.LAMBvalue=this.$data.DistributionReward;
+      // let value = parseFloat(this.LAMBvalue);
+      
+      // // if (value <= 0 || value > this.$data.DistributionReward ) {
+      // //   // need to alert
+      // //   this.$Notice.warning({
+      // //     title: this.$t('home.action.check_balance_amount_transfer')
+      // //   });
+      // //   return;
+      // // }
+  
+
+      // if (isNaN(value)) {
+      //   this.$Notice.warning({
+      //     title: this.$t('home.action.Check_the_amount')
+      //   });
+      //   return;
+      // }
+      this.$data.withdrawalModal=false;
+      this.transferAsset(1000,1,false);
     },
     sendcancel() {
       this.sendModal = false;
