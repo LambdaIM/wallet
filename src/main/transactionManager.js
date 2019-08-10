@@ -32,7 +32,7 @@ class Transaction {
 
     }
     console.log('getTransactionList')
-    var result = await this.CosmosAPI.get.bankTxs(this.defaultAddress);
+    var result = await this.CosmosAPI.get.txs(this.defaultAddress);
     var resultList=[];
     if( result instanceof Array){
       result.forEach(function(item){
@@ -65,17 +65,8 @@ class Transaction {
 
   }
   async getTransactionInfo(hash,txType){
-    var url =`${DAEMON_CONFIG.LambdaExplorer}/api/tx/txDetailByType`;
-    log.info(url);
-    var data ={
-          txHash:hash,
-          txType: txType
-        }
-  
-      const result = await axios.get(url, {
-          params: data
-        })
-      // log.info(result);
+    var result = await this.CosmosAPI.get.tx(hash);
+    console.log('getTransactionInfo')
       return result;
   
   }

@@ -22,9 +22,9 @@
             class-name="content-wrapper"
           >
           <a
-            @click="checkHash(data.txHash,txType)"
+            @click="checkHash(data.txhash,txType)"
             class="item-value"
-          >{{data.txHash}}</a>
+          >{{data.txhash}}</a>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -71,7 +71,7 @@
             span="20"
             class-name="content-wrapper"
           >
-          <span class="item-value">{{data.create_time | formatDate}}</span>
+          <span class="item-value">{{data.timestamp | formatDate}}</span>
           </Col>
         </Row>
 
@@ -87,9 +87,9 @@
             class-name="content-wrapper"
           >
           <a
-            @click="checkAddress(data.from)"
+            @click="checkAddress(sender)"
             class="item-value"
-          >{{data.from}}</a>
+          >{{sender}}</a>
           </Col>
         </Row>
 
@@ -105,10 +105,10 @@
             class-name="content-wrapper"
           >
           <a
-            v-if="!!data.to==true"
-            @click="checkAddress(data.to)"
+            v-if="!!to==true"
+            @click="checkAddress(to)"
             class="item-value"
-          >{{data.to}}</a>
+          >{{to}}</a>
           <span v-else>--</span>
           </Col>
         </Row>
@@ -124,7 +124,7 @@
             span="20"
             class-name="content-wrapper"
           >
-          <span class="item-value">{{data.value | formatValue}}</span>
+          <span class="item-value">{{amount}}</span>
           </Col>
         </Row>
       </div>
@@ -214,17 +214,41 @@
             hash,
             txType
           });
-          let tempData = res.data.data;
-          if (tempData.data.length != 0 && tempData.code == 200) {
-            this.$data.data = tempData.data;
+          
+            this.$data.data = res.data;
             this.loading=false;
-          }
+          
         } catch (ex) {
           this.loading=false;
           console.log(ex);
         }
       }
-    }
+    },
+    computed: {
+      sender(){
+        var msg = this.$data.data.tx.value.msg;
+        return msg[0].value.from_address
+
+      },
+      to(){
+        var msg = this.$data.data.tx.value.msg;
+        return msg[0].value.to_address
+      },
+      amount(){
+        var msg = this.$data.data.tx.value.msg;
+        console.log('msg')
+        console.log(msg[0].value)
+        if(msg[0].value.amount==undefined){
+          return ;
+        }
+        if(msg[0].value.amount instanceof Array){
+          return msg[0].value.amount[0].amount+msg[0].value.amount[0].denom
+        }else{
+          return msg[0].value.amount.amount+msg[0].value.amount.denom
+        }
+        
+      }
+    },
   };
 </script>
 

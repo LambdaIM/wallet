@@ -124,7 +124,7 @@
       <Modal
         loading
         v-model="withdrawalModal"
-        title="提取奖励"
+        title="提取奖励（一次只能从5个验证节点中提取奖励）"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
@@ -156,6 +156,7 @@ import wUtils from "../common/js/utils.js";
 import eventhub from "../common/js/event.js";
 import _ from "underscore";
 import { setTimeout, clearTimeout } from 'timers';
+import { isNull } from 'util';
 const { shell } = require("electron");
 
 
@@ -170,44 +171,7 @@ export default {
         {
           title: this.$t("home.table.Type"),
           key: "txType",
-            filters: [
-              {
-                label: "txSend",
-                value: "txSend"
-              },
-              {
-                label: "txPledgeNew",
-                value: "txPledgeNew"
-              },
-              {
-                label: "txPledgeRevert",
-                value: "txPledgeRevert"
-              },
-              {
-                label: "txOrder",
-                value: "txOrder"
-              },
-              {
-                label: "txDeal",
-                value: "txDeal"
-              },
-              {
-                label: "txProof",
-                value: "txProof"
-              },
-              {
-                label: "txCancelOrder",
-                value: "txCancelOrder"
-              },
-              {
-                label: "txValidatorUpdate",
-                value: "txValidatorUpdate"
-              }
-            ],
-            filterRemote:function(value, row){
-              eventhub.$emit('TxType',value[0]);
-            },
-            filterMultiple: false
+
         },
         {
           title: this.$t("home.table.Amount"),
@@ -515,10 +479,10 @@ export default {
             if(item.error==undefined){
               this.data.push({
                 // amount: item.value==""?"--":(checkaddress(item.tx.value.msg[0].value.from_address) + item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom  ,
-                amount:item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom,
+                amount:this.getamount(item) ,
                 from:item.tx.value.msg[0].value.from_address,
                 to:item.tx.value.msg[0].value.to_address||'--',
-                txType: item.txType,
+                txType: item.tags[0].value,
                 date: filters.formatDate(item.timestamp),
                 status: item.logs[0].success,
                 txHash:item.txhash
@@ -549,11 +513,25 @@ export default {
         this.$data.pageNumber=pageNumber;
         this.transactionList();
     },
-      openvalidator(value) {
+    openvalidator(value) {
         // console.log(value);
         let url = DAEMON_CONFIG.pledgeurl;
         shell.openExternal(url);
+    },
+    getamount(item){
+      var msg0=item.tx.value.msg[0];
+      if(msg0.value!=undefined&&msg0.value.amount!=undefined){
+        if(msg0.value.amount instanceof Array){
+          return msg0.value.amount[0].amount+msg0.value.amount[0].denom
+        }else{
+          return msg0.value.amount.amount+msg0.value.amount.denom
+        }
+        
+      }else{
+        return '--'
       }
+        
+    }
   }
 };
 </script>
