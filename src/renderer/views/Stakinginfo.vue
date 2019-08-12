@@ -131,6 +131,7 @@
         </div>
       </Modal>
     </div>
+    <StakingModelDialog ref="StakingModelDialog" />
   </div>
 </template>
 
@@ -139,6 +140,7 @@ import MyTable from "@/components/common/useful/Mytable.vue";
 import Mycard from "@/components/common/useful/Mycard.vue";
 const ipc = require("electron-better-ipc");
 import eventhub from "../common/js/event.js";
+import StakingModelDialog from '@/views/Dialog/stakingModel.vue'
 
 export default {
   data() {
@@ -163,15 +165,17 @@ export default {
   },
   methods: {
     openSend() {
-      this.sendModal = true;
-      this.$data.isdege = true;
+      // this.sendModal = true;
+      // this.$data.isdege = true;
+      this.$refs.StakingModelDialog.open(this.$data.Tovalue,true)
     },
     sendcancel() {
       this.sendModal = false;
     },
     openUndelegate(){
-      this.sendModal = true;
-      this.$data.isdege = false;
+      // this.sendModal = true;
+      // this.$data.isdege = false;
+      this.$refs.StakingModelDialog.open(this.$data.Tovalue,false)
     },
     preSendLAMB() {
       console.log("-----");
@@ -298,7 +302,8 @@ export default {
   },
   components: {
     MyTable,
-    Mycard
+    Mycard,
+    StakingModelDialog
   },
   computed: {
     address: function() {

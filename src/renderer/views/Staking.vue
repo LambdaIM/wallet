@@ -58,6 +58,8 @@
 <script>
 import MyTable from "@/components/common/useful/Mytable.vue";
 
+
+
 const ipc = require("electron-better-ipc");
 
 export default {
@@ -302,7 +304,7 @@ export default {
         // console.log(res);
         console.log(res)
         // console.log(poolres)
-        if (res.state) {
+        if (res.state&&res.data instanceof Array) {
           var list=[]
           res.data.forEach((item)=>{
             item.entries.forEach((entrie)=>{

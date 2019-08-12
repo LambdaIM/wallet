@@ -232,7 +232,11 @@
 
  
     </div>
+    <SendModelDialog ref="SendModelDialog" />
+    <WithdrawalModalDialog ref="WithdrawalModalDialog" />
+    <AssetlModalDialog ref="AssetlModalDialog" />
   </div>
+  
 </template>
 
 <script>
@@ -247,8 +251,12 @@ import wUtils from "../common/js/utils.js";
 import eventhub from "../common/js/event.js";
 import _ from "underscore";
 import { setTimeout, clearTimeout } from 'timers';
-import { isNull } from 'util';
+
 const { shell } = require("electron");
+
+import SendModelDialog from '@/views/Dialog/sendModel.vue'
+import WithdrawalModalDialog from '@/views/Dialog/withdrawalModal.vue'
+import AssetlModalDialog from '@/views/Dialog/assetlModal.vue'
 
 
 export default {
@@ -347,7 +355,10 @@ export default {
     };
   },
   components: {
-    MyTable
+    MyTable,
+    SendModelDialog,
+    WithdrawalModalDialog,
+    AssetlModalDialog
   },
   computed: {
     amount: value => {
@@ -403,7 +414,8 @@ export default {
       this.$data.AssetLAMBvalue= this.$data.AssetSTOvalue *  1000; 
     },
     openwithdrawalModal(){
-      this.$data.withdrawalModal=true;
+      // this.$data.withdrawalModal=true;
+      this.$refs.WithdrawalModalDialog.open()
     },
     toDetail(row, index) {
       console.log(row, index);
@@ -412,10 +424,14 @@ export default {
       this.$router.push(`/detail/${row.txHash}/${row.txType}`);
     },
     openSend() {
-      this.sendModal = true;
+      // this.sendModal = true;
+
+      this.$refs.SendModelDialog.open()
+
     },
     openAssert(){
-      this.$data.AssetlModal=true;
+      // this.$data.AssetlModal=true;
+      this.$refs.AssetlModalDialog.open();
     },
     async transfer(amount,txType) {
       let to = this.Tovalue;

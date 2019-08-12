@@ -386,7 +386,7 @@ walletManger.prototype.getDelegationsBalance =async  function () {
     console.log(delegationsList)
     if( delegationsList instanceof Array){
         delegationsList.forEach((item)=>{
-            result+=item.shares;
+            result+=(item.shares-0);
         })
 
     } 
@@ -701,15 +701,22 @@ walletManger.prototype.getSigner=  function (config, submitType = "", { address,
 
 walletManger.prototype.SignData = async function (password,content){
 
-    var tenderKeys = new TenderKeys();
+    // var tenderKeys = new TenderKeys();
     var contentBuffer=Buffer.from(content)
-    var walletInfo = this.OpenDefaultwallet(password);
-    var sindata = tenderKeys.signBuffer(walletInfo.privateKey.toString('hex'),contentBuffer);//   lastpayobj
+    // var walletInfo = this.OpenDefaultwallet(password);
+    var  pravteKey=cosmos.keyStore.checkJson(this.defaultwallet, password)
+    // var  publicKey = cosmos.publicKey.getBytes(this.defaultwallet.publicKey) ;
+    console.log('pravteKey',pravteKey)
+    // var sindata = tenderKeys.signBuffer(pravteKey,contentBuffer);//   lastpayobj
+    var sindata  = cosmos.crypto.sign(
+        contentBuffer ,
+        pravteKey
+      )
 
     
 
     var TxMessageload={
-        key: walletInfo.publicKey ,
+        key: this.defaultwallet.publicKey ,
         content: content ,
         signature:sindata.toString('hex')
     }
