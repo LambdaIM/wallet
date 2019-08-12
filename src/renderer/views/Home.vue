@@ -45,7 +45,7 @@
                       提取奖励
                       <Icon type="md-swap"></Icon>
                   </Button>
-                  <Button slot="extra" @click="preAssetPledge()">
+                  <Button slot="extra" @click="openAssert()">
                       兑换资产
                       <Icon type="md-swap"></Icon>
                   </Button>
@@ -133,13 +133,100 @@
         @on-cancel="sendcancel"
       >
         <p>
-          <Input readonly v-model="DistributionReward">
+          <Input  v-model="DistributionReward">
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
             <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
           </Input>
         </p>
         <div slot="footer">
           <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
+        </div>
+      </Modal>
+
+      <Modal
+        loading
+        v-model="AssetlModal"
+        title="资产兑换"
+        :styles="{top: '200px'}"
+        @on-cancel="sendcancel"
+      >
+        <p style="text-align: center">
+              <RadioGroup v-model="exchangesStatus" type="button">
+                  <Radio label="true">
+                      <span>LAMB 兑换 STO</span>
+                  </Radio>
+                  <Radio label="false">
+                      <span>STO 兑换 LAMB</span>
+                  </Radio>
+                  
+              </RadioGroup>
+              
+        </p>
+        <br/>
+        <div v-if="exchangesStatus=='true'">
+                <p>
+                  <Input @keyup.native="AssetLAMBvalueChane"  v-model="AssetLAMBvalue">
+                    <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
+                    <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
+                  </Input>
+                </p>
+                <br/>
+                <p>
+                  <Input v-model="AssetSTOvalue" readonly>
+                    <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
+                    <span slot="append">STO</span>
+                  </Input>
+                  
+                
+                </p>
+        </div>
+        <div v-else>
+              <p>
+                  <Input @keyup.native="AssetSTOvalueChane" v-model="AssetSTOvalue" >
+                    <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
+                    <span slot="append">STO</span>
+                  </Input>
+                </p>
+                  <br/>
+                <p>
+                  <Input v-model="AssetLAMBvalue" readonly>
+                    <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
+                    <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
+                  </Input>
+                </p>
+                <br/>
+                
+
+        </div>
+
+        <div slot="footer">
+          <Button type="primary" @click="preAssetPledge">{{$t('home.Modal1.Submit')}}</Button>
+        </div>
+      </Modal>
+
+      <Modal v-model="assetConfirmModal" :styles="{top: '200px'}">
+        <div class="modal-header" slot="header">
+          <h2> 资产兑换 </h2>
+          <Row class-name="item">
+            <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+            <Col span="20" class-name="value">{{address}}</Col>
+          </Row>
+          
+          <Row v-if="exchangesStatus=='true'" class-name="item">
+            <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+            <Col span="20" class-name="value">{{AssetLAMBvalue}} LAMB 兑换  {{AssetSTOvalue}} STO</Col>
+          </Row>
+          <Row v-else class-name="item">
+            <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+            <Col span="20" class-name="value">{{AssetSTOvalue}} STO  兑换 {{AssetLAMBvalue}} LAMB </Col>
+          </Row>
+          
+        </div>
+        <!-- <p>
+          <Input v-model="walletPassword" type="password"></Input>
+        </p>-->
+        <div slot="footer">
+          <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
         </div>
       </Modal>
 
@@ -250,7 +337,13 @@ export default {
                         key: 'name'
                     },
       ],
-      withdrawalModal:false
+      withdrawalModal:false,
+      AssetlModal:false,
+      AssetLAMBvalue:"",
+      AssetSTOvalue:"",
+      assetConfirmModal:false,
+      exchangesStatus:"true"
+
     };
   },
   components: {
@@ -259,6 +352,9 @@ export default {
   computed: {
     amount: value => {
       console.log(value);
+    },
+    STOcounter(){
+      return this.$data.AssetLAMBvalue/1000
     }
   },
  async mounted() {
@@ -289,6 +385,9 @@ export default {
      
     });
 
+    // var num = this.bigNum(0);
+    // console.log(num);
+
     
 
   },
@@ -296,6 +395,13 @@ export default {
     clearInterval(this.$data.Interval);
   },
   methods: {
+    AssetLAMBvalueChane(){
+     console.log('- -')
+     this.$data.AssetSTOvalue = this.$data.AssetLAMBvalue/1000; 
+    },
+    AssetSTOvalueChane(){
+      this.$data.AssetLAMBvalue= this.$data.AssetSTOvalue *  1000; 
+    },
     openwithdrawalModal(){
       this.$data.withdrawalModal=true;
     },
@@ -307,6 +413,9 @@ export default {
     },
     openSend() {
       this.sendModal = true;
+    },
+    openAssert(){
+      this.$data.AssetlModal=true;
     },
     async transfer(amount,txType) {
       let to = this.Tovalue;
@@ -347,7 +456,7 @@ export default {
         if (res.state) {
           this.$data.transactiondata=res.data
           this.sendcancel();
-          this.confirmModal = true;
+          this.assetConfirmModal = true;
         }
       } catch (ex) {
         console.log(ex);
@@ -424,20 +533,34 @@ export default {
       // // }
   
 
-      // if (isNaN(value)) {
-      //   this.$Notice.warning({
-      //     title: this.$t('home.action.Check_the_amount')
-      //   });
-      //   return;
-      // }
+      
+      
+      console.log(this.$data.exchangesStatus)
+
       this.$data.withdrawalModal=false;
-      this.transferAsset(1000,1,false);
+      var AssetLAMBvalue = this.$data.AssetLAMBvalue;
+      var sto =this.$data.AssetSTOvalue;
+
+      if (isNaN(sto)||isNaN(AssetLAMBvalue)) {
+        this.$Notice.warning({
+          title: this.$t('home.action.Check_the_amount')
+        });
+        return;
+      }
+      if(this.$data.exchangesStatus == "false"){
+        this.transferAsset(AssetLAMBvalue,sto,false);
+      }else{
+        this.transferAsset(AssetLAMBvalue,sto,true);
+      }
+      
     },
     sendcancel() {
       this.sendModal = false;
+      this.$data.AssetlModal=false;
     },
     confirm() {
       this.confirmModal = false;
+      this.$data.assetConfirmModal=false;
       // this.passwordModal = true;
       eventhub.$emit('TxConfirm',this.$data.transactiondata);
 
@@ -456,6 +579,7 @@ export default {
             // this.address = res.data.address;
             // this.$store.dispatch("setaddress", this.address);
             this.balance = res.data.Liquid.balance - 0 ;
+            this.balanceSto = res.data.Liquid.balanceSto - 0 ;
             var DistributionReward=0; 
             if(res.data.DistributionReward!=null){
               res.data.DistributionReward.forEach((item)=>{
@@ -472,6 +596,8 @@ export default {
             this.$store.dispatch("setblance", this.balance);
             this.$store.dispatch("setTotalblance",Totalblance);
             this.$store.dispatch("setDistributionReward", DistributionReward) ;
+            this.$store.dispatch("setbalanceSto", this.balanceSto);
+            
             this.$data.Totalblance = Totalblance  ;
             this.$data.DistributionReward = DistributionReward ;
 
@@ -534,11 +660,17 @@ export default {
                 txType: item.tags[0].value,
                 date: filters.formatDate(item.timestamp),
                 status: item.logs[0].success,
-                txHash:item.txhash
+                txHash:item.txhash,
+                timestampSort:new Date(item.timestamp).getTime()
               });
+            }else{
+              console.log('读取交易记录失败')
             }
           });
         }
+        this.data.sort((item1,item2)=>{
+          return   item2.timestampSort - item1.timestampSort
+          })
         this.$data.loading=false;
       } catch (ex) {
         console.log(ex);

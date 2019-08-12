@@ -347,7 +347,7 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
     // var Message = AccountMessage.decode(buf);
     
     // var userbalance = BigInteger.fromBuffer(Message.balance.abs)
-    var balanceLamb = 0;
+    var balanceLamb = 0,balanceSto;
     log.info('----------');
     log.info(result);
     log.info(result.coins);
@@ -356,11 +356,15 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
         if(item.denom=='lamb'){
             balanceLamb=item.amount
         }
+        if(item.denom=='sto'){
+            balanceSto=item.amount
+        }
     })
 
     var acountjson = {
         address: result.address,
         balance: balanceLamb,
+        balanceSto:balanceSto,
         coins:result.coins
 
         // nonce: parseInt(Message.nonce, 10)

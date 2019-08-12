@@ -3,7 +3,8 @@ const state = {
   blance: 0,
   loginState: false,
   Totalblance:0,
-  DistributionReward:0
+  DistributionReward:0,
+  balanceSto:0
 }
 
 console.log('--------***************');
@@ -24,6 +25,9 @@ const mutations = {
   },
   setDistributionReward:function(state,Reward){
     state.DistributionReward = Reward;
+  },
+  setbalanceSto:function(state,balanceSto){
+    state.balanceSto = balanceSto;
   }
 }
 
@@ -45,6 +49,9 @@ const actions = {
   },
   setDistributionReward:function(context,DistributionReward){
     context.commit('setDistributionReward', DistributionReward)
+  },
+  setbalanceSto:function(context,balanceSto){
+    context.commit('setbalanceSto', balanceSto)
   }
 }
 const getters = {
@@ -59,6 +66,9 @@ const getters = {
   },
   getDistributionReward:(state)=>{
     return state.DistributionReward
+  },
+  getbalanceSto(state){
+    return state.balanceSto
   }
 }
 

@@ -18,6 +18,7 @@ import VueClipboard from 'vue-clipboard2';
 
 import VueI18n from 'vue-i18n';
 import messages from './lang/index.js';
+import GlobalFn from "./Global.js"
 const settings = require("electron-settings");
 
 const {  remote } = require('electron');
@@ -29,6 +30,7 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.use(VueClipboard)
+Vue.use(GlobalFn)
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
