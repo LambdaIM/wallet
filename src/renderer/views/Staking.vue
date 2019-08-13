@@ -2,16 +2,16 @@
   <div class="customer-container">
   <div class="tableContainer">
        <Tabs >
-        <TabPane label="我的代表" >
+        <TabPane label="我的质押" >
           <Table :columns="columnsme" :data="mydelegationsList" >
               <template slot-scope="{ row, index }" slot="payment">
-                      {{row.commission.rate}}
+                      {{row.commission.rate|Percentformat}}
                     </template>
                     <template slot-scope="{ row, index }" slot="description">
                       {{row.description.moniker}}
                     </template>
                     <template slot-scope="{ row, index }" slot="vote">
-                      {{row.tokens/pool.bonded_tokens}}
+                      {{row.tokens/pool.bonded_tokens|Percentformat}}
                     </template>
                     <template slot-scope="{ row, index }" slot="operator_address">
                       <router-link
@@ -19,19 +19,27 @@
                       class="item"
                     >{{row.operator_address}}</router-link>
                     </template>
+                    <template slot-scope="{ row, index }" slot="shares">
+                      {{row.shares|Lambformat}}
+                    </template>
+                    <template slot-scope="{ row, index }" slot="reward">
+                      {{row.reward|Lambformat}}
+                    </template>
+
+                    
           </Table>
         </TabPane>
         <TabPane label="验证节点列表" >
           <Table :columns="columns" :data="validatorsList" >
 
           <template slot-scope="{ row, index }" slot="payment">
-            {{row.commission.rate}}
+            {{row.commission.rate|Percentformat}}
           </template>
           <template slot-scope="{ row, index }" slot="description">
             {{row.description.moniker}}
           </template>
           <template slot-scope="{ row, index }" slot="vote">
-            {{row.tokens/pool.bonded_tokens}}
+            {{row.tokens/pool.bonded_tokens|Percentformat}}
           </template>
           <template slot-scope="{ row, index }" slot="operator_address">
             <router-link
@@ -44,6 +52,10 @@
         </TabPane>
         <TabPane label="解绑中" >
             <Table :columns="uncolumns" :data="myUndelegationsList" >
+              
+              <template slot-scope="{ row, index }" slot="completion_time">
+                {{row.completion_time|formatDate}}
+              </template>
         
             </Table>
 
@@ -118,11 +130,12 @@ export default {
         {
           title: "我的质押",
           key: "shares",
+          slot: "shares",
           
         },
         {
           title: "我的收益",
-          key: "reward",
+          key: "reward"
           
         },
         {
@@ -182,6 +195,7 @@ export default {
         },{
           title: "完成时间",
           key: "completion_time",
+          slot:'completion_time'
           
         },
         
@@ -232,7 +246,7 @@ export default {
         console.log(res)
         // console.log(poolres)
         if (res.state) {
-          this.$data.mydelegationsList=res.data;
+          this.$data.mydelegationsList=res.data||[];
           this.validatorsListForMe();
           
 
@@ -289,7 +303,7 @@ export default {
     coinListFormart(list){
       var result =[]
       list.forEach((item)=>{
-        result.push(item.amount+item.denom)
+        result.push(this.bigNum(item.amount).div(1).toFormat() +" "+item.denom.toUpperCase())
       })
       return result.join(',')
 

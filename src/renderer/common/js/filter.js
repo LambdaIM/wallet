@@ -2,15 +2,33 @@ import moment from "moment";
 const BigNumber = require('bignumber.js');
 BigNumber.config({ DECIMAL_PLACES: 8,ROUNDING_MODE: BigNumber.ROUND_DOWN })
 
+
 const formatValue = (value) => {
     if(value=="" || value == undefined || value == null){
         return '--'
     }
     var bigvalue=new BigNumber(value);
-    var uservalue = bigvalue.div('1e18')
-    return `${uservalue.toFormat() } LAMB`;
+    
+    return `${bigvalue.toFormat() } LAMB`;
 }
 
+const Lambformat = (value) => {
+    if(value=="" || value == undefined || value == null){
+        return '--'
+    }
+    var bigvalue=new BigNumber(value);
+    
+    return `${bigvalue.div(1).toFormat() } LAMB`;
+}
+
+const Percentformat = (value) => {
+    if(value=="" || value == undefined || value == null){
+        return '--'
+    }
+    var bigvalue=new BigNumber(value);
+    
+    return `${bigvalue.div(1).times(100).toFormat() }%`;
+}
 const formatDate = (value) => {
     //具体时间格式待定 
     //1 区块返回的时间
@@ -77,5 +95,7 @@ export default {
     formatStringToTime,
     formatMinerStatus,
     readableBytes,
-    blockFormatDate
+    blockFormatDate,
+    Lambformat,
+    Percentformat
 }

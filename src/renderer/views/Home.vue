@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <p class="balance">
-      可用资产: {{balance}} LAMB
-      奖励 :{{DistributionReward}} LAMB
+      可用资产: {{balance|Lambformat}} 
+      奖励 :{{DistributionReward|Lambformat}} 
       <!-- <span style="color:green">
         <a @click="openvalidator">{{ $t("home.profits_pledge_system") }}</a>
       </span>-->

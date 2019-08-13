@@ -36,10 +36,10 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">佣金:</span>
+            <span class="title">简介:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.commission.rate}}</a>
+            <a class="item-value">{{validator.description.details||'--'}}</a>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -47,7 +47,15 @@
             <span class="title">佣金:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.commission.rate}}</a>
+            <a class="item-value">{{validator.commission.rate|Percentformat}}</a>
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            <span class="title">佣金:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+            <a class="item-value">{{validator.commission.rate|Percentformat}}</a>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -55,7 +63,7 @@
             <span class="title">最大佣金:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.commission.max_rate}}</a>
+            <a class="item-value">{{validator.commission.max_rate|Percentformat}}</a>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -63,7 +71,7 @@
             <span class="title">最大佣金变化:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.commission.max_change_rate}}</a>
+            <a class="item-value">{{validator.commission.max_change_rate|Percentformat}}</a>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -71,7 +79,7 @@
             <span class="title">投票权重:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.tokens/pool.bonded_tokens}}</a>
+            <a class="item-value">{{validator.tokens/pool.bonded_tokens|Percentformat}}</a>
           </Col>
         </Row>
       </div>
