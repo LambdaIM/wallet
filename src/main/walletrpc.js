@@ -158,7 +158,7 @@ export default  function(){
 
 
     eipc.answerRenderer('transfer',async(query)=>{
-        var {to,amount,gas} = query;
+        var {to,amount,gas,denom} = query;
         // to 需要判断 账号的格式是否合理呵护规则
         // amount 需要判断  转账金额大小 数据类型
         // gas 目前默认值位1  转账金额大小 数据类型
@@ -181,13 +181,16 @@ export default  function(){
         if(gas==undefined){
             throw resultView(null,false,'need to gas')
         }
+        if(denom==undefined){
+            denom='lamb'
+        }
 
         if(isNaN(parseInt(gas)) ){
             throw resultView(null,false,'Incorrect gas format')
         }
         
         try{    
-            var data = await WM.Transfer(to,amount,gas)
+            var data = await WM.Transfer(to,amount,gas,denom)
             return resultView(data,true)
         }catch(ex){
             throw resultView(null,false,ex)
@@ -255,7 +258,7 @@ export default  function(){
     })
 
     eipc.answerRenderer('AssetPledge',async(query)=>{
-        var {asset,amount,gas,isdege} = query;
+        var {asset,amount,gas,isdege,denom} = query;
         
         
 
@@ -265,9 +268,12 @@ export default  function(){
         if(asset==undefined){
             throw resultView(null,false,'need asset')
         }
+        if(denom==undefined){
+            denom='lamb'
+        }
         
         try{    
-            var data = await WM.AssetPledge(amount,asset,gas,isdege)
+            var data = await WM.AssetPledge(amount,asset,gas,isdege,denom)
             return resultView(data,true)
         }catch(ex){
             throw resultView(null,false,ex)

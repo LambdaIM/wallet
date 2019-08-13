@@ -3,7 +3,7 @@
   <Modal
     loading
     v-model="sendModal"
-    :title="$t('home.Modal1.Send_LAMB')"
+    :title="denomtitleShow"
     :styles="{top: '200px'}"
     @on-cancel="sendcancel"
   >
@@ -22,7 +22,7 @@
     <p>
       <Input v-model="LAMBvalue">
         <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-        <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
+        <span slot="append">{{denomShow}}</span>
       </Input>
     </p>
     <div slot="footer">
@@ -42,7 +42,7 @@
           </Row>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{LAMBvalue}} LAMB</Col>
+            <Col span="20" class-name="value">{{LAMBvalue}} {{denomShow}}</Col>
           </Row>
           
         </div>
@@ -70,7 +70,8 @@ export default {
       denom:'lamb',
       LAMBvalue: "",
       to:"",
-      Tovalue:''
+      Tovalue:'',
+      denomBlance:''
     };
   },
   methods: {
@@ -84,7 +85,7 @@ export default {
         });
         return;
       }
-      if (value <= 0 || value > this.balance) {
+      if (value <= 0 || value > this.$data.denomBlance) {
         // need to alert
         this.$Notice.warning({
           title: this.$t("home.action.check_balance_amount_transfer")
@@ -115,12 +116,14 @@ export default {
       // let amount = this.LAMBvalue;
       let gas = 1;
       // amount = amount * 10000;
+      let denom =this.$data.denom;
       this.$data.transactiondata = null;
       try {
         let res = await ipc.callMain("transfer", {
           to,
           amount,
-          gas
+          gas,
+          denom
         });
         // console.log(res);
         if (res.state) {
@@ -144,7 +147,9 @@ export default {
       this.sendModal = false;
       // this.confirmModal=true;
     },
-    open(){
+    open(amountBlance,coinType){
+      this.$data.denomBlance=amountBlance||this.balance
+      this.$data.denom=coinType||'lamb'
       this.sendModal =true;
       this.confirmModal=false;
     }
@@ -155,6 +160,12 @@ export default {
     },
     balance:function(){
       return this.$store.getters.getblance;
+    },
+    denomShow:function(){
+      return this.$data.denom.toUpperCase()
+    },
+    denomtitleShow:function(){
+      return "发送" +this.$data.denom.toUpperCase()
     }
   }
 };

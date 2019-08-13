@@ -76,7 +76,7 @@
         </Row>
       </div>
     </Mycard>
-    <div class="modal-container">
+    <!-- <div class="modal-container">
       <Modal
         loading
         v-model="sendModal"
@@ -123,14 +123,12 @@
             <Col span="20" class-name="value">{{LAMBvalue}} LAMB</Col>
           </Row>
         </div>
-        <!-- <p>
-          <Input v-model="walletPassword" type="password"></Input>
-        </p>-->
+        
         <div slot="footer">
           <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
         </div>
       </Modal>
-    </div>
+    </div> -->
     <StakingModelDialog ref="StakingModelDialog" />
   </div>
 </template>
@@ -177,86 +175,86 @@ export default {
       // this.$data.isdege = false;
       this.$refs.StakingModelDialog.open(this.$data.Tovalue,false)
     },
-    preSendLAMB() {
-      console.log("-----");
-      let from = this.address;
-      let to = this.Tovalue;
-      let value = parseFloat(this.LAMBvalue);
-      if (to == from) {
-        this.$Notice.warning({
-          title: this.$t("home.action.not_transfer_LAMB_to_yourself")
-        });
-        return;
-      }
-      if(this.$data.isdege){
-         if (value <= 0 || value > this.balance) {
-        // need to alert
-            this.$Notice.warning({
-              title: this.$t("home.action.check_balance_amount_transfer")
-            });
-            return;
-          }
+    // preSendLAMB() {
+    //   console.log("-----");
+    //   let from = this.address;
+    //   let to = this.Tovalue;
+    //   let value = parseFloat(this.LAMBvalue);
+    //   if (to == from) {
+    //     this.$Notice.warning({
+    //       title: this.$t("home.action.not_transfer_LAMB_to_yourself")
+    //     });
+    //     return;
+    //   }
+    //   if(this.$data.isdege){
+    //      if (value <= 0 || value > this.balance) {
+    //     // need to alert
+    //         this.$Notice.warning({
+    //           title: this.$t("home.action.check_balance_amount_transfer")
+    //         });
+    //         return;
+    //       }
 
-      }else{
-        if (value <= 0 || value > this.$data.shares) {
-        // need to alert
-            this.$Notice.warning({
-              title: this.$t("home.action.check_balance_amount_transfer")
-            });
-            return;
-          }
+    //   }else{
+    //     if (value <= 0 || value > this.$data.shares) {
+    //     // need to alert
+    //         this.$Notice.warning({
+    //           title: this.$t("home.action.check_balance_amount_transfer")
+    //         });
+    //         return;
+    //       }
 
 
-      }
+    //   }
       
-      // value = wUtils.numberToBig(value) ;
-      // 还需要新的校验地址方法
-      // if (Utils.isAddress(to) == false) {
-      //   // need to alert
-      //   this.$Notice.warning({
-      //     title:this.$t('home.action.Check_forwarding_address')
-      //   });
+    //   // value = wUtils.numberToBig(value) ;
+    //   // 还需要新的校验地址方法
+    //   // if (Utils.isAddress(to) == false) {
+    //   //   // need to alert
+    //   //   this.$Notice.warning({
+    //   //     title:this.$t('home.action.Check_forwarding_address')
+    //   //   });
 
-      //   return;
-      // }
+    //   //   return;
+    //   // }
 
-      if (isNaN(value)) {
-        this.$Notice.warning({
-          title: this.$t("home.action.Check_the_amount")
-        });
-        return;
-      }
-      this.transfer(value);
-    },
-    async transfer(amount) {
-      let to = this.Tovalue;
-      // let amount = this.LAMBvalue;
-      let gas = 1;
-      // amount = amount * 10000;
-      this.$data.transactiondata = null;
-      let isdege = this.$data.isdege;
-      try {
-        let res = await ipc.callMain("transferDelegation", {
-          to,
-          amount,
-          gas,
-          isdege
-        });
-        // console.log(res);
-        if (res.state) {
-          this.$data.transactiondata = res.data;
-          this.sendcancel();
-          this.confirmModal = true;
-        }
-      } catch (ex) {
-        console.log(ex);
-      }
-    },
-    confirm() {
-      this.confirmModal = false;
-      // this.passwordModal = true;
-      eventhub.$emit("TxConfirm", this.$data.transactiondata);
-    },
+    //   if (isNaN(value)) {
+    //     this.$Notice.warning({
+    //       title: this.$t("home.action.Check_the_amount")
+    //     });
+    //     return;
+    //   }
+    //   this.transfer(value);
+    // },
+    // async transfer(amount) {
+    //   let to = this.Tovalue;
+    //   // let amount = this.LAMBvalue;
+    //   let gas = 1;
+    //   // amount = amount * 10000;
+    //   this.$data.transactiondata = null;
+    //   let isdege = this.$data.isdege;
+    //   try {
+    //     let res = await ipc.callMain("transferDelegation", {
+    //       to,
+    //       amount,
+    //       gas,
+    //       isdege
+    //     });
+    //     // console.log(res);
+    //     if (res.state) {
+    //       this.$data.transactiondata = res.data;
+    //       this.sendcancel();
+    //       this.confirmModal = true;
+    //     }
+    //   } catch (ex) {
+    //     console.log(ex);
+    //   }
+    // },
+    // confirm() {
+    //   this.confirmModal = false;
+    //   // this.passwordModal = true;
+    //   eventhub.$emit("TxConfirm", this.$data.transactiondata);
+    // },
     async getinfo(operator_address) {
       try {
         let res = await ipc.callMain("validator", {

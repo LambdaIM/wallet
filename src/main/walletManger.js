@@ -25,6 +25,8 @@ import CosmosAPI from "@lunie/cosmos-api"
 import transaction from "./utils/transactionTypes"
 import ActionManager from "./utils/ActionManager.js"
 
+import BigNum from './utils/BigNum';
+
 
 
 
@@ -324,42 +326,29 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
 
     const delegations = await this.CosmosAPI.get.delegations(this.defaultwallet.address)
 
-    // console.log('this.CosmosAPI.getAccount')
-    // console.log(result)
-    // console.log(typeof result)
-    // console.log(result.coins)
-    // console.log('this.CosmosAPI.getAccount')
+
     console.log('delegations')
     console.log(delegations)
     console.log('delegations')
-    // var result = await this._getAccountInfo();
 
-
-    // // log.info(`result  ============>>>>>>>> ${result}`);
-    // if (result.data.result.response.value == undefined && result.data.result.response.log != undefined) {
-    //     throw new Error(result.data.result.response.log)
-    // }
-    // var accountInfo = result.data.result.response.value;
-    // const protoRoot = await protobuf.load(this.protofilepath);
-
-    // var buf = Buffer.from(accountInfo, 'base64');
-    // var AccountMessage = protoRoot.lookupType('types.Account');
-    // var Message = AccountMessage.decode(buf);
-    
-    // var userbalance = BigInteger.fromBuffer(Message.balance.abs)
-    var balanceLamb = 0,balanceSto;
     log.info('----------');
     log.info(result);
     log.info(result.coins);
     log.info('----------');
-    result.coins.forEach((item)=>{
-        if(item.denom=='lamb'){
-            balanceLamb=item.amount
-        }
-        if(item.denom=='sto'){
-            balanceSto=item.amount
-        }
-    })
+    var balanceLamb=0;
+    var balanceSto=0;
+    if(result.coins instanceof Array){
+        result.coins.forEach((item)=>{
+            if(item.denom=='lamb'){
+                balanceLamb=item.amount
+            }
+            if(item.denom=='sto'){
+                balanceSto=item.amount
+            }
+        })
+
+    }
+    
 
     var acountjson = {
         address: result.address,
@@ -386,7 +375,8 @@ walletManger.prototype.getDelegationsBalance =async  function () {
     console.log(delegationsList)
     if( delegationsList instanceof Array){
         delegationsList.forEach((item)=>{
-            result+=(item.shares-0);
+            // result+=(item.shares-0);
+            result=BigNum(item.shares).plus(result)
         })
 
     } 
@@ -427,13 +417,13 @@ walletManger.prototype.TransferWithdrawal = async function (to, amount, gas,isde
         denom: 'lamb'
       }
 }
-walletManger.prototype.AssetPledge = async function (amount,asset, gas,isdege) {
+walletManger.prototype.AssetPledge = async function (amount,asset, gas,isdege,denom) {
     if(isdege){
         return {
             type: transaction.AssetPledge,
             amounts: {
                 amount: amount,
-                denom: 'lamb'
+                denom: denom
               }
             ,
             asset: {
@@ -464,7 +454,7 @@ walletManger.prototype.AssetPledge = async function (amount,asset, gas,isdege) {
 
 
 
-walletManger.prototype.Transfer = async function (to, amount, gas) {
+walletManger.prototype.Transfer = async function (to, amount, gas,denom) {
 
     return {
         type: transaction.SEND,
@@ -472,75 +462,13 @@ walletManger.prototype.Transfer = async function (to, amount, gas) {
         amounts: [
           {
             amount: amount,
-            denom: 'lamb'
+            denom: denom||'lamb'
           }
         ],
         memo: ''
       }
 
-    
-    // bigInter()
-    // const protoRoot = await protobuf.load(this.protofilepath);
-    
-    // var payload = {
-    //     from: Buffer.from(defaultAddress(), 'hex'),
-    //     to: Buffer.from(to, 'hex'),
-    //     amount: bigInter(protoRoot,amount),
-    //     gas: gas,
-    //     createTime: +(new Date()).getTime().toString().substr(0, 10)
-    // };
 
-    
-    
-    // var TxDataMessage = protoRoot.lookupType('types.TxData');
-    
-    
-    // var errMsg = TxDataMessage.verify(payload);
-    // log.error(errMsg)
-    // if (errMsg)
-    //     throw errMsg
-
-    // var TxData = TxDataMessage.create(payload);
-    // var TxDatabuffer = TxDataMessage.encode(TxData).finish();
-    // var TxSendMessage = protoRoot.lookupType('types.TxSend');
-
-    // var sendload = {
-    //     id: generatesha256(TxDatabuffer),
-    //     txData: TxData
-    // }
-
-    // errMsg = TxSendMessage.verify(sendload);
-    // log.error(errMsg)
-    // if (errMsg)
-    //     throw errMsg
-
-    // var TxSend = TxSendMessage.create(sendload);
-    // var TxSendbuffer = TxSendMessage.encode(TxSend).finish()
-    // return {
-    //     dataType:'types.TxSend', //proto 中类型
-    //     hexdata:TxSendbuffer.toString('hex'),
-    //     sendType: 'txSend', //payload 中的key
-    //     Type:"txsend" //TxPayload 中的 type 属性
-    //   };
-
-    // var TxPayloadMessage = protoRoot.lookupType('types.TxPayload');
-
-    // var TxPayload = {
-    //     txSend: TxSend,
-    //     payload: 'txSend'
-    // }
-    // TxPayload.nonce = nonce + 1;
-    // errMsg = TxPayloadMessage.verify(TxPayload);
-    // log.error(errMsg)
-    // if (errMsg)
-    //     throw errMsg
-    // var TxPay = TxPayloadMessage.create(TxPayload);
-    // log.info('Txpay========>'+JSON.stringify(TxPay))
-
-    // this.lastpayobj = TxPay;
-    // this.lastpayArry = TxPayloadMessage.encode(TxPay).finish()
-
-    // return true;
 }
 
 walletManger.prototype.TransferConfirm = async function (password,transactiondata) {
@@ -560,7 +488,7 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
         // denom: this.bondDenom
         denom: 'lamb'
       }
-      this.gasEstimate =250000; //需要接口读取
+      this.gasEstimate =500000; //需要接口读取
       const feeProperties = {
         gasEstimate: this.gasEstimate,
         gasPrice: gasPrice,
@@ -586,88 +514,7 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
    
       return result;
 
-    // //============
-    // //==
-    // const protoRoot = await protobuf.load(this.protofilepath);
-
-    // var transactiondataMessage=protoRoot.lookupType(transactiondata.dataType);
-    // var transactionBufer=Buffer.from(transactiondata.hexdata,'hex');
-    // var sendType=transactiondata.sendType;
-    // var Type =transactiondata.Type;
-    
-
-    // var transactionObject = transactiondataMessage.decode(transactionBufer) ;
-    // // console.log('transactionBufer',transactionBufer)
-    // // console.log('transactionObject',transactionObject)
-    
-
-    // var TxPayloadMessage = protoRoot.lookupType('types.TxPayload');
-    // var TxPayload = {
-    //     payload: sendType,
-    //     type:Type    //type 这压力测试版本的链新增的一个交易属性 这个版本钱包现在支付交易接口里面加上其他的还没有加
-    // }
-    // TxPayload[sendType]=transactionObject
-      
-    // var acountjson = await this.getDefaultWalletBlance();
-    // TxPayload.nonce = acountjson.nonce + 1;
-    
-    
-    // errMsg = TxPayloadMessage.verify(TxPayload);
-    // log.error(errMsg)
-    // if (errMsg)
-    //     throw errMsg
-    // var TxPay = TxPayloadMessage.create(TxPayload);
-    // var TxPayBufer = TxPayloadMessage.encode(TxPay).finish()
-    
-    // // console.log(TxPay)
-    // // console.log(TxPayBufer)
-    // // console.log(TxPayBufer.toString('hex'))
-    // // var bf1=Buffer.from('080f2a680a2006b623ff16c14964a99763462151e8e7f50e8a87ce05cc9039bc8e79673acd4112440a1458f5173838d50d5fab4a06489c84ebe85f73782210e9021a0c080112080de0b6b3a7640000220608011202040028dee891e5053801420b3139322e3136382e312e31','hex')
-    // // var bf2=Buffer.from('080f2a6a0a2006b623ff16c14964a99763462151e8e7f50e8a87ce05cc9039bc8e79673acd4112460a1458f5173838d50d5fab4a06489c84ebe85f73782210e9021a0c080112080de0b6b3a7640000220608011202040028dee891e50530003801420b3139322e3136382e312e31','hex')
-    // // var obj1= TxPayloadMessage.decode(bf1)
-    // // var obj2=TxPayloadMessage.decode(bf2)
-    // // log.info(obj1)
-    // // log.info(obj2)
-    
-    // //==
-    // var TxMessage = protoRoot.lookupType('types.Tx');
-    // var walletInfo = this.OpenDefaultwallet(password);
-    // var tenderKeys = new TenderKeys();
-    // console.log('walletInfo.address')
-    // console.log(walletInfo.address)
-    // var sindata = tenderKeys.signBuffer(walletInfo.privateKey.toString('hex'), TxPayBufer);//   lastpayobj
-    // Amino.RegisterConcrete(null, 'tendermint/PubKeyEd25519')
-
-    // var TxMessageload = {
-    //     key: Amino.MarshalBinary('tendermint/PubKeyEd25519', Buffer.from(walletInfo.publicKey, 'hex')),
-    //     signature: sindata,
-    //     payload: TxPay
-    // }
-
-    // var errMsg = TxMessage.verify(TxMessageload);
-    // log.error(errMsg)
-
-    // if (errMsg) {
-    //     throw errMsg
-    // }
-    // var TxMessageData = TxMessage.create(TxMessageload);
-    // //https://github.com/irisnet/irisnet-crypto/search?q=pubKey&unscoped_q=pubKey
-    // var nodeBaseUrl = DAEMON_CONFIG.LambdaNetwork();
-    // var txinfourl = nodeBaseUrl + 'broadcast_tx_commit';
-
-    // var TxMessagebuffer = TxMessage.encode(TxMessageData).finish();
-    // var TxMessageHex = '0x'+TxMessagebuffer.toString('hex');
-    // log.info('start')
-    
-    
-    // var result = await axios.get(txinfourl, {
-    //     params: {
-    //         tx: TxMessageHex
-    //     }
-    // });
-    // log.info('end')
-    
-    // return result;
+   
 }
 
 walletManger.prototype.getSigner=  function (config, submitType = "", { address, password }){

@@ -130,10 +130,21 @@ export default {
         .catch(function(err) {
           console.log(err);
           _this.$data.loadingsendLAMBTx=false;
-          _this.$Notice.error({
+
+          try {
+            var errormsg = JSON.parse(err.errormsg) 
+            _this.$Notice.error({
+              title: errormsg.message,
+              
+            });
+          } catch (error) {
+            _this.$Notice.error({
               title: err.errormsg||'error',
               
             });
+            
+          }
+          
         });
 
     },

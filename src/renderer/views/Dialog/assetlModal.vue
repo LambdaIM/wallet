@@ -10,10 +10,10 @@
       <p style="text-align: center">
         <RadioGroup v-model="exchangesStatus" type="button">
           <Radio label="true">
-            <span>LAMB 兑换 STO</span>
+            <span>{{coinTypeShow}} 兑换 STO</span>
           </Radio>
           <Radio label="false">
-            <span>STO 兑换 LAMB</span>
+            <span>STO 兑换 {{coinTypeShow}}</span>
           </Radio>
         </RadioGroup>
       </p>
@@ -22,7 +22,7 @@
         <p>
           <Input @keyup.native="AssetLAMBvalueChane" v-model="AssetLAMBvalue">
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
+            <span slot="append">{{coinTypeShow}}</span>
           </Input>
         </p>
         <br />
@@ -44,7 +44,7 @@
         <p>
           <Input v-model="AssetLAMBvalue" readonly>
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
+            <span slot="append">{{coinTypeShow}}</span>
           </Input>
         </p>
         <br />
@@ -65,11 +65,11 @@
           
           <Row v-if="exchangesStatus=='true'" class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{AssetLAMBvalue}} LAMB 兑换  {{AssetSTOvalue}} STO</Col>
+            <Col span="20" class-name="value">{{AssetLAMBvalue}} {{coinTypeShow}} 兑换  {{AssetSTOvalue}} STO</Col>
           </Row>
           <Row v-else class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{AssetSTOvalue}} STO  兑换 {{AssetLAMBvalue}} LAMB </Col>
+            <Col span="20" class-name="value">{{AssetSTOvalue}} STO  兑换 {{AssetLAMBvalue}} {{coinTypeShow}} </Col>
           </Row>
           
         </div>
@@ -94,12 +94,16 @@ export default {
       exchangesStatus: "true",
       AssetLAMBvalue: "",
       AssetSTOvalue:'',
-      AssetLAMBvalue:''
+      AssetLAMBvalue:'',
+      amountBlance:0,
+      coinType:'lamb'
     };
   },
   methods: {
-    open(){
-        this.$data.AssetlModal=true;
+    open(amountBlance,coinType){
+      this.$data.AssetlModal=true;
+      this.$data.amountBlance=amountBlance||this.balance
+      this.$data.coinType=coinType||'lamb'
     },
     AssetLAMBvalueChane() {
       console.log("- -");
@@ -115,13 +119,13 @@ export default {
       // this.LAMBvalue=this.$data.DistributionReward;
       // let value = parseFloat(this.LAMBvalue);
 
-      // // if (value <= 0 || value > this.$data.DistributionReward ) {
-      // //   // need to alert
-      // //   this.$Notice.warning({
-      // //     title: this.$t('home.action.check_balance_amount_transfer')
-      // //   });
-      // //   return;
-      // // }
+      // if (value <= 0 || value > this.$data.balance ) {
+      //   // need to alert
+      //   this.$Notice.warning({
+      //     title: this.$t('home.action.check_balance_amount_transfer')
+      //   });
+      //   return;
+      // }
 
       console.log(this.$data.exchangesStatus);
 
@@ -178,6 +182,9 @@ export default {
     },
     balance:function(){
       return this.$store.getters.getblance;
+    },
+    coinTypeShow(){
+      return this.$data.coinType.toUpperCase();
     }
   }
 };
