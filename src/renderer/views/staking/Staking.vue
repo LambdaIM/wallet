@@ -60,7 +60,21 @@
             </Table>
 
         </TabPane>
-        <TabPane label="说明" >说明</TabPane>
+        <TabPane label="说明" >
+              <Form  :model="dataParameters" :label-width="150">
+                  <FormItem  label="解绑等待时间:">
+                    {{dataParameters.unbonding_time/(1000*1000*1000*60*60*24)}}天
+                  </FormItem>
+                  <FormItem  label="最大验证节点数量:">
+                    {{dataParameters.max_validators}}
+                  </FormItem>
+                  <FormItem  label="质押的token类型:">
+                    {{dataParameters.bond_denom}}
+                  </FormItem>
+             
+              </Form>
+
+        </TabPane>
     </Tabs>
   </div>
     
@@ -69,6 +83,7 @@
 
 <script>
 import MyTable from "@/components/common/useful/Mytable.vue";
+
 
 
 
@@ -200,7 +215,8 @@ export default {
         },
         
 
-      ]
+      ],
+      dataParameters:{}
     };
   },
  async mounted() {
@@ -208,6 +224,7 @@ export default {
    var r1= await this.getListData();
    var r2= await this.getmyListData();
    this.getmyUnListData();
+   this.stakingParameters();
   },
   methods: {
    link(operator_address){
@@ -345,6 +362,18 @@ export default {
       }
       
     },
+    async stakingParameters(){
+       try {
+         let res = await ipc.callMain("stakingParameters", {});
+         if(res.state){
+           console.log('--')
+           console.log(res)
+           this.$data.dataParameters=res.data;
+         }
+       } catch (error) {
+         
+       }
+    }
   },
   components: {
     MyTable

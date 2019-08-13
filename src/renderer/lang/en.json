@@ -161,7 +161,7 @@
       "action":{
         "not_transfer_LAMB_to_yourself":"You can't transfer LAMB to yourself.",
         "check_balance_amount_transfer":"Please check the balance and the amount of transfer.",
-        "Check_forwarding_address":"Check the forwarding address",
+        "Check_forwarding_address":"Check the  address",
         "Check_the_amount":"Check the amount"
       }
     },

@@ -58,6 +58,7 @@
 <script>
 import eventhub from "../../common/js/event.js";
 const ipc = require("electron-better-ipc");
+import isaddress from "../../../utils/isaddress"
 
 export default {
   props: {
@@ -78,14 +79,14 @@ export default {
     preSendLAMB() {
       let from = this.address;
       let to = this.Tovalue;
-      let value = parseFloat(this.LAMBvalue);
+      let value = this.LAMBvalue;
       if (to == from) {
         this.$Notice.warning({
           title: this.$t("home.action.not_transfer_LAMB_to_yourself")
         });
         return;
       }
-      if (value <= 0 || value > this.$data.denomBlance) {
+      if (this.bigLess0OrGreater(value,this.$data.denomBlance) ) {
         // need to alert
         this.$Notice.warning({
           title: this.$t("home.action.check_balance_amount_transfer")
@@ -94,14 +95,14 @@ export default {
       }
       // value = wUtils.numberToBig(value) ;
       // 还需要新的校验地址方法
-      // if (Utils.isAddress(to) == false) {
-      //   // need to alert
-      //   this.$Notice.warning({
-      //     title:this.$t('home.action.Check_forwarding_address')
-      //   });
+      if (isaddress(to) == false) {
+        // need to alert
+        this.$Notice.warning({
+          title:this.$t('home.action.Check_forwarding_address')
+        });
 
-      //   return;
-      // }
+        return;
+      }
 
       if (isNaN(value)) {
         this.$Notice.warning({

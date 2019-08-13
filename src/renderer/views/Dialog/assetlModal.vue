@@ -107,10 +107,10 @@ export default {
     },
     AssetLAMBvalueChane() {
       console.log("- -");
-      this.$data.AssetSTOvalue = this.$data.AssetLAMBvalue / 1000;
+      this.$data.AssetSTOvalue =this.bigNum(this.$data.AssetLAMBvalue).div(1000).toNumber()  ;
     },
     AssetSTOvalueChane() {
-      this.$data.AssetLAMBvalue = this.$data.AssetSTOvalue * 1000;
+      this.$data.AssetLAMBvalue = this.bigNum( this.$data.AssetSTOvalue).times(1000).toNumber()  ;
     },
     sendcancel(){
       this.$data.AssetlModal=false
@@ -119,13 +119,7 @@ export default {
       // this.LAMBvalue=this.$data.DistributionReward;
       // let value = parseFloat(this.LAMBvalue);
 
-      // if (value <= 0 || value > this.$data.balance ) {
-      //   // need to alert
-      //   this.$Notice.warning({
-      //     title: this.$t('home.action.check_balance_amount_transfer')
-      //   });
-      //   return;
-      // }
+      
 
       console.log(this.$data.exchangesStatus);
 
@@ -139,7 +133,27 @@ export default {
         });
         return;
       }
-      if (this.$data.exchangesStatus == "false") {
+      
+      if(this.$data.exchangesStatus == "true"){
+         if (this.bigLess0OrGreater(AssetLAMBvalue,this.$data.amountBlance)) {
+            this.$Notice.warning({
+              title: this.$t('home.action.check_balance_amount_transfer')
+            });
+            return;
+          }
+        
+      }else{
+        if (this.bigLess0OrGreater(sto,this.balanceSto)) {
+            this.$Notice.warning({
+              title: this.$t('home.action.check_balance_amount_transfer')
+            });
+            return;
+          }
+
+      }
+      
+
+      if (this.$data.exchangesStatus == "false") {  
         this.transferAsset(AssetLAMBvalue, sto, false);
       } else {
         this.transferAsset(AssetLAMBvalue, sto, true);
@@ -185,7 +199,10 @@ export default {
     },
     coinTypeShow(){
       return this.$data.coinType.toUpperCase();
-    }
+    },
+    balanceSto:function(){
+      return this.$store.getters.getbalanceSto;
+    },
   }
 };
 </script>

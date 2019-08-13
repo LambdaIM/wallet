@@ -92,7 +92,7 @@ export default {
         return;
       }
       if(this.$data.isdege){
-         if (value <= 0 || value > this.balance) {
+         if (this.this.bigLess0OrGreater(value,this.balance)) {
         // need to alert
             this.$Notice.warning({
               title: this.$t("home.action.check_balance_amount_transfer")
@@ -101,7 +101,7 @@ export default {
           }
 
       }else{
-        if (value <= 0 || value > this.$data.shares) {
+        if (this.this.bigLess0OrGreater(value,this.$data.shares)) {
         // need to alert
             this.$Notice.warning({
               title: this.$t("home.action.check_balance_amount_transfer")

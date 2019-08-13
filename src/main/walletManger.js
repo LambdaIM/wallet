@@ -1,19 +1,19 @@
 
 
-// var ETHwallet = require('./ETHv3wallet.js');
+
 var fs = require('graceful-fs')
 var log = require('../log').log;
 var { DAEMON_CONFIG } = require('../configmain.js');
 var TenderKeys = require('tendermintelectronkey')
 
-import ETHwallet from './ETHv3wallet.js'
+
 const settings = require("electron-settings");
 const axios = require('axios');
 var protobuf = require("protobufjs");
 const path = require('path');
 
 
-import Amino from 'irisnet-crypto/chains/iris/amino.js';
+
 var crypto = require("crypto");
 var BigInteger = require('bigi');
 import bigInter from './bigInter';

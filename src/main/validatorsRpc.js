@@ -86,6 +86,22 @@ import CosmosAPI from "@lunie/cosmos-api"
       throw resultView(null,false,ex)
     }
   })
+  eipc.answerRenderer('stakingParameters',async(query)=>{
+    
+
+    try{
+      
+      var result = await  cosmosapi.get.stakingParameters();
+        
+        return resultView(result,true)
+
+    }catch(ex){
+      throw resultView(null,false,ex)
+    }
+  })
+
+
+  
 
   
   

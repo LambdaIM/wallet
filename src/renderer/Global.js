@@ -10,5 +10,13 @@ export default {
             var bigvalue=new BigNumber(value);
             return bigvalue;
         }
+
+        Vue.prototype.bigLess0OrGreater = function(num,GreaterNum){
+            if (this.bigNum(num).isLessThanOrEqualTo(0)  || this.bigNum(num).isGreaterThan(GreaterNum)  ){
+                return true
+            }else{
+                return false
+            }
+        }
     }
 }

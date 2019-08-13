@@ -145,7 +145,7 @@
 import MyTable from "@/components/common/useful/Mytable.vue";
 import Mycard from "@/components/common/useful/Mycard.vue";
 const ipc = require("electron-better-ipc");
-import eventhub from "../common/js/event.js";
+import eventhub from "../../common/js/event.js";
 import StakingModelDialog from '@/views/Dialog/stakingModel.vue'
 
 export default {

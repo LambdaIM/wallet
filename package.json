@@ -51,7 +51,7 @@
         }
     },
     "dependencies": {
-        "@lunie/cosmos-api": "^0.1.1",
+        "@lunie/cosmos-api": "https://github.com/qqqzhch/cosmos-api.git",
         "axios": "^0.18.0",
         "bcryptjs": "https://github.com/qqqzhch/bcrypt.js.git",
         "bigi": "^1.4.2",
@@ -67,7 +67,6 @@
         "express": "^4.16.4",
         "graceful-fs": "^4.1.15",
         "husky": "^3.0.2",
-        "irisnet-crypto": "https://github.com/qqqzhch/irisnet-crypto.git",
         "iview": "^3.2.0",
         "js-base64": "^2.5.1",
         "moment": "^2.24.0",

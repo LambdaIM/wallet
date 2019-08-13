@@ -67,13 +67,13 @@ settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH,'set.json') );
         path: '/staking',
         name: 'Staking',
         component: () =>
-            import('@/views/Staking.vue')
+            import('@/views/staking/Staking.vue')
     },
     {
         path: '/stakinginfo/:operator_address',
         name: 'Stakinginfo',
         component: () =>
-            import('@/views/Stakinginfo.vue')
+            import('@/views/staking/Stakinginfo.vue')
     },
     {
         path: '*',
