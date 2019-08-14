@@ -233,7 +233,23 @@
       "Explain":{
           "unbonding_time":"Unbonding time:",
           "max_validators":"Max validators:",
-          "bond_denom":"Token type:"
+          "bond_denom":"Token type:",
+          "unit":"dyas"
       }
+  },
+  "stakinginfo":{
+    "title":"Node details",
+    "Nickname":"Nickname",
+    "Mypledge":"My pledge",
+    "PledgeAddress":"Pledge address",
+    "details":"Details",
+    "commission":"Commission",
+    "maxcommission":"Max commission",
+    "max_change_rate":"Max commission change rate",
+    "VotingPower":"Voting Power",
+    "pledge":"Pledge",
+    "Cancelpledge":"Cancel pledge"
   }
+
+
 }

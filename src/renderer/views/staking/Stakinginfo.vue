@@ -1,34 +1,34 @@
 <template>
   <div class="customer-container">
-    <Mycard cardtitle="节点详情" class="mt20" v-if="validator!=null">
+    <Mycard :cardtitle="$t('stakinginfo.title')" class="mt20" v-if="validator!=null">
       <div class="transaction-content" slot="card-content">
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">昵称:</span>
+            <span class="title">{{$t('stakinginfo.Nickname')}}:</span>
           </Col>
           <Col span="16" class-name="content-wrapper">
             <a class="item-value">{{validator.description.moniker}}</a>
           </Col>
           <Col span="4" class-name="title-wrapper">
-            <Button @click="openSend" type="primary">质押</Button>
+            <Button @click="openSend" type="primary">{{$t('stakinginfo.pledge')}}</Button>
             
           </Col>
         </Row>
         <Row v-if="shares!=null" class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">我的质押量:</span>
+            <span class="title">{{$t('stakinginfo.Mypledge')}}:</span>
           </Col>
           <Col span="16" class-name="content-wrapper">
-            <a class="item-value">{{shares}}</a>
+            <a class="item-value">{{shares|Lambformat}}</a>
           </Col>
           <Col span="4" class-name="title-wrapper">
             
-            <Button @click="openUndelegate" v-if="shares!=null" type="primary">取消质押</Button>
+            <Button @click="openUndelegate" v-if="shares!=null" type="primary">{{$t('stakinginfo.Cancelpledge')}}</Button>
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">地址:</span>
+            <span class="title">{{$t('stakinginfo.PledgeAddress')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a class="item-value">{{validator.operator_address}}</a>
@@ -36,15 +36,16 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">简介:</span>
+            <span class="title">{{$t('stakinginfo.details')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a class="item-value">{{validator.description.details||'--'}}</a>
           </Col>
         </Row>
+        
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">佣金:</span>
+            <span class="title">{{$t('stakinginfo.commission')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a class="item-value">{{validator.commission.rate|Percentformat}}</a>
@@ -52,15 +53,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">佣金:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.commission.rate|Percentformat}}</a>
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">最大佣金:</span>
+            <span class="title">{{$t('stakinginfo.maxcommission')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a class="item-value">{{validator.commission.max_rate|Percentformat}}</a>
@@ -68,7 +61,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">最大佣金变化:</span>
+            <span class="title">{{$t('stakinginfo.max_change_rate')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a class="item-value">{{validator.commission.max_change_rate|Percentformat}}</a>
@@ -76,7 +69,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">投票权重:</span>
+            <span class="title">{{$t('stakinginfo.VotingPower')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a class="item-value">{{validator.tokens/pool.bonded_tokens|Percentformat}}</a>

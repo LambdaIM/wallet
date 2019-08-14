@@ -227,7 +227,21 @@
       "Explain":{
           "unbonding_time":"解绑等待时间:",
           "max_validators":"最大验证节点数量:",
-          "bond_denom":"质押的token类型:"
+          "bond_denom":"质押的token类型:",
+          "unit":"天"
       }
+  },
+  "stakinginfo":{
+    "title":"节点详情",
+    "Nickname":"昵称",
+    "Mypledge":"我的质押",
+    "PledgeAddress":"质押地址",
+    "details":"简介",
+    "commission":"佣金",
+    "maxcommission":"最大佣金",
+    "max_change_rate":"最大佣金变化",
+    "VotingPower":"投票权重",
+    "pledge":"质押",
+    "Cancelpledge":"取消质押"
   }
 }

@@ -63,7 +63,7 @@
         <TabPane :label="$t('staking.ExplainTab')" >
               <Form  :model="dataParameters" :label-width="150">
                   <FormItem  :label="$t('staking.Explain.unbonding_time')">
-                    {{dataParameters.unbonding_time/(1000*1000*1000*60*60*24)}}天
+                    {{dataParameters.unbonding_time/(1000*1000*1000*60*60*24)}}{{$t('staking.Explain.unit')}}
                   </FormItem>
                   <FormItem  :label="$t('staking.Explain.max_validators')">
                     {{dataParameters.max_validators}}
