@@ -171,9 +171,9 @@ export default {
     },
     isdegeTxt:function(){
       if(this.$data.isdege){
-        return "质押"
+        return  this.$t('Dialog.stakingModel.title1') 
       }else{
-        return "取消质押"
+        return  this.$t('Dialog.stakingModel.title2') 
       }
     }
   }

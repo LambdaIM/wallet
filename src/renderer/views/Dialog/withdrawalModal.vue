@@ -3,7 +3,7 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="提取奖励（一次只能从5个验证节点中提取奖励）"
+      :title="$t('Dialog.withdrawalModal.title')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >

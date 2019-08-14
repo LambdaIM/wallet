@@ -144,7 +144,7 @@
           "no_Transaction": "无交易"
       },
       "Modal1": {
-          "Send_LAMB": "发送 lambda",
+          "Send_LAMB": "发送 {0}",
           "From": "发送方",
           "To": "接收方",
           "Amount": "金额",
@@ -243,5 +243,14 @@
     "VotingPower":"投票权重",
     "pledge":"质押",
     "Cancelpledge":"取消质押"
+  },
+  "Dialog":{
+      "withdrawalModal":{
+          "title":"提取奖励（一次只能从5个验证节点中提取奖励）"
+      },
+      "stakingModel":{
+          "title1":"质押",
+          "title2":"取消质押"
+      }
   }
 }

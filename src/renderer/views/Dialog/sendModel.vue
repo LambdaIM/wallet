@@ -166,7 +166,7 @@ export default {
       return this.$data.denom.toUpperCase()
     },
     denomtitleShow:function(){
-      return "发送" +this.$data.denom.toUpperCase()
+      return this.$t('home.Modal1.Send_LAMB',[this.$data.denom.toUpperCase()])
     }
   }
 };
