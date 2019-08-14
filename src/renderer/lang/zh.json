@@ -129,6 +129,8 @@
       "Balance": "余额",
       "Latest_Transaction": "最新交易记录",
       "Transfer": "交易",
+      "Reward":"奖励",
+      "Withdraw":"提取奖励",
       "profits_pledge_system": "挖矿奖励与质押系统的提现额度有关。详情请参阅质押系统。",
       "View_Detail": "查看详情",
       "table": {
@@ -151,6 +153,14 @@
           "Transfer": "交易",
           "Confirm": "确认",
           "LAMB": "LAMB"
+      },
+      "Token":{
+          "name":"名称",
+          "amount":"数量",
+          "operation":"操作",
+          "Transfer":"交易",
+          "Exchange":"兑换"
+
       },
       "action": {
           "not_transfer_LAMB_to_yourself": "你不能把LAMB发送给自己。",
@@ -191,6 +201,33 @@
           "Transaction_failure": "事务失败。",
           "Transaction_success": "事务成功",
           "Transaction_error": "事务处理错误"
+      }
+  },
+  "staking":{
+      "Mypledge":"我的质押",
+      "Validatorlist":"验证节点列表",
+      "Unpledge":"解绑中",
+      "ExplainTab":"说明",
+      "pledgeTable":{
+          "Nickname":"昵称",
+          "Mypledge":"我的质押",
+          "Myreward":"我的奖励",
+          "PledgeAddress":"质押地址",
+          "Commission":"佣金",
+          "VotingPower":"投票权重",
+          "State":"状态"
+      },
+      "UnpledgeTable":{
+        "PledgeAddress":"质押地址",
+        "UntyingAddress":"解绑地址",
+        "Blockheight":"区块高度",
+        "Amount":"金额(LAMB)",
+        "Completiontime":"完成时间"
+      },
+      "Explain":{
+          "unbonding_time":"解绑等待时间:",
+          "max_validators":"最大验证节点数量:",
+          "bond_denom":"质押的token类型:"
       }
   }
 }

@@ -1,15 +1,15 @@
 <template>
   <div class="container">
     <p class="balance">
-      可用资产: {{balance|Lambformat}} 
-      奖励 :{{DistributionReward|Lambformat}} 
+      {{$t('home.Balance')}}: {{balance|Lambformat}} 
+      {{$t('home.Reward')}} :{{DistributionReward|Lambformat}} 
       <!-- <span style="color:green">
         <a @click="openvalidator">{{ $t("home.profits_pledge_system") }}</a>
       </span>-->
     </p>
     <div style="width:94%;    margin: 0 auto;">
       <Tabs>
-        <TabPane label="最新交易记录">
+        <TabPane :label="$t('home.Latest_Transaction')">
           <Table :loading="loading" :columns="columns" :data="data">
             <template slot-scope="{ row, index }" slot="from">
               <Poptip word-wrap trigger="hover" width="200" :content="row.from">
@@ -35,9 +35,9 @@
         <TabPane label="Token">
           <Table :columns="columnsToken" :data="coinList">
             <template slot-scope="{ row, index }" slot="action">
-              <Button @click="cointransaction(row)" type="primary" size="small">交易</Button>
+              <Button @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
-              <Button v-if="row.denom!='sto'" @click="openAssert(row)" size="small">兑换</Button>
+              <Button v-if="row.denom!='sto'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
             </template>
           </Table>
         </TabPane>
@@ -48,7 +48,7 @@
           </Button>
 &nbsp; &nbsp;
           <Button slot="extra" @click="openwithdrawalModal()">
-            提取奖励
+            {{$t('home.Withdraw')}}
             <Icon type="md-swap"></Icon>
           </Button>
 &nbsp; &nbsp;
@@ -166,15 +166,15 @@ export default {
       DistributionReward: 0,
       columnsToken: [
         {
-          title: "名称",
+          title: this.$t('home.Token.name'),
           key: "denom"
         },
         {
-          title: "数量",
+          title: this.$t('home.Token.amount'),
           key: "amount"
         },
         {
-          title: "操作",
+          title: this.$t('home.Token.operation'),
           key: "action",
           slot: "action"
         }
@@ -293,7 +293,7 @@ export default {
 
           // this.$data.Totalblance = Totalblance  ;
           this.$data.DistributionReward = DistributionReward;
-          this.$data.coinList = res.data.Liquid.coins;
+          this.$data.coinList = res.data.Liquid.coins||[];
 
           console.log(this.balance);
         } catch (ex) {

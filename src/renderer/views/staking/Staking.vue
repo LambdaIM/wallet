@@ -2,7 +2,7 @@
   <div class="customer-container">
   <div class="tableContainer">
        <Tabs >
-        <TabPane label="我的质押" >
+        <TabPane :label="$t('staking.Mypledge')" >
           <Table :columns="columnsme" :data="mydelegationsList" >
               <template slot-scope="{ row, index }" slot="payment">
                       {{row.commission.rate|Percentformat}}
@@ -29,7 +29,7 @@
                     
           </Table>
         </TabPane>
-        <TabPane label="验证节点列表" >
+        <TabPane :label="$t('staking.Validatorlist')" >
           <Table :columns="columns" :data="validatorsList" >
 
           <template slot-scope="{ row, index }" slot="payment">
@@ -50,7 +50,7 @@
           
           </Table>
         </TabPane>
-        <TabPane label="解绑中" >
+        <TabPane :label="$t('staking.Unpledge')" >
             <Table :columns="uncolumns" :data="myUndelegationsList" >
               
               <template slot-scope="{ row, index }" slot="completion_time">
@@ -60,15 +60,15 @@
             </Table>
 
         </TabPane>
-        <TabPane label="说明" >
+        <TabPane :label="$t('staking.ExplainTab')" >
               <Form  :model="dataParameters" :label-width="150">
-                  <FormItem  label="解绑等待时间:">
+                  <FormItem  :label="$t('staking.Explain.unbonding_time')">
                     {{dataParameters.unbonding_time/(1000*1000*1000*60*60*24)}}天
                   </FormItem>
-                  <FormItem  label="最大验证节点数量:">
+                  <FormItem  :label="$t('staking.Explain.max_validators')">
                     {{dataParameters.max_validators}}
                   </FormItem>
-                  <FormItem  label="质押的token类型:">
+                  <FormItem  :label="$t('staking.Explain.bond_denom')">
                     {{dataParameters.bond_denom}}
                   </FormItem>
              
@@ -94,29 +94,29 @@ export default {
     return {
       columns: [
         {
-          title: "昵称",
+          title: this.$t('staking.pledgeTable.Nickname'),
           key: "description",
           slot:'description'
         
           
         },
         {
-          title: "质押地址",
+          title: this.$t('staking.pledgeTable.PledgeAddress'),
           key: "operator_address",
           slot:'operator_address'
         },
         {
-          title: "佣金",
+          title: this.$t('staking.pledgeTable.Commission'),
           key: "payment",
           slot:'payment'
         },
         {
-          title: "投票权重",
+          title: this.$t('staking.pledgeTable.VotingPower'),
           key: "vote",
           slot:'vote'
         },
         {
-          title: "状态",
+          title: this.$t('staking.pledgeTable.State'),
           key: "status",
           render: (h, params) => {
             // console.log(params);
@@ -136,40 +136,40 @@ export default {
       ],
       columnsme: [
         {
-          title: "昵称",
+          title: this.$t('staking.pledgeTable.Nickname'),
           key: "description",
           slot:'description'
         
           
         },
         {
-          title: "我的质押",
+          title: this.$t('staking.pledgeTable.Mypledge'),
           key: "shares",
           slot: "shares",
           
         },
         {
-          title: "我的收益",
+          title: this.$t('staking.pledgeTable.Myreward'),
           key: "reward"
           
         },
         {
-          title: "质押地址",
+          title: this.$t('staking.pledgeTable.PledgeAddress'),
           key: "operator_address",
           slot:'operator_address'
         },
         {
-          title: "佣金",
+          title: this.$t('staking.pledgeTable.Commission'),
           key: "payment",
           slot:'payment'
         },
         {
-          title: "投票权重",
+          title: this.$t('staking.pledgeTable.VotingPower'),
           key: "vote",
           slot:'vote'
         },
         {
-          title: "状态",
+          title: this.$t('staking.pledgeTable.State'),
           key: "status",
           render: (h, params) => {
             // console.log(params);
@@ -192,23 +192,23 @@ export default {
       mydelegationsList:[],
       myUndelegationsList:[],
       uncolumns:[{
-          title: "质押地址",
+          title: this.$t('staking.UnpledgeTable.PledgeAddress'),
           key: "validator_address"
         },
         {
-          title: "解绑地址",
+          title: this.$t('staking.UnpledgeTable.UntyingAddress'),
           key: "delegator_address"
         },
         {
-          title: "区块高度",
+          title: this.$t('staking.UnpledgeTable.Blockheight'),
           key: "creation_height",
           
         },{
-          title: "解绑金额(lamb)",
+          title: this.$t('staking.UnpledgeTable.Amount'),
           key: "initial_balance",
           
         },{
-          title: "完成时间",
+          title: this.$t('staking.UnpledgeTable.Completiontime'),
           key: "completion_time",
           slot:'completion_time'
           

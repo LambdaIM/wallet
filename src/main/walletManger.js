@@ -380,7 +380,7 @@ walletManger.prototype.getDelegationsBalance =async  function () {
         })
 
     } 
-    return result;
+    return result.toString();
 }
 
 walletManger.prototype.getDistributionRewards = async function (){

@@ -133,6 +133,8 @@
     "home":{
       "Balance":"Balance",
       "Latest_Transaction":"Latest  Transaction Records",
+      "Reward":"Reward",
+      "Withdraw":"Withdraw",
       "Transfer":"Transfer",
       "profits_pledge_system":"The profits of miners'mining are related to the withdrawal amount in the storage miners' system. Details are referred to the pledge system",
       "View_Detail":"View Detail",
@@ -157,6 +159,14 @@
         "Transfer":"Transfer",
         "Confirm":"Confirm",
         "LAMB":"LAMB"
+      },
+      "Token":{
+        "name":"Name",
+        "amount":"Amount",
+        "operation":"Operation",
+        "Transfer":"Transfer",
+        "Exchange":"Exchange"
+
       },
       "action":{
         "not_transfer_LAMB_to_yourself":"You can't transfer LAMB to yourself.",
@@ -198,5 +208,32 @@
       "Transaction_success":"Transaction success",
       "Transaction_error":"Transaction error"
     }
+  },
+  "staking":{
+      "Mypledge":"My pledge",
+      "Validatorlist":"Validator list",
+      "Unpledge":"Unbundling",
+      "ExplainTab":"Explain",
+      "pledgeTable":{
+          "Nickname":"Nickname",
+          "Mypledge":"My pledge",
+          "Myreward":"My reward",
+          "PledgeAddress":"Pledge Address",
+          "Commission":"Commission",
+          "VotingPower":"Voting Power",
+          "State":"State"
+      },
+      "UnpledgeTable":{
+        "PledgeAddress":"Pledge Address",
+        "UntyingAddress":"unbonding Address",
+        "Blockheight":"Block height",
+        "Amount":"Amount(LAMB)",
+        "Completiontime":"Completion time"
+      },
+      "Explain":{
+          "unbonding_time":"Unbonding time:",
+          "max_validators":"Max validators:",
+          "bond_denom":"Token type:"
+      }
   }
 }
