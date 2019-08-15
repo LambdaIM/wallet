@@ -18,5 +18,23 @@ export default {
                 return false
             }
         }
+        Vue.prototype.bigNumTypeFormat = function (value,type) {
+            if(value=="" || value == undefined || value == null){
+                value=0;
+            }
+            var bigvalue=new BigNumber(value).div(1);
+            if(type=='lamb'){
+                return `${bigvalue.toFormat() } LAMB`;
+            }else if(type=='lambs'){
+                return `${bigvalue.toFormat() } LAMBS`;
+            }
+            else if(type=='sto'){
+                return `${bigvalue.toFormat() } STO`;
+            }else{
+                return `${bigvalue.toFormat() } ${type.toUpperCase()}`;
+            }
+            
+            
+        }
     }
 }

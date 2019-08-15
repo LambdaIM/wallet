@@ -34,6 +34,14 @@
         </TabPane>
         <TabPane label="Token">
           <Table :columns="columnsToken" :data="coinList">
+            
+            
+            <template slot-scope="{ row, index }" slot="amount">
+              {{bigNumTypeFormat(row.amount,row.denom)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="denom">
+              {{denomFormart(row.denom)}}
+            </template>
             <template slot-scope="{ row, index }" slot="action">
               <Button @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
@@ -167,11 +175,13 @@ export default {
       columnsToken: [
         {
           title: this.$t('home.Token.name'),
-          key: "denom"
+          key: "denom",
+          slot: "denom"
         },
         {
           title: this.$t('home.Token.amount'),
-          key: "amount"
+          key: "amount",
+          slot: "amount"
         },
         {
           title: this.$t('home.Token.operation'),
@@ -243,6 +253,10 @@ export default {
     openwithdrawalModal() {
       // this.$data.withdrawalModal=true;
       this.$refs.WithdrawalModalDialog.open();
+    },
+    denomFormart(denom){
+      //  return  denom..substr(1).toUpperCase()
+       return  denom.substr(0).toUpperCase()
     },
     toDetail(row, index) {
       console.log(row, index);
@@ -392,34 +406,34 @@ export default {
       if (msg0.value != undefined) {
         if (msg0.value.amount != undefined) {
           if (msg0.value.amount instanceof Array) {
-            result = msg0.value.amount[0].amount + msg0.value.amount[0].denom;
+            result = this.bigNumTypeFormat( msg0.value.amount[0].amount , msg0.value.amount[0].denom);
           } else {
-            result = msg0.value.amount.amount + msg0.value.amount.denom;
+            result =this.bigNumTypeFormat( msg0.value.amount.amount , msg0.value.amount.denom);
           }
         } else {
           if (msg0.type == "lambda/MsgAssetDrop") {
             result =
-              msg0.value.asset.amount +
-              msg0.value.asset.denom +
+              this.bigNumTypeFormat(msg0.value.asset.amount ,
+              msg0.value.asset.denom )+
               "->" +
-              msg0.value.coin.amount +
-              msg0.value.coin.denom;
+              this.bigNumTypeFormat(msg0.value.coin.amount ,
+              msg0.value.coin.denom);
           } else if (msg0.type == "lambda/MsgAssetPledge") {
             result =
-              msg0.value.token.amount +
-              msg0.value.token.denom +
+              this.bigNumTypeFormat(msg0.value.token.amount ,
+              msg0.value.token.denom )+
               "->" +
-              msg0.value.asset.amount +
-              msg0.value.asset.denom;
+              this.bigNumTypeFormat(msg0.value.asset.amount ,
+              msg0.value.asset.denom);
+          }else {
+            item.tags.forEach(item => {
+              if (item.key == "rewards") {
+                result = this.bigNumTypeFormat(item.value.replace('lamb',''),'lamb');
+              }
+            });
           }
         }
-      } else {
-        item.tags.forEach(item => {
-          if (item.key == "rewards") {
-            result = item.value;
-          }
-        });
-      }
+      } 
       return result;
     },
     getSendAddress(item) {

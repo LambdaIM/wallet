@@ -217,34 +217,34 @@ export default {
       if (msg0.value != undefined) {
         if (msg0.value.amount != undefined) {
           if (msg0.value.amount instanceof Array) {
-            result = msg0.value.amount[0].amount + msg0.value.amount[0].denom;
+            result = this.bigNumTypeFormat( msg0.value.amount[0].amount , msg0.value.amount[0].denom);
           } else {
-            result = msg0.value.amount.amount + msg0.value.amount.denom;
+            result =this.bigNumTypeFormat( msg0.value.amount.amount , msg0.value.amount.denom);
           }
         } else {
           if (msg0.type == "lambda/MsgAssetDrop") {
             result =
-              msg0.value.asset.amount +
-              msg0.value.asset.denom +
+              this.bigNumTypeFormat(msg0.value.asset.amount ,
+              msg0.value.asset.denom )+
               "->" +
-              msg0.value.coin.amount +
-              msg0.value.coin.denom;
+              this.bigNumTypeFormat(msg0.value.coin.amount ,
+              msg0.value.coin.denom);
           } else if (msg0.type == "lambda/MsgAssetPledge") {
             result =
-              msg0.value.token.amount +
-              msg0.value.token.denom +
+              this.bigNumTypeFormat(msg0.value.token.amount ,
+              msg0.value.token.denom )+
               "->" +
-              msg0.value.asset.amount +
-              msg0.value.asset.denom;
+              this.bigNumTypeFormat(msg0.value.asset.amount ,
+              msg0.value.asset.denom);
+          }else {
+            this.$data.data.tags.forEach(item => {
+              if (item.key == "rewards") {
+                result = this.bigNumTypeFormat(item.value.replace('lamb',''),'lamb');
+              }
+            });
           }
         }
-      } else {
-        item.tags.forEach(item => {
-          if (item.key == "rewards") {
-            result = item.value;
-          }
-        });
-      }
+      } 
       return result;
     },
     memo() {
