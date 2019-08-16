@@ -3,6 +3,7 @@
     "head": {
       "home": "Home",
       "miner": "Miner",
+      "partner":"Partner",
       "customer": "Customer",
       "validator": "Validator",
       "sign": "Sign",
@@ -231,9 +232,9 @@
         "Completiontime":"Completion time"
       },
       "Explain":{
-          "unbonding_time":"Unbonding time:",
-          "max_validators":"Max validators:",
-          "bond_denom":"Token type:",
+          "unbonding_time":"Unbonding time",
+          "max_validators":"Max validators",
+          "bond_denom":"Token type",
           "unit":"dyas"
       }
   },

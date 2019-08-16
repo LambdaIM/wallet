@@ -45,6 +45,12 @@
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
             <Col span="20" class-name="value">{{LAMBvalue}} LAMB</Col>
           </Row>
+          <Row class-name="item">
+            <Input v-model="gaseFee" >
+                              <span slot="prepend">Gas费用</span>
+                                <span slot="append">LAMB</span>
+                              </Input>
+          </Row>
         </div>
         <!-- <p>
           <Input v-model="walletPassword" type="password"></Input>
@@ -66,7 +72,8 @@ export default {
             confirmModal:false,
             Tovalue:'',
             LAMBvalue:'',
-            isdege:true
+            isdege:true,
+            gaseFee:0
         }
 
     },
@@ -147,9 +154,14 @@ export default {
         });
         // console.log(res);
         if (res.state) {
-          this.$data.transactiondata = res.data;
-          this.sendcancel();
-          this.confirmModal = true;
+          let gasres= await ipc.callMain("Simulate",{transactiondata:res.data})
+          if(gasres.state){
+            this.$data.gaseFee=gasres.data
+            this.$data.transactiondata = res.data;
+            this.sendcancel();
+            this.confirmModal = true;
+          }
+          
         }
       } catch (ex) {
         console.log(ex);
@@ -158,7 +170,7 @@ export default {
     confirm() {
       this.confirmModal = false;
       // this.passwordModal = true;
-      eventhub.$emit("TxConfirm", this.$data.transactiondata);
+      eventhub.$emit("TxConfirm", this.$data.transactiondata,this.$data.gaseFee);
     },
 
     },

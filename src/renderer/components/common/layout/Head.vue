@@ -27,16 +27,17 @@
         </div>
         <div class="head-menu-item">
           <router-link
-            to="/home"
-            class="item"
-          >{{ $t("head.miner") }}</router-link>
-        </div>
-        <div class="head-menu-item">
-          <router-link
             to="/staking"
             class="item"
           >{{ $t("head.validator") }}</router-link>
         </div>
+        <div class="head-menu-item">
+          <router-link
+            to="/home"
+            class="item"
+          >{{ $t("head.partner") }}</router-link>
+        </div>
+        
         <div class="head-menu-item">
           <router-link
             to="/sign"

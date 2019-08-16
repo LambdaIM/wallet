@@ -28,6 +28,12 @@
           <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
           <Col span="20" class-name="value">{{DistributionReward}} LAMB</Col>
         </Row>
+        <Row class-name="item">
+            <Input v-model="gaseFee" >
+                              <span slot="prepend">Gas费用</span>
+                                <span slot="append">LAMB</span>
+                              </Input>
+          </Row>
       </div>
       <!-- <p>
           <Input v-model="walletPassword" type="password"></Input>
@@ -45,7 +51,8 @@ export default {
   data() {
     return {
       withdrawalModal: false,
-      confirmModal: false
+      confirmModal: false,
+      gaseFee:0,
     };
   },
   methods: {
@@ -88,9 +95,16 @@ export default {
         });
         // console.log(res);
         if (res.state) {
-          this.$data.transactiondata=res.data
-          this.sendcancel();
-          this.confirmModal = true;
+          console.log(res.data)
+          let gasres= await ipc.callMain("Simulate",{transactiondata:res.data})
+          if(gasres.state){
+            this.$data.gaseFee=gasres.data
+            this.$data.transactiondata=res.data
+            this.sendcancel();
+            this.confirmModal = true;
+
+          }
+          
         }
       } catch (ex) {
         console.log(ex);
@@ -103,7 +117,7 @@ export default {
     confirm() {
       this.confirmModal = false;
       console.log(this.$data.transactiondata)
-      eventhub.$emit('TxConfirm',this.$data.transactiondata);
+      eventhub.$emit('TxConfirm',this.$data.transactiondata,this.$data.gaseFee);
 
 
     },

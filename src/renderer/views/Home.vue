@@ -8,9 +8,9 @@
       </span>-->
     </p>
     <div style="width:94%;    margin: 0 auto;">
-      <Tabs>
-        <TabPane :label="$t('home.Latest_Transaction')">
-          <Table :loading="loading" :columns="columns" :data="data">
+      <Tabs >
+        <TabPane :label="$t('home.Latest_Transaction')" >
+          <Table size="large" :loading="loading" :columns="columns" :data="data">
             <template slot-scope="{ row, index }" slot="from">
               <Poptip word-wrap trigger="hover" width="200" :content="row.from">
                 <span class="etc">{{row.from}}</span>

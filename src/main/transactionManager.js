@@ -40,8 +40,8 @@ class Transaction {
       })
     }
     
-    console.log(result)
-    console.log('getTransactionList')
+    
+    
     // var address =this.defaultAddress;
     // console.log(address);
 

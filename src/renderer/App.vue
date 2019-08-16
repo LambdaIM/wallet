@@ -38,12 +38,13 @@ export default {
 
   },
   mounted() {
-    eventHub.$on("TxConfirm", (data) => {
+    eventHub.$on("TxConfirm", (data,gaseFee) => {
       console.log('TxConfirm');
       console.log(data);
       this.$data.txdata=data
       this.$data.passwordModal=true;
       this.$data.loadingsendLAMBTx=false;
+      this.$data.gaseFee=gaseFee;
     });
   },
   methods: {
@@ -57,7 +58,8 @@ export default {
       ipc
         .callMain("transferConfirm", {
           password: this.$data.walletPassword,
-          transactiondata: this.$data.txdata
+          transactiondata: this.$data.txdata,
+          gaseFee:this.$data.gaseFee
         })
         .then(function(data) {
           if (data.state == false) {

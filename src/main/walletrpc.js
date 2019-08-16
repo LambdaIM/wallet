@@ -281,15 +281,24 @@ export default  function(){
         
     })
 
-
+    eipc.answerRenderer('Simulate',async(query)=>{
+        var {transactiondata} = query;
+        
+        try{
+            var data = await WM.Simulate(transactiondata);   
+            return resultView(data,true)
+        }catch(ex){
+            throw resultView(null,false,ex)
+        }
+    })
 
     eipc.answerRenderer('transferConfirm',async(query)=>{
         log.info('transferConfirm rpc')
-        var {password,transactiondata} = query;
-        log.info(password);
-        log.info(transactiondata);
+        var {password,transactiondata,gaseFee} = query;
+        
+        
         try{
-            var data = await WM.TransferConfirm(password,transactiondata);   
+            var data = await WM.TransferConfirm(password,transactiondata,gaseFee);   
             return resultView(data,true)
         }catch(ex){
             throw resultView(null,false,ex)

@@ -3,7 +3,7 @@
   <div class="tableContainer">
        <Tabs >
         <TabPane :label="$t('staking.Mypledge')" >
-          <Table :columns="columnsme" :data="mydelegationsList" >
+          <Table size="large" :columns="columnsme" :data="mydelegationsList" >
               <template slot-scope="{ row, index }" slot="payment">
                       {{row.commission.rate|Percentformat}}
                     </template>
@@ -29,8 +29,8 @@
                     
           </Table>
         </TabPane>
-        <TabPane :label="$t('staking.Validatorlist')" >
-          <Table :columns="columns" :data="validatorsList" >
+        <TabPane  :label="$t('staking.Validatorlist')" >
+          <Table size="large" :columns="columns" :data="validatorsList" >
 
           <template slot-scope="{ row, index }" slot="payment">
             {{row.commission.rate|Percentformat}}
@@ -51,18 +51,22 @@
           </Table>
         </TabPane>
         <TabPane :label="$t('staking.Unpledge')" >
-            <Table :columns="uncolumns" :data="myUndelegationsList" >
-              
+
+            <Table size="large" :columns="uncolumns" :data="myUndelegationsList" >    
               <template slot-scope="{ row, index }" slot="completion_time">
                 {{row.completion_time|formatDate}}
               </template>
-        
             </Table>
 
         </TabPane>
         <TabPane :label="$t('staking.ExplainTab')" >
-              <Form  :model="dataParameters" :label-width="150">
-                  <FormItem  :label="$t('staking.Explain.unbonding_time')">
+          <ul class="ulpanel">
+            <li>{{$t('staking.Explain.unbonding_time')}}:{{dataParameters.unbonding_time/(1000*1000*1000*60*60*24)}}{{$t('staking.Explain.unit')}}</li>
+            <li>{{$t('staking.Explain.max_validators')}}:{{dataParameters.max_validators}}</li>
+            <li>{{$t('staking.Explain.bond_denom')}}:{{dataParameters.bond_denom}}</li>
+          </ul>
+              <!-- <Form   :model="dataParameters" :label-width="150">
+                  <FormItem   :label="$t('staking.Explain.unbonding_time')">
                     {{dataParameters.unbonding_time/(1000*1000*1000*60*60*24)}}{{$t('staking.Explain.unit')}}
                   </FormItem>
                   <FormItem  :label="$t('staking.Explain.max_validators')">
@@ -72,7 +76,7 @@
                     {{dataParameters.bond_denom}}
                   </FormItem>
              
-              </Form>
+              </Form> -->
 
         </TabPane>
     </Tabs>
@@ -397,6 +401,13 @@ export default {
     width: 94%;
     margin: 0 auto;
     margin-top: 40px;
+  }
+}
+.ulpanel{
+  margin-left: 30px;
+  li{
+    font-size: 14px;
+    line-height: 28px;
   }
 }
 </style>

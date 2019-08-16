@@ -2,6 +2,7 @@
   "head": {
       "home": "首页",
       "miner": "矿工",
+      "partner":"合伙人",
       "customer": "顾客",
       "validator": "验证节点",
       "sign": "签名",
@@ -225,9 +226,9 @@
         "Completiontime":"完成时间"
       },
       "Explain":{
-          "unbonding_time":"解绑等待时间:",
-          "max_validators":"最大验证节点数量:",
-          "bond_denom":"质押的token类型:",
+          "unbonding_time":"解绑等待时间",
+          "max_validators":"最大验证节点数量",
+          "bond_denom":"质押的token类型",
           "unit":"天"
       }
   },

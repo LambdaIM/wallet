@@ -44,6 +44,12 @@
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
             <Col span="20" class-name="value">{{LAMBvalue}} {{denomShow}}</Col>
           </Row>
+          <Row class-name="item">
+            <Input v-model="gaseFee" >
+                              <span slot="prepend">Gas费用</span>
+                                <span slot="append">LAMB</span>
+                              </Input>
+          </Row>
           
         </div>
         <!-- <p>
@@ -60,6 +66,7 @@ import eventhub from "../../common/js/event.js";
 const ipc = require("electron-better-ipc");
 import isaddress from "../../../utils/isaddress"
 
+
 export default {
   props: {
 
@@ -72,7 +79,8 @@ export default {
       LAMBvalue: "",
       to:"",
       Tovalue:'',
-      denomBlance:''
+      denomBlance:'',
+      gaseFee:0
     };
   },
   methods: {
@@ -128,9 +136,14 @@ export default {
         });
         // console.log(res);
         if (res.state) {
-          this.sendcancel();
-          this.confirmModal=true;
-          this.$data.transactiondata  = res.data;
+          let gasres= await ipc.callMain("Simulate",{transactiondata:res.data})
+          if(gasres.state){
+            console.log(gasres.data)
+            this.$data.gaseFee=gasres.data
+            this.confirmModal=true;
+            this.$data.transactiondata  = res.data;
+            this.sendcancel();
+          }
           //触发事件活着回掉函数
         }
       } catch (ex) {
@@ -140,7 +153,7 @@ export default {
     confirm() {
       this.confirmModal = false;
       console.log(this.$data.transactiondata)
-      eventhub.$emit('TxConfirm',this.$data.transactiondata);
+      eventhub.$emit('TxConfirm',this.$data.transactiondata,this.$data.gaseFee);
 
 
     },
