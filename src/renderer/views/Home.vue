@@ -105,7 +105,7 @@ export default {
   data() {
     return {
       stateType: null,
-      balance: 0,
+      
       address: "",
       sendModal: false,
       columns: [
@@ -170,8 +170,8 @@ export default {
       sum: null,
       pageNumber: 1,
       loading: true,
-      Totalblance: 0,
-      DistributionReward: 0,
+      
+      
       columnsToken: [
         {
           title: this.$t('home.Token.name'),
@@ -194,8 +194,7 @@ export default {
       AssetLAMBvalue: "",
       AssetSTOvalue: "",
       assetConfirmModal: false,
-      exchangesStatus: "true",
-      coinList: []
+      exchangesStatus: "true"
     };
   },
   components: {
@@ -208,24 +207,30 @@ export default {
     amount: value => {
       console.log(value);
     },
-    STOcounter() {
-      return this.$data.AssetLAMBvalue / 1000;
+    balance:function(){
+      return this.$store.getters.getblance;
+    },
+    DistributionReward:function(){
+      return this.$store.getters.getDistributionReward;
+    },
+    coinList:function(){
+      return this.$store.getters.getcoinList;
     }
   },
   async mounted() {
     this.address = await this.WalletBasicinfo();
 
-    this.getBalance();
+    
     this.transactionList();
 
     this.Interval = setInterval(() => {
-      this.getBalance();
+      
       this.transactionList();
     }, 1000 * 15);
 
     eventhub.$on("TransactionSuccess", data => {
       console.log("TransactionSuccess");
-      this.getBalance();
+      
       this.transactionList();
     });
 
@@ -275,45 +280,6 @@ export default {
     },
     cointransaction(row) {
       this.$refs.SendModelDialog.open(row.amount, row.denom);
-    },
-    getBalance() {
-      // console.log("importWallet");
-      if (this.$data.timeid != undefined) {
-        clearTimeout(this.$data.timeid);
-      }
-
-      this.$data.timeid = setTimeout(async () => {
-        try {
-          var res = await ipc.callMain("defaultWalletBlance", {});
-          if (!res.state) return;
-          // this.address = res.data.address;
-          // this.$store.dispatch("setaddress", this.address);
-          this.balance = res.data.Liquid.balance ;
-          this.balanceSto = res.data.Liquid.balanceSto ;
-          var DistributionReward = 0;
-          if (res.data.DistributionReward instanceof Array) {
-            res.data.DistributionReward.forEach(item => {
-              if (item.denom == "ulamb") {
-                DistributionReward = item.amount || 0;
-              }
-            });
-          }
-
-          // var Totalblance = (res.data.Delegation-0)+this.balance + (DistributionReward-0);
-          this.$store.dispatch("setblance", this.balance);
-          // this.$store.dispatch("setTotalblance",Totalblance);
-          this.$store.dispatch("setDistributionReward", DistributionReward);
-          this.$store.dispatch("setbalanceSto", this.balanceSto);
-
-          // this.$data.Totalblance = Totalblance  ;
-          this.$data.DistributionReward = DistributionReward;
-          this.$data.coinList = res.data.Liquid.coins||[];
-
-          console.log(this.balance);
-        } catch (ex) {
-          console.log(ex);
-        }
-      }, 1000);
     },
     async transactionList(pagenum) {
       console.log("transactionList");

@@ -4,7 +4,8 @@ const state = {
   loginState: false,
   Totalblance:0,
   DistributionReward:0,
-  balanceSto:0
+  balanceSto:0,
+  coinList:[]
 }
 
 console.log('--------***************');
@@ -28,6 +29,9 @@ const mutations = {
   },
   setbalanceSto:function(state,balanceSto){
     state.balanceSto = balanceSto;
+  },
+  setcoinList:function(state,list){
+    state.coinList = list;
   }
 }
 
@@ -52,6 +56,9 @@ const actions = {
   },
   setbalanceSto:function(context,balanceSto){
     context.commit('setbalanceSto', balanceSto)
+  },
+  setcoinList:function(context,list){
+    context.commit('setcoinList', list)
   }
 }
 const getters = {
@@ -69,6 +76,9 @@ const getters = {
   },
   getbalanceSto(state){
     return state.balanceSto
+  },
+  getcoinList(state){
+    return state.coinList
   }
 }
 

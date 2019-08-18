@@ -234,7 +234,8 @@
       }
   },
   "stakinginfo":{
-    "title":"节点详情",
+    "title":"验证节点详情",
+    "titlepartner":"合伙人节点详情",
     "Nickname":"昵称",
     "Mypledge":"我的质押",
     "PledgeAddress":"质押地址",

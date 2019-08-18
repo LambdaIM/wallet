@@ -241,6 +241,7 @@
   },
   "stakinginfo":{
     "title":"Node details",
+    "titlepartner":"Partner Node details",
     "Nickname":"Nickname",
     "Mypledge":"My pledge",
     "PledgeAddress":"Pledge address",

@@ -161,6 +161,11 @@ export default {
     this.$data.Tovalue = this.$route.params.operator_address;
     var r1 = await this.getinfo(operator_address);
     var r2 = await this.getmyListData(operator_address);
+    eventhub.$on("TransactionSuccess", async(data) => {
+      console.log("TransactionSuccess");
+      var r1 = await this.getinfo(operator_address);
+      var r2 = await this.getmyListData(operator_address);
+    });
   },
   methods: {
     openSend() {

@@ -197,6 +197,7 @@
 <script>
   const ipc = require("electron-better-ipc");
   const settings = require("electron-settings");
+  import eventhub from "../../../common/js/event.js";
   import { mapState } from "vuex";
   export default {
     data() {
@@ -218,6 +219,12 @@
       if (login) {
         this.WalletBasicinfo();
       }
+      eventhub.$on("TransactionSuccess", data => {
+        console.log("TransactionSuccess");
+        this.getBalance();
+        
+        
+      });
     },
     beforeUpdate() {
       let login = settings.get("isopenfile");
@@ -233,8 +240,49 @@
       onError(e) {
         this.$Message.info(this.$t("head.action.Failed_to_copy_texts"));
       },
+      getBalance() {
+      // console.log("importWallet");
+      if (this.$data.timeid != undefined) {
+        clearTimeout(this.$data.timeid);
+      }
+
+      this.$data.timeid = setTimeout(async () => {
+        try {
+          var res = await ipc.callMain("defaultWalletBlance", {});
+          if (!res.state) return;
+
+          var balance = res.data.Liquid.balance ;
+          var balanceSto = res.data.Liquid.balanceSto ;
+          var coinList = res.data.Liquid.coins||[];
+          var DistributionReward = 0;
+          if (res.data.DistributionReward instanceof Array) {
+            res.data.DistributionReward.forEach(item => {
+              if (item.denom == "ulamb") {
+                DistributionReward = item.amount || 0;
+              }
+            });
+          }
+
+          
+          this.$store.dispatch("setblance", balance);
+          this.$store.dispatch("setDistributionReward", DistributionReward);
+          this.$store.dispatch("setbalanceSto", balanceSto);
+          this.$store.dispatch("setcoinList", coinList);
+
+      
+          
+
+          
+        } catch (ex) {
+          console.log(ex);
+        }
+      }, 1000);
+    },
       async WalletBasicinfo() {
         console.log("WalletBasicinfo");
+        /////读取余额
+        this.getBalance();
+        /////
         try {
           let res = await ipc.callMain("defaultWalletBasicinfo", {});
           console.log(res);

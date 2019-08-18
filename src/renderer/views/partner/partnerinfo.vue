@@ -1,6 +1,6 @@
 <template>
   <div class="customer-container">
-    <Mycard :cardtitle="$t('stakinginfo.title')" class="mt20" v-if="validator!=null">
+    <Mycard :cardtitle="$t('stakinginfo.titlepartner')" class="mt20" v-if="validator!=null">
       <div class="transaction-content" slot="card-content">
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
@@ -161,6 +161,11 @@ export default {
     this.$data.Tovalue = this.$route.params.operator_address;
     var r1 = await this.getinfo(operator_address);
     var r2 = await this.getmyListData(operator_address);
+    eventhub.$on("TransactionSuccess", async(data) => {
+      console.log("TransactionSuccess");
+      var r1 = await this.getinfo(operator_address);
+      var r2 = await this.getmyListData(operator_address);
+    });
   },
   methods: {
     openSend() {
