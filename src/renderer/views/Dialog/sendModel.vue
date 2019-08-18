@@ -87,7 +87,7 @@ export default {
     preSendLAMB() {
       let from = this.address;
       let to = this.Tovalue;
-      let value = this.LAMBvalue;
+      let value =this.toBigNumStr(this.LAMBvalue) ;
       if (to == from) {
         this.$Notice.warning({
           title: this.$t("home.action.not_transfer_LAMB_to_yourself")
@@ -153,7 +153,7 @@ export default {
     confirm() {
       this.confirmModal = false;
       console.log(this.$data.transactiondata)
-      eventhub.$emit('TxConfirm',this.$data.transactiondata,this.$data.gaseFee);
+      eventhub.$emit('TxConfirm',this.$data.transactiondata,this.toBigNumStr(this.$data.gaseFee));
 
 
     },
@@ -163,7 +163,7 @@ export default {
     },
     open(amountBlance,coinType){
       this.$data.denomBlance=amountBlance||this.balance
-      this.$data.denom=coinType||'lamb'
+      this.$data.denom=coinType||'ulamb'
       this.sendModal =true;
       this.confirmModal=false;
     }
@@ -176,10 +176,10 @@ export default {
       return this.$store.getters.getblance;
     },
     denomShow:function(){
-      return this.$data.denom.toUpperCase()
+      return this.$data.denom.substr(1).toUpperCase()
     },
     denomtitleShow:function(){
-      return this.$t('home.Modal1.Send_LAMB',[this.$data.denom.toUpperCase()])
+      return this.$t('home.Modal1.Send_LAMB',[this.$data.denom.substr(1).toUpperCase()])
     }
   }
 };

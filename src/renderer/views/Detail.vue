@@ -227,8 +227,8 @@ export default {
               this.bigNumTypeFormat(msg0.value.asset.amount ,
               msg0.value.asset.denom )+
               "->" +
-              this.bigNumTypeFormat(msg0.value.coin.amount ,
-              msg0.value.coin.denom);
+              this.bigNumTypeFormat(msg0.value.token.amount ,
+              msg0.value.token.denom);
           } else if (msg0.type == "lambda/MsgAssetPledge") {
             result =
               this.bigNumTypeFormat(msg0.value.token.amount ,

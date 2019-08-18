@@ -256,7 +256,7 @@ export default {
     },
     denomFormart(denom){
       //  return  denom..substr(1).toUpperCase()
-       return  denom.substr(0).toUpperCase()
+       return  denom.substr(1).toUpperCase()
     },
     toDetail(row, index) {
       console.log(row, index);
@@ -288,12 +288,12 @@ export default {
           if (!res.state) return;
           // this.address = res.data.address;
           // this.$store.dispatch("setaddress", this.address);
-          this.balance = res.data.Liquid.balance - 0;
-          this.balanceSto = res.data.Liquid.balanceSto - 0;
+          this.balance = res.data.Liquid.balance ;
+          this.balanceSto = res.data.Liquid.balanceSto ;
           var DistributionReward = 0;
           if (res.data.DistributionReward instanceof Array) {
             res.data.DistributionReward.forEach(item => {
-              if (item.denom == "lamb") {
+              if (item.denom == "ulamb") {
                 DistributionReward = item.amount || 0;
               }
             });
@@ -352,7 +352,7 @@ export default {
         this.data = [];
 
         if (tempData) {
-          console.log(tempData);
+          // console.log(tempData);
           tempData.forEach(item => {
             if (item.error == undefined) {
               this.data.push({
@@ -416,8 +416,8 @@ export default {
               this.bigNumTypeFormat(msg0.value.asset.amount ,
               msg0.value.asset.denom )+
               "->" +
-              this.bigNumTypeFormat(msg0.value.coin.amount ,
-              msg0.value.coin.denom);
+              this.bigNumTypeFormat(msg0.value.token.amount ,
+              msg0.value.token.denom);
           } else if (msg0.type == "lambda/MsgAssetPledge") {
             result =
               this.bigNumTypeFormat(msg0.value.token.amount ,

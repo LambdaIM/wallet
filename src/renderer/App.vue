@@ -45,6 +45,7 @@ export default {
       this.$data.passwordModal=true;
       this.$data.loadingsendLAMBTx=false;
       this.$data.gaseFee=gaseFee;
+      this.$data.walletPassword='';
     });
   },
   methods: {
@@ -135,14 +136,31 @@ export default {
 
           try {
             var errormsg = JSON.parse(err.errormsg) 
-            _this.$Notice.error({
-              title: errormsg.message,
-              
-            });
+            if(errormsg instanceof Array){
+              errormsg.forEach((errItem)=>{
+                var log = JSON.parse(errItem.log) 
+                _this.$Notice.error({
+                  title: 'error',
+                  desc:log.message||'error',
+                  duration: 60
+                });
+              })
+
+            }else{
+              _this.$Notice.error({
+                  title: 'error',
+                  desc:errormsg.message||'error',
+                  duration: 60
+                });
+
+            }
+            
+
           } catch (error) {
             _this.$Notice.error({
-              title: err.errormsg||'error',
-              
+              title: 'error',
+              desc:err.errormsg||'error',
+              duration: 60
             });
             
           }

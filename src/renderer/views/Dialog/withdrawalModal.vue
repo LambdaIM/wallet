@@ -117,7 +117,7 @@ export default {
     confirm() {
       this.confirmModal = false;
       console.log(this.$data.transactiondata)
-      eventhub.$emit('TxConfirm',this.$data.transactiondata,this.$data.gaseFee);
+      eventhub.$emit('TxConfirm',this.$data.transactiondata,this.toBigNumStr(this.$data.gaseFee));
 
 
     },

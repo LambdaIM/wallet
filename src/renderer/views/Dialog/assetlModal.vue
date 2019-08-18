@@ -102,7 +102,7 @@ export default {
       AssetSTOvalue:'',
       AssetLAMBvalue:'',
       amountBlance:0,
-      coinType:'lamb',
+      coinType:'ulamb',
       gaseFee:0
     };
   },
@@ -110,7 +110,7 @@ export default {
     open(amountBlance,coinType){
       this.$data.AssetlModal=true;
       this.$data.amountBlance=amountBlance||this.balance
-      this.$data.coinType=coinType||'lamb'
+      this.$data.coinType=coinType||'ulamb'
     },
     AssetLAMBvalueChane() {
       console.log("- -");
@@ -131,8 +131,8 @@ export default {
       console.log(this.$data.exchangesStatus);
 
       this.$data.withdrawalModal = false;
-      var AssetLAMBvalue = this.$data.AssetLAMBvalue;
-      var sto = this.$data.AssetSTOvalue;
+      var AssetLAMBvalue =this.toBigNumStr(this.$data.AssetLAMBvalue) ;
+      var sto = this.toBigNumStr(this.$data.AssetSTOvalue);
 
       if (isNaN(sto) || isNaN(AssetLAMBvalue)) {
         this.$Notice.warning({
@@ -177,7 +177,8 @@ export default {
           asset,
           amount,
           gas,
-          isdege
+          isdege,
+          denom:this.$data.coinType
         });
         // console.log(res);
         if (res.state) {
@@ -198,7 +199,7 @@ export default {
     confirm() {
       this.assetConfirmModal = false;
       console.log(this.$data.transactiondata)
-      eventhub.$emit('TxConfirm',this.$data.transactiondata,this.$data.gaseFee);
+      eventhub.$emit('TxConfirm',this.$data.transactiondata,this.toBigNumStr(this.$data.gaseFee));
 
 
     },
@@ -211,7 +212,7 @@ export default {
       return this.$store.getters.getblance;
     },
     coinTypeShow(){
-      return this.$data.coinType.toUpperCase();
+      return this.$data.coinType.substr(1).toUpperCase();
     },
     balanceSto:function(){
       return this.$store.getters.getbalanceSto;

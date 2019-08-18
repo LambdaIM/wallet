@@ -19,6 +19,17 @@ import CosmosAPI from "@lunie/cosmos-api"
           throw resultView(null,false,ex)
         }
     })
+    eipc.answerRenderer('partnerList',async(query)=>{
+      try{
+        
+        var result = await  cosmosapi.get.partnervalidators();
+          
+          return resultView(result,true)
+
+      }catch(ex){
+        throw resultView(null,false,ex)
+      }
+  })
     eipc.answerRenderer('pool',async(query)=>{
       try{
         
@@ -43,6 +54,19 @@ import CosmosAPI from "@lunie/cosmos-api"
         throw resultView(null,false,ex)
       }
   })
+  eipc.answerRenderer('partner',async(query)=>{
+    var operator_address=query.operator_address;
+
+    try{
+      
+      var result = await  cosmosapi.get.partnervalidator(operator_address);
+        
+        return resultView(result,true)
+
+    }catch(ex){
+      throw resultView(null,false,ex)
+    }
+})
   eipc.answerRenderer('mydelegations',async(query)=>{
     var operator_address=query.operator_address;
 
@@ -56,6 +80,22 @@ import CosmosAPI from "@lunie/cosmos-api"
       throw resultView(null,false,ex)
     }
   })
+
+  eipc.answerRenderer('mypartnerDelegations',async(query)=>{
+    var operator_address=query.operator_address;
+
+    try{
+      
+      var result = await  cosmosapi.get.partnerDelegations(operator_address);
+        
+        return resultView(result,true)
+
+    }catch(ex){
+      throw resultView(null,false,ex)
+    }
+  })
+
+  
   eipc.answerRenderer('delegatorRewardsFromValidator',async(query)=>{
     var operator_address=query.operator_address;
     var validatorAddr=query.validatorAddr;

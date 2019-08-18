@@ -35,8 +35,8 @@ export default {
     _this.getValidatorIp();
     _this.getValidatorInfo();
     setInterval(function(){
-          // _this.getValidatorIp();
-        // _this.getValidatorInfo();
+        _this.getValidatorIp();
+        _this.getValidatorInfo();
     },1000*10)
   },
   methods: {
@@ -67,9 +67,9 @@ export default {
            
          }else{
            console.log('连接的验证节点异常')
-         _this.$Notice.warning({
-          title: '连接的验证节点异常'
-        });  
+            _this.$Notice.warning({
+               title: '连接的验证节点异常'
+            });  
          }
        })
        .catch(function(err){

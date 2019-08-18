@@ -29,7 +29,7 @@
                     
           </Table>
         </TabPane>
-        <TabPane  :label="$t('staking.Validatorlist')" >
+        <TabPane  :label="$t('staking.Partnerlist')" >
           <Table size="large" :columns="columns" :data="validatorsList" >
 
           <template slot-scope="{ row, index }" slot="payment">
@@ -233,12 +233,12 @@ export default {
   methods: {
    link(operator_address){
      console.log(operator_address);
-    return "/stakinginfo/"+operator_address ;
+    return "/partnerinfo/"+operator_address ;
    },
    async getListData(){
      console.log('getListData')
       try {
-        let res = await ipc.callMain("validatorsList", {});
+        let res = await ipc.callMain("partnerList", {});
         let poolres= await ipc.callMain("pool", {});
         // console.log(res);
         console.log(res)
@@ -259,7 +259,7 @@ export default {
     async getmyListData(){
      console.log('getListData')
       try {
-        let res = await ipc.callMain("mydelegations", {
+        let res = await ipc.callMain("mypartnerDelegations", {
           operator_address:this.address
         });
         // let poolres= await ipc.callMain("pool", {});
@@ -372,7 +372,7 @@ export default {
          if(res.state){
            console.log('--')
            console.log(res)
-           this.$data.dataParameters=res.data.Params;
+           this.$data.dataParameters=res.data;
          }
        } catch (error) {
          

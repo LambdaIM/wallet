@@ -345,10 +345,10 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
     var balanceSto=0;
     if(result.coins instanceof Array){
         result.coins.forEach((item)=>{
-            if(item.denom=='lamb'){
+            if(item.denom=='ulamb'){
                 balanceLamb=item.amount
             }
-            if(item.denom=='sto'){
+            if(item.denom=='usto'){
                 balanceSto=item.amount
             }
         })
@@ -395,7 +395,7 @@ walletManger.prototype.getDistributionRewards = async function (){
     return result;
 
 }
-walletManger.prototype.TransferDelegation = async function (to, amount, gas,isdege) {
+walletManger.prototype.TransferDelegation = async function (to, amount, gas,isdege,validatorType) {
     
         if (isdege) {
             //质押
@@ -403,7 +403,8 @@ walletManger.prototype.TransferDelegation = async function (to, amount, gas,isde
             type: transaction.DELEGATE,
             validatorAddress: to,
             amount: amount,
-            denom: 'lamb'
+            denom: 'usto',
+            validatortype:validatorType
           }
         } else {
             //取消质押
@@ -411,7 +412,8 @@ walletManger.prototype.TransferDelegation = async function (to, amount, gas,isde
             type: transaction.UNDELEGATE,
             validatorAddress: to,
             amount: amount,
-            denom: 'lamb'
+            denom: 'usto',
+            validatortype:validatorType
           }
         }
 }
@@ -433,7 +435,7 @@ walletManger.prototype.AssetPledge = async function (amount,asset, gas,isdege,de
             ,
             asset: {
                 amount: asset,
-                denom: 'sto'
+                denom: 'usto'
               }
             
           }
@@ -443,12 +445,12 @@ walletManger.prototype.AssetPledge = async function (amount,asset, gas,isdege,de
             type: transaction.AssetDrop,
             amounts: {
                 amount: amount,
-                denom: 'lamb'
+                denom: denom
               }
             ,
             asset: {
                 amount: asset,
-                denom: 'sto'
+                denom: 'usto'
               }
             
           }
@@ -469,7 +471,7 @@ walletManger.prototype.Transfer = async function (to, amount, gas,denom) {
         amounts: [
           {
             amount: amount,
-            denom: denom||'lamb'
+            denom: denom||'ulamb'
           }
         ],
         memo: ''
@@ -511,7 +513,7 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
       const gasPrice = {
         amount:  default_gas_price.toFixed(9),
         // denom: this.bondDenom
-        denom: 'lamb'
+        denom: 'ulamb'
       }
 
       const feeProperties = {

@@ -33,7 +33,7 @@
         </div>
         <div class="head-menu-item">
           <router-link
-            to="/home"
+            to="/partner"
             class="item"
           >{{ $t("head.partner") }}</router-link>
         </div>
@@ -316,6 +316,11 @@
               font-size: 18px;
               text-align: center;
             }
+          }
+          .activeMenu{
+              border-bottom: 2px solid transparent;
+              border-image: linear-gradient(to right, #339cae, #9167d3);
+              border-image-slice: 10;
           }
         }
       }

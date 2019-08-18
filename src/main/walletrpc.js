@@ -200,7 +200,7 @@ export default  function(){
 
 
     eipc.answerRenderer('transferDelegation',async(query)=>{
-        var {to,amount,gas,isdege} = query;
+        var {to,amount,gas,isdege,validatorType} = query;
         // to 需要判断 账号的格式是否合理呵护规则
         // amount 需要判断  转账金额大小 数据类型
         // gas 目前默认值位1  转账金额大小 数据类型
@@ -230,9 +230,12 @@ export default  function(){
         if(isdege==undefined){
             isdege=true
         }
+        if(validatorType==undefined){
+            validatorType=1
+        }
         
         try{    
-            var data = await WM.TransferDelegation(to,amount,gas,isdege)
+            var data = await WM.TransferDelegation(to,amount,gas,isdege,validatorType)
             return resultView(data,true)
         }catch(ex){
             throw resultView(null,false,ex)
@@ -269,7 +272,7 @@ export default  function(){
             throw resultView(null,false,'need asset')
         }
         if(denom==undefined){
-            denom='lamb'
+            denom='ulamb'
         }
         
         try{    

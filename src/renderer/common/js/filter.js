@@ -18,7 +18,7 @@ const Lambformat = (value) => {
     }
     var bigvalue=new BigNumber(value);
     
-    return `${bigvalue.div(1).toFormat() } LAMB`;
+    return `${bigvalue.div(10e6).toFormat() } LAMB`;
 }
 
 const Percentformat = (value) => {

@@ -213,6 +213,7 @@
   "staking":{
       "Mypledge":"My pledge",
       "Validatorlist":"Validator list",
+      "Partnerlist":"Partner list",
       "Unpledge":"Unbundling",
       "ExplainTab":"Explain",
       "pledgeTable":{

@@ -207,6 +207,7 @@
   "staking":{
       "Mypledge":"我的质押",
       "Validatorlist":"验证节点列表",
+      "Partnerlist":"合伙人列表",
       "Unpledge":"解绑中",
       "ExplainTab":"说明",
       "pledgeTable":{

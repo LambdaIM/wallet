@@ -166,7 +166,7 @@ export default {
     openSend() {
       // this.sendModal = true;
       // this.$data.isdege = true;
-      this.$refs.StakingModelDialog.open(this.$data.Tovalue,true,1)
+      this.$refs.StakingModelDialog.open(this.$data.Tovalue,true,0)
     },
     sendcancel() {
       this.sendModal = false;
@@ -174,7 +174,7 @@ export default {
     openUndelegate(){
       // this.sendModal = true;
       // this.$data.isdege = false;
-      this.$refs.StakingModelDialog.open(this.$data.Tovalue,false,1)
+      this.$refs.StakingModelDialog.open(this.$data.Tovalue,false,0)
     },
     // preSendLAMB() {
     //   console.log("-----");
@@ -258,7 +258,8 @@ export default {
     // },
     async getinfo(operator_address) {
       try {
-        let res = await ipc.callMain("validator", {
+        console.log("-------------");
+        let res = await ipc.callMain("partner", {
           operator_address: operator_address
         });
         let poolres = await ipc.callMain("pool", {});
@@ -292,9 +293,6 @@ export default {
       console.log("getListDataEnd");
     },
     getME(operator_address) {
-      if(this.$data.mydelegationsList instanceof Array ==false){
-        return ;
-      }
       this.$data.mydelegationsList.forEach(myitem => {
         if (operator_address == myitem.validator_address) {
           this.$data.shares = myitem.shares;

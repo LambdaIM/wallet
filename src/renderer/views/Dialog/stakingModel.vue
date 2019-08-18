@@ -22,7 +22,7 @@
         <p>
           <Input v-model="LAMBvalue">
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
+            <span slot="append">STO</span>
           </Input>
         </p>
         <div slot="footer">
@@ -43,7 +43,7 @@
           </Row>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{LAMBvalue}} LAMB</Col>
+            <Col span="20" class-name="value">{{LAMBvalue}} STO</Col>
           </Row>
           <Row class-name="item">
             <Input v-model="gaseFee" >
@@ -78,10 +78,14 @@ export default {
 
     },
     methods: {
-     open(toaddress,isdege){
+     open(toaddress,isdege,validatorType){
          this.$data.Tovalue = toaddress;
          this.$data.isdege = isdege||isdege;
          this.sendModal = true;
+         this.$data.validatorType=validatorType
+         if(validatorType==undefined){
+           throw new Error('need validatorType')
+         }
 
      },
      sendcancel() {
@@ -91,7 +95,7 @@ export default {
       console.log("-----");
       let from = this.address;
       let to = this.Tovalue;
-      let value = parseFloat(this.LAMBvalue);
+      let value = this.toBigNumStr(this.LAMBvalue);
       if (to == from) {
         this.$Notice.warning({
           title: this.$t("home.action.not_transfer_LAMB_to_yourself")
@@ -150,7 +154,8 @@ export default {
           to,
           amount,
           gas,
-          isdege
+          isdege,
+          validatorType:this.$data.validatorType //验证节点为1
         });
         // console.log(res);
         if (res.state) {
@@ -170,7 +175,7 @@ export default {
     confirm() {
       this.confirmModal = false;
       // this.passwordModal = true;
-      eventhub.$emit("TxConfirm", this.$data.transactiondata,this.$data.gaseFee);
+      eventhub.$emit("TxConfirm", this.$data.transactiondata,this.toBigNumStr(this.$data.gaseFee));
     },
 
     },
@@ -179,7 +184,7 @@ export default {
       return this.$store.getters.getaddress;
     },
     balance: function() {
-      return this.$store.getters.getbalance;
+      return this.$store.getters.getbalanceSto;
     },
     isdegeTxt:function(){
       if(this.$data.isdege){
