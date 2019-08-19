@@ -199,6 +199,7 @@
   const settings = require("electron-settings");
   import eventhub from "../../../common/js/event.js";
   import { mapState } from "vuex";
+
   export default {
     data() {
       return {
@@ -218,6 +219,10 @@
       this.$store.dispatch("set", login);
       if (login) {
         this.WalletBasicinfo();
+        setInterval(()=>{
+          this.getBalance();
+        },1000*15)
+        
       }
       eventhub.$on("TransactionSuccess", data => {
         console.log("TransactionSuccess");
@@ -248,6 +253,7 @@
 
       this.$data.timeid = setTimeout(async () => {
         try {
+          console.log('读取余额')
           var res = await ipc.callMain("defaultWalletBlance", {});
           if (!res.state) return;
 

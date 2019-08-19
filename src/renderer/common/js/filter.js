@@ -20,6 +20,14 @@ const Lambformat = (value) => {
     
     return `${bigvalue.div(10e6).toFormat() } LAMB`;
 }
+const Stoformat = (value) => {
+    if(value=="" || value == undefined || value == null){
+        return '--'
+    }
+    var bigvalue=new BigNumber(value);
+    
+    return `${bigvalue.div(10e6).toFormat() } STO`;
+}
 
 const Percentformat = (value) => {
     if(value=="" || value == undefined || value == null){
@@ -97,5 +105,6 @@ export default {
     readableBytes,
     blockFormatDate,
     Lambformat,
-    Percentformat
+    Percentformat,
+    Stoformat
 }

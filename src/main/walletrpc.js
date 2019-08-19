@@ -158,7 +158,7 @@ export default  function(){
 
 
     eipc.answerRenderer('transfer',async(query)=>{
-        var {to,amount,gas,denom} = query;
+        var {to,amount,gas,denom,memo} = query;
         // to 需要判断 账号的格式是否合理呵护规则
         // amount 需要判断  转账金额大小 数据类型
         // gas 目前默认值位1  转账金额大小 数据类型
@@ -190,7 +190,7 @@ export default  function(){
         }
         
         try{    
-            var data = await WM.Transfer(to,amount,gas,denom)
+            var data = await WM.Transfer(to,amount,gas,denom,memo)
             return resultView(data,true)
         }catch(ex){
             throw resultView(null,false,ex)

@@ -3,7 +3,7 @@
   <div class="tableContainer">
        <Tabs >
         <TabPane :label="$t('staking.Mypledge')" >
-          <Table size="large" :columns="columnsme" :data="mydelegationsList" >
+          <Table v-if="mydelegationsList!=null"  size="large" :columns="columnsme" :data="mydelegationsList" >
               <template slot-scope="{ row, index }" slot="payment">
                       {{row.commission.rate|Percentformat}}
                     </template>
@@ -20,7 +20,7 @@
                     >{{row.operator_address}}</router-link>
                     </template>
                     <template slot-scope="{ row, index }" slot="shares">
-                      {{row.shares|Lambformat}}
+                      {{row.shares|Stoformat}}
                     </template>
                     <template slot-scope="{ row, index }" slot="reward">
                       {{row.reward|Lambformat}}
@@ -28,9 +28,11 @@
 
                     
           </Table>
+          <Table v-else :loading="mydelegationsList==null">
+          </Table>
         </TabPane>
         <TabPane  :label="$t('staking.Validatorlist')" >
-          <Table size="large" :columns="columns" :data="validatorsList" >
+          <Table  v-if="validatorsList!=null"  size="large" :columns="columns" :data="validatorsList" >
 
           <template slot-scope="{ row, index }" slot="payment">
             {{row.commission.rate|Percentformat}}
@@ -49,13 +51,22 @@
           </template>
           
           </Table>
+          <Table :loading="validatorsList==null"   v-else>
+          </Table>
         </TabPane>
         <TabPane :label="$t('staking.Unpledge')" >
 
-            <Table size="large" :columns="uncolumns" :data="myUndelegationsList" >    
+            <Table v-if="myUndelegationsList!=null"   size="large" :columns="uncolumns" :data="myUndelegationsList" >    
               <template slot-scope="{ row, index }" slot="completion_time">
                 {{row.completion_time|formatDate}}
               </template>
+              <template slot-scope="{ row, index }" slot="initial_balance">
+                {{row.initial_balance|Stoformat}}
+              </template>
+
+              
+            </Table>
+            <Table :loading="myUndelegationsList==null" v-else>
             </Table>
 
         </TabPane>
@@ -65,22 +76,12 @@
             <li>{{$t('staking.Explain.max_validators')}}:{{dataParameters.max_validators}}</li>
             <li>{{$t('staking.Explain.bond_denom')}}:{{dataParameters.bond_denom}}</li>
           </ul>
-              <!-- <Form   :model="dataParameters" :label-width="150">
-                  <FormItem   :label="$t('staking.Explain.unbonding_time')">
-                    {{dataParameters.unbonding_time/(1000*1000*1000*60*60*24)}}{{$t('staking.Explain.unit')}}
-                  </FormItem>
-                  <FormItem  :label="$t('staking.Explain.max_validators')">
-                    {{dataParameters.max_validators}}
-                  </FormItem>
-                  <FormItem  :label="$t('staking.Explain.bond_denom')">
-                    {{dataParameters.bond_denom}}
-                  </FormItem>
-             
-              </Form> -->
+              
 
         </TabPane>
     </Tabs>
   </div>
+  <br><br><br><br><br><br>
     
   </div>
 </template>
@@ -191,10 +192,10 @@ export default {
           }
         }
       ],
-      validatorsList:[],
+      validatorsList:null,
       pool:null,
-      mydelegationsList:[],
-      myUndelegationsList:[],
+      mydelegationsList:null,
+      myUndelegationsList:null,
       uncolumns:[{
           title: this.$t('staking.UnpledgeTable.PledgeAddress'),
           key: "validator_address"
@@ -210,6 +211,7 @@ export default {
         },{
           title: this.$t('staking.UnpledgeTable.Amount'),
           key: "initial_balance",
+          slot:'initial_balance'
           
         },{
           title: this.$t('staking.UnpledgeTable.Completiontime'),
@@ -324,7 +326,7 @@ export default {
     coinListFormart(list){
       var result =[]
       list.forEach((item)=>{
-        result.push(this.bigNum(item.amount).div(1).toFormat() +" "+item.denom.toUpperCase())
+        result.push(this.bigNumTypeFormat(item.amount,item.denom))
       })
       return result.join(',')
 
@@ -353,12 +355,13 @@ export default {
             
           })
           this.$data.myUndelegationsList=list;
-          console.log(this.$data.myUndelegationsList)
           
+          
+        }else{
+          this.$data.myUndelegationsList=[];
         }
-        // if(poolres.state){
-        //   this.$data.pool=poolres.data
-        // }
+        console.log('this.$data.myUndelegationsList')
+        console.log(this.$data.myUndelegationsList)
 
 
       } catch (ex) {
@@ -372,7 +375,7 @@ export default {
          if(res.state){
            console.log('--')
            console.log(res)
-           this.$data.dataParameters=res.data.Params;
+           this.$data.dataParameters=res.data;
          }
        } catch (error) {
          

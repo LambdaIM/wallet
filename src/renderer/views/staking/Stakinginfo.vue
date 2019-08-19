@@ -1,6 +1,7 @@
 <template>
   <div class="customer-container">
-    <Mycard :cardtitle="$t('stakinginfo.title')" class="mt20" v-if="validator!=null">
+    <Spin size="large" fix v-if="validator==null"></Spin>
+    <Mycard  :cardtitle="$t('stakinginfo.title')" class="mt20" v-if="validator!=null">
       <div class="transaction-content" slot="card-content">
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
@@ -19,11 +20,21 @@
             <span class="title">{{$t('stakinginfo.Mypledge')}}:</span>
           </Col>
           <Col span="16" class-name="content-wrapper">
-            <a class="item-value">{{shares|Lambformat}}</a>
+            <a class="item-value">{{shares|Stoformat}}</a>
           </Col>
           <Col span="4" class-name="title-wrapper">
             
             <Button @click="openUndelegate" v-if="shares!=null" type="primary">{{$t('stakinginfo.Cancelpledge')}}</Button>
+          </Col>
+        </Row>
+
+        
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            <span class="title">我的奖励:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+            <a class="item-value">{{reward}}</a>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -77,59 +88,7 @@
         </Row>
       </div>
     </Mycard>
-    <!-- <div class="modal-container">
-      <Modal
-        loading
-        v-model="sendModal"
-        :title="isdegeTxt"
-        :styles="{top: '200px'}"
-        @on-cancel="sendcancel"
-      >
-        <p>
-          <Input v-model="address" readonly>
-            <span slot="prepend">{{$t('home.Modal1.From')}}</span>
-          </Input>
-        </p>
-        <br />
-        <p>
-          <Input v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
-            <span slot="prepend">{{$t('home.Modal1.To')}}</span>
-          </Input>
-        </p>
-        <br />
-        <p>
-          <Input v-model="LAMBvalue">
-            <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
-          </Input>
-        </p>
-        <div slot="footer">
-          <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
-        </div>
-      </Modal>
 
-      <Modal v-model="confirmModal" :styles="{top: '200px'}">
-        <div class="modal-header" slot="header">
-          <h2>{{isdegeTxt}}</h2>
-          <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
-            <Col span="20" class-name="value">{{address}}</Col>
-          </Row>
-          <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
-            <Col span="20" class-name="value">{{Tovalue}}</Col>
-          </Row>
-          <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{LAMBvalue}} LAMB</Col>
-          </Row>
-        </div>
-        
-        <div slot="footer">
-          <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
-        </div>
-      </Modal>
-    </div> -->
     <StakingModelDialog ref="StakingModelDialog" />
   </div>
 </template>
@@ -152,7 +111,8 @@ export default {
       LAMBvalue: "",
       mydelegationsList: [],
       shares: null,
-      isdege:true
+      isdege:true,
+      reward:''
     };
   },
   async mounted() {
@@ -161,10 +121,12 @@ export default {
     this.$data.Tovalue = this.$route.params.operator_address;
     var r1 = await this.getinfo(operator_address);
     var r2 = await this.getmyListData(operator_address);
+    this.getMyreword(operator_address)
     eventhub.$on("TransactionSuccess", async(data) => {
       console.log("TransactionSuccess");
       var r1 = await this.getinfo(operator_address);
       var r2 = await this.getmyListData(operator_address);
+      this.getMyreword(operator_address)
     });
   },
   methods: {
@@ -181,86 +143,6 @@ export default {
       // this.$data.isdege = false;
       this.$refs.StakingModelDialog.open(this.$data.Tovalue,false,1)
     },
-    // preSendLAMB() {
-    //   console.log("-----");
-    //   let from = this.address;
-    //   let to = this.Tovalue;
-    //   let value = parseFloat(this.LAMBvalue);
-    //   if (to == from) {
-    //     this.$Notice.warning({
-    //       title: this.$t("home.action.not_transfer_LAMB_to_yourself")
-    //     });
-    //     return;
-    //   }
-    //   if(this.$data.isdege){
-    //      if (value <= 0 || value > this.balance) {
-    //     // need to alert
-    //         this.$Notice.warning({
-    //           title: this.$t("home.action.check_balance_amount_transfer")
-    //         });
-    //         return;
-    //       }
-
-    //   }else{
-    //     if (value <= 0 || value > this.$data.shares) {
-    //     // need to alert
-    //         this.$Notice.warning({
-    //           title: this.$t("home.action.check_balance_amount_transfer")
-    //         });
-    //         return;
-    //       }
-
-
-    //   }
-      
-    //   // value = wUtils.numberToBig(value) ;
-    //   // 还需要新的校验地址方法
-    //   // if (Utils.isAddress(to) == false) {
-    //   //   // need to alert
-    //   //   this.$Notice.warning({
-    //   //     title:this.$t('home.action.Check_forwarding_address')
-    //   //   });
-
-    //   //   return;
-    //   // }
-
-    //   if (isNaN(value)) {
-    //     this.$Notice.warning({
-    //       title: this.$t("home.action.Check_the_amount")
-    //     });
-    //     return;
-    //   }
-    //   this.transfer(value);
-    // },
-    // async transfer(amount) {
-    //   let to = this.Tovalue;
-    //   // let amount = this.LAMBvalue;
-    //   let gas = 1;
-    //   // amount = amount * 10000;
-    //   this.$data.transactiondata = null;
-    //   let isdege = this.$data.isdege;
-    //   try {
-    //     let res = await ipc.callMain("transferDelegation", {
-    //       to,
-    //       amount,
-    //       gas,
-    //       isdege
-    //     });
-    //     // console.log(res);
-    //     if (res.state) {
-    //       this.$data.transactiondata = res.data;
-    //       this.sendcancel();
-    //       this.confirmModal = true;
-    //     }
-    //   } catch (ex) {
-    //     console.log(ex);
-    //   }
-    // },
-    // confirm() {
-    //   this.confirmModal = false;
-    //   // this.passwordModal = true;
-    //   eventhub.$emit("TxConfirm", this.$data.transactiondata);
-    // },
     async getinfo(operator_address) {
       try {
         let res = await ipc.callMain("validator", {
@@ -305,7 +187,32 @@ export default {
           this.$data.shares = myitem.shares;
         }
       });
-    }
+    },
+    async getMyreword(operator_address){
+           try {
+           let res = await ipc.callMain("delegatorRewardsFromValidator", {
+              operator_address:this.address,
+              validatorAddr:operator_address
+            });
+            if (res.state) {
+              console.log(res.data)
+              this.$data.reward=this.coinListFormart(res.data) ;
+              // item.reward='---11111';
+            }
+           
+         } catch (error) {
+           console.log(error)
+           
+         }
+    },
+    coinListFormart(list){
+      var result =[]
+      list.forEach((item)=>{
+        result.push(this.bigNumTypeFormat(item.amount,item.denom))
+      })
+      return result.join(',')
+
+    },
   },
   components: {
     MyTable,

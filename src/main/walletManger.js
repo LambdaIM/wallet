@@ -461,7 +461,7 @@ walletManger.prototype.AssetPledge = async function (amount,asset, gas,isdege,de
 
 
 
-walletManger.prototype.Transfer = async function (to, amount, gas,denom) {
+walletManger.prototype.Transfer = async function (to, amount, gas,denom,memo) {
 
     
 
@@ -474,7 +474,7 @@ walletManger.prototype.Transfer = async function (to, amount, gas,denom) {
             denom: denom||'ulamb'
           }
         ],
-        memo: ''
+        memo: memo||''
       }
     return result;
      

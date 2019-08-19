@@ -223,7 +223,7 @@
         "PledgeAddress":"质押地址",
         "UntyingAddress":"解绑地址",
         "Blockheight":"区块高度",
-        "Amount":"金额(LAMB)",
+        "Amount":"金额",
         "Completiontime":"完成时间"
       },
       "Explain":{
@@ -254,6 +254,12 @@
       "stakingModel":{
           "title1":"质押",
           "title2":"取消质押"
+      },
+      "com":{
+          "gasfee":"Gas费用",
+          "to":" 兑换 ",
+          "AssetConversion":"Asset 兑换"
+          
       }
   }
 }

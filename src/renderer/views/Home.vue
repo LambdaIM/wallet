@@ -45,7 +45,7 @@
             <template slot-scope="{ row, index }" slot="action">
               <Button @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
-              <Button v-if="row.denom!='sto'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
+              <Button v-if="row.denom!='usto'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
             </template>
           </Table>
         </TabPane>
@@ -267,7 +267,7 @@ export default {
       console.log(row, index);
       let id = index;
       // console.log(id);
-      this.$router.push(`/detail/${row.txHash}/${row.txType}`);
+      this.$router.push(`/detail/${row.txHash}`);
     },
     openSend() {
       // this.sendModal = true;
@@ -325,7 +325,7 @@ export default {
                 // amount: item.value==""?"--":(checkaddress(item.tx.value.msg[0].value.from_address) + item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom  ,
                 amount: this.getamount(item) || "--",
                 from: this.getSendAddress(item) || "--",
-                to: item.tx.value.msg[0].value.to_address || "--",
+                to: this.getToAddress(item) || "--",
                 txType: item.tags[0].value,
                 date: filters.formatDate(item.timestamp),
                 status: item.logs[0].success,
@@ -394,7 +394,7 @@ export default {
           }else {
             item.tags.forEach(item => {
               if (item.key == "rewards") {
-                result = this.bigNumTypeFormat(item.value.replace('lamb',''),'lamb');
+                result = this.bigNumTypeFormat(item.value.replace('ulamb',''),'lamb');
               }
             });
           }
@@ -418,7 +418,21 @@ export default {
       }
 
       return result;
+    },
+    getToAddress(item){
+      var value = item.tx.value.msg[0].value;
+      var toaddress = value.to_address||value.validator_address;
+      if(toaddress==undefined){
+        item.tags.forEach(item => {
+          if (item.key == "source-validator") {
+            toaddress = item.value;
+          }
+        });
+      }
+      return toaddress
+
     }
+
   }
 };
 </script>

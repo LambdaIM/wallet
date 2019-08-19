@@ -25,6 +25,10 @@
         <span slot="append">{{denomShow}}</span>
       </Input>
     </p>
+    <br />
+    <p><Button @click="openmemo" v-if="editmemo==false" type="dashed" >编辑备注</Button>
+    <Input  v-else v-model="memo" type="textarea" :rows="4" placeholder="Enter something..." :maxlength="memoNum" />
+    </p>
     <div slot="footer">
       <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
     </div>
@@ -46,9 +50,12 @@
           </Row>
           <Row class-name="item">
             <Input v-model="gaseFee" >
-                              <span slot="prepend">Gas费用</span>
+                              <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
                                 <span slot="append">LAMB</span>
                               </Input>
+          </Row>
+          <Row v-if="openmemo==true"  class-name="item">
+            <Input readonly type="textarea" :rows="4"  />
           </Row>
           
         </div>
@@ -80,10 +87,16 @@ export default {
       to:"",
       Tovalue:'',
       denomBlance:'',
-      gaseFee:0
+      gaseFee:0,
+      editmemo:false,
+      memo:'',
+      memoNum:255
     };
   },
   methods: {
+    openmemo(){
+      this.$data.editmemo=true;
+    },
     preSendLAMB() {
       let from = this.address;
       let to = this.Tovalue;
@@ -126,13 +139,15 @@ export default {
       let gas = 1;
       // amount = amount * 10000;
       let denom =this.$data.denom;
+      let memo=this.$data.memo;
       this.$data.transactiondata = null;
       try {
         let res = await ipc.callMain("transfer", {
           to,
           amount,
           gas,
-          denom
+          denom,
+          memo
         });
         // console.log(res);
         if (res.state) {

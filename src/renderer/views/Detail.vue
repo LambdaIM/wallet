@@ -15,7 +15,7 @@
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('transactiondetails.Type')}}:</span>
           </Col>
-          <Col span="20" class-name="content-wrapper">{{txType}}</Col>
+          <Col span="20" class-name="content-wrapper">{{data.tags[0].value}}</Col>
         </Row>
 
         <Row class-name="card-item">
@@ -50,7 +50,7 @@
             <span class="title">{{$t('transactiondetails.To')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a v-if="!!to==true" @click="checkAddress(to)" class="item-value">{{to}}</a>
+            <a v-if="!!getToAddress==true" @click="checkAddress(getToAddress)" class="item-value">{{getToAddress}}</a>
             <span v-else>--</span>
           </Col>
         </Row>
@@ -66,7 +66,16 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">gas used:</span>
+            <span class="title">费用:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+            <span class="item-value">{{fee}}</span>
+          </Col>
+        </Row>
+
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            <span class="title">gas 已用:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{data.gas_used}}</span>
@@ -75,7 +84,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">gas_wanted:</span>
+            <span class="title">gas 要求:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{data.gas_wanted}}</span>
@@ -128,7 +137,7 @@ export default {
     checkHash(value, txType) {
       // console.log(value);
       var explorer = DAEMON_CONFIG.explore;
-      let url = `${explorer}#/txhashdetail/${value}/${txType}`;
+      let url = `${explorer}#/txDetail/${value}`;
       shell.openExternal(url);
     },
     checkAddress(value) {
@@ -140,32 +149,9 @@ export default {
     checkHeight(value) {
       // console.log(value);
       var explorer = DAEMON_CONFIG.explore;
-      let url = `${explorer}/#/blockdetail/${value}`;
+      let url = `${explorer}/#/blockDetail/${value}`;
       shell.openExternal(url);
     },
-    // getpaylist(address) {
-    //   this.id = this.$route.params.id;
-    //   console.log(this.id);
-    //   console.log(address);
-    //   ipc
-    //     .callMain("httpget", {
-    //       url: DAEMON_CONFIG.explorer + "api/tx/getTxAccountList",
-    //       data: {
-    //         accountHash: address,
-    //         pageNum: 1,
-    //         showNum: 10
-    //       }
-    //     })
-    //     .then(res => {
-    //       // console.log("getpaylist", res.data.data);
-    //       if (res.data.data && res.data.data.code == 200) {
-    //         // console.log(res.data.data.data.txList);
-    //         this.data = res.data.data.data.txList;
-    //         // console.log(this.data);
-    //       }
-    //     })
-    //     .catch(function(err) {});
-    // }
     async transactionInfo() {
       this.loading = true;
       let hash = this.$route.params.id;
@@ -239,7 +225,7 @@ export default {
           }else {
             this.$data.data.tags.forEach(item => {
               if (item.key == "rewards") {
-                result = this.bigNumTypeFormat(item.value.replace('lamb',''),'lamb');
+                result = this.bigNumTypeFormat(item.value.replace('ulamb',''),'lamb');
               }
             });
           }
@@ -247,9 +233,30 @@ export default {
       } 
       return result;
     },
+    getToAddress(){
+      var item = this.$data.data;
+      var value = item.tx.value.msg[0].value;
+      var toaddress = value.to_address||value.validator_address;
+      if(toaddress==undefined){
+        item.tags.forEach(item => {
+          if (item.key == "source-validator") {
+            toaddress = item.value;
+          }
+        });
+      }
+      return toaddress
+
+    },
     memo() {
       var memo = this.$data.data.tx.value.memo;
       return memo;
+    },
+    fee(){
+      var fee = this.$data.data.tx.value.fee;
+      if(fee.amount==null){
+        return '无'
+      }
+      return this.bigNumTypeFormat(fee.amount[0].amount,fee.amount[0].denom);
     }
   }
 };

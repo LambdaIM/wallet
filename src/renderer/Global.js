@@ -42,6 +42,15 @@ export default {
             }
             
             
+        },
+        Vue.prototype.bigNumType = function (value) {
+            if(value=="" || value == undefined || value == null){
+                value=0;
+            }
+            var bigvalue=new BigNumber(value).div(10e6);
+            return bigvalue.toFormat()
+            
+            
         }
     }
 }

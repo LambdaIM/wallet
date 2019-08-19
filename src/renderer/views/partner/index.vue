@@ -3,7 +3,7 @@
   <div class="tableContainer">
        <Tabs >
         <TabPane :label="$t('staking.Mypledge')" >
-          <Table size="large" :columns="columnsme" :data="mydelegationsList" >
+          <Table :loading="tabloading1" size="large" :columns="columnsme" :data="mydelegationsList" >
               <template slot-scope="{ row, index }" slot="payment">
                       {{row.commission.rate|Percentformat}}
                     </template>
@@ -20,7 +20,7 @@
                     >{{row.operator_address}}</router-link>
                     </template>
                     <template slot-scope="{ row, index }" slot="shares">
-                      {{row.shares|Lambformat}}
+                      {{row.shares|Stoformat}}
                     </template>
                     <template slot-scope="{ row, index }" slot="reward">
                       {{row.reward|Lambformat}}
@@ -30,7 +30,7 @@
           </Table>
         </TabPane>
         <TabPane  :label="$t('staking.Partnerlist')" >
-          <Table size="large" :columns="columns" :data="validatorsList" >
+          <Table :loading="tabloading2" size="large" :columns="columns" :data="validatorsList" >
 
           <template slot-scope="{ row, index }" slot="payment">
             {{row.commission.rate|Percentformat}}
@@ -52,10 +52,15 @@
         </TabPane>
         <TabPane :label="$t('staking.Unpledge')" >
 
-            <Table size="large" :columns="uncolumns" :data="myUndelegationsList" >    
+            <Table :loading="tabloading3" size="large" :columns="uncolumns" :data="myUndelegationsList" >    
               <template slot-scope="{ row, index }" slot="completion_time">
                 {{row.completion_time|formatDate}}
               </template>
+              <template slot-scope="{ row, index }" slot="initial_balance">
+                {{row.initial_balance|Stoformat}}
+              </template>
+
+              
             </Table>
 
         </TabPane>
@@ -81,7 +86,7 @@
         </TabPane>
     </Tabs>
   </div>
-    
+    <br><br><br><br><br><br>
   </div>
 </template>
 
@@ -210,6 +215,7 @@ export default {
         },{
           title: this.$t('staking.UnpledgeTable.Amount'),
           key: "initial_balance",
+          slot:'initial_balance'
           
         },{
           title: this.$t('staking.UnpledgeTable.Completiontime'),
@@ -220,7 +226,10 @@ export default {
         
 
       ],
-      dataParameters:{}
+      dataParameters:{},
+      tabloading1:true,
+      tabloading2:true,
+      tabloading3:true
     };
   },
  async mounted() {
@@ -249,6 +258,7 @@ export default {
         if(poolres.state){
           this.$data.pool=poolres.data
         }
+        this.$data.tabloading2=false
 
 
       } catch (ex) {
@@ -269,6 +279,7 @@ export default {
         if (res.state) {
           this.$data.mydelegationsList=res.data||[];
           this.validatorsListForMe();
+          
           
 
         }
@@ -297,6 +308,7 @@ export default {
         this.$data.mydelegationsList=list;
         console.log(this.$data.mydelegationsList)
         this.getMyRewardsList();
+        this.$data.tabloading1=false;
         
     },
     getMyRewardsList(){
@@ -311,6 +323,7 @@ export default {
               item.reward=this.coinListFormart(res.data) ;
               // item.reward='---11111';
             }
+            
            
          } catch (error) {
            console.log(error)
@@ -324,7 +337,7 @@ export default {
     coinListFormart(list){
       var result =[]
       list.forEach((item)=>{
-        result.push(this.bigNum(item.amount).div(1).toFormat() +" "+item.denom.toUpperCase())
+        result.push(this.bigNumTypeFormat(item.amount,item.denom))
       })
       return result.join(',')
 
@@ -355,7 +368,9 @@ export default {
           this.$data.myUndelegationsList=list;
           console.log(this.$data.myUndelegationsList)
           
+          
         }
+        this.$data.tabloading3=false;
         // if(poolres.state){
         //   this.$data.pool=poolres.data
         // }

@@ -8,7 +8,7 @@
       @on-cancel="sendcancel"
     >
       <p>
-        <Input v-model="DistributionReward">
+        <Input readonly v-model="DistributionReward">
           <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
           <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
         </Input>
@@ -29,8 +29,8 @@
           <Col span="20" class-name="value">{{DistributionReward}} LAMB</Col>
         </Row>
         <Row class-name="item">
-            <Input v-model="gaseFee" >
-                              <span slot="prepend">Gas费用</span>
+            <Input  v-model="gaseFee" >
+                              <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
                                 <span slot="append">LAMB</span>
                               </Input>
           </Row>
@@ -61,8 +61,9 @@ export default {
       this.$data.confirmModal = false;
     },
     prewithdrawalLAMB() {
+      console.log('- -')
       this.LAMBvalue = this.DistributionReward;
-      let value = parseFloat(this.LAMBvalue);
+      let value =this.toBigNumStr(this.LAMBvalue) ;
 
       // if (value <= 0 || value > this.$data.DistributionReward ) {
       //   // need to alert
@@ -124,7 +125,7 @@ export default {
   },
   computed: {
     DistributionReward() {
-      return this.$store.getters.getDistributionReward;
+      return this.bigNumType(this.$store.getters.getDistributionReward) ;
     },
     address: function() {
       return this.$store.getters.getaddress;

@@ -47,7 +47,7 @@
           </Row>
           <Row class-name="item">
             <Input v-model="gaseFee" >
-                              <span slot="prepend">Gas费用</span>
+                              <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
                                 <span slot="append">LAMB</span>
                               </Input>
           </Row>

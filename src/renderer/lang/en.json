@@ -229,7 +229,7 @@
         "PledgeAddress":"Pledge Address",
         "UntyingAddress":"unbonding Address",
         "Blockheight":"Block height",
-        "Amount":"Amount(LAMB)",
+        "Amount":"Amount",
         "Completiontime":"Completion time"
       },
       "Explain":{
@@ -260,6 +260,11 @@
       "stakingModel":{
           "title1":"Pledge",
           "title2":"Cancel pledge"
+      },
+      "com":{
+          "gasfee":"Gas Fee",
+          "to":" to ",
+          "AssetConversion":"Asset Conversion"
       }
   }
 

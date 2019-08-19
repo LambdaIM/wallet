@@ -3,17 +3,17 @@
     <Modal
       loading
       v-model="AssetlModal"
-      title="资产兑换"
+      :title="$t('Dialog.com.AssetConversion')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
       <p style="text-align: center">
         <RadioGroup v-model="exchangesStatus" type="button">
           <Radio label="true">
-            <span>{{coinTypeShow}} 兑换 STO</span>
+            <span>{{coinTypeShow}} {{$t('Dialog.com.to')}} STO</span>
           </Radio>
           <Radio label="false">
-            <span>STO 兑换 {{coinTypeShow}}</span>
+            <span>STO {{$t('Dialog.com.to')}} {{coinTypeShow}}</span>
           </Radio>
         </RadioGroup>
       </p>
@@ -65,15 +65,15 @@
           
           <Row v-if="exchangesStatus=='true'" class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{AssetLAMBvalue}} {{coinTypeShow}} 兑换  {{AssetSTOvalue}} STO</Col>
+            <Col span="20" class-name="value">{{AssetLAMBvalue}} {{coinTypeShow}} {{$t('Dialog.com.to')}}  {{AssetSTOvalue}} STO</Col>
           </Row>
           <Row v-else class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{AssetSTOvalue}} STO  兑换 {{AssetLAMBvalue}} {{coinTypeShow}} </Col>
+            <Col span="20" class-name="value">{{AssetSTOvalue}} STO  {{$t('Dialog.com.to')}} {{AssetLAMBvalue}} {{coinTypeShow}} </Col>
           </Row>
           <Row class-name="item">
             <Input v-model="gaseFee" >
-                              <span slot="prepend">Gas费用</span>
+                              <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
                                 <span slot="append">LAMB</span>
                               </Input>
           </Row>

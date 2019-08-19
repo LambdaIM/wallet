@@ -40,7 +40,7 @@ settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH,'set.json') );
             import('@/views/account/Register/Export.vue'),
     },
     {
-        path: '/detail/:id/:txType',
+        path: '/detail/:id',
         name: 'detail',
         component: () =>
             import('@/views/Detail.vue')

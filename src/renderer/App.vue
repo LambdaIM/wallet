@@ -87,9 +87,12 @@ export default {
                   });
             console.log(data.data.txhash);
             _this.$Modal.success({
-              title: "Transaction success",
+              title: "发送事物成功",
               width: '700',
-              content: "Transaction hash  <br/>" + data.data.txhash,
+              content: `事务哈希  <br/>
+                          <a  href="#/detail/${data.data.txhash}">
+                          ${data.data.txhash}
+                        </a>` ,
               okText: "OK",
             });
             // _this.getAccountInfo()
