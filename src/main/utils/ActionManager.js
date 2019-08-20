@@ -129,10 +129,12 @@ async function getTop5RewardsValidators(operator_address,cosmos) {
   //1 获取我的质押列表
   //2 获取我的收益列表
   //3 选择前5条数据 因为出块大小限制
-  console.log('this.context.userAddress')
+  console.log('getTop5RewardsValidators')
   
   // return;
   var delegationsList = await  cosmos.get.delegations(operator_address);
+  var partnerDelegations = await  cosmos.get.partnerDelegations(operator_address);
+  delegationsList=delegationsList.concat(partnerDelegations);
    delegationsList.forEach(async (item)=>{
     var Rewards =await  cosmos.get.delegatorRewardsFromValidator(operator_address,item.validator_address);
     item.Rewards=coinListFormart(Rewards);
@@ -144,7 +146,7 @@ async function getTop5RewardsValidators(operator_address,cosmos) {
     .slice(0, 5) // Just the top 5
     .map((item) => item.validator_address)
     console.log(validatorList)
-    console.log('this.context.userAddress')
+    console.log('getTop5RewardsValidators')
   return validatorList
 }
 

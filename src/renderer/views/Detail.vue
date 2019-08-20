@@ -49,9 +49,15 @@
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('transactiondetails.To')}}:</span>
           </Col>
-          <Col span="20" class-name="content-wrapper">
+          <Col span="20" class-name="content-wrapper" v-if="typeof getToAddress =='string'" >
             <a v-if="!!getToAddress==true" @click="checkAddress(getToAddress)" class="item-value">{{getToAddress}}</a>
             <span v-else>--</span>
+          </Col>
+          <Col  v-else span="20" class-name="content-wrapper"  >
+          <span v-for="oneaddress in  getToAddress">
+            <a   @click="checkAddress(oneaddress)" class="item-value">{{oneaddress}}</a>
+            <br/>
+          </span>
           </Col>
         </Row>
 
@@ -225,9 +231,11 @@ export default {
           }else {
             this.$data.data.tags.forEach(item => {
               if (item.key == "rewards") {
-                result = this.bigNumTypeFormat(item.value.replace('ulamb',''),'lamb');
+                result=this.bigNumAdd(item.value.replace('ulamb',''),result);
+                
               }
             });
+            result =this.bigNumTypeFormat(result,'ulamb')
           }
         }
       } 
@@ -236,14 +244,29 @@ export default {
     getToAddress(){
       var item = this.$data.data;
       var value = item.tx.value.msg[0].value;
-      var toaddress = value.to_address||value.validator_address;
-      if(toaddress==undefined){
+      var toaddress=''
+      if(item.tags[0].value=='withdraw_delegator_reward'){
+        toaddress=[]
         item.tags.forEach(item => {
-          if (item.key == "source-validator") {
-            toaddress = item.value;
-          }
-        });
+                  if (item.key == "source-validator") {
+                    toaddress.push(item.value);
+                  }
+                });
+
+        
+
+      }else{
+              toaddress = value.to_address||value.validator_address;
+              if(toaddress==undefined){
+                item.tags.forEach(item => {
+                  if (item.key == "source-validator") {
+                    toaddress = item.value;
+                  }
+                });
+              }
+
       }
+
       return toaddress
 
     },

@@ -48,9 +48,18 @@ export default {
                 value=0;
             }
             var bigvalue=new BigNumber(value).div(10e6);
-            return bigvalue.toFormat()
-            
-            
+            return bigvalue.toString()
+        }
+
+        Vue.prototype.bigNumAdd = function (value,value2) {
+            if(value==undefined){
+                value=0
+            }
+            if(value2==undefined){
+                value2=0
+            }
+            var bigvalue=BigNumber.sum(value,value2);
+            return bigvalue.toString();
         }
     }
 }

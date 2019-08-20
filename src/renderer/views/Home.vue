@@ -394,9 +394,11 @@ export default {
           }else {
             item.tags.forEach(item => {
               if (item.key == "rewards") {
-                result = this.bigNumTypeFormat(item.value.replace('ulamb',''),'lamb');
+                result=this.bigNumAdd(item.value.replace('ulamb',''),result);
+                
               }
             });
+            result =this.bigNumTypeFormat(result,'ulamb')
           }
         }
       } 
