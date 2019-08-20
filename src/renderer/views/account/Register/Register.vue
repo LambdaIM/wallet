@@ -93,8 +93,8 @@ export default {
             trigger: "blur"
           }
         ],
-        loading:false
-      }
+      },
+      loading:false
     };
   },
   components: {

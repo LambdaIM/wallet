@@ -71,7 +71,7 @@ export default {
           } else {
             this.$Message.error(this.$t("Confirm.action.Confirmed_Fail") );
             setTimeout(() => {
-              this.$router.push("/register");
+              // this.$router.push("/register");
             }, 2000);
           }
         } else {
