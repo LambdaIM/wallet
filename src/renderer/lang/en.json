@@ -272,6 +272,17 @@
           "Transactionhash":"Transaction hash",
           "EditMemo":"Edit Memo"
       }
+  },
+  "txType": {
+    "All": "All",
+    "MsgSend": "Send",
+    "MsgCreateValidator": "CreateValidator",
+    "MsgUndelegate": "Undelegate",
+    "MsgDelegate": "Delegate",
+    "MsgWithdrawDelegationReward": "WithdrawDelegatorReward",
+    "MsgAssetPledge": "AssetPledge",
+    "NewMsgAssetDrop": "AssetDrop",
+    "MsgBeginReDelegate": "BeginReDelegate"
   }
 
 

@@ -30,6 +30,12 @@
               >{{ $t("home.View_Detail") }}</Button>
               <!-- <Button type="error" size="small" @click="remove(index)">Delete</Button> -->
             </template>
+            <template slot-scope="{ row, index }" slot="txType">
+              {{$t(`txType.${row.txType}`)}}
+            </template>
+
+
+            
           </Table>
         </TabPane>
         <TabPane label="Token">
@@ -111,7 +117,8 @@ export default {
       columns: [
         {
           title: this.$t("home.table.Type"),
-          key: "txType"
+          key: "txType",
+          slot: "txType"
         },
         {
           title: this.$t("home.table.Amount"),
@@ -326,7 +333,7 @@ export default {
                 amount: this.getamount(item) || "--",
                 from: this.getSendAddress(item) || "--",
                 to: this.getToAddress(item) || "--",
-                txType: item.tags[0].value,
+                txType: this.getType(item),
                 date: filters.formatDate(item.timestamp),
                 status: item.logs[0].success,
                 txHash: item.txhash,
@@ -433,6 +440,10 @@ export default {
       }
       return toaddress
 
+    },
+    getType(data){
+      var list=data.tx.value.msg[0].type.split('/')
+      return list[1]||list[0];
     }
 
   }

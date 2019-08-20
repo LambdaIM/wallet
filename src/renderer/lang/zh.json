@@ -180,7 +180,9 @@
       "To": "接受",
       "Value": "金额",
       "GaseUsed":"瓦斯已用",
-      "GasWanted":"瓦斯要求"
+      "GasWanted":"瓦斯要求",
+      "Momo":"备注",
+      "Fee":"费用"
   },
   "Sign": {
       "Data_signature": "数据签名",
@@ -265,5 +267,16 @@
           "EditMemo":"编辑备注"
           
       }
-  }
+  },
+  "txType": {
+	"All": "全部",
+	"MsgSend": "转帐交易",
+	"MsgCreateValidator": "创造节点",
+	"MsgDelegate": "节点质押",
+	"MsgUndelegate": "节点反质押",
+	"MsgWithdrawDelegationReward": "收益分配",
+	"MsgAssetPledge": "兑换资产",
+	"NewMsgAssetDrop": "兑换Token",
+	"MsgBeginReDelegate": "转质押"
+   }
 }

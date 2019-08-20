@@ -15,7 +15,7 @@
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('transactiondetails.Type')}}:</span>
           </Col>
-          <Col span="20" class-name="content-wrapper">{{data.tags[0].value}}</Col>
+          <Col span="20" class-name="content-wrapper">{{$t(`txType.${getType(data)}`)}}</Col>
         </Row>
 
         <Row class-name="card-item">
@@ -176,6 +176,10 @@ export default {
         this.loading = false;
         console.log(ex);
       }
+    },
+    getType(data){
+      var list=data.tx.value.msg[0].type.split('/')
+      return list[1]||list[0];
     }
   },
   computed: {
