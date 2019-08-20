@@ -28,9 +28,9 @@
           </Col>
         </Row>
                 
-        <Row class-name="card-item">
+        <Row v-if="reward!=null" class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">我的奖励:</span>
+            <span class="title">{{$t('stakinginfo.Myreward')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a class="item-value">{{reward}}</a>
@@ -111,7 +111,7 @@ export default {
       mydelegationsList: [],
       shares: null,
       isdege:true,
-      reward:''
+      reward:null
     };
   },
   async mounted() {
@@ -191,7 +191,7 @@ export default {
               operator_address:this.address,
               validatorAddr:operator_address
             });
-            if (res.state) {
+            if (res.state&&res.data.error==undefined) {
               console.log(res.data)
               this.$data.reward=this.coinListFormart(res.data) ;
               // item.reward='---11111';

@@ -255,7 +255,8 @@
     "max_change_rate":"Max commission change rate",
     "VotingPower":"Voting Power",
     "pledge":"Pledge",
-    "Cancelpledge":"Cancel pledge"
+    "Cancelpledge":"Cancel pledge",
+    "Myreward":"My reward"
   },
   "Dialog":{
       "withdrawalModal":{

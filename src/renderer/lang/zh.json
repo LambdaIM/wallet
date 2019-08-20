@@ -249,7 +249,8 @@
     "max_change_rate":"最大佣金变化",
     "VotingPower":"投票权重",
     "pledge":"质押",
-    "Cancelpledge":"取消质押"
+    "Cancelpledge":"取消质押",
+    "Myreward":"我的奖励"
   },
   "Dialog":{
       "withdrawalModal":{
