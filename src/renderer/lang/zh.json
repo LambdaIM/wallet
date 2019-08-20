@@ -277,7 +277,7 @@
 	"MsgUndelegate": "节点反质押",
 	"MsgWithdrawDelegationReward": "收益分配",
 	"MsgAssetPledge": "兑换资产",
-	"NewMsgAssetDrop": "兑换Token",
+	"MsgAssetDrop": "兑换Token",
 	"MsgBeginReDelegate": "转质押"
    }
 }

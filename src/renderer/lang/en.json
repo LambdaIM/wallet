@@ -282,7 +282,7 @@
     "MsgDelegate": "Delegate",
     "MsgWithdrawDelegationReward": "WithdrawDelegatorReward",
     "MsgAssetPledge": "AssetPledge",
-    "NewMsgAssetDrop": "AssetDrop",
+    "MsgAssetDrop": "AssetDrop",
     "MsgBeginReDelegate": "BeginReDelegate"
   }
 
