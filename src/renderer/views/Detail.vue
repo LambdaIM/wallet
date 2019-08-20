@@ -72,7 +72,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">费用:</span>
+            <span class="title">{{$t('transactiondetails.Fee')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{fee}}</span>
@@ -81,7 +81,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">gas 已用:</span>
+            <span class="title">{{$t('transactiondetails.GaseUsed')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{data.gas_used}}</span>
@@ -90,7 +90,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">gas 要求:</span>
+            <span class="title">{{$t('transactiondetails.GasWanted')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{data.gas_wanted}}</span>
@@ -98,7 +98,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">备注:</span>
+            <span class="title">{{$t('transactiondetails.Fee')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{memo}}</span>

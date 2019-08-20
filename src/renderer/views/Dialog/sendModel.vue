@@ -26,7 +26,7 @@
       </Input>
     </p>
     <br />
-    <p><Button @click="openmemo" v-if="editmemo==false" type="dashed" >编辑备注</Button>
+    <p><Button @click="openmemo" v-if="editmemo==false" type="dashed" >{{$t('Dialog.com.EditMemo')}}</Button>
     <Input  v-else v-model="memo" type="textarea" :rows="4" placeholder="Enter something..." :maxlength="memoNum" />
     </p>
     <div slot="footer">

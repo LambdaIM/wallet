@@ -81,15 +81,12 @@ export default {
             console.log("ok");
             _this.$data.passwordModal = false;
             _this.$data.walletPassword = null;
-            _this.$Notice.success({
-                      title: _this.$t("apppage.action.Transaction_success"),
-                      // desc:'Transaction hash  <br/>'+data.data.data.result.hash
-                  });
+            
             console.log(data.data.txhash);
             _this.$Modal.success({
-              title: "发送事物成功",
+              title: _this.$t("apppage.action.Transaction_success"),
               width: '700',
-              content: `事务哈希  <br/>
+              content: `${_this.$t('Dialog.com.Transactionhash')}  <br/>
                           <a  href="#/detail/${data.data.txhash}">
                           ${data.data.txhash}
                         </a>` ,

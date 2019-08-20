@@ -184,7 +184,11 @@
       "Type": "Type",
       "From":"From",
       "To":"To",
-      "Value":"Value"
+      "Value":"Value",
+      "GaseUsed":"Gase Used",
+      "GasWanted":"Gas Wanted",
+      "Momo":"Momo",
+      "Fee":"Fee"
   },
   "Sign":{
     "Data_signature":"Data signature",
@@ -264,7 +268,9 @@
       "com":{
           "gasfee":"Gas Fee",
           "to":" to ",
-          "AssetConversion":"Asset Conversion"
+          "AssetConversion":"Asset Conversion",
+          "Transactionhash":"Transaction hash",
+          "EditMemo":"Edit Memo"
       }
   }
 

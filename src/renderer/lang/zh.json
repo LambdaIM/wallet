@@ -178,7 +178,9 @@
       "Type": "类型",
       "From": "发送",
       "To": "接受",
-      "Value": "金额"
+      "Value": "金额",
+      "GaseUsed":"瓦斯已用",
+      "GasWanted":"瓦斯要求"
   },
   "Sign": {
       "Data_signature": "数据签名",
@@ -258,7 +260,9 @@
       "com":{
           "gasfee":"Gas费用",
           "to":" 兑换 ",
-          "AssetConversion":"Asset 兑换"
+          "AssetConversion":"Asset 兑换",
+          "Transactionhash":"事物哈希",
+          "EditMemo":"编辑备注"
           
       }
   }
