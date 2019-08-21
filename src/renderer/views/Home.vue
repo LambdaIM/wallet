@@ -1,12 +1,11 @@
 <template>
   <div class="container">
+        
     <p class="balance">
       {{$t('home.Balance')}}: {{balance|Lambformat}} 
       {{$t('home.Reward')}} :{{DistributionReward|Lambformat}} 
-      <!-- <span style="color:green">
-        <a @click="openvalidator">{{ $t("home.profits_pledge_system") }}</a>
-      </span>-->
     </p>
+    
     <div style="width:94%;    margin: 0 auto;">
       <Tabs >
         <TabPane :label="$t('home.Latest_Transaction')" >
@@ -99,7 +98,7 @@ import * as Utils from "web3-utils";
 import wUtils from "../common/js/utils.js";
 import eventhub from "../common/js/event.js";
 import _ from "underscore";
-import { setTimeout, clearTimeout } from "timers";
+
 
 const { shell } = require("electron");
 
@@ -237,7 +236,6 @@ export default {
 
     eventhub.$on("TransactionSuccess", data => {
       console.log("TransactionSuccess");
-      
       this.transactionList();
     });
 
@@ -537,4 +535,7 @@ export default {
     font-size: 14px;
   }
 }
+ .demo-spin-icon-load{
+        animation: ani-demo-spin 1s linear infinite;
+    }
 </style>

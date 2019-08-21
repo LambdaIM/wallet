@@ -35,13 +35,13 @@ export default function(){
         
         try {
             var CosmosAPIobj= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork(),'lambda-hub-test')
-            log.info('blockchainstate2')
+            
             var nodeInfo = await CosmosAPIobj.get.nodeVersion();
-            log.info('blockchainstate3')
+            
             var nodeSyncing = await CosmosAPIobj.get.nodeSyncing();
             var blockLatest = await CosmosAPIobj.get.nodeBlocklatest();
-            log.info(nodeInfo)
-            log.info('blockchainstate')
+            
+            
             return {data:{
                 nodeInfo:nodeInfo,
                 nodeSyncing:nodeSyncing,

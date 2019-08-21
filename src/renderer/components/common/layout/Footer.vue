@@ -57,7 +57,7 @@ export default {
     },
     getValidatorInfo() {
       var _this = this;
-         console.log('blockchainstate')   
+         
        ipc.callMain("blockchainstate", {})
        .then(function(res){
          
@@ -105,7 +105,7 @@ export default {
   },
   computed: {
     getstore(){
-      console.log(' - -')
+      
       try {
       // this.$data.node_info=this.$store.getters.info.node_info;
         return this.dataFormat(this.$store.getters.info);
@@ -116,7 +116,7 @@ export default {
       
     },
     getIPAndAddress(){
-      console.log(' - -')
+      
       try {
       // this.$data.node_info=this.$store.getters.info.node_info;
        var result =  this.dataFormat(this.$store.getters.info);

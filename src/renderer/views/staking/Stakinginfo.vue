@@ -8,7 +8,7 @@
             <span class="title">{{$t('stakinginfo.Nickname')}}:</span>
           </Col>
           <Col span="16" class-name="content-wrapper">
-            <a class="item-value">{{validator.description.moniker}}</a>
+            {{validator.description.moniker}}
           </Col>
           <Col span="4" class-name="title-wrapper">
             <Button @click="openSend" type="primary">{{$t('stakinginfo.pledge')}}</Button>
@@ -20,7 +20,7 @@
             <span class="title">{{$t('stakinginfo.Mypledge')}}:</span>
           </Col>
           <Col span="16" class-name="content-wrapper">
-            <a class="item-value">{{shares|Stoformat}}</a>
+            {{shares|Stoformat}}
           </Col>
           <Col span="4" class-name="title-wrapper">
             
@@ -34,7 +34,7 @@
             <span class="title">{{$t('stakinginfo.Myreward')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{reward}}</a>
+            {{reward}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -42,7 +42,8 @@
             <span class="title">{{$t('stakinginfo.PledgeAddress')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.operator_address}}</a>
+            
+            <a  @click="checkAddress(validator.operator_address)" class="value">{{validator.operator_address}}</a>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -50,7 +51,7 @@
             <span class="title">{{$t('stakinginfo.details')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.description.details||'--'}}</a>
+            {{validator.description.details||'--'}}
           </Col>
         </Row>
         
@@ -59,7 +60,7 @@
             <span class="title">{{$t('stakinginfo.commission')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.commission.rate|Percentformat}}</a>
+            {{validator.commission.rate|Percentformat}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -67,7 +68,7 @@
             <span class="title">{{$t('stakinginfo.maxcommission')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.commission.max_rate|Percentformat}}</a>
+            {{validator.commission.max_rate|Percentformat}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -75,7 +76,7 @@
             <span class="title">{{$t('stakinginfo.max_change_rate')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.commission.max_change_rate|Percentformat}}</a>
+            {{validator.commission.max_change_rate|Percentformat}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -83,7 +84,7 @@
             <span class="title">{{$t('stakinginfo.VotingPower')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a class="item-value">{{validator.tokens/pool.bonded_tokens|Percentformat}}</a>
+            {{validator.tokens/pool.bonded_tokens|Percentformat}}
           </Col>
         </Row>
       </div>
@@ -99,7 +100,8 @@ import Mycard from "@/components/common/useful/Mycard.vue";
 const ipc = require("electron-better-ipc");
 import eventhub from "../../common/js/event.js";
 import StakingModelDialog from '@/views/Dialog/stakingModel.vue'
-
+import { DAEMON_CONFIG } from "../../../config.js";
+const { shell } = require("electron");
 export default {
   data() {
     return {
@@ -130,6 +132,18 @@ export default {
     });
   },
   methods: {
+    checkAddress(value) {
+      // console.log(value);
+      var explorer = DAEMON_CONFIG.explore;
+      let url ;
+      if(value.indexOf('lambdavaloper')==0){
+         url = `${explorer}/#/validatorDetail/${value}`;
+      }else{
+          url = `${explorer}/#/address/${value}`;
+      }
+      
+      shell.openExternal(url);
+    },
     openSend() {
       // this.sendModal = true;
       // this.$data.isdege = true;
@@ -194,7 +208,7 @@ export default {
               operator_address:this.address,
               validatorAddr:operator_address
             });
-            if (res.state&&res.data.error==undefined) {
+            if (res.state&&res.data&&res.data.error==undefined) {
               console.log(res.data)
               this.$data.reward=this.coinListFormart(res.data) ;
               // item.reward='---11111';

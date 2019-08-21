@@ -294,18 +294,20 @@ export default  function(){
             throw resultView(null,false,ex)
         }
     })
-
+    
     eipc.answerRenderer('transferConfirm',async(query)=>{
         log.info('transferConfirm rpc')
         var {password,transactiondata,gaseFee} = query;
-        
-        
         try{
-            var data = await WM.TransferConfirm(password,transactiondata,gaseFee);   
-            return resultView(data,true)
+            
+                log.info('transferConfirm rpc1')
+                var data = await WM.TransferConfirm(password,transactiondata,gaseFee);   
+                return resultView(data,true)
         }catch(ex){
             throw resultView(null,false,ex)
         }
+        
+        
         
     })
 

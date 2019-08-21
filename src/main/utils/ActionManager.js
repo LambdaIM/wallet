@@ -134,7 +134,14 @@ async function getTop5RewardsValidators(operator_address,cosmos) {
   // return;
   var delegationsList = await  cosmos.get.delegations(operator_address);
   var partnerDelegations = await  cosmos.get.partnerDelegations(operator_address);
+ if(delegationsList==null){
+  delegationsList=[];
+ }
+ if(partnerDelegations==null){
+  partnerDelegations=[];
+ }
   delegationsList=delegationsList.concat(partnerDelegations);
+
    delegationsList.forEach(async (item)=>{
     var Rewards =await  cosmos.get.delegatorRewardsFromValidator(operator_address,item.validator_address);
     item.Rewards=coinListFormart(Rewards);
@@ -145,8 +152,7 @@ async function getTop5RewardsValidators(operator_address,cosmos) {
     .sort(byBalanceOfDenom)
     .slice(0, 5) // Just the top 5
     .map((item) => item.validator_address)
-    console.log(validatorList)
-    console.log('getTop5RewardsValidators')
+    
   return validatorList
 }
 

@@ -1,6 +1,6 @@
 import moment from "moment";
 const BigNumber = require('bignumber.js');
-BigNumber.config({ DECIMAL_PLACES: 8,ROUNDING_MODE: BigNumber.ROUND_DOWN })
+BigNumber.config({ DECIMAL_PLACES: 6,ROUNDING_MODE: BigNumber.ROUND_DOWN })
 
 
 const formatValue = (value) => {
@@ -16,17 +16,18 @@ const Lambformat = (value) => {
     if(value=="" || value == undefined || value == null){
         return '--'
     }
-    var bigvalue=new BigNumber(value);
-    
-    return `${bigvalue.div(10e6).toFormat() } LAMB`;
+    var bigvalue1=new BigNumber(value).div(1e6).toFixed(6) ;
+    var bigvalue=new BigNumber(bigvalue1) ;
+    return `${bigvalue.toFormat(6) } LAMB`;
 }
 const Stoformat = (value) => {
     if(value=="" || value == undefined || value == null){
         return '--'
     }
-    var bigvalue=new BigNumber(value);
+    var bigvalue1=new BigNumber(value).div(1e6).toFixed(6) ;
+    var bigvalue=new BigNumber(bigvalue1);
     
-    return `${bigvalue.div(10e6).toFormat() } STO`;
+    return `${bigvalue.toFormat(6) } STO`;
 }
 
 const Percentformat = (value) => {
@@ -45,7 +46,7 @@ const formatDate = (value) => {
     if(value==undefined){
         return '--'
     }
-    return moment(value).utc().utcOffset(0).format("YYYY-MM-DD HH:mm:ss");
+    return moment(value).utc().utcOffset(8).format("YYYY-MM-DD HH:mm:ss");
 }
 
 const blockFormatDate = (value) => {

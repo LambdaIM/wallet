@@ -12,7 +12,8 @@
         "You_just_copied":"You just copied:",
         "Failed_to_copy_texts":"Failed to copy texts",
         "No_wallet_found":"No default wallet was found",
-        "configuration_file":"Please check your configuration file"
+        "configuration_file":"Please check your configuration file",
+        "txloading": "Update the balance of your wallet. Please do it later."
       }
     },
     "foot": {
@@ -221,7 +222,7 @@
       "Unpledge":"Unbundling",
       "ExplainTab":"Explain",
       "pledgeTable":{
-          "Nickname":"Nickname",
+          "Nickname":"Node Nickname",
           "Mypledge":"My pledge",
           "Myreward":"My reward",
           "PledgeAddress":"Pledge Address",
@@ -246,7 +247,7 @@
   "stakinginfo":{
     "title":"Node details",
     "titlepartner":"Partner Node details",
-    "Nickname":"Nickname",
+    "Nickname":"Node Nickname",
     "Mypledge":"My pledge",
     "PledgeAddress":"Pledge address",
     "details":"Details",
@@ -283,7 +284,8 @@
     "MsgWithdrawDelegationReward": "WithdrawDelegatorReward",
     "MsgAssetPledge": "AssetPledge",
     "MsgAssetDrop": "AssetDrop",
-    "MsgBeginReDelegate": "BeginReDelegate"
+    "MsgBeginReDelegate": "BeginReDelegate",
+    "MsgUnjail":"Unjail"
   }
 
 

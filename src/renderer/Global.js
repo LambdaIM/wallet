@@ -15,7 +15,14 @@ export default {
                 value=0;
             }
             var bigvalue=new BigNumber(value);
-            return bigvalue.times(10e6).toString();
+            return bigvalue.times(1e6).toString();
+        }
+        Vue.prototype.toBigNumFixed = function (value) {
+            if(value=="" || value == undefined || value == null){
+                value=0;
+            }
+            var bigvalue=new BigNumber(value);
+            return bigvalue.times(1e6).toFixed(6);
         }
 
         Vue.prototype.bigLess0OrGreater = function(num,GreaterNum){
@@ -29,7 +36,8 @@ export default {
             if(value=="" || value == undefined || value == null){
                 value=0;
             }
-            var bigvalue=new BigNumber(value).div(10e6);
+            var bigvalue1=new BigNumber(value).div(1e6).toFixed(6)  ;
+            var bigvalue=new BigNumber(bigvalue1)
             if(type=='ulamb'){
                 return `${bigvalue.toFormat() } LAMB`;
             }else if(type=='ulambs'){
@@ -47,7 +55,7 @@ export default {
             if(value=="" || value == undefined || value == null){
                 value=0;
             }
-            var bigvalue=new BigNumber(value).div(10e6);
+            var bigvalue=new BigNumber(value).div(1e6);
             return bigvalue.toString()
         }
 

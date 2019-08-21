@@ -191,6 +191,9 @@
       </Col>
 
     </Row>
+    <div v-if="balanceLoading" >
+    <Spin  > <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>{{$t("head.action.txloading")}}</Spin>
+    </div>
   </div>
 </template>
 
@@ -208,7 +211,9 @@
           zh: "简体中文",
           en: "English"
         },
-        langnow: this.$i18n.locale
+        langnow: this.$i18n.locale,
+        balanceLoading:false,
+        balanceLoadingPre:''
       };
     },
     created() {
@@ -219,24 +224,21 @@
       this.$store.dispatch("set", login);
       if (login) {
         this.WalletBasicinfo();
+        this.getBalance();
         setInterval(()=>{
+          this.WalletBasicinfo();
           this.getBalance();
         },1000*15)
         
       }
       eventhub.$on("TransactionSuccess", data => {
         console.log("TransactionSuccess");
+        this.$data.balanceLoadingPre=this.$store.getters.getblance;
+        this.$data.balanceLoading=true;  
         this.getBalance();
         
         
       });
-    },
-    beforeUpdate() {
-      let login = settings.get("isopenfile");
-      this.$store.dispatch("set", login);
-      if (login) {
-        this.WalletBasicinfo();
-      }
     },
     methods: {
       onCopy(e) {
@@ -274,6 +276,10 @@
           this.$store.dispatch("setDistributionReward", DistributionReward);
           this.$store.dispatch("setbalanceSto", balanceSto);
           this.$store.dispatch("setcoinList", coinList);
+          console.log('余额信息：',balance)
+          if(this.$data.balanceLoadingPre!=this.$store.getters.getblance){
+              this.$data.balanceLoading=false;  
+          }
 
       
           
@@ -282,13 +288,10 @@
         } catch (ex) {
           console.log(ex);
         }
-      }, 1000);
+      },50);
     },
       async WalletBasicinfo() {
         console.log("WalletBasicinfo");
-        /////读取余额
-        this.getBalance();
-        /////
         try {
           let res = await ipc.callMain("defaultWalletBasicinfo", {});
           console.log(res);
