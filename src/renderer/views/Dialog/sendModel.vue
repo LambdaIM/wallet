@@ -182,6 +182,7 @@ export default {
       this.$data.denom=coinType||'ulamb'
       this.sendModal =true;
       this.confirmModal=false;
+      this.editmemo=false;
     }
   },
   computed: {
