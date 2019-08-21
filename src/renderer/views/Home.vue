@@ -3,7 +3,9 @@
         
     <p class="balance">
       {{$t('home.Balance')}}: {{balance|Lambformat}} 
+      质押: {{DelegationValue|Stoformat}}
       {{$t('home.Reward')}} :{{DistributionReward|Lambformat}} 
+
     </p>
     
     <div style="width:94%;    margin: 0 auto;">
@@ -221,6 +223,9 @@ export default {
     },
     coinList:function(){
       return this.$store.getters.getcoinList;
+    },
+    DelegationValue:function(){
+      return this.$store.getters.getDelegation;
     }
   },
   async mounted() {

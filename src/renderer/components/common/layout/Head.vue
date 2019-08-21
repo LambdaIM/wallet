@@ -202,6 +202,7 @@
   const settings = require("electron-settings");
   import eventhub from "../../../common/js/event.js";
   import { mapState } from "vuex";
+  
 
   export default {
     data() {
@@ -219,26 +220,32 @@
     created() {
       // this.isLogin();
     },
-    mounted() {
+    mounted() {  
       let login = settings.get("isopenfile");
-      this.$store.dispatch("set", login);
-      if (login) {
+        
+      eventhub.$on("TransactionSuccess", data => {
+        console.log("TransactionSuccess");
+        this.$data.balanceLoadingPre=this.$store.getters.getblance;
+        this.$data.balanceLoading=true;  
+        this.getBalance();
+      });
+      eventhub.$on("login", data => {
+        console.log("loginSuccess");
+        
         this.WalletBasicinfo();
         this.getBalance();
         setInterval(()=>{
           this.WalletBasicinfo();
           this.getBalance();
         },1000*15)
-        
-      }
-      eventhub.$on("TransactionSuccess", data => {
-        console.log("TransactionSuccess");
-        this.$data.balanceLoadingPre=this.$store.getters.getblance;
-        this.$data.balanceLoading=true;  
-        this.getBalance();
-        
-        
       });
+      if(login){
+        this.$store.dispatch("setLogin", login);
+        eventhub.$emit('login');
+      }
+
+
+
     },
     methods: {
       onCopy(e) {
@@ -263,6 +270,7 @@
           var balanceSto = res.data.Liquid.balanceSto ;
           var coinList = res.data.Liquid.coins||[];
           var DistributionReward = 0;
+          var Delegation=res.data.Delegation;
           if (res.data.DistributionReward instanceof Array) {
             res.data.DistributionReward.forEach(item => {
               if (item.denom == "ulamb") {
@@ -276,6 +284,7 @@
           this.$store.dispatch("setDistributionReward", DistributionReward);
           this.$store.dispatch("setbalanceSto", balanceSto);
           this.$store.dispatch("setcoinList", coinList);
+          this.$store.dispatch("setDelegation", Delegation);
           console.log('余额信息：',balance)
           if(this.$data.balanceLoadingPre!=this.$store.getters.getblance){
               this.$data.balanceLoading=false;  

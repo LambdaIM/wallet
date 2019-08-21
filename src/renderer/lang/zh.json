@@ -280,6 +280,7 @@
 	"MsgAssetPledge": "兑换资产",
 	"MsgAssetDrop": "兑换Token",
     "MsgBeginReDelegate": "转质押",
-    "MsgUnjail":"释放"
+    "MsgUnjail":"释放",
+    "MsgEditValidator": "修改节点"
    }
 }

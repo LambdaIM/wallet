@@ -5,7 +5,8 @@ const state = {
   Totalblance:0,
   DistributionReward:0,
   balanceSto:0,
-  coinList:[]
+  coinList:[],
+  Delegation:0
 }
 
 console.log('--------***************');
@@ -32,6 +33,9 @@ const mutations = {
   },
   setcoinList:function(state,list){
     state.coinList = list;
+  },
+  setDelegation:function(state,value){
+    state.Delegation = value;
   }
 }
 
@@ -44,7 +48,7 @@ const actions = {
   setblance: function (context, blance ) {
     context.commit('setblance', blance)
   },
-  set: function (context, loginState) {
+  setLogin: function (context, loginState) {
     console.log('actions login')
     context.commit('setLogin', loginState)
   },
@@ -59,6 +63,9 @@ const actions = {
   },
   setcoinList:function(context,list){
     context.commit('setcoinList', list)
+  },
+  setDelegation:function(context,value){
+    context.commit('setDelegation', value)
   }
 }
 const getters = {
@@ -79,6 +86,9 @@ const getters = {
   },
   getcoinList(state){
     return state.coinList
+  },
+  getDelegation(state){
+    return state.Delegation
   }
 }
 

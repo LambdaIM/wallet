@@ -285,7 +285,8 @@
     "MsgAssetPledge": "AssetPledge",
     "MsgAssetDrop": "AssetDrop",
     "MsgBeginReDelegate": "BeginReDelegate",
-    "MsgUnjail":"Unjail"
+    "MsgUnjail":"Unjail",
+    "MsgEditValidator": "EditValidator"
   }
 
 

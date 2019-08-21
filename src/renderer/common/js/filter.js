@@ -18,7 +18,7 @@ const Lambformat = (value) => {
     }
     var bigvalue1=new BigNumber(value).div(1e6).toFixed(6) ;
     var bigvalue=new BigNumber(bigvalue1) ;
-    return `${bigvalue.toFormat(6) } LAMB`;
+    return `${bigvalue.toFormat() } LAMB`;
 }
 const Stoformat = (value) => {
     if(value=="" || value == undefined || value == null){
@@ -27,7 +27,7 @@ const Stoformat = (value) => {
     var bigvalue1=new BigNumber(value).div(1e6).toFixed(6) ;
     var bigvalue=new BigNumber(bigvalue1);
     
-    return `${bigvalue.toFormat(6) } STO`;
+    return `${bigvalue.toFormat() } STO`;
 }
 
 const Percentformat = (value) => {

@@ -69,6 +69,8 @@ import { DAEMON_CONFIG } from "../../../config.js";
 import Mybg from "@/components/common/useful/Mybg.vue";
 const ipc = require("electron-better-ipc");
 const settings = require("electron-settings");
+import eventHub from "@/common/js/event.js"
+
 export default {
   data() {
     return {
@@ -143,7 +145,8 @@ export default {
           });
           let login=settings.set("isopenfile", true);
           console.log(login);
-          this.$store.dispatch("set", true);
+          this.$store.dispatch("setLogin", true);
+          eventHub.$emit('login');
           this.$router.push("/home");
         }
       } catch (ex) {

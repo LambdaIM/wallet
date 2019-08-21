@@ -364,10 +364,11 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
 }
 
 walletManger.prototype.getDelegationsBalance =async  function () {
-    console.log('_getAccountInfo')
+    console.log('getDelegationsBalance')
 
     var address = this.defaultwallet.address;
     var delegationsList  = await this.CosmosAPI.get.delegations(address);
+    var partnerDelegations  = await this.CosmosAPI.get.partnerDelegations(address);
     var result=0;
     
     if( delegationsList instanceof Array){
@@ -377,6 +378,12 @@ walletManger.prototype.getDelegationsBalance =async  function () {
         })
 
     } 
+    if(partnerDelegations instanceof Array){
+        partnerDelegations.forEach((item)=>{
+            // result+=(item.shares-0);
+            result=BigNum(item.shares).plus(result)
+        })
+    }
     return result.toString();
 }
 
