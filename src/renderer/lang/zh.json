@@ -150,7 +150,7 @@
           "From": "发送方",
           "To": "接收方",
           "Amount": "金额",
-          "Submit": "提交",
+          "Submit": "下一步",
           "LAMB_address": "lambda 地址",
           "Transfer": "交易",
           "Confirm": "确认",

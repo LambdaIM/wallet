@@ -20,7 +20,7 @@
 import Footer from "@/components/common/layout/Footer.vue";
 import Header from "@/components/common/layout/Head.vue";
 import eventHub from "@/common/js/event.js"
-import { clearTimeout } from 'timers';
+
 const ipc = require("electron-better-ipc");
 
 export default {

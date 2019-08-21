@@ -216,6 +216,12 @@
             <Col span="4" class-name="content-wrapper">
               <a>Private Key Visible</a>
             </Col> -->
+            <Col
+              span="4"
+              class-name="title-wrapper"
+            >
+            &nbsp;
+            </Col>
 
             <Col
               span="4"
@@ -422,7 +428,7 @@
         editvalue: "",
         lang: "zh",
         langnow: this.$i18n.locale,
-        versionNumber: "0.1.9"
+        versionNumber: "0.1.10"
       };
     },
     mounted() {

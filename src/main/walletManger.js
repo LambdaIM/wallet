@@ -44,8 +44,8 @@ var walletManger = function (dir) {
 
     this.lastpayobj = null;
     this.lastpayArry = null;
-    var protofilepath = path.join(__static, '/awesome.proto');
-    this.protofilepath=protofilepath;
+    // var protofilepath = path.join(__static, '/awesome.proto');
+    // this.protofilepath=protofilepath;
     
     this.CosmosAPI= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork(),'lambda-hub-test')
     this.actionManager=new ActionManager()
@@ -178,9 +178,7 @@ walletManger.prototype.setDefaultWallet = function (address) {
         this.defaultwallet = objwallet;
 
     }
-    if(this.actionManager!=undefined){
-        this.actionManager.setContext({url:DAEMON_CONFIG.LambdaNetwork(),userAddress:this.defaultwallet.address})
-    }
+    
     
     
     
@@ -476,6 +474,9 @@ walletManger.prototype.Transfer = async function (to, amount, gas,denom,memo) {
 walletManger.prototype.Simulate = async function (transactiondata) {
     var  default_gas_price=2.5e-8; // recommended from Cosmos Docs
     const { type, memo, ...properties } = transactiondata
+    if(this.actionManager!=undefined){
+        this.actionManager.setContext({url:DAEMON_CONFIG.LambdaNetwork(),userAddress:this.defaultwallet.address})
+    }
     
      this.actionManager.setMessage(type, properties)
      var  gasEstimate = await this.actionManager.simulate(memo||'')
@@ -524,6 +525,9 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
         address: this.defaultwallet.address,
         password
       })
+      if(this.actionManager!=undefined){
+        this.actionManager.setContext({url:DAEMON_CONFIG.LambdaNetwork(),userAddress:this.defaultwallet.address})
+      }
       ///
         var txHash ;
         this.actionManager.setMessage(type, transactionProperties)
@@ -533,6 +537,8 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
           signerFn
         )
         var result = await included();
+        log.info('transactiondata')
+        log.info(transactiondata)
         log.info('TransferConfirmresult')
         log.info(result)
         
