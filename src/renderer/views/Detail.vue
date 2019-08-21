@@ -98,7 +98,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('transactiondetails.Fee')}}:</span>
+            <span class="title">{{$t('transactiondetails.Momo')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{memo}}</span>
