@@ -101,7 +101,7 @@
             <span class="title">{{$t('transactiondetails.Momo')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <span class="item-value">{{memo}}</span>
+            <Input readonly type="textarea" :rows="4" v-model="memo"  />
           </Col>
         </Row>
       </div>
