@@ -192,7 +192,8 @@ export default {
            
          }else{
            _this.$Notice.error({
-                    title: _this.$t("Validator.action.Switching_fail"),
+                    title: 'error',
+                    desc:_this.$t("Validator.action.Switching_fail"),
                     
                 });
          }
@@ -200,8 +201,8 @@ export default {
        .catch(function(err){
          _this.$data.loadingbtn=false;
            _this.$Notice.error({
-                    title: _this.$t("Validator.action.Switching_fail"),
-                    
+                    title: 'error',
+                    desc:_this.$t("Validator.action.Switching_fail"),
                 });
        })
     },

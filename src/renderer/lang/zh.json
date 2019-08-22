@@ -124,8 +124,8 @@
       "Sync_info": "同步信息",
       "Validator_node": "请输入验证程序节点的IP地址",
       "action": {
-          "Switching_success": "切换验证程序成功",
-          "Switching_fail": "切换验证程序失败"
+          "Switching_success": "切换验证节点成功",
+          "Switching_fail": "切换验证节点失败，或节点没有开启rpc服务"
       }
   },
   "home": {
@@ -185,7 +185,8 @@
       "GaseUsed":"瓦斯已用",
       "GasWanted":"瓦斯要求",
       "Momo":"备注",
-      "Fee":"费用"
+      "Fee":"费用",
+      "Extract": "提取"
   },
   "Sign": {
       "Data_signature": "数据签名",

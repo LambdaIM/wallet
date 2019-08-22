@@ -47,7 +47,8 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('transactiondetails.To')}}:</span>
+            <span v-if="data.tags[0].value!='withdraw_delegator_reward'" class="title">{{$t('transactiondetails.To')}}:</span>
+            <span v-else class="title">{{$t('transactiondetails.Extract')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper" v-if="typeof getToAddress =='string'" >
             <a v-if="!!getToAddress==true" @click="checkAddress(getToAddress)" class="item-value">{{getToAddress}}</a>

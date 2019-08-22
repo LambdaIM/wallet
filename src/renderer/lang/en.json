@@ -130,7 +130,7 @@
       "Validator_node":"Please enter the IP address of the  Validator node",
       "action":{
         "Switching_success":"Switching Validator success",
-        "Switching_fail":"Switching Validator fail"
+        "Switching_fail":"Switching Validator fail,Or the node does not open the RPC service"
       }
     },
     "home":{
@@ -191,7 +191,8 @@
       "GaseUsed":"Gase Used",
       "GasWanted":"Gas Wanted",
       "Momo":"Momo",
-      "Fee":"Fee"
+      "Fee":"Fee",
+      "Extract": "Extract"
   },
   "Sign":{
     "Data_signature":"Data signature",

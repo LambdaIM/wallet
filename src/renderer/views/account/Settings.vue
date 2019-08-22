@@ -444,7 +444,7 @@
       },
       logout() {
         settings.set("isopenfilev1", false);
-        this.$store.dispatch("set", false);
+        this.$store.dispatch("setLogin", false);
         this.$router.push("/");
         // console.log('8888')
       },
