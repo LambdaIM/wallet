@@ -443,7 +443,7 @@
         this.$Message.info("Failed to copy texts");
       },
       logout() {
-        settings.set("isopenfile", false);
+        settings.set("isopenfilev1", false);
         this.$store.dispatch("set", false);
         this.$router.push("/");
         // console.log('8888')

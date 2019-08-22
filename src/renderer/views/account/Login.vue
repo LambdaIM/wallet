@@ -143,7 +143,7 @@ export default {
           this.$Notice.success({
             title: this.$t('login.action.Login_success')
           });
-          let login=settings.set("isopenfile", true);
+          let login=settings.set("isopenfilev1", true);
           console.log(login);
           this.$store.dispatch("setLogin", true);
           eventHub.$emit('login');

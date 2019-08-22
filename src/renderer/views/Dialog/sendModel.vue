@@ -162,6 +162,10 @@ export default {
           //触发事件活着回掉函数
         }
       } catch (ex) {
+        this.$Notice.warning({
+          title: "error",
+          desc:ex.errormsg
+        });
         console.log(ex);
       }
     },

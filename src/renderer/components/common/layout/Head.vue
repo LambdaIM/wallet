@@ -221,7 +221,7 @@
       // this.isLogin();
     },
     mounted() {  
-      let login = settings.get("isopenfile");
+      let login = settings.get("isopenfilev1");
         
       eventhub.$on("TransactionSuccess", data => {
         console.log("TransactionSuccess");

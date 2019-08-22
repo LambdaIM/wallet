@@ -20,6 +20,7 @@
       "block_time": "同步时间",
       "sync_block": "同步块…",
       "validator_connecting": "正在连接验证节点…",
+      "linkerror": "连接的验证节点出现异常",
       "action": {
           "Validator_time_out": "验证节点网络连接超时，请检查您的网络。"
       }
@@ -133,6 +134,7 @@
       "Transfer": "交易",
       "Reward":"奖励",
       "Withdraw":"提取奖励",
+      "pledge":"质押",
       "profits_pledge_system": "挖矿奖励与质押系统的提现额度有关。详情请参阅质押系统。",
       "View_Detail": "查看详情",
       "table": {
@@ -267,6 +269,7 @@
           "AssetConversion":"Asset 兑换",
           "Transactionhash":"事物哈希",
           "EditMemo":"编辑备注"
+          
           
       }
   },

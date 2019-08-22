@@ -68,7 +68,7 @@ export default {
          }else{
            console.log('连接的验证节点异常')
             _this.$Notice.warning({
-               title: '连接的验证节点异常'
+               title: _this.$t("foot.linkerror")
             });  
          }
        })

@@ -3,7 +3,7 @@
         
     <p class="balance">
       {{$t('home.Balance')}}: {{balance|Lambformat}} 
-      质押: {{DelegationValue|Stoformat}}
+      {{$t('home.pledge')}}: {{DelegationValue|Stoformat}}
       {{$t('home.Reward')}} :{{DistributionReward|Lambformat}} 
 
     </p>

@@ -169,6 +169,10 @@ export default {
           
         }
       } catch (ex) {
+        this.$Notice.warning({
+          title: "error",
+          desc:ex.errormsg
+        });
         console.log(ex);
       }
     },

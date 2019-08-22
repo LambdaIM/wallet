@@ -129,7 +129,7 @@ var _this=this;
 walletRouter.beforeResolve((to, from, next) => {
     // ...
     console.log('router')
-    var open = settings.get('isopenfile');
+    var open = settings.get('isopenfilev1');
 
     if(notNeedLogin.indexOf(to.name)==-1){
         

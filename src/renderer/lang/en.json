@@ -22,6 +22,7 @@
       "block_time": "Block time",
       "sync_block": "Sync Block....",
       "validator_connecting": "Validator connecting ...",
+      "linkerror": "An exception occurs at the validation node of the connection",
       "action":{
         "Validator_time_out":"Validator Network connect timed out, please check your network."
 
@@ -138,6 +139,7 @@
       "Reward":"Reward",
       "Withdraw":"Withdraw",
       "Transfer":"Transfer",
+      "pledge":"Pledge",
       "profits_pledge_system":"The profits of miners'mining are related to the withdrawal amount in the storage miners' system. Details are referred to the pledge system",
       "View_Detail":"View Detail",
       "table":{
