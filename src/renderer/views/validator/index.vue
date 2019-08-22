@@ -35,7 +35,9 @@
     </div>
 
  
-    
+    <div class="demo-spin-container" v-if="node_info.length==0">
+       <Spin fix></Spin>
+    </div>
       <Mycard  v-if="node_info.length>0" :cardtitle="$t('Validator.Node_info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row   v-for="item in node_info" class-name="card-item">
@@ -263,4 +265,11 @@ export default {
     }
   }
 }
+ .demo-spin-container{
+    	display: inline-block;
+        width: 100%;
+        height: 100px;
+        position: relative;
+        border: 1px solid #eee;
+    }
 </style>
