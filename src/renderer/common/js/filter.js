@@ -1,6 +1,6 @@
 import moment from "moment";
 const BigNumber = require('bignumber.js');
-BigNumber.config({ DECIMAL_PLACES: 6,ROUNDING_MODE: BigNumber.ROUND_DOWN })
+BigNumber.config({ROUNDING_MODE: BigNumber.ROUND_DOWN })
 
 
 const formatValue = (value) => {
@@ -117,10 +117,10 @@ const formatRelativeDate = (value) => {
             yy: "%d years"
         }
     });
-    var utcnow = moment().zone(0).add(8, 'hours').utc().format();
+    var utcnow = moment().utc().utcOffset(8).format();
     // console.log(utcnow,value);
     // return moment(value).fromNow();
-    return moment(value).utc().from(utcnow);
+    return moment(value).utc().utcOffset(8).from(utcnow);
 }
 
 

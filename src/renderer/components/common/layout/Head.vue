@@ -229,6 +229,12 @@
         this.$data.balanceLoading=true;  
         this.getBalance();
       });
+      eventhub.$on("Refreshbalance", data => {
+        console.log("TransactionSuccess");
+        this.getBalance();
+      });
+
+      
       eventhub.$on("login", data => {
         console.log("loginSuccess");
         

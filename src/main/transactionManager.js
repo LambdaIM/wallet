@@ -34,7 +34,7 @@ class Transaction {
 
     }
     console.log('getTransactionList')
-    var result = await this.CosmosAPI.get.txs(this.defaultAddress);
+    var result = await this.CosmosAPI().get.txs(this.defaultAddress);
     var resultList=[];
     if( result instanceof Array){
       result.forEach(function(item){
@@ -67,7 +67,7 @@ class Transaction {
 
   }
   async getTransactionInfo(hash,txType){
-    var result = await this.CosmosAPI.get.tx(hash);
+    var result = await this.CosmosAPI().get.tx(hash);
     console.log('getTransactionInfo')
       return result;
   

@@ -15,7 +15,7 @@ var fs = require('graceful-fs')
 //homedir  系统默认的文件存储路径
 
 
-var defaultip='198.11.177.95'
+var defaultip='39.105.124.220'
 // var defaultip='192.168.10.29'
 
 var configData = {

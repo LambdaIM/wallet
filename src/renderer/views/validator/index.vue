@@ -96,6 +96,7 @@ import _ from "underscore";
 const ipc = require("electron-better-ipc");
 const settings = require("electron-settings");
 var  { DAEMON_CONFIG }  = require("../../../config.js");
+import eventhub from "../../common/js/event.js";
 
 export default {
   data() {
@@ -187,10 +188,12 @@ export default {
                               ipv1: ValidatorIP
                             });
           
-          var tempresult =await ipc.callMain("changeip", "" );
+          
           _this.$Notice.success({
                     title: _this.$t("Validator.action.Switching_success"),      
               });
+          var tempresult =await ipc.callMain("changeip", "" );
+          eventhub.$emit('Refreshbalance');
            
          }else{
            _this.$Notice.error({

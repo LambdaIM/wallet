@@ -133,6 +133,7 @@ export default {
   },
   methods: {
     myMypledge(){
+      // console.log('myMypledge',this.$data.shares,this.$data.validator.delegator_shares,this.$data.validator.tokens)
      return this.CalculationMypledge(this.$data.shares,this.$data.validator.delegator_shares,this.$data.validator.tokens)
    },
     checkAddress(value) {

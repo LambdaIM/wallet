@@ -326,7 +326,7 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
     }
 
     
-    var result = await this.CosmosAPI.get.account(this.defaultwallet.address);
+    var result = await this.CosmosAPI().get.account(this.defaultwallet.address);
     //返回结果 1  { sequence: '0', accountNumber: '0' }
     // 返回结果2 
 
@@ -368,8 +368,8 @@ walletManger.prototype.getDelegationsBalance =async  function () {
     console.log('getDelegationsBalance')
 
     var address = this.defaultwallet.address;
-    var delegationsList  = await this.CosmosAPI.get.delegations(address);
-    var partnerDelegations  = await this.CosmosAPI.get.partnerDelegations(address);
+    var delegationsList  = await this.CosmosAPI().get.delegations(address);
+    var partnerDelegations  = await this.CosmosAPI().get.partnerDelegations(address);
     var result=0;
     
     if( delegationsList instanceof Array){
@@ -391,7 +391,7 @@ walletManger.prototype.getDelegationsBalance =async  function () {
 
 walletManger.prototype.getDistributionRewards = async function (){
     var address = this.defaultwallet.address;
-    var result =  await this.CosmosAPI.get.delegatorRewards(address);
+    var result =  await this.CosmosAPI().get.delegatorRewards(address);
 
     return result;
 

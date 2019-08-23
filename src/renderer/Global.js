@@ -1,5 +1,5 @@
 const BigNumber = require('bignumber.js');
-BigNumber.config({ DECIMAL_PLACES: 8,ROUNDING_MODE: BigNumber.ROUND_DOWN })
+BigNumber.config({ROUNDING_MODE: BigNumber.ROUND_DOWN })
 
 export default {
     install (Vue, options) {
@@ -70,8 +70,9 @@ export default {
             return bigvalue.toString();
         },
         Vue.prototype.CalculationMypledge = function (shares,delegator_shares,tokens) {
-            
-            var bigvalue=new BigNumber(shares).div(delegator_shares).times(tokens);
+            console.log('CalculationMypledge')
+            var BN = BigNumber.clone({ ROUNDING_MODE: BigNumber.ROUND_HALF_UP })
+            var bigvalue=new BN(shares).div(delegator_shares).times(tokens);
             bigvalue = bigvalue.div(1e6).toFixed(6);
             var bigvalue2=new BigNumber(bigvalue)
             return `${bigvalue2.toFormat() } STO`;

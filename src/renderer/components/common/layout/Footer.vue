@@ -20,6 +20,8 @@
 const ipc = require("electron-better-ipc");
 const settings = require("electron-settings");
 var  { DAEMON_CONFIG }  = require("../../../../config.js");
+import eventhub from "../../../common/js/event.js";
+
 export default {
   data() {
     return {
@@ -38,6 +40,11 @@ export default {
         _this.getValidatorIp();
         _this.getValidatorInfo();
     },1000*10)
+    eventhub.$on("Refreshbalance", data => {
+        console.log("Refreshbalance");
+        _this.getValidatorIp();
+        _this.getValidatorInfo();
+      });
   },
   methods: {
     getValidatorIp(){
@@ -79,7 +86,7 @@ export default {
        })
     },
     dataFormat(result){
-
+      console.log(result)
 
       return {
         address:result.nodeInfo.moniker||result.nodeInfo.id,

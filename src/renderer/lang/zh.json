@@ -17,7 +17,7 @@
   "foot": {
       "validator": "验证节点",
       "block_height": "块高",
-      "block_time": "同步时间",
+      "block_time": "Sync",
       "sync_block": "同步块…",
       "validator_connecting": "正在连接验证节点…",
       "linkerror": "连接的验证节点出现异常",
@@ -287,6 +287,8 @@
     "MsgBeginReDelegate": "转质押",
     "MsgUnjail":"释放",
     "MsgEditValidator": "修改节点",
-    "MsgSetWithdrawAddress":"修改提取收益地址"
+    "MsgSetWithdrawAddress":"修改提取收益地址",
+    "MsgWithdrawValidatorCommission": "提取佣金"
+
    }
 }

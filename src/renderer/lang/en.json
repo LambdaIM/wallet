@@ -19,7 +19,7 @@
     "foot": {
       "validator": "Validator",
       "block_height": "Block height",
-      "block_time": "Block time",
+      "block_time": "Sync",
       "sync_block": "Sync Block....",
       "validator_connecting": "Validator connecting ...",
       "linkerror": "An exception occurs at the validation node of the connection",
@@ -291,7 +291,8 @@
     "MsgBeginReDelegate": "BeginReDelegate",
     "MsgUnjail":"Unjail",
     "MsgEditValidator": "EditValidator",
-    "MsgSetWithdrawAddress":"MsgSetWithdrawAddress"
+    "MsgSetWithdrawAddress":"MsgSetWithdrawAddress",
+    "MsgWithdrawValidatorCommission": "WithdrawCommission"
   }
 
 

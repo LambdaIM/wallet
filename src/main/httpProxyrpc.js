@@ -37,10 +37,10 @@ export default function(){
         try {
             var CosmosAPIobj= LambdaApi();
             
-            var nodeInfo = await CosmosAPIobj.get.nodeVersion();
+            var nodeInfo = await CosmosAPIobj().get.nodeVersion();
             
-            var nodeSyncing = await CosmosAPIobj.get.nodeSyncing();
-            var blockLatest = await CosmosAPIobj.get.nodeBlocklatest();
+            var nodeSyncing = await CosmosAPIobj().get.nodeSyncing();
+            var blockLatest = await CosmosAPIobj().get.nodeBlocklatest();
             
             
             return {data:{
