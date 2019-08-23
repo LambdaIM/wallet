@@ -36,6 +36,10 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@jswebfans/bcryptjs@2.4.4":
+  version "2.4.4"
+  resolved "https://registry.npmjs.org/@jswebfans/bcryptjs/-/bcryptjs-2.4.4.tgz#79894242110e73df25ee928b01210f79b558d386"
+
 "@jswebfans/cosmos-api@0.1.2":
   version "0.1.2"
   resolved "https://registry.npmjs.org/@jswebfans/cosmos-api/-/cosmos-api-0.1.2.tgz#f66575177a472fe500af441c97315405c23a20e3"
@@ -44,11 +48,11 @@
     axios "^0.19.0"
     cross-fetch "^3.0.4"
 
-"@jswebfans/cosmos-lib@1.1.4":
-  version "1.1.4"
-  resolved "https://registry.npmjs.org/@jswebfans/cosmos-lib/-/cosmos-lib-1.1.4.tgz#0736fed7ca683c78b6b3f4d5702ca04b76dc891f"
+"@jswebfans/cosmos-lib@1.1.6":
+  version "1.1.6"
+  resolved "https://registry.npmjs.org/@jswebfans/cosmos-lib/-/cosmos-lib-1.1.6.tgz#7a6dc8bd5018002b6e3772a13ad3e9fde97ecce2"
   dependencies:
-    bcryptjs "git+https://github.com/qqqzhch/bcrypt.js.git"
+    "@jswebfans/bcryptjs" "2.4.4"
     bech32 "^1.1.3"
     bip32 "^2.0.3"
     bip39 "^3.0.2"
@@ -1423,15 +1427,6 @@ bcrypt-pbkdf@^1.0.0:
   resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.2.tgz#a4301d389b6a43f9b67ff3ca11a3f6637e360e9e"
   dependencies:
     tweetnacl "^0.14.3"
-
-"bcryptjs@git+https://github.com/qqqzhch/bcrypt.js.git":
-  version "2.4.4"
-  uid "6ee0169d948cc4f90cf8570ea087188079718908"
-  resolved "git+https://github.com/qqqzhch/bcrypt.js.git#6ee0169d948cc4f90cf8570ea087188079718908"
-
-"bcryptjs@https://github.com/qqqzhch/bcrypt.js.git":
-  version "2.4.4"
-  resolved "https://github.com/qqqzhch/bcrypt.js.git#6ee0169d948cc4f90cf8570ea087188079718908"
 
 bech32@^1.1.3:
   version "1.1.3"
