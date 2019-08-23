@@ -65,7 +65,7 @@
 <script>
 // import RPC from "../../rpc.js";
 import { DAEMON_CONFIG } from "../../../config.js";
-// import https from "@/server/https.js";
+
 import Mybg from "@/components/common/useful/Mybg.vue";
 const {ipcRenderer: ipc} = require('electron-better-ipc');
 const settings = require("electron-settings");

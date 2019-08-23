@@ -113,7 +113,7 @@
 <script>
 import Mycard from "@/components/common/useful/Mycard.vue";
 import { DAEMON_CONFIG } from "../../config.js";
-import https from "@/server/https.js";
+
 const { shell } = require("electron");
 const {ipcRenderer: ipc} = require('electron-better-ipc');
 import filters from "../common/js/filter.js";

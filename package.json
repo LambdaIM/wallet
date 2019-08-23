@@ -54,28 +54,15 @@
         "@jswebfans/cosmos-api": "0.1.2",
         "@jswebfans/cosmos-lib": "1.1.6",
         "axios": "^0.18.0",
-        "bigi": "^1.4.2",
         "bignumber.js": "^8.1.1",
-        "body-parser": "^1.18.3",
-        "buffer-to-uint8array": "^1.1.0",
-        "crypto": "^1.0.1",
         "electron-better-ipc": "^0.4.0",
         "electron-log": "^2.2.17",
         "electron-settings": "^3.2.0",
         "graceful-fs": "^4.1.15",
         "husky": "^3.0.2",
         "iview": "^3.2.0",
-        "js-base64": "^2.5.1",
         "moment": "^2.24.0",
         "object-assign": "^4.1.1",
-        "protobufjs": "^6.8.8",
-        "qs": "^6.6.0",
-        
-        
-        
-        
-        "tweetnacl-util": "^0.15.0",
-        "typedarray-to-buffer": "^3.1.5",
         "underscore": "^1.9.1",
         "uuid": "^3.3.2",
         "vue": "^2.5.16",
@@ -83,9 +70,7 @@
         "vue-electron": "^1.0.6",
         "vue-i18n": "^8.11.2",
         "vue-router": "^3.0.1",
-        "vuex": "^3.0.1"
-        
-        
+        "vuex": "^3.0.1"  
     },
     "devDependencies": {
         "ajv": "^6.5.0",

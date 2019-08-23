@@ -18,8 +18,8 @@ class Transaction {
     
   }
   readconfig(){
-    log.info('defaultwallet num value');
-    log.info(settings.has('defaultwallet'));
+    log.info('Transaction readconfig');
+    
 
     if(settings.has('defaultwallet')!=false){
         this.defaultAddress = settings.get('defaultwallet')

@@ -5,7 +5,6 @@ const path = require('path');
 
 import walletrpc from './walletrpc';
 import transactionrpc from './transactionrpc';
-import minerrpc from './minerrpc';
 
 import httpProxyrpc from './httpProxyrpc';
 
@@ -17,7 +16,7 @@ export default function(){
     
     walletrpc();
     transactionrpc();
-    minerrpc();
+    
     httpProxyrpc();
     validatorsRpc();
 

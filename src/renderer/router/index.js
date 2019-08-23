@@ -58,12 +58,6 @@ settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH,'set.json') );
             import('@/views/account/Settings.vue')
     },
     {
-        path: '/customer',
-        name: 'Customer',
-        component: () =>
-            import('@/views/Customer.vue')
-    },
-    {
         path: '/staking',
         name: 'Staking',
         component: () =>
@@ -91,30 +85,12 @@ settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH,'set.json') );
         path: '*',
         redirect: '/'
     },
-    // {
-    //     path: '/test',
-    //     name: 'test',
-    //     component: () =>
-    //         import('@/views/Test.vue')
-    // },
-    {
-        path: '/api',
-        name: 'api',
-        component: () =>
-            import('@/views/Api.vue')
-    },
     {
         path: '/validator',
         name: 'validator',
         component: () =>
             import('@/views/validator/index.vue')
     },
-    // {
-    //     path: '/miner',
-    //     name: 'miner',
-    //     component: () =>
-    //         import('@/views/miner/index.vue')
-    // },
     {
         path: '/sign',
         name: 'sign',

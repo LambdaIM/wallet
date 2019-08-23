@@ -6,27 +6,14 @@ var log = require('../log').log;
 var { DAEMON_CONFIG } = require('../configmain.js');
 
 
-
 const settings = require("electron-settings");
-const axios = require('axios');
-var protobuf = require("protobufjs");
 const path = require('path');
-
-
-
-var crypto = require("crypto");
-var BigInteger = require('bigi');
-import bigInter from './bigInter';
-import defaultAddress from './defaultAddress';
-import generatesha256 from './generatesha256';
-
 const cosmos = require('@jswebfans/cosmos-lib');
 
 import transaction from "./utils/transactionTypes"
 import ActionManager from "./utils/ActionManager.js"
 
 import BigNum from './utils/BigNum';
-
 import LambdaApi from './lambdaApi';
 
 
@@ -36,17 +23,12 @@ import LambdaApi from './lambdaApi';
 var walletManger = function (dir) {
     //遍历文件夹
     //
-    
-  
-
     this.walletList = [];
     this.defaultwallet = null;
     //默认的钱包 应该存储在 配置文件里面
 
     this.lastpayobj = null;
     this.lastpayArry = null;
-    // var protofilepath = path.join(__static, '/awesome.proto');
-    // this.protofilepath=protofilepath;
     
     this.CosmosAPI= LambdaApi()
     this.actionManager=new ActionManager()
@@ -128,7 +110,6 @@ walletManger.prototype.OpenDefaultwallet = function (password) {
 
     var  pravteKey=cosmos.keyStore.checkJson(this.defaultwallet, password)
     
-    // wallet = ETHwallet.fromV3(this.defaultwallet, password);
     info = {
         publicKey: this.defaultwallet.publicKey,
         address: this.defaultwallet.address,
@@ -495,7 +476,7 @@ walletManger.prototype.Simulate = async function (transactiondata) {
 }
 
 walletManger.prototype.TransferConfirm = async function (password,transactiondata,gaseFee) {
-    log.info('transferConfirm')
+    log.info('walletManger transferConfirm')
     const SIGN_METHODS = {
         LOCAL: `local`,
         LEDGER: `ledger`,

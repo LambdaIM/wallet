@@ -91,7 +91,7 @@
 // import Header from "@/components/common/layout/Head.vue";
 import MyTable from "@/components/common/useful/Mytable.vue";
 import Mycard from "@/components/common/useful/Mycard.vue";
-import https from "@/server/https.js";
+
 import _ from "underscore";
 const {ipcRenderer: ipc} = require('electron-better-ipc');
 const settings = require("electron-settings");

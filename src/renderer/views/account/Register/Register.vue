@@ -55,7 +55,7 @@
 <script>
 import Mybg from "@/components/common/useful/Mybg.vue";
 import { DAEMON_CONFIG } from "../../../../config.js";
-// import https from "@/server/https.js";
+
 const {ipcRenderer: ipc} = require('electron-better-ipc');
 // const settings = require("electron-settings");
 export default {
