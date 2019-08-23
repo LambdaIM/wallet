@@ -1,5 +1,5 @@
 var log = require('../log').log;
-const eipc = require('electron-better-ipc');
+const {ipcMain: eipc} = require('electron-better-ipc');
 const axiosM =require('axios');
 var {DAEMON_CONFIG} =require('../configmain.js')
 

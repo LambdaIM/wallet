@@ -17,7 +17,7 @@
 </template>
 
 <script>
-const ipc = require("electron-better-ipc");
+const {ipcRenderer: ipc} = require('electron-better-ipc');
 const settings = require("electron-settings");
 var  { DAEMON_CONFIG }  = require("../../../../config.js");
 import eventhub from "../../../common/js/event.js";

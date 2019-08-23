@@ -109,7 +109,7 @@
 <script>
 import Header from "@/components/common/layout/Head.vue";
 import MyTable from "@/components/common/useful/Mytable.vue";
-const ipc = require("electron-better-ipc");
+const {ipcRenderer: ipc} = require('electron-better-ipc');
 
 import utils from "@/common/js/utils.js";
 

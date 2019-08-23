@@ -21,7 +21,7 @@ import Footer from "@/components/common/layout/Footer.vue";
 import Header from "@/components/common/layout/Head.vue";
 import eventHub from "@/common/js/event.js"
 
-const ipc = require("electron-better-ipc");
+const {ipcRenderer: ipc} = require('electron-better-ipc');
 
 export default {
   name: "wallet",

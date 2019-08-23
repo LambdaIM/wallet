@@ -59,11 +59,9 @@
         "body-parser": "^1.18.3",
         "buffer-to-uint8array": "^1.1.0",
         "crypto": "^1.0.1",
-        "electron-better-ipc": "^0.1.2",
+        "electron-better-ipc": "^0.4.0",
         "electron-log": "^2.2.17",
         "electron-settings": "^3.2.0",
-        "ethereumjs-util": "^6.0.0",
-        "express": "^4.16.4",
         "graceful-fs": "^4.1.15",
         "husky": "^3.0.2",
         "iview": "^3.2.0",
@@ -72,10 +70,10 @@
         "object-assign": "^4.1.1",
         "protobufjs": "^6.8.8",
         "qs": "^6.6.0",
-        "randombytes": "^2.0.6",
-        "safe-buffer": "^5.1.2",
-        "scrypt.js": "^0.3.0",
-        "tendermintelectronkey": "0.0.5",
+        
+        
+        
+        
         "tweetnacl-util": "^0.15.0",
         "typedarray-to-buffer": "^3.1.5",
         "underscore": "^1.9.1",
@@ -85,9 +83,9 @@
         "vue-electron": "^1.0.6",
         "vue-i18n": "^8.11.2",
         "vue-router": "^3.0.1",
-        "vuex": "^3.0.1",
-        "vuex-electron": "^1.0.0",
-        "web3-utils": "^1.0.0-beta.46"
+        "vuex": "^3.0.1"
+        
+        
     },
     "devDependencies": {
         "ajv": "^6.5.0",
@@ -105,9 +103,9 @@
         "css-loader": "^0.28.11",
         "del": "^3.0.0",
         "devtron": "^1.4.0",
-        "electron": "^2.0.4",
-        "electron-builder": "^20.19.2",
-        "electron-debug": "^1.5.0",
+        "electron": "^6.0.3",
+        "electron-builder": "^21.2.0",
+        "electron-debug": "^3.0.1",
         "electron-devtools-installer": "^2.2.4",
         "electron-rebuild": "^1.8.4",
         "file-loader": "^1.1.11",

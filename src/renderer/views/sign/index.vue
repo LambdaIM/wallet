@@ -102,7 +102,7 @@
 <script>
 import MyTable from "@/components/common/useful/Mytable.vue";
 import Mycard from "@/components/common/useful/Mycard.vue";
-const ipc = require("electron-better-ipc");
+const {ipcRenderer: ipc} = require('electron-better-ipc');
 export default {
   data() {
     return {

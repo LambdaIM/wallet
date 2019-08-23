@@ -130,7 +130,7 @@
 </template>
 
 <script>
-  const ipc = require("electron-better-ipc");
+  const {ipcRenderer: ipc} = require('electron-better-ipc');
   import fs from "fs";
 
   export default {

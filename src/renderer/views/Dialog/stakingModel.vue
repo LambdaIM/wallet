@@ -62,7 +62,7 @@
 </div>
 </template>
 <script>
-const ipc = require("electron-better-ipc");
+const {ipcRenderer: ipc} = require('electron-better-ipc');
 import eventhub from "../../common/js/event.js";
 
 export default {

@@ -198,7 +198,7 @@
 </template>
 
 <script>
-  const ipc = require("electron-better-ipc");
+  const {ipcRenderer: ipc} = require('electron-better-ipc');
   const settings = require("electron-settings");
   import eventhub from "../../../common/js/event.js";
   import { mapState } from "vuex";

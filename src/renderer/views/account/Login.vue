@@ -67,7 +67,7 @@
 import { DAEMON_CONFIG } from "../../../config.js";
 // import https from "@/server/https.js";
 import Mybg from "@/components/common/useful/Mybg.vue";
-const ipc = require("electron-better-ipc");
+const {ipcRenderer: ipc} = require('electron-better-ipc');
 const settings = require("electron-settings");
 import eventHub from "@/common/js/event.js"
 

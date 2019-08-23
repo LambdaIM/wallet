@@ -27,10 +27,10 @@ import Header from "@/components/common/layout/Head.vue";
 import MyTable from "@/components/common/useful/Mytable.vue";
 import { DAEMON_CONFIG } from "../../config.js";
 import https from "@/server/https.js";
-const ipc = require("electron-better-ipc");
+const {ipcRenderer: ipc} = require('electron-better-ipc');
 const settings = require("electron-settings");
 import filters from '../common/js/filter.js'
-import * as Utils from 'web3-utils';
+
 
 
 export default {

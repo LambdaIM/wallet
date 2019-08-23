@@ -92,7 +92,7 @@ import MyTable from "@/components/common/useful/Mytable.vue";
 
 
 
-const ipc = require("electron-better-ipc");
+const {ipcRenderer: ipc} = require('electron-better-ipc');
 
 export default {
   data() {

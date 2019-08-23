@@ -4,7 +4,7 @@
 var fs = require('graceful-fs')
 var log = require('../log').log;
 var { DAEMON_CONFIG } = require('../configmain.js');
-var TenderKeys = require('tendermintelectronkey')
+
 
 
 const settings = require("electron-settings");
@@ -208,7 +208,7 @@ walletManger.prototype.getWalletList = function () {
 
 
 walletManger.prototype.creatWallet = function (password, name) {
-    // var tenderKeys = new TenderKeys();
+    
 
     var mnemonic = cosmos.crypto.generateRandomMnemonic(256);
 
@@ -218,7 +218,7 @@ walletManger.prototype.creatWallet = function (password, name) {
 
 }
 walletManger.prototype.generateWallet = function (mnemonic, password, name) {
-    var tenderKeys = new TenderKeys();
+    
 
     const keys = cosmos.crypto.getKeysFromMnemonic(mnemonic);
     // var seed = tenderKeys.generateSeed(mnemonic);

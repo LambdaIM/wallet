@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { createPersistedState, createSharedMutations } from 'vuex-electron'
+// import { createPersistedState, createSharedMutations } from 'vuex-electron'
 
 import register from './modules/Register'
 import account from './modules/Account'

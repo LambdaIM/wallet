@@ -1,4 +1,4 @@
-const eipc = require('electron-better-ipc');
+const {ipcMain: eipc} = require('electron-better-ipc');
 const path = require('path');
 const { shell } = require('electron');
 

@@ -47,9 +47,9 @@ function createWindow() {
         useContentSize: true,
         width: 975,
         autoHideMenuBar: true,
-        // title:'lamb wallet',
-        // resizable: true,
-        // frame: false
+        webPreferences: {
+            nodeIntegration: true
+        }
     })
     if (process.env.NODE_ENV == 'development'){
         mainWindow.webContents.openDevTools();

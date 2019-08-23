@@ -44,7 +44,7 @@ import Mybg from "@/components/common/useful/Mybg.vue";
 import { DAEMON_CONFIG } from "../../../..//config.js";
 import { mapState, mapMutations } from "vuex";
 import https from "@/server/https.js";
-const ipc = require("electron-better-ipc");
+const {ipcRenderer: ipc} = require('electron-better-ipc');
 const settings = require("electron-settings");
 export default {
   data() {

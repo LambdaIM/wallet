@@ -1,5 +1,5 @@
 var {DAEMON_CONFIG} =require('../configmain.js');
-const eipc = require('electron-better-ipc');
+const {ipcMain: eipc} = require('electron-better-ipc');
 import resultView from './result.js';
 const settings = require('electron-settings');
 var log = require('../log').log;

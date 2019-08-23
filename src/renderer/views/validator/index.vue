@@ -93,7 +93,7 @@ import MyTable from "@/components/common/useful/Mytable.vue";
 import Mycard from "@/components/common/useful/Mycard.vue";
 import https from "@/server/https.js";
 import _ from "underscore";
-const ipc = require("electron-better-ipc");
+const {ipcRenderer: ipc} = require('electron-better-ipc');
 const settings = require("electron-settings");
 var  { DAEMON_CONFIG }  = require("../../../config.js");
 import eventhub from "../../common/js/event.js";

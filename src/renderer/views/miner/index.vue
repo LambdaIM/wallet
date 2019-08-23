@@ -146,7 +146,7 @@
 </template>
 
 <script>
-const ipc = require("electron-better-ipc");
+const {ipcRenderer: ipc} = require('electron-better-ipc');
 import MyTable from "@/components/common/useful/Mytable.vue";
 import filters from "../../common/js/filter.js";
 import wUtils from "../../common/js/utils.js";
