@@ -196,6 +196,9 @@ export default {
       console.log("getListDataEnd");
     },
     getME(operator_address) {
+      if(this.$data.mydelegationsList instanceof Array ==false){
+        return ;
+      }
       this.$data.mydelegationsList.forEach(myitem => {
         if (operator_address == myitem.validator_address) {
           this.$data.shares = myitem.shares;

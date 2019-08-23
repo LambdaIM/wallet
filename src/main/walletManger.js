@@ -20,7 +20,7 @@ import bigInter from './bigInter';
 import defaultAddress from './defaultAddress';
 import generatesha256 from './generatesha256';
 
-const cosmos = require('cosmos-lib');
+const cosmos = require('@jswebfans/cosmos-lib');
 
 import transaction from "./utils/transactionTypes"
 import ActionManager from "./utils/ActionManager.js"

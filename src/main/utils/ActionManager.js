@@ -1,4 +1,4 @@
-import Cosmos from "@lunie/cosmos-api"
+import Cosmos from "@jswebfans/cosmos-api"
 // import config from "src/config"
 // import { getSigner } from "./signer"
 import transaction from "./transactionTypes"

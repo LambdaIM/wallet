@@ -51,14 +51,14 @@
         }
     },
     "dependencies": {
-        "@lunie/cosmos-api": "https://github.com/qqqzhch/cosmos-api.git",
+        "@jswebfans/cosmos-api": "0.1.2",
         "axios": "^0.18.0",
         "bcryptjs": "https://github.com/qqqzhch/bcrypt.js.git",
         "bigi": "^1.4.2",
         "bignumber.js": "^8.1.1",
         "body-parser": "^1.18.3",
         "buffer-to-uint8array": "^1.1.0",
-        "cosmos-lib": "https://github.com/qqqzhch/cosmos-lib.git",
+        "@jswebfans/cosmos-lib": "1.1.4",
         "crypto": "^1.0.1",
         "electron-better-ipc": "^0.1.2",
         "electron-log": "^2.2.17",

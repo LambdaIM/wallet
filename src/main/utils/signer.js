@@ -1,6 +1,6 @@
 
 // import { signWithPrivateKey, getStoredWallet } from "@lunie/cosmos-keys"
-const cosmosLib = require('cosmos-lib');
+const cosmosLib = require('@jswebfans/cosmos-lib');
 
 
 export function getSigner(config, submitType = "", { address, password }) {

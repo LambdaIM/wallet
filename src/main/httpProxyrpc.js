@@ -2,7 +2,7 @@ var log = require('../log').log;
 const eipc = require('electron-better-ipc');
 const axiosM =require('axios');
 var {DAEMON_CONFIG} =require('../configmain.js')
-// import CosmosAPI from "@lunie/cosmos-api"
+
 import LambdaApi from './lambdaApi';
 
 const axios = axiosM.create();
