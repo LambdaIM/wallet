@@ -21,12 +21,13 @@ import defaultAddress from './defaultAddress';
 import generatesha256 from './generatesha256';
 
 const cosmos = require('cosmos-lib');
-import CosmosAPI from "@lunie/cosmos-api"
+
 import transaction from "./utils/transactionTypes"
 import ActionManager from "./utils/ActionManager.js"
 
 import BigNum from './utils/BigNum';
 
+import LambdaApi from './lambdaApi';
 
 
 
@@ -47,7 +48,7 @@ var walletManger = function (dir) {
     // var protofilepath = path.join(__static, '/awesome.proto');
     // this.protofilepath=protofilepath;
     
-    this.CosmosAPI= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork(),'lambda-hub-test')
+    this.CosmosAPI= LambdaApi()
     this.actionManager=new ActionManager()
 
     this.scann();
@@ -318,7 +319,7 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
 
 
 walletManger.prototype.getDefaultWalletBlance = async function () {
-    log.info('getDefaultWalletBlance')
+    log.info('walletManger getDefaultWalletBlance')
     
     if(this.defaultwallet==null){
        throw new Error('not find DefaultWallet')
@@ -329,7 +330,7 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
     //返回结果 1  { sequence: '0', accountNumber: '0' }
     // 返回结果2 
 
-    const delegations = await this.CosmosAPI.get.delegations(this.defaultwallet.address)
+    // const delegations = await this.CosmosAPI.get.delegations(this.defaultwallet.address)
 
 
     
@@ -374,6 +375,7 @@ walletManger.prototype.getDelegationsBalance =async  function () {
     if( delegationsList instanceof Array){
         delegationsList.forEach((item)=>{
             // result+=(item.shares-0);
+            console.log('item.shares',item)
             result=BigNum(item.shares).plus(result)
         })
 

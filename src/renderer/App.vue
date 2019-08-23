@@ -113,7 +113,20 @@ export default {
         })
         .catch(function(err) {
           console.log(err);
+          
           _this.$data.loadingsendLAMBTx=false;
+          if(err.errormsg&&err.errormsg.indexOf("Tx already exists in cache")>0){
+            _this.$data.passwordModal = false;
+            _this.$data.walletPassword = null;
+            _this.$Modal.warning({
+              title: _this.$t('Dialog.com.Txalreadyexistsincache'),
+              width: '700',
+              content: err.errormsg ,
+              okText: "OK",
+            });
+            eventHub.$emit('TransactionSuccess');
+           return ;
+          }
 
           try {
             var errormsg = JSON.parse(err.errormsg) 

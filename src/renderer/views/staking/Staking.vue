@@ -20,7 +20,7 @@
                     >{{row.operator_address}}</router-link>
                     </template>
                     <template slot-scope="{ row, index }" slot="shares">
-                      {{row.shares|Stoformat}}
+                      {{myMypledge(row)}}
                     </template>
                     <template slot-scope="{ row, index }" slot="reward">
                       {{row.reward|Lambformat}}
@@ -233,6 +233,9 @@ export default {
    this.stakingParameters();
   },
   methods: {
+   myMypledge(row){
+     return this.CalculationMypledge(row.shares,row.delegator_shares,row.tokens)
+   },
    link(operator_address){
      console.log(operator_address);
     return "/stakinginfo/"+operator_address ;

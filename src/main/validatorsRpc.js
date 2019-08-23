@@ -1,13 +1,15 @@
 var {DAEMON_CONFIG} =require('../configmain.js');
 const eipc = require('electron-better-ipc');
 import resultView from './result.js';
-import CosmosAPI from "@lunie/cosmos-api"
+
+import LambdaApi from './lambdaApi';
+import {changeCosmosAPI} from './lambdaApi';
 
 
 
 
   export default function(){
-    var cosmosapi= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork(),'lambda-hub-test')
+    var cosmosapi= LambdaApi()
     eipc.answerRenderer('validatorsList',async(query)=>{
         try{
           
@@ -139,6 +141,16 @@ import CosmosAPI from "@lunie/cosmos-api"
       throw resultView(null,false,ex)
     }
   })
+  eipc.answerRenderer('changeip',async(query)=>{
+    try{
+      var result = changeCosmosAPI()
+      return resultView(result,true)
+
+    }catch(ex){
+      throw resultView(null,false,ex)
+    }
+  })
+
 
 
   

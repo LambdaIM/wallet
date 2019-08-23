@@ -2,7 +2,9 @@ const axios =require('axios');
 const settings = require("electron-settings");
 var {DAEMON_CONFIG} =require('../configmain.js')
 var log = require('../log').log;
-import CosmosAPI from "@lunie/cosmos-api"
+
+import LambdaApi from './lambdaApi';
+
 
 
 
@@ -11,7 +13,7 @@ class Transaction {
   constructor() {
     this.defaultAddress=null;
     this.readconfig();
-    this.CosmosAPI= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork(),'lambda-hub-test')
+    this.CosmosAPI= LambdaApi();
     
     
   }

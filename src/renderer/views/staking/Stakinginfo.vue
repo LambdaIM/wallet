@@ -20,11 +20,11 @@
             <span class="title">{{$t('stakinginfo.Mypledge')}}:</span>
           </Col>
           <Col span="16" class-name="content-wrapper">
-            {{shares|Stoformat}}
+            {{myMypledge()}}
           </Col>
           <Col span="4" class-name="title-wrapper">
             
-            <Button @click="openUndelegate" v-if="shares!=null" type="primary">{{$t('stakinginfo.Cancelpledge')}}</Button>
+            <!-- <Button @click="openUndelegate" v-if="shares!=null" type="primary">{{$t('stakinginfo.Cancelpledge')}}</Button> -->
           </Col>
         </Row>
 
@@ -132,6 +132,9 @@ export default {
     });
   },
   methods: {
+    myMypledge(){
+     return this.CalculationMypledge(this.$data.shares,this.$data.validator.delegator_shares,this.$data.validator.tokens)
+   },
     checkAddress(value) {
       // console.log(value);
       var explorer = DAEMON_CONFIG.explore;

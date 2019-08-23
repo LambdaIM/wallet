@@ -178,7 +178,7 @@ export default {
       this.$data.loadingbtn=true;
             
        ipc.callMain("httpgetstatus", pra)
-       .then(function(res){
+       .then(async function(res){
          _this.$data.loadingbtn=false;
          if(res.state&&res.data.data&&res.data.data){
           //  _this.dataFormat(res)
@@ -186,6 +186,8 @@ export default {
            settings.set('validator', {
                               ipv1: ValidatorIP
                             });
+          
+          var tempresult =await ipc.callMain("changeip", "" );
           _this.$Notice.success({
                     title: _this.$t("Validator.action.Switching_success"),      
               });

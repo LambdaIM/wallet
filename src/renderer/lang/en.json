@@ -275,7 +275,8 @@
           "to":" to ",
           "AssetConversion":"Asset Conversion",
           "Transactionhash":"Transaction hash",
-          "EditMemo":"Edit Memo"
+          "EditMemo":"Edit Memo",
+          "Txalreadyexistsincache":"Please check the latest transaction records in 5 minutes to confirm whether the transaction has been completed.Duplicate submission or the chain has stopped working. "
       }
   },
   "txType": {
@@ -289,7 +290,8 @@
     "MsgAssetDrop": "AssetDrop",
     "MsgBeginReDelegate": "BeginReDelegate",
     "MsgUnjail":"Unjail",
-    "MsgEditValidator": "EditValidator"
+    "MsgEditValidator": "EditValidator",
+    "MsgSetWithdrawAddress":"MsgSetWithdrawAddress"
   }
 
 

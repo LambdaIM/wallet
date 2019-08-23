@@ -68,6 +68,13 @@ export default {
             }
             var bigvalue=BigNumber.sum(value,value2);
             return bigvalue.toString();
+        },
+        Vue.prototype.CalculationMypledge = function (shares,delegator_shares,tokens) {
+            
+            var bigvalue=new BigNumber(shares).div(delegator_shares).times(tokens);
+            bigvalue = bigvalue.div(1e6).toFixed(6);
+            var bigvalue2=new BigNumber(bigvalue)
+            return `${bigvalue2.toFormat() } STO`;
         }
     }
 }

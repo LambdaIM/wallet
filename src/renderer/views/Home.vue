@@ -3,7 +3,7 @@
         
     <p class="balance">
       {{$t('home.Balance')}}: {{balance|Lambformat}} 
-      {{$t('home.pledge')}}: {{DelegationValue|Stoformat}}
+      <!-- {{$t('home.pledge')}}: {{DelegationValue|Stoformat}} -->
       {{$t('home.Reward')}} :{{DistributionReward|Lambformat}} 
 
     </p>
@@ -337,7 +337,7 @@ export default {
                 from: this.getSendAddress(item) || "--",
                 to: this.getToAddress(item) || "--",
                 txType: this.getType(item),
-                date: filters.formatDate(item.timestamp),
+                date: filters.formatRelativeDate(item.timestamp),
                 status: item.logs[0].success,
                 txHash: item.txhash,
                 timestampSort: new Date(item.timestamp).getTime()

@@ -95,6 +95,34 @@ const  readableBytes =(bytes)=> {
     return (bytes / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + sizes[i];
 }
 
+const formatRelativeDate = (value) => {
+    if (value == '' || value == undefined) {
+        return '--'
+    }
+    moment.updateLocale('en', {
+        relativeTime : {
+            future: "in %s",
+            past:   "%s ago",
+            s  : '%d secs',
+            ss : '%d secs',
+            m:  "a min",
+            mm: "%d min",
+            h:  "an hour",
+            hh: "%d hours",
+            d:  "a day",
+            dd: "%d days",
+            M:  "a month",
+            MM: "%d months",
+            y:  "a year",
+            yy: "%d years"
+        }
+    });
+    var utcnow = moment().zone(0).add(8, 'hours').utc().format();
+    // console.log(utcnow,value);
+    // return moment(value).fromNow();
+    return moment(value).utc().from(utcnow);
+}
+
 
 export default {
     formatValue,
@@ -107,5 +135,6 @@ export default {
     blockFormatDate,
     Lambformat,
     Percentformat,
-    Stoformat
+    Stoformat,
+    formatRelativeDate
 }

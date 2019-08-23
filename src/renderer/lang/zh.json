@@ -269,7 +269,8 @@
           "to":" 兑换 ",
           "AssetConversion":"Asset 兑换",
           "Transactionhash":"事物哈希",
-          "EditMemo":"编辑备注"
+          "EditMemo":"编辑备注",
+          "Txalreadyexistsincache":"重复提交或链已经停止工作，请5分钟后查看最新交易记录，确认交易是否完成"
           
           
       }
@@ -285,6 +286,7 @@
 	"MsgAssetDrop": "兑换Token",
     "MsgBeginReDelegate": "转质押",
     "MsgUnjail":"释放",
-    "MsgEditValidator": "修改节点"
+    "MsgEditValidator": "修改节点",
+    "MsgSetWithdrawAddress":"修改提取收益地址"
    }
 }

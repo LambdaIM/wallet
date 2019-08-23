@@ -2,7 +2,8 @@ var log = require('../log').log;
 const eipc = require('electron-better-ipc');
 const axiosM =require('axios');
 var {DAEMON_CONFIG} =require('../configmain.js')
-import CosmosAPI from "@lunie/cosmos-api"
+// import CosmosAPI from "@lunie/cosmos-api"
+import LambdaApi from './lambdaApi';
 
 const axios = axiosM.create();
  
@@ -34,7 +35,7 @@ export default function(){
         
         
         try {
-            var CosmosAPIobj= new CosmosAPI(DAEMON_CONFIG.LambdaNetwork(),'lambda-hub-test')
+            var CosmosAPIobj= LambdaApi();
             
             var nodeInfo = await CosmosAPIobj.get.nodeVersion();
             

@@ -140,14 +140,16 @@ export default  function(){
 
 
     eipc.answerRenderer('defaultWalletBlance',async(query)=>{
+        log.info('defaultWalletBlance start')
         try{
             var Liquid  = await WM.getDefaultWalletBlance();
-            var Delegation = await WM.getDelegationsBalance();
+            // var Delegation = await WM.getDelegationsBalance();
             var DistributionReward = await WM.getDistributionRewards();
             
             return resultView({
                 Liquid:Liquid,
-                Delegation:Delegation,
+                // Delegation:Delegation,
+                Delegation:'0',
                 DistributionReward:DistributionReward
             },true)
         }catch(ex){
@@ -294,13 +296,25 @@ export default  function(){
             throw resultView(null,false,ex)
         }
     })
-    
+    var lastTime;
     eipc.answerRenderer('transferConfirm',async(query)=>{
-        log.info('transferConfirm rpc')
+        log.info('transferConfirm rpc start')
+        var now=new Date().getTime();
+         if(lastTime!=undefined&&now-lastTime<2000){
+            log.info('transferConfirm rpc repeat')
+            setTimeout(()=>{
+                return resultView('repeat',true)
+            },1000*30)
+            return;
+            
+         }
+        if(lastTime==undefined){
+            lastTime=new Date().getTime();
+        }
         var {password,transactiondata,gaseFee} = query;
         try{
             
-                log.info('transferConfirm rpc1')
+                log.info('transferConfirm rpc step1')
                 var data = await WM.TransferConfirm(password,transactiondata,gaseFee);   
                 return resultView(data,true)
         }catch(ex){
