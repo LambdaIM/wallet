@@ -308,6 +308,8 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
 
     
     var result = await this.CosmosAPI().get.account(this.defaultwallet.address);
+    log.info('账户信息')
+    log.info(result)
     //返回结果 1  { sequence: '0', accountNumber: '0' }
     // 返回结果2 
 
@@ -334,7 +336,8 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
         address: result.address,
         balance: balanceLamb,
         balanceSto:balanceSto,
-        coins:result.coins
+        coins:result.coins,
+        sequence:result.sequence
 
         // nonce: parseInt(Message.nonce, 10)
     }
@@ -545,9 +548,10 @@ walletManger.prototype.getSigner=  function (config, submitType = "", { address,
     
     var  pravteKey=cosmos.keyStore.checkJson(this.defaultwallet, password)
     var  publicKey = cosmos.publicKey.getBytes(this.defaultwallet.publicKey) ;
-    console.log('校验密码ok')
+    log.info('校验密码ok')
     return signMessage => {
-        
+    log.info('数据签名')
+    log.info(signMessage)
       const signature = cosmos.crypto.sign(
         Buffer.from(signMessage) ,
         pravteKey

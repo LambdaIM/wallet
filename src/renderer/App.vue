@@ -52,6 +52,8 @@ export default {
   },
   methods: {
     TransferConfirmTimeOut(){
+      console.log('TransferConfirmTimeOut')
+      ipc.callMain('log','TransferConfirmPreJS')
       this.$data.loadingsendLAMBTx = true;
       if(this.$data.timeid!=undefined){
         clearTimeout(this.$data.timeid)
@@ -63,7 +65,8 @@ export default {
 
     },
     TransferConfirm() {
-      
+      console.log('TransferConfirm')
+      ipc.callMain('log','TransferConfirmcallMain')
       var _this = this;
       if (this.$data.walletPassword == null) {
         return;

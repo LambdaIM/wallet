@@ -12,7 +12,7 @@
           <Radio label="true">
             <span>{{coinTypeShow}} {{$t('Dialog.com.to')}} STO</span>
           </Radio>
-          <Radio label="false">
+          <Radio v-if="coinType!='ulambs'" label="false">
             <span>STO {{$t('Dialog.com.to')}} {{coinTypeShow}}</span>
           </Radio>
         </RadioGroup>
@@ -111,6 +111,7 @@ export default {
       this.$data.AssetlModal=true;
       this.$data.amountBlance=amountBlance||this.balance
       this.$data.coinType=coinType||'ulamb'
+      this.$data.exchangesStatus="true"
     },
     AssetLAMBvalueChane() {
       console.log("- -");

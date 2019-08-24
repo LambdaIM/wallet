@@ -6,14 +6,13 @@ var {DAEMON_CONFIG} =require('../configmain.js')
 var fs = require('graceful-fs')
 var log = require('../log').log;
 
-// var walletManger =require('./walletManger.js')
-// var resultView =require('./result.js')
+
 import walletManger from './walletManger.js';
 import resultView from './result.js';
 import isAddress from '../utils/isaddress.js';
 
 
-// var WM =new walletManger();
+
 export default  function(){
 
     var WM =new walletManger();    

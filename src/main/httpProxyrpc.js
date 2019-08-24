@@ -70,6 +70,17 @@ export default function(){
         
         
     });
+    eipc.answerRenderer('log', async (query) => {
+        try{
+            log.verbose(query)
+         return {data:{},state:true} ;
+        }catch(error){
+         return {data:error,state:false} 
+ 
+        }
+         
+         
+     });
 
 
 

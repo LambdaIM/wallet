@@ -225,7 +225,7 @@
         
       eventhub.$on("TransactionSuccess", data => {
         console.log("TransactionSuccess");
-        this.$data.balanceLoadingPre=this.$store.getters.getblance;
+        this.$data.sequencePre=this.$data.sequence;
         this.$data.balanceLoading=true;  
         this.getBalance();
       });
@@ -284,6 +284,7 @@
               }
             });
           }
+          this.$data.sequence=res.data.Liquid.sequence
 
           
           this.$store.dispatch("setblance", balance);
@@ -292,7 +293,7 @@
           this.$store.dispatch("setcoinList", coinList);
           this.$store.dispatch("setDelegation", Delegation);
           console.log('余额信息：',balance)
-          if(this.$data.balanceLoadingPre!=this.$store.getters.getblance){
+          if(this.$data.sequencePre!=this.$data.sequence){
               this.$data.balanceLoading=false;  
           }
 
