@@ -52,7 +52,7 @@
             <template slot-scope="{ row, index }" slot="action">
               <Button @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
-              <Button v-if="row.denom!='usto'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
+              <Button v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
             </template>
           </Table>
         </TabPane>

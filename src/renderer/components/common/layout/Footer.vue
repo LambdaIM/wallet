@@ -74,12 +74,14 @@ export default {
            
          }else{
            console.log('连接的验证节点异常')
+           _this.$store.dispatch("setinfo", null);
             _this.$Notice.warning({
                title: _this.$t("foot.linkerror")
             });  
          }
        })
        .catch(function(err){
+         _this.$store.dispatch("setinfo", null);
          _this.$Notice.warning({
           title: _this.$t("foot.action.Validator_time_out")
         });
@@ -87,6 +89,11 @@ export default {
     },
     dataFormat(result){
       console.log(result)
+      if(result==null){
+        return {
+        address:null  
+        }
+      }
 
       return {
         address:result.nodeInfo.moniker||result.nodeInfo.id,

@@ -115,10 +115,10 @@ export default {
     },
     AssetLAMBvalueChane() {
       console.log("- -");
-      this.$data.AssetSTOvalue =this.bigNum(this.$data.AssetLAMBvalue).div(1000).toNumber()  ;
+      this.$data.AssetSTOvalue =this.bigNum(this.$data.AssetLAMBvalue).div(3000).toNumber()  ;
     },
     AssetSTOvalueChane() {
-      this.$data.AssetLAMBvalue = this.bigNum( this.$data.AssetSTOvalue).times(1000).toNumber()  ;
+      this.$data.AssetLAMBvalue = this.bigNum( this.$data.AssetSTOvalue).times(3000).toNumber()  ;
     },
     sendcancel(){
       this.$data.AssetlModal=false
