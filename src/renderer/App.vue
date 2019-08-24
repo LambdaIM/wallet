@@ -69,6 +69,7 @@ export default {
         return;
       }
       
+      
       ipc
         .callMain("transferConfirm", {
           password: this.$data.walletPassword,
@@ -88,6 +89,12 @@ export default {
                 title: _this.$t("apppage.action.Transaction_failure")
               });
             }
+            return;
+          }
+          if(data.data=='repeattx'){
+            _this.$data.passwordModal = false;
+            _this.$data.walletPassword = null;
+            eventHub.$emit('TransactionSuccess');
             return;
           }
           if(data.data.logs[0].success){

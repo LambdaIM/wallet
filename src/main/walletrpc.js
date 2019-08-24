@@ -300,17 +300,19 @@ export default  function(){
     eipc.answerRenderer('transferConfirm',async(query)=>{
         log.info('transferConfirm rpc start')
         var now=new Date().getTime();
-         if(lastTime!=undefined&&now-lastTime<2000){
+        log.info('transferConfirm rpc time',lastTime,now-lastTime)
+         if(lastTime!=undefined&&now-lastTime<1000*10){
             log.info('transferConfirm rpc repeat')
-            setTimeout(()=>{
-                return resultView('repeat',true)
-            },1000*30)
-            return;
+            log.info('transferConfirm rpc repeat cancel')
+            return resultView('repeattx',true)
             
+            
+         }else{
+            log.info('transferConfirm rpc not repeat')
          }
-        if(lastTime==undefined){
-            lastTime=new Date().getTime();
-        }
+        
+        lastTime=new Date().getTime();
+        
         var {password,transactiondata,gaseFee} = query;
         try{
             
