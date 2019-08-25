@@ -10,10 +10,10 @@
       <p style="text-align: center">
         <RadioGroup v-model="exchangesStatus" type="button">
           <Radio label="true">
-            <span>{{coinTypeShow}} {{$t('Dialog.com.to')}} STO</span>
+            <span>{{coinTypeShow}} {{$t('Dialog.com.to')}} TBB</span>
           </Radio>
           <Radio v-if="coinType!='ulambs'" label="false">
-            <span>STO {{$t('Dialog.com.to')}} {{coinTypeShow}}</span>
+            <span>TBB {{$t('Dialog.com.to')}} {{coinTypeShow}}</span>
           </Radio>
         </RadioGroup>
       </p>
@@ -29,7 +29,7 @@
         <p>
           <Input v-model="AssetSTOvalue" readonly>
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">STO</span>
+            <span slot="append">TBB</span>
           </Input>
         </p>
       </div>
@@ -37,7 +37,7 @@
         <p>
           <Input @keyup.native="AssetSTOvalueChane" v-model="AssetSTOvalue">
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">STO</span>
+            <span slot="append">TBB</span>
           </Input>
         </p>
         <br />
@@ -65,11 +65,11 @@
           
           <Row v-if="exchangesStatus=='true'" class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{AssetLAMBvalue}} {{coinTypeShow}} {{$t('Dialog.com.to')}}  {{AssetSTOvalue}} STO</Col>
+            <Col span="20" class-name="value">{{AssetLAMBvalue}} {{coinTypeShow}} {{$t('Dialog.com.to')}}  {{AssetSTOvalue}} TBB</Col>
           </Row>
           <Row v-else class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{AssetSTOvalue}} STO  {{$t('Dialog.com.to')}} {{AssetLAMBvalue}} {{coinTypeShow}} </Col>
+            <Col span="20" class-name="value">{{AssetSTOvalue}} TBB  {{$t('Dialog.com.to')}} {{AssetLAMBvalue}} {{coinTypeShow}} </Col>
           </Row>
           <Row class-name="item">
             <Input v-model="gaseFee" >

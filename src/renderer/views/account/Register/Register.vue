@@ -38,7 +38,8 @@
           </Form>
 
           <div class="button-wrapper">
-            <button  :loading="loading" class="btn login-button" @click="submit('formInline')">{{ $t("create.Create") }}</button>
+            <button  v-if="loading==false" class="btn login-button" @click.stop="submit('formInline')">{{ $t("create.Create") }}</button>
+            <button  v-else class="btn login-button" >loading</button>
           </div>
 
           <div class="bottom-wrapper tc">
@@ -56,8 +57,10 @@
 import Mybg from "@/components/common/useful/Mybg.vue";
 import { DAEMON_CONFIG } from "../../../../config.js";
 
+
 const {ipcRenderer: ipc} = require('electron-better-ipc');
 // const settings = require("electron-settings");
+
 export default {
   data() {
     return {
@@ -102,19 +105,27 @@ export default {
   },
   methods: {
     submit(name) {
+      this.$data.loading=true;
       this.$refs[name].validate(valid => {
         if (valid) {
           this.create();
+        }else{
+          this.$data.loading=false;
         }
       });
+
+      
+
     },
     async create() {
       console.log("createWallet");
+      ipc.callMain('log','createWallet JS')
       let password = this.formInline.password;
       let name = this.formInline.walletName;
-      console.log(password, name);
+      
       // debugger;
-      this.$data.loading=true;
+      
+      
       try {
         let res = await ipc.callMain("createWallet", {
           password,

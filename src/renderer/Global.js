@@ -43,8 +43,8 @@ export default {
             }else if(type=='ulambs'){
                 return `${bigvalue.toFormat() } LAMBS`;
             }
-            else if(type=='usto'){
-                return `${bigvalue.toFormat() } STO`;
+            else if(type=='utbb'){
+                return `${bigvalue.toFormat() } TBB`;
             }else{
                 return `${bigvalue.toFormat() } ${type.substr(1).toUpperCase()}`;
             }
@@ -75,7 +75,7 @@ export default {
             var bigvalue=new BN(shares).div(delegator_shares).times(tokens);
             bigvalue = bigvalue.div(1e6).toFixed(6);
             var bigvalue2=new BigNumber(bigvalue)
-            return `${bigvalue2.toFormat() } STO`;
+            return `${bigvalue2.toFormat() } TBB`;
         }
     }
 }

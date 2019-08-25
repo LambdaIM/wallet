@@ -52,6 +52,9 @@ export default {
   },
   methods: {
     TransferConfirmTimeOut(){
+      if(this.$data.loadingsendLAMBTx == true){
+        return;
+      }
       console.log('TransferConfirmTimeOut')
       ipc.callMain('log','TransferConfirmPreJS')
       this.$data.loadingsendLAMBTx = true;

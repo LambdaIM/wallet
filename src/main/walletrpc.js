@@ -12,7 +12,7 @@ import resultView from './result.js';
 import isAddress from '../utils/isaddress.js';
 
 
-
+var lastTime;
 export default  function(){
 
     var WM =new walletManger();    
@@ -73,8 +73,24 @@ export default  function(){
 
     })
     // log.info('start createWallet');
+    
     eipc.answerRenderer('createWallet',(query)=>{
         log.info('createWallet');
+        log.info('createWallet rpc start')
+        var now=new Date().getTime();
+        log.info('createWallet rpc time',lastTime,now-lastTime)
+         if(lastTime!=undefined&&now-lastTime<1000*10){
+            log.info('createWallet rpc repeat')
+            log.info('createWallet rpc repeat cancel')
+            return resultView('repeattx',true)
+            
+            
+         }else{
+            log.info('transferConfirm rpc not repeat')
+         }
+        
+        lastTime=new Date().getTime();
+
         var {password,name} =query;
         if(password==undefined){
             throw resultView(null,false,'need password')
@@ -84,9 +100,13 @@ export default  function(){
         }
         try{
             var info = WM.creatWallet(password,name);
+            log.info('createWallet rpc end')
             return resultView(info,true)
 
         }catch(ex){
+            loading=false;
+            log.info('createWallet rpc error')
+            log.info(ex)
             throw resultView(null,false,ex)
         }
         
@@ -295,7 +315,7 @@ export default  function(){
             throw resultView(null,false,ex)
         }
     })
-    var lastTime;
+    
     eipc.answerRenderer('transferConfirm',async(query)=>{
         log.info('transferConfirm rpc start')
         var now=new Date().getTime();

@@ -108,13 +108,13 @@ walletManger.prototype.OpenDefaultwallet = function (password) {
         throw new Error('not find DefaultWallet')
     }
 
-    var  pravteKey=cosmos.keyStore.checkJson(this.defaultwallet, password)
+    var  privatekey=cosmos.keyStore.checkJson(this.defaultwallet, password)
     
     info = {
         publicKey: this.defaultwallet.publicKey,
         address: this.defaultwallet.address,
         name: this.defaultwallet.name,
-        privateKey: pravteKey,
+        privatekey: privatekey,
     }
 
     return info;
@@ -217,18 +217,7 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name) {
     // var walletjson=cosmos.privateKey.ExportprivateKey(keys.privateKey,password)
     var walletjson = cosmos.keyStore.toJson(keys,password,name);
 
-    // var wallet = new ETHwallet(keyPair.privateKey);
-    // var walletjson = {
-
-    // }
-    // {
-    //     salt:usersalt,
-    //     pravteKey:PravteKey
-    //   }
-    // walletjson.name = name;
-    // walletjson.address= address;
-    // walletjson.salt=walletjson.salt.toString('base64');
-    // walletjson.pravteKey=walletjson.pravteKey.toString('base64');
+   
 
     var filepath = path.join(DAEMON_CONFIG.WalletFile, address + '.keyinfo');
 
@@ -278,10 +267,10 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
     var v3file = fs.readFileSync(filepath, 'utf8');
     v3file = JSON.parse(v3file);
     v3file.name = name;
-    var  pravteKey=cosmos.keyStore.checkJson(v3file, password)
+    var  privatekey=cosmos.keyStore.checkJson(v3file, password)
     // wallet = ETHwallet.fromV3(v3file, password);
 
-    if(pravteKey == undefined){
+    if(privatekey == undefined){
         throw new Error('Import failed,Please check the wallet file and password') 
     }
 
@@ -324,7 +313,7 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
             if(item.denom=='ulamb'){
                 balanceLamb=item.amount
             }
-            if(item.denom=='usto'){
+            if(item.denom=='utbb'){
                 balanceSto=item.amount
             }
         })
@@ -388,7 +377,7 @@ walletManger.prototype.TransferDelegation = async function (to, amount, gas,isde
             type: transaction.DELEGATE,
             validatorAddress: to,
             amount: amount,
-            denom: 'usto',
+            denom: 'utbb',
             validatortype:validatorType
           }
         } else {
@@ -397,7 +386,7 @@ walletManger.prototype.TransferDelegation = async function (to, amount, gas,isde
             type: transaction.UNDELEGATE,
             validatorAddress: to,
             amount: amount,
-            denom: 'usto',
+            denom: 'utbb',
             validatortype:validatorType
           }
         }
@@ -420,7 +409,7 @@ walletManger.prototype.AssetPledge = async function (amount,asset, gas,isdege,de
             ,
             asset: {
                 amount: asset,
-                denom: 'usto'
+                denom: 'utbb'
               }
             
           }
@@ -435,7 +424,7 @@ walletManger.prototype.AssetPledge = async function (amount,asset, gas,isdege,de
             ,
             asset: {
                 amount: asset,
-                denom: 'usto'
+                denom: 'utbb'
               }
             
           }
@@ -479,7 +468,7 @@ walletManger.prototype.Simulate = async function (transactiondata) {
 }
 
 walletManger.prototype.TransferConfirm = async function (password,transactiondata,gaseFee) {
-    log.info('walletManger transferConfirm')
+    log.info('walletManger transferConfirm start')
     const SIGN_METHODS = {
         LOCAL: `local`,
         LEDGER: `ledger`,
@@ -534,6 +523,7 @@ walletManger.prototype.TransferConfirm = async function (password,transactiondat
         log.info(transactiondata)
         log.info('TransferConfirmresult')
         log.info(result)
+        log.info('walletManger transferConfirm end')
         
         
    
@@ -546,7 +536,7 @@ walletManger.prototype.getSigner=  function (config, submitType = "", { address,
     console.log('getSigner')
     
     
-    var  pravteKey=cosmos.keyStore.checkJson(this.defaultwallet, password)
+    var  privatekey=cosmos.keyStore.checkJson(this.defaultwallet, password)
     var  publicKey = cosmos.publicKey.getBytes(this.defaultwallet.publicKey) ;
     log.info('校验密码ok')
     return signMessage => {
@@ -554,7 +544,7 @@ walletManger.prototype.getSigner=  function (config, submitType = "", { address,
     log.info(signMessage)
       const signature = cosmos.crypto.sign(
         Buffer.from(signMessage) ,
-        pravteKey
+        privatekey
       )
       return {
         signature,
@@ -568,11 +558,11 @@ walletManger.prototype.SignData = async function (password,content){
     
     var contentBuffer=Buffer.from(content)
     
-    var  pravteKey=cosmos.keyStore.checkJson(this.defaultwallet, password)
+    var  privatekey=cosmos.keyStore.checkJson(this.defaultwallet, password)
     
     var sindata  = cosmos.crypto.sign(
         contentBuffer ,
-        pravteKey
+        privatekey
       )
 
     
