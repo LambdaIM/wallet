@@ -22,7 +22,7 @@
         <p>
           <Input v-model="LAMBvalue">
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">STO</span>
+            <span slot="append">TBB</span>
           </Input>
         </p>
         <div slot="footer">
@@ -43,7 +43,7 @@
           </Row>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{LAMBvalue}} STO</Col>
+            <Col span="20" class-name="value">{{LAMBvalue}} TBB</Col>
           </Row>
           <Row class-name="item">
             <Input v-model="gaseFee" >
