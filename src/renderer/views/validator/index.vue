@@ -112,7 +112,7 @@ export default {
       ruleInline: {
                     ValidatorIP: [
                         { required: true, message: 'Please fill in the Validator IP.', trigger: 'blur' },
-                        {  type: 'string', pattern: /(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})(\.(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})){3}/g , message: 'Must be IP'}
+                        // {  type: 'string', pattern: /(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})(\.(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})){3}/g , message: 'Must be IP'}
                     ]
       },
       loadingbtn:false
