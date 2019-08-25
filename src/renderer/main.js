@@ -31,7 +31,7 @@ Object.keys(filters).forEach(key => {
 
 Vue.use(VueClipboard)
 Vue.use(GlobalFn)
-if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
+// if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
@@ -53,9 +53,9 @@ if(language=='en'){
   Vue.use(iView, { locale:locale_zh });
 }
 
-
+console.log('new app')
 /* eslint-disable no-new */
-new Vue({
+var  app= new Vue({
     components: { App },
     router,
     store,
