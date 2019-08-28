@@ -211,11 +211,7 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name) {
     if(file!=null){
         throw new Error('Import failed,address already exists') 
     }
-    log.info('--------------')
-    log.info("地址:"+address) 
-    log.info("pub:"+keys.publicKey.toString('base64')) 
-    log.info("pri:"+keys.privateKey.toString('base64'))
-    log.info('--------------')
+    
     // var cospublicKey=cosmos.publicKey.getPublicKey(keys.publicKey);
     // var walletjson=cosmos.privateKey.ExportprivateKey(keys.privateKey,password)
     var walletjson = cosmos.keyStore.toJson(keys,password,name);
