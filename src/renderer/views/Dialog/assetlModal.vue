@@ -141,6 +141,12 @@ export default {
         });
         return;
       }
+      if(Math.floor(this.$data.AssetSTOvalue) !== this.$data.AssetSTOvalue){
+        this.$Notice.warning({
+          title: this.$t("home.action.Check_the_amount")
+        });
+        return ;
+      }
       
       if(this.$data.exchangesStatus == "true"){
          if (this.bigLess0OrGreater(AssetLAMBvalue,this.$data.amountBlance)) {
