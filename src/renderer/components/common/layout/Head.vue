@@ -87,7 +87,7 @@
           class="head-menu-item"
           style="text-align: right;    margin-right: 80px"
         >
-          <Dropdown @on-click="selectlang">
+          <Dropdown v-if="showChange" @on-click="selectlang">
             <a
               href="javascript:void(0)"
               style="color:white"
@@ -341,7 +341,17 @@
           console.log("---******");
           return state.account.loginState;
         }
-      })
+      }),
+      showChange(){
+        var name=this.$route.name;
+        var list=['Register','Success','Export']
+        if(list.indexOf(name)>-1){
+         return false;
+        }else{
+          return true;
+
+        }
+      }
       // login:function(){
       //   return this.$store.getters.getLogin;
       // }
