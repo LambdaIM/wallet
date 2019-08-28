@@ -109,6 +109,10 @@
       "Import":"Import",
       "characters_symbol":"Please fill in the Mnemonic words",
       "Confirm_password":"Confirm the password",
+      "preview":"Preview",
+      "mnemonicpreview":"Mnemonic review",
+      "edit":"Edit",
+      "name":"Wallet name",
       "action":{
         "fill_Mnemonic_word":"Please fill in the Mnemonic words",
         "fill_wallet_name":"Please fill in the wallet name",
