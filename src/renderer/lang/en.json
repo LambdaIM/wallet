@@ -235,7 +235,7 @@
           "Mypledge":"My pledge",
           "Myreward":"My reward",
           "PledgeAddress":"Pledge Address",
-          "Commission":"Profit",
+          "Commission":"Validator Profit",
           "VotingPower":"Voting Power",
           "State":"State"
       },
@@ -260,7 +260,7 @@
     "Mypledge":"My pledge",
     "PledgeAddress":"Pledge address",
     "details":"Details",
-    "commission":"Profit",
+    "commission":"Validator Profit",
     "maxcommission":"Max profit",
     "max_change_rate":"Max profit change rate",
     "VotingPower":"Voting Power",

@@ -229,7 +229,7 @@
           "Mypledge":"我的质押",
           "Myreward":"我的奖励",
           "PledgeAddress":"质押地址",
-          "Commission":"收益",
+          "Commission":"节点收益",
           "VotingPower":"投票权重",
           "State":"状态"
       },
@@ -254,7 +254,7 @@
     "Mypledge":"我的质押",
     "PledgeAddress":"质押地址",
     "details":"简介",
-    "commission":"收益",
+    "commission":"节点收益",
     "maxcommission":"最大收益",
     "max_change_rate":"最大收益变化",
     "VotingPower":"投票权重",
@@ -273,7 +273,7 @@
       "com":{
           "gasfee":"Gas费用",
           "to":" 兑换 ",
-          "AssetConversion":"Asset 兑换",
+          "AssetConversion":"资产兑换",
           "Transactionhash":"事物哈希",
           "EditMemo":"编辑备注",
           "Txalreadyexistsincache":"重复提交或链已经停止工作，请5分钟后查看最新交易记录，确认交易是否完成"
