@@ -235,7 +235,7 @@
           "Mypledge":"My pledge",
           "Myreward":"My reward",
           "PledgeAddress":"Pledge Address",
-          "Commission":"Commission",
+          "Commission":"Profit",
           "VotingPower":"Voting Power",
           "State":"State"
       },
@@ -260,9 +260,9 @@
     "Mypledge":"My pledge",
     "PledgeAddress":"Pledge address",
     "details":"Details",
-    "commission":"Commission",
-    "maxcommission":"Max commission",
-    "max_change_rate":"Max commission change rate",
+    "commission":"Profit",
+    "maxcommission":"Max profit",
+    "max_change_rate":"Max profit change rate",
     "VotingPower":"Voting Power",
     "pledge":"Pledge",
     "Cancelpledge":"Cancel pledge",
@@ -298,7 +298,7 @@
     "MsgUnjail":"Unjail",
     "MsgEditValidator": "EditValidator",
     "MsgSetWithdrawAddress":"MsgSetWithdrawAddress",
-    "MsgWithdrawValidatorCommission": "WithdrawCommission"
+    "MsgWithdrawValidatorCommission": "WithdrawValidatorprofit"
   }
 
 

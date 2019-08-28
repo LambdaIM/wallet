@@ -229,7 +229,7 @@
           "Mypledge":"我的质押",
           "Myreward":"我的奖励",
           "PledgeAddress":"质押地址",
-          "Commission":"佣金",
+          "Commission":"收益",
           "VotingPower":"投票权重",
           "State":"状态"
       },
@@ -254,9 +254,9 @@
     "Mypledge":"我的质押",
     "PledgeAddress":"质押地址",
     "details":"简介",
-    "commission":"佣金",
-    "maxcommission":"最大佣金",
-    "max_change_rate":"最大佣金变化",
+    "commission":"收益",
+    "maxcommission":"最大收益",
+    "max_change_rate":"最大收益变化",
     "VotingPower":"投票权重",
     "pledge":"质押",
     "Cancelpledge":"取消质押",
@@ -294,7 +294,7 @@
     "MsgUnjail":"释放",
     "MsgEditValidator": "修改节点",
     "MsgSetWithdrawAddress":"修改提取收益地址",
-    "MsgWithdrawValidatorCommission": "提取佣金"
+    "MsgWithdrawValidatorCommission": "提取节点收益"
 
    }
 }

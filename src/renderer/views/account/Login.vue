@@ -12,7 +12,7 @@
             <span>{{item.name}}</span>
             <span>{{item.address}}</span>
           </p>-->
-          <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
+          <Form @submit.native.prevent ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
             <FormItem prop="name">
               <Select :placeholder="selectplaceholder" v-model="value" @on-change="selectName" clearable size="large">
                 <Option
@@ -47,7 +47,7 @@
           </Form>
 
           <div class="button-wrapper">
-            <button  class="btn login-button" @click="openWallet('formInline')">{{ $t("login.Login") }}</button>
+            <button  @keyup.enter="openWallet('formInline')" class="btn login-button" @click="openWallet('formInline')">{{ $t("login.Login") }}</button>
             <!-- <button class="btn login-button"    @click="getwalletList">Login1</button> -->
           </div>
 
