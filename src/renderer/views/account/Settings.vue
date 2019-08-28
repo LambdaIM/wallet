@@ -428,7 +428,7 @@
         editvalue: "",
         lang: "zh",
         langnow: this.$i18n.locale,
-        versionNumber: "0.1.10"
+        versionNumber: DAEMON_CONFIG.version
       };
     },
     mounted() {

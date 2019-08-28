@@ -92,6 +92,7 @@
       "Confirm_words":"Confirm the words",
       "click_words_to_confirm":"Please click on the words in order to confirm that you are backing up correctly",
       "Export_Keystore_File":"Export Keystore File",
+      "backtoword": "back to view mnemonic ",
       "action":{
         "Confirmed_Fail":"Confirmed Fail!"
 

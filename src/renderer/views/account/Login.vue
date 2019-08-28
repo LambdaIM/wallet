@@ -5,7 +5,7 @@
         <div class="login-wrapper">
           <div class="form-title">
             <div class="title-wrapper">
-              <p class="title">{{ $t("login.LAMBDA_Wallet") }}</p>
+              <p class="title">{{ $t("login.LAMBDA_Wallet") }} v{{versionNumber}}</p>
             </div>
           </div>
           <!-- <p v-for="(item,index) in walletList" :key="index">
@@ -97,7 +97,8 @@ export default {
       name: "",
       value: null,
       address: null,
-      selectplaceholder:this.$t('login.select_Wallet')
+      selectplaceholder:this.$t('login.select_Wallet'),
+      versionNumber: DAEMON_CONFIG.version
     };
   },
   components: {

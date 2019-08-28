@@ -9,8 +9,10 @@
           <h2 class="title">{{ $t("Confirm.Confirm_words") }}</h2>
           <p>{{ $t("Confirm.click_words_to_confirm") }}</p>
         </div>
+        
 
         <div class="word-wrapper">
+          
           <div class="word-content">
             <span
               @click="deleteSingleWord(item,index)"
@@ -33,6 +35,9 @@
         </div>
         <div v-if="showButton" class="button-wrapper">
           <button class="btn next-button" @click="exportWallet()">{{ $t("Confirm.Export_Keystore_File") }}</button>
+        </div>
+        <div v-else class="button-wrapper">
+          <button class="btn next-button" @click="back">{{ $t("Confirm.backtoword") }}  </button>
         </div>
       </div>
     </Mybg>
@@ -83,6 +88,9 @@ export default {
     }
   },
   methods: {
+    back(){
+      this.$router.push("/success");
+    },
     deleteSingleWord(item, index) {
       // console.log(item,index);
       this.inputWords.splice(index, 1);
@@ -94,12 +102,14 @@ export default {
       this.words.splice(index, 1);
     },
     getWords() {
-      this.tempWords = this.$store.getters.getWords;
+      this.tempWords = this.$store.getters.getCombineWords.split(" ");
       this.combineWords=this.$store.getters.getCombineWords;
       this.words = this.shuffle(this.tempWords);
-      console.log(this.words);
+      
     },
     exportWallet() {
+      this.$store.dispatch("setCombineWord", "");
+      this.$store.dispatch("setWord", []);
       ipc.callMain("openkeystore", {});
       setTimeout(() => {
         this.$router.push("/");
