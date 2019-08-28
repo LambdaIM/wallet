@@ -177,23 +177,21 @@ export default {
             };
       var _this=this;
       this.$data.loadingbtn=true;
-            
+       this.$data.node_info=[];     
        ipc.callMain("httpgetstatus", pra)
        .then(async function(res){
          _this.$data.loadingbtn=false;
          if(res.state&&res.data.data&&res.data.data){
-          //  _this.dataFormat(res)
-          //  _this.$store.dispatch("setinfo", res.data.data.result);
            settings.set('validator', {
                               ipv1: ValidatorIP
                             });
-          
           
           _this.$Notice.success({
                     title: _this.$t("Validator.action.Switching_success"),      
               });
           var tempresult =await ipc.callMain("changeip", "" );
           eventhub.$emit('Refreshbalance');
+          _this.getdata();
            
          }else{
            _this.$Notice.error({
