@@ -88,6 +88,7 @@
       "Confirm_words": "确认助记词语",
       "click_words_to_confirm": "请单击这些词以确认您正在正确备份",
       "Export_Keystore_File": "导出密钥库文件",
+      "backtoword": "返回查看助记词",
       "action": {
           "Confirmed_Fail": "确认失败！"
       }

@@ -42,7 +42,8 @@ export default {
   },
   methods: {
     getWords() {
-      this.words=this.$store.getters.getWords;
+      this.words=this.$store.getters.getCombineWords.split(" ");
+      
     },
     next() {
       this.$router.push("/export");
