@@ -211,8 +211,11 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name) {
     if(file!=null){
         throw new Error('Import failed,address already exists') 
     }
-    // keys.publicKey
-    // keys.privateKey
+    log.info('--------------')
+    log.info("地址:"+address) 
+    log.info("pub:"+keys.publicKey.toString('base64')) 
+    log.info("pri:"+keys.privateKey.toString('base64'))
+    log.info('--------------')
     // var cospublicKey=cosmos.publicKey.getPublicKey(keys.publicKey);
     // var walletjson=cosmos.privateKey.ExportprivateKey(keys.privateKey,password)
     var walletjson = cosmos.keyStore.toJson(keys,password,name);
@@ -255,8 +258,8 @@ walletManger.prototype.ImportWalletByMnemonic = function (mnemonic, password, na
     if(mnemonicList==null||mnemonicList.length<12){
         throw new Error('make sure  inputting 12 words or more ') 
     }
-    var mnemonicStr = mnemonicList.join(" ");
-    return this.generateWallet(mnemonicStr, password, name)
+    var mnemonic=mnemonicList.join(' ')
+    return this.generateWallet(mnemonic, password, name)
 }
 
 

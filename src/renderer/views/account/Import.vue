@@ -63,58 +63,79 @@
           </TabPane>
 
           <TabPane :label="$t('Import.by_mnemonic_word')" name="name2">
-            <Form
-              ref="formInMnemonic"
-              :model="Mnemonic"
-              :rules="ruleMnemonic"
-              class="form-container"
-            >
-              <FormItem prop="word">
-                <Input
-                  type="textarea"
-                  v-model="Mnemonic.word"
-                  :placeholder="$t('Import.characters_symbol')"
-                >
-                  <Icon type="ios-lock-outline" slot="prepend"></Icon>
-                </Input>
-              </FormItem>
-              <FormItem prop="walletname">
-                <Input
-                  type="text"
-                  v-model="Mnemonic.walletname"
-                  :placeholder="$t('Import.Name_you_wallet')"
-                >
-                  <Icon type="ios-person-outline" slot="prepend"></Icon>
-                </Input>
-              </FormItem>
+            <div v-if="review==false">
+              <Form
+                ref="formInMnemonic"
+                :model="Mnemonic"
+                :rules="ruleMnemonic"
+                class="form-container"
+              >
+                <FormItem prop="word">
+                  <Input
+                    type="textarea"
+                    v-model="Mnemonic.word"
+                    :placeholder="$t('Import.characters_symbol')"
+                    :autosize="{minRows: 5}"
+                  >
+                    <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                  </Input>
+                </FormItem>
+                <FormItem prop="walletname">
+                  <Input
+                    type="text"
+                    v-model="Mnemonic.walletname"
+                    :placeholder="$t('Import.Name_you_wallet')"
+                  >
+                    <Icon type="ios-person-outline" slot="prepend"></Icon>
+                  </Input>
+                </FormItem>
 
-              <FormItem prop="password">
-                <Input
-                  autocomplete="on"
-                  type="password"
-                  v-model="Mnemonic.password"
-                  :placeholder="$t('Import.Password')"
-                >
-                  <Icon type="ios-lock-outline" slot="prepend"></Icon>
-                </Input>
-              </FormItem>
+                <FormItem prop="password">
+                  <Input
+                    autocomplete="on"
+                    type="password"
+                    v-model="Mnemonic.password"
+                    :placeholder="$t('Import.Password')"
+                  >
+                    <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                  </Input>
+                </FormItem>
 
-              <FormItem prop="confirmPassword" class="confirmPassword">
-                <Input
-                  autocomplete="on"
-                  type="password"
-                  v-model="Mnemonic.confirmPassword"
-                  :placeholder="$t('Import.Confirm_password')"
-                >
-                  <Icon type="ios-lock-outline" slot="prepend"></Icon>
-                </Input>
-              </FormItem>
-            </Form>
-            <div class="button-wrapper">
-              <button
-                class="btn login-button"
-                @click="handleSubmit('formInMnemonic')"
-              >{{$t('Import.Import')}}</button>
+                <FormItem prop="confirmPassword" class="confirmPassword">
+                  <Input
+                    autocomplete="on"
+                    type="password"
+                    v-model="Mnemonic.confirmPassword"
+                    :placeholder="$t('Import.Confirm_password')"
+                  >
+                    <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                  </Input>
+                </FormItem>
+              </Form>
+              <div class="button-wrapper">
+                <button
+                  class="btn login-button"
+                  @click="handleSubmit('formInMnemonic')"
+                >{{$t('Import.preview')}}</button>
+                
+              </div>
+            </div>
+            <div v-else>
+              <h2 style="color: white;margin-bottom: 15px">{{$t('Import.name')}}：{{Mnemonic.walletname}}</h2>
+              <h2 style="color: white;">{{$t('Import.mnemonicpreview')}}</h2>
+
+                 
+                  <Tag  sizr="large" v-for="item in worldList" type="dot"  color="primary">{{item}}</Tag>
+              <div style="text-align: center;">
+                <br/><br/>
+
+                <Button @click="back" class="btn login-button">{{$t('Import.edit')}}</Button>&nbsp;&nbsp;
+                <Button
+                  class="btn login-button"
+                  @click="importWord"
+                >{{$t('Import.Import')}}</Button>
+              </div>
+              <br/><br/>
             </div>
           </TabPane>
         </Tabs>
@@ -196,11 +217,27 @@
               trigger: "blur"
             }
           ]
-        }
+        },
+        review:false
       };
     },
-    mounted() {},
+    mounted() {
+
+    },
+    computed: {
+      worldList(){
+        var mnemonic = this.Mnemonic.word;
+        console.log(mnemonic)
+        var mnemonicList = mnemonic.match(/[a-z]+[\-\']?[a-z]*/ig);
+         console.log(mnemonicList)
+        return mnemonicList
+
+      }
+    },
     methods: {
+      back(){
+        this.$data.review=false;
+      },
       handleSubmit(name) {
         // this.$router.push("/home");
         this.$refs[name].validate(valid => {
@@ -208,7 +245,8 @@
             if (name == "formbyfile") {
               this.importfile();
             } else {
-              this.importWord();
+              this.$data.review=true;
+              // this.importWord();
             }
           }
         });
@@ -317,7 +355,7 @@
 
 <style lang="less" scoped>
   .container {
-    position: relative;
+    
     background: url(../../assets/img/bgs_01.jpg);
     background-size: cover;
     height: 100%;
@@ -333,11 +371,12 @@
     }
     .login-wrapper {
       position: absolute;
-      width: 55%;
+      width: 70%;
       height: 80%;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+      overflow-y: scroll;
       .form-title {
         width: 100%;
         margin-top: 90px;
@@ -401,5 +440,12 @@
         }
       }
     }
+  }
+  .ivu-tag{
+    font-size: 17px;
+    height: 30px;
+    line-height: 30px;
+    margin: 7px;
+    
   }
 </style>

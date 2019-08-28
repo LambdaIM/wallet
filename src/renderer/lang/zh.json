@@ -104,6 +104,10 @@
       "Import": "确定",
       "characters_symbol": "请输入助记词",
       "Confirm_password": "确认密码",
+      "preview":"预览",
+      "mnemonicpreview":"助记次预览",
+      "edit":"编辑",
+      "name":"钱包名称",
       "action": {
           "fill_Mnemonic_word": "请填写助记词",
           "fill_wallet_name": "请填一下钱包的名字",
