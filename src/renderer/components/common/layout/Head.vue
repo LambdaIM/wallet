@@ -192,7 +192,7 @@
 
     </Row>
     <div v-if="balanceLoading" >
-    <Spin  > <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>{{$t("head.action.txloading")}}</Spin>
+    <Spin  fix> <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>{{$t("head.action.txloading")}}</Spin>
     </div>
   </div>
 </template>

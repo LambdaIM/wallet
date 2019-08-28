@@ -214,7 +214,8 @@
   "apppage":{
     "Modal1":{
       "Please_enter_password":"Please enter your wallet password",
-      "Confirm":"Confirm"
+      "Confirm":"Confirm",
+      "loading10": "Please operate after 10 seconds."
     },
     "action":{
       "check_password":"Please check your password",

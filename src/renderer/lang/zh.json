@@ -208,7 +208,8 @@
   "apppage": {
       "Modal1": {
           "Please_enter_password": "请输入您的钱包密码",
-          "Confirm": "确认"
+          "Confirm": "确认",
+          "loading10": "请10秒后再操作"
       },
       "action": {
           "check_password": "请检查您的密码",

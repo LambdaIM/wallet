@@ -8,7 +8,8 @@
           <Input v-model="walletPassword" type="password"></Input>
         </p>
         <div slot="footer">
-          <Button :loading="loadingsendLAMBTx" type="primary" @click="TransferConfirmTimeOut">{{$t('apppage.Modal1.Confirm')}}</Button>
+          <Button v-if="loadingsendLAMBTx==false" :loading="loadingsendLAMBTx" type="primary" @click="TransferConfirmTimeOut">{{$t('apppage.Modal1.Confirm')}}</Button>
+          <Button v-else :loading="loadingsendLAMBTx" type="primary" > {{$t('apppage.Modal1.loading10')}}</Button>
         </div>
       </Modal>
 
@@ -20,6 +21,7 @@
 import Footer from "@/components/common/layout/Footer.vue";
 import Header from "@/components/common/layout/Head.vue";
 import eventHub from "@/common/js/event.js"
+
 
 const {ipcRenderer: ipc} = require('electron-better-ipc');
 
@@ -34,7 +36,8 @@ export default {
       txdata:null,
       passwordModal:false,
       walletPassword:null,
-      loadingsendLAMBTx:false
+      loadingsendLAMBTx:false,
+      closeID:undefined
     }
 
   },
@@ -67,6 +70,15 @@ export default {
 
 
     },
+    cloasLoading(){
+      if(this.$data.closeID!=undefined){
+        clearTimeout(this.$data.closeID)
+      }
+      this.$data.closeID =setTimeout(()=>{
+        this.$data.loadingsendLAMBTx = false;
+      },1000*10)
+      
+    },
     TransferConfirm() {
       console.log('TransferConfirm')
       ipc.callMain('log','TransferConfirmcallMain')
@@ -84,7 +96,7 @@ export default {
         })
         .then(function(data) {
           if (data.state == false) {
-            _this.$data.loadingsendLAMBTx = false;
+            _this.cloasLoading();
             if (data.code == "1001") {
               _this.$Notice.error({
                 title: _this.$t("apppage.action.check_password")
@@ -127,7 +139,7 @@ export default {
         .catch(function(err) {
           console.log(err);
           
-          _this.$data.loadingsendLAMBTx=false;
+           _this.cloasLoading();
           if(err.errormsg&&err.errormsg.indexOf("Tx already exists in cache")>0){
             _this.$data.passwordModal = false;
             _this.$data.walletPassword = null;
