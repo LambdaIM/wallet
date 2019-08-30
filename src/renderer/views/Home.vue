@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-        
+
     <p class="balance">
-      {{$t('home.Balance')}}: {{balance|Lambformat}} 
+      {{$t('home.Balance')}}: {{balance|Lambformat}}
       <!-- {{$t('home.pledge')}}: {{DelegationValue|Stoformat}} -->
-      {{$t('home.Reward')}} :{{DistributionReward|Lambformat}} 
+      {{$t('home.Reward')}} :{{DistributionReward|Lambformat}}
 
     </p>
-    
+
     <div style="width:94%;    margin: 0 auto;">
       <Tabs >
         <TabPane :label="$t('home.Latest_Transaction')" >
@@ -36,13 +36,13 @@
             </template>
 
 
-            
+
           </Table>
         </TabPane>
         <TabPane label="Token">
           <Table :columns="columnsToken" :data="coinList">
-            
-            
+
+
             <template slot-scope="{ row, index }" slot="amount">
               {{bigNumTypeFormat(row.amount,row.denom)}}
             </template>
@@ -89,67 +89,69 @@
   </div>
 </template>
 
+
+
 <script>
-import Header from "@/components/common/layout/Head.vue";
-import MyTable from "@/components/common/useful/Mytable.vue";
-import { DAEMON_CONFIG } from "../../config.js";
-const {ipcRenderer: ipc} = require('electron-better-ipc');
-const settings = require("electron-settings");
-import filters from "../common/js/filter.js";
+import Header from '@/components/common/layout/Head.vue';
+import MyTable from '@/components/common/useful/Mytable.vue';
+import { DAEMON_CONFIG } from '../../config.js';
+import filters from '../common/js/filter.js';
 
-import wUtils from "../common/js/utils.js";
-import eventhub from "../common/js/event.js";
-import _ from "underscore";
+import wUtils from '../common/js/utils.js';
+import eventhub from '../common/js/event.js';
+import _ from 'underscore';
+
+import SendModelDialog from '@/views/Dialog/sendModel.vue';
+import WithdrawalModalDialog from '@/views/Dialog/withdrawalModal.vue';
+import AssetlModalDialog from '@/views/Dialog/assetlModal.vue';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+const settings = require('electron-settings');
 
 
-const { shell } = require("electron");
-
-import SendModelDialog from "@/views/Dialog/sendModel.vue";
-import WithdrawalModalDialog from "@/views/Dialog/withdrawalModal.vue";
-import AssetlModalDialog from "@/views/Dialog/assetlModal.vue";
+const { shell } = require('electron');
 
 export default {
   data() {
     return {
       stateType: null,
-      
-      address: "",
+
+      address: '',
       sendModal: false,
       columns: [
         {
-          title: this.$t("home.table.Type"),
-          key: "txType",
-          slot: "txType"
+          title: this.$t('home.table.Type'),
+          key: 'txType',
+          slot: 'txType'
         },
         {
-          title: this.$t("home.table.Amount"),
-          key: "amount"
+          title: this.$t('home.table.Amount'),
+          key: 'amount'
         },
         {
-          title: this.$t("home.table.From"),
-          key: "from",
-          slot: "from"
+          title: this.$t('home.table.From'),
+          key: 'from',
+          slot: 'from'
         },
         {
-          title: this.$t("home.table.To"),
-          key: "to",
-          slot: "to"
+          title: this.$t('home.table.To'),
+          key: 'to',
+          slot: 'to'
         },
         {
-          title: this.$t("home.table.Date"),
-          key: "date"
+          title: this.$t('home.table.Date'),
+          key: 'date'
         },
         {
-          title: this.$t("home.table.Status"),
-          key: "status",
+          title: this.$t('home.table.Status'),
+          key: 'status',
           render: (h, params) => {
             // console.log(params);
-            if (params.row.status == "1") {
-              this.stateType = "md-checkmark";
+            if (params.row.status == '1') {
+              this.stateType = 'md-checkmark';
             } else {
-              this.stateType = "md-close";
+              this.stateType = 'md-close';
             }
-            return h("Icon", {
+            return h('Icon', {
               props: {
                 type: `${this.stateType}`,
                 size: 32
@@ -158,16 +160,16 @@ export default {
           }
         },
         {
-          title: this.$t("home.table.detail"),
-          key: "detail",
-          slot: "action"
+          title: this.$t('home.table.detail'),
+          key: 'detail',
+          slot: 'action'
         }
       ],
       data: [],
       accountinfo: null,
-      Fromvalue: "",
-      Tovalue: "",
-      LAMBvalue: "",
+      Fromvalue: '',
+      Tovalue: '',
+      LAMBvalue: '',
       confirmModal: false,
       passwordModal: false,
       walletPassword: null,
@@ -178,31 +180,31 @@ export default {
       sum: null,
       pageNumber: 1,
       loading: true,
-      
-      
+
+
       columnsToken: [
         {
           title: this.$t('home.Token.name'),
-          key: "denom",
-          slot: "denom"
+          key: 'denom',
+          slot: 'denom'
         },
         {
           title: this.$t('home.Token.amount'),
-          key: "amount",
-          slot: "amount"
+          key: 'amount',
+          slot: 'amount'
         },
         {
           title: this.$t('home.Token.operation'),
-          key: "action",
-          slot: "action"
+          key: 'action',
+          slot: 'action'
         }
       ],
       withdrawalModal: false,
       AssetlModal: false,
-      AssetLAMBvalue: "",
-      AssetSTOvalue: "",
+      AssetLAMBvalue: '',
+      AssetSTOvalue: '',
       assetConfirmModal: false,
-      exchangesStatus: "true"
+      exchangesStatus: 'true'
     };
   },
   components: {
@@ -215,37 +217,36 @@ export default {
     amount: value => {
       console.log(value);
     },
-    balance:function(){
+    balance: function() {
       return this.$store.getters.getblance;
     },
-    DistributionReward:function(){
+    DistributionReward: function() {
       return this.$store.getters.getDistributionReward;
     },
-    coinList:function(){
+    coinList: function() {
       return this.$store.getters.getcoinList;
     },
-    DelegationValue:function(){
+    DelegationValue: function() {
       return this.$store.getters.getDelegation;
     }
   },
   async mounted() {
     this.address = await this.WalletBasicinfo();
 
-    
+
     this.transactionList();
 
     this.Interval = setInterval(() => {
-      
       this.transactionList();
     }, 1000 * 15);
 
-    eventhub.$on("TransactionSuccess", data => {
-      console.log("TransactionSuccess");
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
       this.transactionList();
     });
 
-    eventhub.$on("TxType", data => {
-      console.log("TxType", data);
+    eventhub.$on('TxType', data => {
+      console.log('TxType', data);
       this.$data.txType = data;
 
       this.transactionList();
@@ -269,9 +270,9 @@ export default {
       // this.$data.withdrawalModal=true;
       this.$refs.WithdrawalModalDialog.open();
     },
-    denomFormart(denom){
+    denomFormart(denom) {
       //  return  denom..substr(1).toUpperCase()
-       return  denom.substr(1).toUpperCase()
+      return denom.substr(1).toUpperCase();
     },
     toDetail(row, index) {
       console.log(row, index);
@@ -292,21 +293,21 @@ export default {
       this.$refs.SendModelDialog.open(row.amount, row.denom);
     },
     async transactionList(pagenum) {
-      console.log("transactionList");
+      console.log('transactionList');
       var address = this.address;
       function checkaddress(address1) {
         if (address1.toUpperCase() == address.toUpperCase()) {
-          return " -  ";
+          return ' -  ';
         } else {
-          return " +  ";
+          return ' +  ';
         }
       }
 
       function subAddress(address) {
         if (address) {
-          return address.substr(0, 8) + "...";
+          return address.substr(0, 8) + '...';
         } else {
-          return "--";
+          return '--';
         }
       }
       // this.$data.loading=false;
@@ -316,11 +317,11 @@ export default {
           pageNum: this.$data.pageNumber,
           showNum: 10
         };
-        if (this.txType != null || this.txType != "") {
+        if (this.txType != null || this.txType != '') {
           param.txType = this.txType;
         }
 
-        let res = await ipc.callMain("transactionList", param);
+        let res = await ipc.callMain('transactionList', param);
         // console.log(res);
         if (!res.state) return;
         let tempData = res.data.data;
@@ -333,9 +334,9 @@ export default {
             if (item.error == undefined) {
               this.data.push({
                 // amount: item.value==""?"--":(checkaddress(item.tx.value.msg[0].value.from_address) + item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom  ,
-                amount: this.getamount(item) || "--",
-                from: this.getSendAddress(item) || "--",
-                to: this.getToAddress(item) || "--",
+                amount: this.getamount(item) || '--',
+                from: this.getSendAddress(item) || '--',
+                to: this.getToAddress(item) || '--',
                 txType: this.getType(item),
                 date: filters.formatRelativeDate(item.timestamp),
                 status: item.logs[0].success,
@@ -343,7 +344,7 @@ export default {
                 timestampSort: new Date(item.timestamp).getTime()
               });
             } else {
-              console.log("读取交易记录失败");
+              console.log('读取交易记录失败');
             }
           });
         }
@@ -359,7 +360,7 @@ export default {
     async WalletBasicinfo() {
       var result = null;
       try {
-        let res = await ipc.callMain("defaultWalletBasicinfo", {});
+        let res = await ipc.callMain('defaultWalletBasicinfo', {});
         console.log(res);
         if (!res.state) return;
         result = res.data.address;
@@ -382,36 +383,33 @@ export default {
       if (msg0.value != undefined) {
         if (msg0.value.amount != undefined) {
           if (msg0.value.amount instanceof Array) {
-            result = this.bigNumTypeFormat( msg0.value.amount[0].amount , msg0.value.amount[0].denom);
+            result = this.bigNumTypeFormat(msg0.value.amount[0].amount, msg0.value.amount[0].denom);
           } else {
-            result =this.bigNumTypeFormat( msg0.value.amount.amount , msg0.value.amount.denom);
+            result = this.bigNumTypeFormat(msg0.value.amount.amount, msg0.value.amount.denom);
           }
+        } else if (msg0.type == 'lambda/MsgAssetDrop') {
+          result =
+              this.bigNumTypeFormat(msg0.value.asset.amount,
+                msg0.value.asset.denom) +
+              '->' +
+              this.bigNumTypeFormat(msg0.value.token.amount,
+                msg0.value.token.denom);
+        } else if (msg0.type == 'lambda/MsgAssetPledge') {
+          result =
+              this.bigNumTypeFormat(msg0.value.token.amount,
+                msg0.value.token.denom) +
+              '->' +
+              this.bigNumTypeFormat(msg0.value.asset.amount,
+                msg0.value.asset.denom);
         } else {
-          if (msg0.type == "lambda/MsgAssetDrop") {
-            result =
-              this.bigNumTypeFormat(msg0.value.asset.amount ,
-              msg0.value.asset.denom )+
-              "->" +
-              this.bigNumTypeFormat(msg0.value.token.amount ,
-              msg0.value.token.denom);
-          } else if (msg0.type == "lambda/MsgAssetPledge") {
-            result =
-              this.bigNumTypeFormat(msg0.value.token.amount ,
-              msg0.value.token.denom )+
-              "->" +
-              this.bigNumTypeFormat(msg0.value.asset.amount ,
-              msg0.value.asset.denom);
-          }else {
-            item.tags.forEach(item => {
-              if (item.key == "rewards") {
-                result=this.bigNumAdd(item.value.replace('ulamb',''),result);
-                
-              }
-            });
-            result =this.bigNumTypeFormat(result,'ulamb')
-          }
+          item.tags.forEach(item => {
+            if (item.key == 'rewards') {
+              result = this.bigNumAdd(item.value.replace('ulamb', ''), result);
+            }
+          });
+          result = this.bigNumTypeFormat(result, 'ulamb');
         }
-      } 
+      }
       return result;
     },
     getSendAddress(item) {
@@ -423,7 +421,7 @@ export default {
         result = msg0.value.address;
       } else {
         item.tags.forEach(item => {
-          if (item.key == "delegator") {
+          if (item.key == 'delegator') {
             result = item.value;
           }
         });
@@ -431,22 +429,21 @@ export default {
 
       return result;
     },
-    getToAddress(item){
+    getToAddress(item) {
       var value = item.tx.value.msg[0].value;
-      var toaddress = value.to_address||value.validator_address;
-      if(toaddress==undefined){
+      var toaddress = value.to_address || value.validator_address;
+      if (toaddress == undefined) {
         item.tags.forEach(item => {
-          if (item.key == "source-validator") {
+          if (item.key == 'source-validator') {
             toaddress = item.value;
           }
         });
       }
-      return toaddress
-
+      return toaddress;
     },
-    getType(data){
-      var list=data.tx.value.msg[0].type.split('/')
-      return list[1]||list[0];
+    getType(data) {
+      var list = data.tx.value.msg[0].type.split('/');
+      return list[1] || list[0];
     }
 
   }
@@ -540,5 +537,5 @@ export default {
     font-size: 14px;
   }
 }
- 
+
 </style>
