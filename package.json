@@ -14,7 +14,21 @@
         "pack": "npm run pack:main && npm run pack:renderer",
         "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
         "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
-        "postinstall": ""
+        "postinstall": "",
+        "eslint": "./node_modules/.bin/eslint --ext .js,.vue  -c ./.eslintrc.render.js  src/renderer/  --fix  -f ./node_modules/eslint-friendly-formatter",
+        "eslintm": "./node_modules/.bin/eslint --ext .js       -c ./.eslintrc.main.js    src/main/      --fix -f ./node_modules/eslint-friendly-formatter"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "src/**/*.{js,vue}": [
+            "npm run eslint",
+            "npm run eslintm",
+            "git add"
+        ]
     },
     "build": {
         "productName": "Wallet",
@@ -59,8 +73,9 @@
         "electron-log": "^2.2.17",
         "electron-settings": "^3.2.0",
         "graceful-fs": "^4.1.15",
-        "husky": "^3.0.2",
+        
         "iview": "^3.2.0",
+        
         "moment": "^2.24.0",
         "object-assign": "^4.1.1",
         "underscore": "^1.9.1",
@@ -72,8 +87,15 @@
         "vuex": "^3.0.1"
     },
     "devDependencies": {
+        "husky": "^3.0.2",
+        "lint-staged": "^9.2.5",
+        "@vue/cli-plugin-babel": "^3.1.0",
+        "@vue/cli-plugin-eslint": "^3.1.0",
+        "@vue/eslint-config-prettier": "^4.0.1",
+        "@vue/eslint-config-standard": "^4.0.0",
         "ajv": "^6.5.0",
         "babel-core": "^6.26.3",
+        "babel-eslint": "^10.0.3",
         "babel-loader": "^7.1.4",
         "babel-plugin-transform-runtime": "^6.23.0",
         "babel-preset-env": "^1.7.0",
@@ -92,6 +114,9 @@
         "electron-debug": "^3.0.1",
         "electron-devtools-installer": "^2.2.4",
         "electron-rebuild": "^1.8.4",
+        "eslint": "^5.8.0",
+        "eslint-friendly-formatter": "^4.0.1",
+        "eslint-plugin-vue": "^5.2.3",
         "file-loader": "^1.1.11",
         "html-webpack-plugin": "^3.2.0",
         "less": "^3.9.0",
@@ -100,6 +125,7 @@
         "multispinner": "^0.2.1",
         "node-loader": "^0.6.0",
         "node-sass": "^4.9.2",
+        "prettier": "^1.18.2",
         "sass-loader": "^7.0.3",
         "style-loader": "^0.21.0",
         "url-loader": "^1.0.1",
