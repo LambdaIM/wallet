@@ -4,10 +4,10 @@ module.exports = {
       'es6': true
     },
     'extends': [
-      "plugin:vue/recommended",
-      "prettier"
-      // "plugin:vue/essential",
-      // "@vue/standard",
+      // "plugin:vue/recommended",
+      "prettier",
+      "plugin:vue/essential",
+      "@vue/standard",
       // 'eslint:recommended'
     ],
     'globals': {
