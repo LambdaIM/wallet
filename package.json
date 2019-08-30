@@ -15,8 +15,8 @@
         "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
         "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
         "postinstall": "",
-        "eslint": "./node_modules/.bin/eslint --ext .js,.vue  -c ./.eslintrc.render.js  src/renderer/  --fix  -f ./node_modules/eslint-friendly-formatter",
-        "eslintm": "./node_modules/.bin/eslint --ext .js       -c ./.eslintrc.main.js    src/main/      --fix -f ./node_modules/eslint-friendly-formatter"
+        "eslint": "./node_modules/.bin/eslint --ext .js,.vue  -c ./.eslintrc.render.js    --fix  -f ./node_modules/eslint-friendly-formatter",
+        "eslintm": "./node_modules/.bin/eslint --ext .js       -c ./.eslintrc.main.js         --fix -f ./node_modules/eslint-friendly-formatter"
     },
     "husky": {
         "hooks": {
@@ -24,9 +24,12 @@
         }
     },
     "lint-staged": {
-        "src/**/*.{js,vue}": [
+        "src/renderer/**/*.{js,vue}": [
             "npm run eslint",
-            "npm run eslintm",
+            "git add"
+        ],
+        "src/main/**/*.{js,vue}": [
+            "npm run eslint",
             "git add"
         ]
     },
