@@ -50,12 +50,12 @@
             <span v-if="data.tags[0].value!='withdraw_delegator_reward'" class="title">{{$t('transactiondetails.To')}}:</span>
             <span v-else class="title">{{$t('transactiondetails.Extract')}}:</span>
           </Col>
-          <Col span="20" class-name="content-wrapper" v-if="typeof getToAddress =='string'" >
-            <a v-if="!!getToAddress==true" @click="checkAddress(getToAddress)" class="item-value">{{getToAddress}}</a>
-            <span v-else>--</span>
+          <Col v-if="typeof getToAddress =='string'" span="20" class-name="content-wrapper"  >
+              <a v-if="!!getToAddress==true" @click="checkAddress(getToAddress)" class="item-value">{{getToAddress}}</a>
+              <span v-else>--</span>
           </Col>
           <Col  v-else span="20" class-name="content-wrapper"  >
-          <span v-for="oneaddress in  getToAddress">
+            <span v-for="oneaddress in  getToAddress" :key="oneaddress">
             <a   @click="checkAddress(oneaddress)" class="item-value">{{oneaddress}}</a>
             <br/>
           </span>
@@ -111,20 +111,21 @@
 </template>
 
 <script>
-import Mycard from "@/components/common/useful/Mycard.vue";
-import { DAEMON_CONFIG } from "../../config.js";
+import Mycard from '@/components/common/useful/Mycard.vue';
+import { DAEMON_CONFIG } from '../../config.js';
 
-const { shell } = require("electron");
-const {ipcRenderer: ipc} = require('electron-better-ipc');
-import filters from "../common/js/filter.js";
+
+const { shell } = require('electron');
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 
 
 export default {
   data() {
     return {
       data: null,
-      id: "",
-      txType: "",
+      id: '',
+      txType: '',
       loading: false
     };
   },
@@ -150,13 +151,13 @@ export default {
     checkAddress(value) {
       // console.log(value);
       var explorer = DAEMON_CONFIG.explore;
-      let url ;
-      if(value.indexOf('lambdavaloper')==0){
-         url = `${explorer}/#/validatorDetail/${value}`;
-      }else{
-          url = `${explorer}/#/address/${value}`;
+      let url;
+      if (value.indexOf('lambdavaloper') == 0) {
+        url = `${explorer}/#/validatorDetail/${value}`;
+      } else {
+        url = `${explorer}/#/address/${value}`;
       }
-      
+
       shell.openExternal(url);
     },
     checkHeight(value) {
@@ -171,7 +172,7 @@ export default {
       let txType = this.$route.params.txType;
       this.$data.txType = txType;
       try {
-        var res = await ipc.callMain("transactionInfo", {
+        var res = await ipc.callMain('transactionInfo', {
           hash,
           txType
         });
@@ -184,16 +185,16 @@ export default {
         console.log(ex);
       }
     },
-    getType(data){
-      var list=data.tx.value.msg[0].type.split('/')
-      return list[1]||list[0];
+    getType(data) {
+      var list = data.tx.value.msg[0].type.split('/');
+      return list[1] || list[0];
     }
   },
   computed: {
     sender() {
       var item = this.$data.data;
 
-      var result = "--";
+      var result = '--';
       var msg0 = item.tx.value.msg[0];
       if (msg0.value.from_address != undefined) {
         result = msg0.value.from_address;
@@ -201,7 +202,7 @@ export default {
         result = msg0.value.address;
       } else {
         item.tags.forEach(item => {
-          if (item.key == "delegator") {
+          if (item.key == 'delegator') {
             result = item.value;
           }
         });
@@ -220,77 +221,69 @@ export default {
       if (msg0.value != undefined) {
         if (msg0.value.amount != undefined) {
           if (msg0.value.amount instanceof Array) {
-            result = this.bigNumTypeFormat( msg0.value.amount[0].amount , msg0.value.amount[0].denom);
+            result = this.bigNumTypeFormat(msg0.value.amount[0].amount, msg0.value.amount[0].denom);
           } else {
-            result =this.bigNumTypeFormat( msg0.value.amount.amount , msg0.value.amount.denom);
+            result = this.bigNumTypeFormat(msg0.value.amount.amount, msg0.value.amount.denom);
           }
+        } else if (msg0.type == 'lambda/MsgAssetDrop') {
+          result =
+              this.bigNumTypeFormat(msg0.value.asset.amount,
+                msg0.value.asset.denom) +
+              '->' +
+              this.bigNumTypeFormat(msg0.value.token.amount,
+                msg0.value.token.denom);
+        } else if (msg0.type == 'lambda/MsgAssetPledge') {
+          result =
+              this.bigNumTypeFormat(msg0.value.token.amount,
+                msg0.value.token.denom) +
+              '->' +
+              this.bigNumTypeFormat(msg0.value.asset.amount,
+                msg0.value.asset.denom);
         } else {
-          if (msg0.type == "lambda/MsgAssetDrop") {
-            result =
-              this.bigNumTypeFormat(msg0.value.asset.amount ,
-              msg0.value.asset.denom )+
-              "->" +
-              this.bigNumTypeFormat(msg0.value.token.amount ,
-              msg0.value.token.denom);
-          } else if (msg0.type == "lambda/MsgAssetPledge") {
-            result =
-              this.bigNumTypeFormat(msg0.value.token.amount ,
-              msg0.value.token.denom )+
-              "->" +
-              this.bigNumTypeFormat(msg0.value.asset.amount ,
-              msg0.value.asset.denom);
-          }else {
-            this.$data.data.tags.forEach(item => {
-              if (item.key == "rewards") {
-                result=this.bigNumAdd(item.value.replace('ulamb',''),result);
-                
-              }
-            });
-            result =this.bigNumTypeFormat(result,'ulamb')
-          }
+          this.$data.data.tags.forEach(item => {
+            if (item.key == 'rewards') {
+              result = this.bigNumAdd(item.value.replace('ulamb', ''), result);
+            }
+          });
+          result = this.bigNumTypeFormat(result, 'ulamb');
         }
-      } 
+      }
       return result;
     },
-    getToAddress(){
+    getToAddress() {
       var item = this.$data.data;
       var value = item.tx.value.msg[0].value;
-      var toaddress=''
-      if(item.tags[0].value=='withdraw_delegator_reward'){
-        toaddress=[]
+      var toaddress = '';
+      if (item.tags[0].value == 'withdraw_delegator_reward') {
+        toaddress = [];
         item.tags.forEach(item => {
-                  if (item.key == "source-validator") {
-                    toaddress.push(item.value);
-                  }
-                });
-
-        
-
-      }else{
-              toaddress = value.to_address||value.validator_address;
-              if(toaddress==undefined){
-                item.tags.forEach(item => {
-                  if (item.key == "source-validator") {
-                    toaddress = item.value;
-                  }
-                });
-              }
-
+          if (item.key == 'source-validator') {
+            toaddress.push(item.value);
+          }
+        });
+      } else {
+        toaddress = value.to_address || value.validator_address;
+        if (toaddress == undefined) {
+          item.tags.forEach(item => {
+            if (item.key == 'source-validator') {
+              toaddress = item.value;
+            }
+          });
+        }
       }
 
-      return toaddress
-
+      return toaddress;
     },
     memo() {
       var memo = this.$data.data.tx.value.memo;
       return memo;
     },
-    fee(){
+    fee() {
       var fee = this.$data.data.tx.value.fee;
-      if(fee.amount==null){
-        return '无'
+      if (fee.amount == null) {
+        return '无';
       }
-      return this.bigNumTypeFormat(fee.amount[0].amount,fee.amount[0].denom);
+      return this.bigNumTypeFormat(fee.amount[0].amount, fee.amount[0].denom);
     }
   }
 };
