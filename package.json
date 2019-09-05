@@ -16,7 +16,9 @@
         "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
         "postinstall": "",
         "eslint": "./node_modules/.bin/eslint --ext .js,.vue  -c ./.eslintrc.render.js    --fix  -f ./node_modules/eslint-friendly-formatter",
-        "eslintm": "./node_modules/.bin/eslint --ext .js       -c ./.eslintrc.main.js         --fix -f ./node_modules/eslint-friendly-formatter"
+        "eslintm": "./node_modules/.bin/eslint --ext .js       -c ./.eslintrc.main.js         --fix -f ./node_modules/eslint-friendly-formatter",
+        "lint": "./node_modules/.bin/eslint --ext .js,.vue  -c ./.eslintrc.render.js  ./src/renderer/    -f ./node_modules/eslint-friendly-formatter",
+        "lintm": "./node_modules/.bin/eslint --ext .js       -c ./.eslintrc.main.js   ./src/main/     -f ./node_modules/eslint-friendly-formatter"
     },
     "husky": {
         "hooks": {
@@ -28,7 +30,7 @@
             "npm run eslint",
             "git add"
         ],
-        "src/main/**/*.{js,vue}": [
+        "src/main/**/*.{js}": [
             "npm run eslint",
             "git add"
         ]
@@ -68,17 +70,15 @@
         }
     },
     "dependencies": {
-        "@jswebfans/cosmos-api": "0.1.2",
-        "@jswebfans/cosmos-lib": "1.2.4",
+        "@jswebfans/rpcapijs": "0.1.3",
+        "@jswebfans/hdkeyjs": "1.2.5",
         "axios": "^0.18.0",
         "bignumber.js": "^8.1.1",
         "electron-better-ipc": "^0.4.0",
         "electron-log": "^2.2.17",
         "electron-settings": "^3.2.0",
         "graceful-fs": "^4.1.15",
-        
         "iview": "^3.2.0",
-        
         "moment": "^2.24.0",
         "object-assign": "^4.1.1",
         "underscore": "^1.9.1",
