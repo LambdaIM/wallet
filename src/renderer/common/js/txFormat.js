@@ -89,10 +89,9 @@ function getamount(msg0, item, vueIns) {
 }
 
 function fee(item, vueIns) {
-  console.log('- -');
   var fee = item.tx.value.fee;
   if (fee.amount == null) {
-    return '无';
+    return '--';
   }
   return vueIns.bigNumTypeFormat(fee.amount[0].amount, fee.amount[0].denom);
 }

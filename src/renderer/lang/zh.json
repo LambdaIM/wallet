@@ -187,11 +187,12 @@
       "From": "发送",
       "To": "接受",
       "Value": "金额",
-      "GaseUsed":"瓦斯已用",
+      "GaseUsed":"瓦斯(已用/要求)",
       "GasWanted":"瓦斯要求",
       "Momo":"备注",
       "Fee":"费用",
-      "Extract": "提取"
+      "Extract": "提取",
+      "action":"动作"
   },
   "Sign": {
       "Data_signature": "数据签名",
@@ -296,5 +297,15 @@
     "MsgSetWithdrawAddress":"修改提取收益地址",
     "MsgWithdrawValidatorCommission": "提取节点收益"
 
+   },
+   "txTable":{
+    "action":"活动",
+    "detail": "详情",
+    "Date": "时间",
+    "block_height": "块高",
+    "fee":"费用",
+    "Transactionhash":"事物哈希",
+    "to":"到",
+    "Withdraw":"从"
    }
 }

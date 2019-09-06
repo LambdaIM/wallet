@@ -11,12 +11,12 @@
             <a @click="checkHash(data.txhash,txType)" class="item-value">{{data.txhash}}</a>
           </Col>
         </Row>
-        <Row class-name="card-item">
+        <!-- <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('transactiondetails.Type')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">{{$t(`txType.${getType(data)}`)}}</Col>
-        </Row>
+        </Row> -->
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
@@ -36,16 +36,16 @@
           </Col>
         </Row>
 
-        <Row class-name="card-item">
+        <!-- <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('transactiondetails.From')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             <a @click="checkAddress(sender)" class="item-value">{{sender}}</a>
           </Col>
-        </Row>
+        </Row> -->
 
-        <Row class-name="card-item">
+        <!-- <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span v-if="data.tags[0].value!='withdraw_delegator_reward'" class="title">{{$t('transactiondetails.To')}}:</span>
             <span v-else class="title">{{$t('transactiondetails.Extract')}}:</span>
@@ -69,7 +69,9 @@
           <Col span="20" class-name="content-wrapper">
             <span class="item-value">{{amount}}</span>
           </Col>
-        </Row>
+        </Row> -->
+
+
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
@@ -85,18 +87,19 @@
             <span class="title">{{$t('transactiondetails.GaseUsed')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <span class="item-value">{{data.gas_used}}</span>
+            <span class="item-value"> {{(data.gas_used/data.gas_wanted).toFixed(4)*100}}%  ({{data.gas_used}}/{{data.gas_wanted}}   )</span>
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            <span class="title">{{$t('transactiondetails.action')}}:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+              <Activity :activityData="activityData"/>
+
           </Col>
         </Row>
 
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('transactiondetails.GasWanted')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            <span class="item-value">{{data.gas_wanted}}</span>
-          </Col>
-        </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('transactiondetails.Momo')}}:</span>
@@ -113,11 +116,12 @@
 <script>
 import Mycard from '@/components/common/useful/Mycard.vue';
 import { DAEMON_CONFIG } from '../../config.js';
+import Activity from '@/components/txTable/Activity.vue';
+import txFormat from '@/common/js/txFormat.js';
 
 
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
-
 
 
 export default {
@@ -126,11 +130,13 @@ export default {
       data: null,
       id: '',
       txType: '',
-      loading: false
+      loading: false,
+      activityData: []
     };
   },
   components: {
-    Mycard
+    Mycard,
+    Activity
   },
   created() {
     // let address = this.$store.getters.getaddress.toLowerCase();
@@ -179,6 +185,7 @@ export default {
         console.log(res.data);
 
         this.$data.data = res.data;
+        this.$data.activityData = txFormat(res.data, this).txs;
         this.loading = false;
       } catch (ex) {
         this.loading = false;
@@ -281,7 +288,7 @@ export default {
     fee() {
       var fee = this.$data.data.tx.value.fee;
       if (fee.amount == null) {
-        return '无';
+        return '--';
       }
       return this.bigNumTypeFormat(fee.amount[0].amount, fee.amount[0].denom);
     }

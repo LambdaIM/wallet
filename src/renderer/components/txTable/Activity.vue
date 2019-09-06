@@ -14,7 +14,7 @@
 
       <Tag color="primary">{{$t(`txType.${txItem.action}`)}}</Tag> <span class="value">{{ txItem.amount | formatAmount }}</span>
       <span v-if="txItem.to">
-      to
+       {{getToWord(txItem)}}
       <AddressLink :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
       </span>
       <Tag v-if="txItem.valid" color="success">Success</Tag>
@@ -53,6 +53,15 @@ export default {
     showError: {
       type: Boolean,
       default: true
+    }
+  },
+  methods: {
+    getToWord(txItem) {
+      if (txItem.action == 'MsgWithdrawDelegationReward') {
+        return this.$t('txTable.Withdraw');
+      } else {
+        return this.$t('txTable.to');
+      }
     }
   }
 };
