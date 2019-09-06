@@ -287,7 +287,7 @@
 	"MsgCreateValidator": "创造节点",
 	"MsgDelegate": "节点质押",
 	"MsgUndelegate": "节点反质押",
-	"MsgWithdrawDelegationReward": "收益分配",
+	"MsgWithdrawDelegationReward": "提取收益",
 	"MsgAssetPledge": "兑换资产",
 	"MsgAssetDrop": "兑换Token",
     "MsgBeginReDelegate": "转质押",

@@ -11,7 +11,8 @@
     <div style="width:94%;    margin: 0 auto;">
       <Tabs >
         <TabPane :label="$t('home.Latest_Transaction')" >
-          <Table size="large" :loading="loading" :columns="columns" :data="data">
+          <TxTable :txData="data" />
+          <!-- <Table size="large" :loading="loading" :columns="columns" :data="data">
             <template slot-scope="{ row, index }" slot="from">
               <Poptip word-wrap trigger="hover" width="200" :content="row.from">
                 <span class="etc">{{row.from}}</span>
@@ -29,7 +30,7 @@
                 size="small"
                 @click="toDetail(row,index)"
               >{{ $t("home.View_Detail") }}</Button>
-              <!-- <Button type="error" size="small" @click="remove(index)">Delete</Button> -->
+
             </template>
             <template slot-scope="{ row, index }" slot="txType">
               {{$t(`txType.${row.txType}`)}}
@@ -37,7 +38,7 @@
 
 
 
-          </Table>
+          </Table> -->
         </TabPane>
         <TabPane label="Token">
           <Table :columns="columnsToken" :data="coinList">
@@ -92,20 +93,18 @@
 
 
 <script>
-import Header from '@/components/common/layout/Head.vue';
+
 import MyTable from '@/components/common/useful/Mytable.vue';
 import { DAEMON_CONFIG } from '../../config.js';
-import filters from '../common/js/filter.js';
 
-import wUtils from '../common/js/utils.js';
 import eventhub from '../common/js/event.js';
-import _ from 'underscore';
 
 import SendModelDialog from '@/views/Dialog/sendModel.vue';
 import WithdrawalModalDialog from '@/views/Dialog/withdrawalModal.vue';
 import AssetlModalDialog from '@/views/Dialog/assetlModal.vue';
+import TxTable from '@/components/txTable/index.vue';
+import txFormat from '@/common/js/txFormat.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
-const settings = require('electron-settings');
 
 
 const { shell } = require('electron');
@@ -211,7 +210,8 @@ export default {
     MyTable,
     SendModelDialog,
     WithdrawalModalDialog,
-    AssetlModalDialog
+    AssetlModalDialog,
+    TxTable
   },
   computed: {
     amount: value => {
@@ -276,7 +276,7 @@ export default {
     },
     toDetail(row, index) {
       console.log(row, index);
-      let id = index;
+
       // console.log(id);
       this.$router.push(`/detail/${row.txHash}`);
     },
@@ -294,22 +294,8 @@ export default {
     },
     async transactionList(pagenum) {
       console.log('transactionList');
-      var address = this.address;
-      function checkaddress(address1) {
-        if (address1.toUpperCase() == address.toUpperCase()) {
-          return ' -  ';
-        } else {
-          return ' +  ';
-        }
-      }
 
-      function subAddress(address) {
-        if (address) {
-          return address.substr(0, 8) + '...';
-        } else {
-          return '--';
-        }
-      }
+
       // this.$data.loading=false;
       try {
         // txType: txPledgeNew
@@ -329,20 +315,10 @@ export default {
         this.data = [];
 
         if (tempData) {
-          // console.log(tempData);
+          console.log(tempData);
           tempData.forEach(item => {
             if (item.error == undefined) {
-              this.data.push({
-                // amount: item.value==""?"--":(checkaddress(item.tx.value.msg[0].value.from_address) + item.tx.value.msg[0].value.amount[0].amount+item.tx.value.msg[0].value.amount[0].denom  ,
-                amount: this.getamount(item) || '--',
-                from: this.getSendAddress(item) || '--',
-                to: this.getToAddress(item) || '--',
-                txType: this.getType(item),
-                date: filters.formatRelativeDate(item.timestamp),
-                status: item.logs[0].success,
-                txHash: item.txhash,
-                timestampSort: new Date(item.timestamp).getTime()
-              });
+              this.data.push(txFormat(item, this));
             } else {
               console.log('读取交易记录失败');
             }

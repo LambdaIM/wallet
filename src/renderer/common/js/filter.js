@@ -123,6 +123,9 @@ const formatRelativeDate = value => {
   return moment(value).utc().utcOffset(8).from(utcnow);
 };
 
+function formatAmount(Amount) {
+  return Amount;
+}
 
 export default {
   formatValue,
@@ -136,5 +139,6 @@ export default {
   Lambformat,
   Percentformat,
   Stoformat,
-  formatRelativeDate
+  formatRelativeDate,
+  formatAmount
 };
