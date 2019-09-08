@@ -34,8 +34,6 @@ var configData = {
         return `http://${settings.get('validator.ipv1')||defaultip}:13657`
         // return `http://${defaultip}:13657`
     },           
-    // LambdaExplorer:'http://explorer.lambda.im/',
-    LambdaExplorer:'http://explorer.lambdastorage.com/',
     setUP:function(){
         if(fs.existsSync(this.BASE_PATH)==false) {
             fs.mkdirSync(this.BASE_PATH);
