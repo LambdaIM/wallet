@@ -189,29 +189,32 @@ export default {
     async Checkstatus() {
       try {
         var txinfo = await ipc.callMain('CheckTxstatus', {});
-        if (txinfo.data.logs[0].success) {
-          this.$data.showTxLoading = false;
-          this.$Modal.success({
-            title: this.$t('apppage.action.Transaction_success'),
-            width: '700',
-            content: `${this.$t('Dialog.com.Transactionhash')}  <br/>
+
+        this.$data.showTxLoading = false;
+        this.$Modal.success({
+          title: this.$t('apppage.action.Transaction_success'),
+          width: '700',
+          content: `${this.$t('Dialog.com.Transactionhash')}  <br/>
                           <a  href="#/detail/${txinfo.data.txhash}">
                           ${txinfo.data.txhash}
                         </a>`,
-            okText: 'OK'
-          });
-          eventHub.$emit('TransactionSuccess');
-        } else {
-          // 如果是错误信息 那么应该提示下
-          console.log('Checkstatus5');
-        }
+          okText: 'OK'
+        });
+        eventHub.$emit('TransactionSuccess');
       } catch (err) {
+        // 交易失败了也需要刷新余额
+        this.$data.showTxLoading = false;
         console.log('Checkstatus6');
         console.log(err);
-        this.$Notice.error({
+        this.$Modal.error({
           title: 'error',
-          desc: err.errormsg || err.message || 'error',
-          duration: 200
+          width: '700',
+          content: `${this.$t('Dialog.com.Transactionhash')}  <br/>
+                          ${this.$data.txhash}
+                        <br/>
+                        ${err.errormsg || err.message || 'error'}
+                        `,
+          okText: 'OK'
         });
       }
     }
