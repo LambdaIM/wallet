@@ -17,8 +17,8 @@
             <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
               <div>
                 <Icon type="md-checkmark-circle" />
-                交易已经发送，请稍后<br/>
-             交易哈希：{{txhash}}
+                {{$t("txTable.sendtxloading")}}<br/>
+             {{$t('Dialog.com.Transactionhash')}}：{{txhash}}
               </div>
 
             </Spin>

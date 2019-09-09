@@ -309,7 +309,8 @@
     "fee": "Cost",
     "Transactionhash": "Things of Things",
     "to": "To",
-    "Withdraw": "From"
+    "Withdraw": "From",
+    "sendtxloading":"The transaction has been sent, please wait a moment"
   }
 
 
