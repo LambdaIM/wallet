@@ -22,6 +22,11 @@
         >
       </Card>
     </Row>
+    <Row className="cardTable__content-item" v-if="txData&&txData.length==0" >
+      <div style="text-align: center;">
+      {{$t("Dialog.com.Nodata")}}
+      </div>
+    </Row>
   </div>
 </template>
 

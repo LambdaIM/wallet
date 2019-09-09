@@ -116,55 +116,7 @@ export default {
 
       address: '',
       sendModal: false,
-      columns: [
-        {
-          title: this.$t('home.table.Type'),
-          key: 'txType',
-          slot: 'txType'
-        },
-        {
-          title: this.$t('home.table.Amount'),
-          key: 'amount'
-        },
-        {
-          title: this.$t('home.table.From'),
-          key: 'from',
-          slot: 'from'
-        },
-        {
-          title: this.$t('home.table.To'),
-          key: 'to',
-          slot: 'to'
-        },
-        {
-          title: this.$t('home.table.Date'),
-          key: 'date'
-        },
-        {
-          title: this.$t('home.table.Status'),
-          key: 'status',
-          render: (h, params) => {
-            // console.log(params);
-            if (params.row.status == '1') {
-              this.stateType = 'md-checkmark';
-            } else {
-              this.stateType = 'md-close';
-            }
-            return h('Icon', {
-              props: {
-                type: `${this.stateType}`,
-                size: 32
-              }
-            });
-          }
-        },
-        {
-          title: this.$t('home.table.detail'),
-          key: 'detail',
-          slot: 'action'
-        }
-      ],
-      data: [],
+      data: null,
       accountinfo: null,
       Fromvalue: '',
       Tovalue: '',

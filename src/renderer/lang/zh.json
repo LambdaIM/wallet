@@ -277,7 +277,8 @@
           "AssetConversion":"资产兑换",
           "Transactionhash":"交易哈希",
           "EditMemo":"编辑备注",
-          "Txalreadyexistsincache":"重复提交或链已经停止工作，请5分钟后查看最新交易记录，确认交易是否完成"
+          "Txalreadyexistsincache":"重复提交或链已经停止工作，请5分钟后查看最新交易记录，确认交易是否完成",
+          "Nodata":"暂无数据"
           
           
       }

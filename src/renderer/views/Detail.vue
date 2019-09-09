@@ -87,7 +87,7 @@
             <span class="title">{{$t('transactiondetails.GaseUsed')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <span class="item-value"> {{(data.gas_used/data.gas_wanted).toFixed(4)*100}}%  ({{data.gas_used}}/{{data.gas_wanted}}   )</span>
+            <span class="item-value"> {{(data.gas_used/data.gas_wanted*100).toFixed(2)}}%  ({{data.gas_used}}/{{data.gas_wanted}}   )</span>
           </Col>
         </Row>
         <Row class-name="card-item">

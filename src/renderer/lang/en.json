@@ -283,7 +283,8 @@
           "AssetConversion":"Asset Conversion",
           "Transactionhash":"Transaction hash",
           "EditMemo":"Edit Memo",
-          "Txalreadyexistsincache":"Please check the latest transaction records in 5 minutes to confirm whether the transaction has been completed.Duplicate submission or the chain has stopped working. "
+          "Txalreadyexistsincache":"Please check the latest transaction records in 5 minutes to confirm whether the transaction has been completed.Duplicate submission or the chain has stopped working. ",
+          "Nodata":"No data"
       }
   },
   "txType": {
