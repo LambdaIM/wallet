@@ -28,6 +28,7 @@ module.exports = {
           eqeqeq: 0,
           "no-console": 0,
           // 解决iview x-invalid-end-tag eslint报错问题
+          "vue/valid-v-else":0,
           "vue/no-parsing-error": [2, { "x-invalid-end-tag": false }],
           "vue/no-unused-components": 0,
           "vue/no-unused-vars": 0,

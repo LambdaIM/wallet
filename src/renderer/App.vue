@@ -224,9 +224,12 @@ export default {
 
 <style lang="less" scoped>
    .demo-spin-col{
-        width: 100%;
-        // position: fixed;
-        border: 1px solid #eee;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    // border: 1px solid #eee;
     }
     .demo-spin-icon-load{
         animation: ani-demo-spin 1s linear infinite;
