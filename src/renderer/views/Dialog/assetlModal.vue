@@ -62,7 +62,7 @@
             <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
             <Col span="20" class-name="value">{{address}}</Col>
           </Row>
-          
+
           <Row v-if="exchangesStatus=='true'" class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
             <Col span="20" class-name="value">{{AssetLAMBvalue}} {{coinTypeShow}} {{$t('Dialog.com.to')}}  {{AssetSTOvalue}} TBB</Col>
@@ -77,7 +77,7 @@
                                 <span slot="append">LAMB</span>
                               </Input>
           </Row>
-          
+
         </div>
         <!-- <p>
           <Input v-model="walletPassword" type="password"></Input>
@@ -86,148 +86,139 @@
           <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
         </div>
       </Modal>
-    
+
   </div>
 </template>
 <script>
-import eventhub from "../../common/js/event.js";
-const {ipcRenderer: ipc} = require('electron-better-ipc');
+import eventhub from '../../common/js/event.js';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
   data() {
     return {
       AssetlModal: false,
-      assetConfirmModal:false,
-      exchangesStatus: "true",
-      AssetLAMBvalue: "",
-      AssetSTOvalue:'',
-      AssetLAMBvalue:'',
-      amountBlance:0,
-      coinType:'ulamb',
-      gaseFee:0
+      assetConfirmModal: false,
+      exchangesStatus: 'true',
+      AssetLAMBvalue: '',
+      AssetSTOvalue: '',
+      amountBlance: 0,
+      coinType: 'ulamb',
+      gaseFee: 0
     };
   },
   methods: {
-    open(amountBlance,coinType){
-      this.$data.AssetlModal=true;
-      this.$data.amountBlance=amountBlance||this.balance
-      this.$data.coinType=coinType||'ulamb'
-      this.$data.exchangesStatus="true"
+    open(amountBlance, coinType) {
+      this.$data.AssetlModal = true;
+      this.$data.amountBlance = amountBlance || this.balance;
+      this.$data.coinType = coinType || 'ulamb';
+      this.$data.exchangesStatus = 'true';
     },
     AssetLAMBvalueChane() {
-      console.log("- -");
-      this.$data.AssetSTOvalue =this.bigNum(this.$data.AssetLAMBvalue).div(3000).toNumber()  ;
+      console.log('- -');
+      this.$data.AssetSTOvalue = this.bigNum(this.$data.AssetLAMBvalue).div(3000).toNumber();
     },
     AssetSTOvalueChane() {
-      this.$data.AssetLAMBvalue = this.bigNum( this.$data.AssetSTOvalue).times(3000).toNumber()  ;
+      this.$data.AssetLAMBvalue = this.bigNum(this.$data.AssetSTOvalue).times(3000).toNumber();
     },
-    sendcancel(){
-      this.$data.AssetlModal=false
+    sendcancel() {
+      this.$data.AssetlModal = false;
     },
     preAssetPledge() {
       // this.LAMBvalue=this.$data.DistributionReward;
       // let value = parseFloat(this.LAMBvalue);
 
-      
+
 
       console.log(this.$data.exchangesStatus);
 
       this.$data.withdrawalModal = false;
-      var AssetLAMBvalue =this.toBigNumStr(this.$data.AssetLAMBvalue) ;
+      var AssetLAMBvalue = this.toBigNumStr(this.$data.AssetLAMBvalue);
       var sto = this.toBigNumStr(this.$data.AssetSTOvalue);
 
       if (isNaN(sto) || isNaN(AssetLAMBvalue)) {
         this.$Notice.warning({
-          title: this.$t("home.action.Check_the_amount")
+          title: this.$t('home.action.Check_the_amount')
         });
         return;
       }
-      if(Math.floor(this.$data.AssetSTOvalue) !== this.$data.AssetSTOvalue){
+      if (Math.floor(this.$data.AssetSTOvalue).toString() !== this.$data.AssetSTOvalue.toString()) {
         this.$Notice.warning({
-          title: this.$t("home.action.Check_the_amount")
+          title: this.$t('home.action.Check_the_amount')
         });
-        return ;
+        return;
       }
-      
-      if(this.$data.exchangesStatus == "true"){
-         if (this.bigLess0OrGreater(AssetLAMBvalue,this.$data.amountBlance)) {
-            this.$Notice.warning({
-              title: this.$t('home.action.check_balance_amount_transfer')
-            });
-            return;
-          }
-        
-      }else{
-        if (this.bigLess0OrGreater(sto,this.balanceSto)) {
-            this.$Notice.warning({
-              title: this.$t('home.action.check_balance_amount_transfer')
-            });
-            return;
-          }
 
+      if (this.$data.exchangesStatus == 'true') {
+        if (this.bigLess0OrGreater(AssetLAMBvalue, this.$data.amountBlance)) {
+          this.$Notice.warning({
+            title: this.$t('home.action.check_balance_amount_transfer')
+          });
+          return;
+        }
+      } else if (this.bigLess0OrGreater(sto, this.balanceSto)) {
+        this.$Notice.warning({
+          title: this.$t('home.action.check_balance_amount_transfer')
+        });
+        return;
       }
-      
 
-      if (this.$data.exchangesStatus == "false") {  
+
+      if (this.$data.exchangesStatus == 'false') {
         this.transferAsset(AssetLAMBvalue, sto, false);
       } else {
         this.transferAsset(AssetLAMBvalue, sto, true);
       }
     },
-    async transferAsset(amount,asset,isdege) {
-      let to = this.Tovalue;
+    async transferAsset(amount, asset, isdege) {
       // let amount = this.LAMBvalue;
       let gas = 1;
       // amount = amount * 10000;
-      this.$data.transactiondata=null;
+      this.$data.transactiondata = null;
       try {
         let res = await ipc.callMain('AssetPledge', {
           asset,
           amount,
           gas,
           isdege,
-          denom:this.$data.coinType
+          denom: this.$data.coinType
         });
         // console.log(res);
         if (res.state) {
-          console.log(res)
-          let gasres= await ipc.callMain("Simulate",{transactiondata:res.data})
-          if(gasres.state){
-            this.$data.gaseFee=gasres.data
-            this.$data.transactiondata=res.data
+          console.log(res);
+          let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
+          if (gasres.state) {
+            this.$data.gaseFee = gasres.data;
+            this.$data.transactiondata = res.data;
             this.sendcancel();
             this.assetConfirmModal = true;
           }
-          
         }
       } catch (ex) {
         this.$Notice.warning({
-          title: "error",
-          desc:ex.errormsg
+          title: 'error',
+          desc: ex.errormsg
         });
         console.log(ex);
       }
     },
     confirm() {
       this.assetConfirmModal = false;
-      console.log(this.$data.transactiondata)
-      eventhub.$emit('TxConfirm',this.$data.transactiondata,this.toBigNumStr(this.$data.gaseFee));
-
-
-    },
+      console.log(this.$data.transactiondata);
+      eventhub.$emit('TxConfirm', this.$data.transactiondata, this.toBigNumStr(this.$data.gaseFee));
+    }
   },
   computed: {
     address: function() {
       return this.$store.getters.getaddress;
     },
-    balance:function(){
+    balance: function() {
       return this.$store.getters.getblance;
     },
-    coinTypeShow(){
+    coinTypeShow() {
       return this.$data.coinType.substr(1).toUpperCase();
     },
-    balanceSto:function(){
+    balanceSto: function() {
       return this.$store.getters.getbalanceSto;
-    },
+    }
   }
 };
 </script>
