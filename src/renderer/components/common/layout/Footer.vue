@@ -8,7 +8,7 @@
           <router-link
             to="/validator"
             class="item"
-          >{{getstore.address}}<Icon type="ios-arrow-dropdown" /></router-link>
+          >{{getstore.address}}<Icon  v-if="login" type="ios-arrow-dropdown" /></router-link>
           </Poptip>
       </span>
 
@@ -17,15 +17,15 @@
       <span class="item" v-else>{{ $t("foot.block_time") }}: {{getstore.time | formatRelativeDate}}</span>
     </div>
     <div v-else class="footer-wrapper">
-      <span   class="item">{{ $t("foot.validator_connecting") }}<Icon type="ios-arrow-dropdown" /></span>
+      <span   class="item">{{ $t("foot.validator_connecting") }}<Icon v-if="login" type="ios-arrow-dropdown" /></span>
     </div>
   </div>
 </template>
 
 <script>
 import eventhub from '../../../common/js/event.js';
+import { mapState } from 'vuex';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
-
 
 
 export default {
@@ -140,7 +140,13 @@ export default {
       } catch (error) {
         return '';
       }
-    }
+    },
+    ...mapState({
+      login: state => {
+        console.log('---******');
+        return state.account.loginState;
+      }
+    })
   }
 };
 </script>
