@@ -229,7 +229,7 @@
       "Mypledge":"My pledge",
       "Validatorlist":"Validator list",
       "Partnerlist":"Partner list",
-      "Unpledge":"Unbundling",
+      "Unpledge":"Unbonding",
       "ExplainTab":"Explain",
       "pledgeTable":{
           "Nickname":"Node Nickname",
