@@ -1,10 +1,14 @@
-import { app, BrowserWindow, Menu  } from 'electron'
+import { app, BrowserWindow, Menu, net } from 'electron';
 import { hidden } from 'ansi-colors';
 
 import { fork } from 'child_process';
-import { DAEMON_CONFIG } from "../config.js";
-import { join } from "path";
+import { DAEMON_CONFIG } from '../config.js';
+import { join } from 'path';
 import { connect } from 'net';
+
+
+import logicrpc from './logic.js';
+
 
 /**
  * Set `__static` path to static files in production
@@ -13,12 +17,8 @@ import { connect } from 'net';
 // let DAEMON ;
 
 if (process.env.NODE_ENV !== 'development') {
-    
-    global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')   
+  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
 }
-
-
-import logicrpc from './logic.js';
 
 // var log = require('../log').log;
 // const settings = require('electron-settings');
@@ -27,91 +27,89 @@ import logicrpc from './logic.js';
 
 
 
+global.__net = net;
+
+let mainWindow;
+const winURL = process.env.NODE_ENV === 'development'
+  ? `http://localhost:9080`
+  : `file://${__dirname}/index.html`;
 
 
-let mainWindow
-const winURL = process.env.NODE_ENV === 'development' ?
-    `http://localhost:9080` :
-    `file://${__dirname}/index.html`
-
-
-    
 
 function createWindow() {
-    /**
+  /**
      * Initial window options
      */
-    logicrpc();
-    mainWindow = new BrowserWindow({
-        height: 676,
-        useContentSize: true,
-        width: 975,
-        autoHideMenuBar: true,
-        webPreferences: {
-            nodeIntegration: true
-        }
-    })
-    if (process.env.NODE_ENV == 'development'){
-        mainWindow.webContents.openDevTools();
+  logicrpc();
+  mainWindow = new BrowserWindow({
+    height: 676,
+    useContentSize: true,
+    width: 975,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true
     }
-    
-     
-    mainWindow.loadURL(winURL)
+  });
+  if (process.env.NODE_ENV == 'development') {
+    mainWindow.webContents.openDevTools();
+  }
 
-    mainWindow.on('closed', () => {
-        mainWindow = null
-    })
 
-    
-    
-    
+  mainWindow.loadURL(winURL);
+
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 }
 
 function Max() {
-    mainWindow.maximize()
+  mainWindow.maximize();
 }
 
 
-function creatMenu(){
-    // Create the Application's main menu
-    var template = [{
-        label: "Application",
-        submenu: [
-            { label: "About Application", selector: "orderFrontStandardAboutPanel:" },
-            { type: "separator" },
-            { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
-        ]}, {
-        label: "Edit",
-        submenu: [
-            { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-            { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-            { type: "separator" },
-            { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-            { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-            { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-            { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
-        ]}
-    ];
+function creatMenu() {
+  // Create the Application's main menu
+  var template = [{
+    label: 'Application',
+    submenu: [
+      { label: 'About Application', selector: 'orderFrontStandardAboutPanel:' },
+      { type: 'separator' },
+      { label: 'Quit', accelerator: 'Command+Q', click: function() { app.quit(); } }
+    ] }, {
+    label: 'Edit',
+    submenu: [
+      { label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
+      { label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:' },
+      { type: 'separator' },
+      { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
+      { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
+      { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
+      { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' }
+    ] }
+  ];
 
-    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
+// process.on('uncaughtException', (err)=>{
+//     console.log(err)
+// })
 
 app.on('ready', () => {
-    createWindow();
-    
-    creatMenu();
-})
+  createWindow();
+
+  creatMenu();
+});
 
 app.on('window-all-closed', () => {
-    // if (process.platform !== 'darwin') {
-        app.quit()
-    // }
-})
+  // if (process.platform !== 'darwin') {
+  app.quit();
+  // }
+});
 
 app.on('activate', () => {
-    if (mainWindow === null) {
-        createWindow()
-    }
-})
+  if (mainWindow === null) {
+    createWindow();
+  }
+});
 
