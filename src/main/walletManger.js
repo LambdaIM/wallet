@@ -452,22 +452,31 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   this.actionManager.setMessage(type, transactionProperties);
   // const { included, hash }
   // 如果出现网络相关的问题  有可能会产生异常，最好是醉解返回hash
-  const { included } = await this.actionManager.send(
+  const { included, hash } = await this.actionManager.send(
     memo,
     feeProperties,
     signerFn
   );
-  var result = await included();
+  this.includedForTx=included;
+  
   log.info('transactiondata');
   log.info(transactiondata);
   log.info('TransferConfirmresult');
-  log.info(result);
+  log.info(hash);
   log.info('walletManger transferConfirm end');
 
 
 
-  return result;
+  return {
+    txhash:hash,
+    haveHash:true
+  };
 };
+walletManger.prototype.includedForTx = async function () {
+   var  result = await this.includedForTx()
+   return result;
+
+}
 
 walletManger.prototype.getSigner = function (config, submitType = '', { address, password }) {
   console.log('getSigner');

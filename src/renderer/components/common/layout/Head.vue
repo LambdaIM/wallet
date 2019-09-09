@@ -37,7 +37,7 @@
             class="item"
           >{{ $t("head.partner") }}</router-link>
         </div>
-        
+
         <div class="head-menu-item">
           <router-link
             to="/sign"
@@ -191,76 +191,73 @@
       </Col>
 
     </Row>
-    <div v-if="balanceLoading" >
+    <div  class="demo-spin-col" v-if="balanceLoading" >
     <Spin  fix> <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>{{$t("head.action.txloading")}}</Spin>
     </div>
   </div>
 </template>
 
 <script>
-  const {ipcRenderer: ipc} = require('electron-better-ipc');
-  const settings = require("electron-settings");
-  import eventhub from "../../../common/js/event.js";
-  import { mapState } from "vuex";
-  
+import eventhub from '../../../common/js/event.js';
+import { mapState } from 'vuex';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+const settings = require('electron-settings');
 
-  export default {
-    data() {
-      return {
-        // log: false
-        lang: {
-          zh: "简体中文",
-          en: "English"
-        },
-        langnow: this.$i18n.locale,
-        balanceLoading:false,
-        balanceLoadingPre:''
-      };
-    },
-    created() {
-      // this.isLogin();
-    },
-    mounted() {  
-      let login = settings.get("isopenfilev1");
-        
-      eventhub.$on("TransactionSuccess", data => {
-        console.log("TransactionSuccess");
-        this.$data.sequencePre=this.$data.sequence;
-        this.$data.balanceLoading=true;  
-        this.getBalance();
-      });
-      eventhub.$on("Refreshbalance", data => {
-        console.log("TransactionSuccess");
-        this.getBalance();
-      });
 
-      
-      eventhub.$on("login", data => {
-        console.log("loginSuccess");
-        
+export default {
+  data() {
+    return {
+      // log: false
+      lang: {
+        zh: '简体中文',
+        en: 'English'
+      },
+      langnow: this.$i18n.locale,
+      balanceLoading: false,
+      balanceLoadingPre: ''
+    };
+  },
+  created() {
+    // this.isLogin();
+  },
+  mounted() {
+    let login = settings.get('isopenfilev1');
+
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.$data.sequencePre = this.$data.sequence;
+      this.$data.balanceLoading = true;
+      this.getBalance();
+    });
+    eventhub.$on('Refreshbalance', data => {
+      console.log('TransactionSuccess');
+      this.getBalance();
+    });
+
+
+    eventhub.$on('login', data => {
+      console.log('loginSuccess');
+
+      this.WalletBasicinfo();
+      this.getBalance();
+      setInterval(() => {
         this.WalletBasicinfo();
         this.getBalance();
-        setInterval(()=>{
-          this.WalletBasicinfo();
-          this.getBalance();
-        },1000*15)
-      });
-      if(login){
-        this.$store.dispatch("setLogin", login);
-        eventhub.$emit('login');
-      }
-
-
-
+      }, 1000 * 15);
+    });
+    if (login) {
+      this.$store.dispatch('setLogin', login);
+      eventhub.$emit('login');
+    }
+  },
+  methods: {
+    onCopy(e) {
+      this.$Message.info(this.$t('head.action.You_just_copied') + e.text);
     },
-    methods: {
-      onCopy(e) {
-        this.$Message.info(this.$t("head.action.You_just_copied") + e.text);
-      },
-      onError(e) {
-        this.$Message.info(this.$t("head.action.Failed_to_copy_texts"));
-      },
-      getBalance() {
+    onError(e) {
+      this.$Message.info(this.$t('head.action.Failed_to_copy_texts'));
+    },
+    getBalance() {
       // console.log("importWallet");
       if (this.$data.timeid != undefined) {
         clearTimeout(this.$data.timeid);
@@ -268,95 +265,89 @@
 
       this.$data.timeid = setTimeout(async () => {
         try {
-          console.log('读取余额')
-          var res = await ipc.callMain("defaultWalletBlance", {});
+          console.log('读取余额');
+          var res = await ipc.callMain('defaultWalletBlance', {});
           if (!res.state) return;
 
-          var balance = res.data.Liquid.balance ;
-          var balanceSto = res.data.Liquid.balanceSto ;
-          var coinList = res.data.Liquid.coins||[];
+          var balance = res.data.Liquid.balance;
+          var balanceSto = res.data.Liquid.balanceSto;
+          var coinList = res.data.Liquid.coins || [];
           var DistributionReward = 0;
-          var Delegation=res.data.Delegation;
+          var Delegation = res.data.Delegation;
           if (res.data.DistributionReward instanceof Array) {
             res.data.DistributionReward.forEach(item => {
-              if (item.denom == "ulamb") {
+              if (item.denom == 'ulamb') {
                 DistributionReward = item.amount || 0;
               }
             });
           }
-          this.$data.sequence=res.data.Liquid.sequence
+          this.$data.sequence = res.data.Liquid.sequence;
 
-          
-          this.$store.dispatch("setblance", balance);
-          this.$store.dispatch("setDistributionReward", DistributionReward);
-          this.$store.dispatch("setbalanceSto", balanceSto);
-          this.$store.dispatch("setcoinList", coinList);
-          this.$store.dispatch("setDelegation", Delegation);
-          console.log('余额信息：',balance)
-          if(this.$data.sequencePre!=this.$data.sequence){
-              this.$data.balanceLoading=false;  
+
+          this.$store.dispatch('setblance', balance);
+          this.$store.dispatch('setDistributionReward', DistributionReward);
+          this.$store.dispatch('setbalanceSto', balanceSto);
+          this.$store.dispatch('setcoinList', coinList);
+          this.$store.dispatch('setDelegation', Delegation);
+          console.log('余额信息：', balance);
+          if (this.$data.sequencePre != this.$data.sequence) {
+            this.$data.balanceLoading = false;
           }
-
-      
-          
-
-          
         } catch (ex) {
           console.log(ex);
         }
-      },50);
+      }, 50);
     },
-      async WalletBasicinfo() {
-        console.log("WalletBasicinfo");
-        try {
-          let res = await ipc.callMain("defaultWalletBasicinfo", {});
-          console.log(res);
-          if (!res.state) return;
-          this.$store.dispatch("setaddress", res.data.address);
-          console.log("WalletBasicinfo", res.data.address);
-        } catch (ex) {
-          console.log(ex);
-          console.log("没有找到默认钱包，是否需要重新创建账号");
-          this.$Notice.error({
-            title: this.$t("head.action.No_wallet_found"),
-            desc: this.$t("head.action.configuration_file"),
-            duration: 1000
-          });
-        }
-      },
-      selectlang(item) {
-        console.log(item);
-        this.$i18n.locale = item;
-        this.$data.langnow = item;
-        settings.set("set", { language: item });
-        window.location.reload();
+    async WalletBasicinfo() {
+      console.log('WalletBasicinfo');
+      try {
+        let res = await ipc.callMain('defaultWalletBasicinfo', {});
+        console.log(res);
+        if (!res.state) return;
+        this.$store.dispatch('setaddress', res.data.address);
+        console.log('WalletBasicinfo', res.data.address);
+      } catch (ex) {
+        console.log(ex);
+        console.log('没有找到默认钱包，是否需要重新创建账号');
+        this.$Notice.error({
+          title: this.$t('head.action.No_wallet_found'),
+          desc: this.$t('head.action.configuration_file'),
+          duration: 1000
+        });
       }
     },
-    computed: {
-      address: function() {
-        return this.$store.getters.getaddress;
-      },
-      ...mapState({
-        login: state => {
-          console.log("---******");
-          return state.account.loginState;
-        }
-      }),
-      showChange(){
-        var name=this.$route.name;
-        var list=['Register','Success','Export']
-        if(list.indexOf(name)>-1){
-         return false;
-        }else{
-          return true;
-
-        }
-      }
-      // login:function(){
-      //   return this.$store.getters.getLogin;
-      // }
+    selectlang(item) {
+      console.log(item);
+      this.$i18n.locale = item;
+      this.$data.langnow = item;
+      settings.set('set', { language: item });
+      window.location.reload();
     }
-  };
+  },
+  computed: {
+    address: function() {
+      return this.$store.getters.getaddress;
+    },
+    ...mapState({
+      login: state => {
+        console.log('---******');
+        return state.account.loginState;
+      }
+    }),
+    showChange() {
+      var name = this.$route.name;
+      var list = ['Register', 'Success', 'Export'];
+      if (list.indexOf(name) > -1) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+    // login:function(){
+    //   return this.$store.getters.getLogin;
+    // }
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -415,5 +406,14 @@
   }
   .demo-spin-icon-load{
         animation: ani-demo-spin 1s linear infinite;
+    }
+    .demo-spin-col{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 888;
+    // border: 1px solid #eee;
     }
 </style>

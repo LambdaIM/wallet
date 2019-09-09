@@ -22,7 +22,7 @@
       "block_time": "Sync",
       "sync_block": "Sync Block....",
       "validator_connecting": "Validator connecting ...",
-      "linkerror": "An exception occurs at the validation node of the connection",
+      "linkerror": "Connecting to Validation Node Exceptions, Check Network Links or Validation Nodes",
       "action":{
         "Validator_time_out":"Validator Network connect timed out, please check your network."
 
@@ -193,11 +193,12 @@
       "From":"From",
       "To":"To",
       "Value":"Value",
-      "GaseUsed":"Gase Used",
+      "GaseUsed":"Gase (Used/Wanted)",
       "GasWanted":"Gas Wanted",
       "Momo":"Momo",
       "Fee":"Fee",
-      "Extract": "Extract"
+      "Extract": "Extract",
+      "action":"Activity"
   },
   "Sign":{
     "Data_signature":"Data signature",
@@ -228,7 +229,7 @@
       "Mypledge":"My pledge",
       "Validatorlist":"Validator list",
       "Partnerlist":"Partner list",
-      "Unpledge":"Unbundling",
+      "Unpledge":"Unbonding",
       "ExplainTab":"Explain",
       "pledgeTable":{
           "Nickname":"Node Nickname",
@@ -241,7 +242,7 @@
       },
       "UnpledgeTable":{
         "PledgeAddress":"Pledge Address",
-        "UntyingAddress":"unbonding Address",
+        "UntyingAddress":"Unbonding Address",
         "Blockheight":"Block height",
         "Amount":"Amount",
         "Completiontime":"Completion time"
@@ -250,7 +251,7 @@
           "unbonding_time":"Unbonding time",
           "max_validators":"Max validators",
           "bond_denom":"Token type",
-          "unit":"dyas"
+          "unit":"days"
       }
   },
   "stakinginfo":{
@@ -282,7 +283,8 @@
           "AssetConversion":"Asset Conversion",
           "Transactionhash":"Transaction hash",
           "EditMemo":"Edit Memo",
-          "Txalreadyexistsincache":"Please check the latest transaction records in 5 minutes to confirm whether the transaction has been completed.Duplicate submission or the chain has stopped working. "
+          "Txalreadyexistsincache":"Please check the latest transaction records in 5 minutes to confirm whether the transaction has been completed.Duplicate submission or the chain has stopped working. ",
+          "Nodata":"No data"
       }
   },
   "txType": {
@@ -299,6 +301,17 @@
     "MsgEditValidator": "EditValidator",
     "MsgSetWithdrawAddress":"MsgSetWithdrawAddress",
     "MsgWithdrawValidatorCommission": "WithdrawRewards"
+  },
+  "txTable":{
+    "action": "Activity",
+    "detail": "Details",
+    "Date": "Time",
+    "block_height": "Block height",
+    "fee": "Cost",
+    "Transactionhash": "Things of Things",
+    "to": "To",
+    "Withdraw": "From",
+    "sendtxloading":"The transaction has been sent, please wait a moment"
   }
 
 

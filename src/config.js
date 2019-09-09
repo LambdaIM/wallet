@@ -18,7 +18,6 @@ var packageJson =require('../package.json')
 module.exports.DAEMON_CONFIG  = {
     BASE_PATH:BASE_PATH,
     pledgeurl: "http://validator.lambdastorage.com/",
-    // explore:'http://explorer.lambdastorage.com/'
-    explore:'http://47.94.197.75:8080/',
+    explore:'http://explorer.lambdastorage.com/',
     version:packageJson.version
 };
