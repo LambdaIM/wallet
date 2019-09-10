@@ -2,7 +2,7 @@
   <span>
 
       <Poptip word-wrap trigger="hover" width="400" :content="to" placement="left-start">
-                <a v-if="isme">[我]{{to.slice(0,addressLength)}}</a>
+                <a v-if="isme">我</a>
                 <a v-else>{{to.slice(0,addressLength)}}</a>
               </Poptip>
 

@@ -11,7 +11,7 @@
     <div style="width:94%;    margin: 0 auto;">
       <Tabs >
         <TabPane :label="$t('home.Latest_Transaction')" >
-          <TxTable :txData="data" />
+          <TxTable :txData="data" :loading="loading" />
           <!-- <Table size="large" :loading="loading" :columns="columns" :data="data">
             <template slot-scope="{ row, index }" slot="from">
               <Poptip word-wrap trigger="hover" width="200" :content="row.from">
