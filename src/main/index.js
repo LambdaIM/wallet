@@ -1,13 +1,7 @@
 import { app, BrowserWindow, Menu, net } from 'electron';
-import { hidden } from 'ansi-colors';
-
-import { fork } from 'child_process';
-import { DAEMON_CONFIG } from '../config.js';
-import { join } from 'path';
-import { connect } from 'net';
-
 
 import logicrpc from './logic.js';
+import upgrade from './upgrade.js';
 
 
 /**
@@ -56,15 +50,15 @@ function createWindow() {
 
 
   mainWindow.loadURL(winURL);
+  setTimeout(() => {
+    upgrade(true);
+  }, 2000);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
 }
 
-function Max() {
-  mainWindow.maximize();
-}
 
 
 function creatMenu() {
@@ -73,6 +67,10 @@ function creatMenu() {
     label: 'Application',
     submenu: [
       { label: 'About Application', selector: 'orderFrontStandardAboutPanel:' },
+      { label: 'New Version Detection',
+        click: function() {
+          upgrade(false);
+        } },
       { type: 'separator' },
       { label: 'Quit', accelerator: 'Command+Q', click: function() { app.quit(); } }
     ] }, {
