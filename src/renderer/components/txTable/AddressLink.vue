@@ -2,7 +2,8 @@
   <span>
 
       <Poptip word-wrap trigger="hover" width="400" :content="to" placement="left-start">
-                <a >{{to.slice(0,addressLength)}}</a>
+                <a v-if="isme">我</a>
+                <a v-else>{{to.slice(0,addressLength)}}</a>
               </Poptip>
 
   </span>
@@ -15,7 +16,13 @@ export default {
     },
     addressLength: {
       type: Number,
-      default: 10
+      default: 15
+    }
+  },
+
+  computed: {
+    isme: function() {
+      return this.$store.getters.getaddress == this.$props.to;
     }
   }
 };

@@ -4,7 +4,7 @@
       :md="md"
       :lg="lg"
       :xs="xs"
-      v-for="(txItem, txIndex) in activityData"
+      v-for="(txItem, txIndex) in activityDataList"
       :key="txIndex"
       className="cardTable__content-activity"
     >
@@ -22,6 +22,14 @@
       <p v-if="!txItem.valid && showError == true" class="error">
         Because of : <Tag color="error"> {{ txItem.Log }}</Tag>
       </p>
+    </Col>
+   <Col :md="md"
+       :lg="lg"
+        :xs="xs" >
+    <div style="text-align: right;    padding-right: 20px">
+        <Icon size="24" v-if="more==false" @click="showmore" type="md-more" />
+        <span v-else>&nbsp;</span>
+    </div>
     </Col>
   </div>
 </template>
@@ -55,12 +63,43 @@ export default {
       default: true
     }
   },
+  data() {
+    return {
+      more: !(this.$props.activityData.length > 1)
+    };
+  },
   methods: {
     getToWord(txItem) {
       if (txItem.action == 'MsgWithdrawDelegationReward') {
         return this.$t('txTable.Withdraw');
       } else {
         return this.$t('txTable.to');
+      }
+    },
+    showmore() {
+      this.$data.more = true;
+    }
+  },
+  computed: {
+    activityDataList() {
+      // .from   .to
+      if (this.$props.activityData.length == 1) {
+        return this.$props.activityData;
+      }
+      var me = this.$store.getters.getaddress;
+      var meList = []; var otherList = [];
+      this.$props.activityData.forEach(item => {
+        if ((item.to || item.from == me) && meList.length < 2) {
+          meList.push(item);
+        } else {
+          otherList.push(item);
+        }
+      });
+
+      if (this.more) {
+        return meList.concat(otherList);
+      } else {
+        return meList;
       }
     }
   }
