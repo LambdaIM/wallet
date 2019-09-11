@@ -641,9 +641,9 @@
   version "2.4.4"
   resolved "https://registry.npmjs.org/@jswebfans/bcryptjs/-/bcryptjs-2.4.4.tgz#79894242110e73df25ee928b01210f79b558d386"
 
-"@jswebfans/hdkeyjs@1.2.5":
-  version "1.2.5"
-  resolved "https://registry.npmjs.org/@jswebfans/hdkeyjs/-/hdkeyjs-1.2.5.tgz#1b9ebe4a1dea06bb76fb29a289e68ee85282e1a5"
+"@jswebfans/hdkeyjs@1.2.6":
+  version "1.2.6"
+  resolved "https://registry.npmjs.org/@jswebfans/hdkeyjs/-/hdkeyjs-1.2.6.tgz#69c16d60ff770a4d7ad96240f2694337a5681f2c"
   dependencies:
     "@jswebfans/bcryptjs" "2.4.4"
     bech32 "^1.1.3"
@@ -657,9 +657,9 @@
     tweetnacl-util "^0.15.0"
     typedarray-to-buffer "^3.1.5"
 
-"@jswebfans/rpcapijs@0.1.8":
-  version "0.1.8"
-  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.1.8.tgz#c368b8deaba1fbabc908639c8e2f8b66f590ab44"
+"@jswebfans/rpcapijs@0.1.9":
+  version "0.1.9"
+  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.1.9.tgz#e6184731f6f9de8eb62217ea2b892149408eafd6"
   dependencies:
     "@babel/runtime" "^7.5.4"
 

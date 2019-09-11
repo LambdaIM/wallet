@@ -45,14 +45,14 @@
   </div>
 </template>
 <script>
-import eventhub from "../../common/js/event.js";
-const {ipcRenderer: ipc} = require('electron-better-ipc');
+import eventhub from '../../common/js/event.js';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
   data() {
     return {
       withdrawalModal: false,
       confirmModal: false,
-      gaseFee:0,
+      gaseFee: 0
     };
   },
   methods: {
@@ -61,9 +61,9 @@ export default {
       this.$data.confirmModal = false;
     },
     prewithdrawalLAMB() {
-      console.log('- -')
+      console.log('- -');
       this.LAMBvalue = this.DistributionReward;
-      let value =this.toBigNumStr(this.LAMBvalue) ;
+      let value = this.toBigNumStr(this.LAMBvalue);
 
       // if (value <= 0 || value > this.$data.DistributionReward ) {
       //   // need to alert
@@ -75,19 +75,19 @@ export default {
 
       if (isNaN(value)) {
         this.$Notice.warning({
-          title: this.$t("home.action.Check_the_amount")
+          title: this.$t('home.action.Check_the_amount')
         });
         return;
       }
       this.$data.withdrawalModal = false;
-      this.transfer(value, "withdrawal");
+      this.transfer(value, 'withdrawal');
     },
-    async transfer(amount,txType) {
+    async transfer(amount, txType) {
       let to = this.Tovalue;
       // let amount = this.LAMBvalue;
       let gas = 1;
       // amount = amount * 10000;
-      this.$data.transactiondata=null;
+      this.$data.transactiondata = null;
       try {
         let res = await ipc.callMain(txType, {
           to,
@@ -96,21 +96,19 @@ export default {
         });
         // console.log(res);
         if (res.state) {
-          console.log(res.data)
-          let gasres= await ipc.callMain("Simulate",{transactiondata:res.data})
-          if(gasres.state){
-            this.$data.gaseFee=gasres.data
-            this.$data.transactiondata=res.data
+          console.log(res.data);
+          let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
+          if (gasres.state) {
+            this.$data.gaseFee = gasres.data;
+            this.$data.transactiondata = res.data;
             this.sendcancel();
             this.confirmModal = true;
-
           }
-          
         }
       } catch (ex) {
         this.$Notice.warning({
-          title: "error",
-          desc:ex.errormsg
+          title: 'error',
+          desc: ex.errormsg
         });
         console.log(ex);
       }
@@ -120,20 +118,28 @@ export default {
       // this.confirmModal=true;
     },
     confirm() {
+      if (this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.getblance) == 1) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: '请减小手续费，手续费不能大于lamb的余额'
+        });
+        return;
+      }
       this.confirmModal = false;
-      console.log(this.$data.transactiondata)
-      eventhub.$emit('TxConfirm',this.$data.transactiondata,this.toBigNumStr(this.$data.gaseFee));
-
-
-    },
+      console.log(this.$data.transactiondata);
+      eventhub.$emit('TxConfirm', this.$data.transactiondata, this.toBigNumStr(this.$data.gaseFee));
+    }
   },
   computed: {
     DistributionReward() {
-      return this.bigNumType(this.$store.getters.getDistributionReward) ;
+      return this.bigNumType(this.$store.getters.getDistributionReward);
     },
     address: function() {
       return this.$store.getters.getaddress;
     },
+    balance: function() {
+      return this.$store.getters.getblance;
+    }
   }
 };
 </script>

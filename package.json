@@ -70,8 +70,8 @@
         }
     },
     "dependencies": {
-        "@jswebfans/hdkeyjs": "1.2.5",
-        "@jswebfans/rpcapijs": "0.1.8",
+        "@jswebfans/hdkeyjs": "1.2.6",
+        "@jswebfans/rpcapijs": "0.1.9",
         "axios": "^0.18.0",
         "bignumber.js": "^8.1.1",
         "electron-better-ipc": "^0.4.0",
