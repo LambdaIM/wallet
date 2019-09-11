@@ -5,16 +5,18 @@ import resultView from './result.js';
 import LambdaApi from './lambdaApi';
 import {changeCosmosAPI} from './lambdaApi';
 
+const hdkeyjs = require('@jswebfans/hdkeyjs');
+
 
 
 
 
   export default function(){
-    var cosmosapi= LambdaApi()
+    var LambdaRpcApi= LambdaApi()
     eipc.answerRenderer('validatorsList',async(query)=>{
         try{
           
-          var result = await  cosmosapi().get.validators();
+          var result = await  LambdaRpcApi().get.validators();
             
             return resultView(result,true)
 
@@ -25,7 +27,7 @@ import {changeCosmosAPI} from './lambdaApi';
     eipc.answerRenderer('partnerList',async(query)=>{
       try{
         
-        var result = await  cosmosapi().get.partnervalidators();
+        var result = await  LambdaRpcApi().get.partnervalidators();
           
           return resultView(result,true)
 
@@ -36,7 +38,7 @@ import {changeCosmosAPI} from './lambdaApi';
     eipc.answerRenderer('pool',async(query)=>{
       try{
         
-        var result = await  cosmosapi().get.pool();
+        var result = await  LambdaRpcApi().get.pool();
           
           return resultView(result,true)
 
@@ -49,7 +51,7 @@ import {changeCosmosAPI} from './lambdaApi';
 
       try{
         
-        var result = await  cosmosapi().get.validator(operator_address);
+        var result = await  LambdaRpcApi().get.validator(operator_address);
           
           return resultView(result,true)
 
@@ -62,7 +64,7 @@ import {changeCosmosAPI} from './lambdaApi';
 
     try{
       
-      var result = await  cosmosapi().get.partnervalidator(operator_address);
+      var result = await  LambdaRpcApi().get.partnervalidator(operator_address);
         
         return resultView(result,true)
 
@@ -75,7 +77,7 @@ import {changeCosmosAPI} from './lambdaApi';
 
     try{
       
-      var result = await  cosmosapi().get.delegations(operator_address);
+      var result = await  LambdaRpcApi().get.delegations(operator_address);
         
         return resultView(result,true)
 
@@ -84,12 +86,16 @@ import {changeCosmosAPI} from './lambdaApi';
     }
   })
 
+
+  
+  
+
   eipc.answerRenderer('mypartnerDelegations',async(query)=>{
     var operator_address=query.operator_address;
 
     try{
       
-      var result = await  cosmosapi().get.partnerDelegations(operator_address);
+      var result = await  LambdaRpcApi().get.partnerDelegations(operator_address);
         
         return resultView(result,true)
 
@@ -105,7 +111,7 @@ import {changeCosmosAPI} from './lambdaApi';
 
     try{
       
-      var result = await  cosmosapi().get.delegatorRewardsFromValidator(operator_address,validatorAddr);
+      var result = await  LambdaRpcApi().get.delegatorRewardsFromValidator(operator_address,validatorAddr);
         
         return resultView(result,true)
 
@@ -118,10 +124,10 @@ import {changeCosmosAPI} from './lambdaApi';
   
   eipc.answerRenderer('myUndelegations',async(query)=>{
     var operator_address=query.operator_address;
-
+LambdaRpcApi
     try{
       
-      var result = await  cosmosapi().get.undelegations(operator_address);
+      var result = await  LambdaRpcApi().get.undelegations(operator_address);
         
         return resultView(result,true)
 
@@ -134,7 +140,7 @@ import {changeCosmosAPI} from './lambdaApi';
 
     try{
       
-      var result = await  cosmosapi().get.stakingParameters();
+      var result = await  LambdaRpcApi().get.stakingParameters();
         
         return resultView(result,true)
 

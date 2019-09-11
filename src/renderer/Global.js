@@ -55,7 +55,7 @@ export default {
             if(value=="" || value == undefined || value == null){
                 value=0;
             }
-            var bigvalue=new BigNumber(value).div(1e6);
+            var bigvalue=new BigNumber(value).div(1e6).toFixed(6);
             return bigvalue.toString()
         }
 

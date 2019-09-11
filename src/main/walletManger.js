@@ -317,6 +317,15 @@ walletManger.prototype.getDistributionRewards = async function () {
 
   return result;
 };
+walletManger.prototype.DistributionInformation = async function () {
+  var operator_address = this.defaultwallet.address;
+  var lambdaDevelopAdresss = hdkeyjs.address.validatorAddress(operator_address);
+  var result = await this.CosmosAPI().get.validatorDistributionInformation(lambdaDevelopAdresss);
+  return result;
+};
+
+
+
 walletManger.prototype.TransferDelegation = async function (to, amount, gas, isdege, validatorType) {
   if (isdege) {
     // 质押
@@ -342,7 +351,19 @@ walletManger.prototype.TransferWithdrawal = async function (to, amount, gas, isd
   return {
     type: transaction.WITHDRAW,
     amount: amount,
-    denom: 'lamb'
+    denom: 'ulamb'
+  };
+};
+walletManger.prototype.TransferwithdrawalDistribution=async function (to, amount, gas, isdege) {
+  console.log('TransferwithdrawalDistribution')
+  var operator_address = this.defaultwallet.address;
+  var lambdaDevelopAdresss = hdkeyjs.address.validatorAddress(operator_address);
+  console.log(transaction.WithdrawValidatorCommission)
+  return {
+    type: transaction.WithdrawValidatorCommission,
+    amount: amount,
+    denom: 'ulamb',
+    validatorAddress:lambdaDevelopAdresss
   };
 };
 walletManger.prototype.AssetPledge = async function (amount, asset, gas, isdege, denom) {

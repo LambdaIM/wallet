@@ -1,7 +1,7 @@
 <template>
   <span>
 
-      <Poptip word-wrap trigger="hover" width="400" :content="to" placement="left-start">
+      <Poptip v-if="to" word-wrap trigger="hover" width="400" :content="to" placement="left-start">
                 <a v-if="isme">我</a>
                 <a v-else>{{to.slice(0,addressLength)}}</a>
               </Poptip>

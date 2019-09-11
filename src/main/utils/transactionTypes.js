@@ -8,7 +8,8 @@ const transactionTypes = {
   DEPOSIT: `MsgDeposit`,
   WITHDRAW: `MsgWithdrawDelegationReward`,
   AssetPledge:`MsgAssetPledge`,
-  AssetDrop:`MsgAssetDrop`
+  AssetDrop:`MsgAssetDrop`,
+  WithdrawValidatorCommission:`MsgWithdrawValidatorCommission`
 }
 
 export default transactionTypes

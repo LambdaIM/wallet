@@ -6,7 +6,8 @@ const state = {
   DistributionReward:0,
   balanceSto:0,
   coinList:[],
-  Delegation:0
+  Delegation:0,
+  Distribution:0
 }
 
 console.log('--------***************');
@@ -36,7 +37,12 @@ const mutations = {
   },
   setDelegation:function(state,value){
     state.Delegation = value;
+  },
+  setDistribution:function(state,value){
+    state.Distribution = value;
   }
+
+  
 }
 
 
@@ -66,6 +72,9 @@ const actions = {
   },
   setDelegation:function(context,value){
     context.commit('setDelegation', value)
+  },
+  setDistribution:function(context,value){
+    context.commit('setDistribution', value)
   }
 }
 const getters = {
@@ -89,6 +98,9 @@ const getters = {
   },
   getDelegation(state){
     return state.Delegation
+  },
+  getDistribution(state){
+    return state.Distribution
   }
 }
 

@@ -99,6 +99,7 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+  
 
   eipc.answerRenderer('importWalletBykeyStore', async query => {
     var { filepath, password, name } = query;
@@ -159,6 +160,15 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('DistributionInformation',async(query)=>{
+    
+    try{
+        var result = await WM.DistributionInformation();
+        return resultView(result,true)
+    }catch(ex){
+      throw resultView(null,false,ex)
+    }
+  })
 
 
 
@@ -256,6 +266,25 @@ export default function() {
 
     try {
       var data = await WM.TransferWithdrawal(to, amount, gas, isdege);
+      return resultView(data, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  
+  eipc.answerRenderer('withdrawalDistribution', async query => {
+    var { to, amount, gas, isdege } = query;
+
+
+
+    if (amount == undefined) {
+      throw resultView(null, false, 'need amount');
+    }
+
+    try {
+      console.log('~~withdrawalDistribution~~')
+      var data = await WM.TransferwithdrawalDistribution(to, amount, gas, isdege);
       return resultView(data, true);
     } catch (ex) {
       throw resultView(null, false, ex);

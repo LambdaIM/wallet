@@ -5,6 +5,9 @@
       {{$t('home.Balance')}}: {{balance|Lambformat}}
       <!-- {{$t('home.pledge')}}: {{DelegationValue|Stoformat}} -->
       {{$t('home.Reward')}} :{{DistributionReward|Lambformat}}
+      <span v-if="distributionBalance!=null">
+      节点收益 :{{distributionBalance|Lambformat}}
+      </span>
 
     </p>
 
@@ -62,12 +65,22 @@
             {{$t('home.Transfer')}}
             <Icon type="md-swap"></Icon>
           </Button>
+
+          
+          <Dropdown @on-click="openwithdrawalModal" style="margin-left: 20px">
+              <Button  >
+                  {{$t('home.Withdraw')}}
+                  <Icon type="md-arrow-down" />
+                </Button>
+              <DropdownMenu slot="list">
+                  <DropdownItem  name="Withdraw">{{$t('home.Withdraw')}}</DropdownItem>
+                  <DropdownItem  name="Distribution">提取节点收益</DropdownItem>
+                  
+                  
+              </DropdownMenu>
+          </Dropdown>
 &nbsp; &nbsp;
-          <Button slot="extra" @click="openwithdrawalModal()">
-            {{$t('home.Withdraw')}}
-            <Icon type="md-swap"></Icon>
-          </Button>
-&nbsp; &nbsp;
+  
         </span>
       </Tabs>
     </div>
@@ -87,6 +100,7 @@
     <SendModelDialog ref="SendModelDialog" />
     <WithdrawalModalDialog ref="WithdrawalModalDialog" />
     <AssetlModalDialog ref="AssetlModalDialog" />
+    <DistributionModal ref="DistributionModal" />
   </div>
 </template>
 
@@ -105,7 +119,7 @@ import AssetlModalDialog from '@/views/Dialog/assetlModal.vue';
 import TxTable from '@/components/txTable/index.vue';
 import txFormat from '@/common/js/txFormat.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
-
+import DistributionModal from '@/views/Dialog/distributionModal.vue';
 
 const { shell } = require('electron');
 
@@ -155,7 +169,11 @@ export default {
       AssetLAMBvalue: '',
       AssetSTOvalue: '',
       assetConfirmModal: false,
-      exchangesStatus: 'true'
+      exchangesStatus: 'true',
+      distributionBalance:null,
+      downName1:'1',
+      downName2:'2'
+
     };
   },
   components: {
@@ -163,7 +181,8 @@ export default {
     SendModelDialog,
     WithdrawalModalDialog,
     AssetlModalDialog,
-    TxTable
+    TxTable,
+    DistributionModal
   },
   computed: {
     amount: value => {
@@ -187,6 +206,7 @@ export default {
 
 
     this.transactionList();
+    this.validatorDistribution();
 
     this.Interval = setInterval(() => {
       this.transactionList();
@@ -218,9 +238,13 @@ export default {
     // AssetSTOvalueChane(){
     //   this.$data.AssetLAMBvalue= this.$data.AssetSTOvalue *  1000;
     // },
-    openwithdrawalModal() {
-      // this.$data.withdrawalModal=true;
-      this.$refs.WithdrawalModalDialog.open();
+    openwithdrawalModal(name) {
+      if(name=='Withdraw'){
+        this.$refs.WithdrawalModalDialog.open();
+      }else{
+        this.$refs.DistributionModal.open();
+      }
+      
     },
     denomFormart(denom) {
       //  return  denom..substr(1).toUpperCase()
@@ -305,74 +329,31 @@ export default {
       let url = DAEMON_CONFIG.pledgeurl;
       shell.openExternal(url);
     },
-    getamount(item) {
-      var msg0 = item.tx.value.msg[0];
-      var result;
-      if (msg0.value != undefined) {
-        if (msg0.value.amount != undefined) {
-          if (msg0.value.amount instanceof Array) {
-            result = this.bigNumTypeFormat(msg0.value.amount[0].amount, msg0.value.amount[0].denom);
-          } else {
-            result = this.bigNumTypeFormat(msg0.value.amount.amount, msg0.value.amount.denom);
-          }
-        } else if (msg0.type == 'lambda/MsgAssetDrop') {
-          result =
-              this.bigNumTypeFormat(msg0.value.asset.amount,
-                msg0.value.asset.denom) +
-              '->' +
-              this.bigNumTypeFormat(msg0.value.token.amount,
-                msg0.value.token.denom);
-        } else if (msg0.type == 'lambda/MsgAssetPledge') {
-          result =
-              this.bigNumTypeFormat(msg0.value.token.amount,
-                msg0.value.token.denom) +
-              '->' +
-              this.bigNumTypeFormat(msg0.value.asset.amount,
-                msg0.value.asset.denom);
-        } else {
-          item.tags.forEach(item => {
-            if (item.key == 'rewards') {
-              result = this.bigNumAdd(item.value.replace('ulamb', ''), result);
-            }
-          });
-          result = this.bigNumTypeFormat(result, 'ulamb');
-        }
-      }
-      return result;
-    },
-    getSendAddress(item) {
-      var result;
-      var msg0 = item.tx.value.msg[0];
-      if (msg0.value.from_address != undefined) {
-        result = msg0.value.from_address;
-      } else if (msg0.value.address != undefined) {
-        result = msg0.value.address;
-      } else {
-        item.tags.forEach(item => {
-          if (item.key == 'delegator') {
-            result = item.value;
-          }
-        });
-      }
+   async validatorDistribution(){
+      try {
+        
+        let res = await ipc.callMain('DistributionInformation', {});
+        console.log(res);
+        if (!res.state) return;
+        console.log(res)
+        if(res.data&&res.data.val_commission){
+          res.data.val_commission.forEach((item)=>{
+            if(item.denom==='ulamb'){
+              this.$data.distributionBalance=item.amount;
+              this.$store.dispatch('setDistribution', item.amount);
 
-      return result;
-    },
-    getToAddress(item) {
-      var value = item.tx.value.msg[0].value;
-      var toaddress = value.to_address || value.validator_address;
-      if (toaddress == undefined) {
-        item.tags.forEach(item => {
-          if (item.key == 'source-validator') {
-            toaddress = item.value;
-          }
-        });
+            }
+
+          })
+        }
+          
+        
+      } catch (ex) {
+        console.log(ex)
+
       }
-      return toaddress;
-    },
-    getType(data) {
-      var list = data.tx.value.msg[0].type.split('/');
-      return list[1] || list[0];
     }
+    
 
   }
 };
