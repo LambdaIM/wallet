@@ -25,6 +25,11 @@
             <span slot="append">TBB</span>
           </Input>
         </p>
+        <br />
+        <p>
+          我的TBB余额 : {{balance|Stoformat}}
+
+        </p>
         <div slot="footer">
           <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
         </div>
@@ -169,7 +174,7 @@ export default {
       }
     },
     confirm() {
-      if (this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.getblance) == 1) {
+      if (this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb) == 1) {
         this.$Notice.warning({
           title: 'error',
           desc: '请减小手续费，手续费不能大于lamb的余额'
@@ -188,6 +193,9 @@ export default {
     },
     balance: function() {
       return this.$store.getters.getbalanceSto;
+    },
+    balanceLamb: function() {
+      return this.$store.getters.getblance;
     },
     isdegeTxt: function() {
       if (this.$data.isdege) {
