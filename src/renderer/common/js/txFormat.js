@@ -78,14 +78,12 @@ function getamount(msg0, item, vueIns) {
           msg0.value.asset.denom);
     } else {
       item.tags.forEach(item => {
-        if (item.key == 'rewards'&&item.value) {
+        if (item.key == 'rewards' && item.value) {
           result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
         }
-        if (item.key == 'commission'&&item.value) {
+        if (item.key == 'commission' && item.value) {
           result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
         }
-        
-
       });
       result = _this.bigNumTypeFormat(result, 'ulamb');
     }

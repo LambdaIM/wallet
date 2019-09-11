@@ -7,9 +7,9 @@ const transactionTypes = {
   VOTE: `MsgVote`,
   DEPOSIT: `MsgDeposit`,
   WITHDRAW: `MsgWithdrawDelegationReward`,
-  AssetPledge:`MsgAssetPledge`,
-  AssetDrop:`MsgAssetDrop`,
-  WithdrawValidatorCommission:`MsgWithdrawValidatorCommission`
-}
+  AssetPledge: `MsgAssetPledge`,
+  AssetDrop: `MsgAssetDrop`,
+  WithdrawValidatorCommission: `MsgWithdrawValidatorCommission`
+};
 
-export default transactionTypes
+export default transactionTypes;

@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     getToWord(txItem) {
-      if (txItem.action == 'MsgWithdrawDelegationReward'||txItem.action == 'MsgWithdrawValidatorCommission') {
+      if (txItem.action == 'MsgWithdrawDelegationReward' || txItem.action == 'MsgWithdrawValidatorCommission') {
         return this.$t('txTable.Withdraw');
       } else {
         return this.$t('txTable.to');

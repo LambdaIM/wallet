@@ -66,7 +66,7 @@
             <Icon type="md-swap"></Icon>
           </Button>
 
-          
+
           <Dropdown @on-click="openwithdrawalModal" style="margin-left: 20px">
               <Button  >
                   {{$t('home.Withdraw')}}
@@ -75,12 +75,12 @@
               <DropdownMenu slot="list">
                   <DropdownItem  name="Withdraw">{{$t('home.Withdraw')}}</DropdownItem>
                   <DropdownItem  name="Distribution">提取节点收益</DropdownItem>
-                  
-                  
+
+
               </DropdownMenu>
           </Dropdown>
 &nbsp; &nbsp;
-  
+
         </span>
       </Tabs>
     </div>
@@ -118,8 +118,8 @@ import WithdrawalModalDialog from '@/views/Dialog/withdrawalModal.vue';
 import AssetlModalDialog from '@/views/Dialog/assetlModal.vue';
 import TxTable from '@/components/txTable/index.vue';
 import txFormat from '@/common/js/txFormat.js';
-const { ipcRenderer: ipc } = require('electron-better-ipc');
 import DistributionModal from '@/views/Dialog/distributionModal.vue';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 const { shell } = require('electron');
 
@@ -170,9 +170,9 @@ export default {
       AssetSTOvalue: '',
       assetConfirmModal: false,
       exchangesStatus: 'true',
-      distributionBalance:null,
-      downName1:'1',
-      downName2:'2'
+      distributionBalance: null,
+      downName1: '1',
+      downName2: '2'
 
     };
   },
@@ -239,12 +239,11 @@ export default {
     //   this.$data.AssetLAMBvalue= this.$data.AssetSTOvalue *  1000;
     // },
     openwithdrawalModal(name) {
-      if(name=='Withdraw'){
+      if (name == 'Withdraw') {
         this.$refs.WithdrawalModalDialog.open();
-      }else{
+      } else {
         this.$refs.DistributionModal.open();
       }
-      
     },
     denomFormart(denom) {
       //  return  denom..substr(1).toUpperCase()
@@ -329,31 +328,25 @@ export default {
       let url = DAEMON_CONFIG.pledgeurl;
       shell.openExternal(url);
     },
-   async validatorDistribution(){
+    async validatorDistribution() {
       try {
-        
         let res = await ipc.callMain('DistributionInformation', {});
         console.log(res);
         if (!res.state) return;
-        console.log(res)
-        if(res.data&&res.data.val_commission){
-          res.data.val_commission.forEach((item)=>{
-            if(item.denom==='ulamb'){
-              this.$data.distributionBalance=item.amount;
+        console.log(res);
+        if (res.data && res.data.val_commission) {
+          res.data.val_commission.forEach(item => {
+            if (item.denom === 'ulamb') {
+              this.$data.distributionBalance = item.amount;
               this.$store.dispatch('setDistribution', item.amount);
-
             }
-
-          })
+          });
         }
-          
-        
       } catch (ex) {
-        console.log(ex)
-
+        console.log(ex);
       }
     }
-    
+
 
   }
 };
