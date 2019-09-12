@@ -416,7 +416,7 @@ export default function() {
         try {
           if (item.state == 0 || item.state == -1) {
             var txinfo = await transaction.getTransactionInfo(item.txhash);
-            var flag;
+            var flag; var message = '';
             if (txinfo.error || txinfo.code) {
               // 有tx 或tx错误
               if (txinfo.error) {
@@ -424,12 +424,15 @@ export default function() {
               }
               if (txinfo.code) {
                 flag = -2;
+                message = txinfo.logs.map(item => {
+                  return item.log;
+                }).join(',');
               }
             } else {
               flag = 1;
             }
 
-            var isok = await nedb.updateTxState(item.txhash, flag);
+            var isok = await nedb.updateTxState(item.txhash, flag, message);
             console.log(isok);
           }
         } catch (error) {

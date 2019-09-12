@@ -65,7 +65,7 @@ export default {
   },
   data() {
     return {
-      more: !(this.$props.activityData.length > 1)
+      more: !(this.$props.activityData.length > 2)
     };
   },
   methods: {

@@ -61,7 +61,7 @@
           </Table>
 
         </TabPane>
-        <TabPane label="本地交易记录">
+        <TabPane label="本地最新交易记录">
           <Table :columns="localTxcolumns" :data="localTxList">
 
             <template slot-scope="{ row, index }" slot="state">
@@ -69,13 +69,22 @@
                   <Tag v-if="row.state===0"  color="primary">交易已发送</Tag>
                   <Tag v-if="row.state===1"  color="success">交易成功</Tag>
                   <Tag v-if="row.state===-2"  color="error">交易失败</Tag>
-                  <Tag v-if="row.state===-1" color="warning">交易等待打包</Tag>
+                  <Tag v-if="row.state===-1" color="warning">交易未打包</Tag>
             </template>
             <template slot-scope="{ row, index }" slot="txinfo">
                 <Button @click="txinfo(row)" type="text" size="small">查看详情</Button>
             </template>
             <template slot-scope="{ row, index }" slot="createTime">
                 {{row.createTime|formatToTime}}
+            </template>
+            <template slot-scope="{ row, index }" slot="txtype">
+                {{localtype(row.transactiondata)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="amount">
+                {{localamount(row.transactiondata)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="to">
+                {{localto(row.transactiondata)}}
             </template>
 
 
@@ -205,15 +214,33 @@ export default {
           slot: 'state'
         },
         {
+          title: '类型',
+          key: 'state',
+          slot: 'txtype'
+        }, {
+          title: '金额',
+          key: 'state',
+          slot: 'amount'
+        }, {
+          title: '接受者',
+          key: 'state',
+          slot: 'to'
+        },
+        {
           key: 'createTime',
           slot: 'createTime',
           title: '创建时间'
+        },
+        {
+          key: 'message',
+          title: '日志'
         },
         {
           title: '查看详情',
           key: 'createTime',
           slot: 'txinfo'
         }
+
 
       ]
 
@@ -254,19 +281,23 @@ export default {
 
     this.Interval = setInterval(() => {
       this.transactionList();
+      this.validatorDistribution();
+      this.getlocaltxlist();
     }, 1000 * 15);
 
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.transactionList();
+      this.validatorDistribution();
+      this.getlocaltxlist();
     });
 
-    eventhub.$on('TxType', data => {
-      console.log('TxType', data);
-      this.$data.txType = data;
+    // eventhub.$on('TxType', data => {
+    //   console.log('TxType', data);
+    //   this.$data.txType = data;
 
-      this.transactionList();
-    });
+    //   this.transactionList();
+    // });
 
     // var num = this.bigNum(0);
     // console.log(num);
@@ -275,6 +306,30 @@ export default {
     clearInterval(this.$data.Interval);
   },
   methods: {
+    localtype(item) {
+      if (item) {
+        return this.$t(`txType.${item.type}`);
+      }
+    },
+    localto(item) {
+      if (item) {
+        return item.toAddress || item.validatorAddress;
+      }
+    },
+    localamount(item) {
+      var result = '';
+      if (item && (item.amount || item.amounts)) {
+        if (item.amounts instanceof Array) {
+          var list = item.amounts.map(one => {
+            return this.bigNumTypeFormat(one.amount, one.denom);
+          });
+          result = list.join(',');
+        } else {
+          result = this.bigNumTypeFormat(item.amount, item.denom);
+        }
+        return result;
+      }
+    },
     txinfo(item) {
       // console.log(value);
       var explorer = DAEMON_CONFIG.explore;

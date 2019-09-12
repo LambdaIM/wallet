@@ -8,13 +8,16 @@ var db = new Datastore({ filename: datafile, autoload: true });
 
 
 export default {
-  insertTx(hash) {
+  insertTx(hash, transactiondata, gaseFee) {
     return new Promise(function (resolve, reject) {
       db.insert({
         txhash: hash,
         state: 0,
         dataType: 'localSendTx',
-        createTime: new Date().getTime()
+        createTime: new Date().getTime(),
+        transactiondata: transactiondata,
+        gaseFee: gaseFee,
+        message: ''
       }, function (err, newDoc) {
         // newDoc is the newly inserted document, including its _id
         // newDoc has no key called notToBeSaved since its value was undefined
@@ -28,9 +31,7 @@ export default {
   },
   getTxList() {
     return new Promise(function (resolve, reject) {
-      db.find({ dataType: 'localSendTx' }, function (err, docs) {
-        // docs is an array containing documents Mars, Earth, Jupiter
-        // If no document is found, docs is equal to []
+      db.find({ dataType: 'localSendTx' }).sort({ createTime: -1 }).limit(100).exec(function (err, docs) {
         if (err == null) {
           resolve(docs);
         } else {
@@ -39,10 +40,10 @@ export default {
       });
     });
   },
-  updateTxState(hash, state) {
+  updateTxState(hash, state, message) {
     return new Promise(function (resolve, reject) {
       // Set an existing field's value
-      db.update({ dataType: 'localSendTx', txhash: hash }, { $set: { state: state } },
+      db.update({ dataType: 'localSendTx', txhash: hash }, { $set: { state: state, message: message } },
         function (err, numReplaced) {
           // numReplaced = 3
           // Field 'system' on Mars, Earth, Jupiter now has value 'solar system'

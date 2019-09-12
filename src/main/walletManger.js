@@ -482,7 +482,7 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   this.includedTx=included;
   console.log('nedb')
   console.log(nedb)
-  var isok = await nedb.insertTx(hash)
+  var isok = await nedb.insertTx(hash,transactiondata, gaseFee)
   
   log.info('transactiondata');
   log.info(transactiondata);
