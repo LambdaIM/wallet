@@ -12,7 +12,8 @@ export default function (tx, vueIns) {
         'msg_type': msg.type,
         'action': msg.type.split('/')[1],
         'amount': getamount(msg, tx, vueIns),
-        'valid': tx.logs[index].success
+        'valid': tx.logs[index].success,
+        'log': tx.logs[index].log
 
       };
     })

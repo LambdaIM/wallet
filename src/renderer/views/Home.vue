@@ -5,7 +5,7 @@
       {{$t('home.Balance')}}: {{balance|Lambformat}}
       <!-- {{$t('home.pledge')}}: {{DelegationValue|Stoformat}} -->
       {{$t('home.Reward')}} :{{DistributionReward|Lambformat}}
-      <span v-if="distributionBalance!=null">
+      <span v-if="distributionBalance > 0">
       节点收益 :{{distributionBalance|Lambformat}}
       </span>
 
@@ -58,6 +58,28 @@
 
               <Button v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
             </template>
+          </Table>
+
+        </TabPane>
+        <TabPane label="本地交易记录">
+          <Table :columns="localTxcolumns" :data="localTxList">
+
+            <template slot-scope="{ row, index }" slot="state">
+
+                  <Tag v-if="row.state===0"  color="primary">交易已发送</Tag>
+                  <Tag v-if="row.state===1"  color="success">交易成功</Tag>
+                  <Tag v-if="row.state===-2"  color="error">交易失败</Tag>
+                  <Tag v-if="row.state===-1" color="warning">交易等待打包</Tag>
+            </template>
+            <template slot-scope="{ row, index }" slot="txinfo">
+                <Button @click="txinfo(row)" type="text" size="small">查看详情</Button>
+            </template>
+            <template slot-scope="{ row, index }" slot="createTime">
+                {{row.createTime|formatToTime}}
+            </template>
+
+
+
           </Table>
         </TabPane>
         <span slot="extra">
@@ -171,8 +193,29 @@ export default {
       assetConfirmModal: false,
       exchangesStatus: 'true',
       distributionBalance: null,
-      downName1: '1',
-      downName2: '2'
+      localTxList: [],
+      localTxcolumns: [
+        {
+          title: '交易哈希',
+          key: 'txhash'
+        },
+        {
+          title: '状态',
+          key: 'state',
+          slot: 'state'
+        },
+        {
+          key: 'createTime',
+          slot: 'createTime',
+          title: '创建时间'
+        },
+        {
+          title: '查看详情',
+          key: 'createTime',
+          slot: 'txinfo'
+        }
+
+      ]
 
     };
   },
@@ -207,6 +250,7 @@ export default {
 
     this.transactionList();
     this.validatorDistribution();
+    this.getlocaltxlist();
 
     this.Interval = setInterval(() => {
       this.transactionList();
@@ -231,13 +275,12 @@ export default {
     clearInterval(this.$data.Interval);
   },
   methods: {
-    // AssetLAMBvalueChane(){
-    //  console.log('- -')
-    //  this.$data.AssetSTOvalue = this.$data.AssetLAMBvalue/1000;
-    // },
-    // AssetSTOvalueChane(){
-    //   this.$data.AssetLAMBvalue= this.$data.AssetSTOvalue *  1000;
-    // },
+    txinfo(item) {
+      // console.log(value);
+      var explorer = DAEMON_CONFIG.explore;
+      let url = `${explorer}#/txDetail/${item.txhash}`;
+      shell.openExternal(url);
+    },
     openwithdrawalModal(name) {
       if (name == 'Withdraw') {
         this.$refs.WithdrawalModalDialog.open();
@@ -345,6 +388,13 @@ export default {
       } catch (ex) {
         console.log(ex);
       }
+    },
+    async getlocaltxlist() {
+      let res = await ipc.callMain('localtxlist', {});
+      console.log(res);
+      if (!res.state) return;
+      console.log(res);
+      this.$data.localTxList = res.data;
     }
 
 

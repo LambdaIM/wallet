@@ -20,7 +20,7 @@
       <Tag v-if="txItem.valid" color="success">Success</Tag>
       <Tag v-if="!txItem.valid" color="error">Failed</Tag>
       <p v-if="!txItem.valid && showError == true" class="error">
-        Because of : <Tag color="error"> {{ txItem.Log }}</Tag>
+        Because of : <Tag color="error"> {{ txItem.log }}</Tag>
       </p>
     </Col>
    <Col :md="md"

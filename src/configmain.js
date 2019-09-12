@@ -22,6 +22,7 @@ var configData = {
     BASE_PATH:BASE_PATH,
     WalletFile:path.join( BASE_PATH,'Wallet'),
     LogFile:path.join(BASE_PATH,'Log'),
+    DataFile:path.join(BASE_PATH,'Data'),
     ValidatorIp:function(){
         return settings.get('validator.ipv1')||defaultip;
         // return defaultip;
@@ -43,6 +44,9 @@ var configData = {
         }
         if(fs.existsSync(this.LogFile)==false) {
             fs.mkdirSync(this.LogFile);
+        }
+        if(fs.existsSync(this.DataFile)==false) {
+            fs.mkdirSync(this.DataFile);
         }
         settings.setPath(path.join(this.BASE_PATH,'set.json') );
     }

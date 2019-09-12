@@ -1,5 +1,9 @@
 import WalletManger from './walletManger.js';
 import resultView from './result.js';
+
+import nedb from './utils/nedb';
+
+import TransactionManager from './transactionManager.js';
 // import isAddress from '../utils/isaddress.js';
 
 
@@ -399,6 +403,41 @@ export default function() {
       var TxMessageload = await WM.editDefaultName(name);
 
       return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('localtxlist', async query => {
+    try {
+      var txlist = await nedb.getTxList() || [];
+      var transaction = new TransactionManager();
+      txlist.forEach(async item => {
+        try {
+          if (item.state == 0 || item.state == -1) {
+            var txinfo = await transaction.getTransactionInfo(item.txhash);
+            var flag;
+            if (txinfo.error || txinfo.code) {
+              // 有tx 或tx错误
+              if (txinfo.error) {
+                flag = -1;
+              }
+              if (txinfo.code) {
+                flag = -2;
+              }
+            } else {
+              flag = 1;
+            }
+
+            var isok = await nedb.updateTxState(item.txhash, flag);
+            console.log(isok);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      });
+
+      return resultView(txlist, true);
     } catch (error) {
       throw resultView(null, false, error);
     }

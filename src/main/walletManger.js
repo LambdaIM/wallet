@@ -6,6 +6,7 @@ import ActionManager from './utils/ActionManager.js';
 
 import BigNum from './utils/BigNum';
 import LambdaApi from './lambdaApi';
+import nedb from './utils/nedb';
 
 var fs = require('graceful-fs');
 var log = require('../log').log;
@@ -478,7 +479,10 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
     feeProperties,
     signerFn
   );
-  this.includedForTx=included;
+  this.includedTx=included;
+  console.log('nedb')
+  console.log(nedb)
+  var isok = await nedb.insertTx(hash)
   
   log.info('transactiondata');
   log.info(transactiondata);
@@ -494,7 +498,13 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   };
 };
 walletManger.prototype.includedForTx = async function () {
-   var  result = await this.includedForTx()
+  console.log('includedForTx')
+   var  result = await this.includedTx()
+   var isok = await nedb.updateTxState(result.txhash,1)
+   console.log('isok',isok,result.txhash)
+   console.log('-------')
+   console.log(result)
+   console.log('-------')
    return result;
 
 }
