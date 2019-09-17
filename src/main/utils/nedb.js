@@ -23,7 +23,7 @@ export default class {
       db.insert({
         address: address,
         txhash: hash,
-        state: 0,
+        state: -3,
         dataType: 'localSendTx',
         createTime: new Date().getTime(),
         transactiondata: transactiondata,
@@ -71,3 +71,11 @@ export default class {
     });
   }
 }
+/*    <Tag v-if="row.state===-3"  color="error">交易未发送</Tag>
+      <Tag v-if="row.state===-2"  color="error">交易失败</Tag>
+      <Tag v-if="row.state===-1" color="warning">交易未打包</Tag>
+      <Tag v-if="row.state===0"  color="primary">交易已发送</Tag>
+      <Tag v-if="row.state===1"  color="success">交易成功</Tag>
+
+
+*/

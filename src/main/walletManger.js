@@ -506,6 +506,7 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   log.info(txhashNative);
   var isok = await this.Nedbjs.insertTx(txhashNative,transactiondata, gaseFee)
 
+  
   const { included, hash } = await this.actionManager.send(
     memo,
     feeProperties,
@@ -520,7 +521,9 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   log.info('TransferConfirmresult');
   log.info(hash);
   log.info('walletManger transferConfirm end');
+  isok = await this.Nedbjs.updateTxState(hash,0)
 
+  console.log(isok)
 
 
   return {

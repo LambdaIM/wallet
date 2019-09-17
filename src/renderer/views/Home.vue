@@ -66,13 +66,14 @@
 
             <template slot-scope="{ row, index }" slot="state">
 
-                  <Tag v-if="row.state===0"  color="primary">交易已发送</Tag>
-                  <Tag v-if="row.state===1"  color="success">交易成功</Tag>
-                  <Tag v-if="row.state===-2"  color="error">交易失败</Tag>
-                  <Tag v-if="row.state===-1" color="warning">交易未打包</Tag>
+                  <Tag v-if="row.state===0"  color="primary">已发送</Tag>
+                  <Tag v-if="row.state===1"  color="success">成  功</Tag>
+                  <Tag v-if="row.state===-2"  color="error">失   败</Tag>
+                  <Tag v-if="row.state===-1" color="warning">未打包</Tag>
+                  <Tag v-if="row.state===-3" color="warning">未发送</Tag>
             </template>
             <template slot-scope="{ row, index }" slot="txinfo">
-                <Button @click="txinfo(row)" type="text" size="small">查看详情</Button>
+                <Button type="primary" @click="txinfo(row)"  size="small">查看详情</Button>
             </template>
             <template slot-scope="{ row, index }" slot="createTime">
                 {{row.createTime|formatToTime}}
