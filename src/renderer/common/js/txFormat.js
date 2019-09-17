@@ -6,16 +6,21 @@ export default function (tx, vueIns) {
     'create_time': tx.timestamp,
     'timestampSort': new Date(tx.timestamp).getTime(),
     'txs': tx.tx.value.msg.map((msg, index) => {
-      return {
-        'from': getSendAddress(msg, tx),
-        'to': getToAddress(msg, tx),
-        'msg_type': msg.type,
-        'action': msg.type.split('/')[1],
-        'amount': getamount(msg, tx, vueIns),
-        'valid': tx.logs[index].success,
-        'log': tx.logs[index].log
+      try {
+        return {
+          'from': getSendAddress(msg, tx),
+          'to': getToAddress(msg, tx),
+          'msg_type': msg.type,
+          'action': msg.type.split('/')[1],
+          'amount': getamount(msg, tx, vueIns),
+          'valid': tx.logs[index] ? tx.logs[index].success : false,
+          'log': tx.logs[index] ? tx.logs[index].log : '--'
 
-      };
+        };
+      } catch (error) {
+        console.log(msg, index, tx);
+        console.log(error);
+      }
     })
   };
 }

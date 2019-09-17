@@ -89,7 +89,7 @@ export default {
       var me = this.$store.getters.getaddress;
       var meList = []; var otherList = [];
       this.$props.activityData.forEach(item => {
-        if ((item.to || item.from == me) && meList.length < 2) {
+        if ((item.to == me || item.from == me) && meList.length < 2) {
           meList.push(item);
         } else {
           otherList.push(item);

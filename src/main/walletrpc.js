@@ -1,7 +1,7 @@
 import WalletManger from './walletManger.js';
 import resultView from './result.js';
 
-import nedb from './utils/nedb';
+import Nedb from './utils/nedb';
 
 import TransactionManager from './transactionManager.js';
 // import isAddress from '../utils/isaddress.js';
@@ -19,6 +19,7 @@ var log = require('../log').log;
 var lastTime;
 export default function() {
   var WM = new WalletManger();
+  var Nedbjs = new Nedb();
   eipc.answerRenderer('walletList', async query => {
     try {
       var result = WM.getWalletList();
@@ -100,6 +101,15 @@ export default function() {
     } catch (ex) {
       log.info('createWallet rpc error');
       log.info(ex);
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('creatWalletComplete', async query => {
+    try {
+      var result = await WM.creatWalletComplete();
+      return resultView(result, true);
+    } catch (ex) {
       throw resultView(null, false, ex);
     }
   });
@@ -410,7 +420,7 @@ export default function() {
 
   eipc.answerRenderer('localtxlist', async query => {
     try {
-      var txlist = await nedb.getTxList() || [];
+      var txlist = await Nedbjs.getTxList() || [];
       var transaction = new TransactionManager();
       txlist.forEach(async item => {
         try {
@@ -432,7 +442,7 @@ export default function() {
               flag = 1;
             }
 
-            var isok = await nedb.updateTxState(item.txhash, flag, message);
+            var isok = await Nedbjs.updateTxState(item.txhash, flag, message);
             console.log(isok);
           }
         } catch (error) {
