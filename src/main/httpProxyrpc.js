@@ -1,24 +1,23 @@
 import LambdaApi from './lambdaApi';
 
+import fetch from './utils/fetch';
+
 var log = require('../log').log;
 const { ipcMain: eipc } = require('electron-better-ipc');
-const axiosM = require('axios');
-var { DAEMON_CONFIG } = require('../configmain.js');
 
-const axios = axiosM.create();
+var { DAEMON_CONFIG } = require('../configmain.js');
 
 // Override timeout default for the library
 // Now all requests using this instance will wait 2.5 seconds before timing out
-axios.defaults.timeout = 1000 * 15;
+
 
 export default function() {
   eipc.answerRenderer('httpgetstatus', async query => {
     log.info('httpget:' + query.url);
     try {
-      const result = await axios.get(query.url, {
-        params: query.data || {}
-      });
-      return { data: result, state: true };
+      const result = await fetch(query.url, {});
+      var data = await result.json();
+      return { data: data, state: true };
     } catch (error) {
       log.error(error);
       return { data: error, state: false };

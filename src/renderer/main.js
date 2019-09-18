@@ -1,9 +1,9 @@
-import Vue from 'vue'
-import axios from 'axios'
+import Vue from 'vue';
 
-import App from './App'
-import router from './router'
-import store from './store'
+
+import App from './App';
+import router from './router';
+import store from './store';
 import iView from 'iview';
 import './common/css/reset.less';
 import './common/css/position.less';
@@ -18,58 +18,58 @@ import VueClipboard from 'vue-clipboard2';
 
 import VueI18n from 'vue-i18n';
 import messages from './lang/index.js';
-import GlobalFn from "./Global.js"
-const settings = require("electron-settings");
+import GlobalFn from './Global.js';
+const settings = require('electron-settings');
 
-const {  remote } = require('electron');
+const { remote } = require('electron');
 
- 
+
 
 Object.keys(filters).forEach(key => {
-    Vue.filter(key, filters[key])
-})
+  Vue.filter(key, filters[key]);
+});
 
-Vue.use(VueClipboard)
-Vue.use(GlobalFn)
+Vue.use(VueClipboard);
+Vue.use(GlobalFn);
 // if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
-Vue.http = Vue.prototype.$http = axios
-Vue.config.productionTip = false
+
+Vue.config.productionTip = false;
 
 
-var language = settings.get('set.language')||'en';
+var language = settings.get('set.language') || 'en';
 // var language = 'en';
 // console.log(language);
-Vue.use(VueI18n)
+Vue.use(VueI18n);
 const i18n = new VueI18n({
   locale: language, // set locale
-  messages:messages, // set locale messages
-})
+  messages: messages // set locale messages
+});
 
 
 
-if(language=='en'){
-  Vue.use(iView, { locale:locale_en });
-}else{
-  Vue.use(iView, { locale:locale_zh });
+if (language == 'en') {
+  Vue.use(iView, { locale: locale_en });
+} else {
+  Vue.use(iView, { locale: locale_zh });
 }
 
-console.log('new app')
+console.log('new app');
 /* eslint-disable no-new */
-var  app= new Vue({
-    components: { App },
-    router,
-    store,
-    template: '<App/>',
-    i18n,
-}).$mount('#app')
+var app = new Vue({
+  components: { App },
+  router,
+  store,
+  template: '<App/>',
+  i18n
+}).$mount('#app');
 
 
-//CommandOrControl+Shift+K
+// CommandOrControl+Shift+K
 remote.globalShortcut.register('F12', () => {
-    remote.BrowserWindow.getFocusedWindow().webContents.openDevTools()
-  })
-  
-  window.addEventListener('beforeunload', () => {
-    remote.globalShortcut.unregisterAll()
-  })
+  remote.BrowserWindow.getFocusedWindow().webContents.openDevTools();
+});
+
+window.addEventListener('beforeunload', () => {
+  remote.globalShortcut.unregisterAll();
+});
 
