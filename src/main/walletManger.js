@@ -6,6 +6,7 @@ import ActionManager from './utils/ActionManager.js';
 
 import BigNum from './utils/BigNum';
 import LambdaApi from './lambdaApi';
+import Nedb from './utils/nedb';
 
 var fs = require('graceful-fs');
 var log = require('../log').log;
@@ -34,9 +35,11 @@ var walletManger = function (dir) {
   this.scann();
   this.setDefaultWallet();
 
-
+  this.filepath_create = null;
+  this.walletjson__create = null;
 
   this.gasEstimate = null;
+  this.Nedbjs = new Nedb();
 };
 walletManger.prototype.readconfig = function () {
   // console.log('defaultwallet', settings.get('defaultwallet'));
@@ -155,12 +158,24 @@ walletManger.prototype.getWalletList = function () {
 
 
 walletManger.prototype.creatWallet = function (password, name) {
+  this.filepath_create = null;
+  this.walletjson__create = null;
+
   var mnemonic = hdkeyjs.crypto.generateRandomMnemonic(256);
-
-
-  return this.generateWallet(mnemonic, password, name);
+  var result = this.generateWallet(mnemonic, password, name, true);
+  return result;
 };
-walletManger.prototype.generateWallet = function (mnemonic, password, name) {
+walletManger.prototype.creatWalletComplete = function (password, name) {
+  if (this.filepath_create == null || this.walletjson__create == null) {
+    throw new Error('can not find  mnemonic');
+  }
+  fs.writeFileSync(this.filepath_create, JSON.stringify(this.walletjson__create));
+  this.scann();
+  return true;
+};
+
+
+walletManger.prototype.generateWallet = function (mnemonic, password, name, iscreat) {
   const keys = hdkeyjs.crypto.getKeysFromMnemonic(mnemonic);
   // var seed = tenderKeys.generateSeed(mnemonic);
   // var keyPair = tenderKeys.generateKeyPair(seed);
@@ -179,8 +194,16 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name) {
 
   var filepath = path.join(DAEMON_CONFIG.WalletFile, address + '.keyinfo');
 
-  fs.writeFileSync(filepath, JSON.stringify(walletjson));
-  this.scann();
+
+  if (iscreat) {
+    this.filepath_create = filepath;
+    this.walletjson__create = walletjson;
+  } else {
+    fs.writeFileSync(filepath, JSON.stringify(walletjson));
+    this.scann();
+  }
+
+
   return {
     mnemonic: mnemonic,
     address: address,
@@ -213,7 +236,7 @@ walletManger.prototype.ImportWalletByMnemonic = function (mnemonic, password, na
     throw new Error('make sure  inputting 12 words or more ');
   }
   var mnemonics = mnemonicList.join(' ');
-  return this.generateWallet(mnemonics, password, name);
+  return this.generateWallet(mnemonics, password, name,false);
 };
 
 
@@ -473,19 +496,34 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   this.actionManager.setMessage(type, transactionProperties);
   // const { included, hash }
   // 如果出现网络相关的问题  有可能会产生异常，最好是醉解返回hash
+  var txhashNative = await this.actionManager.getTxhash(
+    memo,
+    feeProperties,
+    signerFn
+  )
+  
+  log.info('txhashNative');
+  log.info(txhashNative);
+  var isok = await this.Nedbjs.insertTx(txhashNative,transactiondata, gaseFee)
+
+  
   const { included, hash } = await this.actionManager.send(
     memo,
     feeProperties,
     signerFn
   );
-  this.includedForTx=included;
+  this.includedTx=included;
+  
+  
   
   log.info('transactiondata');
   log.info(transactiondata);
   log.info('TransferConfirmresult');
   log.info(hash);
   log.info('walletManger transferConfirm end');
+  isok = await this.Nedbjs.updateTxState(hash,0)
 
+  console.log(isok)
 
 
   return {
@@ -494,7 +532,13 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   };
 };
 walletManger.prototype.includedForTx = async function () {
-   var  result = await this.includedForTx()
+  console.log('includedForTx')
+   var  result = await this.includedTx()
+   var isok = await this.Nedbjs.updateTxState(result.txhash,1)
+   console.log('isok',isok,result.txhash)
+   console.log('-------')
+   console.log(result)
+   console.log('-------')
    return result;
 
 }

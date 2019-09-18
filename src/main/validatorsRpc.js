@@ -1,16 +1,13 @@
 import resultView from './result.js';
 
-import {changeCosmosAPI} from LambdaApi from './lambdaApi';
+import * as LambdaApi from './lambdaApi';
 
-var { DAEMON_CONFIG } = require('../configmain.js');
 const { ipcMain: eipc } = require('electron-better-ipc');
-
-const hdkeyjs = require('@jswebfans/hdkeyjs');
 
 
 
 export default function() {
-  var LambdaRpcApi = LambdaApi();
+  var LambdaRpcApi = LambdaApi.default();
   eipc.answerRenderer('validatorsList', async query => {
     try {
       var result = await LambdaRpcApi().get.validators();
@@ -104,7 +101,7 @@ export default function() {
 
   eipc.answerRenderer('myUndelegations', async query => {
     var operator_address = query.operator_address;
-    LambdaRpcApi;
+
     try {
       var result = await LambdaRpcApi().get.undelegations(operator_address);
 
@@ -124,7 +121,7 @@ export default function() {
   });
   eipc.answerRenderer('changeip', async query => {
     try {
-      var result = changeCosmosAPI();
+      var result = LambdaApi.changeCosmosAPI();
       return resultView(result, true);
     } catch (ex) {
       throw resultView(null, false, ex);

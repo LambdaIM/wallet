@@ -20,7 +20,7 @@
       <Tag v-if="txItem.valid" color="success">Success</Tag>
       <Tag v-if="!txItem.valid" color="error">Failed</Tag>
       <p v-if="!txItem.valid && showError == true" class="error">
-        Because of : <Tag color="error"> {{ txItem.Log }}</Tag>
+        Because of : <Tag color="error"> {{ txItem.log }}</Tag>
       </p>
     </Col>
    <Col :md="md"
@@ -65,7 +65,7 @@ export default {
   },
   data() {
     return {
-      more: !(this.$props.activityData.length > 1)
+      more: !(this.$props.activityData.length > 2)
     };
   },
   methods: {
@@ -89,7 +89,7 @@ export default {
       var me = this.$store.getters.getaddress;
       var meList = []; var otherList = [];
       this.$props.activityData.forEach(item => {
-        if ((item.to || item.from == me) && meList.length < 2) {
+        if ((item.to == me || item.from == me) && meList.length < 2) {
           meList.push(item);
         } else {
           otherList.push(item);

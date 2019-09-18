@@ -70,8 +70,8 @@
         }
     },
     "dependencies": {
-        "@jswebfans/hdkeyjs": "1.2.5",
-        "@jswebfans/rpcapijs": "0.1.8",
+        "@jswebfans/hdkeyjs": "1.2.8",
+        "@jswebfans/rpcapijs": "0.1.13",
         "axios": "^0.18.0",
         "bignumber.js": "^8.1.1",
         "electron-better-ipc": "^0.4.0",
@@ -80,6 +80,7 @@
         "graceful-fs": "^4.1.15",
         "iview": "^3.2.0",
         "moment": "^2.24.0",
+        "nedb": "^1.8.0",
         "object-assign": "^4.1.1",
         "underscore": "^1.9.1",
         "uuid": "^3.3.2",

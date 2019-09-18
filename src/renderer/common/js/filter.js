@@ -70,6 +70,12 @@ const formatStatus = value => {
 };
 
 const formatStringToTime = s => { return moment(parseInt(s) * 1000).format('YYYY-MM-DD HH:mm:ss'); };
+const formatToTime = s => {
+  if (s == undefined) {
+    return '--';
+  }
+  return moment(s).format('YYYY-MM-DD HH:mm:ss');
+};
 
 const formatSize = value => {
   return `${value} M`;
@@ -140,5 +146,6 @@ export default {
   Percentformat,
   Stoformat,
   formatRelativeDate,
-  formatAmount
+  formatAmount,
+  formatToTime
 };

@@ -119,6 +119,13 @@ export default {
       // this.confirmModal=true;
     },
     confirm() {
+      if (this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.getblance) == 1) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: '请减小手续费，手续费不能大于lamb的余额'
+        });
+        return;
+      }
       this.confirmModal = false;
       console.log(this.$data.transactiondata);
       eventhub.$emit('TxConfirm', this.$data.transactiondata, this.toBigNumStr(this.$data.gaseFee));
@@ -130,6 +137,9 @@ export default {
     },
     address: function() {
       return this.$store.getters.getaddress;
+    },
+    balance: function() {
+      return this.$store.getters.getblance;
     }
   }
 };

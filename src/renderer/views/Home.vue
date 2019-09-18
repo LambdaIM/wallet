@@ -5,7 +5,7 @@
       {{$t('home.Balance')}}: {{balance|Lambformat}}
       <!-- {{$t('home.pledge')}}: {{DelegationValue|Stoformat}} -->
       {{$t('home.Reward')}} :{{DistributionReward|Lambformat}}
-      <span v-if="distributionBalance!=null">
+      <span v-if="distributionBalance > 0">
       节点收益 :{{distributionBalance|Lambformat}}
       </span>
 
@@ -58,6 +58,38 @@
 
               <Button v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
             </template>
+          </Table>
+
+        </TabPane>
+        <TabPane label="本地最新交易记录">
+          <Table :columns="localTxcolumns" :data="localTxList">
+
+            <template slot-scope="{ row, index }" slot="state">
+
+                  <Tag v-if="row.state===0"  color="primary">已发送</Tag>
+                  <Tag v-if="row.state===1"  color="success">成  功</Tag>
+                  <Tag v-if="row.state===-2"  color="error">失   败</Tag>
+                  <Tag v-if="row.state===-1" color="warning">未打包</Tag>
+                  <Tag v-if="row.state===-3" color="warning">未发送</Tag>
+            </template>
+            <template slot-scope="{ row, index }" slot="txinfo">
+                <Button type="primary" @click="txinfo(row)"  size="small">查看详情</Button>
+            </template>
+            <template slot-scope="{ row, index }" slot="createTime">
+                {{row.createTime|formatToTime}}
+            </template>
+            <template slot-scope="{ row, index }" slot="txtype">
+                {{localtype(row.transactiondata)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="amount">
+                {{localamount(row.transactiondata)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="to">
+                {{localto(row.transactiondata)}}
+            </template>
+
+
+
           </Table>
         </TabPane>
         <span slot="extra">
@@ -171,8 +203,47 @@ export default {
       assetConfirmModal: false,
       exchangesStatus: 'true',
       distributionBalance: null,
-      downName1: '1',
-      downName2: '2'
+      localTxList: [],
+      localTxcolumns: [
+        {
+          title: '交易哈希',
+          key: 'txhash'
+        },
+        {
+          title: '状态',
+          key: 'state',
+          slot: 'state'
+        },
+        {
+          title: '类型',
+          key: 'state',
+          slot: 'txtype'
+        }, {
+          title: '金额',
+          key: 'state',
+          slot: 'amount'
+        }, {
+          title: '接受者',
+          key: 'state',
+          slot: 'to'
+        },
+        {
+          key: 'createTime',
+          slot: 'createTime',
+          title: '创建时间'
+        },
+        {
+          key: 'message',
+          title: '日志'
+        },
+        {
+          title: '查看详情',
+          key: 'createTime',
+          slot: 'txinfo'
+        }
+
+
+      ]
 
     };
   },
@@ -207,22 +278,27 @@ export default {
 
     this.transactionList();
     this.validatorDistribution();
+    this.getlocaltxlist();
 
     this.Interval = setInterval(() => {
       this.transactionList();
+      this.validatorDistribution();
+      this.getlocaltxlist();
     }, 1000 * 15);
 
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.transactionList();
+      this.validatorDistribution();
+      this.getlocaltxlist();
     });
 
-    eventhub.$on('TxType', data => {
-      console.log('TxType', data);
-      this.$data.txType = data;
+    // eventhub.$on('TxType', data => {
+    //   console.log('TxType', data);
+    //   this.$data.txType = data;
 
-      this.transactionList();
-    });
+    //   this.transactionList();
+    // });
 
     // var num = this.bigNum(0);
     // console.log(num);
@@ -231,13 +307,36 @@ export default {
     clearInterval(this.$data.Interval);
   },
   methods: {
-    // AssetLAMBvalueChane(){
-    //  console.log('- -')
-    //  this.$data.AssetSTOvalue = this.$data.AssetLAMBvalue/1000;
-    // },
-    // AssetSTOvalueChane(){
-    //   this.$data.AssetLAMBvalue= this.$data.AssetSTOvalue *  1000;
-    // },
+    localtype(item) {
+      if (item) {
+        return this.$t(`txType.${item.type}`);
+      }
+    },
+    localto(item) {
+      if (item) {
+        return item.toAddress || item.validatorAddress;
+      }
+    },
+    localamount(item) {
+      var result = '';
+      if (item && (item.amount || item.amounts)) {
+        if (item.amounts instanceof Array) {
+          var list = item.amounts.map(one => {
+            return this.bigNumTypeFormat(one.amount, one.denom);
+          });
+          result = list.join(',');
+        } else {
+          result = this.bigNumTypeFormat(item.amount, item.denom);
+        }
+        return result;
+      }
+    },
+    txinfo(item) {
+      // console.log(value);
+      var explorer = DAEMON_CONFIG.explore;
+      let url = `${explorer}#/txDetail/${item.txhash}`;
+      shell.openExternal(url);
+    },
     openwithdrawalModal(name) {
       if (name == 'Withdraw') {
         this.$refs.WithdrawalModalDialog.open();
@@ -345,6 +444,13 @@ export default {
       } catch (ex) {
         console.log(ex);
       }
+    },
+    async getlocaltxlist() {
+      let res = await ipc.callMain('localtxlist', {});
+      console.log(res);
+      if (!res.state) return;
+      console.log(res);
+      this.$data.localTxList = res.data;
     }
 
 
