@@ -37,6 +37,12 @@
             class="item"
           >{{ $t("head.partner") }}</router-link>
         </div>
+        <div class="head-menu-item">
+          <router-link
+            to="/proposal"
+            class="item"
+          > 提案 </router-link>
+        </div>
 
         <div class="head-menu-item">
           <router-link
@@ -44,6 +50,7 @@
             class="item"
           >{{ $t("head.sign") }}</router-link>
         </div>
+
 
         <div class="head-menu-item overtext">
           <router-link

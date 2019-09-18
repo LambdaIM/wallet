@@ -1,132 +1,137 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-const settings = require("electron-settings");
+import Vue from 'vue';
+import Router from 'vue-router';
+const settings = require('electron-settings');
 const path = require('path');
-var {DAEMON_CONFIG} =require('../../configmain.js');
+var { DAEMON_CONFIG } = require('../../configmain.js');
 
-Vue.use(Router)
-settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH,'set.json') );
+Vue.use(Router);
+settings.setPath(path.join(DAEMON_CONFIG.BASE_PATH, 'set.json'));
 
 
- var walletRouter = new Router({
-    routes: [{
-        path: '/',
-        name: 'Login',
-        component: () =>
+var walletRouter = new Router({
+  routes: [{
+    path: '/',
+    name: 'Login',
+    component: () =>
             import('@/views/account/Login.vue')
-    },
-    {
-        path: '/home',
-        name: 'Home',
-        component: () =>
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: () =>
             import('@/views/Home.vue')
-    },
-    {
-        path: '/register',
-        name: 'Register',
-        component: () =>
-            import('@/views/account/Register/Register.vue'), 
-    },
-    {
-        path: '/success',
-        name: 'Success',
-        component: () =>
-            import('@/views/account/Register/Success.vue'),
-    },
-    {
-        path: '/export',
-        name: 'Export',
-        component: () =>
-            import('@/views/account/Register/Export.vue'),
-    },
-    {
-        path: '/detail/:id',
-        name: 'detail',
-        component: () =>
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () =>
+            import('@/views/account/Register/Register.vue')
+  },
+  {
+    path: '/success',
+    name: 'Success',
+    component: () =>
+            import('@/views/account/Register/Success.vue')
+  },
+  {
+    path: '/export',
+    name: 'Export',
+    component: () =>
+            import('@/views/account/Register/Export.vue')
+  },
+  {
+    path: '/detail/:id',
+    name: 'detail',
+    component: () =>
             import('@/views/Detail.vue')
-    },
-    {
-        path: '/import',
-        name: 'Import',
-        component: () =>
+  },
+  {
+    path: '/import',
+    name: 'Import',
+    component: () =>
             import('@/views/account/Import.vue')
-    },
-    {
-        path: '/settings',
-        name: 'Settings',
-        component: () =>
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () =>
             import('@/views/account/Settings.vue')
-    },
-    {
-        path: '/staking',
-        name: 'Staking',
-        component: () =>
+  },
+  {
+    path: '/staking',
+    name: 'Staking',
+    component: () =>
             import('@/views/staking/Staking.vue')
-    },
-    {
-        path: '/stakinginfo/:operator_address',
-        name: 'Stakinginfo',
-        component: () =>
+  },
+  {
+    path: '/stakinginfo/:operator_address',
+    name: 'Stakinginfo',
+    component: () =>
             import('@/views/staking/Stakinginfo.vue')
-    },
-    {
-        path: '/partner',
-        name: 'partner',
-        component: () =>
+  },
+  {
+    path: '/partner',
+    name: 'partner',
+    component: () =>
             import('@/views/partner/index.vue')
-    },
-    {
-        path: '/partnerinfo/:operator_address',
-        name: 'partnerinfo',
-        component: () =>
+  },
+  {
+    path: '/partnerinfo/:operator_address',
+    name: 'partnerinfo',
+    component: () =>
             import('@/views/partner/partnerinfo.vue')
-    },
-    {
-        path: '*',
-        redirect: '/'
-    },
-    {
-        path: '/validator',
-        name: 'validator',
-        component: () =>
+  },
+  {
+    path: '*',
+    redirect: '/'
+  },
+  {
+    path: '/validator',
+    name: 'validator',
+    component: () =>
             import('@/views/validator/index.vue')
-    },
-    {
-        path: '/sign',
-        name: 'sign',
-        component: () =>
+  },
+  {
+    path: '/sign',
+    name: 'sign',
+    component: () =>
             import('@/views/sign/index.vue')
-    },
-    ]
-})
+  },
+  {
+    path: '/proposal',
+    name: 'proposal',
+    component: () =>
+            import('@/views/proposal/index.vue')
+  }, {
+    path: '/proposalinfo',
+    name: 'proposalinfo',
+    component: () =>
+            import('@/views/proposal/info.vue')
+  }
+  ]
+});
 
-var notNeedLogin=['Login','Register','Success','Export','Import']
-var _this=this;
+var notNeedLogin = ['Login', 'Register', 'Success', 'Export', 'Import'];
+var _this = this;
 walletRouter.beforeResolve((to, from, next) => {
-    // ...
-    console.log('router')
-    var open = settings.get('isopenfilev1');
+  // ...
+  console.log('router');
+  var open = settings.get('isopenfilev1');
 
-    if(notNeedLogin.indexOf(to.name)==-1){
-        
-        console.log('open',open)
-        console.log(_this)
-        if(open==false){
-            next("/")
-        }else{
-            next()    
-        }
-
-    }else{
-        if(to.name=='Login'&&open==true){
-            next('Home')
-        }else{
-            next()
-        }
-        
+  if (notNeedLogin.indexOf(to.name) == -1) {
+    console.log('open', open);
+    console.log(_this);
+    if (open == false) {
+      next('/');
+    } else {
+      next();
     }
-            
-  })
+  } else if (to.name == 'Login' && open == true) {
+    next('Home');
+  } else {
+    next();
+  }
+});
 
 
-export default  walletRouter
+export default walletRouter;
