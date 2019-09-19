@@ -4,7 +4,7 @@
       "home": "Home",
       "miner": "Miner",
       "partner":"Partner",
-      "customer": "Customer",
+      "proposals": "Proposals",
       "validator": "Validator",
       "sign": "Sign",
 
@@ -335,6 +335,23 @@
     "to": "To",
     "Withdraw": "From",
     "sendtxloading":"The transaction has been sent, please wait a moment"
+  },
+  "proposalsPage":{
+      "Status":"Status",
+      "ProposalID":"Proposal ID",
+      "SubmitTime":"Submit Time",
+      "VotingStartTime":"Voting Start Time",
+      
+      "EndVotingTime":"End Voting Time",
+      "TotalVoteCount":"Total Vote Count",
+      "Yes":"Yes",
+      "No":"No",
+      "NowithVeto":"No with Veto",
+      "Abstain":"Abstain",
+      "Description":"Description",
+      "DepositCount":"Deposit Amount"
+      
+
   }
 
 

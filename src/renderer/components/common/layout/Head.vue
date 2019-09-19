@@ -41,7 +41,7 @@
           <router-link
             to="/proposal"
             class="item"
-          > 提案 </router-link>
+          > {{$t("head.proposals")}} </router-link>
         </div>
 
         <div class="head-menu-item">

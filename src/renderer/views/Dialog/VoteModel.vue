@@ -15,16 +15,16 @@
         <br />
         <p>
           <Input readonly v-model="title" :placeholder="$t('home.Modal1.LAMB_address')">
-            <span slot="prepend">提案</span>
+            <span slot="prepend">{{$t("head.proposals")}}</span>
           </Input>
         </p>
         <br />
         <p style="    text-align: center">
           <RadioGroup  v-model="voteType" type="button">
-            <Radio value="Yes" label="Yes">Yes</Radio>
-            <Radio value="No" label="No">No</Radio>
-            <Radio value="No With Veto" label="No With Veto">No With Veto</Radio>
-            <Radio value="Abstain" label="Abstain">Abstain</Radio>
+            <Radio value="Yes" label="Yes">{{$t('proposalsPage.Yes')}}</Radio>
+            <Radio value="No" label="No">{{$t('proposalsPage.No')}}</Radio>
+            <Radio value="No With Veto" label="No With Veto">{{$t('proposalsPage.NowithVeto')}}</Radio>
+            <Radio value="Abstain" label="Abstain">{{$t('proposalsPage.Abstain')}}</Radio>
         </RadioGroup>
 
         </p>
@@ -46,12 +46,12 @@
             <Col span="20" class-name="value">{{address}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">提案:</Col>
+            <Col span="4" class-name="key">{{$t("head.proposals")}}:</Col>
             <Col span="20" class-name="value">{{title}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">投票:</Col>
-            <Col span="20" class-name="value">{{voteType}} </Col>
+            <Col span="4" class-name="key">{{$t("proposalsPage.Vote")}}:</Col>
+            <Col span="20" class-name="value">{{$t(`proposalsPage.${voteType}`)}} </Col>
           </Row>
           <Row class-name="item">
             <Input v-model="gaseFee" >
@@ -166,7 +166,7 @@ export default {
       return this.$store.getters.getblance;
     },
     isdegeTxt: function() {
-      return 'Vote';
+      return this.$t('proposalsPage.Vote');
     }
   }
 

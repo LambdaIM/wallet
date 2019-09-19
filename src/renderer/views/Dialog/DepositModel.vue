@@ -15,7 +15,7 @@
         <br />
         <p>
           <Input readonly v-model="title" :placeholder="$t('home.Modal1.LAMB_address')">
-            <span slot="prepend">提案</span>
+            <span slot="prepend">{{$t("head.proposals")}}</span>
           </Input>
         </p>
         <br />
@@ -43,7 +43,7 @@
             <Col span="20" class-name="value">{{address}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">提案:</Col>
+            <Col span="4" class-name="key">{{$t("head.proposals")}}:</Col>
             <Col span="20" class-name="value">{{title}}</Col>
           </Row>
           <Row class-name="item">
@@ -171,7 +171,7 @@ export default {
       return this.$store.getters.getblance;
     },
     isdegeTxt: function() {
-      return 'Deposit';
+      return this.$t('proposalsPage.Deposit');
     }
   }
 

@@ -3,7 +3,7 @@
       "home": "首页",
       "miner": "矿工",
       "partner":"合伙人",
-      "customer": "顾客",
+      "proposals": "提案",
       "validator": "验证节点",
       "sign": "签名",
       "action": {
@@ -331,5 +331,23 @@
     "to":"到",
     "Withdraw":"从",
     "sendtxloading":"交易已经发送，请稍后"
+   },
+   "proposalsPage":{
+       "Status":"状态",
+       "ProposalID":"编号",
+       "SubmitTime":"提交时间",
+       "VotingStartTime":"投票开始时间",
+       "EndVotingTime":"投票结束时间",
+       "TotalVoteCount":"投票总量",
+       "Yes":"同意",
+       "No":"反对",
+       "NowithVeto":"强烈反对",
+       "Abstain":"弃权",
+       "Description":"详细内容",
+       "DepositCount":"存钱金额",
+       "Vote":"投票",
+        "Deposit":"存钱"
+       
+
    }
 }

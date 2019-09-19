@@ -4,7 +4,7 @@
       <div slot="card-content">
         <Row class="rowitem">
           <Col span="12">
-            <span class="waptitle">State:</span>
+            <span class="waptitle">{{$t('proposalsPage.Status')}}:</span>
 
             <Tag v-if="info.proposal_status==='Passed'" color="success">{{info.proposal_status}}</Tag>
             <Tag v-if="info.proposal_status==='Rejected'" color="error">{{info.proposal_status}}</Tag>
@@ -13,7 +13,7 @@
             <Tag v-if="info.proposal_status==='Removed'" color="default">{{info.proposal_status}}</Tag>
           </Col>
           <Col span="12">
-            <span class="waptitle">Proposal Id:</span>
+            <span class="waptitle">{{$t('proposalsPage.ProposalID')}}:</span>
             {{proposal_id}}
 
 
@@ -23,47 +23,47 @@
 
         <Row class="rowitem">
           <Col span="12">
-            <span class="waptitle">Submitted:</span>{{info.submit_time|formatDate}}
+            <span class="waptitle">{{$t('proposalsPage.SubmitTime')}}:</span>{{info.submit_time|formatDate}}
           </Col>
           <Col span="12">
-            <span class="waptitle">Voting Start Date:</span>{{info.voting_start_time|formatDate}}
+            <span class="waptitle">{{$t('proposalsPage.VotingStartTime')}}:</span>{{info.voting_start_time|formatDate}}
           </Col>
 
         </Row>
         <Row class="rowitem">
 
           <Col span="12">
-            <span class="waptitle">Voting End Date:</span>{{info.voting_start_time|formatDate}}
+            <span class="waptitle">{{$t('proposalsPage.EndVotingTime')}}:</span>{{info.voting_start_time|formatDate}}
           </Col>
           <Col span="12">
-            <span class="waptitle">Total Vote Count:</span>{{info.voting_end_time|formatDate}}
+            <span class="waptitle">{{$t('proposalsPage.TotalVoteCount')}}:</span>{{allVote(info.final_tally_result)|Lambformat}}
           </Col>
         </Row>
         <Row class="rowitem">
 
           <Col span="24">
           <div style="text-align: center;">
-             <Button @click="openVote" type="primary">vote</Button>
+             <Button @click="openVote" type="primary">{{$t('proposalsPage.Vote')}}</Button>
           </div>
           </Col>
         </Row>
         <Row class="rowitem">
           <Col span="6">
-            <span class="waptitle">Yes:</span>{{info.final_tally_result['yes']}}
+            <span class="waptitle">{{$t('proposalsPage.Yes')}}:</span>{{info.final_tally_result['yes']}}
           </Col>
           <Col span="6">
-            <span class="waptitle">No:</span>{{info.final_tally_result['no']}}
+            <span class="waptitle">{{$t('proposalsPage.No')}}:</span>{{info.final_tally_result['no']}}
           </Col>
           <Col span="6">
-            <span class="waptitle">No with Veto:</span>{{info.final_tally_result['no_with_veto']}}
+            <span class="waptitle">{{$t('proposalsPage.NowithVeto')}}:</span>{{info.final_tally_result['no_with_veto']}}
           </Col>
           <Col span="6">
-            <span class="waptitle">Abstain:</span>{{info.final_tally_result['abstain']}}
+            <span class="waptitle">{{$t('proposalsPage.Abstain')}}:</span>{{info.final_tally_result['abstain']}}
           </Col>
         </Row>
         <Row class="rowitem">
           <Col span="24">
-            <span class="waptitle">Description</span>
+            <span class="waptitle">{{$t('proposalsPage.Description')}}</span>
           </Col>
           <Col
             span="24"
@@ -79,7 +79,7 @@
       <div slot="card-content">
         <Row class="rowitem">
           <Col span="12">
-            <span class="waptitle">State:</span>
+            <span class="waptitle">{{$t('proposalsPage.Status')}}:</span>
             <Tag v-if="info.proposal_status==='Passed'" color="success">{{info.proposal_status}}</Tag>
             <Tag v-if="info.proposal_status==='Rejected'" color="error">{{info.proposal_status}}</Tag>
             <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{info.proposal_status}}</Tag>
@@ -87,7 +87,7 @@
             <Tag v-if="info.proposal_status==='Removed'" color="default">{{info.proposal_status}}</Tag>
           </Col>
           <Col span="12">
-            <span class="waptitle">Proposal Id:</span>
+            <span class="waptitle">{{$t('proposalsPage.ProposalID')}}:</span>
             {{proposal_id}}
 
 
@@ -96,23 +96,23 @@
 
         <Row class="rowitem">
           <Col span="12">
-            <span class="waptitle">Submitted:</span>{{info.submit_time|formatDate}}
+            <span class="waptitle">{{$t('proposalsPage.SubmitTime')}}:</span>{{info.submit_time|formatDate}}
           </Col>
           <Col span="12">
-            <span class="waptitle">Voting Start Date:</span>{{info.voting_start_time|formatDate}}
+            <span class="waptitle">{{$t('proposalsPage.VotingStartTime')}}:</span>{{info.voting_start_time|formatDate}}
           </Col>
         </Row>
         <Row class="rowitem">
           <Col span="12">
-            <span class="waptitle">Deposit Count:</span>{{amount(info.total_deposit)}}
+            <span class="waptitle">{{$t('proposalsPage.DepositCount')}}:</span>{{amount(info.total_deposit)}}
           </Col>
           <Col span="12">
-            <Button @click="openDeposit" type="primary">Deposit</Button>
+            <Button @click="openDeposit" type="primary">{{$t('proposalsPage.Deposit')}}</Button>
           </Col>
         </Row>
         <Row class="rowitem">
           <Col span="24">
-            <span class="waptitle">Description</span>
+            <span class="waptitle">{{$t('proposalsPage.Description')}}</span>
           </Col>
           <Col
             span="24"
@@ -148,6 +148,16 @@ export default {
     this.getinfo();
   },
   methods: {
+    allVote(item) {
+      var result = this.bigNum(0);
+      for (var key in item) {
+        // this.bigNum(item[key]).
+        result = result.plus(item[key]);
+      }
+      return result;
+
+      // this.bigNum()
+    },
     openDeposit() {
       this.$refs.DepositModel.open(this.$data.proposal_id, this.$data.info.proposal_content.value.title);
     },
