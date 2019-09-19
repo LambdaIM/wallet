@@ -5,10 +5,14 @@
       <span    class="item etc">{{ $t("foot.validator") }}:
         <Poptip word-wrap trigger="hover" width="300" :content="getIPAndAddress">
 
-          <router-link
+          <router-link v-if="login"
             to="/validator"
             class="item"
-          >{{getstore.address}}<Icon  v-if="login" type="ios-arrow-dropdown" /></router-link>
+          >{{getstore.address}}<Icon   type="ios-arrow-dropdown" /></router-link>
+          <span v-else>
+            {{getstore.address}}
+          </span>
+
           </Poptip>
       </span>
 

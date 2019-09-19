@@ -140,9 +140,12 @@
     },
     "home":{
       "Balance":"Balance",
+      "Validatorprofit": "Validator profit",
       "Latest_Transaction":"Latest  Transaction Records",
+      "Latest_Transaction_local": "Latest Local  Transaction Records",
       "Reward":"Reward",
       "Withdraw":"Withdraw",
+      "Withdrawprofit":"Withdraw validator  profit",
       "Transfer":"Transfer",
       "pledge":"Pledge",
       "profits_pledge_system":"The profits of miners'mining are related to the withdrawal amount in the storage miners' system. Details are referred to the pledge system",
@@ -177,6 +180,23 @@
         "Exchange":"Exchange"
 
       },
+      "localtable":{
+        "txhash":"txhash",
+        "state":"state",
+        "txtype":"type",
+        "amount":"amount",
+        "to":"recipient",
+        "time":"sending time",
+        "error":"log",
+        "more":"View details",
+        "types":{
+          "-3":"Not sent",
+          "-2":"Failure",
+          "-1":"Unpacked",
+          "0":"Sended",
+          "1":"success"
+      }
+    },
       "action":{
         "not_transfer_LAMB_to_yourself":"You can't transfer LAMB to yourself.",
         "check_balance_amount_transfer":"Please check the balance and the amount of transfer.",
@@ -284,7 +304,10 @@
           "Transactionhash":"Transaction hash",
           "EditMemo":"Edit Memo",
           "Txalreadyexistsincache":"Please check the latest transaction records in 5 minutes to confirm whether the transaction has been completed.Duplicate submission or the chain has stopped working. ",
-          "Nodata":"No data"
+          "Nodata":"No data",
+          "me":"me",
+          "Reason":"Because of"
+          
       }
   },
   "txType": {

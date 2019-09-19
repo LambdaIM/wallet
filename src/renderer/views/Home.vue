@@ -6,7 +6,7 @@
       <!-- {{$t('home.pledge')}}: {{DelegationValue|Stoformat}} -->
       {{$t('home.Reward')}} :{{DistributionReward|Lambformat}}
       <span v-if="distributionBalance > 0">
-      节点收益 :{{distributionBalance|Lambformat}}
+      {{$t('home.Validatorprofit')}} :{{distributionBalance|Lambformat}}
       </span>
 
     </p>
@@ -61,19 +61,19 @@
           </Table>
 
         </TabPane>
-        <TabPane label="本地最新交易记录">
+        <TabPane :label="$t('home.Latest_Transaction_local')">
           <Table :columns="localTxcolumns" :data="localTxList">
 
             <template slot-scope="{ row, index }" slot="state">
 
-                  <Tag v-if="row.state===0"  color="primary">已发送</Tag>
-                  <Tag v-if="row.state===1"  color="success">成  功</Tag>
-                  <Tag v-if="row.state===-2"  color="error">失   败</Tag>
-                  <Tag v-if="row.state===-1" color="warning">未打包</Tag>
-                  <Tag v-if="row.state===-3" color="warning">未发送</Tag>
+                  <Tag v-if="row.state===0"  color="primary">{{localTypeState(row.state)}}</Tag>
+                  <Tag v-if="row.state===1"  color="success">{{localTypeState(row.state)}}</Tag>
+                  <Tag v-if="row.state===-2"  color="error">{{localTypeState(row.state)}}</Tag>
+                  <Tag v-if="row.state===-1" color="warning">{{localTypeState(row.state)}}</Tag>
+                  <Tag v-if="row.state===-3" color="warning">{{localTypeState(row.state)}}</Tag>
             </template>
             <template slot-scope="{ row, index }" slot="txinfo">
-                <Button type="primary" @click="txinfo(row)"  size="small">查看详情</Button>
+                <Button type="primary" @click="txinfo(row)"  size="small">{{$t('home.localtable.more')}}</Button>
             </template>
             <template slot-scope="{ row, index }" slot="createTime">
                 {{row.createTime|formatToTime}}
@@ -99,14 +99,14 @@
           </Button>
 
 
-          <Dropdown @on-click="openwithdrawalModal" style="margin-left: 20px">
+          <Dropdown @on-click="openwithdrawalModal" style="margin-left:20px">
               <Button  >
                   {{$t('home.Withdraw')}}
                   <Icon type="md-arrow-down" />
                 </Button>
               <DropdownMenu slot="list">
                   <DropdownItem  name="Withdraw">{{$t('home.Withdraw')}}</DropdownItem>
-                  <DropdownItem  name="Distribution">提取节点收益</DropdownItem>
+                  <DropdownItem  name="Distribution">{{$t('home.Withdrawprofit')}}</DropdownItem>
 
 
               </DropdownMenu>
@@ -206,38 +206,38 @@ export default {
       localTxList: [],
       localTxcolumns: [
         {
-          title: '交易哈希',
+          title: this.$t('home.localtable.txhash'),
           key: 'txhash'
         },
         {
-          title: '状态',
+          title: this.$t('home.localtable.state'),
           key: 'state',
           slot: 'state'
         },
         {
-          title: '类型',
+          title: this.$t('home.localtable.txtype'),
           key: 'state',
           slot: 'txtype'
         }, {
-          title: '金额',
+          title: this.$t('home.localtable.amount'),
           key: 'state',
           slot: 'amount'
         }, {
-          title: '接受者',
+          title: this.$t('home.localtable.to'),
           key: 'state',
           slot: 'to'
         },
         {
           key: 'createTime',
           slot: 'createTime',
-          title: '创建时间'
+          title: this.$t('home.localtable.time')
         },
         {
           key: 'message',
-          title: '日志'
+          title: this.$t('home.localtable.error')
         },
         {
-          title: '查看详情',
+          title: this.$t('home.localtable.more'),
           key: 'createTime',
           slot: 'txinfo'
         }
@@ -307,6 +307,10 @@ export default {
     clearInterval(this.$data.Interval);
   },
   methods: {
+    localTypeState(item) {
+      console.log(`home.localtable.types.${item}`);
+      return this.$t(`home.localtable.types.${item}`);
+    },
     localtype(item) {
       if (item) {
         return this.$t(`txType.${item.type}`);

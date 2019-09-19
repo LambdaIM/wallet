@@ -23,7 +23,8 @@ export default class {
       db.insert({
         address: address,
         txhash: hash,
-        state: -3,
+        // state: -3,
+        state: 0,
         dataType: 'localSendTx',
         createTime: new Date().getTime(),
         transactiondata: transactiondata,

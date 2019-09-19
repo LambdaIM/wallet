@@ -135,10 +135,13 @@
   },
   "home": {
       "Balance": "余额",
+      "Validatorprofit": "节点收益",
       "Latest_Transaction": "最新交易记录",
+      "Latest_Transaction_local": "本地最新交易记录",
       "Transfer": "交易",
       "Reward":"奖励",
       "Withdraw":"提取奖励",
+      "Withdrawprofit":"提取节点收益",
       "pledge":"质押",
       "profits_pledge_system": "挖矿奖励与质押系统的提现额度有关。详情请参阅质押系统。",
       "View_Detail": "查看详情",
@@ -170,6 +173,23 @@
           "Transfer":"交易",
           "Exchange":"兑换"
 
+      },
+      "localtable":{
+          "txhash":"交易哈希",
+          "state":"状态",
+          "txtype":"交易类型",
+          "amount":"金额",
+          "to":"接受人",
+          "time":"发送时间",
+          "error":"日志",
+          "more":"查看详情",
+          "types":{
+              "-3":"未发送",
+              "-2":"失败",
+              "-1":"未打包",
+              "0":"已发送",
+              "1":"成功"
+          }
       },
       "action": {
           "not_transfer_LAMB_to_yourself": "你不能把LAMB发送给自己。",
@@ -278,7 +298,9 @@
           "Transactionhash":"交易哈希",
           "EditMemo":"编辑备注",
           "Txalreadyexistsincache":"重复提交或链已经停止工作，请5分钟后查看最新交易记录，确认交易是否完成",
-          "Nodata":"暂无数据"
+          "Nodata":"暂无数据",
+          "me":"我",
+          "Reason":"原因"
           
           
       }

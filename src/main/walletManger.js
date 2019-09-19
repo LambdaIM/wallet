@@ -496,6 +496,7 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   this.actionManager.setMessage(type, transactionProperties);
   // const { included, hash }
   // 如果出现网络相关的问题  有可能会产生异常，最好是醉解返回hash
+  /*
   var txhashNative = await this.actionManager.getTxhash(
     memo,
     feeProperties,
@@ -504,7 +505,9 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   
   log.info('txhashNative');
   log.info(txhashNative);
-  var isok = await this.Nedbjs.insertTx(txhashNative,transactiondata, gaseFee)
+  */
+  
+  
 
   
   const { included, hash } = await this.actionManager.send(
@@ -521,7 +524,8 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   log.info('TransferConfirmresult');
   log.info(hash);
   log.info('walletManger transferConfirm end');
-  isok = await this.Nedbjs.updateTxState(hash,0)
+  var isok = await this.Nedbjs.insertTx(hash,transactiondata, gaseFee)
+  // isok = await this.Nedbjs.updateTxState(hash,0)
 
   console.log(isok)
 

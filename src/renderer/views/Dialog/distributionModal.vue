@@ -3,7 +3,7 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="提取节点收益"
+      :title="$t('home.Withdrawprofit')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
@@ -20,7 +20,7 @@
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>提取节点收益</h2>
+        <h2>{{$t('home.Withdrawprofit')}}</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     open() {
+      console.log('- -');
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
     },

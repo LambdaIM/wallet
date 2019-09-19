@@ -27,7 +27,7 @@
         </p>
         <br />
         <p>
-          我的TBB余额 : {{balance|Stoformat}}
+          {{$t('home.Balance')}} : {{balance|Stoformat}}
 
         </p>
         <div slot="footer">

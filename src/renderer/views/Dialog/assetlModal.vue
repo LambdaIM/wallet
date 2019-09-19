@@ -57,7 +57,7 @@
 
      <Modal v-model="assetConfirmModal" :styles="{top: '200px'}">
         <div class="modal-header" slot="header">
-          <h2> 资产兑换 </h2>
+          <h2> {{$t('Dialog.com.AssetConversion')}} </h2>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
             <Col span="20" class-name="value">{{address}}</Col>
