@@ -455,6 +455,41 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+
+  eipc.answerRenderer('deposit', async query => {
+    var { ProposalID, amount } = query;
+    if (ProposalID == undefined) {
+      throw resultView(null, false, 'need ProposalID');
+    }
+    if (amount == undefined) {
+      throw resultView(null, false, 'need amount');
+    }
+    try {
+      var TxMessageload = await WM.TransferDeposit(ProposalID, amount);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('vote', async query => {
+    var { ProposalID, option } = query;
+    if (ProposalID == undefined) {
+      throw resultView(null, false, 'need ProposalID');
+    }
+    if (option == undefined) {
+      throw resultView(null, false, 'need option');
+    }
+    try {
+      var TxMessageload = await WM.TransferVote(ProposalID, option);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
 }
 
 

@@ -8,7 +8,7 @@
           <Row slot="title">
 
 
-              <Col span="20"><h4>{{item.proposal_content.value.title}}</h4></Col>
+              <Col span="20"><h4>#{{item.proposal_id}}  {{item.proposal_content.value.title}}</h4></Col>
               <Col span="4">
                 <Tag v-if="item.proposal_status==='Passed'" color="success">{{item.proposal_status}}</Tag>
                 <Tag v-if="item.proposal_status==='Rejected'" color="error">{{item.proposal_status}}</Tag>

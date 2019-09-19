@@ -14,23 +14,23 @@
         </p>
         <br />
         <p>
-          <Input v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
-            <span slot="prepend">{{$t('home.Modal1.To')}}</span>
+          <Input readonly v-model="title" :placeholder="$t('home.Modal1.LAMB_address')">
+            <span slot="prepend">提案</span>
           </Input>
         </p>
         <br />
         <p style="    text-align: center">
-          <RadioGroup v-model="voteType" type="button">
-            <Radio label="Yes">Yes</Radio>
-            <Radio label="No">No</Radio>
-            <Radio label="No With Veto">No With Veto</Radio>
-            <Radio label="Abstain">Abstain</Radio>
+          <RadioGroup  v-model="voteType" type="button">
+            <Radio value="Yes" label="Yes">Yes</Radio>
+            <Radio value="No" label="No">No</Radio>
+            <Radio value="No With Veto" label="No With Veto">No With Veto</Radio>
+            <Radio value="Abstain" label="Abstain">Abstain</Radio>
         </RadioGroup>
 
         </p>
         <br />
         <p>
-          我的LAMB余额 : {{balanceLamb|Lambformat}}
+          {{$t('home.Balance')}} : {{balanceLamb|Lambformat}}
 
         </p>
         <div slot="footer">
@@ -46,8 +46,8 @@
             <Col span="20" class-name="value">{{address}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
-            <Col span="20" class-name="value">{{Tovalue}}</Col>
+            <Col span="4" class-name="key">提案:</Col>
+            <Col span="20" class-name="value">{{title}}</Col>
           </Row>
           <Row class-name="item">
             <Col span="4" class-name="key">投票:</Col>
@@ -81,12 +81,14 @@ export default {
       Tovalue: '',
       LAMBvalue: '',
       gaseFee: 0,
-      voteType: 0
+      voteType: 'Yes',
+      title: ''
     };
   },
   methods: {
-    open(toaddress) {
+    open(toaddress, title) {
       this.$data.Tovalue = toaddress;
+      this.$data.title = title;
 
       this.sendModal = true;
     },
@@ -98,14 +100,6 @@ export default {
       let from = this.address;
       let to = this.Tovalue;
       let value = this.toBigNumStr(this.LAMBvalue);
-      if (to == from) {
-        this.$Notice.warning({
-          title: this.$t('home.action.not_transfer_LAMB_to_yourself')
-        });
-        return;
-      }
-
-
 
       if (isNaN(value)) {
         this.$Notice.warning({
@@ -116,16 +110,17 @@ export default {
       this.transfer(value);
     },
     async transfer(amount) {
-      let to = this.Tovalue;
+      let ProposalID = this.Tovalue;
       // let amount = this.LAMBvalue;
       let gas = 1;
+      let option = this.$data.voteType;
       // amount = amount * 10000;
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
       try {
-        let res = await ipc.callMain('transferDelegation', {
-          to,
-          amount,
+        let res = await ipc.callMain('vote', {
+          ProposalID,
+          option,
           gas
         });
         // console.log(res);

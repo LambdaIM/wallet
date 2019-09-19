@@ -21,7 +21,14 @@
       <span class="item" v-else>{{ $t("foot.block_time") }}: {{getstore.time | formatRelativeDate}}</span>
     </div>
     <div v-else class="footer-wrapper">
-      <span   class="item">{{ $t("foot.validator_connecting") }}<Icon v-if="login" type="ios-arrow-dropdown" /></span>
+
+      <router-link v-if="login"
+            to="/validator"
+            class="item"
+          >{{ $t("foot.validator_connecting") }}<Icon   type="ios-arrow-dropdown" /></router-link>
+          <span v-else>
+            {{ $t("foot.validator_connecting") }}
+          </span>
     </div>
   </div>
 </template>

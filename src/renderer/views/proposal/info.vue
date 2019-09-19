@@ -3,7 +3,7 @@
       <Mycard v-if="info!=null&&showType" :cardtitle="info.proposal_content.value.title" class="mt20">
       <div slot="card-content">
         <Row class="rowitem">
-          <Col span="24">
+          <Col span="12">
             <span class="waptitle">State:</span>
 
             <Tag v-if="info.proposal_status==='Passed'" color="success">{{info.proposal_status}}</Tag>
@@ -12,7 +12,14 @@
             <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{info.proposal_status}}</Tag>
             <Tag v-if="info.proposal_status==='Removed'" color="default">{{info.proposal_status}}</Tag>
           </Col>
+          <Col span="12">
+            <span class="waptitle">Proposal Id:</span>
+            {{proposal_id}}
+
+
+          </Col>
         </Row>
+
 
         <Row class="rowitem">
           <Col span="12">
@@ -68,16 +75,22 @@
 
       </div>
     </Mycard>
-    <Mycard   v-if="info&&showType==false" :cardtitle="info.proposal_content.value.title" class="mt20">
+    <Mycard   v-if="info!=null&&showType==false" :cardtitle="info.proposal_content.value.title" class="mt20">
       <div slot="card-content">
         <Row class="rowitem">
-          <Col span="24">
+          <Col span="12">
             <span class="waptitle">State:</span>
             <Tag v-if="info.proposal_status==='Passed'" color="success">{{info.proposal_status}}</Tag>
             <Tag v-if="info.proposal_status==='Rejected'" color="error">{{info.proposal_status}}</Tag>
             <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{info.proposal_status}}</Tag>
             <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{info.proposal_status}}</Tag>
             <Tag v-if="info.proposal_status==='Removed'" color="default">{{info.proposal_status}}</Tag>
+          </Col>
+          <Col span="12">
+            <span class="waptitle">Proposal Id:</span>
+            {{proposal_id}}
+
+
           </Col>
         </Row>
 
@@ -127,7 +140,8 @@ export default {
   data() {
     return {
       info: null,
-      showType: false
+      showType: false,
+      proposal_id: null
     };
   },
   mounted() {
@@ -135,15 +149,15 @@ export default {
   },
   methods: {
     openDeposit() {
-      this.$refs.DepositModel.open('lambda1xweyhe30hxpjmwysx7shkrvhqukhmsmsdyvazp');
+      this.$refs.DepositModel.open(this.$data.proposal_id, this.$data.info.proposal_content.value.title);
     },
     openVote() {
-      this.$refs.VoteModel.open('lambda1xweyhe30hxpjmwysx7shkrvhqukhmsmsdyvazp');
+      this.$refs.VoteModel.open(this.$data.proposal_id, this.$data.info.proposal_content.value.title);
     },
     async getinfo() {
-      let proposal_id = this.$route.params.proposal_id;
+      this.$data.proposal_id = this.$route.params.proposal_id;
       let res = await ipc.callMain('proposalInfo', {
-        id: proposal_id
+        id: this.$data.proposal_id
       });
       if (res.state) {
         this.$data.info = res.data.data;

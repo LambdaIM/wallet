@@ -377,6 +377,23 @@ walletManger.prototype.TransferWithdrawal = async function (to, amount, gas, isd
     denom: 'ulamb'
   };
 };
+
+walletManger.prototype.TransferDeposit = async function (ProposalID, amount) {
+  return {
+    type: transaction.DEPOSIT,
+    proposalId:ProposalID,
+    amounts:[{amount: amount,denom: 'ulamb'}]
+  };
+};
+
+walletManger.prototype.TransferVote = async function (ProposalID, option) {
+  return {
+    type: transaction.VOTE,
+    proposalId:ProposalID,
+    option:option
+  };
+};
+
 walletManger.prototype.TransferwithdrawalDistribution=async function (to, amount, gas, isdege) {
   console.log('TransferwithdrawalDistribution')
   var operator_address = this.defaultwallet.address;
