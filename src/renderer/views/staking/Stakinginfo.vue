@@ -12,7 +12,7 @@
           </Col>
           <Col span="4" class-name="title-wrapper">
             <Button @click="openSend" type="primary">{{$t('stakinginfo.pledge')}}</Button>
-            
+
           </Col>
         </Row>
         <Row v-if="shares!=null" class-name="card-item">
@@ -23,12 +23,12 @@
             {{myMypledge()}}
           </Col>
           <Col span="4" class-name="title-wrapper">
-            
+
             <!-- <Button @click="openUndelegate" v-if="shares!=null" type="primary">{{$t('stakinginfo.Cancelpledge')}}</Button> -->
           </Col>
         </Row>
 
-        
+
         <Row v-if="reward!=null" class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('stakinginfo.Myreward')}}:</span>
@@ -42,7 +42,7 @@
             <span class="title">{{$t('stakinginfo.PledgeAddress')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            
+
             <a  @click="checkAddress(validator.operator_address)" class="value">{{validator.operator_address}}</a>
           </Col>
         </Row>
@@ -54,7 +54,7 @@
             {{validator.description.details||'--'}}
           </Col>
         </Row>
-        
+
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('stakinginfo.commission')}}:</span>
@@ -91,82 +91,83 @@
     </Mycard>
 
     <StakingModelDialog ref="StakingModelDialog" />
+    <br><br><br><br><br><br>
   </div>
 </template>
 
 <script>
-import MyTable from "@/components/common/useful/Mytable.vue";
-import Mycard from "@/components/common/useful/Mycard.vue";
-const {ipcRenderer: ipc} = require('electron-better-ipc');
-import eventhub from "../../common/js/event.js";
-import StakingModelDialog from '@/views/Dialog/stakingModel.vue'
-import { DAEMON_CONFIG } from "../../../config.js";
-const { shell } = require("electron");
+import MyTable from '@/components/common/useful/Mytable.vue';
+import Mycard from '@/components/common/useful/Mycard.vue';
+import eventhub from '../../common/js/event.js';
+import StakingModelDialog from '@/views/Dialog/stakingModel.vue';
+import { DAEMON_CONFIG } from '../../../config.js';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+const { shell } = require('electron');
 export default {
   data() {
     return {
       validator: null,
       pool: null,
       sendModal: false,
-      Tovalue: "",
+      Tovalue: '',
       confirmModal: false,
-      LAMBvalue: "",
+      LAMBvalue: '',
       mydelegationsList: [],
       shares: null,
-      isdege:true,
-      reward:null
+      isdege: true,
+      reward: null
     };
   },
   async mounted() {
-    console.log("-------------");
+    console.log('-------------');
     let operator_address = this.$route.params.operator_address;
     this.$data.Tovalue = this.$route.params.operator_address;
     var r1 = await this.getinfo(operator_address);
     var r2 = await this.getmyListData(operator_address);
-    this.getMyreword(operator_address)
-    eventhub.$on("TransactionSuccess", async(data) => {
-      console.log("TransactionSuccess");
+    this.getMyreword(operator_address);
+    eventhub.$on('TransactionSuccess', async data => {
+      console.log('TransactionSuccess');
       var r1 = await this.getinfo(operator_address);
       var r2 = await this.getmyListData(operator_address);
-      this.getMyreword(operator_address)
+      this.getMyreword(operator_address);
     });
   },
   methods: {
-    myMypledge(){
+    myMypledge() {
       // console.log('myMypledge',this.$data.shares,this.$data.validator.delegator_shares,this.$data.validator.tokens)
-     return this.CalculationMypledge(this.$data.shares,this.$data.validator.delegator_shares,this.$data.validator.tokens)
-   },
+      return this.CalculationMypledge(this.$data.shares, this.$data.validator.delegator_shares, this.$data.validator.tokens);
+    },
     checkAddress(value) {
       // console.log(value);
       var explorer = DAEMON_CONFIG.explore;
-      let url ;
-      if(value.indexOf('lambdavaloper')==0){
-         url = `${explorer}/#/validatorDetail/${value}`;
-      }else{
-          url = `${explorer}/#/address/${value}`;
+      let url;
+      if (value.indexOf('lambdavaloper') == 0) {
+        url = `${explorer}/#/validatorDetail/${value}`;
+      } else {
+        url = `${explorer}/#/address/${value}`;
       }
-      
+
       shell.openExternal(url);
     },
     openSend() {
       // this.sendModal = true;
       // this.$data.isdege = true;
-      this.$refs.StakingModelDialog.open(this.$data.Tovalue,true,1)
+      this.$refs.StakingModelDialog.open(this.$data.Tovalue, true, 1);
     },
     sendcancel() {
       this.sendModal = false;
     },
-    openUndelegate(){
+    openUndelegate() {
       // this.sendModal = true;
       // this.$data.isdege = false;
-      this.$refs.StakingModelDialog.open(this.$data.Tovalue,false,1)
+      this.$refs.StakingModelDialog.open(this.$data.Tovalue, false, 1);
     },
     async getinfo(operator_address) {
       try {
-        let res = await ipc.callMain("validator", {
+        let res = await ipc.callMain('validator', {
           operator_address: operator_address
         });
-        let poolres = await ipc.callMain("pool", {});
+        let poolres = await ipc.callMain('pool', {});
 
         console.log(res);
 
@@ -181,9 +182,9 @@ export default {
       }
     },
     async getmyListData(operator_address) {
-      console.log("getListData");
+      console.log('getListData');
       try {
-        let res = await ipc.callMain("mydelegations", {
+        let res = await ipc.callMain('mydelegations', {
           operator_address: this.address
         });
 
@@ -194,11 +195,11 @@ export default {
       } catch (ex) {
         console.log(ex);
       }
-      console.log("getListDataEnd");
+      console.log('getListDataEnd');
     },
     getME(operator_address) {
-      if(this.$data.mydelegationsList instanceof Array ==false){
-        return ;
+      if (this.$data.mydelegationsList instanceof Array == false) {
+        return;
       }
       this.$data.mydelegationsList.forEach(myitem => {
         if (operator_address == myitem.validator_address) {
@@ -206,31 +207,28 @@ export default {
         }
       });
     },
-    async getMyreword(operator_address){
-           try {
-           let res = await ipc.callMain("delegatorRewardsFromValidator", {
-              operator_address:this.address,
-              validatorAddr:operator_address
-            });
-            if (res.state&&res.data&&res.data.error==undefined) {
-              console.log(res.data)
-              this.$data.reward=this.coinListFormart(res.data) ;
-              // item.reward='---11111';
-            }
-           
-         } catch (error) {
-           console.log(error)
-           
-         }
+    async getMyreword(operator_address) {
+      try {
+        let res = await ipc.callMain('delegatorRewardsFromValidator', {
+          operator_address: this.address,
+          validatorAddr: operator_address
+        });
+        if (res.state && res.data && res.data.error == undefined) {
+          console.log(res.data);
+          this.$data.reward = this.coinListFormart(res.data);
+          // item.reward='---11111';
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
-    coinListFormart(list){
-      var result =[]
-      list.forEach((item)=>{
-        result.push(this.bigNumTypeFormat(item.amount,item.denom))
-      })
-      return result.join(',')
-
-    },
+    coinListFormart(list) {
+      var result = [];
+      list.forEach(item => {
+        result.push(this.bigNumTypeFormat(item.amount, item.denom));
+      });
+      return result.join(',');
+    }
   },
   components: {
     MyTable,
@@ -244,11 +242,11 @@ export default {
     balance: function() {
       return this.$store.getters.getbalance;
     },
-    isdegeTxt:function(){
-      if(this.$data.isdege){
-        return "质押"
-      }else{
-        return "取消质押"
+    isdegeTxt: function() {
+      if (this.$data.isdege) {
+        return '质押';
+      } else {
+        return '取消质押';
       }
     }
   }

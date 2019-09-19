@@ -1,0 +1,31 @@
+import resultView from './result.js';
+import Manager from './proposalManager.js';
+var { DAEMON_CONFIG } = require('../configmain.js');
+const { ipcMain: eipc } = require('electron-better-ipc');
+
+
+
+export default function() {
+  eipc.answerRenderer('proposalList', async query => {
+    try {
+      var M = new Manager();
+      var result = await M.getProposalList(query);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+  eipc.answerRenderer('proposalInfo', async query => {
+    var { id } = query;
+
+    try {
+      var M = new Manager();
+      var result = await M.getProposalInfo(id);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+}

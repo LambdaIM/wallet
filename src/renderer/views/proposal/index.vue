@@ -1,20 +1,26 @@
 <template>
 <div class="customer-container">
  <div class="tableContainer">
-     <div v-for="item in data" class="itemhoder" :key="item">
+     <div v-for="item in List" class="itemhoder" :key="item.proposal_id">
 
      <Card  >
 
           <Row slot="title">
 
 
-              <Col span="20"><h4>No border title</h4></Col>
-              <Col span="4"><Tag color="primary">primary</Tag> </Col>
+              <Col span="20"><h4>{{item.proposal_content.value.title}}</h4></Col>
+              <Col span="4">
+                <Tag v-if="item.proposal_status==='Passed'" color="success">{{item.proposal_status}}</Tag>
+                <Tag v-if="item.proposal_status==='Rejected'" color="error">{{item.proposal_status}}</Tag>
+                <Tag v-if="item.proposal_status==='VotingPeriod'" color="warning">{{item.proposal_status}}</Tag>
+                <Tag v-if="item.proposal_status==='DepositPeriod'" color="primary">{{item.proposal_status}}</Tag>
+                <Tag v-if="item.proposal_status==='Removed'" color="default">{{item.proposal_status}}</Tag>
+              </Col>
         </Row>
 
-        <p @click="goitem"  class="clickitem">
+        <p @click="goitem(item)"  class="clickitem">
 
-            Content of no border type. Content of no border type. Content of no border type. Content of no border type.
+            {{item.proposal_content.value.description.substring(0,300)}}...
 
 
         </p>
@@ -26,15 +32,27 @@
 </div>
 </template>
 <script>
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 export default {
   data() {
     return {
-      data: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      List: []
     };
   },
+  mounted() {
+    this.getList();
+  },
   methods: {
-    goitem() {
-      this.$router.push('/proposalinfo');
+    goitem(item) {
+      this.$router.push(`/proposalinfo/${item.proposal_id}`);
+    },
+    async getList() {
+      let res = await ipc.callMain('proposalList', {});
+      if (res.state) {
+        this.$data.List = res.data.data.reverse();
+      }
+      console.log(res);
     }
   }
 

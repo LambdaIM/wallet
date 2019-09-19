@@ -1,30 +1,35 @@
 <template>
   <div class="customer-container">
-      <Mycard cardtitle="标题" class="mt20">
+      <Mycard v-if="info!=null&&showType" :cardtitle="info.proposal_content.value.title" class="mt20">
       <div slot="card-content">
         <Row class="rowitem">
           <Col span="24">
             <span class="waptitle">State:</span>
-            <Tag color="primary">VOTING PERIOD</Tag>
+
+            <Tag v-if="info.proposal_status==='Passed'" color="success">{{info.proposal_status}}</Tag>
+            <Tag v-if="info.proposal_status==='Rejected'" color="error">{{info.proposal_status}}</Tag>
+            <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{info.proposal_status}}</Tag>
+            <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{info.proposal_status}}</Tag>
+            <Tag v-if="info.proposal_status==='Removed'" color="default">{{info.proposal_status}}</Tag>
           </Col>
         </Row>
 
         <Row class="rowitem">
           <Col span="12">
-            <span class="waptitle">Submitted:</span>*****
+            <span class="waptitle">Submitted:</span>{{info.submit_time|formatDate}}
           </Col>
           <Col span="12">
-            <span class="waptitle">Voting Start Date:</span>*********
+            <span class="waptitle">Voting Start Date:</span>{{info.voting_start_time|formatDate}}
           </Col>
 
         </Row>
         <Row class="rowitem">
 
           <Col span="12">
-            <span class="waptitle">Voting End Date:</span>*********
+            <span class="waptitle">Voting End Date:</span>{{info.voting_start_time|formatDate}}
           </Col>
           <Col span="12">
-            <span class="waptitle">Total Vote Count:</span>*****
+            <span class="waptitle">Total Vote Count:</span>{{info.voting_end_time|formatDate}}
           </Col>
         </Row>
         <Row class="rowitem">
@@ -37,16 +42,16 @@
         </Row>
         <Row class="rowitem">
           <Col span="6">
-            <span class="waptitle">Yes:</span>*****
+            <span class="waptitle">Yes:</span>{{info.final_tally_result['yes']}}
           </Col>
           <Col span="6">
-            <span class="waptitle">No:</span>*****
+            <span class="waptitle">No:</span>{{info.final_tally_result['no']}}
           </Col>
           <Col span="6">
-            <span class="waptitle">No with Veto:</span>*****
+            <span class="waptitle">No with Veto:</span>{{info.final_tally_result['no_with_veto']}}
           </Col>
           <Col span="6">
-            <span class="waptitle">Abstain:</span>*****
+            <span class="waptitle">Abstain:</span>{{info.final_tally_result['abstain']}}
           </Col>
         </Row>
         <Row class="rowitem">
@@ -55,31 +60,38 @@
           </Col>
           <Col
             span="24"
-          >This proposal is intended to supersede Cosmos Hub 3 Upgrade Proposal B: https://hubble.figment.network/cosmos/chains/cosmoshub-2/governance/proposals/14 This proposal is intended to signal acceptance/rejection of the precise software release that will contain the changes to be included in the Cosmos Hub 3 upgrade. A high overview of these changes was successfully approved by the voters signalling via Cosmos Hub 3 Upgrade Proposal A: https://hubble.figment.network/cosmos/chains/cosmoshub-2/governance/proposals/13 We are proposing to use this code https://github.com/cosmos/gaia/releases/tag/v2.0.0 to upgrade the Cosmos Hub. We are proposing to export the ledger’s state at Block Height 1823000, which we expect to occur on Sunday, September 15, 2019 at or around 2:00 pm UTC. We are proposing to launch Cosmos Hub 3 at 60 minutes after Block Height 1823000. The validator is responsible for setting the correct genesis time. Instructions for migration: https://github.com/cosmos/gaia/wiki/Cosmos-Hub-2-Upgrade Full proposal: https://ipfs.io/ipfs/QmZYGSVN4FqL6R8kGB8mzBmgHwE5geaf3JYAxBSaer2moa</Col>
+          >
+          {{info.proposal_content.value.description}}
+
+          </Col>
         </Row>
 
       </div>
     </Mycard>
-    <Mycard cardtitle="标题" class="mt20">
+    <Mycard   v-if="info&&showType==false" :cardtitle="info.proposal_content.value.title" class="mt20">
       <div slot="card-content">
         <Row class="rowitem">
           <Col span="24">
             <span class="waptitle">State:</span>
-            <Tag color="primary">DEPOSIT PERIOD</Tag>
+            <Tag v-if="info.proposal_status==='Passed'" color="success">{{info.proposal_status}}</Tag>
+            <Tag v-if="info.proposal_status==='Rejected'" color="error">{{info.proposal_status}}</Tag>
+            <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{info.proposal_status}}</Tag>
+            <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{info.proposal_status}}</Tag>
+            <Tag v-if="info.proposal_status==='Removed'" color="default">{{info.proposal_status}}</Tag>
           </Col>
         </Row>
 
         <Row class="rowitem">
           <Col span="12">
-            <span class="waptitle">Submitted:</span>*****
+            <span class="waptitle">Submitted:</span>{{info.submit_time|formatDate}}
           </Col>
           <Col span="12">
-            <span class="waptitle">Voting Start Date:</span>*********
+            <span class="waptitle">Voting Start Date:</span>{{info.voting_start_time|formatDate}}
           </Col>
         </Row>
         <Row class="rowitem">
           <Col span="12">
-            <span class="waptitle">Deposit Count:</span>************
+            <span class="waptitle">Deposit Count:</span>{{amount(info.total_deposit)}}
           </Col>
           <Col span="12">
             <Button @click="openDeposit" type="primary">Deposit</Button>
@@ -91,7 +103,9 @@
           </Col>
           <Col
             span="24"
-          >This proposal is intended to supersede Cosmos Hub 3 Upgrade Proposal B: https://hubble.figment.network/cosmos/chains/cosmoshub-2/governance/proposals/14 This proposal is intended to signal acceptance/rejection of the precise software release that will contain the changes to be included in the Cosmos Hub 3 upgrade. A high overview of these changes was successfully approved by the voters signalling via Cosmos Hub 3 Upgrade Proposal A: https://hubble.figment.network/cosmos/chains/cosmoshub-2/governance/proposals/13 We are proposing to use this code https://github.com/cosmos/gaia/releases/tag/v2.0.0 to upgrade the Cosmos Hub. We are proposing to export the ledger’s state at Block Height 1823000, which we expect to occur on Sunday, September 15, 2019 at or around 2:00 pm UTC. We are proposing to launch Cosmos Hub 3 at 60 minutes after Block Height 1823000. The validator is responsible for setting the correct genesis time. Instructions for migration: https://github.com/cosmos/gaia/wiki/Cosmos-Hub-2-Upgrade Full proposal: https://ipfs.io/ipfs/QmZYGSVN4FqL6R8kGB8mzBmgHwE5geaf3JYAxBSaer2moa</Col>
+          >
+           {{info.proposal_content.value.description}}
+          </Col>
         </Row>
       </div>
     </Mycard>
@@ -103,7 +117,7 @@
 import Mycard from '@/components/common/useful/Mycard.vue';
 import DepositModelDialog from '@/views/Dialog/DepositModel.vue';
 import VoteModelDialog from '@/views/Dialog/VoteModel.vue';
-
+const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
   components: {
     Mycard,
@@ -112,8 +126,12 @@ export default {
   },
   data() {
     return {
-      data: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      info: null,
+      showType: false
     };
+  },
+  mounted() {
+    this.getinfo();
   },
   methods: {
     openDeposit() {
@@ -121,7 +139,29 @@ export default {
     },
     openVote() {
       this.$refs.VoteModel.open('lambda1xweyhe30hxpjmwysx7shkrvhqukhmsmsdyvazp');
+    },
+    async getinfo() {
+      let proposal_id = this.$route.params.proposal_id;
+      let res = await ipc.callMain('proposalInfo', {
+        id: proposal_id
+      });
+      if (res.state) {
+        this.$data.info = res.data.data;
+        if (['VotingPeriod'].indexOf(this.$data.info.proposal_status) > -1) {
+          this.$data.showType = true;
+        } else {
+          this.$data.showType = false;
+        }
+      }
+      console.log(res);
+    },
+    amount(listamount) {
+      var list = listamount.map(one => {
+        return this.bigNumTypeFormat(one.amount, one.denom);
+      });
+      return list.join(',');
     }
+
   }
 };
 </script>
