@@ -43,7 +43,7 @@
 
           <Col span="24">
           <div style="text-align: center;">
-             <Button @click="openVote" type="primary">{{$t('proposalsPage.Vote')}}</Button>
+             <Button  v-if="info.proposal_status==='VotingPeriod'" @click="openVote" type="primary">{{$t('proposalsPage.Vote')}}</Button>
           </div>
           </Col>
         </Row>
@@ -116,7 +116,7 @@
             <span class="waptitle">{{$t('proposalsPage.DepositCount')}}:</span>{{amount(info.total_deposit)}}
           </Col>
           <Col span="12">
-            <Button @click="openDeposit" type="primary">{{$t('proposalsPage.Deposit')}}</Button>
+            <Button v-if="info.proposal_status==='DepositPeriod'" @click="openDeposit" type="primary">{{$t('proposalsPage.Deposit')}}</Button>
           </Col>
         </Row>
         <Row class="rowitem">
@@ -148,7 +148,9 @@
 import Mycard from '@/components/common/useful/Mycard.vue';
 import DepositModelDialog from '@/views/Dialog/DepositModel.vue';
 import VoteModelDialog from '@/views/Dialog/VoteModel.vue';
+import eventhub from '../../common/js/event.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 export default {
   components: {
     Mycard,
@@ -164,6 +166,10 @@ export default {
   },
   mounted() {
     this.getinfo();
+    eventhub.$on('TransactionSuccess', async data => {
+      console.log('TransactionSuccess');
+      this.getinfo();
+    });
   },
   methods: {
     allVote(item) {
