@@ -307,7 +307,8 @@
           "Txalreadyexistsincache":"Please check the latest transaction records in 5 minutes to confirm whether the transaction has been completed.Duplicate submission or the chain has stopped working. ",
           "Nodata":"No data",
           "me":"me",
-          "Reason":"Because of"
+          "Reason":"Because of",
+          "Lesscommission":"Please reduce the handling fee. The handling fee should not be greater than the balance of lamb."
           
       }
   },

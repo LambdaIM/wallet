@@ -204,7 +204,7 @@ export default {
       if (this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.getblance) == 1) {
         this.$Notice.warning({
           title: 'error',
-          desc: '请减小手续费，手续费不能大于lamb的余额'
+          desc: this.$t('Dialog.com.Lesscommission')
         });
         return;
       }

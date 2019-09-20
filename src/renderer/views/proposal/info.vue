@@ -36,7 +36,7 @@
             <span class="waptitle">{{$t('proposalsPage.EndVotingTime')}}:</span>{{info.voting_start_time|formatDate}}
           </Col>
           <Col span="12">
-            <span class="waptitle">{{$t('proposalsPage.TotalVoteCount')}}:</span>{{allVote(info.final_tally_result)|Lambformat}}
+            <span class="waptitle">{{$t('proposalsPage.TotalVoteCount')}}:</span>{{allVote(info.final_tally_result)}}
           </Col>
         </Row>
         <Row class="rowitem">
@@ -167,10 +167,11 @@ export default {
   },
   methods: {
     allVote(item) {
-      var result = this.bigNum(0);
+      console.log('allVote');
+      var result = 0;
       for (var key in item) {
         // this.bigNum(item[key]).
-        result = result.plus(item[key]);
+        result = result + parseInt(item[key]);
       }
       return result;
 
