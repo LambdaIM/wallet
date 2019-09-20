@@ -23,10 +23,11 @@
             {{myMypledge()}}
           </Col>
           <Col span="3" class-name="title-wrapper">
-            <Button @click="openUndelegate" v-if="shares!=null" type="warning" ghost>{{$t('stakinginfo.Cancelpledge')}}</Button>
+            <Button @click="openTransferred"  type="info" ghost>转质押</Button>
+
           </Col>
           <Col span="3" class-name="title-wrapper">
-            <Button @click="openTransferred"  type="info" ghost>转质押</Button>
+            <!-- <Button @click="openUndelegate" v-if="shares!=null" type="warning" ghost>{{$t('stakinginfo.Cancelpledge')}}</Button>   -->
 
           </Col>
         </Row>

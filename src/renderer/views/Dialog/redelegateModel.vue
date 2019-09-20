@@ -172,12 +172,13 @@ export default {
       let SourceAddress = this.Tovalue;
       let DestinationAddress = this.Tovaluenew;
       let gas = 1;
+      let validatortype = this.$data.validatorType;
 
       this.$data.transactiondata = null;
 
       try {
         let res = await ipc.callMain('redelegate', {
-          SourceAddress, DestinationAddress, amount
+          SourceAddress, DestinationAddress, amount, validatortype
         });
         // console.log(res);
         if (res.state) {

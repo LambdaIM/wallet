@@ -492,7 +492,7 @@ export default function() {
   });
 
   eipc.answerRenderer('redelegate', async query => {
-    var { SourceAddress, DestinationAddress, amount } = query;
+    var { SourceAddress, DestinationAddress, amount, validatortype } = query;
     if (SourceAddress == undefined) {
       throw resultView(null, false, 'need SourceAddress');
     }
@@ -503,7 +503,7 @@ export default function() {
       throw resultView(null, false, 'need amount');
     }
     try {
-      var TxMessageload = await WM.TransferRedelegate(SourceAddress, DestinationAddress, amount);
+      var TxMessageload = await WM.TransferRedelegate(SourceAddress, DestinationAddress, amount, validatortype);
 
       return resultView(TxMessageload, true);
     } catch (error) {
