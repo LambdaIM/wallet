@@ -23,7 +23,7 @@
           <RadioGroup  v-model="voteType" type="button">
             <Radio value="Yes" label="Yes">{{$t('proposalsPage.Yes')}}</Radio>
             <Radio value="No" label="No">{{$t('proposalsPage.No')}}</Radio>
-            <Radio value="No With Veto" label="No With Veto">{{$t('proposalsPage.NowithVeto')}}</Radio>
+            <Radio value="NoWithVeto" label="No With Veto">{{$t('proposalsPage.NowithVeto')}}</Radio>
             <Radio value="Abstain" label="Abstain">{{$t('proposalsPage.Abstain')}}</Radio>
         </RadioGroup>
 
@@ -115,6 +115,7 @@ export default {
       let gas = 1;
       let option = this.$data.voteType;
       // amount = amount * 10000;
+
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
       try {

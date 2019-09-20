@@ -43,7 +43,7 @@
 
           </Table> -->
         </TabPane>
-        <TabPane label="Token">
+        <TabPane :label="$t('home.token')">
           <Table :columns="columnsToken" :data="coinList">
 
 
@@ -408,6 +408,7 @@ export default {
         this.$data.loading = false;
       } catch (ex) {
         console.log(ex);
+        this.data = [];
         this.$data.loading = false;
       }
     },

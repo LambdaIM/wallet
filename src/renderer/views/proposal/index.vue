@@ -10,11 +10,11 @@
 
               <Col span="20"><h4>#{{item.proposal_id}}  {{item.proposal_content.value.title}}</h4></Col>
               <Col span="4">
-                <Tag v-if="item.proposal_status==='Passed'" color="success">{{item.proposal_status}}</Tag>
-                <Tag v-if="item.proposal_status==='Rejected'" color="error">{{item.proposal_status}}</Tag>
-                <Tag v-if="item.proposal_status==='VotingPeriod'" color="warning">{{item.proposal_status}}</Tag>
-                <Tag v-if="item.proposal_status==='DepositPeriod'" color="primary">{{item.proposal_status}}</Tag>
-                <Tag v-if="item.proposal_status==='Removed'" color="default">{{item.proposal_status}}</Tag>
+                <Tag v-if="item.proposal_status==='Passed'" color="success">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
+                <Tag v-if="item.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
+                <Tag v-if="item.proposal_status==='VotingPeriod'" color="warning">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
+                <Tag v-if="item.proposal_status==='DepositPeriod'" color="primary">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
+                <Tag v-if="item.proposal_status==='Removed'" color="default">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
               </Col>
         </Row>
 

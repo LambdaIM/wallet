@@ -145,6 +145,7 @@
       "pledge":"质押",
       "profits_pledge_system": "挖矿奖励与质押系统的提现额度有关。详情请参阅质押系统。",
       "View_Detail": "查看详情",
+      "token": "资产",
       "table": {
           "Amount": "金额",
           "From":"发送",
@@ -346,7 +347,15 @@
        "Description":"详细内容",
        "DepositCount":"存钱金额",
        "Vote":"投票",
-        "Deposit":"存钱"
+       "Deposit":"存钱",
+       "type":"类型",
+       "typename":{
+           "DepositPeriod":"存钱阶段",
+           "VotingPeriod":"投票阶段",
+           "Rejected":"未通过",
+           "Passed":"通过",
+           "Removed":"已删除"
+       }
        
 
    }

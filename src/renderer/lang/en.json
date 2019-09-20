@@ -150,6 +150,7 @@
       "pledge":"Pledge",
       "profits_pledge_system":"The profits of miners'mining are related to the withdrawal amount in the storage miners' system. Details are referred to the pledge system",
       "View_Detail":"View Detail",
+      "token": "Assets",
       "table":{
         "Amount":"Amount",
         "Source":"Source",
@@ -349,7 +350,17 @@
       "NowithVeto":"No with Veto",
       "Abstain":"Abstain",
       "Description":"Description",
-      "DepositCount":"Deposit Amount"
+      "DepositCount":"Deposit Amount",
+      "Vote":"Vote",
+      "Deposit":"Deposit",
+      "type":"type",
+      "typename":{
+        "DepositPeriod":"DepositPeriod",
+        "VotingPeriod":"VotingPeriod",
+        "Rejected":"Rejected",
+        "Passed":"Passed",
+        "Removed":"Removed"
+    }
       
 
   }

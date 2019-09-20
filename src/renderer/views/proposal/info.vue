@@ -6,11 +6,11 @@
           <Col span="12">
             <span class="waptitle">{{$t('proposalsPage.Status')}}:</span>
 
-            <Tag v-if="info.proposal_status==='Passed'" color="success">{{info.proposal_status}}</Tag>
-            <Tag v-if="info.proposal_status==='Rejected'" color="error">{{info.proposal_status}}</Tag>
-            <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{info.proposal_status}}</Tag>
-            <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{info.proposal_status}}</Tag>
-            <Tag v-if="info.proposal_status==='Removed'" color="default">{{info.proposal_status}}</Tag>
+            <Tag v-if="info.proposal_status==='Passed'" color="success">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='Removed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
           </Col>
           <Col span="12">
             <span class="waptitle">{{$t('proposalsPage.ProposalID')}}:</span>
@@ -68,6 +68,15 @@
           <Col
             span="24"
           >
+          {{info.proposal_content.type}}
+
+          </Col>
+          <Col span="24">
+            <span class="waptitle">{{$t('proposalsPage.type')}}</span>
+          </Col>
+          <Col
+            span="24"
+          >
           {{info.proposal_content.value.description}}
 
           </Col>
@@ -80,11 +89,11 @@
         <Row class="rowitem">
           <Col span="12">
             <span class="waptitle">{{$t('proposalsPage.Status')}}:</span>
-            <Tag v-if="info.proposal_status==='Passed'" color="success">{{info.proposal_status}}</Tag>
-            <Tag v-if="info.proposal_status==='Rejected'" color="error">{{info.proposal_status}}</Tag>
-            <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{info.proposal_status}}</Tag>
-            <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{info.proposal_status}}</Tag>
-            <Tag v-if="info.proposal_status==='Removed'" color="default">{{info.proposal_status}}</Tag>
+            <Tag v-if="info.proposal_status==='Passed'" color="success">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='Removed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
           </Col>
           <Col span="12">
             <span class="waptitle">{{$t('proposalsPage.ProposalID')}}:</span>
@@ -111,6 +120,15 @@
           </Col>
         </Row>
         <Row class="rowitem">
+          <Col span="24">
+            <span class="waptitle">{{$t('proposalsPage.type')}}</span>
+          </Col>
+          <Col
+            span="24"
+          >
+          {{info.proposal_content.type}}
+
+          </Col>
           <Col span="24">
             <span class="waptitle">{{$t('proposalsPage.Description')}}</span>
           </Col>
