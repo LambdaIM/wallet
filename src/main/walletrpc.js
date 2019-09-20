@@ -490,6 +490,26 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+  eipc.answerRenderer('redelegate', async query => {
+    var { SourceAddress, DestinationAddress, amount } = query;
+    if (SourceAddress == undefined) {
+      throw resultView(null, false, 'need SourceAddress');
+    }
+    if (DestinationAddress == undefined) {
+      throw resultView(null, false, 'need DestinationAddress');
+    }
+    if (amount == undefined) {
+      throw resultView(null, false, 'need amount');
+    }
+    try {
+      var TxMessageload = await WM.TransferRedelegate(SourceAddress, DestinationAddress, amount);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
 }
 
 

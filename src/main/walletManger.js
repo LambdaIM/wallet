@@ -378,6 +378,16 @@ walletManger.prototype.TransferWithdrawal = async function (to, amount, gas, isd
   };
 };
 
+walletManger.prototype.TransferRedelegate = async function (validatorSourceAddress,validatorDestinationAddress ,amount) {
+  return {
+    type: transaction.REDELEGATE,
+    validatorSourceAddress,
+    validatorDestinationAddress,
+    amount: amount,
+    denom: 'utbb'
+  };
+};
+
 walletManger.prototype.TransferDeposit = async function (ProposalID, amount) {
   return {
     type: transaction.DEPOSIT,

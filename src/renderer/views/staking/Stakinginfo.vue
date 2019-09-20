@@ -7,10 +7,10 @@
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('stakinginfo.Nickname')}}:</span>
           </Col>
-          <Col span="16" class-name="content-wrapper">
+          <Col span="14" class-name="content-wrapper">
             {{validator.description.moniker}}
           </Col>
-          <Col span="4" class-name="title-wrapper">
+          <Col span="6" class-name="title-wrapper">
             <Button @click="openSend" type="primary">{{$t('stakinginfo.pledge')}}</Button>
 
           </Col>
@@ -19,12 +19,15 @@
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('stakinginfo.Mypledge')}}:</span>
           </Col>
-          <Col span="16" class-name="content-wrapper">
+          <Col span="14" class-name="content-wrapper">
             {{myMypledge()}}
           </Col>
-          <Col span="4" class-name="title-wrapper">
+          <Col span="3" class-name="title-wrapper">
+            <Button @click="openUndelegate" v-if="shares!=null" type="warning" ghost>{{$t('stakinginfo.Cancelpledge')}}</Button>
+          </Col>
+          <Col span="3" class-name="title-wrapper">
+            <Button @click="openTransferred"  type="info" ghost>转质押</Button>
 
-            <!-- <Button @click="openUndelegate" v-if="shares!=null" type="primary">{{$t('stakinginfo.Cancelpledge')}}</Button> -->
           </Col>
         </Row>
 
@@ -91,6 +94,7 @@
     </Mycard>
 
     <StakingModelDialog ref="StakingModelDialog" />
+    <RedelegateModelDialog ref="RedelegateModelDialog" />
     <br><br><br><br><br><br>
   </div>
 </template>
@@ -100,6 +104,7 @@ import MyTable from '@/components/common/useful/Mytable.vue';
 import Mycard from '@/components/common/useful/Mycard.vue';
 import eventhub from '../../common/js/event.js';
 import StakingModelDialog from '@/views/Dialog/stakingModel.vue';
+import RedelegateModelDialog from '@/views/Dialog/redelegateModel.vue';
 import { DAEMON_CONFIG } from '../../../config.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
@@ -153,6 +158,9 @@ export default {
       // this.sendModal = true;
       // this.$data.isdege = true;
       this.$refs.StakingModelDialog.open(this.$data.Tovalue, true, 1);
+    },
+    openTransferred() {
+      this.$refs.RedelegateModelDialog.open(this.$data.Tovalue, true, 1);
     },
     sendcancel() {
       this.sendModal = false;
@@ -233,7 +241,8 @@ export default {
   components: {
     MyTable,
     Mycard,
-    StakingModelDialog
+    StakingModelDialog,
+    RedelegateModelDialog
   },
   computed: {
     address: function() {
