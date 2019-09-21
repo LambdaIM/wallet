@@ -14,8 +14,8 @@
         </p>
         <br />
         <p>
-          <Input v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
-            <span slot="prepend">转出</span>
+          <Input readonly v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
+            <span slot="prepend">{{$t('Dialog.redelegateModel.turnout')}}</span>
           </Input>
         </p>
         <br />
@@ -28,7 +28,7 @@
         <br />
         <p>
 
-              <Select :label-in-value="true" @on-change="getselectvalue" placeholder="请选择转入的节点" size="large"  v-model="Tovaluenew" style="width:100%">
+              <Select :label-in-value="true" @on-change="getselectvalue" :placeholder="$t('Dialog.redelegateModel.choosepledge')" size="large"  v-model="Tovaluenew" style="width:100%">
                   <Option  v-for="item in validatorsList"  :value="item.operator_address" :label="item.description.moniker">
                       <span >{{item.operator_address.substring(0,40)}}...</span>
                       <span style="float:right;color:red">{{item.description.moniker}}</span>
@@ -37,6 +37,9 @@
               </Select>
         </p>
         <br />
+        <p style="color:red">
+          {{$t('Dialog.redelegateModel.tip')}}
+        </p>
 
         <div slot="footer">
           <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
@@ -51,15 +54,15 @@
             <Col span="20" class-name="value">{{address}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">转出:</Col>
+            <Col span="4" class-name="key">{{$t('Dialog.redelegateModel.turnout')}}:</Col>
             <Col span="20" class-name="value">{{Tovalue}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">转入:</Col>
+            <Col span="4" class-name="key">{{$t('Dialog.redelegateModel.turnin')}}:</Col>
             <Col span="20" class-name="value">{{Tovaluenew}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">节点名称:</Col>
+            <Col span="4" class-name="key">{{$t('Dialog.redelegateModel.validatorname')}}:</Col>
             <Col span="20" class-name="value">{{validatorName}}</Col>
           </Row>
           <Row class-name="item">
@@ -73,9 +76,7 @@
                               </Input>
           </Row>
         </div>
-        <!-- <p>
-          <Input v-model="walletPassword" type="password"></Input>
-        </p>-->
+
         <div slot="footer">
           <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
         </div>
@@ -142,7 +143,7 @@ export default {
       let value = this.toBigNumStr(this.LAMBvalue);
       if (to == tonew) {
         this.$Notice.warning({
-          title: this.$t('转出和转入的地址不能相同')
+          title: this.$t('Dialog.redelegateModel.action.differentaddresses')
         });
         return;
       }
@@ -156,7 +157,7 @@ export default {
       }
       if (tonew == '') {
         this.$Notice.warning({
-          title: '请选择转入的节点'
+          title: this.$t('Dialog.redelegateModel.action.selectaddresses')
         });
         return;
       }
@@ -223,7 +224,7 @@ export default {
       return this.$store.getters.getblance;
     },
     isdegeTxt: function() {
-      return '转质押';
+      return this.$t('Dialog.redelegateModel.redelegate');
     }
   }
 

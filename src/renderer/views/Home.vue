@@ -313,6 +313,7 @@ export default {
     },
     localtype(item) {
       if (item) {
+        console.log('- -');
         return this.$t(`txType.${item.type}`);
       }
     },

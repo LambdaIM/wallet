@@ -23,7 +23,7 @@
             {{myMypledge()}}
           </Col>
           <Col span="3" class-name="title-wrapper">
-            <Button @click="openTransferred"  type="info" ghost>转质押</Button>
+            <Button @click="openTransferred"  type="info" ghost>{{$t('Dialog.redelegateModel.redelegate')}} </Button>
 
           </Col>
           <Col span="3" class-name="title-wrapper">

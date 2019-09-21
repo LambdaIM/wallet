@@ -292,6 +292,18 @@
           "title1":"质押",
           "title2":"取消质押"
       },
+      "redelegateModel":{
+         "redelegate":"转质押",
+         "turnout":"旧节点",
+         "turnin":"新节点",
+         "choosepledge":"请选择转质押的节点",
+         "validatorname":"节点名称",
+         "tip":"注意：转质押到新的节点后21天没有奖励",
+         "action":{
+             "differentaddresses":"新节点和旧节点不能相同",
+             "selectaddresses":"请选择转入的节点"
+         }
+      },
       "com":{
           "gasfee":"Gas费用",
           "to":" 兑换 ",
@@ -316,7 +328,7 @@
 	"MsgWithdrawDelegationReward": "提取收益",
 	"MsgAssetPledge": "兑换资产",
 	"MsgAssetDrop": "兑换Token",
-    "MsgBeginReDelegate": "转质押",
+    "MsgBeginRedelegate": "转质押",
     "MsgUnjail":"释放",
     "MsgEditValidator": "修改节点",
     "MsgSetWithdrawAddress":"修改提取收益地址",
