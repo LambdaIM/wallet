@@ -45,7 +45,7 @@ function getSendAddress(msg, item) {
 }
 
 function getToAddress(msg, item) {
-  var toaddress = msg.value.to_address || msg.value.validator_address;
+  var toaddress = msg.value.to_address || msg.value.validator_dst_address || msg.value.validator_address;
   if (toaddress == undefined) {
     item.tags.forEach(item => {
       if (item.key == 'source-validator') {
