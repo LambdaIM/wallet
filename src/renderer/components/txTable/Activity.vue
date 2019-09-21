@@ -12,11 +12,15 @@
       <AddressLink :addressLength="addressLength" :to="txItem.from">{{ txItem.from }}</AddressLink
       >&nbsp;
 
-      <Tag color="primary">{{$t(`txType.${txItem.action}`)}}</Tag> <span class="value">{{ txItem.amount | formatAmount }}</span>
-      <span v-if="txItem.to">
-       {{getToWord(txItem)}}
-      <AddressLink :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
+      <Tag color="primary">{{$t(`txType.${txItem.action}`)}}</Tag>
+      <span v-if="isProposal(txItem)">
+        <span class="value">{{ txItem.amount | formatAmount }}</span>
+        <span v-if="txItem.to">
+        {{getToWord(txItem)}}
       </span>
+
+      </span>
+      <AddressLink :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
       <Tag v-if="txItem.valid" color="success">Success</Tag>
       <Tag v-if="!txItem.valid" color="error">Failed</Tag>
       <p v-if="!txItem.valid && showError == true" class="error">
@@ -75,6 +79,9 @@ export default {
       } else {
         return this.$t('txTable.to');
       }
+    },
+    isProposal(txItem) {
+      return txItem.action !== 'MsgSubmitProposal';
     },
     showmore() {
       this.$data.more = true;

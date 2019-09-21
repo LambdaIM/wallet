@@ -1,6 +1,6 @@
 <template>
   <div class="customer-container">
-      <Mycard v-if="info!=null&&showType" :cardtitle="info.proposal_content.value.title" class="mt20">
+      <Mycard v-if="info!=null&&showType" :cardtitle="info.content.value.title" class="mt20">
       <div slot="card-content">
         <Row class="rowitem">
           <Col span="12">
@@ -33,7 +33,7 @@
         <Row class="rowitem">
 
           <Col span="12">
-            <span class="waptitle">{{$t('proposalsPage.EndVotingTime')}}:</span>{{info.voting_start_time|formatDate}}
+            <span class="waptitle">{{$t('proposalsPage.EndVotingTime')}}:</span>{{info.voting_end_time|formatDate}}
           </Col>
           <Col span="12">
             <span class="waptitle">{{$t('proposalsPage.TotalVoteCount')}}:</span>{{allVote(info.final_tally_result)}}
@@ -68,7 +68,7 @@
           <Col
             span="24"
           >
-          {{info.proposal_content.type}}
+          {{info.content.type.split('/')[1]}}
 
           </Col>
           <Col span="24">
@@ -77,14 +77,16 @@
           <Col
             span="24"
           >
-          {{info.proposal_content.value.description}}
+          <div style=" word-break:break-all;">
+            {{info.content.value.description}}
+            </div>
 
           </Col>
         </Row>
 
       </div>
     </Mycard>
-    <Mycard   v-if="info!=null&&showType==false" :cardtitle="info.proposal_content.value.title" class="mt20">
+    <Mycard   v-if="info!=null&&showType==false" :cardtitle="info.content.value.title" class="mt20">
       <div slot="card-content">
         <Row class="rowitem">
           <Col span="12">
@@ -107,7 +109,7 @@
           <Col span="12">
             <span class="waptitle">{{$t('proposalsPage.SubmitTime')}}:</span>{{info.submit_time|formatDate}}
           </Col>
-          <Col span="12">
+          <Col v-if="info.proposal_status!=='DepositPeriod'"  span="12">
             <span class="waptitle">{{$t('proposalsPage.VotingStartTime')}}:</span>{{info.voting_start_time|formatDate}}
           </Col>
         </Row>
@@ -120,13 +122,21 @@
           </Col>
         </Row>
         <Row class="rowitem">
+          <Col span="12">
+            <span class="waptitle">最小存款金额:</span>{{amount(DepositParameters.min_deposit)}}
+          </Col>
+          <Col span="12">
+            <span class="waptitle">最大存款时间:</span>{{DepositParameters.max_deposit_period/(1000*1000*1000*60*60*24)}}{{$t('staking.Explain.unit')}}
+          </Col>
+        </Row>
+        <Row class="rowitem">
           <Col span="24">
             <span class="waptitle">{{$t('proposalsPage.type')}}</span>
           </Col>
           <Col
             span="24"
           >
-          {{info.proposal_content.type}}
+          {{info.content.type.split('/')[1]}}
 
           </Col>
           <Col span="24">
@@ -135,7 +145,9 @@
           <Col
             span="24"
           >
-           {{info.proposal_content.value.description}}
+            <div style=" word-break:break-all;">
+            {{info.content.value.description}}
+            </div>
           </Col>
         </Row>
       </div>
@@ -161,11 +173,13 @@ export default {
     return {
       info: null,
       showType: false,
-      proposal_id: null
+      proposal_id: null,
+      DepositParameters: {}
     };
   },
   mounted() {
     this.getinfo();
+    this.govDepositParameters();
     eventhub.$on('TransactionSuccess', async data => {
       console.log('TransactionSuccess');
       this.getinfo();
@@ -184,10 +198,10 @@ export default {
       // this.bigNum()
     },
     openDeposit() {
-      this.$refs.DepositModel.open(this.$data.proposal_id, this.$data.info.proposal_content.value.title);
+      this.$refs.DepositModel.open(this.$data.proposal_id, this.$data.info.content.value.title);
     },
     openVote() {
-      this.$refs.VoteModel.open(this.$data.proposal_id, this.$data.info.proposal_content.value.title);
+      this.$refs.VoteModel.open(this.$data.proposal_id, this.$data.info.content.value.title);
     },
     async getinfo() {
       this.$data.proposal_id = this.$route.params.proposal_id;
@@ -204,7 +218,18 @@ export default {
       }
       console.log(res);
     },
+    async govDepositParameters() {
+      let res = await ipc.callMain('govDepositParameters', {
+
+      });
+      if (res.state) {
+        this.$data.DepositParameters = res.data.data;
+      }
+    },
     amount(listamount) {
+      if (listamount == null) {
+        return '--';
+      }
       var list = listamount.map(one => {
         return this.bigNumTypeFormat(one.amount, one.denom);
       });

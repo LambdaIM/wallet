@@ -28,4 +28,14 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('govDepositParameters', async query => {
+    try {
+      var M = new Manager();
+      var result = await M.govDepositParameters();
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
 }

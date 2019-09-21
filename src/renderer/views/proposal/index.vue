@@ -1,14 +1,14 @@
 <template>
 <div class="customer-container">
  <div class="tableContainer">
-     <div v-for="item in List" class="itemhoder" :key="item.proposal_id">
+     <div v-for="item in List" class="itemhoder" :key="item.id" @click="goitem(item)">
 
      <Card  >
 
           <Row slot="title">
 
 
-              <Col span="20"><h4>#{{item.proposal_id}}  {{item.proposal_content.value.title}}</h4></Col>
+              <Col span="20"><h4 style=" word-break:break-all;">#{{item.id}}  {{item.content.value.title}}</h4></Col>
               <Col span="4">
                 <Tag v-if="item.proposal_status==='Passed'" color="success">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 <Tag v-if="item.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
@@ -18,11 +18,15 @@
               </Col>
         </Row>
 
-        <p @click="goitem(item)"  class="clickitem">
+        <p style=" word-break:break-all;"   class="clickitem">
 
-            {{item.proposal_content.value.description.substring(0,300)}}...
+            {{item.content.value.description.substring(0,300)}}...
 
 
+
+        </p>
+        <p>
+            {{item.content.type.split('/')[1]}}
         </p>
         </Card>
 
@@ -45,7 +49,7 @@ export default {
   },
   methods: {
     goitem(item) {
-      this.$router.push(`/proposalinfo/${item.proposal_id}`);
+      this.$router.push(`/proposalinfo/${item.id}`);
     },
     async getList() {
       let res = await ipc.callMain('proposalList', {});

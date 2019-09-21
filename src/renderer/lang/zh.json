@@ -332,7 +332,9 @@
     "MsgUnjail":"释放",
     "MsgEditValidator": "修改节点",
     "MsgSetWithdrawAddress":"修改提取收益地址",
-    "MsgWithdrawValidatorCommission": "提取节点收益"
+    "MsgWithdrawValidatorCommission": "提取节点收益",
+    "MsgSubmitProposal":"发起提案",
+    "MsgDeposit":"存入押金"
 
    },
    "txTable":{
@@ -358,12 +360,12 @@
        "NowithVeto":"强烈反对",
        "Abstain":"弃权",
        "Description":"详细内容",
-       "DepositCount":"存钱金额",
+       "DepositCount":"已存押金",
        "Vote":"投票",
-       "Deposit":"存钱",
+       "Deposit":"存入押金",
        "type":"类型",
        "typename":{
-           "DepositPeriod":"存钱阶段",
+           "DepositPeriod":"押金阶段",
            "VotingPeriod":"投票阶段",
            "Rejected":"未通过",
            "Passed":"通过",

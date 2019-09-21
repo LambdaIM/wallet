@@ -35,7 +35,7 @@ function getSendAddress(msg, item) {
     result = msg.value.address;
   } else {
     item.tags.forEach(item => {
-      if (item.key == 'delegator') {
+      if (item.key == 'delegator' || item.key == 'sender') {
         result = item.value;
       }
     });
@@ -46,6 +46,10 @@ function getSendAddress(msg, item) {
 
 function getToAddress(msg, item) {
   var toaddress = msg.value.to_address || msg.value.validator_dst_address || msg.value.validator_address;
+  if (msg.type === 'cosmos-sdk/MsgSubmitProposal') {
+    toaddress = msg.value.content.value.title;
+  }
+
   if (toaddress == undefined) {
     item.tags.forEach(item => {
       if (item.key == 'source-validator') {

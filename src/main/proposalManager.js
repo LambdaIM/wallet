@@ -37,6 +37,11 @@ class proposalManager {
     return { data: result };
   }
 
+  async govDepositParameters() {
+    var result = await this.CosmosAPI().get.govDepositParameters();
+    return { data: result };
+  }
+
 
 
   // getTransactionByHash?hash=
