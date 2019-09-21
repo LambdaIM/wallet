@@ -308,7 +308,6 @@ export default {
   },
   methods: {
     localTypeState(item) {
-      console.log(`home.localtable.types.${item}`);
       return this.$t(`home.localtable.types.${item}`);
     },
     localtype(item) {
