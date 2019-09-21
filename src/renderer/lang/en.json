@@ -298,6 +298,18 @@
           "title1":"Pledge",
           "title2":"Cancel pledge"
       },
+      "redelegateModel":{
+         "redelegate":"Redelegate",
+         "turnout":"Old validator",
+         "turnin":"New validator",
+         "choosepledge":"Please choose the validator of the pledge.",
+         "validatorname":"Validator name",
+         "tip":"Note: There is no reward 21 days after the pledge is transferred to the new validator",
+         "action":{
+             "differentaddresses":"New and old validator cannot be the same",
+             "selectaddresses":"Select the validator to delegate"
+         }
+      },
       "com":{
           "gasfee":"Gas Fee",
           "to":" to ",
@@ -321,7 +333,7 @@
     "MsgWithdrawDelegationReward": "WithdrawDelegatorReward",
     "MsgAssetPledge": "AssetPledge",
     "MsgAssetDrop": "AssetDrop",
-    "MsgBeginReDelegate": "BeginReDelegate",
+    "MsgBeginRedelegate": "BeginReDelegate",
     "MsgUnjail":"Unjail",
     "MsgEditValidator": "EditValidator",
     "MsgSetWithdrawAddress":"MsgSetWithdrawAddress",

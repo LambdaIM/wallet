@@ -2,7 +2,7 @@ const transactionTypes = {
   SEND: `MsgSend`,
   DELEGATE: `MsgDelegate`,
   UNDELEGATE: `MsgUndelegate`,
-  REDELEGATE: `MsgRedelegate`,
+  REDELEGATE: `MsgBeginRedelegate`,
   SUBMIT_PROPOSAL: `MsgSubmitProposal`,
   VOTE: `MsgVote`,
   DEPOSIT: `MsgDeposit`,

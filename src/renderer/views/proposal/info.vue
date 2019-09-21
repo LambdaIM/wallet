@@ -190,7 +190,7 @@ export default {
       });
       if (res.state) {
         this.$data.info = res.data.data;
-        if (['VotingPeriod'].indexOf(this.$data.info.proposal_status) > -1) {
+        if (['VotingPeriod', 'Rejected', 'Passed'].indexOf(this.$data.info.proposal_status) > -1) {
           this.$data.showType = true;
         } else {
           this.$data.showType = false;
