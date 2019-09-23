@@ -339,7 +339,8 @@
     "MsgSetWithdrawAddress":"MsgSetWithdrawAddress",
     "MsgWithdrawValidatorCommission": "WithdrawRewards",
     "MsgSubmitProposal":"SubmitProposal",
-    "MsgDeposit":"Deposit"
+    "MsgDeposit":"Deposit",
+    "MsgVote":"Vote"
   },
   "txTable":{
     "action": "Activity",

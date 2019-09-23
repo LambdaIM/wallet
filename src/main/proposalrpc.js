@@ -38,4 +38,30 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('proposalDeposit', async query => {
+    var { id } = query;
+    try {
+      var M = new Manager();
+      var result = await M.proposalDeposit(id);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+  eipc.answerRenderer('proposalVote', async query => {
+    var { id } = query;
+    try {
+      var M = new Manager();
+      var result = await M.proposalVote(id);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
+
+  // proposalDeposit
 }

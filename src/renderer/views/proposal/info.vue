@@ -62,6 +62,15 @@
           </Col>
         </Row>
         <Row class="rowitem">
+          <Col span="12">
+            <span class="waptitle">我存入的押金:</span>{{amount(myDeposit)}}
+          </Col>
+          <Col span="12">
+            <span class="waptitle">我的投票:</span>{{$t(`proposalsPage.${myvote}`)}}
+          </Col>
+
+        </Row>
+        <Row class="rowitem">
           <Col span="24">
             <span class="waptitle">{{$t('proposalsPage.Description')}}</span>
           </Col>
@@ -130,6 +139,13 @@
           </Col>
         </Row>
         <Row class="rowitem">
+          <Col span="12">
+            <span class="waptitle">我存入的押金:</span>{{amount(myDeposit)}}
+          </Col>
+
+        </Row>
+
+        <Row class="rowitem">
           <Col span="24">
             <span class="waptitle">{{$t('proposalsPage.type')}}</span>
           </Col>
@@ -174,15 +190,21 @@ export default {
       info: null,
       showType: false,
       proposal_id: null,
-      DepositParameters: {}
+      DepositParameters: {},
+      myDeposit: [],
+      myvote: ''
     };
   },
   mounted() {
     this.getinfo();
     this.govDepositParameters();
+    this.proposalmyDeposit();
+    this.proposalmyVote();
     eventhub.$on('TransactionSuccess', async data => {
       console.log('TransactionSuccess');
       this.getinfo();
+      this.proposalmyDeposit();
+      this.proposalmyVote();
     });
   },
   methods: {
@@ -224,6 +246,22 @@ export default {
       });
       if (res.state) {
         this.$data.DepositParameters = res.data.data;
+      }
+    },
+    async proposalmyDeposit() {
+      let res = await ipc.callMain('proposalDeposit', {
+        id: this.$data.proposal_id
+      });
+      if (res.state) {
+        this.$data.myDeposit = res.data.data.amount;
+      }
+    },
+    async proposalmyVote() {
+      let res = await ipc.callMain('proposalVote', {
+        id: this.$data.proposal_id
+      });
+      if (res.state) {
+        this.$data.myvote = res.data.data.option;
       }
     },
     amount(listamount) {

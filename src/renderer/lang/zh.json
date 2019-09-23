@@ -334,7 +334,8 @@
     "MsgSetWithdrawAddress":"修改提取收益地址",
     "MsgWithdrawValidatorCommission": "提取节点收益",
     "MsgSubmitProposal":"发起提案",
-    "MsgDeposit":"存入押金"
+    "MsgDeposit":"存入押金",
+    "MsgVote":"投票"
 
    },
    "txTable":{

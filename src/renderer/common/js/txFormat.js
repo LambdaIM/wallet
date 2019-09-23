@@ -55,12 +55,16 @@ function getToAddress(msg, item) {
       if (item.key == 'source-validator') {
         toaddress = item.value;
       }
+      if (item.key == 'proposal_id') {
+        toaddress = '提案编号：' + item.value;
+      }
     });
   }
   return toaddress;
 }
 
 function getamount(msg0, item, vueIns) {
+  console.log('||---||');
   var result; var _this = vueIns;
   if (msg0.value != undefined) {
     if (msg0.value.amount != undefined) {
@@ -86,6 +90,8 @@ function getamount(msg0, item, vueIns) {
         '->' +
         _this.bigNumTypeFormat(msg0.value.asset.amount,
           msg0.value.asset.denom);
+    } else if (msg0.type == 'cosmos-sdk/MsgVote') {
+      result = msg0.value.option;
     } else {
       item.tags.forEach(item => {
         if (item.key == 'rewards' && item.value) {
