@@ -8,8 +8,8 @@ export default function (tx, vueIns) {
     'txs': tx.tx.value.msg.map((msg, index) => {
       try {
         return {
-          'from': getSendAddress(msg, tx),
-          'to': getToAddress(msg, tx),
+          'from': getSendAddress(msg, tx, vueIns),
+          'to': getToAddress(msg, tx, vueIns),
           'msg_type': msg.type,
           'action': msg.type.split('/')[1],
           'amount': getamount(msg, tx, vueIns),
@@ -44,7 +44,8 @@ function getSendAddress(msg, item) {
   return result;
 }
 
-function getToAddress(msg, item) {
+function getToAddress(msg, item, vuethis) {
+  console.log('-------');
   var toaddress = msg.value.to_address || msg.value.validator_dst_address || msg.value.validator_address;
   if (msg.type === 'cosmos-sdk/MsgSubmitProposal') {
     toaddress = msg.value.content.value.title;
@@ -91,7 +92,7 @@ function getamount(msg0, item, vueIns) {
         _this.bigNumTypeFormat(msg0.value.asset.amount,
           msg0.value.asset.denom);
     } else if (msg0.type == 'cosmos-sdk/MsgVote') {
-      result = msg0.value.option;
+      result = vueIns.$t(`proposalsPage.${msg0.value.option}`);
     } else {
       item.tags.forEach(item => {
         if (item.key == 'rewards' && item.value) {

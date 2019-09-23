@@ -44,7 +44,7 @@
           </Row>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t("head.proposals")}}:</Col>
-            <Col span="20" class-name="value">{{title}}</Col>
+            <Col span="20" class-name="value">{{title.length>50?title.substring(0,50)+'...':title}}</Col>
           </Row>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>

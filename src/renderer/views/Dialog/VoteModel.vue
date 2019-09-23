@@ -23,7 +23,7 @@
           <RadioGroup  v-model="voteType" type="button">
             <Radio value="Yes" label="Yes">{{$t('proposalsPage.Yes')}}</Radio>
             <Radio value="No" label="No">{{$t('proposalsPage.No')}}</Radio>
-            <Radio value="NoWithVeto" label="No With Veto">{{$t('proposalsPage.NowithVeto')}}</Radio>
+            <Radio value="NoWithVeto" label="NoWithVeto">{{$t('proposalsPage.NoWithVeto')}}</Radio>
             <Radio value="Abstain" label="Abstain">{{$t('proposalsPage.Abstain')}}</Radio>
         </RadioGroup>
 
@@ -47,7 +47,7 @@
           </Row>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t("head.proposals")}}:</Col>
-            <Col span="20" class-name="value">{{title}}</Col>
+            <Col span="20" class-name="value">{{title.length>50?title.substring(0,50)+'...':title}}</Col>
           </Row>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t("proposalsPage.Vote")}}:</Col>

@@ -363,7 +363,7 @@
       "TotalVoteCount":"Total Vote Count",
       "Yes":"Yes",
       "No":"No",
-      "NowithVeto":"No with Veto",
+      "NoWithVeto":"No with Veto",
       "Abstain":"Abstain",
       "Description":"Description",
       "DepositCount":"Deposit Amount",
@@ -376,7 +376,11 @@
         "Rejected":"Rejected",
         "Passed":"Passed",
         "Removed":"Removed"
-    }
+    },
+    "Needdeposit":"Need deposit",
+    "Thelongestdepositperiod":"The longest deposit period",
+    "Mydeposit":"My deposit",
+    "Myvote":"My vote"
       
 
   }

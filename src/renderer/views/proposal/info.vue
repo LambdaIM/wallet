@@ -55,7 +55,7 @@
             <span class="waptitle">{{$t('proposalsPage.No')}}:</span>{{info.final_tally_result['no']}}
           </Col>
           <Col span="6">
-            <span class="waptitle">{{$t('proposalsPage.NowithVeto')}}:</span>{{info.final_tally_result['no_with_veto']}}
+            <span class="waptitle">{{$t('proposalsPage.NoWithVeto')}}:</span>{{info.final_tally_result['no_with_veto']}}
           </Col>
           <Col span="6">
             <span class="waptitle">{{$t('proposalsPage.Abstain')}}:</span>{{info.final_tally_result['abstain']}}
@@ -63,10 +63,10 @@
         </Row>
         <Row class="rowitem">
           <Col span="12">
-            <span class="waptitle">我存入的押金:</span>{{amount(myDeposit)}}
+            <span class="waptitle">{{$t('proposalsPage.Mydeposit')}}:</span>{{amount(myDeposit)}}
           </Col>
           <Col span="12">
-            <span class="waptitle">我的投票:</span>{{$t(`proposalsPage.${myvote}`)}}
+            <span class="waptitle">{{$t('proposalsPage.Myvote')}}:</span>{{$t(`proposalsPage.${myvote}`)}}
           </Col>
 
         </Row>
@@ -132,15 +132,15 @@
         </Row>
         <Row class="rowitem">
           <Col span="12">
-            <span class="waptitle">最小存款金额:</span>{{amount(DepositParameters.min_deposit)}}
+            <span class="waptitle">{{$t('proposalsPage.Needdeposit')}}:</span>{{amount(DepositParameters.min_deposit)}}
           </Col>
           <Col span="12">
-            <span class="waptitle">最大存款时间:</span>{{DepositParameters.max_deposit_period/(1000*1000*1000*60*60*24)}}{{$t('staking.Explain.unit')}}
+            <span class="waptitle">{{$t('proposalsPage.Thelongestdepositperiod')}}:</span>{{DepositParameters.max_deposit_period/(1000*1000*1000*60*60*24)}}{{$t('staking.Explain.unit')}}
           </Col>
         </Row>
         <Row class="rowitem">
           <Col span="12">
-            <span class="waptitle">我存入的押金:</span>{{amount(myDeposit)}}
+            <span class="waptitle">{{$t('proposalsPage.Mydeposit')}}:</span>{{amount(myDeposit)}}
           </Col>
 
         </Row>

@@ -358,7 +358,7 @@
        "TotalVoteCount":"投票总量",
        "Yes":"同意",
        "No":"反对",
-       "NowithVeto":"强烈反对",
+       "NoWithVeto":"强烈反对",
        "Abstain":"弃权",
        "Description":"详细内容",
        "DepositCount":"已存押金",
@@ -371,7 +371,12 @@
            "Rejected":"未通过",
            "Passed":"通过",
            "Removed":"已删除"
-       }
+       },
+       "Needdeposit":"需要存入押金",
+       "Thelongestdepositperiod":"存入押金的最长时间",
+       "Mydeposit":"我存入的押金",
+       "Myvote":"我的投票"
+
        
 
    }
