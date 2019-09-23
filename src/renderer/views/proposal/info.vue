@@ -47,7 +47,7 @@
           </div>
           </Col>
         </Row>
-        <Row class="rowitem">
+        <Row v-if="info.proposal_status!=='VotingPeriod'" class="rowitem">
           <Col span="6">
             <span class="waptitle">{{$t('proposalsPage.Yes')}}:</span>{{info.final_tally_result['yes']}}
           </Col>
@@ -61,6 +61,21 @@
             <span class="waptitle">{{$t('proposalsPage.Abstain')}}:</span>{{info.final_tally_result['abstain']}}
           </Col>
         </Row>
+        <Row v-else class="rowitem">
+          <Col span="6">
+            <span class="waptitle">{{$t('proposalsPage.Yes')}}:</span>{{proposalTally['yes']}}
+          </Col>
+          <Col span="6">
+            <span class="waptitle">{{$t('proposalsPage.No')}}:</span>{{proposalTally['no']}}
+          </Col>
+          <Col span="6">
+            <span class="waptitle">{{$t('proposalsPage.NoWithVeto')}}:</span>{{proposalTally['no_with_veto']}}
+          </Col>
+          <Col span="6">
+            <span class="waptitle">{{$t('proposalsPage.Abstain')}}:</span>{{proposalTally['abstain']}}
+          </Col>
+        </Row>
+
         <Row class="rowitem">
           <Col span="12">
             <span class="waptitle">{{$t('proposalsPage.Mydeposit')}}:</span>{{amount(myDeposit)}}
@@ -192,7 +207,8 @@ export default {
       proposal_id: null,
       DepositParameters: {},
       myDeposit: [],
-      myvote: ''
+      myvote: '',
+      proposalTally: {}
     };
   },
   mounted() {
@@ -200,11 +216,13 @@ export default {
     this.govDepositParameters();
     this.proposalmyDeposit();
     this.proposalmyVote();
+    this.proposalTallyIng();
     eventhub.$on('TransactionSuccess', async data => {
       console.log('TransactionSuccess');
       this.getinfo();
       this.proposalmyDeposit();
       this.proposalmyVote();
+      this.proposalTallyIng();
     });
   },
   methods: {
@@ -264,6 +282,16 @@ export default {
         this.$data.myvote = res.data.data.option;
       }
     },
+    async proposalTallyIng() {
+      let res = await ipc.callMain('proposalTally', {
+        id: this.$data.proposal_id
+      });
+      if (res.state) {
+        this.$data.proposalTally = res.data.data;
+      }
+    },
+
+
     amount(listamount) {
       if (listamount == null) {
         return '--';

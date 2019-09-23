@@ -351,7 +351,7 @@
    },
    "proposalsPage":{
        "Status":"状态",
-       "ProposalID":"编号",
+       "ProposalID":"提案编号",
        "SubmitTime":"提交时间",
        "VotingStartTime":"投票开始时间",
        "EndVotingTime":"投票结束时间",

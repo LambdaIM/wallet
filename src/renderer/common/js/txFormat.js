@@ -57,7 +57,7 @@ function getToAddress(msg, item, vuethis) {
         toaddress = item.value;
       }
       if (item.key == 'proposal_id') {
-        toaddress = '提案编号：' + item.value;
+        toaddress = vuethis.$t(`proposalsPage.ProposalID`) + ':' + item.value;
       }
     });
   }
@@ -65,7 +65,6 @@ function getToAddress(msg, item, vuethis) {
 }
 
 function getamount(msg0, item, vueIns) {
-  console.log('||---||');
   var result; var _this = vueIns;
   if (msg0.value != undefined) {
     if (msg0.value.amount != undefined) {

@@ -50,12 +50,12 @@ class proposalManager {
     var result = await this.CosmosAPI().get.proposalVote(proposalId, this.defaultAddress);
     return { data: result };
   }
+  async proposalTally(proposalId) {
+    var result = await this.CosmosAPI().get.proposalTally(proposalId);
+    return { data: result };
+  }
 
 
-  // proposalVote
-
-
-
-  // getTransactionByHash?hash=
+  // proposalTally
 }
 export default proposalManager;

@@ -60,6 +60,17 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('proposalTally', async query => {
+    var { id } = query;
+    try {
+      var M = new Manager();
+      var result = await M.proposalTally(id);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
 
 
 
