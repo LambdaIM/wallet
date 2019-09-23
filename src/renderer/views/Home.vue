@@ -335,6 +335,8 @@ export default {
             return this.bigNumTypeFormat(one.amount, one.denom);
           });
           result = list.join(',');
+        } else if (item.amounts != undefined) {
+          result = this.bigNumTypeFormat(item.amounts.amount, item.amounts.denom);
         } else {
           result = this.bigNumTypeFormat(item.amount, item.denom);
         }
