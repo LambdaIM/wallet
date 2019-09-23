@@ -30,7 +30,7 @@
         </p>
         <br />
         <p>
-          {{$t('home.Balance')}} : {{balanceLamb|Lambformat}}
+          {{$t('Dialog.com.Proposaltip')}}
 
         </p>
         <div slot="footer">

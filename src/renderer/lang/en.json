@@ -320,7 +320,8 @@
           "Nodata":"No data",
           "me":"me",
           "Reason":"Because of",
-          "Lesscommission":"Please reduce the handling fee. The handling fee should not be greater than the balance of lamb."
+          "Lesscommission":"Please reduce the handling fee. The handling fee should not be greater than the balance of lamb.",
+          "Proposaltip":"The pledge is the weight of voting. If there is no pledge, the voting weight is 0"
           
       }
   },

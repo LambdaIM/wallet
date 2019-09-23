@@ -312,17 +312,23 @@ export default {
     },
     localtype(item) {
       if (item) {
-        console.log('- -');
         return this.$t(`txType.${item.type}`);
       }
     },
     localto(item) {
       if (item) {
+        if (item.type == 'MsgVote' || item.type == 'MsgDeposit') {
+          return this.$t(`proposalsPage.ProposalID`) + ':' + item.proposalId;
+        }
         return item.toAddress || item.validatorAddress;
       }
     },
     localamount(item) {
       var result = '';
+      if (item.type == 'MsgVote') {
+        return this.$t(`proposalsPage.${item.option}`);
+      }
+
       if (item && (item.amount || item.amounts)) {
         if (item.amounts instanceof Array) {
           var list = item.amounts.map(one => {
@@ -434,6 +440,7 @@ export default {
     },
     async validatorDistribution() {
       try {
+        this.$store.dispatch('setDistribution', 0);
         let res = await ipc.callMain('DistributionInformation', {});
         console.log(res);
         if (!res.state) return;

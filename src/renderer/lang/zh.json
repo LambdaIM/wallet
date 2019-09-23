@@ -314,7 +314,8 @@
           "Nodata":"暂无数据",
           "me":"我",
           "Reason":"原因",
-          "Lesscommission":"请减小手续费，手续费不能大于lamb的余额"
+          "Lesscommission":"请减小手续费，手续费不能大于lamb的余额",
+          "Proposaltip":"质押量为投票的权重.如果没有质押，投票权重为0"
           
           
       }

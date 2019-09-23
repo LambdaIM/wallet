@@ -12,9 +12,11 @@
             <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
             <Tag v-if="info.proposal_status==='Removed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
           </Col>
-          <Col span="12">
+          <Col  span="12">
+          <span @click="goexplor(proposal_id)">
             <span class="waptitle">{{$t('proposalsPage.ProposalID')}}:</span>
-            {{proposal_id}}
+            <a>{{proposal_id}} <Icon type="ios-redo" /> </a>
+          </span>
 
 
           </Col>
@@ -81,7 +83,9 @@
             <span class="waptitle">{{$t('proposalsPage.Mydeposit')}}:</span>{{amount(myDeposit)}}
           </Col>
           <Col span="12">
-            <span class="waptitle">{{$t('proposalsPage.Myvote')}}:</span>{{$t(`proposalsPage.${myvote}`)}}
+            <span class="waptitle">{{$t('proposalsPage.Myvote')}}:</span>
+            {{myvote!=''?$t(`proposalsPage.${myvote}`):'--'}}
+
           </Col>
 
         </Row>
@@ -122,8 +126,10 @@
             <Tag v-if="info.proposal_status==='Removed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
           </Col>
           <Col span="12">
+            <span @click="goexplor(proposal_id)">
             <span class="waptitle">{{$t('proposalsPage.ProposalID')}}:</span>
-            {{proposal_id}}
+            <a>{{proposal_id}} <Icon type="ios-redo" /> </a>
+          </span>
 
 
           </Col>
@@ -192,7 +198,9 @@ import Mycard from '@/components/common/useful/Mycard.vue';
 import DepositModelDialog from '@/views/Dialog/DepositModel.vue';
 import VoteModelDialog from '@/views/Dialog/VoteModel.vue';
 import eventhub from '../../common/js/event.js';
+import { DAEMON_CONFIG } from '../../../config.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+const { shell } = require('electron');
 
 export default {
   components: {
@@ -226,6 +234,11 @@ export default {
     });
   },
   methods: {
+    goexplor(id) {
+      var explorer = DAEMON_CONFIG.explore;
+      let url = `${explorer}#proposalDetail/{id}`;
+      shell.openExternal(url);
+    },
     allVote(item) {
       console.log('allVote');
       var result = 0;
@@ -278,7 +291,7 @@ export default {
       let res = await ipc.callMain('proposalVote', {
         id: this.$data.proposal_id
       });
-      if (res.state) {
+      if (res.state && res.data.data.error == undefined) {
         this.$data.myvote = res.data.data.option;
       }
     },
