@@ -90,17 +90,32 @@
 
         </Row>
         <Row class="rowitem">
-          <Col span="24">
-            <span class="waptitle">{{$t('proposalsPage.Description')}}</span>
+          <Col span="12">
+            <span class="waptitle">{{$t('proposalsPage.type')}}</span>:{{$t(`proposalsPage.${proposaltype}`) }}
           </Col>
-          <Col
-            span="24"
-          >
-          {{info.content.type.split('/')[1]}}
+          <Col span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
+            <span class="waptitle">{{$t('proposalsPage.amount')}}</span>:{{amount(info.content.value.amount)}}
+          </Col>
+          <Col span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
+            <span class="waptitle">{{$t('proposalsPage.recipient')}}</span>:{{info.content.value.recipient}}
+          </Col>
+          <Col span="12" v-if="proposaltype==='BurnCoinsProposal'">
+            <span class="waptitle">{{$t('proposalsPage.burn_amount')}}</span>:{{amount(info.content.value.burn_amount)}}
+          </Col>
+          <Col span="24" v-if="proposaltype==='ParameterChangeProposal'">
+            <span class="waptitle">{{$t('proposalsPage.parameterlist')}} </span>:
+
+             <Table :columns="ParameterChange" :data="info.content.value.changes"></Table>
+          </Col>
+
+
 
           </Col>
+        </Row>
+        <Row class="rowitem">
+
           <Col span="24">
-            <span class="waptitle">{{$t('proposalsPage.type')}}</span>
+            <span class="waptitle">{{$t('proposalsPage.Description')}}</span>
           </Col>
           <Col
             span="24"
@@ -167,25 +182,42 @@
         </Row>
 
         <Row class="rowitem">
-          <Col span="24">
-            <span class="waptitle">{{$t('proposalsPage.type')}}</span>
+          <Col span="12">
+            <span class="waptitle">{{$t('proposalsPage.type')}}</span>:{{$t(`proposalsPage.${proposaltype}`) }}
           </Col>
-          <Col
-            span="24"
-          >
-          {{info.content.type.split('/')[1]}}
+          <Col span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
+            <span class="waptitle">{{$t('proposalsPage.amount')}}</span>:{{amount(info.content.value.amount)}}
+          </Col>
+          <Col span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
+            <span class="waptitle">{{$t('proposalsPage.recipient')}}</span>:{{info.content.value.recipient}}
+          </Col>
+          <Col span="12" v-if="proposaltype==='BurnCoinsProposal'">
+            <span class="waptitle">{{$t('proposalsPage.burn_amount')}}</span>:{{amount(info.content.value.burn_amount)}}
+          </Col>
+          <Col span="24" v-if="proposaltype==='ParameterChangeProposal'">
+            <span class="waptitle">{{$t('proposalsPage.parameterlist')}} </span>:
+
+             <Table :columns="ParameterChange" :data="info.content.value.changes"></Table>
+          </Col>
+
+
 
           </Col>
+        </Row>
+        <Row class="rowitem">
+
           <Col span="24">
             <span class="waptitle">{{$t('proposalsPage.Description')}}</span>
           </Col>
           <Col
             span="24"
           >
-            <div style=" word-break:break-all;">
+          <div style=" word-break:break-all;">
             {{info.content.value.description}}
             </div>
+
           </Col>
+        </Row>
         </Row>
       </div>
     </Mycard>
@@ -216,7 +248,23 @@ export default {
       DepositParameters: {},
       myDeposit: [],
       myvote: '',
-      proposalTally: {}
+      proposalTally: {},
+      proposaltype: '',
+      ParameterChange: [
+        {
+          title: this.$t('proposalsPage.subspace'),
+          key: 'subspace'
+        },
+        {
+          title: this.$t('proposalsPage.key'),
+          key: 'key'
+        },
+        {
+          title: this.$t('proposalsPage.value'),
+          key: 'value'
+        }
+
+      ]
     };
   },
   mounted() {
@@ -263,6 +311,7 @@ export default {
       });
       if (res.state) {
         this.$data.info = res.data.data;
+        this.$data.proposaltype = res.data.data.content.type.split('/')[1];
         if (['VotingPeriod', 'Rejected', 'Passed'].indexOf(this.$data.info.proposal_status) > -1) {
           this.$data.showType = true;
         } else {
@@ -313,6 +362,12 @@ export default {
         return this.bigNumTypeFormat(one.amount, one.denom);
       });
       return list.join(',');
+    },
+    oneamount(one) {
+      if (one == null) {
+        return '--';
+      }
+      return this.bigNumTypeFormat(one.amount, one.denom);
     }
 
   }

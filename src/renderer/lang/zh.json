@@ -315,7 +315,9 @@
           "me":"我",
           "Reason":"原因",
           "Lesscommission":"请减小手续费，手续费不能大于lamb的余额",
-          "Proposaltip":"质押量为投票的权重.如果没有质押，投票权重为0"
+          "Proposaltip":"质押量为投票的权重.如果没有质押，投票权重为0",
+          "Success":"成功",
+          "Failed":"失败"
           
           
       }
@@ -376,9 +378,17 @@
        "Needdeposit":"需要存入押金",
        "Thelongestdepositperiod":"存入押金的最长时间",
        "Mydeposit":"我存入的押金",
-       "Myvote":"我的投票"
-
-       
-
+       "Myvote":"我的投票",
+       "subspace":"模块",
+       "key":"参数",
+       "value":"值",
+       "amount":"金额",
+       "recipient":"接受人",
+       "burn_amount":"销毁金额",
+       "parameterlist":"参数列表",
+       "TextProposal":"文本",
+       "CommunityPoolSpendProposal":"社区基金",
+       "BurnCoinsProposal":"销毁币",
+       "ParameterChangeProposal":"参数变更"
    }
 }

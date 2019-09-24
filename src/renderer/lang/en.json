@@ -321,7 +321,9 @@
           "me":"me",
           "Reason":"Because of",
           "Lesscommission":"Please reduce the handling fee. The handling fee should not be greater than the balance of lamb.",
-          "Proposaltip":"The pledge is the weight of voting. If there is no pledge, the voting weight is 0"
+          "Proposaltip":"The pledge is the weight of voting. If there is no pledge, the voting weight is 0",
+          "Success":"Success",
+          "Failed":"Failed"
           
       }
   },
@@ -381,7 +383,18 @@
     "Needdeposit":"Need deposit",
     "Thelongestdepositperiod":"The longest deposit period",
     "Mydeposit":"My deposit",
-    "Myvote":"My vote"
+    "Myvote":"My vote",
+    "subspace":"subspace",
+    "key":"key",
+    "value":"value",
+    "amount":"amount",
+    "recipient":"recipient",
+    "burn_amount":"burn amount",
+    "parameterlist":"parameter list",
+    "TextProposal":"Text",
+    "CommunityPoolSpendProposal":"Community Pool Spend",
+    "BurnCoinsProposal":"Burn Coins",
+    "ParameterChangeProposal":"Parameter Change"
       
 
   }

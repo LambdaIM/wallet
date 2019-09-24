@@ -21,8 +21,8 @@
 
       </span>
       <AddressLink :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
-      <Tag v-if="txItem.valid" color="success">Success</Tag>
-      <Tag v-if="!txItem.valid" color="error">Failed</Tag>
+      <Tag v-if="txItem.valid" color="success">{{$t('Dialog.com.Success')}}   </Tag>
+      <Tag v-if="!txItem.valid" color="error">{{$t('Dialog.com.Failed')}}</Tag>
       <p v-if="!txItem.valid && showError == true" class="error">
         {{$t('Dialog.com.Reason')}} : <Tag color="error"> {{ txItem.log }}</Tag>
       </p>
