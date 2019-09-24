@@ -2,7 +2,7 @@ const state = {
   address: '',
   blance: 0,
   loginState: false,
-  Totalblance: 0,
+
   DistributionReward: 0,
   balanceSto: 0,
   coinList: [],
@@ -22,9 +22,6 @@ const mutations = {
   setLogin: function (state, loginState) {
     console.log('setLogin');
     state.loginState = loginState;
-  },
-  setTotalblance: function(state, Totalblance) {
-    state.Totalblance = Totalblance;
   },
   setDistributionReward: function(state, Reward) {
     state.DistributionReward = Reward;
@@ -58,9 +55,6 @@ const actions = {
     console.log('actions login');
     context.commit('setLogin', loginState);
   },
-  setTotalblance: function (context, Totalblance) {
-    context.commit('setTotalblance', Totalblance);
-  },
   setDistributionReward: function(context, DistributionReward) {
     context.commit('setDistributionReward', DistributionReward);
   },
@@ -84,8 +78,8 @@ const getters = {
   getblance: state => {
     return state.blance;
   },
-  getTotalblance: state => {
-    return state.Totalblance;
+  balanceLamb: state => {
+    return state.blance;
   },
   getDistributionReward: state => {
     return state.DistributionReward;

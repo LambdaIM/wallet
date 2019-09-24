@@ -184,7 +184,7 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name, iscr
   const address = hdkeyjs.address.getAddress(keys.publicKey);
   var file = this.findFile(address);
   if (file != null) {
-    throw new Error('Import failed,address already exists');
+    throw new Error(`Import failed,${address} already exists`);
   }
 
 
@@ -254,7 +254,7 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
 
   var file = this.findFile(v3file.address);
   if (file != null) {
-    throw new Error('Import failed,address already exists');
+    throw new Error('Import failed,'+v3file.address+' already exists');
   }
 
 

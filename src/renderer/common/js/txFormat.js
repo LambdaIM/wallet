@@ -45,7 +45,6 @@ function getSendAddress(msg, item) {
 }
 
 function getToAddress(msg, item, vuethis) {
-  console.log('-------');
   var toaddress = msg.value.to_address || msg.value.validator_dst_address || msg.value.validator_address;
   if (msg.type === 'cosmos-sdk/MsgSubmitProposal') {
     toaddress = msg.value.content.value.title;

@@ -51,32 +51,39 @@
         </Row>
         <Row v-if="info.proposal_status!=='VotingPeriod'" class="rowitem">
           <Col span="6">
-            <span class="waptitle">{{$t('proposalsPage.Yes')}}:</span>{{info.final_tally_result['yes']}}
+            <span class="waptitle">{{$t('proposalsPage.Yes')}}:</span>{{info.final_tally_result['yes']}}({{percentage(info.final_tally_result['yes'],info.final_tally_result)}})
           </Col>
           <Col span="6">
-            <span class="waptitle">{{$t('proposalsPage.No')}}:</span>{{info.final_tally_result['no']}}
+            <span class="waptitle">{{$t('proposalsPage.No')}}:</span>{{info.final_tally_result['no']}}({{percentage(info.final_tally_result['no'],info.final_tally_result)}})
           </Col>
           <Col span="6">
-            <span class="waptitle">{{$t('proposalsPage.NoWithVeto')}}:</span>{{info.final_tally_result['no_with_veto']}}
+            <span class="waptitle">{{$t('proposalsPage.NoWithVeto')}}:</span>{{info.final_tally_result['no_with_veto']}}({{percentage(info.final_tally_result['no_with_veto'],info.final_tally_result)}})
           </Col>
           <Col span="6">
-            <span class="waptitle">{{$t('proposalsPage.Abstain')}}:</span>{{info.final_tally_result['abstain']}}
+            <span class="waptitle">{{$t('proposalsPage.Abstain')}}:</span>{{info.final_tally_result['abstain']}}({{percentage(info.final_tally_result['abstain'],info.final_tally_result)}})
+          </Col>
+          <Col span="12">
+            <span class="waptitle"> {{$t('proposalsPage.onlinevotingpower')}} :</span>{{percentageall(info.final_tally_result,poolres) }}
           </Col>
         </Row>
         <Row v-else class="rowitem">
           <Col span="6">
-            <span class="waptitle">{{$t('proposalsPage.Yes')}}:</span>{{proposalTally['yes']}}
+            <span class="waptitle">{{$t('proposalsPage.Yes')}}:</span>{{proposalTally['yes']}}({{percentage(proposalTally['yes'],proposalTally) }})
           </Col>
           <Col span="6">
-            <span class="waptitle">{{$t('proposalsPage.No')}}:</span>{{proposalTally['no']}}
+            <span class="waptitle">{{$t('proposalsPage.No')}}:</span>{{proposalTally['no']}}({{percentage(proposalTally['no'],proposalTally) }})
           </Col>
           <Col span="6">
-            <span class="waptitle">{{$t('proposalsPage.NoWithVeto')}}:</span>{{proposalTally['no_with_veto']}}
+            <span class="waptitle">{{$t('proposalsPage.NoWithVeto')}}:</span>{{proposalTally['no_with_veto']}}({{percentage(proposalTally['no_with_veto'],proposalTally) }})
           </Col>
           <Col span="6">
-            <span class="waptitle">{{$t('proposalsPage.Abstain')}}:</span>{{proposalTally['abstain']}}
+            <span class="waptitle">{{$t('proposalsPage.Abstain')}}:</span>{{proposalTally['abstain']}}({{percentage(proposalTally['abstain'],proposalTally) }})
+          </Col>
+          <Col span="12">
+            <span class="waptitle"> {{$t('proposalsPage.onlinevotingpower')}} :</span>{{percentageall(proposalTally,poolres) }}
           </Col>
         </Row>
+
 
         <Row class="rowitem">
           <Col span="12">
@@ -264,7 +271,8 @@ export default {
           key: 'value'
         }
 
-      ]
+      ],
+      poolres: null
     };
   },
   mounted() {
@@ -273,12 +281,14 @@ export default {
     this.proposalmyDeposit();
     this.proposalmyVote();
     this.proposalTallyIng();
+    this.poolTallyIng();
     eventhub.$on('TransactionSuccess', async data => {
       console.log('TransactionSuccess');
       this.getinfo();
       this.proposalmyDeposit();
       this.proposalmyVote();
       this.proposalTallyIng();
+      this.poolTallyIng();
     });
   },
   methods: {
@@ -352,8 +362,13 @@ export default {
         this.$data.proposalTally = res.data.data;
       }
     },
-
-
+    async poolTallyIng() {
+      let res = await ipc.callMain('pool', {
+      });
+      if (res.state) {
+        this.$data.poolres = res.data.bonded_tokens;
+      }
+    },
     amount(listamount) {
       if (listamount == null) {
         return '--';
@@ -368,6 +383,31 @@ export default {
         return '--';
       }
       return this.bigNumTypeFormat(one.amount, one.denom);
+    },
+    percentage(value, item) {
+      if (value == undefined || item['yes'] == undefined) {
+        return;
+      }
+      var p1 = this.bigNum(value);
+      var p2 = this.bigNum(0);
+      for (var key in item) {
+        p2 = p2.plus(item[key]);
+      }
+      if (p2.toNumber() === 0) {
+        return '0%';
+      }
+      return p1.div(p2).times(100) + '%';
+    },
+    percentageall(item, all) {
+      if (all == null || item['yes'] == undefined) {
+        return;
+      }
+      var p2 = this.bigNum(0);
+      for (var key in item) {
+        p2 = p2.plus(item[key]);
+      }
+
+      return p2.div(all).times(100) + '%';
     }
 
   }

@@ -120,7 +120,8 @@ export default {
       // this.confirmModal=true;
     },
     confirm() {
-      if (this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.getblance) == 1) {
+      var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
+      if (comparedNum == 1 || comparedNum == null || comparedNum == 0) {
         this.$Notice.warning({
           title: 'error',
           desc: this.$t('Dialog.com.Lesscommission')
