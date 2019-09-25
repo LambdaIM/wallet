@@ -343,7 +343,13 @@
     "MsgWithdrawValidatorCommission": "WithdrawRewards",
     "MsgSubmitProposal":"SubmitProposal",
     "MsgDeposit":"Deposit",
-    "MsgVote":"Vote"
+    "MsgVote":"Vote",
+    "MsgCreateAsset": "CreateAsset",
+    "MsgMintAsset": "MintAsset",
+    "MsgLockAsset": "LockAsset",
+    "MsgUnLockAsset": "UnLockAsset",
+    "MsgDestroyAsset": "DestroyAsset",
+    "MsgRuinAsset": "RuinAsset"
   },
   "txTable":{
     "action": "Activity",

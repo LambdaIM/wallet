@@ -2,7 +2,7 @@
 <div class="customer-container">
  <div class="tableContainer">
      <div  style="text-align: center;" v-if="List.length ==0">
-       暂无提案
+       {{$t('Dialog.com.Nodata')}}
      </div>
      <div v-for="item in List" class="itemhoder" :key="item.id" @click="goitem(item)">
 

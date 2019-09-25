@@ -338,7 +338,13 @@
     "MsgWithdrawValidatorCommission": "提取节点收益",
     "MsgSubmitProposal":"发起提案",
     "MsgDeposit":"存入押金",
-    "MsgVote":"投票"
+    "MsgVote":"投票",
+    "MsgCreateAsset": "创建资产",
+    "MsgMintAsset": "增发资产",
+    "MsgLockAsset": "锁定资产",
+    "MsgUnLockAsset": "解锁资产",
+    "MsgDestroyAsset": "销毁资产",
+    "MsgRuinAsset": "毁灭资产"
 
    },
    "txTable":{

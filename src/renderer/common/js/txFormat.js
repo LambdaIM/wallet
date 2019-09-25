@@ -91,6 +91,9 @@ function getamount(msg0, item, vueIns) {
           msg0.value.asset.denom);
     } else if (msg0.type == 'cosmos-sdk/MsgVote') {
       result = vueIns.$t(`proposalsPage.${msg0.value.option}`);
+    } else if (msg0.type == 'lambda/MsgCreateAsset') {
+      result = _this.bigNumTypeFormat(msg0.value.asset.amount,
+        msg0.value.asset.denom);
     } else {
       item.tags.forEach(item => {
         if (item.key == 'rewards' && item.value) {
@@ -100,6 +103,7 @@ function getamount(msg0, item, vueIns) {
           result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
         }
       });
+
       result = _this.bigNumTypeFormat(result, 'ulamb');
     }
   }

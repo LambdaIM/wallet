@@ -461,9 +461,9 @@ export default {
     },
     async getlocaltxlist() {
       let res = await ipc.callMain('localtxlist', {});
-      console.log(res);
+      // console.log(res);
       if (!res.state) return;
-      console.log(res);
+      // console.log(res);
       this.$data.localTxList = res.data;
     }
 

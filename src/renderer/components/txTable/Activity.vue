@@ -81,7 +81,7 @@ export default {
       }
     },
     isProposal(txItem) {
-      return txItem.action !== 'MsgSubmitProposal';
+      return txItem.action !== 'MsgSubmitProposal' && txItem.action !== 'MsgUnjail' && txItem.action !== 'MsgCreateValidator';
     },
     showmore() {
       this.$data.more = true;
