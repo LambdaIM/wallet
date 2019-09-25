@@ -309,9 +309,9 @@ export default {
         });
       } catch (ex) {
         console.log(ex);
-        this.$Notice.error({
+        this.$Modal.error({
           title: 'error',
-          desc: ex.errormsg
+          content: "<div style='word-break: break-word;'>" + ex.errormsg + '</div>'
         });
       }
 
@@ -336,9 +336,9 @@ export default {
         console.log(res);
       } catch (ex) {
         console.log(ex);
-        this.$Notice.error({
+        this.$Modal.error({
           title: 'error',
-          desc: ex.errormsg
+          content: "<div style='word-break: break-word;'>" + ex.errormsg + '</div>'
         });
       }
 
