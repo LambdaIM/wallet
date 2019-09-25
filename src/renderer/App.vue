@@ -214,10 +214,10 @@ export default {
                         <br/>
                         ${err.errormsg || err.message || 'error'}
                         <br/>
-                        交易出现错误后检查交易是打包上链注意事项<br/>
-                        1:在首页最新交易记录查看是包含当前交易哈希，包含当前交易哈希说明交易已经打包上链<br/>
-                        2:点击首页本地最新交易记录列表，查看当前交易的状态<br/>
-                        3:在浏览器中搜索当前交易哈希，或搜索lamb地址，查看最新交易记录是否包含当前交易哈希<br/>
+                        ${this.$t('Dialog.txhash.tip')}<br/>
+                        ${this.$t('Dialog.txhash.tip1')}<br/>
+                        ${this.$t('Dialog.txhash.tip2')}<br/>
+                        ${this.$t('Dialog.txhash.tip3')}<br/>
 
                         `,
           okText: 'OK'
