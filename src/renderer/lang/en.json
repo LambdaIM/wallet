@@ -323,7 +323,11 @@
           "Lesscommission":"Please reduce the handling fee. The handling fee should not be greater than the balance of lamb. or lamb is running low",
           "Proposaltip":"The pledge is the weight of voting. If there is no pledge, the voting weight is 0",
           "Success":"Success",
-          "Failed":"Failed"
+          "Failed":"Failed",
+          "mintabletrue":"mintable",
+          "mintablefalse":"is not mintable",
+          "locktime":"locktime"
+          
           
       }
   },

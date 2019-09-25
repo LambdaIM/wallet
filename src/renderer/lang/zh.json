@@ -317,7 +317,11 @@
           "Lesscommission":"请减小手续费，手续费不能大于lamb的余额,或lamb的余额不足",
           "Proposaltip":"质押量为投票的权重.如果没有质押，投票权重为0",
           "Success":"成功",
-          "Failed":"失败"
+          "Failed":"失败",
+          "mintabletrue":"可增发",
+          "mintablefalse":"不可增发",
+          "locktime":"锁仓时长"
+          
           
           
       }

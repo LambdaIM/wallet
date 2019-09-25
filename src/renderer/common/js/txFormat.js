@@ -92,8 +92,21 @@ function getamount(msg0, item, vueIns) {
     } else if (msg0.type == 'cosmos-sdk/MsgVote') {
       result = vueIns.$t(`proposalsPage.${msg0.value.option}`);
     } else if (msg0.type == 'lambda/MsgCreateAsset') {
-      result = _this.bigNumTypeFormat(msg0.value.asset.amount,
-        msg0.value.asset.denom);
+      result = _this.bigNumTypeFormat(msg0.value.token.amount,
+        msg0.value.token.denom) +
+      '->' + _this.bigNumTypeFormat(msg0.value.asset.amount,
+        msg0.value.asset.denom) + ',' +
+        (msg0.value.mintable ? vueIns.$t('Dialog.com.mintabletrue') : vueIns.$t('Dialog.com.mintablefalse'));
+    } else if (msg0.type == 'lambda/MsgMintAsset') {
+      result = _this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom);
+    } else if (msg0.type == 'lambda/MsgLockAsset') {
+      result = _this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom) +
+             '  ' + vueIns.$t('Dialog.com.locktime') + '  ' + (msg0.value.lock_duration / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(3) +
+             '  ' + vueIns.$t('staking.Explain.unit');
+    } else if (msg0.type == 'lambda/MsgUnLockAsset' || msg0.type == 'lambda/MsgRuinAsset') {
+      result = msg0.value.symbol;
+    } else if (msg0.type == 'lambda/MsgDestroyAsset') {
+      result = _this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom);
     } else {
       item.tags.forEach(item => {
         if (item.key == 'rewards' && item.value) {
