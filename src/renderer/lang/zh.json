@@ -3,7 +3,7 @@
       "home": "首页",
       "miner": "矿工",
       "partner":"合伙人",
-      "customer": "顾客",
+      "proposals": "提案",
       "validator": "验证节点",
       "sign": "签名",
       "action": {
@@ -135,13 +135,17 @@
   },
   "home": {
       "Balance": "余额",
+      "Validatorprofit": "节点收益",
       "Latest_Transaction": "最新交易记录",
+      "Latest_Transaction_local": "本地最新交易记录",
       "Transfer": "交易",
       "Reward":"奖励",
       "Withdraw":"提取奖励",
+      "Withdrawprofit":"提取节点收益",
       "pledge":"质押",
       "profits_pledge_system": "挖矿奖励与质押系统的提现额度有关。详情请参阅质押系统。",
       "View_Detail": "查看详情",
+      "token": "资产",
       "table": {
           "Amount": "金额",
           "From":"发送",
@@ -170,6 +174,23 @@
           "Transfer":"交易",
           "Exchange":"兑换"
 
+      },
+      "localtable":{
+          "txhash":"交易哈希",
+          "state":"状态",
+          "txtype":"交易类型",
+          "amount":"金额",
+          "to":"接受人",
+          "time":"发送时间",
+          "error":"日志",
+          "more":"查看详情",
+          "types":{
+              "-3":"未发送",
+              "-2":"失败",
+              "-1":"未打包",
+              "0":"已发送",
+              "1":"成功"
+          }
       },
       "action": {
           "not_transfer_LAMB_to_yourself": "你不能把LAMB发送给自己。",
@@ -271,6 +292,24 @@
           "title1":"质押",
           "title2":"取消质押"
       },
+      "redelegateModel":{
+         "redelegate":"转质押",
+         "turnout":"旧节点",
+         "turnin":"新节点",
+         "choosepledge":"请选择转质押的节点",
+         "validatorname":"节点名称",
+         "tip":"注意：转质押到新的节点后21天没有奖励",
+         "action":{
+             "differentaddresses":"新节点和旧节点不能相同",
+             "selectaddresses":"请选择转入的节点"
+         }
+      },
+      "txhash":{
+          "tip":"交易出现错误后检查交易是打包上链注意事项",
+          "tip1":"1:在首页最新交易记录查看是包含当前交易哈希，包含当前交易哈希说明交易已经打包上链",
+          "tip2":"2:点击首页本地最新交易记录列表，查看当前交易的状态",
+          "tip3":"3:在浏览器中搜索当前交易哈希，或搜索lamb地址，查看最新交易记录是否包含当前交易哈希"
+      },
       "com":{
           "gasfee":"Gas费用",
           "to":" 兑换 ",
@@ -278,7 +317,17 @@
           "Transactionhash":"交易哈希",
           "EditMemo":"编辑备注",
           "Txalreadyexistsincache":"重复提交或链已经停止工作，请5分钟后查看最新交易记录，确认交易是否完成",
-          "Nodata":"暂无数据"
+          "Nodata":"暂无数据",
+          "me":"我",
+          "Reason":"原因",
+          "Lesscommission":"请减小手续费，手续费不能大于lamb的余额,或lamb的余额不足",
+          "Proposaltip":"质押量为投票的权重.如果没有质押，投票权重为0",
+          "Success":"成功",
+          "Failed":"失败",
+          "mintabletrue":"可增发",
+          "mintablefalse":"不可增发",
+          "locktime":"锁仓时长"
+          
           
           
       }
@@ -292,11 +341,20 @@
 	"MsgWithdrawDelegationReward": "提取收益",
 	"MsgAssetPledge": "兑换资产",
 	"MsgAssetDrop": "兑换Token",
-    "MsgBeginReDelegate": "转质押",
+    "MsgBeginRedelegate": "转质押",
     "MsgUnjail":"释放",
     "MsgEditValidator": "修改节点",
     "MsgSetWithdrawAddress":"修改提取收益地址",
-    "MsgWithdrawValidatorCommission": "提取节点收益"
+    "MsgWithdrawValidatorCommission": "提取节点收益",
+    "MsgSubmitProposal":"发起提案",
+    "MsgDeposit":"存入押金",
+    "MsgVote":"投票",
+    "MsgCreateAsset": "创建资产",
+    "MsgMintAsset": "增发资产",
+    "MsgLockAsset": "锁定资产",
+    "MsgUnLockAsset": "解锁资产",
+    "MsgDestroyAsset": "销毁资产",
+    "MsgRuinAsset": "毁灭资产"
 
    },
    "txTable":{
@@ -309,5 +367,49 @@
     "to":"到",
     "Withdraw":"从",
     "sendtxloading":"交易已经发送，请稍后"
+   },
+   "proposalsPage":{
+       "Status":"状态",
+       "ProposalID":"提案编号",
+       "SubmitTime":"提交时间",
+       "VotingStartTime":"投票开始时间",
+       "EndVotingTime":"投票结束时间",
+       "TotalVoteCount":"投票总量",
+       "Yes":"同意",
+       "No":"反对",
+       "NoWithVeto":"强烈反对",
+       "Abstain":"弃权",
+       "Description":"详细内容",
+       "DepositCount":"已存押金",
+       "Vote":"投票",
+       "Deposit":"存入押金",
+       "type":"类型",
+       "typename":{
+           "DepositPeriod":"押金阶段",
+           "VotingPeriod":"投票阶段",
+           "Rejected":"未通过",
+           "Passed":"通过",
+           "Removed":"已删除"
+       },
+       "Needdeposit":"需要存入押金",
+       "Thelongestdepositperiod":"存入押金的最长时间",
+       "Mydeposit":"我存入的押金",
+       "Myvote":"我的投票",
+       "subspace":"模块",
+       "key":"参数",
+       "value":"值",
+       "amount":"金额",
+       "recipient":"接受人",
+       "burn_amount":"销毁金额",
+       "parameterlist":"参数列表",
+       "TextProposal":"文本",
+       "CommunityPoolSpendProposal":"社区基金",
+       "BurnCoinsProposal":"销毁币",
+       "ParameterChangeProposal":"参数变更",
+       "SoftwareUpgradeProposal":"软件升级",
+       "onlinevotingpower":"全网有效投票率",
+       "software":"软件",
+       "version":"版本",
+       "switch_height":"切换的区块高度"
    }
 }

@@ -1,6 +1,6 @@
 {
     "name": "Wallet",
-    "version": "0.2.11",
+    "version": "0.3.11",
     "author": "lambda wallet developer <544262408@qq.com>",
     "description": "lambda wallet",
     "license": null,
@@ -70,9 +70,8 @@
         }
     },
     "dependencies": {
-        "@jswebfans/hdkeyjs": "1.2.5",
-        "@jswebfans/rpcapijs": "0.1.8",
-        "axios": "^0.18.0",
+        "@jswebfans/hdkeyjs": "1.2.9",
+        "@jswebfans/rpcapijs": "0.1.18",
         "bignumber.js": "^8.1.1",
         "electron-better-ipc": "^0.4.0",
         "electron-log": "^2.2.17",
@@ -80,6 +79,7 @@
         "graceful-fs": "^4.1.15",
         "iview": "^3.2.0",
         "moment": "^2.24.0",
+        "nedb": "^1.8.0",
         "object-assign": "^4.1.1",
         "underscore": "^1.9.1",
         "uuid": "^3.3.2",
@@ -107,7 +107,7 @@
         "chalk": "^2.4.1",
         "copy-webpack-plugin": "^4.5.1",
         "cross-env": "^5.1.6",
-        "css-loader": "^0.28.11",
+        "css-loader": "^3.2.0",
         "del": "^3.0.0",
         "devtron": "^1.4.0",
         "electron": "6.0.3",

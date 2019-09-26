@@ -57,7 +57,7 @@
 
      <Modal v-model="assetConfirmModal" :styles="{top: '200px'}">
         <div class="modal-header" slot="header">
-          <h2> 资产兑换 </h2>
+          <h2> {{$t('Dialog.com.AssetConversion')}} </h2>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
             <Col span="20" class-name="value">{{address}}</Col>
@@ -201,6 +201,14 @@ export default {
       }
     },
     confirm() {
+      var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
+      if (comparedNum == 1 || comparedNum == null || comparedNum == 0) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Dialog.com.Lesscommission')
+        });
+        return;
+      }
       this.assetConfirmModal = false;
       console.log(this.$data.transactiondata);
       eventhub.$emit('TxConfirm', this.$data.transactiondata, this.toBigNumStr(this.$data.gaseFee));

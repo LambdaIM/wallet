@@ -1,5 +1,9 @@
 import WalletManger from './walletManger.js';
 import resultView from './result.js';
+
+import Nedb from './utils/nedb';
+
+import TransactionManager from './transactionManager.js';
 // import isAddress from '../utils/isaddress.js';
 
 
@@ -15,6 +19,7 @@ var log = require('../log').log;
 var lastTime;
 export default function() {
   var WM = new WalletManger();
+  var Nedbjs = new Nedb();
   eipc.answerRenderer('walletList', async query => {
     try {
       var result = WM.getWalletList();
@@ -100,6 +105,16 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('creatWalletComplete', async query => {
+    try {
+      var result = await WM.creatWalletComplete();
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
   eipc.answerRenderer('importWalletBykeyStore', async query => {
     var { filepath, password, name } = query;
     if (filepath == undefined) {
@@ -155,6 +170,14 @@ export default function() {
         Delegation: '0',
         DistributionReward: DistributionReward
       }, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+  eipc.answerRenderer('DistributionInformation', async query => {
+    try {
+      var result = await WM.DistributionInformation();
+      return resultView(result, true);
     } catch (ex) {
       throw resultView(null, false, ex);
     }
@@ -256,6 +279,25 @@ export default function() {
 
     try {
       var data = await WM.TransferWithdrawal(to, amount, gas, isdege);
+      return resultView(data, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
+  eipc.answerRenderer('withdrawalDistribution', async query => {
+    var { to, amount, gas, isdege } = query;
+
+
+
+    if (amount == undefined) {
+      throw resultView(null, false, 'need amount');
+    }
+
+    try {
+      console.log('~~withdrawalDistribution~~');
+      var data = await WM.TransferwithdrawalDistribution(to, amount, gas, isdege);
       return resultView(data, true);
     } catch (ex) {
       throw resultView(null, false, ex);
@@ -369,6 +411,99 @@ export default function() {
     var name = query.name;
     try {
       var TxMessageload = await WM.editDefaultName(name);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('localtxlist', async query => {
+    try {
+      var txlist = await Nedbjs.getTxList() || [];
+      var transaction = new TransactionManager();
+      txlist.forEach(async item => {
+        try {
+          if (item.state == 0 || item.state == -1) {
+            var txinfo = await transaction.getTransactionInfo(item.txhash);
+            var flag; var message = '';
+            if (txinfo.error || txinfo.code) {
+              // 有tx 或tx错误
+              if (txinfo.error) {
+                flag = -1;
+              }
+              if (txinfo.code) {
+                flag = -2;
+                message = txinfo.logs.map(item => {
+                  return item.log;
+                }).join(',');
+              }
+            } else {
+              flag = 1;
+            }
+
+            var isok = await Nedbjs.updateTxState(item.txhash, flag, message);
+            console.log(isok);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      });
+
+      return resultView(txlist, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+  eipc.answerRenderer('deposit', async query => {
+    var { ProposalID, amount } = query;
+    if (ProposalID == undefined) {
+      throw resultView(null, false, 'need ProposalID');
+    }
+    if (amount == undefined) {
+      throw resultView(null, false, 'need amount');
+    }
+    try {
+      var TxMessageload = await WM.TransferDeposit(ProposalID, amount);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('vote', async query => {
+    var { ProposalID, option } = query;
+    if (ProposalID == undefined) {
+      throw resultView(null, false, 'need ProposalID');
+    }
+    if (option == undefined) {
+      throw resultView(null, false, 'need option');
+    }
+    try {
+      var TxMessageload = await WM.TransferVote(ProposalID, option);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('redelegate', async query => {
+    var { SourceAddress, DestinationAddress, amount, validatortype } = query;
+    if (SourceAddress == undefined) {
+      throw resultView(null, false, 'need SourceAddress');
+    }
+    if (DestinationAddress == undefined) {
+      throw resultView(null, false, 'need DestinationAddress');
+    }
+    if (amount == undefined) {
+      throw resultView(null, false, 'need amount');
+    }
+    try {
+      var TxMessageload = await WM.TransferRedelegate(SourceAddress, DestinationAddress, amount, validatortype);
 
       return resultView(TxMessageload, true);
     } catch (error) {

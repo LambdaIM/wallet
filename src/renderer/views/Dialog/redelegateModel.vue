@@ -14,8 +14,8 @@
         </p>
         <br />
         <p>
-          <Input v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
-            <span slot="prepend">{{$t('home.Modal1.To')}}</span>
+          <Input readonly v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
+            <span slot="prepend">{{$t('Dialog.redelegateModel.turnout')}}</span>
           </Input>
         </p>
         <br />
@@ -27,9 +27,20 @@
         </p>
         <br />
         <p>
-          {{$t('home.Balance')}} : {{balance|Stoformat}}
 
+              <Select :label-in-value="true" @on-change="getselectvalue" :placeholder="$t('Dialog.redelegateModel.choosepledge')" size="large"  v-model="Tovaluenew" style="width:100%">
+                  <Option  v-for="item in validatorsList"  :value="item.operator_address" :label="item.description.moniker">
+                      <span >{{item.operator_address.substring(0,40)}}...</span>
+                      <span style="float:right;color:red">{{item.description.moniker}}</span>
+                  </Option>
+
+              </Select>
         </p>
+        <br />
+        <p style="color:red">
+          {{$t('Dialog.redelegateModel.tip')}}
+        </p>
+
         <div slot="footer">
           <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
         </div>
@@ -43,8 +54,16 @@
             <Col span="20" class-name="value">{{address}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
+            <Col span="4" class-name="key">{{$t('Dialog.redelegateModel.turnout')}}:</Col>
             <Col span="20" class-name="value">{{Tovalue}}</Col>
+          </Row>
+          <Row class-name="item">
+            <Col span="4" class-name="key">{{$t('Dialog.redelegateModel.turnin')}}:</Col>
+            <Col span="20" class-name="value">{{Tovaluenew}}</Col>
+          </Row>
+          <Row class-name="item">
+            <Col span="4" class-name="key">{{$t('Dialog.redelegateModel.validatorname')}}:</Col>
+            <Col span="20" class-name="value">{{validatorName}}</Col>
           </Row>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
@@ -57,9 +76,7 @@
                               </Input>
           </Row>
         </div>
-        <!-- <p>
-          <Input v-model="walletPassword" type="password"></Input>
-        </p>-->
+
         <div slot="footer">
           <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
         </div>
@@ -76,13 +93,36 @@ export default {
       sendModal: false,
       confirmModal: false,
       Tovalue: '',
+      Tovaluenew: '',
       LAMBvalue: '',
       isdege: true,
-      gaseFee: 0
+      gaseFee: 0,
+      validatorsList: [],
+      validatorName: ''
     };
   },
   methods: {
-    open(toaddress, isdege, validatorType) {
+    getselectvalue(item) {
+      console.log(item);
+      this.$data.validatorName = item.label;
+    },
+    async getListData() {
+      console.log('getListData');
+      try {
+        let res = await ipc.callMain('validatorsList', {});
+
+        // console.log(res);
+        console.log(res);
+
+        if (res.state) {
+          this.$data.validatorsList = res.data;
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+      console.log('getListDataEnd');
+    },
+    async open(toaddress, isdege, validatorType) {
       this.$data.Tovalue = toaddress;
       this.$data.isdege = isdege || isdege;
       this.sendModal = true;
@@ -90,6 +130,7 @@ export default {
       if (validatorType == undefined) {
         throw new Error('need validatorType');
       }
+      var result = await this.getListData();
     },
     sendcancel() {
       this.sendModal = false;
@@ -98,40 +139,28 @@ export default {
       console.log('-----');
       let from = this.address;
       let to = this.Tovalue;
+      let tonew = this.Tovaluenew;
       let value = this.toBigNumStr(this.LAMBvalue);
-      if (to == from) {
+      if (to == tonew) {
         this.$Notice.warning({
-          title: this.$t('home.action.not_transfer_LAMB_to_yourself')
-        });
-        return;
-      }
-      if (this.$data.isdege) {
-        if (this.bigLess0OrGreater(value, this.balance)) {
-        // need to alert
-          this.$Notice.warning({
-            title: this.$t('home.action.check_balance_amount_transfer')
-          });
-          return;
-        }
-      } else if (this.bigLess0OrGreater(value, this.$data.shares)) {
-        // need to alert
-        this.$Notice.warning({
-          title: this.$t('home.action.check_balance_amount_transfer')
+          title: this.$t('Dialog.redelegateModel.action.differentaddresses')
         });
         return;
       }
 
-      // value = wUtils.numberToBig(value) ;
-      // 还需要新的校验地址方法
-      // if (Utils.isAddress(to) == false) {
+      // if (this.bigLess0OrGreater(value, this.balance)) {
       //   // need to alert
       //   this.$Notice.warning({
-      //     title:this.$t('home.action.Check_forwarding_address')
+      //     title: this.$t('home.action.check_balance_amount_transfer')
       //   });
-
       //   return;
       // }
-
+      if (tonew == '') {
+        this.$Notice.warning({
+          title: this.$t('Dialog.redelegateModel.action.selectaddresses')
+        });
+        return;
+      }
       if (isNaN(value)) {
         this.$Notice.warning({
           title: this.$t('home.action.Check_the_amount')
@@ -141,19 +170,16 @@ export default {
       this.transfer(value);
     },
     async transfer(amount) {
-      let to = this.Tovalue;
-      // let amount = this.LAMBvalue;
+      let SourceAddress = this.Tovalue;
+      let DestinationAddress = this.Tovaluenew;
       let gas = 1;
-      // amount = amount * 10000;
+      let validatortype = this.$data.validatorType;
+
       this.$data.transactiondata = null;
-      let isdege = this.$data.isdege;
+
       try {
-        let res = await ipc.callMain('transferDelegation', {
-          to,
-          amount,
-          gas,
-          isdege,
-          validatorType: this.$data.validatorType // 验证节点为1
+        let res = await ipc.callMain('redelegate', {
+          SourceAddress, DestinationAddress, amount, validatortype
         });
         // console.log(res);
         if (res.state) {
@@ -192,18 +218,11 @@ export default {
     address: function() {
       return this.$store.getters.getaddress;
     },
-    balance: function() {
-      return this.$store.getters.getbalanceSto;
-    },
     balanceLamb: function() {
       return this.$store.getters.getblance;
     },
     isdegeTxt: function() {
-      if (this.$data.isdege) {
-        return this.$t('Dialog.stakingModel.title1');
-      } else {
-        return this.$t('Dialog.stakingModel.title2');
-      }
+      return this.$t('Dialog.redelegateModel.redelegate');
     }
   }
 

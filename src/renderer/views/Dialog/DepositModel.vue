@@ -1,52 +1,54 @@
 <template>
 <div>
-  <Modal
-    loading
-    v-model="sendModal"
-    :title="denomtitleShow"
-    :styles="{top: '200px'}"
-    @on-cancel="sendcancel"
-  >
-    <p>
-      <Input v-model="address" readonly>
-        <span slot="prepend">{{$t('home.Modal1.From')}}</span>
-      </Input>
-    </p>
-    <br />
-    <p>
-      <Input v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
-        <span slot="prepend">{{$t('home.Modal1.To')}}</span>
-      </Input>
-    </p>
-    <br />
-    <p>
-      <Input v-model="LAMBvalue">
-        <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-        <span slot="append">{{denomShow}}</span>
-      </Input>
-    </p>
-    <br />
-    <p><Button @click="openmemo" v-if="editmemo==false" type="dashed" >{{$t('Dialog.com.EditMemo')}}</Button>
-    <Input  v-else v-model="memo" type="textarea" :rows="4" placeholder="Enter something..." :maxlength="memoNum" />
-    </p>
-    <div slot="footer">
-      <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
-    </div>
-  </Modal>
-  <Modal v-model="confirmModal" :styles="{top: '200px'}">
+          <Modal
+        loading
+        v-model="sendModal"
+        :title="isdegeTxt"
+        :styles="{top: '200px'}"
+        @on-cancel="sendcancel"
+      >
+        <p>
+          <Input v-model="address" readonly>
+            <span slot="prepend">{{$t('home.Modal1.From')}}</span>
+          </Input>
+        </p>
+        <br />
+        <p>
+          <Input readonly v-model="title" :placeholder="$t('home.Modal1.LAMB_address')">
+            <span slot="prepend">{{$t("head.proposals")}}</span>
+          </Input>
+        </p>
+        <br />
+        <p>
+          <Input v-model="LAMBvalue">
+            <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
+            <span slot="append">LAMB</span>
+          </Input>
+        </p>
+        <br />
+        <p>
+          {{$t('home.Balance')}} : {{balanceLamb|Lambformat}}
+
+        </p>
+        <div slot="footer">
+          <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
+        </div>
+      </Modal>
+
+      <Modal v-model="confirmModal" :styles="{top: '200px'}">
         <div class="modal-header" slot="header">
-          <h2>{{$t('home.Modal1.Transfer')}}</h2>
+          <h2>{{isdegeTxt}}</h2>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
             <Col span="20" class-name="value">{{address}}</Col>
           </Row>
-          <Row  class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
-            <Col span="20" class-name="value">{{Tovalue}}</Col>
+          <Row class-name="item">
+            <Col span="4" class-name="key">{{$t("head.proposals")}}:</Col>
+            <Col span="20" class-name="value">{{title.length>50?title.substring(0,50)+'...':title}}</Col>
           </Row>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{LAMBvalue}} {{denomShow}}</Col>
+            <Col span="20" class-name="value">{{LAMBvalue}} LAMB</Col>
           </Row>
           <Row class-name="item">
             <Input v-model="gaseFee" >
@@ -54,10 +56,6 @@
                                 <span slot="append">LAMB</span>
                               </Input>
           </Row>
-          <Row v-if="openmemo==true"  class-name="item">
-            <Input readonly type="textarea" :rows="4"  />
-          </Row>
-
         </div>
         <!-- <p>
           <Input v-model="walletPassword" type="password"></Input>
@@ -70,60 +68,44 @@
 </template>
 <script>
 import eventhub from '../../common/js/event.js';
-import isaddress from '../../../utils/isaddress';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
-
 export default {
-  props: {
-
-  },
   data() {
     return {
       sendModal: false,
       confirmModal: false,
-      denom: 'lamb',
-      LAMBvalue: '',
-      to: '',
       Tovalue: '',
-      denomBlance: '',
+      LAMBvalue: '',
       gaseFee: 0,
-      editmemo: false,
-      memo: '',
-      memoNum: 255
+      title: ''
     };
   },
   methods: {
-    openmemo() {
-      this.$data.editmemo = true;
+    open(toaddress, title) {
+      this.$data.Tovalue = toaddress;
+      this.$data.title = title;
+
+      this.sendModal = true;
+    },
+    sendcancel() {
+      this.sendModal = false;
     },
     preSendLAMB() {
+      console.log('-----');
       let from = this.address;
       let to = this.Tovalue;
       let value = this.toBigNumStr(this.LAMBvalue);
-      if (to == from) {
-        this.$Notice.warning({
-          title: this.$t('home.action.not_transfer_LAMB_to_yourself')
-        });
-        return;
-      }
-      if (this.bigLess0OrGreater(value, this.$data.denomBlance)) {
+
+
+      if (this.bigLess0OrGreater(value, this.balance)) {
         // need to alert
         this.$Notice.warning({
           title: this.$t('home.action.check_balance_amount_transfer')
         });
         return;
       }
-      // value = wUtils.numberToBig(value) ;
-      // 还需要新的校验地址方法
-      if (isaddress(to) == false) {
-        // need to alert
-        this.$Notice.warning({
-          title: this.$t('home.action.Check_forwarding_address')
-        });
 
-        return;
-      }
 
       if (isNaN(value)) {
         this.$Notice.warning({
@@ -134,32 +116,27 @@ export default {
       this.transfer(value);
     },
     async transfer(amount) {
-      let to = this.Tovalue;
+      let ProposalID = this.Tovalue;
       // let amount = this.LAMBvalue;
       let gas = 1;
       // amount = amount * 10000;
-      let denom = this.$data.denom;
-      let memo = this.$data.memo;
       this.$data.transactiondata = null;
+
       try {
-        let res = await ipc.callMain('transfer', {
-          to,
+        let res = await ipc.callMain('deposit', {
+          ProposalID,
           amount,
-          gas,
-          denom,
-          memo
+          gas
         });
         // console.log(res);
         if (res.state) {
           let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           if (gasres.state) {
-            console.log(gasres.data);
             this.$data.gaseFee = gasres.data;
-            this.confirmModal = true;
             this.$data.transactiondata = res.data;
             this.sendcancel();
+            this.confirmModal = true;
           }
-          // 触发事件活着回掉函数
         }
       } catch (ex) {
         this.$Notice.warning({
@@ -179,21 +156,10 @@ export default {
         return;
       }
       this.confirmModal = false;
-      console.log(this.$data.transactiondata);
-
+      // this.passwordModal = true;
       eventhub.$emit('TxConfirm', this.$data.transactiondata, this.toBigNumStr(this.$data.gaseFee));
-    },
-    sendcancel() {
-      this.sendModal = false;
-      // this.confirmModal=true;
-    },
-    open(amountBlance, coinType) {
-      this.$data.denomBlance = amountBlance || this.balance;
-      this.$data.denom = coinType || 'ulamb';
-      this.sendModal = true;
-      this.confirmModal = false;
-      this.editmemo = false;
     }
+
   },
   computed: {
     address: function() {
@@ -202,15 +168,19 @@ export default {
     balance: function() {
       return this.$store.getters.getblance;
     },
-    denomShow: function() {
-      return this.$data.denom.substr(1).toUpperCase();
+    balanceLamb: function() {
+      return this.$store.getters.getblance;
     },
-    denomtitleShow: function() {
-      return this.$t('home.Modal1.Send_LAMB', [this.$data.denom.substr(1).toUpperCase()]);
+    isdegeTxt: function() {
+      return this.$t('proposalsPage.Deposit');
     }
   }
+
+
+
 };
 </script>
+
 <style lang="less" scoped>
 .modal-header {
   .item {
@@ -219,4 +189,6 @@ export default {
   }
 }
 </style>
+
+
 

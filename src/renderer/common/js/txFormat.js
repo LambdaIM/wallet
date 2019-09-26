@@ -6,15 +6,21 @@ export default function (tx, vueIns) {
     'create_time': tx.timestamp,
     'timestampSort': new Date(tx.timestamp).getTime(),
     'txs': tx.tx.value.msg.map((msg, index) => {
-      return {
-        'from': getSendAddress(msg, tx),
-        'to': getToAddress(msg, tx),
-        'msg_type': msg.type,
-        'action': msg.type.split('/')[1],
-        'amount': getamount(msg, tx, vueIns),
-        'valid': tx.logs[index].success
+      try {
+        return {
+          'from': getSendAddress(msg, tx, vueIns),
+          'to': getToAddress(msg, tx, vueIns),
+          'msg_type': msg.type,
+          'action': msg.type.split('/')[1],
+          'amount': getamount(msg, tx, vueIns),
+          'valid': tx.logs[index] ? tx.logs[index].success : false,
+          'log': tx.logs[index] ? tx.logs[index].log : '--'
 
-      };
+        };
+      } catch (error) {
+        console.log(msg, index, tx);
+        console.log(error);
+      }
     })
   };
 }
@@ -29,7 +35,7 @@ function getSendAddress(msg, item) {
     result = msg.value.address;
   } else {
     item.tags.forEach(item => {
-      if (item.key == 'delegator') {
+      if (item.key == 'delegator' || item.key == 'sender') {
         result = item.value;
       }
     });
@@ -38,12 +44,19 @@ function getSendAddress(msg, item) {
   return result;
 }
 
-function getToAddress(msg, item) {
-  var toaddress = msg.value.to_address || msg.value.validator_address;
+function getToAddress(msg, item, vuethis) {
+  var toaddress = msg.value.to_address || msg.value.validator_dst_address || msg.value.validator_address;
+  if (msg.type === 'cosmos-sdk/MsgSubmitProposal') {
+    toaddress = msg.value.content.value.title;
+  }
+
   if (toaddress == undefined) {
     item.tags.forEach(item => {
       if (item.key == 'source-validator') {
         toaddress = item.value;
+      }
+      if (item.key == 'proposal_id') {
+        toaddress = vuethis.$t(`proposalsPage.ProposalID`) + ':' + item.value;
       }
     });
   }
@@ -76,12 +89,34 @@ function getamount(msg0, item, vueIns) {
         '->' +
         _this.bigNumTypeFormat(msg0.value.asset.amount,
           msg0.value.asset.denom);
+    } else if (msg0.type == 'cosmos-sdk/MsgVote') {
+      result = vueIns.$t(`proposalsPage.${msg0.value.option}`);
+    } else if (msg0.type == 'lambda/MsgCreateAsset') {
+      result = _this.bigNumTypeFormat(msg0.value.token.amount,
+        msg0.value.token.denom) +
+      '->' + _this.bigNumTypeFormat(msg0.value.asset.amount,
+        msg0.value.asset.denom) + ',' +
+        (msg0.value.mintable ? vueIns.$t('Dialog.com.mintabletrue') : vueIns.$t('Dialog.com.mintablefalse'));
+    } else if (msg0.type == 'lambda/MsgMintAsset') {
+      result = _this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom);
+    } else if (msg0.type == 'lambda/MsgLockAsset') {
+      result = _this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom) +
+             '  ' + vueIns.$t('Dialog.com.locktime') + '  ' + (msg0.value.lock_duration / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(3) +
+             '  ' + vueIns.$t('staking.Explain.unit');
+    } else if (msg0.type == 'lambda/MsgUnLockAsset' || msg0.type == 'lambda/MsgRuinAsset') {
+      result = msg0.value.symbol;
+    } else if (msg0.type == 'lambda/MsgDestroyAsset') {
+      result = _this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom);
     } else {
       item.tags.forEach(item => {
-        if (item.key == 'rewards') {
+        if (item.key == 'rewards' && item.value) {
+          result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
+        }
+        if (item.key == 'commission' && item.value) {
           result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
         }
       });
+
       result = _this.bigNumTypeFormat(result, 'ulamb');
     }
   }

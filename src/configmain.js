@@ -22,13 +22,15 @@ var configData = {
     BASE_PATH:BASE_PATH,
     WalletFile:path.join( BASE_PATH,'Wallet'),
     LogFile:path.join(BASE_PATH,'Log'),
+    DataFile:path.join(BASE_PATH,'Data'),
     ValidatorIp:function(){
         return settings.get('validator.ipv1')||defaultip;
         // return defaultip;
     }   ,
     LambdaNetwork:function(){
+        // return "http://39.107.249.53:8083/mock/5d82f651098df42dee8e6036/wallet"
         return `http://${settings.get('validator.ipv1')||defaultip}:13659`;
-        // return `http://${defaultip}:13659`;
+    
     },
     LambdaExtenNetwork:function(){
         return `http://${settings.get('validator.ipv1')||defaultip}:13657`
@@ -43,6 +45,9 @@ var configData = {
         }
         if(fs.existsSync(this.LogFile)==false) {
             fs.mkdirSync(this.LogFile);
+        }
+        if(fs.existsSync(this.DataFile)==false) {
+            fs.mkdirSync(this.DataFile);
         }
         settings.setPath(path.join(this.BASE_PATH,'set.json') );
     }

@@ -1,8 +1,8 @@
 <template>
   <span>
 
-      <Poptip word-wrap trigger="hover" width="400" :content="to" placement="left-start">
-                <a v-if="isme">我</a>
+      <Poptip v-if="to" word-wrap trigger="hover" width="400" :content="to" placement="left-start">
+                <a v-if="isme">{{$t('Dialog.com.me')}}</a>
                 <a v-else>{{to.slice(0,addressLength)}}</a>
               </Poptip>
 

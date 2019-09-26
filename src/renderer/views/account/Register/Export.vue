@@ -9,15 +9,16 @@
           <h2 class="title">{{ $t("Confirm.Confirm_words") }}</h2>
           <p>{{ $t("Confirm.click_words_to_confirm") }}</p>
         </div>
-        
+
 
         <div class="word-wrapper">
-          
+
           <div class="word-content">
             <span
               @click="deleteSingleWord(item,index)"
               v-for="(item,index) in inputWords"
               class="word-item"
+              :key="index"
             >{{item}}</span>
           </div>
         </div>
@@ -28,13 +29,14 @@
               @click="getSingleWord(item,index)"
               v-for="(item,index) in words"
               class="word-item"
+              :key="index"
             >{{item}}</span>
 
             <!-- <span v-if="showErr">Didn't get words</span> -->
           </div>
         </div>
         <div v-if="showButton" class="button-wrapper">
-          <button class="btn next-button" @click="exportWallet()">{{ $t("Confirm.Export_Keystore_File") }}</button>
+          <button class="btn next-button" @click="exportWallet">{{ $t("Confirm.Export_Keystore_File") }}</button>
         </div>
         <div v-else class="button-wrapper">
           <button class="btn next-button" @click="back">{{ $t("Confirm.backtoword") }}  </button>
@@ -45,22 +47,21 @@
 </template>
 
 <script>
-import Mybg from "@/components/common/useful/Mybg.vue";
-import { DAEMON_CONFIG } from "../../../..//config.js";
-import { mapState, mapMutations } from "vuex";
+import Mybg from '@/components/common/useful/Mybg.vue';
 
-const {ipcRenderer: ipc} = require('electron-better-ipc');
-const settings = require("electron-settings");
+
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 export default {
   data() {
     return {
       words: [],
       inputWords: [],
       showButton: false,
-      combineWords:'',
-      tempWords:[],
+      combineWords: '',
+      tempWords: [],
       style: {
-        display: "block"
+        display: 'block'
       }
     };
   },
@@ -68,19 +69,19 @@ export default {
     words: {
       handler() {
         if (this.words.length == 0) {
-          this.style.display = "none";
-          let tempCombineWords = this.inputWords.join(" ");
+          this.style.display = 'none';
+          let tempCombineWords = this.inputWords.join(' ');
           console.log(tempCombineWords);
           if (tempCombineWords == this.combineWords) {
             this.showButton = true;
           } else {
-            this.$Message.error(this.$t("Confirm.action.Confirmed_Fail") );
+            this.$Message.error(this.$t('Confirm.action.Confirmed_Fail'));
             setTimeout(() => {
               // this.$router.push("/register");
             }, 2000);
           }
         } else {
-          this.style.display = "block";
+          this.style.display = 'block';
         }
       },
       deep: true
@@ -88,8 +89,8 @@ export default {
     }
   },
   methods: {
-    back(){
-      this.$router.push("/success");
+    back() {
+      this.$router.push('/success');
     },
     deleteSingleWord(item, index) {
       // console.log(item,index);
@@ -102,18 +103,34 @@ export default {
       this.words.splice(index, 1);
     },
     getWords() {
-      this.tempWords = this.$store.getters.getCombineWords.split(" ");
-      this.combineWords=this.$store.getters.getCombineWords;
+      this.tempWords = this.$store.getters.getCombineWords.split(' ');
+      this.combineWords = this.$store.getters.getCombineWords;
       this.words = this.shuffle(this.tempWords);
-      
     },
-    exportWallet() {
-      this.$store.dispatch("setCombineWord", "");
-      this.$store.dispatch("setWord", []);
-      ipc.callMain("openkeystore", {});
-      setTimeout(() => {
-        this.$router.push("/");
-      }, 2000);
+    async exportWallet() {
+      console.log('- -');
+      try {
+        var res = await ipc.callMain('creatWalletComplete', {});
+        if (res.state) {
+          this.$store.dispatch('setCombineWord', '');
+          this.$store.dispatch('setWord', []);
+          ipc.callMain('openkeystore', {});
+          setTimeout(() => {
+            this.$router.push('/');
+          }, 2000);
+        } else {
+          this.$Notice.error({
+            desc: this.$t('create.action.create_fail'),
+            duration: 1000
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        this.$Notice.error({
+          desc: this.$t('create.action.create_fail'),
+          duration: 1000
+        });
+      }
     },
     shuffle(array) {
       for (let i = array.length - 1; i >= 0; i--) {

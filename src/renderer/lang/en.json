@@ -4,7 +4,7 @@
       "home": "Home",
       "miner": "Miner",
       "partner":"Partner",
-      "customer": "Customer",
+      "proposals": "Proposals",
       "validator": "Validator",
       "sign": "Sign",
 
@@ -140,13 +140,17 @@
     },
     "home":{
       "Balance":"Balance",
+      "Validatorprofit": "Validator profit",
       "Latest_Transaction":"Latest  Transaction Records",
+      "Latest_Transaction_local": "Latest Local  Transaction Records",
       "Reward":"Reward",
       "Withdraw":"Withdraw",
+      "Withdrawprofit":"Withdraw validator  profit",
       "Transfer":"Transfer",
       "pledge":"Pledge",
       "profits_pledge_system":"The profits of miners'mining are related to the withdrawal amount in the storage miners' system. Details are referred to the pledge system",
       "View_Detail":"View Detail",
+      "token": "Assets",
       "table":{
         "Amount":"Amount",
         "Source":"Source",
@@ -177,6 +181,23 @@
         "Exchange":"Exchange"
 
       },
+      "localtable":{
+        "txhash":"txhash",
+        "state":"state",
+        "txtype":"type",
+        "amount":"amount",
+        "to":"recipient",
+        "time":"sending time",
+        "error":"log",
+        "more":"View details",
+        "types":{
+          "-3":"Not sent",
+          "-2":"Failure",
+          "-1":"Unpacked",
+          "0":"Sended",
+          "1":"success"
+      }
+    },
       "action":{
         "not_transfer_LAMB_to_yourself":"You can't transfer LAMB to yourself.",
         "check_balance_amount_transfer":"Please check the balance and the amount of transfer.",
@@ -277,6 +298,24 @@
           "title1":"Pledge",
           "title2":"Cancel pledge"
       },
+      "redelegateModel":{
+         "redelegate":"Redelegate",
+         "turnout":"Old validator",
+         "turnin":"New validator",
+         "choosepledge":"Please choose the validator of the pledge.",
+         "validatorname":"Validator name",
+         "tip":"Note: There is no reward 21 days after the pledge is transferred to the new validator",
+         "action":{
+             "differentaddresses":"New and old validator cannot be the same",
+             "selectaddresses":"Select the validator to delegate"
+         }
+      },
+      "txhash":{
+        "tip":"Checking transactions after trading errors is a precaution for packaging and chaining",
+        "tip1":"1: The latest transaction record on the home page contains the current transaction hash, which indicates that the transaction has been packaged and chained.",
+        "tip2":"2: Click on the latest local transaction record list on the home page to see the status of the current transaction.",
+        "tip3":"3: Search the browser for the current transaction hash or lamb address to see if the latest transaction record contains the current transaction hash"
+      },
       "com":{
           "gasfee":"Gas Fee",
           "to":" to ",
@@ -284,7 +323,18 @@
           "Transactionhash":"Transaction hash",
           "EditMemo":"Edit Memo",
           "Txalreadyexistsincache":"Please check the latest transaction records in 5 minutes to confirm whether the transaction has been completed.Duplicate submission or the chain has stopped working. ",
-          "Nodata":"No data"
+          "Nodata":"No data",
+          "me":"me",
+          "Reason":"Because of",
+          "Lesscommission":"Please reduce the handling fee. The handling fee should not be greater than the balance of lamb. or lamb is running low",
+          "Proposaltip":"The pledge is the weight of voting. If there is no pledge, the voting weight is 0",
+          "Success":"Success",
+          "Failed":"Failed",
+          "mintabletrue":"mintable",
+          "mintablefalse":"is not mintable",
+          "locktime":"locktime"
+          
+          
       }
   },
   "txType": {
@@ -296,11 +346,20 @@
     "MsgWithdrawDelegationReward": "WithdrawDelegatorReward",
     "MsgAssetPledge": "AssetPledge",
     "MsgAssetDrop": "AssetDrop",
-    "MsgBeginReDelegate": "BeginReDelegate",
+    "MsgBeginRedelegate": "BeginReDelegate",
     "MsgUnjail":"Unjail",
     "MsgEditValidator": "EditValidator",
     "MsgSetWithdrawAddress":"MsgSetWithdrawAddress",
-    "MsgWithdrawValidatorCommission": "WithdrawRewards"
+    "MsgWithdrawValidatorCommission": "WithdrawRewards",
+    "MsgSubmitProposal":"SubmitProposal",
+    "MsgDeposit":"Deposit",
+    "MsgVote":"Vote",
+    "MsgCreateAsset": "CreateAsset",
+    "MsgMintAsset": "MintAsset",
+    "MsgLockAsset": "LockAsset",
+    "MsgUnLockAsset": "UnLockAsset",
+    "MsgDestroyAsset": "DestroyAsset",
+    "MsgRuinAsset": "RuinAsset"
   },
   "txTable":{
     "action": "Activity",
@@ -312,6 +371,53 @@
     "to": "To",
     "Withdraw": "From",
     "sendtxloading":"The transaction has been sent, please wait a moment"
+  },
+  "proposalsPage":{
+      "Status":"Status",
+      "ProposalID":"Proposal ID",
+      "SubmitTime":"Submit Time",
+      "VotingStartTime":"Voting Start Time",
+      
+      "EndVotingTime":"End Voting Time",
+      "TotalVoteCount":"Total Vote Count",
+      "Yes":"Yes",
+      "No":"No",
+      "NoWithVeto":"No with Veto",
+      "Abstain":"Abstain",
+      "Description":"Description",
+      "DepositCount":"Deposit Amount",
+      "Vote":"Vote",
+      "Deposit":"Deposit",
+      "type":"Type",
+      "typename":{
+        "DepositPeriod":"DepositPeriod",
+        "VotingPeriod":"VotingPeriod",
+        "Rejected":"Rejected",
+        "Passed":"Passed",
+        "Removed":"Removed"
+    },
+    "Needdeposit":"Need deposit",
+    "Thelongestdepositperiod":"The longest deposit period",
+    "Mydeposit":"My deposit",
+    "Myvote":"My vote",
+    "subspace":"subspace",
+    "key":"key",
+    "value":"value",
+    "amount":"amount",
+    "recipient":"recipient",
+    "burn_amount":"burn amount",
+    "parameterlist":"Parameter list",
+    "TextProposal":"Text",
+    "CommunityPoolSpendProposal":"Community Pool Spend",
+    "BurnCoinsProposal":"Burn Coins",
+    "ParameterChangeProposal":"Parameter Change",
+    "SoftwareUpgradeProposal":"Software Upgrade",
+    "onlinevotingpower":"Effective Voting Rate of the Whole Network",
+    "software":"software",
+    "version":"version",
+    "switch_height":"switch height"
+
+
   }
 
 

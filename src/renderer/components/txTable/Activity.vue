@@ -12,15 +12,19 @@
       <AddressLink :addressLength="addressLength" :to="txItem.from">{{ txItem.from }}</AddressLink
       >&nbsp;
 
-      <Tag color="primary">{{$t(`txType.${txItem.action}`)}}</Tag> <span class="value">{{ txItem.amount | formatAmount }}</span>
-      <span v-if="txItem.to">
-       {{getToWord(txItem)}}
-      <AddressLink :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
+      <Tag color="primary">{{$t(`txType.${txItem.action}`)}}</Tag>
+      <span v-if="isProposal(txItem)">
+        <span class="value">{{ txItem.amount | formatAmount }}</span>
+        <span v-if="txItem.to">
+        {{getToWord(txItem)}}
       </span>
-      <Tag v-if="txItem.valid" color="success">Success</Tag>
-      <Tag v-if="!txItem.valid" color="error">Failed</Tag>
+
+      </span>
+      <AddressLink :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
+      <Tag v-if="txItem.valid" color="success">{{$t('Dialog.com.Success')}}   </Tag>
+      <Tag v-if="!txItem.valid" color="error">{{$t('Dialog.com.Failed')}}</Tag>
       <p v-if="!txItem.valid && showError == true" class="error">
-        Because of : <Tag color="error"> {{ txItem.Log }}</Tag>
+        {{$t('Dialog.com.Reason')}} : <Tag color="error"> {{ txItem.log }}</Tag>
       </p>
     </Col>
    <Col :md="md"
@@ -65,16 +69,19 @@ export default {
   },
   data() {
     return {
-      more: !(this.$props.activityData.length > 1)
+      more: !(this.$props.activityData.length > 2)
     };
   },
   methods: {
     getToWord(txItem) {
-      if (txItem.action == 'MsgWithdrawDelegationReward') {
+      if (txItem.action == 'MsgWithdrawDelegationReward' || txItem.action == 'MsgWithdrawValidatorCommission') {
         return this.$t('txTable.Withdraw');
       } else {
         return this.$t('txTable.to');
       }
+    },
+    isProposal(txItem) {
+      return txItem.action !== 'MsgSubmitProposal' && txItem.action !== 'MsgUnjail' && txItem.action !== 'MsgCreateValidator';
     },
     showmore() {
       this.$data.more = true;
@@ -89,7 +96,7 @@ export default {
       var me = this.$store.getters.getaddress;
       var meList = []; var otherList = [];
       this.$props.activityData.forEach(item => {
-        if ((item.to || item.from == me) && meList.length < 2) {
+        if ((item.to == me || item.from == me) && meList.length < 2) {
           meList.push(item);
         } else {
           otherList.push(item);
