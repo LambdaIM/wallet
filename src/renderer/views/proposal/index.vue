@@ -11,8 +11,8 @@
           <Row slot="title">
 
 
-              <Col span="18"><h4 style=" word-break:break-all;">#{{item.id}}  {{item.content.value.title}}</h4></Col>
-              <Col span="6">
+              <Col span="17"><h4 style=" word-break:break-all;">#{{item.id}}  {{item.content.value.title}}</h4></Col>
+              <Col span="7">
                 <Tag v-if="item.proposal_status==='Passed'" color="success">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 <Tag v-if="item.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 <Tag v-if="item.proposal_status==='VotingPeriod'" color="warning">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>

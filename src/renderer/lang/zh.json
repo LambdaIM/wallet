@@ -406,6 +406,10 @@
        "CommunityPoolSpendProposal":"社区基金",
        "BurnCoinsProposal":"销毁币",
        "ParameterChangeProposal":"参数变更",
-       "onlinevotingpower":"全网有效投票率"
+       "SoftwareUpgradeProposal":"软件升级",
+       "onlinevotingpower":"全网有效投票率",
+       "software":"软件",
+       "version":"版本",
+       "switch_height":"切换的区块高度"
    }
 }

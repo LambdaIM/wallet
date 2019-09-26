@@ -62,7 +62,7 @@
           <Col span="6">
             <span class="waptitle">{{$t('proposalsPage.Abstain')}}:</span>{{info.final_tally_result['abstain']}}({{percentage(info.final_tally_result['abstain'],info.final_tally_result)}})
           </Col>
-          <Col span="12">
+          <Col style="margin-top: 10px;" span="12">
             <span class="waptitle"> {{$t('proposalsPage.onlinevotingpower')}} :</span>{{percentageall(info.final_tally_result,poolres) }}
           </Col>
         </Row>
@@ -76,10 +76,10 @@
           <Col span="6">
             <span class="waptitle">{{$t('proposalsPage.NoWithVeto')}}:</span>{{proposalTally['no_with_veto']}}({{percentage(proposalTally['no_with_veto'],proposalTally) }})
           </Col>
-          <Col span="6">
+          <Col  span="6">
             <span class="waptitle">{{$t('proposalsPage.Abstain')}}:</span>{{proposalTally['abstain']}}({{percentage(proposalTally['abstain'],proposalTally) }})
           </Col>
-          <Col span="12">
+          <Col style="margin-top: 10px;" span="12">
             <span class="waptitle"> {{$t('proposalsPage.onlinevotingpower')}} :</span>{{percentageall(proposalTally,poolres) }}
           </Col>
         </Row>
@@ -97,22 +97,33 @@
 
         </Row>
         <Row class="rowitem">
-          <Col span="12">
-            <span class="waptitle">{{$t('proposalsPage.type')}}</span>:{{$t(`proposalsPage.${proposaltype}`) }}
+          <Col style="margin-bottom: 10px;" span="12">
+            <span  class="waptitle">{{$t('proposalsPage.type')}}</span>:{{$t(`proposalsPage.${proposaltype}`) }}
           </Col>
-          <Col span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
+          <Col style="margin-bottom: 10px;" span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
             <span class="waptitle">{{$t('proposalsPage.amount')}}</span>:{{amount(info.content.value.amount)}}
           </Col>
-          <Col span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
+          <Col style="margin-bottom: 10px;" span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
             <span class="waptitle">{{$t('proposalsPage.recipient')}}</span>:{{info.content.value.recipient}}
           </Col>
-          <Col span="12" v-if="proposaltype==='BurnCoinsProposal'">
+          <Col style="margin-bottom: 10px;" span="12" v-if="proposaltype==='BurnCoinsProposal'">
             <span class="waptitle">{{$t('proposalsPage.burn_amount')}}</span>:{{amount(info.content.value.burn_amount)}}
           </Col>
-          <Col span="24" v-if="proposaltype==='ParameterChangeProposal'">
-            <span class="waptitle">{{$t('proposalsPage.parameterlist')}} </span>:
+          <Col  style="margin-bottom: 10px;" span="24" v-if="proposaltype==='ParameterChangeProposal'">
+            <div style="margin-bottom: 10px;" class="waptitle">{{$t('proposalsPage.parameterlist')}}: </div>
 
              <Table :columns="ParameterChange" :data="info.content.value.changes"></Table>
+          </Col>
+
+          <Col style="margin-bottom: 10px;" span="12" v-if="proposaltype==='SoftwareUpgradeProposal'">
+            <span class="waptitle">{{$t('proposalsPage.version')}}</span>:{{info.content.value.version}}
+          </Col>
+
+          <Col style="margin-bottom: 10px;" span="12" v-if="proposaltype==='SoftwareUpgradeProposal'">
+            <span class="waptitle">{{$t('proposalsPage.switch_height')}}</span>:{{info.content.value.switch_height}}
+          </Col>
+          <Col  style="margin-bottom: 10px;" span="12" v-if="proposaltype==='SoftwareUpgradeProposal'">
+            <span class="waptitle">{{$t('proposalsPage.software')}}</span>:{{info.content.value.software}}
           </Col>
 
 
@@ -189,22 +200,33 @@
         </Row>
 
         <Row class="rowitem">
-          <Col span="12">
+          <Col style="margin-bottom: 10px;" span="12">
             <span class="waptitle">{{$t('proposalsPage.type')}}</span>:{{$t(`proposalsPage.${proposaltype}`) }}
           </Col>
-          <Col span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
+          <Col style="margin-bottom: 10px;" span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
             <span class="waptitle">{{$t('proposalsPage.amount')}}</span>:{{amount(info.content.value.amount)}}
           </Col>
-          <Col span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
+          <Col style="margin-bottom: 10px;" span="12" v-if="proposaltype==='CommunityPoolSpendProposal'">
             <span class="waptitle">{{$t('proposalsPage.recipient')}}</span>:{{info.content.value.recipient}}
           </Col>
-          <Col span="12" v-if="proposaltype==='BurnCoinsProposal'">
+          <Col style="margin-bottom: 10px;" span="12" v-if="proposaltype==='BurnCoinsProposal'">
             <span class="waptitle">{{$t('proposalsPage.burn_amount')}}</span>:{{amount(info.content.value.burn_amount)}}
           </Col>
-          <Col span="24" v-if="proposaltype==='ParameterChangeProposal'">
-            <span class="waptitle">{{$t('proposalsPage.parameterlist')}} </span>:
+          <Col  style="margin-bottom: 10px;" span="24" v-if="proposaltype==='ParameterChangeProposal'">
+            <div style="margin-bottom: 10px;" class="waptitle">{{$t('proposalsPage.parameterlist')}}:</div>
 
              <Table :columns="ParameterChange" :data="info.content.value.changes"></Table>
+          </Col>
+
+          <Col style="margin-bottom: 10px;" span="12" v-if="proposaltype==='SoftwareUpgradeProposal'">
+            <span class="waptitle">{{$t('proposalsPage.version')}}</span>:{{info.content.value.version}}
+          </Col>
+
+          <Col style="margin-bottom: 10px;" span="12" v-if="proposaltype==='SoftwareUpgradeProposal'">
+            <span class="waptitle">{{$t('proposalsPage.switch_height')}}</span>:{{info.content.value.switch_height}}
+          </Col>
+          <Col  style="margin-bottom: 10px;" span="12" v-if="proposaltype==='SoftwareUpgradeProposal'">
+            <span class="waptitle">{{$t('proposalsPage.software')}}</span>:{{info.content.value.software}}
           </Col>
 
 
@@ -396,7 +418,7 @@ export default {
       if (p2.toNumber() === 0) {
         return '0%';
       }
-      return p1.div(p2).times(100) + '%';
+      return p1.div(p2).times(100).toFixed(2) + '%';
     },
     percentageall(item, all) {
       if (all == null || item['yes'] == undefined) {
@@ -407,7 +429,7 @@ export default {
         p2 = p2.plus(item[key]);
       }
 
-      return p2.div(all).times(100) + '%';
+      return p2.div(all).times(100).toFixed(2) + '%';
     }
 
   }

@@ -388,7 +388,7 @@
       "DepositCount":"Deposit Amount",
       "Vote":"Vote",
       "Deposit":"Deposit",
-      "type":"type",
+      "type":"Type",
       "typename":{
         "DepositPeriod":"DepositPeriod",
         "VotingPeriod":"VotingPeriod",
@@ -406,12 +406,17 @@
     "amount":"amount",
     "recipient":"recipient",
     "burn_amount":"burn amount",
-    "parameterlist":"parameter list",
+    "parameterlist":"Parameter list",
     "TextProposal":"Text",
     "CommunityPoolSpendProposal":"Community Pool Spend",
     "BurnCoinsProposal":"Burn Coins",
     "ParameterChangeProposal":"Parameter Change",
-    "onlinevotingpower":"Effective Voting Rate of the Whole Network"  
+    "SoftwareUpgradeProposal":"Software Upgrade",
+    "onlinevotingpower":"Effective Voting Rate of the Whole Network",
+    "software":"software",
+    "version":"version",
+    "switch_height":"switch height"
+
 
   }
 
