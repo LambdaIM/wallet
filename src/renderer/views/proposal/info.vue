@@ -10,7 +10,7 @@
             <Tag v-if="info.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
             <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
             <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
-            <Tag v-if="info.proposal_status==='Removed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='Failed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
           </Col>
           <Col  span="12">
           <span @click="goexplor(proposal_id)">
@@ -156,7 +156,7 @@
             <Tag v-if="info.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
             <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
             <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
-            <Tag v-if="info.proposal_status==='Removed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='Failed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
           </Col>
           <Col span="12">
             <span @click="goexplor(proposal_id)">

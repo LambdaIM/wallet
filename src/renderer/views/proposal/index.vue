@@ -17,7 +17,7 @@
                 <Tag v-if="item.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 <Tag v-if="item.proposal_status==='VotingPeriod'" color="warning">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 <Tag v-if="item.proposal_status==='DepositPeriod'" color="primary">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
-                <Tag v-if="item.proposal_status==='Removed'" color="default">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
+                <Tag v-if="item.proposal_status==='Failed'" color="default">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 {{$t(`proposalsPage.${item.content.type.split('/')[1]}`) }}
               </Col>
         </Row>

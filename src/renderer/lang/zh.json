@@ -389,7 +389,7 @@
            "VotingPeriod":"投票阶段",
            "Rejected":"未通过",
            "Passed":"通过",
-           "Removed":"已删除"
+           "Failed":"执行失败"
        },
        "Needdeposit":"需要存入押金",
        "Thelongestdepositperiod":"存入押金的最长时间",
