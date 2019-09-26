@@ -148,13 +148,13 @@ export default {
         return;
       }
 
-      if (this.bigLess0OrGreater(value, this.balance)) {
-        // need to alert
-        this.$Notice.warning({
-          title: this.$t('home.action.check_balance_amount_transfer')
-        });
-        return;
-      }
+      // if (this.bigLess0OrGreater(value, this.balance)) {
+      //   // need to alert
+      //   this.$Notice.warning({
+      //     title: this.$t('home.action.check_balance_amount_transfer')
+      //   });
+      //   return;
+      // }
       if (tonew == '') {
         this.$Notice.warning({
           title: this.$t('Dialog.redelegateModel.action.selectaddresses')
@@ -217,9 +217,6 @@ export default {
   computed: {
     address: function() {
       return this.$store.getters.getaddress;
-    },
-    balance: function() {
-      return this.$store.getters.getbalanceSto;
     },
     balanceLamb: function() {
       return this.$store.getters.getblance;
