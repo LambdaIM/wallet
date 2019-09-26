@@ -1,5 +1,6 @@
 <template>
-  <div class="customer-container">
+<div>
+  <div v-if="info!=null" class="customer-container">
       <Mycard v-if="info!=null&&showType" :cardtitle="info.content.value.title" class="mt20">
       <div slot="card-content">
         <Row class="rowitem">
@@ -253,6 +254,10 @@
     <DepositModelDialog ref="DepositModel" />
     <VoteModelDialog ref="VoteModel" />
   </div>
+  <div v-else>
+    <Spin size="large" fix></Spin>
+  </div>
+</div>
 </template>
 <script>
 import Mycard from '@/components/common/useful/Mycard.vue';
