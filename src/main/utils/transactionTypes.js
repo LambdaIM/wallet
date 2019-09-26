@@ -2,13 +2,14 @@ const transactionTypes = {
   SEND: `MsgSend`,
   DELEGATE: `MsgDelegate`,
   UNDELEGATE: `MsgUndelegate`,
-  REDELEGATE: `MsgRedelegate`,
+  REDELEGATE: `MsgBeginRedelegate`,
   SUBMIT_PROPOSAL: `MsgSubmitProposal`,
   VOTE: `MsgVote`,
   DEPOSIT: `MsgDeposit`,
   WITHDRAW: `MsgWithdrawDelegationReward`,
-  AssetPledge:`MsgAssetPledge`,
-  AssetDrop:`MsgAssetDrop`
-}
+  AssetPledge: `MsgAssetPledge`,
+  AssetDrop: `MsgAssetDrop`,
+  WithdrawValidatorCommission: `MsgWithdrawValidatorCommission`
+};
 
-export default transactionTypes
+export default transactionTypes;

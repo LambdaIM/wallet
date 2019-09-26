@@ -213,6 +213,12 @@ export default {
                           ${this.$data.txhash}
                         <br/>
                         ${err.errormsg || err.message || 'error'}
+                        <br/>
+                        ${this.$t('Dialog.txhash.tip')}<br/>
+                        ${this.$t('Dialog.txhash.tip1')}<br/>
+                        ${this.$t('Dialog.txhash.tip2')}<br/>
+                        ${this.$t('Dialog.txhash.tip3')}<br/>
+
                         `,
           okText: 'OK'
         });

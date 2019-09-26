@@ -37,6 +37,12 @@
             class="item"
           >{{ $t("head.partner") }}</router-link>
         </div>
+        <div class="head-menu-item">
+          <router-link
+            to="/proposal"
+            class="item"
+          > {{$t("head.proposals")}} </router-link>
+        </div>
 
         <div class="head-menu-item">
           <router-link
@@ -44,6 +50,7 @@
             class="item"
           >{{ $t("head.sign") }}</router-link>
         </div>
+
 
         <div class="head-menu-item overtext">
           <router-link
@@ -413,7 +420,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 888;
+    z-index: 1;
     // border: 1px solid #eee;
     }
 </style>

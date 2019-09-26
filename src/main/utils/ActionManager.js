@@ -68,6 +68,7 @@ export default class ActionManager {
     return gasEstimate;
   }
 
+
   async send(memo, txMetaData, signerFn) {
     // this.readyCheck()
 
@@ -88,6 +89,29 @@ export default class ActionManager {
     );
 
     return { included, hash };
+  }
+
+
+  async getTxhash(memo, txMetaData, signerFn) {
+    // this.readyCheck()
+
+    const { gasEstimate, gasPrice } = txMetaData;
+
+
+    if (this.messageType === transaction.WITHDRAW) {
+      this.message = await this.createWithdrawTransaction();
+    }
+
+    const hash = await this.message.getTxhash(
+      {
+        gas: String(gasEstimate),
+        gasPrices: convertCurrencyData([gasPrice]),
+        memo
+      },
+      signerFn
+    );
+
+    return hash;
   }
 
   async createWithdrawTransaction() {

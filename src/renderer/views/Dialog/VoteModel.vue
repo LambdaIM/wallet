@@ -14,20 +14,23 @@
         </p>
         <br />
         <p>
-          <Input v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
-            <span slot="prepend">{{$t('home.Modal1.To')}}</span>
+          <Input readonly v-model="title" :placeholder="$t('home.Modal1.LAMB_address')">
+            <span slot="prepend">{{$t("head.proposals")}}</span>
           </Input>
         </p>
         <br />
-        <p>
-          <Input v-model="LAMBvalue">
-            <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">TBB</span>
-          </Input>
+        <p style="    text-align: center">
+          <RadioGroup  v-model="voteType" type="button">
+            <Radio value="Yes" label="Yes">{{$t('proposalsPage.Yes')}}</Radio>
+            <Radio value="No" label="No">{{$t('proposalsPage.No')}}</Radio>
+            <Radio value="NoWithVeto" label="NoWithVeto">{{$t('proposalsPage.NoWithVeto')}}</Radio>
+            <Radio value="Abstain" label="Abstain">{{$t('proposalsPage.Abstain')}}</Radio>
+        </RadioGroup>
+
         </p>
         <br />
         <p>
-          {{$t('home.Balance')}} : {{balance|Stoformat}}
+          {{$t('Dialog.com.Proposaltip')}}
 
         </p>
         <div slot="footer">
@@ -43,12 +46,12 @@
             <Col span="20" class-name="value">{{address}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
-            <Col span="20" class-name="value">{{Tovalue}}</Col>
+            <Col span="4" class-name="key">{{$t("head.proposals")}}:</Col>
+            <Col span="20" class-name="value">{{title.length>50?title.substring(0,50)+'...':title}}</Col>
           </Row>
           <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{LAMBvalue}} TBB</Col>
+            <Col span="4" class-name="key">{{$t("proposalsPage.Vote")}}:</Col>
+            <Col span="20" class-name="value">{{$t(`proposalsPage.${voteType}`)}} </Col>
           </Row>
           <Row class-name="item">
             <Input v-model="gaseFee" >
@@ -77,19 +80,17 @@ export default {
       confirmModal: false,
       Tovalue: '',
       LAMBvalue: '',
-      isdege: true,
-      gaseFee: 0
+      gaseFee: 0,
+      voteType: 'Yes',
+      title: ''
     };
   },
   methods: {
-    open(toaddress, isdege, validatorType) {
+    open(toaddress, title) {
       this.$data.Tovalue = toaddress;
-      this.$data.isdege = isdege || isdege;
+      this.$data.title = title;
+
       this.sendModal = true;
-      this.$data.validatorType = validatorType;
-      if (validatorType == undefined) {
-        throw new Error('need validatorType');
-      }
     },
     sendcancel() {
       this.sendModal = false;
@@ -99,38 +100,6 @@ export default {
       let from = this.address;
       let to = this.Tovalue;
       let value = this.toBigNumStr(this.LAMBvalue);
-      if (to == from) {
-        this.$Notice.warning({
-          title: this.$t('home.action.not_transfer_LAMB_to_yourself')
-        });
-        return;
-      }
-      if (this.$data.isdege) {
-        if (this.bigLess0OrGreater(value, this.balance)) {
-        // need to alert
-          this.$Notice.warning({
-            title: this.$t('home.action.check_balance_amount_transfer')
-          });
-          return;
-        }
-      } else if (this.bigLess0OrGreater(value, this.$data.shares)) {
-        // need to alert
-        this.$Notice.warning({
-          title: this.$t('home.action.check_balance_amount_transfer')
-        });
-        return;
-      }
-
-      // value = wUtils.numberToBig(value) ;
-      // 还需要新的校验地址方法
-      // if (Utils.isAddress(to) == false) {
-      //   // need to alert
-      //   this.$Notice.warning({
-      //     title:this.$t('home.action.Check_forwarding_address')
-      //   });
-
-      //   return;
-      // }
 
       if (isNaN(value)) {
         this.$Notice.warning({
@@ -141,19 +110,19 @@ export default {
       this.transfer(value);
     },
     async transfer(amount) {
-      let to = this.Tovalue;
+      let ProposalID = this.Tovalue;
       // let amount = this.LAMBvalue;
       let gas = 1;
+      let option = this.$data.voteType;
       // amount = amount * 10000;
+
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
       try {
-        let res = await ipc.callMain('transferDelegation', {
-          to,
-          amount,
-          gas,
-          isdege,
-          validatorType: this.$data.validatorType // 验证节点为1
+        let res = await ipc.callMain('vote', {
+          ProposalID,
+          option,
+          gas
         });
         // console.log(res);
         if (res.state) {
@@ -193,17 +162,13 @@ export default {
       return this.$store.getters.getaddress;
     },
     balance: function() {
-      return this.$store.getters.getbalanceSto;
+      return this.$store.getters.getblance;
     },
     balanceLamb: function() {
       return this.$store.getters.getblance;
     },
     isdegeTxt: function() {
-      if (this.$data.isdege) {
-        return this.$t('Dialog.stakingModel.title1');
-      } else {
-        return this.$t('Dialog.stakingModel.title2');
-      }
+      return this.$t('proposalsPage.Vote');
     }
   }
 
@@ -218,7 +183,10 @@ export default {
     margin-top: 20px;
     font-size: 14px;
   }
+
+
 }
+
 </style>
 
 

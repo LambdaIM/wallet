@@ -5,6 +5,9 @@
       {{$t('home.Balance')}}: {{balance|Lambformat}}
       <!-- {{$t('home.pledge')}}: {{DelegationValue|Stoformat}} -->
       {{$t('home.Reward')}} :{{DistributionReward|Lambformat}}
+      <span v-if="distributionBalance > 0">
+      {{$t('home.Validatorprofit')}} :{{distributionBalance|Lambformat}}
+      </span>
 
     </p>
 
@@ -40,7 +43,7 @@
 
           </Table> -->
         </TabPane>
-        <TabPane label="Token">
+        <TabPane :label="$t('home.token')">
           <Table :columns="columnsToken" :data="coinList">
 
 
@@ -56,18 +59,60 @@
               <Button v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
             </template>
           </Table>
+
+        </TabPane>
+        <TabPane :label="$t('home.Latest_Transaction_local')">
+          <Table :columns="localTxcolumns" :data="localTxList">
+
+            <template slot-scope="{ row, index }" slot="state">
+
+                  <Tag v-if="row.state===0"  color="primary">{{localTypeState(row.state)}}</Tag>
+                  <Tag v-if="row.state===1"  color="success">{{localTypeState(row.state)}}</Tag>
+                  <Tag v-if="row.state===-2"  color="error">{{localTypeState(row.state)}}</Tag>
+                  <Tag v-if="row.state===-1" color="warning">{{localTypeState(row.state)}}</Tag>
+                  <Tag v-if="row.state===-3" color="warning">{{localTypeState(row.state)}}</Tag>
+            </template>
+            <template slot-scope="{ row, index }" slot="txinfo">
+                <Button type="primary" @click="txinfo(row)"  size="small">{{$t('home.localtable.more')}}</Button>
+            </template>
+            <template slot-scope="{ row, index }" slot="createTime">
+                {{row.createTime|formatToTime}}
+            </template>
+            <template slot-scope="{ row, index }" slot="txtype">
+                {{localtype(row.transactiondata)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="amount">
+                {{localamount(row.transactiondata)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="to">
+                {{localto(row.transactiondata)}}
+            </template>
+
+
+
+          </Table>
         </TabPane>
         <span slot="extra">
           <Button @click="openSend()">
             {{$t('home.Transfer')}}
             <Icon type="md-swap"></Icon>
           </Button>
+
+
+          <Dropdown @on-click="openwithdrawalModal" style="margin-left:20px">
+              <Button  >
+                  {{$t('home.Withdraw')}}
+                  <Icon type="md-arrow-down" />
+                </Button>
+              <DropdownMenu slot="list">
+                  <DropdownItem  name="Withdraw">{{$t('home.Withdraw')}}</DropdownItem>
+                  <DropdownItem  name="Distribution">{{$t('home.Withdrawprofit')}}</DropdownItem>
+
+
+              </DropdownMenu>
+          </Dropdown>
 &nbsp; &nbsp;
-          <Button slot="extra" @click="openwithdrawalModal()">
-            {{$t('home.Withdraw')}}
-            <Icon type="md-swap"></Icon>
-          </Button>
-&nbsp; &nbsp;
+
         </span>
       </Tabs>
     </div>
@@ -87,6 +132,7 @@
     <SendModelDialog ref="SendModelDialog" />
     <WithdrawalModalDialog ref="WithdrawalModalDialog" />
     <AssetlModalDialog ref="AssetlModalDialog" />
+    <DistributionModal ref="DistributionModal" />
   </div>
 </template>
 
@@ -104,8 +150,8 @@ import WithdrawalModalDialog from '@/views/Dialog/withdrawalModal.vue';
 import AssetlModalDialog from '@/views/Dialog/assetlModal.vue';
 import TxTable from '@/components/txTable/index.vue';
 import txFormat from '@/common/js/txFormat.js';
+import DistributionModal from '@/views/Dialog/distributionModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
-
 
 const { shell } = require('electron');
 
@@ -155,7 +201,50 @@ export default {
       AssetLAMBvalue: '',
       AssetSTOvalue: '',
       assetConfirmModal: false,
-      exchangesStatus: 'true'
+      exchangesStatus: 'true',
+      distributionBalance: null,
+      localTxList: [],
+      localTxcolumns: [
+        {
+          title: this.$t('home.localtable.txhash'),
+          key: 'txhash'
+        },
+        {
+          title: this.$t('home.localtable.state'),
+          key: 'state',
+          slot: 'state'
+        },
+        {
+          title: this.$t('home.localtable.txtype'),
+          key: 'state',
+          slot: 'txtype'
+        }, {
+          title: this.$t('home.localtable.amount'),
+          key: 'state',
+          slot: 'amount'
+        }, {
+          title: this.$t('home.localtable.to'),
+          key: 'state',
+          slot: 'to'
+        },
+        {
+          key: 'createTime',
+          slot: 'createTime',
+          title: this.$t('home.localtable.time')
+        },
+        {
+          key: 'message',
+          title: this.$t('home.localtable.error')
+        },
+        {
+          title: this.$t('home.localtable.more'),
+          key: 'createTime',
+          slot: 'txinfo'
+        }
+
+
+      ]
+
     };
   },
   components: {
@@ -163,7 +252,8 @@ export default {
     SendModelDialog,
     WithdrawalModalDialog,
     AssetlModalDialog,
-    TxTable
+    TxTable,
+    DistributionModal
   },
   computed: {
     amount: value => {
@@ -187,22 +277,28 @@ export default {
 
 
     this.transactionList();
+    this.validatorDistribution();
+    this.getlocaltxlist();
 
     this.Interval = setInterval(() => {
       this.transactionList();
+      this.validatorDistribution();
+      this.getlocaltxlist();
     }, 1000 * 15);
 
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.transactionList();
+      this.validatorDistribution();
+      this.getlocaltxlist();
     });
 
-    eventhub.$on('TxType', data => {
-      console.log('TxType', data);
-      this.$data.txType = data;
+    // eventhub.$on('TxType', data => {
+    //   console.log('TxType', data);
+    //   this.$data.txType = data;
 
-      this.transactionList();
-    });
+    //   this.transactionList();
+    // });
 
     // var num = this.bigNum(0);
     // console.log(num);
@@ -211,16 +307,54 @@ export default {
     clearInterval(this.$data.Interval);
   },
   methods: {
-    // AssetLAMBvalueChane(){
-    //  console.log('- -')
-    //  this.$data.AssetSTOvalue = this.$data.AssetLAMBvalue/1000;
-    // },
-    // AssetSTOvalueChane(){
-    //   this.$data.AssetLAMBvalue= this.$data.AssetSTOvalue *  1000;
-    // },
-    openwithdrawalModal() {
-      // this.$data.withdrawalModal=true;
-      this.$refs.WithdrawalModalDialog.open();
+    localTypeState(item) {
+      return this.$t(`home.localtable.types.${item}`);
+    },
+    localtype(item) {
+      if (item) {
+        return this.$t(`txType.${item.type}`);
+      }
+    },
+    localto(item) {
+      if (item) {
+        if (item.type == 'MsgVote' || item.type == 'MsgDeposit') {
+          return this.$t(`proposalsPage.ProposalID`) + ':' + item.proposalId;
+        }
+        return item.toAddress || item.validatorAddress;
+      }
+    },
+    localamount(item) {
+      var result = '';
+      if (item.type == 'MsgVote') {
+        return this.$t(`proposalsPage.${item.option}`);
+      }
+
+      if (item && (item.amount || item.amounts)) {
+        if (item.amounts instanceof Array) {
+          var list = item.amounts.map(one => {
+            return this.bigNumTypeFormat(one.amount, one.denom);
+          });
+          result = list.join(',');
+        } else if (item.amounts != undefined) {
+          result = this.bigNumTypeFormat(item.amounts.amount, item.amounts.denom);
+        } else {
+          result = this.bigNumTypeFormat(item.amount, item.denom);
+        }
+        return result;
+      }
+    },
+    txinfo(item) {
+      // console.log(value);
+      var explorer = DAEMON_CONFIG.explore;
+      let url = `${explorer}#/txDetail/${item.txhash}`;
+      shell.openExternal(url);
+    },
+    openwithdrawalModal(name) {
+      if (name == 'Withdraw') {
+        this.$refs.WithdrawalModalDialog.open();
+      } else {
+        this.$refs.DistributionModal.open();
+      }
     },
     denomFormart(denom) {
       //  return  denom..substr(1).toUpperCase()
@@ -282,6 +416,7 @@ export default {
         this.$data.loading = false;
       } catch (ex) {
         console.log(ex);
+        this.data = [];
         this.$data.loading = false;
       }
     },
@@ -305,74 +440,33 @@ export default {
       let url = DAEMON_CONFIG.pledgeurl;
       shell.openExternal(url);
     },
-    getamount(item) {
-      var msg0 = item.tx.value.msg[0];
-      var result;
-      if (msg0.value != undefined) {
-        if (msg0.value.amount != undefined) {
-          if (msg0.value.amount instanceof Array) {
-            result = this.bigNumTypeFormat(msg0.value.amount[0].amount, msg0.value.amount[0].denom);
-          } else {
-            result = this.bigNumTypeFormat(msg0.value.amount.amount, msg0.value.amount.denom);
-          }
-        } else if (msg0.type == 'lambda/MsgAssetDrop') {
-          result =
-              this.bigNumTypeFormat(msg0.value.asset.amount,
-                msg0.value.asset.denom) +
-              '->' +
-              this.bigNumTypeFormat(msg0.value.token.amount,
-                msg0.value.token.denom);
-        } else if (msg0.type == 'lambda/MsgAssetPledge') {
-          result =
-              this.bigNumTypeFormat(msg0.value.token.amount,
-                msg0.value.token.denom) +
-              '->' +
-              this.bigNumTypeFormat(msg0.value.asset.amount,
-                msg0.value.asset.denom);
-        } else {
-          item.tags.forEach(item => {
-            if (item.key == 'rewards') {
-              result = this.bigNumAdd(item.value.replace('ulamb', ''), result);
+    async validatorDistribution() {
+      try {
+        this.$store.dispatch('setDistribution', 0);
+        let res = await ipc.callMain('DistributionInformation', {});
+        console.log(res);
+        if (!res.state) return;
+        console.log(res);
+        if (res.data && res.data.val_commission) {
+          res.data.val_commission.forEach(item => {
+            if (item.denom === 'ulamb') {
+              this.$data.distributionBalance = item.amount;
+              this.$store.dispatch('setDistribution', item.amount);
             }
           });
-          result = this.bigNumTypeFormat(result, 'ulamb');
         }
+      } catch (ex) {
+        console.log(ex);
       }
-      return result;
     },
-    getSendAddress(item) {
-      var result;
-      var msg0 = item.tx.value.msg[0];
-      if (msg0.value.from_address != undefined) {
-        result = msg0.value.from_address;
-      } else if (msg0.value.address != undefined) {
-        result = msg0.value.address;
-      } else {
-        item.tags.forEach(item => {
-          if (item.key == 'delegator') {
-            result = item.value;
-          }
-        });
-      }
-
-      return result;
-    },
-    getToAddress(item) {
-      var value = item.tx.value.msg[0].value;
-      var toaddress = value.to_address || value.validator_address;
-      if (toaddress == undefined) {
-        item.tags.forEach(item => {
-          if (item.key == 'source-validator') {
-            toaddress = item.value;
-          }
-        });
-      }
-      return toaddress;
-    },
-    getType(data) {
-      var list = data.tx.value.msg[0].type.split('/');
-      return list[1] || list[0];
+    async getlocaltxlist() {
+      let res = await ipc.callMain('localtxlist', {});
+      // console.log(res);
+      if (!res.state) return;
+      // console.log(res);
+      this.$data.localTxList = res.data;
     }
+
 
   }
 };

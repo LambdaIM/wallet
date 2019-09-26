@@ -3,11 +3,12 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      :title="$t('Dialog.withdrawalModal.title')"
+      :title="$t('home.Withdrawprofit')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
       <p>
+
         <Input readonly v-model="DistributionReward">
           <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
           <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
@@ -19,7 +20,7 @@
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>{{$t('Dialog.withdrawalModal.title')}}</h2>
+        <h2>{{$t('home.Withdrawprofit')}}</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
@@ -81,7 +82,7 @@ export default {
         return;
       }
       this.$data.withdrawalModal = false;
-      this.transfer(value, 'withdrawal');
+      this.transfer(value, 'withdrawalDistribution');
     },
     async transfer(amount, txType) {
       let to = this.Tovalue;
@@ -134,7 +135,7 @@ export default {
   },
   computed: {
     DistributionReward() {
-      return this.bigNumType(this.$store.getters.getDistributionReward);
+      return this.bigNumType(this.$store.getters.getDistribution);
     },
     address: function() {
       return this.$store.getters.getaddress;

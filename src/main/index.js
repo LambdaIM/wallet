@@ -50,9 +50,9 @@ function createWindow() {
 
 
   mainWindow.loadURL(winURL);
-  setTimeout(() => {
-    upgrade(true);
-  }, 2000);
+  // setTimeout(() => {
+  //   upgrade(true);
+  // }, 2000);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
