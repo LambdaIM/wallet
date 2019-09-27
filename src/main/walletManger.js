@@ -317,7 +317,7 @@ walletManger.prototype.getDistributionRewards = async function () {
 
   return result;
 };
-walletManger.prototype.TransferDelegation = async function (to, amount, gas, isdege, validatorType) {
+walletManger.prototype.TransferDelegation = async function (to, amount, gas, isdege, validatorType,memo) {
   if (isdege) {
     // 质押
     return {
@@ -325,7 +325,8 @@ walletManger.prototype.TransferDelegation = async function (to, amount, gas, isd
       validatorAddress: to,
       amount: amount,
       denom: 'utbb',
-      validatortype: validatorType
+      validatortype: validatorType,
+      memo: memo || ''
     };
   } else {
     // 取消质押
