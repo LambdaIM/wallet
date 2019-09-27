@@ -1,10 +1,14 @@
 <template>
 <div class="customer-container">
  <div class="tableContainer">
-     <div  style="text-align: center;" v-if="List.length ==0">
+     <div  style="text-align: center;" v-if="List!=null&&List.length ==0">
        {{$t('Dialog.com.Nodata')}}
      </div>
-     <div v-for="item in List" class="itemhoder" :key="item.id" @click="goitem(item)">
+     <div class="demo-spin-container" v-if="List==null">
+          <Spin size="large" fix></Spin>
+     </div>
+     <div v-if="List!=null">
+     <div   v-for="item in List" class="itemhoder" :key="item.id" @click="goitem(item)">
 
      <Card  >
 
@@ -17,7 +21,7 @@
                 <Tag v-if="item.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 <Tag v-if="item.proposal_status==='VotingPeriod'" color="warning">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 <Tag v-if="item.proposal_status==='DepositPeriod'" color="primary">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
-                <Tag v-if="item.proposal_status==='Removed'" color="default">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
+                <Tag v-if="item.proposal_status==='Failed'" color="default">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 {{$t(`proposalsPage.${item.content.type.split('/')[1]}`) }}
               </Col>
         </Row>
@@ -32,7 +36,8 @@
 
         </Card>
 
-   </div>
+    </div>
+  </div>
         <br/><br/><br/><br/><br/><br/>
  </div>
 </div>
@@ -43,7 +48,7 @@ const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
   data() {
     return {
-      List: []
+      List: null
     };
   },
   mounted() {
@@ -79,6 +84,13 @@ export default {
       cursor: pointer;
       padding: 10px;
   }
+}
+.demo-spin-container{
+  display: inline-block;
+  width: 100%;
+  height: 100px;
+  position: relative;
+  border: 1px solid #eee;
 }
 
 </style>
