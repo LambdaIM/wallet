@@ -175,7 +175,8 @@
           "not_transfer_LAMB_to_yourself": "你不能把LAMB发送给自己。",
           "check_balance_amount_transfer": "请核对余额和交易金额。",
           "Check_forwarding_address": "检查地址",
-          "Check_the_amount": "核对金额"
+          "Check_the_amount": "核对金额",
+          "memotoolang":"备注太长了，请减少备注"
       }
   },
   "transactiondetails": {

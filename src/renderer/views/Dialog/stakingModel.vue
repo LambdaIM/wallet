@@ -27,7 +27,7 @@
         </p>
         <br />
         <p><Button @click="openmemo" v-if="editmemo==false" type="dashed" >{{$t('Dialog.com.EditMemo')}}</Button>
-    <Input  v-else v-model="memo" type="textarea" :rows="4" placeholder="Enter something..." :maxlength="memoNum" />
+    <Input   v-else v-model="memo" type="textarea" :rows="4" placeholder="Enter something..." :maxlength="memoNum" />
     </p>
         <div slot="footer">
           <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
@@ -90,6 +90,10 @@ export default {
     openmemo() {
       this.$data.editmemo = true;
     },
+    memoLength() {
+      return this.StrNum(this.$data.memo);
+    },
+
     open(toaddress, isdege, validatorType) {
       this.$data.Tovalue = toaddress;
       this.$data.isdege = isdege || isdege;
@@ -125,6 +129,12 @@ export default {
         // need to alert
         this.$Notice.warning({
           title: this.$t('home.action.check_balance_amount_transfer')
+        });
+        return;
+      }
+      if (this.memoLength() > this.$data.memoNum) {
+        this.$Notice.warning({
+          title: this.$t('home.action.memotoolang')
         });
         return;
       }
