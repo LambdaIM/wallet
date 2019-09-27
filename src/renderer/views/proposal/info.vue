@@ -1,5 +1,6 @@
 <template>
-  <div class="customer-container">
+<div>
+  <div v-if="info!=null" class="customer-container">
       <Mycard v-if="info!=null&&showType" :cardtitle="info.content.value.title" class="mt20">
       <div slot="card-content">
         <Row class="rowitem">
@@ -10,7 +11,7 @@
             <Tag v-if="info.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
             <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
             <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
-            <Tag v-if="info.proposal_status==='Removed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='Failed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
           </Col>
           <Col  span="12">
           <span @click="goexplor(proposal_id)">
@@ -156,7 +157,7 @@
             <Tag v-if="info.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
             <Tag v-if="info.proposal_status==='VotingPeriod'" color="warning">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
             <Tag v-if="info.proposal_status==='DepositPeriod'" color="primary">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
-            <Tag v-if="info.proposal_status==='Removed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
+            <Tag v-if="info.proposal_status==='Failed'" color="default">{{$t(`proposalsPage.typename.${info.proposal_status}`)}}</Tag>
           </Col>
           <Col span="12">
             <span @click="goexplor(proposal_id)">
@@ -253,6 +254,10 @@
     <DepositModelDialog ref="DepositModel" />
     <VoteModelDialog ref="VoteModel" />
   </div>
+  <div v-else>
+    <Spin size="large" fix></Spin>
+  </div>
+</div>
 </template>
 <script>
 import Mycard from '@/components/common/useful/Mycard.vue';
@@ -316,7 +321,7 @@ export default {
   methods: {
     goexplor(id) {
       var explorer = DAEMON_CONFIG.explore;
-      let url = `${explorer}#proposalDetail/{id}`;
+      let url = `${explorer}#proposalDetail/${id}`;
       shell.openExternal(url);
     },
     allVote(item) {

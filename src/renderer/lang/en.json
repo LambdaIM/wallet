@@ -394,7 +394,7 @@
         "VotingPeriod":"VotingPeriod",
         "Rejected":"Rejected",
         "Passed":"Passed",
-        "Removed":"Removed"
+        "Failed":"Failed"
     },
     "Needdeposit":"Need deposit",
     "Thelongestdepositperiod":"The longest deposit period",

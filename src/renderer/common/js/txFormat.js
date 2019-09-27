@@ -12,7 +12,7 @@ export default function (tx, vueIns) {
           'to': getToAddress(msg, tx, vueIns),
           'msg_type': msg.type,
           'action': msg.type.split('/')[1],
-          'amount': getamount(msg, tx, vueIns),
+          'amount': getamount(msg, tx, vueIns, index),
           'valid': tx.logs[index] ? tx.logs[index].success : false,
           'log': tx.logs[index] ? tx.logs[index].log : '--'
 
@@ -63,7 +63,7 @@ function getToAddress(msg, item, vuethis) {
   return toaddress;
 }
 
-function getamount(msg0, item, vueIns) {
+function getamount(msg0, item, vueIns, index) {
   var result; var _this = vueIns;
   if (msg0.value != undefined) {
     if (msg0.value.amount != undefined) {
@@ -108,12 +108,20 @@ function getamount(msg0, item, vueIns) {
     } else if (msg0.type == 'lambda/MsgDestroyAsset') {
       result = _this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom);
     } else {
+      var indexNative = 0;
       item.tags.forEach(item => {
         if (item.key == 'rewards' && item.value) {
-          result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
+          if (indexNative == index) {
+            result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
+          }
+
+          indexNative++;
         }
         if (item.key == 'commission' && item.value) {
-          result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
+          if (indexNative == index) {
+            result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
+          }
+          indexNative++;
         }
       });
 
