@@ -107,6 +107,11 @@ var walletRouter = new Router({
     name: 'proposalinfo',
     component: () =>
             import('@/views/proposal/info.vue')
+  }, {
+    path: '/market',
+    name: 'market',
+    component: () =>
+            import('@/views/market/index.vue')
   }
   ]
 });

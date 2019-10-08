@@ -13,8 +13,8 @@
       </Col>
 
       <Col
-        span="16"
-        offset="2"
+        span="17"
+        offset="1"
         v-if="login==true"
         class-name="head-menu-wrapper"
       >
@@ -43,6 +43,12 @@
             class="item"
           > {{$t("head.proposals")}} </router-link>
         </div>
+        <div class="head-menu-item">
+          <router-link
+            to="/market"
+            class="item"
+          >市场</router-link>
+        </div>
 
         <div class="head-menu-item">
           <router-link
@@ -50,6 +56,7 @@
             class="item"
           >{{ $t("head.sign") }}</router-link>
         </div>
+
 
 
         <div class="head-menu-item overtext">
