@@ -8,32 +8,22 @@
       @on-cancel="sendcancel"
     >
       <p>
-        商家：lambLucky
-      </p><br/>
-      <p>
-        商家地址：lambda19zptal4p80w29kqjv4wrwyd4qm2y4u7w9k8nrv
+        市场单价：1  GB/LAMB/DAY
       </p>
       <br/>
+
+
       <p>
-        限额：100GB~1000GB
-      </p>
-      <br/>
-      <p>
-        限时：100day~1000day
-      </p>
-      <br/>
-      <p>
-        空间单价：1  GB/LAMB/DAY
-      </p>
-      <br/>
-      <p>
-        赔付比率：3%
+        <Input readonly v-model="DistributionReward">
+          <span slot="prepend">空间</span>
+          <span slot="append">GB</span>
+        </Input>
       </p>
       <br/>
       <p>
         <Input readonly v-model="DistributionReward">
-          <span slot="prepend">空间</span>
-          <span slot="append">TBB</span>
+          <span slot="prepend">时间</span>
+          <span slot="append">Day</span>
         </Input>
       </p>
       <div slot="footer">

@@ -8,18 +8,18 @@
       @on-cancel="sendcancel"
     >
       <p>
-        商家：lambLucky
+        市场地址：lambda19zptal4p80w29kqjv4wrwyd4qm2y4u7w9k8nrv
       </p><br/>
       <p>
-        商家地址：lambda19zptal4p80w29kqjv4wrwyd4qm2y4u7w9k8nrv
+        矿工地址：lambda19zptal4p80w29kqjv4wrwyd4qm2y4u7w9k8nrv
       </p>
       <br/>
       <p>
-        限额：100GB~1000GB
+        最小空间：1gb
       </p>
       <br/>
       <p>
-        限时：100day~1000day
+        最小时间：1day
       </p>
       <br/>
       <p>
@@ -31,10 +31,29 @@
       </p>
       <br/>
       <p>
+        总空间：100gb
+      </p>
+      <br/>
+      <p>
+        剩余空间：100gb
+      </p>
+      <br/>
+      <p>
         <Input readonly v-model="DistributionReward">
           <span slot="prepend">空间</span>
-          <span slot="append">TBB</span>
+          <span slot="append">GB</span>
         </Input>
+      </p>
+            <br/>
+      <p>
+        <Input readonly v-model="DistributionReward">
+          <span slot="prepend">时间</span>
+          <span slot="append"> DAY</span>
+        </Input>
+      </p>
+      <br/>
+      <p>
+        实际付金额：100lamb
       </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
