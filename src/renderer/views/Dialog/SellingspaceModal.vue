@@ -9,10 +9,28 @@
     >
       <p>
         <Input readonly v-model="DistributionReward">
-          <span slot="prepend">空间</span>
+          <span slot="prepend">出售空间</span>
           <span slot="append">TBB</span>
         </Input>
       </p>
+      <p style="margin-top: 20px;">
+        购买限额
+      </p>
+      <br/>
+      <p>
+      <Input readonly v-model="DistributionReward">
+          <span slot="prepend">最少购买空间</span>
+          <span slot="append">TBB</span>
+        </Input>
+      </p>
+      <br/>
+      <p>
+      <Input readonly v-model="DistributionReward">
+          <span slot="prepend">最多购买空间</span>
+          <span slot="append">TBB</span>
+        </Input>
+      </p>
+
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>
