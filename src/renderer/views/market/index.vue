@@ -26,7 +26,7 @@
 
       数量 <Input   style="width: auto" />GB&nbsp;
       时间 <Input   style="width: auto" />Day&nbsp;
-         <Button type="primary">一键购买空间</Button>
+         <Button @click="openautoBuyingspace" type="primary">一键购买空间</Button>
 
     </div>
     <br/>
@@ -101,17 +101,15 @@ export default {
     return {
       autoprice: 1,
       columns1: [{
-        title: '市场类别',
-        key: 'marketType'
-      }, {
-        title: '名称',
-        key: 'name'
-      }, {
-        title: '地址',
+        title: '矿工地址',
         key: 'address'
       },
       {
-        title: '数量',
+        title: '空间总量',
+        key: 'num'
+      },
+      {
+        title: '剩余空间总量',
         key: 'num'
       },
       {
@@ -119,15 +117,19 @@ export default {
         key: 'price'
       },
       {
-        title: '限额',
-        key: 'range'
+        title: '最小空间',
+        key: 'range1'
+      },
+      {
+        title: '最小时间',
+        key: 'range2'
       },
       {
         title: '交易',
         key: 'action',
         slot: 'action'
       }, {
-        title: '费率',
+        title: '赔率',
         key: 'rate'
       }
       ],
@@ -147,19 +149,34 @@ export default {
       ],
       columns3: [
         {
-          title: '数量',
-          key: 'age'
+          title: '空间总量',
+          key: 'num'
         },
         {
-          title: '单价',
+          title: '剩余空间总量',
+          key: 'num'
+        },
+        {
+          title: '单价LAMB/GB/day',
           key: 'price'
         },
         {
-          title: '时间',
-          key: 'time'
+          title: '最小空间',
+          key: 'range1'
+        },
+        {
+          title: '最小时间',
+          key: 'range2'
+        },
+        {
+          title: '赔率',
+          key: 'rate'
         }, {
-          title: '已售',
-          key: 'age2'
+          title: '存储设备',
+          key: 'rate'
+        }, {
+          title: '市场',
+          key: 'rate'
         }
       ],
       columns4: [{
@@ -212,7 +229,8 @@ export default {
           date: '2016-10-03',
           num: '0.8 GB',
           price: '2000lamb',
-          range: '19~1000',
+          range1: '1gb',
+          range2: '1day',
           marketType: 'lambda交易市场',
           rate: '4%'
         }
@@ -265,7 +283,7 @@ export default {
       this.$refs.Sellingspace.open();
     },
     openautoBuyingspace() {
-      this.$refs.Sellingspace.open();
+      this.$refs.autoBuyingspace.open();
     },
     orderinfo() {
       this.$router.push(`/orderinfo`);

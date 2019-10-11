@@ -7,11 +7,31 @@
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
+    <p>
+        市场地址：********************
+      </p><br/>
+      <p>
+        市场名称：lambda 存储市场
+      </p><br/>
       <p>
         <Input readonly v-model="DistributionReward">
           <span slot="prepend">出售空间</span>
-          <span slot="append">TBB</span>
+          <span slot="append">GB</span>
         </Input>
+      </p><br/>
+      <p>
+        赔率&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <RadioGroup >
+
+            <Radio label="1倍"></Radio>
+            <Radio label="3倍"></Radio>
+        </RadioGroup>
+      </p>
+      <br/>
+      <p>存储设备&nbsp;&nbsp;
+        <Select placeholder="请选择存储设备" v-model="model1" style="width:200px">
+        <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+    </Select>
       </p>
       <p style="margin-top: 20px;">
         购买限额
@@ -20,14 +40,14 @@
       <p>
       <Input readonly v-model="DistributionReward">
           <span slot="prepend">最少购买空间</span>
-          <span slot="append">TBB</span>
+          <span slot="append">GB</span>
         </Input>
       </p>
       <br/>
       <p>
       <Input readonly v-model="DistributionReward">
-          <span slot="prepend">最多购买空间</span>
-          <span slot="append">TBB</span>
+          <span slot="prepend">最短购买时间</span>
+          <span slot="append">Day</span>
         </Input>
       </p>
 
@@ -70,7 +90,12 @@ export default {
     return {
       withdrawalModal: false,
       confirmModal: false,
-      gaseFee: 0
+      gaseFee: 0,
+      model1: '',
+      cityList: [{
+        value: '设备1',
+        label: '设备1'
+      }]
     };
   },
   methods: {
