@@ -37,4 +37,39 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('marketSellOrderslist', async query => {
+    try {
+      var M = new Manager();
+      var result = await M.getSellOrderslist();
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('marketUserOrderslist', async query => {
+    try {
+      var M = new Manager();
+      var result = await M.getUserOrderslist();
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
+  eipc.answerRenderer('marketgetOrderinfo', async query => {
+    try {
+      var M = new Manager();
+      var result = await M.getOrderinfo(query);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  // getUserOrderslist
 }
