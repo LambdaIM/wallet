@@ -11,14 +11,14 @@
 
     </Row>
                   <div style="text-align: center;">
-          <Dropdown>
+          <Dropdown @on-click="selectmarketClick">
         <a href="javascript:void(0)">
-            lambd存储市场
+            {{selectmarket.name}}
             <Icon type="ios-arrow-down"></Icon>
         </a>
         <DropdownMenu slot="list">
-            <DropdownItem>biss存储市场</DropdownItem>
-            <DropdownItem>火币矿池存储市场</DropdownItem>
+            <DropdownItem :name="item.name" v-for="item in marketList" >{{item.name}}</DropdownItem>
+
 
         </DropdownMenu>
     </Dropdown>&nbsp;
@@ -40,7 +40,7 @@
 
     </Row>
      <br/>
-                    <Table  :columns="columns1" :data="data1">
+                    <Table  :columns="OrderListcolumns" :data="OrderList">
                         <template slot-scope="{ row, index }" slot="action">
               <Button  @click="openBuyingspace"  type="primary" size="small"> 购买空间 </Button>
 
@@ -100,29 +100,34 @@ export default {
   data() {
     return {
       autoprice: 1,
-      columns1: [{
+      marketList: [],
+      marketExplain: '',
+      selectmarket: '',
+      marketinfo: '',
+      OrderList: [],
+      OrderListcolumns: [{
         title: '矿工地址',
-        key: 'address'
+        key: 'Address'
       },
       {
         title: '空间总量',
-        key: 'num'
+        key: 'SellSize'
       },
       {
         title: '剩余空间总量',
-        key: 'num'
+        key: 'UnUseSize'
       },
       {
         title: '单价LAMB/GB/day',
-        key: 'price'
+        key: 'Price'
       },
       {
         title: '最小空间',
-        key: 'range1'
+        key: 'MinBuySize'
       },
       {
         title: '最小时间',
-        key: 'range2'
+        key: 'MinDuration'
       },
       {
         title: '交易',
@@ -130,7 +135,7 @@ export default {
         slot: 'action'
       }, {
         title: '赔率',
-        key: 'rate'
+        key: 'Rate'
       }
       ],
       columns2: [
@@ -275,7 +280,35 @@ export default {
     SellingspaceModal,
     autoBuyingspaceModal
   },
+  mounted() {
+    this.getmarketlist();
+    this.getOrderList();
+  },
   methods: {
+    async getmarketlist() {
+      console.log('getmarketlist');
+      let res = await ipc.callMain('marketlist', {});
+      if (res.state) {
+        this.$data.marketList = res.data.data;
+        this.$data.selectmarket = this.$data.marketList[0];
+      }
+    },
+    async   getmarketinfo(name) {
+      let res = await ipc.callMain('marketinfo', {
+        name
+      });
+      if (res.state) {
+        this.$data.marketinfo = res.data.data;
+      }
+    },
+    async  getOrderList() {
+      let res = await ipc.callMain('marketOrderList', {
+        name
+      });
+      if (res.state) {
+        this.$data.OrderList = res.data.data;
+      }
+    },
     openBuyingspace() {
       this.$refs.Buyingspace.open();
     },
@@ -287,6 +320,11 @@ export default {
     },
     orderinfo() {
       this.$router.push(`/orderinfo`);
+    },
+    selectmarketClick(e) {
+      console.log(e);
+      this.getmarketinfo(e.name);
+      this.getOrderList(e.name);
     }
 
   },

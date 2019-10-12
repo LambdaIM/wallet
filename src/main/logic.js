@@ -7,6 +7,9 @@ import validatorsRpc from './validatorsRpc';
 
 import proposalrpc from './proposalrpc';
 
+import marketrpc from './marketrpc';
+
+
 var fs = require('graceful-fs');
 var { DAEMON_CONFIG } = require('../configmain.js');
 const settings = require('electron-settings');
@@ -21,4 +24,6 @@ export default function() {
   validatorsRpc();
 
   proposalrpc();
+
+  marketrpc();
 }
