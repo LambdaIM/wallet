@@ -4,10 +4,10 @@
       <div  class="transaction-content" slot="card-content">
           <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">交易市场:</span>
+            <span class="title">交易市场地址:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            lamb模式交易市场
+            {{orderinfo.MarketAddress}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -23,7 +23,7 @@
             <span class="title">订单id:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            ffff
+            {{orderinfo.OrderId}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -31,7 +31,7 @@
             <span class="title">数量:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            1gb
+            {{orderinfo.Size}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -39,7 +39,7 @@
             <span class="title">单价:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            1 LAMB/GB/DAY
+            {{orderinfo.Price}} LAMB/GB/DAY
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -55,7 +55,7 @@
             <span class="title">开始时间:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            2019-10-1
+            {{orderinfo.CreateTime}}
           </Col>
         </Row>
                 <Row class-name="card-item">
@@ -63,39 +63,24 @@
             <span class="title">结束时间:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            2019-10-1
+            {{orderinfo.EndTime}}
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">地址:</span>
+            <span class="title">设备名称:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            lambda19zptal4p80w29kqjv4wrwyd4qm2y4u7w9k8nrv
+            {{orderinfo.MachineName}}
           </Col>
         </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">状态:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            匹配中
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">状态:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            匹配中
-          </Col>
-        </Row>
+
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">操作:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-             <Button type="primary">获取空间管理的token</Button>
+             <Button @click="gets3token" type="primary">获取空间管理的token</Button>
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Button type="warning">文件丢失申请仲裁</Button>
           </Col>
@@ -115,34 +100,41 @@
 import Mycard from '@/components/common/useful/Mycard.vue';
 
 import Activity from '@/components/txTable/Activity.vue';
-import txFormat from '@/common/js/txFormat.js';
 
 
-const { shell } = require('electron');
+
+
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 
 export default {
   data() {
     return {
-      data: null,
-      id: '',
-      txType: '',
-      loading: false,
-      activityData: []
+      orderinfo: {}
     };
   },
   components: {
     Mycard,
     Activity
   },
-  created() {
 
+  mounted() {
+    let id = this.$route.params.id;
+    this.getorderinfo(id);
   },
-  // mounted() {
-
-  // },
   methods: {
+    async  getorderinfo(id) {
+      let res = await ipc.callMain('marketgetOrderinfo', {
+        id
+      });
+      if (res.state) {
+        this.$data.orderinfo = res.data.data;
+      }
+    },
+    async gets3token() {
+      console.log('*********');
+    }
+    // marketgetOrderinfo
 
   },
   computed: {
