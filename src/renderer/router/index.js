@@ -113,7 +113,7 @@ var walletRouter = new Router({
     component: () =>
             import('@/views/market/index.vue')
   }, {
-    path: '/orderinfo',
+    path: '/orderinfo/:id',
     name: 'orderinfo',
     component: () =>
             import('@/views/market/orderinfo.vue')

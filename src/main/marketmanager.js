@@ -41,5 +41,35 @@ class marketmanager {
     var result = await this.CosmosAPI().get.marketOrderslist();
     return { data: result };
   }
+
+  async getSellOrderslist(query) {
+    console.log('marketinfo');
+    if (this.defaultAddress == null) {
+      throw new Error('need address');
+    }
+
+
+    var result = await this.CosmosAPI().get.marketSellOrderslist(this.defaultAddress);
+    return { data: result };
+  }
+
+  async getUserOrderslist(query) {
+    console.log('marketinfo');
+    if (this.defaultAddress == null) {
+      throw new Error('need address');
+    }
+    var result = await this.CosmosAPI().get.marketUserOrderslist(this.defaultAddress);
+    return { data: result };
+  }
+
+
+  async getOrderinfo(query) {
+    console.log('marketinfo');
+    var { id } = query;
+    var result = await this.CosmosAPI().get.marketOrderinfo(id);
+    return { data: result };
+  }
+
+  // marketOrderinfo
 }
 export default marketmanager;

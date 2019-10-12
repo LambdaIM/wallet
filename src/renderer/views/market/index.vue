@@ -56,14 +56,14 @@
                     <Table :columns="columns1" :data="data1"></Table>
                 </TabPane> -->
                 <TabPane label="我出售的空间" name="name4">
-                 <Table :columns="columns3" :data="data2"></Table>
+                 <Table :columns="SellOrdercolumns" :data="SellOrderslist"></Table>
                  <br/>
                     <div style="text-align: center;">
                      <Page total="100" show-elevator />
                     </div>
                  </TabPane>
                 <TabPane label="订单列表" name="name3">
-                    <Table :columns="columns4" :data="data3">
+                    <Table :columns="UserOrderscolumns" :data="UserOrderslist">
                       <template slot-scope="{ row, index }" slot="action">
                         <Button  @click="orderinfo"  type="primary" size="small"> 订单详情 </Button>
                       </template>
@@ -138,84 +138,69 @@ export default {
         key: 'Rate'
       }
       ],
-      columns2: [
-        {
-          title: '数量',
-          key: 'name'
-        },
-        {
-          title: '单价',
-          key: 'age'
-        },
-        {
-          title: '时间',
-          key: 'address'
-        }
-      ],
-      columns3: [
+
+      SellOrdercolumns: [
         {
           title: '空间总量',
-          key: 'num'
+          key: 'SellSize'
         },
         {
           title: '剩余空间总量',
-          key: 'num'
+          key: 'UnUseSize'
         },
         {
           title: '单价LAMB/GB/day',
-          key: 'price'
+          key: 'Price'
         },
         {
           title: '最小空间',
-          key: 'range1'
+          key: 'MinBuySize'
         },
         {
           title: '最小时间',
-          key: 'range2'
+          key: 'MinDuration'
         },
         {
           title: '赔率',
-          key: 'rate'
+          key: 'Rate'
         }, {
           title: '存储设备',
-          key: 'rate'
+          key: 'MachineName'
         }, {
           title: '市场',
-          key: 'rate'
+          key: 'MarketAddress'
         }
       ],
-      columns4: [{
+      SellOrderslist: [],
+      UserOrderscolumns: [{
         title: '类型',
         key: 'type'
       },
       {
-        title: '订单id',
-        key: 'age'
+        title: '订单ID',
+        key: 'OrderId'
       },
 
       {
         title: '数量',
-        key: 'age'
+        key: 'Size'
       },
       {
-        title: '单价',
-        key: 'price'
+        title: '单价(LAMB/GB/DAY)',
+        key: 'Price'
       },
-      {
-        title: '支付金额',
-        key: 'price'
-      },
+
       {
         title: '开始时间',
-        key: 'time'
+        key: 'CreateTime'
       },
       {
         title: '结束时间',
-        key: 'time'
+        key: 'EndTime'
       },
       {
-        title: '地址',
-        key: 'address'
+        title: '市场地址',
+        key: 'MarketAddress'
       },
       {
         title: '状态',
@@ -226,48 +211,7 @@ export default {
         slot: 'action'
       }
       ],
-      data1: [
-        {
-          name: 'John Brown',
-          age: 18,
-          address: 'lambda19zptal4p80w29kqjv4wrwyd4qm2y4u7w9k8nrv',
-          date: '2016-10-03',
-          num: '0.8 GB',
-          price: '2000lamb',
-          range1: '1gb',
-          range2: '1day',
-          marketType: 'lambda交易市场',
-          rate: '4%'
-        }
-      ],
-      data2: [
-        {
-          name: 'John Brown',
-          age: 18,
-          age2: 11,
-          address: 'lambda19zptal4p80w29kqjv4wrwyd4qm2y4u7w9k8nrv',
-          date: '2016-10-03',
-          num: '0.8 TBB',
-          price: '2000lamb',
-          range: '19~1000',
-          time: '2019-10-1'
-        }
-      ],
-      data3: [
-        {
-          name: 'John Brown',
-          age: 18,
-          age2: 11,
-          type: '出售',
-          address: 'lambda19zptal4p80w29kqjv4wrwyd4qm2y4u7w9k8nrv',
-          date: '2016-10-03',
-          num: '0.8 TBB',
-          price: '2000lamb',
-          range: '19~1000',
-          time: '2019-10-1',
-          state: '匹配中'
-        }
-      ]
+      UserOrderslist: []
 
 
 
@@ -283,6 +227,8 @@ export default {
   mounted() {
     this.getmarketlist();
     this.getOrderList();
+    this.getSellOrderslist();
+    this.getUserOrderslist();
   },
   methods: {
     async getmarketlist() {
@@ -309,6 +255,22 @@ export default {
         this.$data.OrderList = res.data.data;
       }
     },
+    async  getSellOrderslist() {
+      let res = await ipc.callMain('marketSellOrderslist', {
+        name
+      });
+      if (res.state) {
+        this.$data.SellOrderslist = res.data.data;
+      }
+    },
+    async getUserOrderslist() {
+      let res = await ipc.callMain('marketUserOrderslist', {
+        name
+      });
+      if (res.state) {
+        this.$data.UserOrderslist = res.data.data;
+      }
+    },
     openBuyingspace() {
       this.$refs.Buyingspace.open();
     },
@@ -319,7 +281,7 @@ export default {
       this.$refs.autoBuyingspace.open();
     },
     orderinfo() {
-      this.$router.push(`/orderinfo`);
+      this.$router.push(`/orderinfo/1`);
     },
     selectmarketClick(e) {
       console.log(e);
