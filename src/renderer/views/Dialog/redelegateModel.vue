@@ -230,7 +230,7 @@ export default {
       if (this.$data.dataParameters.unbonding_time == undefined) {
         return '';
       }
-      return (this.$data.dataParameters.unbonding_time / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(3);
+      return (this.$data.dataParameters.unbonding_time / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(2);
     }
 
   },
