@@ -304,7 +304,8 @@
          "turnin":"New validator",
          "choosepledge":"Please choose the validator of the pledge.",
          "validatorname":"Validator name",
-         "tip":"Note: There is no reward 21 days after the pledge is transferred to the new validator",
+         "tip":"Note: There is no reward {0} days after the pledge is transferred to the new validator",
+         "tip2":"Note: There is no reward {0} days after the cancellation of the pledge.",
          "action":{
              "differentaddresses":"New and old validator cannot be the same",
              "selectaddresses":"Select the validator to delegate"

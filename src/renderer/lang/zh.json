@@ -298,7 +298,8 @@
          "turnin":"新节点",
          "choosepledge":"请选择转质押的节点",
          "validatorname":"节点名称",
-         "tip":"注意：转质押到新的节点后21天没有奖励",
+         "tip":"注意：转质押到新的节点后{0}天没有奖励",
+         "tip2":"注意： 取消质押后{0}天没有奖励",
          "action":{
              "differentaddresses":"新节点和旧节点不能相同",
              "selectaddresses":"请选择转入的节点"

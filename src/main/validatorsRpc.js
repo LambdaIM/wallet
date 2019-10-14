@@ -110,6 +110,19 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('mypartnerundelegations', async query => {
+    var operator_address = query.operator_address;
+
+    try {
+      var result = await LambdaRpcApi().get.partnerundelegations(operator_address);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
   eipc.answerRenderer('stakingParameters', async query => {
     try {
       var result = await LambdaRpcApi().get.stakingParameters();

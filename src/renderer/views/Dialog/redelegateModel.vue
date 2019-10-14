@@ -38,7 +38,7 @@
         </p>
         <br />
         <p style="color:red">
-          {{$t('Dialog.redelegateModel.tip')}}
+          {{$t('Dialog.redelegateModel.tip',[this.days()])}}
         </p>
 
         <div slot="footer">
@@ -98,7 +98,8 @@ export default {
       isdege: true,
       gaseFee: 0,
       validatorsList: [],
-      validatorName: ''
+      validatorName: '',
+      dataParameters: {}
     };
   },
   methods: {
@@ -131,6 +132,7 @@ export default {
         throw new Error('need validatorType');
       }
       var result = await this.getListData();
+      this.stakingParameters();
     },
     sendcancel() {
       this.sendModal = false;
@@ -201,7 +203,7 @@ export default {
     },
     confirm() {
       var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
-      if (comparedNum == 1 || comparedNum == null || comparedNum == 0) {
+      if (comparedNum == 1 || comparedNum == null) {
         this.$Notice.warning({
           title: 'error',
           desc: this.$t('Dialog.com.Lesscommission')
@@ -211,6 +213,24 @@ export default {
       this.confirmModal = false;
       // this.passwordModal = true;
       eventhub.$emit('TxConfirm', this.$data.transactiondata, this.toBigNumStr(this.$data.gaseFee));
+    },
+    async stakingParameters() {
+      try {
+        let res = await ipc.callMain('stakingParameters', {});
+        if (res.state) {
+          console.log('--');
+          console.log(res);
+          this.$data.dataParameters = res.data;
+        }
+      } catch (error) {
+
+      }
+    },
+    days() {
+      if (this.$data.dataParameters.unbonding_time == undefined) {
+        return '';
+      }
+      return (this.$data.dataParameters.unbonding_time / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(3);
     }
 
   },

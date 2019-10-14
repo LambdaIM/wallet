@@ -25,8 +25,13 @@
             <span slot="append">TBB</span>
           </Input>
         </p>
-        <br />
-        <p>
+
+
+        <br/>
+        <p v-if="isdege==false" style="color:red">
+          {{$t('Dialog.redelegateModel.tip2',[this.days()])}}
+        </p>
+        <p v-else>
           {{$t('home.Balance')}} : {{balance|Stoformat}}
 
         </p>
@@ -78,7 +83,8 @@ export default {
       Tovalue: '',
       LAMBvalue: '',
       isdege: true,
-      gaseFee: 0
+      gaseFee: 0,
+      dataParameters: {}
     };
   },
   methods: {
@@ -90,6 +96,7 @@ export default {
       if (validatorType == undefined) {
         throw new Error('need validatorType');
       }
+      this.stakingParameters();
     },
     sendcancel() {
       this.sendModal = false;
@@ -174,8 +181,9 @@ export default {
       }
     },
     confirm() {
+      console.log('- -');
       var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
-      if (comparedNum == 1 || comparedNum == null || comparedNum == 0) {
+      if (comparedNum == 1 || comparedNum == null) {
         this.$Notice.warning({
           title: 'error',
           desc: this.$t('Dialog.com.Lesscommission')
@@ -185,6 +193,24 @@ export default {
       this.confirmModal = false;
       // this.passwordModal = true;
       eventhub.$emit('TxConfirm', this.$data.transactiondata, this.toBigNumStr(this.$data.gaseFee));
+    },
+    async stakingParameters() {
+      try {
+        let res = await ipc.callMain('stakingParameters', {});
+        if (res.state) {
+          console.log('--');
+          console.log(res);
+          this.$data.dataParameters = res.data;
+        }
+      } catch (error) {
+
+      }
+    },
+    days() {
+      if (this.$data.dataParameters.unbonding_time == undefined) {
+        return '';
+      }
+      return (this.$data.dataParameters.unbonding_time / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(3);
     }
 
   },
