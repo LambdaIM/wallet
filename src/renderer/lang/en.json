@@ -304,7 +304,7 @@
          "turnin":"New validator",
          "choosepledge":"Please choose the validator of the pledge.",
          "validatorname":"Validator name",
-         "tip":"Note: There is no reward {0} days after the pledge is transferred to the new validator",
+         "tip":"Note: Within {0} days: the pledge can only be transferred 7 times, and can not be re-transferred from the new node",
          "tip2":"Note: There is no reward {0} days after the cancellation of the pledge.",
          "action":{
              "differentaddresses":"New and old validator cannot be the same",
