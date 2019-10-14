@@ -17,7 +17,10 @@
             <Icon type="ios-arrow-down"></Icon>
         </a>
         <DropdownMenu slot="list">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 文案调整
             <DropdownItem :name="item.name" :key="item.marketAddress" v-for="item in marketList" >{{item.name}}</DropdownItem>
 
 
@@ -31,9 +34,13 @@
 
     </div>
     <br/>
+<<<<<<< HEAD
 
         <div>{{selectmarket.name}}存储市场指标    挂单手续费：{{selectmarket.feeRate|Percentformat}}，成单手续费：{{selectmarket.commissionRate|Percentformat}} 订单量：111，最短购买时间：1天 最长购买时间1年，空间最小1gb 空间最大 10gb </div>
 
+=======
+        <div>{{selectmarket.name}}存储市场指标    挂单手续费：{{selectmarket.feeRate|Percentformat}}，成单手续费：{{selectmarket.commissionRate|Percentformat}} 订单量：111，最短购买时间：1天 最长购买时间1年，空间最小1gb 空间最大 10gb </div>
+>>>>>>> 文案调整
 
      <Divider />
 
