@@ -34,11 +34,9 @@ class marketmanager {
     var result = await this.CosmosAPI().get.marketinfo(name);
     return { data: result };
   }
-  async getOrderList(query) {
+  async getOrderList(marketName, orderType, page, limit) {
     console.log('marketinfo');
-
-
-    var result = await this.CosmosAPI().get.marketOrderslist();
+    var result = await this.CosmosAPI().get.marketOrderslist(marketName, orderType, page, limit);
     return { data: result };
   }
 

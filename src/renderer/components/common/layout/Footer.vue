@@ -168,7 +168,7 @@ export default {
   bottom: 0;
   width: 100%;
   height: 40px;
-  z-index: 9999;
+  z-index: 1;
   background: #09334c;
   background-size: cover;
   .footer-wrapper {

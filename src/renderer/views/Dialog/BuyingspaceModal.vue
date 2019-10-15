@@ -8,52 +8,52 @@
       @on-cancel="sendcancel"
     >
       <p>
-        市场地址：lambda19zptal4p80w29kqjv4wrwyd4qm2y4u7w9k8nrv
+        市场：{{market.name}}
       </p><br/>
       <p>
-        矿工地址：lambda19zptal4p80w29kqjv4wrwyd4qm2y4u7w9k8nrv
+        矿工地址：{{orderinfo.address}}
       </p>
       <br/>
       <p>
-        最小空间：1gb
+        最小空间：{{orderinfo.minBuySize}}GB
       </p>
       <br/>
       <p>
-        最小时间：1day
+        最小时间：{{orderinfo.minDuration/(1000*1000*1000*60*60*24)}}day
       </p>
       <br/>
       <p>
-        空间单价：1  GB/LAMB/DAY
+        空间单价(GB/LAMB/DAY)：{{orderinfo.price|Lambformat}}
       </p>
       <br/>
       <p>
-        赔付比率：3%
+        赔付比率：{{parseInt(orderinfo.rate)}}
       </p>
       <br/>
       <p>
-        总空间：100gb
+        总空间：{{orderinfo.sellSize}}GB
       </p>
       <br/>
       <p>
-        剩余空间：100gb
+        剩余空间：{{orderinfo.unUseSize}}GB
       </p>
       <br/>
       <p>
-        <Input readonly v-model="DistributionReward">
+        <Input v-model="spaceSize">
           <span slot="prepend">空间</span>
           <span slot="append">GB</span>
         </Input>
       </p>
             <br/>
       <p>
-        <Input readonly v-model="DistributionReward">
+        <Input  v-model="spaceDuration">
           <span slot="prepend">时间</span>
           <span slot="append"> DAY</span>
         </Input>
       </p>
       <br/>
       <p>
-        实际付金额：100lamb
+        实际付金额：{{Paymentamount|Lambformat}}
       </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
@@ -94,14 +94,20 @@ export default {
     return {
       withdrawalModal: false,
       confirmModal: false,
-      gaseFee: 0
+      gaseFee: 0,
+      orderinfo: {},
+      market: {},
+      spaceSize: '',
+      spaceDuration: ''
     };
   },
   methods: {
-    open() {
+    open(data, market) {
       console.log('- -');
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
+      this.$data.orderinfo = data;
+      this.$data.market = market;
     },
     prewithdrawalLAMB() {
       console.log('- -');
@@ -183,6 +189,9 @@ export default {
     },
     balance: function() {
       return this.$store.getters.getblance;
+    },
+    Paymentamount: function() {
+      return this.$data.spaceSize * this.$data.spaceDuration * this.$data.orderinfo.price;
     }
   }
 };

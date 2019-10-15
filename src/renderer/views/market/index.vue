@@ -44,15 +44,26 @@
      <br/>
                     <Table  :columns="OrderListcolumns" :data="OrderList">
                         <template slot-scope="{ row, index }" slot="action">
-              <Button  @click="openBuyingspace"  type="primary" size="small"> 购买空间 </Button>
+                         <Button  @click="openBuyingspace(row)"  type="primary" size="small"> 购买空间 </Button>
+                        </template>
+                        <template slot-scope="{ row, index }" slot="price">
+                         {{row.price|Lambformat}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="minDuration">
+                         {{row.minDuration/(1000*1000*1000*60*60*24)}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="rate">
+                         {{parseInt(row.rate)}}
+                        </template>
 
 
-            </template>
+
                     </Table>
                     <br/>
                     <div style="text-align: center;">
                      <Page total="100" show-elevator />
                     </div>
+                    <br/><br/><br/>
                 </TabPane>
                 <!-- <TabPane label="出售" name="name1">
                     <Table :columns="columns1" :data="data1"></Table>
@@ -111,27 +122,29 @@ export default {
       OrderList: [],
       OrderListcolumns: [{
         title: '矿工地址',
-        key: 'Address'
+        key: 'address'
       },
       {
-        title: '空间总量',
-        key: 'SellSize'
+        title: '空间总量(GB)',
+        key: 'sellSize'
       },
       {
-        title: '剩余空间总量',
-        key: 'UnUseSize'
+        title: '剩余空间总量(GB)',
+        key: 'unUseSize'
       },
       {
         title: '单价LAMB/GB/day',
-        key: 'Price'
+        key: 'price',
+        slot: 'price'
       },
       {
-        title: '最小空间',
-        key: 'MinBuySize'
+        title: '最小空间(GB)',
+        key: 'minBuySize'
       },
       {
-        title: '最小时间',
-        key: 'MinDuration'
+        title: '最小时间(天)',
+        key: 'minDuration',
+        slot: 'minDuration'
       },
       {
         title: '交易',
@@ -139,7 +152,8 @@ export default {
         slot: 'action'
       }, {
         title: '赔率',
-        key: 'Rate'
+        key: 'rate',
+        slot: 'rate'
       }
       ],
 
@@ -230,9 +244,9 @@ export default {
   },
   mounted() {
     this.getmarketlist();
-    this.getOrderList();
-    this.getSellOrderslist();
-    this.getUserOrderslist();
+
+    // this.getSellOrderslist();
+    // this.getUserOrderslist();
   },
   methods: {
     async getmarketlist() {
@@ -241,6 +255,7 @@ export default {
       if (res.state) {
         this.$data.marketList = res.data.data;
         this.$data.selectmarket = this.$data.marketList[0];
+        this.getOrderList();
       }
     },
     async   getmarketinfo(name) {
@@ -252,8 +267,12 @@ export default {
       }
     },
     async  getOrderList() {
+      console.log('- -');
       let res = await ipc.callMain('marketOrderList', {
-        name
+        marketName: this.$data.selectmarket.name,
+        orderType: 'vip',
+        page: 1,
+        limit: 10
       });
       if (res.state) {
         this.$data.OrderList = res.data.data;
@@ -275,8 +294,8 @@ export default {
         this.$data.UserOrderslist = res.data.data;
       }
     },
-    openBuyingspace() {
-      this.$refs.Buyingspace.open();
+    openBuyingspace(row) {
+      this.$refs.Buyingspace.open(row, this.$data.selectmarket);
     },
     openSellingspace() {
       this.$refs.Sellingspace.open();

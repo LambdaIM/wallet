@@ -28,9 +28,25 @@ export default function() {
     }
   });
   eipc.answerRenderer('marketOrderList', async query => {
+    var { marketName, orderType, page, limit } = query;
+    if (marketName == undefined) {
+      throw resultView(null, false, 'need marketName');
+    }
+    if (orderType == undefined) {
+      throw resultView(null, false, 'need orderType');
+    }
+
+    if (page == undefined) {
+      throw resultView(null, false, 'need page');
+    }
+
+    if (limit == undefined) {
+      throw resultView(null, false, 'need limit');
+    }
+
     try {
       var M = new Manager();
-      var result = await M.getOrderList(query);
+      var result = await M.getOrderList(marketName, orderType, page, limit);
 
       return resultView(result, true);
     } catch (ex) {
