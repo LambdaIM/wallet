@@ -304,8 +304,8 @@
          "turnin":"New validator",
          "choosepledge":"Please choose the validator of the pledge.",
          "validatorname":"Validator name",
-         "tip":"Note: Within {0} days, it can only be transferred to pledge 7 times, and can not be transferred out from the new node. In the pledge period, it was originally punished. The part of the currency that was transferred to the pledge will still be deducted according to the penalty ratio.",
-         "tip2":"Note: You can only cancel the pledge 7 times in {0} days, and there is no reward in {0} days after the pledge is cancelled. During the anti-pledge period, the node is punished, and the currency in the anti-pledge will be deducted according to the penalty ratio.",
+         "tip":"Note: Within {0} days, it can only be transferred to pledge 7 times, and can not be transferred out from the new node. In the pledge period, the original node is punished. The part of the currency that was transferred to the pledge will still be deducted according to the penalty ratio.",
+         "tip2":"Note: You can only cancel the pledge 7 times in {0} days, and there is no reward in {0} days after the pledge is cancelled. During the anti-pledge period, the original nodethe original node is punished, and the currency in the anti-pledge will be deducted according to the penalty ratio.",
          "action":{
              "differentaddresses":"New and old validator cannot be the same",
              "selectaddresses":"Select the validator to delegate"
