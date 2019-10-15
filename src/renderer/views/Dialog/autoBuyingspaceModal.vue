@@ -8,23 +8,35 @@
       @on-cancel="sendcancel"
     >
       <p>
-        市场单价：1  GB/LAMB/DAY
+        市场名称：{{this.$data.marketinfo.name}}
+      </p>
+      <br/>
+      <p>
+        市场地址：{{this.$data.marketinfo.marketAddress}}
+      </p>
+      <br/>
+      <p>
+        市场单价：{{marketPrice}}  GB/LAMB/DAY
       </p>
       <br/>
 
 
       <p>
-        <Input readonly v-model="DistributionReward">
+        <Input  v-model="spaceSize">
           <span slot="prepend">空间</span>
           <span slot="append">GB</span>
         </Input>
       </p>
       <br/>
       <p>
-        <Input readonly v-model="DistributionReward">
-          <span slot="prepend">时间</span>
+        <Input  v-model="spaceDuration">
+          <span slot="prepend">时长</span>
           <span slot="append">Day</span>
         </Input>
+      </p>
+      <br/>
+      <p>
+        支付金额：{{Paymentamount}} LAMB
       </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
@@ -38,8 +50,28 @@
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-          <Col span="20" class-name="value">{{DistributionReward}} LAMB</Col>
+          <Col span="4" class-name="key">市场名称:</Col>
+          <Col span="20" class-name="value">{{this.$data.marketinfo.name}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">市场地址:</Col>
+          <Col span="20" class-name="value">{{this.$data.marketinfo.marketAddress}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">市场单价:</Col>
+          <Col span="20" class-name="value">{{this.$data.marketPrice}} GB/LAMB/DAY </Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">空间:</Col>
+          <Col span="20" class-name="value">{{spaceSize}} GB</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">时长:</Col>
+          <Col span="20" class-name="value">{{spaceDuration}} Day</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">支付金额:</Col>
+          <Col span="20" class-name="value">{{Paymentamount}} LAMB</Col>
         </Row>
         <Row class-name="item">
             <Input  v-model="gaseFee" >
@@ -65,19 +97,27 @@ export default {
     return {
       withdrawalModal: false,
       confirmModal: false,
-      gaseFee: 0
+      gaseFee: 0,
+      spaceSize: '',
+      spaceDuration: '',
+      marketPrice: 2,
+      marketinfo: {}
     };
   },
   methods: {
-    open() {
+    open(marketinfo, Size, Duration) {
       console.log('- -');
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
+      this.$data.spaceSize = Size;
+      this.$data.spaceDuration = Duration;
+      this.$data.marketinfo = marketinfo;
     },
     prewithdrawalLAMB() {
       console.log('- -');
-      this.LAMBvalue = this.DistributionReward;
-      let value = this.toBigNumStr(this.LAMBvalue);
+
+      let spaceSize = this.toBigNumStr(this.spaceSize);
+      let spaceDuration = this.toBigNumStr(this.spaceDuration);
 
       // if (value <= 0 || value > this.$data.DistributionReward ) {
       //   // need to alert
@@ -87,27 +127,39 @@ export default {
       //   return;
       // }
 
-      if (isNaN(value)) {
+      if (isNaN(spaceSize) || isNaN(spaceDuration)) {
         this.$Notice.warning({
           title: this.$t('home.action.Check_the_amount')
         });
         return;
       }
       this.$data.withdrawalModal = false;
-      this.transfer(value, 'withdrawal');
+      this.transfer(spaceSize, spaceDuration, 'automarket');
     },
-    async transfer(amount, txType) {
+    async transfer(spaceSize, spaceDuration, txType) {
       let to = this.Tovalue;
       // let amount = this.LAMBvalue;
       let gas = 1;
       // amount = amount * 10000;
       this.$data.transactiondata = null;
+      var marketAddress = this.$data.marketinfo.marketAddress;
+
+      //= =========
+      this.sendcancel();
+      this.confirmModal = true;
+      return;
+      //= ========
+
+
       try {
         let res = await ipc.callMain(txType, {
           to,
-          amount,
+          spaceSize,
+          spaceDuration,
+          marketAddress,
           gas
         });
+
         // console.log(res);
         if (res.state) {
           console.log(res.data);
@@ -154,6 +206,9 @@ export default {
     },
     balance: function() {
       return this.$store.getters.getblance;
+    },
+    Paymentamount: function() {
+      return this.$data.spaceSize * this.$data.spaceDuration * this.$data.marketPrice;
     }
   }
 };
