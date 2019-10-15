@@ -17,10 +17,6 @@
             <Icon type="ios-arrow-down"></Icon>
         </a>
         <DropdownMenu slot="list">
-<<<<<<< HEAD
-
-=======
->>>>>>> 文案调整
             <DropdownItem :name="item.name" :key="item.marketAddress" v-for="item in marketList" >{{item.name}}</DropdownItem>
 
 
@@ -28,19 +24,15 @@
     </Dropdown>&nbsp;
 
 
-      数量 <Input   style="width: auto" />GB&nbsp;
-      时间 <Input   style="width: auto" />Day&nbsp;
+      数量 <Input v-model="autoSpaceSize"  style="width: auto" />GB&nbsp;
+      时间 <Input v-model="autoSpaceDuration"  style="width: auto" />Day&nbsp;
          <Button @click="openautoBuyingspace" type="primary">一键购买空间</Button>
 
     </div>
     <br/>
-<<<<<<< HEAD
 
         <div>{{selectmarket.name}}存储市场指标    挂单手续费：{{selectmarket.feeRate|Percentformat}}，成单手续费：{{selectmarket.commissionRate|Percentformat}} 订单量：111，最短购买时间：1天 最长购买时间1年，空间最小1gb 空间最大 10gb </div>
 
-=======
-        <div>{{selectmarket.name}}存储市场指标    挂单手续费：{{selectmarket.feeRate|Percentformat}}，成单手续费：{{selectmarket.commissionRate|Percentformat}} 订单量：111，最短购买时间：1天 最长购买时间1年，空间最小1gb 空间最大 10gb </div>
->>>>>>> 文案调整
 
      <Divider />
 
@@ -114,6 +106,8 @@ export default {
       marketExplain: '',
       selectmarket: '',
       marketinfo: '',
+      autoSpaceSize: '',
+      autoSpaceDuration: '',
       OrderList: [],
       OrderListcolumns: [{
         title: '矿工地址',
@@ -288,7 +282,10 @@ export default {
       this.$refs.Sellingspace.open();
     },
     openautoBuyingspace() {
-      this.$refs.autoBuyingspace.open();
+      this.$refs.autoBuyingspace.open({
+        name: this.$data.selectmarket.name,
+        marketAddress: this.$data.selectmarket.marketAddress
+      }, this.$data.autoSpaceSize, this.$data.autoSpaceDuration);
     },
     orderinfo() {
       this.$router.push(`/orderinfo/1`);
