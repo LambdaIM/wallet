@@ -69,7 +69,17 @@
                     <Table :columns="columns1" :data="data1"></Table>
                 </TabPane> -->
                 <TabPane label="我出售的空间" name="name4">
-                 <Table :columns="SellOrdercolumns" :data="SellOrderslist"></Table>
+                 <Table :columns="SellOrdercolumns" :data="SellOrderslist">
+                   <template slot-scope="{ row, index }" slot="price">
+                         {{row.price|Lambformat}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="minDuration">
+                         {{row.minDuration/(1000*1000*1000*60*60*24)}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="rate">
+                         {{parseInt(row.rate)}}
+                        </template>
+                 </Table>
                  <br/>
                     <div style="text-align: center;">
                      <Page total="100" show-elevator />
@@ -80,6 +90,21 @@
                       <template slot-scope="{ row, index }" slot="action">
                         <Button  @click="orderinfo"  type="primary" size="small"> 订单详情 </Button>
                       </template>
+                        <template slot-scope="{ row, index }" slot="price">
+                         {{row.price|Lambformat}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="userPay">
+                         {{amountFormat(row.userPay)}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="buyAddress">
+                         {{typeFormat(row.buyAddress)}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="minerPay">
+                         {{amountFormat(row.minerPay)}}
+                        </template>
+
+
+
                     </Table>
                     <br/>
                     <div style="text-align: center;">
@@ -160,70 +185,78 @@ export default {
       SellOrdercolumns: [
         {
           title: '空间总量',
-          key: 'SellSize'
+          key: 'sellSize'
         },
         {
           title: '剩余空间总量',
-          key: 'UnUseSize'
+          key: 'unUseSize'
         },
         {
           title: '单价LAMB/GB/day',
-          key: 'Price'
+          key: 'price',
+          slot: 'price'
         },
         {
           title: '最小空间',
-          key: 'MinBuySize'
+          key: 'minBuySize'
         },
         {
           title: '最小时间',
-          key: 'MinDuration'
+          key: 'minDuration',
+          slot: 'minDuration'
         },
         {
           title: '赔率',
-          key: 'Rate'
+          key: 'rate',
+          slot: 'rate'
         }, {
           title: '存储设备',
-          key: 'MachineName'
+          key: 'machineName'
         }, {
           title: '市场',
-          key: 'MarketAddress'
+          key: 'marketAddress'
         }
       ],
       SellOrderslist: [],
       UserOrderscolumns: [{
         title: '类型',
-        key: 'type'
+        key: 'buyAddress',
+        slot: 'buyAddress'
       },
       {
         title: '订单ID',
-        key: 'OrderId'
+        key: 'orderId'
       },
 
       {
         title: '数量',
-        key: 'Size'
+        key: 'size'
       },
       {
         title: '单价(LAMB/GB/DAY)',
-        key: 'Price'
+        key: 'price',
+        slot: 'price'
       },
 
       {
         title: '开始时间',
-        key: 'CreateTime'
+        key: 'createTime'
       },
       {
         title: '结束时间',
-        key: 'EndTime'
+        key: 'endTime'
       },
       {
-        title: '市场地址',
-        key: 'MarketAddress'
+        title: '用户支付金额',
+        key: 'userPay',
+        slot: 'userPay'
       },
       {
-        title: '状态',
-        key: 'state'
-      }, {
+        title: '矿工押金',
+        key: 'minerPay',
+        slot: 'minerPay'
+      },
+      {
         title: '订单详情',
         key: 'action',
         slot: 'action'
@@ -245,8 +278,8 @@ export default {
   mounted() {
     this.getmarketlist();
 
-    // this.getSellOrderslist();
-    // this.getUserOrderslist();
+    this.getSellOrderslist();
+    this.getUserOrderslist();
   },
   methods: {
     async getmarketlist() {
@@ -280,7 +313,8 @@ export default {
     },
     async  getSellOrderslist() {
       let res = await ipc.callMain('marketSellOrderslist', {
-        name
+        page: 1,
+        limit: 10
       });
       if (res.state) {
         this.$data.SellOrderslist = res.data.data;
@@ -288,7 +322,8 @@ export default {
     },
     async getUserOrderslist() {
       let res = await ipc.callMain('marketUserOrderslist', {
-        name
+        page: 1,
+        limit: 10
       });
       if (res.state) {
         this.$data.UserOrderslist = res.data.data;
@@ -298,7 +333,7 @@ export default {
       this.$refs.Buyingspace.open(row, this.$data.selectmarket);
     },
     openSellingspace() {
-      this.$refs.Sellingspace.open();
+      this.$refs.Sellingspace.open(this.$data.selectmarket);
     },
     openautoBuyingspace() {
       this.$refs.autoBuyingspace.open({
@@ -313,6 +348,16 @@ export default {
       console.log(e);
       this.getmarketinfo(e.name);
       this.getOrderList(e.name);
+    },
+    amountFormat(item) {
+      return this.bigNumTypeFormat(item.amount, item.denom);
+    },
+    typeFormat(addeess) {
+      if (this.$store.getters.getaddress === addeess) {
+        return '买单';
+      } else {
+        return '卖单';
+      }
     }
 
   },
@@ -320,6 +365,7 @@ export default {
     address: function() {
       return this.$store.getters.getaddress;
     }
+
   }
 };
 </script>

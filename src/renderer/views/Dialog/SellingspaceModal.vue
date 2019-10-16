@@ -8,44 +8,53 @@
       @on-cancel="sendcancel"
     >
     <p>
-        市场地址：********************
+        市场地址：{{market.marketAddress}}
       </p><br/>
       <p>
-        市场名称：lambda 存储市场
+        市场名称：{{market.name}}
+      </p><br/>
+      <p>存储设备&nbsp;&nbsp;
+        <Select placeholder="请选择存储设备（最近的100个设备）" v-model="model1" style="width:300px">
+        <Option v-for="item in machineList" :value="item.peerId" :key="item.peerId">{{ item.name }}</Option>
+    </Select>
       </p><br/>
       <p>
-        <Input readonly v-model="DistributionReward">
+        <Input  v-model="spaceSize">
           <span slot="prepend">出售空间</span>
           <span slot="append">GB</span>
         </Input>
       </p><br/>
       <p>
-        赔率&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <RadioGroup >
 
-            <Radio label="1倍"></Radio>
-            <Radio label="3倍"></Radio>
-        </RadioGroup>
+          <Input  v-model="unitPrice">
+          <span slot="prepend">单价</span>
+          <span slot="append">LAMB/GB/DAY</span>
+        </Input>
+
       </p>
       <br/>
-      <p>存储设备&nbsp;&nbsp;
-        <Select placeholder="请选择存储设备" v-model="model1" style="width:200px">
-        <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-    </Select>
+      <p>
+
+          <Input  v-model="rate">
+          <span slot="prepend">赔率</span>
+          <span slot="append">倍</span>
+        </Input>
+
       </p>
+      <br/>
       <p style="margin-top: 20px;">
         购买限额
       </p>
       <br/>
       <p>
-      <Input readonly v-model="DistributionReward">
+      <Input  v-model="minSpace">
           <span slot="prepend">最少购买空间</span>
           <span slot="append">GB</span>
         </Input>
       </p>
       <br/>
       <p>
-      <Input readonly v-model="DistributionReward">
+      <Input  v-model="minDuration">
           <span slot="prepend">最短购买时间</span>
           <span slot="append">Day</span>
         </Input>
@@ -57,14 +66,30 @@
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>{{$t('Dialog.withdrawalModal.title')}}</h2>
+        <h2>出售空间</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-          <Col span="20" class-name="value">{{DistributionReward}} LAMB</Col>
+          <Col span="4" class-name="key">出售空间:</Col>
+          <Col span="20" class-name="value">{{spaceSize}} GB</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">单价:</Col>
+          <Col span="20" class-name="value">{{unitPrice}} LAMB/GB/DAY</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">赔率:</Col>
+          <Col span="20" class-name="value">{{rate}} 倍</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key"> 最小空间:</Col>
+          <Col span="20" class-name="value">{{minSpace}}GB</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key"> 最短时间:</Col>
+          <Col span="20" class-name="value">{{minDuration}}Day</Col>
         </Row>
         <Row class-name="item">
             <Input  v-model="gaseFee" >
@@ -92,17 +117,26 @@ export default {
       confirmModal: false,
       gaseFee: 0,
       model1: '',
-      cityList: [{
-        value: '设备1',
-        label: '设备1'
-      }]
+      machineList: [],
+      market: {},
+      spaceSize: '',
+      rate: '',
+      minSpace: '',
+      minDuration: '',
+      unitPrice: ''
     };
   },
   methods: {
-    open() {
+    open(market) {
       console.log('- -');
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
+      this.$data.market = market;
+
+      this.getMinermachines();
+
+
+      console.log('----------');
     },
     prewithdrawalLAMB() {
       console.log('- -');
@@ -132,6 +166,12 @@ export default {
       let gas = 1;
       // amount = amount * 10000;
       this.$data.transactiondata = null;
+      //= ===
+      this.sendcancel();
+      this.confirmModal = true;
+      return;
+      //= ==
+
       try {
         let res = await ipc.callMain(txType, {
           to,
@@ -173,6 +213,16 @@ export default {
       this.confirmModal = false;
       console.log(this.$data.transactiondata);
       eventhub.$emit('TxConfirm', this.$data.transactiondata, this.toBigNumStr(this.$data.gaseFee));
+    },
+    async getMinermachines() {
+      let res = await ipc.callMain('minermachines', {
+        page: 1,
+        limit: 100
+      });
+
+      if (res.state) {
+        this.$data.machineList = res.data.data;
+      }
     }
   },
   computed: {
