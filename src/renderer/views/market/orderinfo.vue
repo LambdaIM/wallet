@@ -7,7 +7,7 @@
             <span class="title">交易市场地址:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.MarketAddress}}
+            {{orderinfo.marketAddress}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -15,7 +15,7 @@
             <span class="title">类型:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            买单
+            {{typeFormat(orderinfo.buyAddress)}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -23,15 +23,15 @@
             <span class="title">订单id:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.OrderId}}
+            {{orderinfo.orderId}}
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">数量:</span>
+            <span class="title">空间:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.Size}}
+            {{orderinfo.size}}GB
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -39,7 +39,7 @@
             <span class="title">单价:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.Price}} LAMB/GB/DAY
+            {{orderinfo.price}} LAMB/GB/DAY
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -47,7 +47,15 @@
             <span class="title">支付金额:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-           1LAMB
+           {{amountFormat(orderinfo.userPay)}}
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            <span class="title">矿工押金:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+           {{amountFormat(orderinfo.minerPay)}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -55,7 +63,7 @@
             <span class="title">开始时间:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.CreateTime}}
+            {{orderinfo.createTime}}
           </Col>
         </Row>
                 <Row class-name="card-item">
@@ -63,7 +71,7 @@
             <span class="title">结束时间:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.EndTime}}
+            {{orderinfo.endTime}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -71,7 +79,7 @@
             <span class="title">设备名称:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.MachineName}}
+            {{orderinfo.machineName}}
           </Col>
         </Row>
 
@@ -85,7 +93,7 @@
               <Button type="warning">文件丢失申请仲裁</Button>
           </Col>
         </Row>
-        <br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/>
 
 
 
@@ -100,7 +108,6 @@
 import Mycard from '@/components/common/useful/Mycard.vue';
 
 import Activity from '@/components/txTable/Activity.vue';
-
 
 
 
@@ -123,9 +130,9 @@ export default {
     this.getorderinfo(id);
   },
   methods: {
-    async  getorderinfo(id) {
+    async  getorderinfo(orderId) {
       let res = await ipc.callMain('marketgetOrderinfo', {
-        id
+        orderId
       });
       if (res.state) {
         this.$data.orderinfo = res.data.data;
@@ -133,6 +140,19 @@ export default {
     },
     async gets3token() {
       console.log('*********');
+    },
+    typeFormat(addeess) {
+      if (this.$store.getters.getaddress === addeess) {
+        return '买单';
+      } else {
+        return '卖单';
+      }
+    },
+    amountFormat(item) {
+      if (item == undefined) {
+        return;
+      }
+      return this.bigNumTypeFormat(item.amount, item.denom);
     }
     // marketgetOrderinfo
 

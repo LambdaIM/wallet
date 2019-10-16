@@ -63,8 +63,8 @@ class marketmanager {
 
   async getOrderinfo(query) {
     console.log('marketinfo');
-    var { id } = query;
-    var result = await this.CosmosAPI().get.marketOrderinfo(id);
+    var { orderId } = query;
+    var result = await this.CosmosAPI().get.marketOrderinfo(orderId);
     return { data: result };
   }
 
