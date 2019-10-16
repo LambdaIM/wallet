@@ -54,9 +54,18 @@ export default function() {
     }
   });
   eipc.answerRenderer('marketSellOrderslist', async query => {
+    var { page, limit } = query;
+    if (page == undefined) {
+      throw resultView(null, false, 'need page');
+    }
+
+    if (limit == undefined) {
+      throw resultView(null, false, 'need limit');
+    }
+
     try {
       var M = new Manager();
-      var result = await M.getSellOrderslist();
+      var result = await M.getSellOrderslist(page, limit);
 
       return resultView(result, true);
     } catch (ex) {
@@ -65,9 +74,18 @@ export default function() {
   });
 
   eipc.answerRenderer('marketUserOrderslist', async query => {
+    var { page, limit } = query;
+    if (page == undefined) {
+      throw resultView(null, false, 'need page');
+    }
+    if (limit == undefined) {
+      throw resultView(null, false, 'need limit');
+    }
+
+
     try {
       var M = new Manager();
-      var result = await M.getUserOrderslist();
+      var result = await M.getUserOrderslist(page, limit);
 
       return resultView(result, true);
     } catch (ex) {
@@ -87,5 +105,25 @@ export default function() {
     }
   });
 
-  // getUserOrderslist
+
+  eipc.answerRenderer('minermachines', async query => {
+    var { page, limit } = query;
+    if (page == undefined) {
+      throw resultView(null, false, 'need address');
+    }
+    if (limit == undefined) {
+      throw resultView(null, false, 'need limit');
+    }
+
+    try {
+      var M = new Manager();
+      var result = await M.getMinermachines(page, limit);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  // getMinermachines
 }
