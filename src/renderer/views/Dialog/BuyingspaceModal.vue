@@ -47,7 +47,7 @@
             <br/>
       <p>
         <Input  v-model="spaceDuration">
-          <span slot="prepend">时间</span>
+          <span slot="prepend">时长</span>
           <span slot="append"> DAY</span>
         </Input>
       </p>
@@ -67,8 +67,24 @@
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-          <Col span="20" class-name="value">{{DistributionReward}} LAMB</Col>
+          <Col span="4" class-name="key">市场:</Col>
+          <Col span="20" class-name="value">{{market.name}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">矿工地址:</Col>
+          <Col span="20" class-name="value">{{orderinfo.address}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">空间 :</Col>
+          <Col span="20" class-name="value">{{spaceSize}} GB</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">时长 :</Col>
+          <Col span="20" class-name="value">{{spaceDuration}} DAY</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">实际付金额 :</Col>
+          <Col span="20" class-name="value">{{Paymentamount|Lambformat}}</Col>
         </Row>
         <Row class-name="item">
             <Input  v-model="gaseFee" >
@@ -137,6 +153,11 @@ export default {
       let gas = 1;
       // amount = amount * 10000;
       this.$data.transactiondata = null;
+      //= ===
+      this.sendcancel();
+      this.confirmModal = true;
+      return;
+      //= ===
       try {
         let res = await ipc.callMain(txType, {
           to,
