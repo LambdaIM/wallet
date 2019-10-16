@@ -61,7 +61,7 @@
                     </Table>
                     <br/>
                     <div style="text-align: center;">
-                     <Page total="100" show-elevator />
+                     <Page  @on-change="orderListPage" :total="100" show-elevator />
                     </div>
                     <br/><br/><br/>
                 </TabPane>
@@ -82,7 +82,7 @@
                  </Table>
                  <br/>
                     <div style="text-align: center;">
-                     <Page total="100" show-elevator />
+                     <Page  @on-change="SellOrderListPage"  :total="100" show-elevator />
                     </div>
                  </TabPane>
                 <TabPane label="订单列表" name="name3">
@@ -108,7 +108,7 @@
                     </Table>
                     <br/>
                     <div style="text-align: center;">
-                     <Page total="100" show-elevator />
+                     <Page @on-change="UserOrdersListPage" :total="100" show-elevator />
                     </div>
                 </TabPane>
 
@@ -282,6 +282,18 @@ export default {
     this.getUserOrderslist();
   },
   methods: {
+    UserOrdersListPage(page) {
+      console.log(page);
+      this.getUserOrderslist(page);
+    },
+    SellOrderListPage(page) {
+      console.log(page);
+      this.getSellOrderslist(page);
+    },
+    orderListPage(page) {
+      console.log(page);
+      this.getOrderList(page);
+    },
     async getmarketlist() {
       console.log('getmarketlist');
       let res = await ipc.callMain('marketlist', {});
@@ -299,30 +311,30 @@ export default {
         this.$data.marketinfo = res.data.data;
       }
     },
-    async  getOrderList() {
+    async  getOrderList(page) {
       console.log('- -');
       let res = await ipc.callMain('marketOrderList', {
         marketName: this.$data.selectmarket.name,
         orderType: 'vip',
-        page: 1,
+        page: page || 1,
         limit: 10
       });
       if (res.state) {
         this.$data.OrderList = res.data.data;
       }
     },
-    async  getSellOrderslist() {
+    async  getSellOrderslist(page) {
       let res = await ipc.callMain('marketSellOrderslist', {
-        page: 1,
+        page: page || 1,
         limit: 10
       });
       if (res.state) {
         this.$data.SellOrderslist = res.data.data;
       }
     },
-    async getUserOrderslist() {
+    async getUserOrderslist(page) {
       let res = await ipc.callMain('marketUserOrderslist', {
-        page: 1,
+        page: page || 1,
         limit: 10
       });
       if (res.state) {
