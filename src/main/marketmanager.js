@@ -40,23 +40,23 @@ class marketmanager {
     return { data: result };
   }
 
-  async getSellOrderslist(query) {
+  async getSellOrderslist(page, limit) {
     console.log('marketinfo');
     if (this.defaultAddress == null) {
       throw new Error('need address');
     }
 
 
-    var result = await this.CosmosAPI().get.marketSellOrderslist(this.defaultAddress);
+    var result = await this.CosmosAPI().get.marketSellOrderslist(this.defaultAddress, page, limit);
     return { data: result };
   }
 
-  async getUserOrderslist(query) {
+  async getUserOrderslist(page, limit) {
     console.log('marketinfo');
     if (this.defaultAddress == null) {
       throw new Error('need address');
     }
-    var result = await this.CosmosAPI().get.marketUserOrderslist(this.defaultAddress);
+    var result = await this.CosmosAPI().get.marketUserOrderslist(this.defaultAddress, page, limit);
     return { data: result };
   }
 
@@ -68,6 +68,14 @@ class marketmanager {
     return { data: result };
   }
 
-  // marketOrderinfo
+  async getMinermachines(address, page, limit) {
+    console.log('marketinfo');
+    var result = await this.CosmosAPI().get.marketminermachines(this.defaultAddress, page, limit);
+    return { data: result };
+  }
+
+
+
+  // marketminermachines
 }
 export default marketmanager;
