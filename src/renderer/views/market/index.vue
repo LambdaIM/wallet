@@ -88,7 +88,7 @@
                 <TabPane label="订单列表" name="name3">
                     <Table :columns="UserOrderscolumns" :data="UserOrderslist">
                       <template slot-scope="{ row, index }" slot="action">
-                        <Button  @click="orderinfo"  type="primary" size="small"> 订单详情 </Button>
+                        <Button  @click="orderinfo(row)"  type="primary" size="small"> 订单详情 </Button>
                       </template>
                         <template slot-scope="{ row, index }" slot="price">
                          {{row.price|Lambformat}}
@@ -184,11 +184,11 @@ export default {
 
       SellOrdercolumns: [
         {
-          title: '空间总量',
+          title: '空间总量(GB)',
           key: 'sellSize'
         },
         {
-          title: '剩余空间总量',
+          title: '剩余空间总量(GB)',
           key: 'unUseSize'
         },
         {
@@ -197,11 +197,11 @@ export default {
           slot: 'price'
         },
         {
-          title: '最小空间',
+          title: '最小空间(GB)',
           key: 'minBuySize'
         },
         {
-          title: '最小时间',
+          title: '最小时间(DAY)',
           key: 'minDuration',
           slot: 'minDuration'
         },
@@ -315,30 +315,30 @@ export default {
       console.log('- -');
       let res = await ipc.callMain('marketOrderList', {
         marketName: this.$data.selectmarket.name,
-        orderType: 'vip',
-        page: page || 1,
+        orderType: 'vip', // vip all
+        page: page || 0,
         limit: 10
       });
       if (res.state) {
-        this.$data.OrderList = res.data.data;
+        this.$data.OrderList = res.data.data || [];
       }
     },
     async  getSellOrderslist(page) {
       let res = await ipc.callMain('marketSellOrderslist', {
-        page: page || 1,
+        page: page || 0,
         limit: 10
       });
       if (res.state) {
-        this.$data.SellOrderslist = res.data.data;
+        this.$data.SellOrderslist = res.data.data || [];
       }
     },
     async getUserOrderslist(page) {
       let res = await ipc.callMain('marketUserOrderslist', {
-        page: page || 1,
+        page: page || 0,
         limit: 10
       });
       if (res.state) {
-        this.$data.UserOrderslist = res.data.data;
+        this.$data.UserOrderslist = res.data.data || [];
       }
     },
     openBuyingspace(row) {
@@ -353,8 +353,8 @@ export default {
         marketAddress: this.$data.selectmarket.marketAddress
       }, this.$data.autoSpaceSize, this.$data.autoSpaceDuration);
     },
-    orderinfo() {
-      this.$router.push(`/orderinfo/1`);
+    orderinfo(item) {
+      this.$router.push(`/orderinfo/${item.orderId}`);
     },
     selectmarketClick(e) {
       console.log(e);
