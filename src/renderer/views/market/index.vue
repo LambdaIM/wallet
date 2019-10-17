@@ -25,7 +25,7 @@
 
 
       数量 <Input v-model="autoSpaceSize"  style="width: auto" />GB&nbsp;
-      时间 <Input v-model="autoSpaceDuration"  style="width: auto" />Day&nbsp;
+      时间 <Input v-model="autoSpaceDuration"  style="width: auto" />月&nbsp;
          <Button @click="openautoBuyingspace" type="primary">一键购买空间</Button>
 
     </div>
@@ -102,6 +102,12 @@
                         <template slot-scope="{ row, index }" slot="minerPay">
                          {{amountFormat(row.minerPay)}}
                         </template>
+                        <template slot-scope="{ row, index }" slot="createTime">
+                         {{row.createTime|formatDate}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="endTime">
+                         {{row.endTime|formatDate}}
+                        </template>
 
 
 
@@ -110,6 +116,7 @@
                     <div style="text-align: center;">
                      <Page @on-change="UserOrdersListPage" :total="100" show-elevator />
                     </div>
+                    <br/><br/><br/><br/>
                 </TabPane>
 
             </Tabs>
@@ -131,6 +138,7 @@ import Mycard from '@/components/common/useful/Mycard.vue';
 import BuyingspaceModal from '@/views/Dialog/BuyingspaceModal.vue';
 import SellingspaceModal from '@/views/Dialog/SellingspaceModal.vue';
 import autoBuyingspaceModal from '@/views/Dialog/autoBuyingspaceModal.vue';
+import eventhub from '../../common/js/event.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
@@ -167,7 +175,7 @@ export default {
         key: 'minBuySize'
       },
       {
-        title: '最小时间(天)',
+        title: '最小时间(月)',
         key: 'minDuration',
         slot: 'minDuration'
       },
@@ -192,7 +200,7 @@ export default {
           key: 'unUseSize'
         },
         {
-          title: '单价LAMB/GB/day',
+          title: '单价LAMB/GB/月',
           key: 'price',
           slot: 'price'
         },
@@ -201,7 +209,7 @@ export default {
           key: 'minBuySize'
         },
         {
-          title: '最小时间(DAY)',
+          title: '最小时间(月)',
           key: 'minDuration',
           slot: 'minDuration'
         },
@@ -233,18 +241,20 @@ export default {
         key: 'size'
       },
       {
-        title: '单价(LAMB/GB/DAY)',
+        title: '单价(LAMB/GB/月)',
         key: 'price',
         slot: 'price'
       },
 
       {
         title: '开始时间',
-        key: 'createTime'
+        key: 'createTime',
+        slot: 'createTime'
       },
       {
         title: '结束时间',
-        key: 'endTime'
+        key: 'endTime',
+        slot: 'endTime'
       },
       {
         title: '用户支付金额',
@@ -277,9 +287,15 @@ export default {
   },
   mounted() {
     this.getmarketlist();
-
     this.getSellOrderslist();
     this.getUserOrderslist();
+
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.getSellOrderslist();
+      this.getUserOrderslist();
+      this.getOrderList();
+    });
   },
   methods: {
     UserOrdersListPage(page) {
@@ -315,8 +331,8 @@ export default {
       console.log('- -');
       let res = await ipc.callMain('marketOrderList', {
         marketName: this.$data.selectmarket.name,
-        orderType: 'vip', // vip all
-        page: page || 0,
+        orderType: 'all', // premium all
+        page: page || 1,
         limit: 10
       });
       if (res.state) {
@@ -325,7 +341,7 @@ export default {
     },
     async  getSellOrderslist(page) {
       let res = await ipc.callMain('marketSellOrderslist', {
-        page: page || 0,
+        page: page || 1,
         limit: 10
       });
       if (res.state) {
