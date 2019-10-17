@@ -68,7 +68,7 @@ class marketmanager {
     return { data: result };
   }
 
-  async getMinermachines(address, page, limit) {
+  async getMinermachines(page, limit) {
     console.log('marketinfo');
     var result = await this.CosmosAPI().get.marketminermachines(this.defaultAddress, page, limit);
     return { data: result };

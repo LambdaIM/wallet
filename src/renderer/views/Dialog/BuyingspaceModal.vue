@@ -61,7 +61,7 @@
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>{{$t('Dialog.withdrawalModal.title')}}</h2>
+        <h2>购买空间</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
@@ -127,53 +127,42 @@ export default {
     },
     prewithdrawalLAMB() {
       console.log('- -');
-      this.LAMBvalue = this.DistributionReward;
-      let value = this.toBigNumStr(this.LAMBvalue);
 
-      // if (value <= 0 || value > this.$data.DistributionReward ) {
-      //   // need to alert
-      //   this.$Notice.warning({
-      //     title: this.$t('home.action.check_balance_amount_transfer')
-      //   });
-      //   return;
-      // }
+      let spaceSize = parseInt(this.$data.spaceSize);
+      let spaceDuration = parseInt(this.$data.spaceDuration);
 
-      if (isNaN(value)) {
+      if (isNaN(spaceSize) || isNaN(spaceDuration) || spaceSize == 0 || spaceDuration == 0) {
         this.$Notice.warning({
-          title: this.$t('home.action.Check_the_amount')
+          title: '空间大小和时长只能填写整数'
         });
         return;
       }
       this.$data.withdrawalModal = false;
-      this.transfer(value, 'withdrawal');
+      this.transfer(spaceSize, spaceDuration, 'CreateBuyOrder');
     },
-    async transfer(amount, txType) {
-      let to = this.Tovalue;
+    async transfer(spaceSize, spaceDuration, txType) {
       // let amount = this.LAMBvalue;
-      let gas = 1;
+
       // amount = amount * 10000;
       this.$data.transactiondata = null;
-      //= ===
-      this.sendcancel();
-      this.confirmModal = true;
-      return;
-      //= ===
+
       try {
         let res = await ipc.callMain(txType, {
-          to,
-          amount,
-          gas
+          duration: spaceDuration * (1000 * 1000 * 1000 * 60 * 60 * 24 * 30) + '',
+          size: spaceSize + '',
+          sellOrderId: this.$data.orderinfo.orderId,
+          marketName: this.$data.market.name
         });
         // console.log(res);
         if (res.state) {
           console.log(res.data);
-          let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
-          if (gasres.state) {
-            this.$data.gaseFee = gasres.data;
-            this.$data.transactiondata = res.data;
-            this.sendcancel();
-            this.confirmModal = true;
-          }
+          // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
+          // if (gasres.state) {
+          // this.$data.gaseFee = gasres.data;
+          this.$data.transactiondata = res.data;
+          this.sendcancel();
+          this.confirmModal = true;
+          // }
         }
       } catch (ex) {
         this.$Notice.warning({
