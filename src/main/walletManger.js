@@ -404,6 +404,52 @@ walletManger.prototype.TransferVote = async function (ProposalID, option) {
     option:option
   };
 };
+walletManger.prototype.TransferCreateSellOrder = async function (marketName,
+  price,
+  rate,
+  sellSize,
+  machineName,
+  cancelTimeDuration,
+  minBuySize,
+  minBuyDuration,
+  maxBuyDuration) {
+  return {
+    type: transaction.CreateSellOrder,
+    marketName,
+    price,
+    rate,
+    sellSize,
+    machineName,
+    cancelTimeDuration,
+    minBuySize,
+    minBuyDuration,
+    maxBuyDuration
+  };
+};
+
+//CreateBuyOrder
+walletManger.prototype.TransferCreateBuyOrder = async function (duration,
+  size,
+  sellOrderId,
+  marketName) {
+  return {
+    type: transaction.CreateBuyOrder,
+    duration,
+    size,
+    sellOrderId,
+    marketName
+  };
+};
+
+walletManger.prototype.TransferVote = async function (ProposalID, option) {
+  return {
+    type: transaction.VOTE,
+    proposalId:ProposalID,
+    option:option
+  };
+};
+
+
 
 walletManger.prototype.TransferwithdrawalDistribution=async function (to, amount, gas, isdege) {
   console.log('TransferwithdrawalDistribution')

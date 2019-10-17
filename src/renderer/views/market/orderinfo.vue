@@ -28,6 +28,22 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
+            <span class="title">矿工:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+            {{orderinfo.askAddress}}
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            <span class="title">用户:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+            {{orderinfo.buyAddress}}
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
             <span class="title">空间:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
@@ -36,10 +52,10 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">单价:</span>
+            <span class="title">单价(LAMB/GB/月):</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.price}} LAMB/GB/DAY
+            {{orderinfo.price|Lambformat}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -63,7 +79,7 @@
             <span class="title">开始时间:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.createTime}}
+            {{orderinfo.createTime|formatDate}}
           </Col>
         </Row>
                 <Row class-name="card-item">
@@ -71,7 +87,7 @@
             <span class="title">结束时间:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.endTime}}
+            {{orderinfo.endTime|formatDate}}
           </Col>
         </Row>
         <Row class-name="card-item">

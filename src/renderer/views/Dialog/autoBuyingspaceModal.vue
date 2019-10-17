@@ -31,7 +31,7 @@
       <p>
         <Input  v-model="spaceDuration">
           <span slot="prepend">时长</span>
-          <span slot="append">Day</span>
+          <span slot="append">月</span>
         </Input>
       </p>
       <br/>
@@ -44,7 +44,7 @@
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>{{$t('Dialog.withdrawalModal.title')}}</h2>
+        <h2>购买空间</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
@@ -59,7 +59,7 @@
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">市场单价:</Col>
-          <Col span="20" class-name="value">{{this.$data.marketPrice}} GB/LAMB/DAY </Col>
+          <Col span="20" class-name="value">{{this.$data.marketPrice}} GB/LAMB/month </Col>
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">空间:</Col>
@@ -67,7 +67,7 @@
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">时长:</Col>
-          <Col span="20" class-name="value">{{spaceDuration}} Day</Col>
+          <Col span="20" class-name="value">{{spaceDuration}} 月</Col>
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">支付金额:</Col>
@@ -116,60 +116,50 @@ export default {
     prewithdrawalLAMB() {
       console.log('- -');
 
-      let spaceSize = this.toBigNumStr(this.spaceSize);
-      let spaceDuration = this.toBigNumStr(this.spaceDuration);
+      let spaceSize = parseInt(this.spaceSize);
+      let spaceDuration = parseInt(this.spaceDuration);
 
-      // if (value <= 0 || value > this.$data.DistributionReward ) {
-      //   // need to alert
-      //   this.$Notice.warning({
-      //     title: this.$t('home.action.check_balance_amount_transfer')
-      //   });
-      //   return;
-      // }
-
-      if (isNaN(spaceSize) || isNaN(spaceDuration)) {
+      if (spaceSize == '' || spaceSize == 0) {
         this.$Notice.warning({
-          title: this.$t('home.action.Check_the_amount')
+          title: '检查空间大小'
         });
         return;
       }
+      if (spaceDuration == '' || spaceDuration == 0) {
+        this.$Notice.warning({
+          title: '检查时长大小'
+        });
+        return;
+      }
+
+
+
       this.$data.withdrawalModal = false;
-      this.transfer(spaceSize, spaceDuration, 'automarket');
+      this.transfer(spaceSize, spaceDuration, 'CreateBuyOrder');
     },
     async transfer(spaceSize, spaceDuration, txType) {
-      let to = this.Tovalue;
-      // let amount = this.LAMBvalue;
-      let gas = 1;
-      // amount = amount * 10000;
       this.$data.transactiondata = null;
-      var marketAddress = this.$data.marketinfo.marketAddress;
 
-      //= =========
-      this.sendcancel();
-      this.confirmModal = true;
-      return;
-      //= ========
 
 
       try {
         let res = await ipc.callMain(txType, {
-          to,
-          spaceSize,
-          spaceDuration,
-          marketAddress,
-          gas
+          duration: spaceDuration * (1000 * 1000 * 1000 * 60 * 60 * 24 * 30) + '',
+          size: spaceSize + '',
+          sellOrderId: '[do-not-input-value]',
+          marketName: this.$data.marketinfo.name
         });
 
         // console.log(res);
         if (res.state) {
           console.log(res.data);
-          let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
-          if (gasres.state) {
-            this.$data.gaseFee = gasres.data;
-            this.$data.transactiondata = res.data;
-            this.sendcancel();
-            this.confirmModal = true;
-          }
+          // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
+          // if (gasres.state) {
+          // this.$data.gaseFee = gasres.data;
+          this.$data.transactiondata = res.data;
+          this.sendcancel();
+          this.confirmModal = true;
+          // }
         }
       } catch (ex) {
         this.$Notice.warning({
