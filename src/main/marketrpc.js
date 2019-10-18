@@ -1,9 +1,12 @@
 import resultView from './result.js';
 import Manager from './marketmanager.js';
+import Promise from 'bluebird';
+import cmd from 'node-cmd';
+import fs from 'graceful-fs';
+import { app } from 'electron';
 var { DAEMON_CONFIG } = require('../configmain.js');
 const { ipcMain: eipc } = require('electron-better-ipc');
-
-
+const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
 
 export default function() {
   eipc.answerRenderer('marketlist', async query => {
@@ -124,6 +127,26 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('cmdtest', async query => {
+    try {
+      var appPath = app.getPath('exe');
+
+      if (fs.existsSync(`${DAEMON_CONFIG.BASE_PATH}/test.sh`) == false) {
+        fs.createReadStream(`${__static}/test.sh`).pipe(fs.createWriteStream(`${DAEMON_CONFIG.BASE_PATH}/test.sh`));
+      }
+
+      const result = await getAsync(`sh ${DAEMON_CONFIG.BASE_PATH}/test.sh`);
+      console.log('---------');
+      console.log(result);
+      console.log('---------');
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
 
   // getMinermachines
 }

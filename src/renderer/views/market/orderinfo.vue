@@ -104,7 +104,7 @@
             <span class="title">操作:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-             <Button @click="gets3token" type="primary">获取空间管理的token</Button>
+             <Button @click="gets3token" type="primary">获取空间管理的token【？？？】</Button>
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Button type="warning">文件丢失申请仲裁</Button>
           </Col>
@@ -156,6 +156,33 @@ export default {
     },
     async gets3token() {
       console.log('*********');
+      try {
+        let res = await ipc.callMain('cmdtest', {
+
+        });
+        if (res.state) {
+          console.log(res.data);
+          this.$Message.info({
+            content: JSON.stringify(res.data),
+            duration: 10,
+            closable: true
+          });
+        // alert(JSON.stringify(res.data))
+        } else {
+        // alert('失败')
+          this.$Message.info({
+            content: '失败',
+            duration: 10,
+            closable: true
+          });
+        }
+      } catch (error) {
+        this.$Message.info({
+          content: JSON.stringify(error),
+          duration: 10,
+          closable: true
+        });
+      }
     },
     typeFormat(addeess) {
       if (this.$store.getters.getaddress === addeess) {
