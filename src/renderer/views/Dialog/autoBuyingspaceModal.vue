@@ -16,7 +16,7 @@
       </p>
       <br/>
       <p>
-        市场单价：{{marketPrice}}  GB/LAMB/DAY
+        市场单价：{{marketPrice}}  GB/LAMB/month
       </p>
       <br/>
 
@@ -153,13 +153,13 @@ export default {
         // console.log(res);
         if (res.state) {
           console.log(res.data);
-          // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
-          // if (gasres.state) {
-          // this.$data.gaseFee = gasres.data;
-          this.$data.transactiondata = res.data;
-          this.sendcancel();
-          this.confirmModal = true;
-          // }
+          let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
+          if (gasres.state) {
+            this.$data.gaseFee = gasres.data;
+            this.$data.transactiondata = res.data;
+            this.sendcancel();
+            this.confirmModal = true;
+          }
         }
       } catch (ex) {
         this.$Notice.warning({

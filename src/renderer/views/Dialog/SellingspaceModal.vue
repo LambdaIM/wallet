@@ -31,7 +31,7 @@
 
           <Input  v-model="unitPrice">
           <span slot="prepend">单价</span>
-          <span slot="append">LAMB/GB/DAY</span>
+          <span slot="append">LAMB/GB/month</span>
         </Input>
 
       </p>
@@ -256,13 +256,13 @@ export default {
         // console.log(res);
         if (res.state) {
           console.log(res.data);
-          // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
-          // if (gasres.state) {
-          // this.$data.gaseFee = gasres.data;
-          this.$data.transactiondata = res.data;
-          this.sendcancel();
-          this.confirmModal = true;
-          // }
+          let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
+          if (gasres.state) {
+            this.$data.gaseFee = gasres.data;
+            this.$data.transactiondata = res.data;
+            this.sendcancel();
+            this.confirmModal = true;
+          }
         }
       } catch (ex) {
         this.$Notice.warning({
