@@ -31,7 +31,7 @@
     </div>
     <br/>
 
-        <div>{{selectmarket.name}}存储市场指标    挂单手续费：{{selectmarket.feeRate|Percentformat}}，成单手续费：{{selectmarket.commissionRate|Percentformat}} 订单量：111，最短购买时间：1天 最长购买时间1年，空间最小1gb 空间最大 10gb </div>
+        <div style="text-align: center;"> 挂单手续费：{{selectmarket.feeRate|Percentformat}}，成单手续费：{{selectmarket.commissionRate|Percentformat}} 单价(LAMB/GB/month)：{{marketinfo.order_normal_price|Lambformat}}，最短购买时间 {{marketinfo.order_min_buy_duration|formatMonth}}月 最长购买时间{{marketinfo.order_max_buy_duration|formatMonth}}月，空间最小{{marketinfo.order_min_buy_size}}GB  </div>
 
 
      <Divider />
@@ -42,6 +42,7 @@
 
     </Row>
      <br/>
+     <div>最近100条数据 </div>
                     <Table  :columns="OrderListcolumns" :data="OrderList">
                         <template slot-scope="{ row, index }" slot="action">
                          <Button  @click="openBuyingspace(row)"  type="primary" size="small"> 购买空间 </Button>
@@ -50,7 +51,7 @@
                          {{row.price|Lambformat}}
                         </template>
                         <template slot-scope="{ row, index }" slot="minDuration">
-                         {{row.minDuration/(1000*1000*1000*60*60*24)}}
+                         {{row.minDuration|formatMonth}}
                         </template>
                         <template slot-scope="{ row, index }" slot="rate">
                          {{parseInt(row.rate)}}
@@ -69,12 +70,13 @@
                     <Table :columns="columns1" :data="data1"></Table>
                 </TabPane> -->
                 <TabPane label="我出售的空间" name="name4">
+                <div>最近100条数据 </div>
                  <Table :columns="SellOrdercolumns" :data="SellOrderslist">
                    <template slot-scope="{ row, index }" slot="price">
                          {{row.price|Lambformat}}
                         </template>
                         <template slot-scope="{ row, index }" slot="minDuration">
-                         {{row.minDuration/(1000*1000*1000*60*60*24)}}
+                         {{row.minDuration|formatMonth}}
                         </template>
                         <template slot-scope="{ row, index }" slot="rate">
                          {{parseInt(row.rate)}}
@@ -86,6 +88,7 @@
                     </div>
                  </TabPane>
                 <TabPane label="订单列表" name="name3">
+                  <div>最近100条数据 </div>
                     <Table :columns="UserOrderscolumns" :data="UserOrderslist">
                       <template slot-scope="{ row, index }" slot="action">
                         <Button  @click="orderinfo(row)"  type="primary" size="small"> 订单详情 </Button>
@@ -290,12 +293,14 @@ export default {
     this.getSellOrderslist();
     this.getUserOrderslist();
 
+
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.getSellOrderslist();
       this.getUserOrderslist();
       this.getOrderList();
     });
+    this.getmarketinfo('');
   },
   methods: {
     UserOrdersListPage(page) {
@@ -350,7 +355,7 @@ export default {
     },
     async getUserOrderslist(page) {
       let res = await ipc.callMain('marketUserOrderslist', {
-        page: page || 0,
+        page: page || 1,
         limit: 10
       });
       if (res.state) {
