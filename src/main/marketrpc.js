@@ -129,15 +129,21 @@ export default function() {
   });
   eipc.answerRenderer('cmdtest', async query => {
     try {
+      console.log('cmdtest');
       var appPath = app.getPath('exe');
 
-      if (fs.existsSync(`${DAEMON_CONFIG.BASE_PATH}/test.sh`) == false) {
-        fs.createReadStream(`${__static}/test.sh`).pipe(fs.createWriteStream(`${DAEMON_CONFIG.BASE_PATH}/test.sh`));
+      if (fs.existsSync(`${DAEMON_CONFIG.BASE_PATH}/lamb`) == false) {
+        fs.createReadStream(`${__static}/lamb`).pipe(fs.createWriteStream(`${DAEMON_CONFIG.BASE_PATH}/lamb`));
+        const result = await getAsync(`chmod 777  ${DAEMON_CONFIG.BASE_PATH}/lamb `);
       }
+      /// chmod 751 file
 
-      const result = await getAsync(`sh ${DAEMON_CONFIG.BASE_PATH}/test.sh`);
-      console.log('---------');
-      console.log(result);
+      // const result = await getAsync(`${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
+      console.log(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
+      console.log(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
+      var result = cmd.run(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
+      console.log('---------!!!!!!!');
+      // console.log(result);
       console.log('---------');
 
       return resultView(result, true);
