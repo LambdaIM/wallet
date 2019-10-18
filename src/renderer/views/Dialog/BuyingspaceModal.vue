@@ -48,7 +48,7 @@
       <p>
         <Input  v-model="spaceDuration">
           <span slot="prepend">时长</span>
-          <span slot="append"> DAY</span>
+          <span slot="append"> 月</span>
         </Input>
       </p>
       <br/>
@@ -80,7 +80,7 @@
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">时长 :</Col>
-          <Col span="20" class-name="value">{{spaceDuration}} DAY</Col>
+          <Col span="20" class-name="value">{{spaceDuration}} 月</Col>
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">实际付金额 :</Col>
@@ -156,13 +156,13 @@ export default {
         // console.log(res);
         if (res.state) {
           console.log(res.data);
-          // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
-          // if (gasres.state) {
-          // this.$data.gaseFee = gasres.data;
-          this.$data.transactiondata = res.data;
-          this.sendcancel();
-          this.confirmModal = true;
-          // }
+          let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
+          if (gasres.state) {
+            this.$data.gaseFee = gasres.data;
+            this.$data.transactiondata = res.data;
+            this.sendcancel();
+            this.confirmModal = true;
+          }
         }
       } catch (ex) {
         this.$Notice.warning({

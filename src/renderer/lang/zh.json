@@ -355,7 +355,17 @@
     "MsgLockAsset": "锁定资产",
     "MsgUnLockAsset": "解锁资产",
     "MsgDestroyAsset": "销毁资产",
-    "MsgRuinAsset": "毁灭资产"
+    "MsgRuinAsset": "毁灭资产",
+    "MsgCreateMarket": "创建交易市场",
+    "MsgEditMarket": "修改交易市场",
+    "MsgWithDrawMarket": "提取市场收益",
+    "MsgCreateMachine": "创建存储节点",
+    "MsgEditMachine": "修改存储节点",
+    "MsgCreateMiner": "创建矿工",
+    "MsgMinerWithDraw": "提取矿工收益",
+    "MsgCreateSellOrder": "创建卖单",
+    "MsgCancelSellOrder": "取消卖单",
+    "MsgCreateBuyOrder": "创建买单"
 
    },
    "txTable":{
