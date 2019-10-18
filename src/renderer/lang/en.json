@@ -359,7 +359,17 @@
     "MsgLockAsset": "LockAsset",
     "MsgUnLockAsset": "UnLockAsset",
     "MsgDestroyAsset": "DestroyAsset",
-    "MsgRuinAsset": "RuinAsset"
+    "MsgRuinAsset": "RuinAsset",
+    "MsgCreateMarket": "CreateMarket",
+    "MsgEditMarket": "EditMarket",
+    "MsgWithDrawMarket": "WithDrawMarket",
+    "MsgCreateMachine": "CreateMachine",
+    "MsgEditMachine": "EditMachine",
+    "MsgCreateMiner": "CreateMiner",
+    "MsgMinerWithDraw": "MinerWithDraw",
+    "MsgCreateSellOrder": "CreateSellOrder",
+    "MsgCancelSellOrder": "CancelSellOrder",
+    "MsgCreateBuyOrder": "CreateBuyOrder"
   },
   "txTable":{
     "action": "Activity",
