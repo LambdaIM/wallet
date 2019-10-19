@@ -2,16 +2,21 @@ import { app, BrowserWindow, Menu, net } from 'electron';
 
 import logicrpc from './logic.js';
 import upgrade from './upgrade.js';
-
+import { connect } from 'net';
+import { join } from 'path';
+import { fork } from 'child_process';
 
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
-// let DAEMON ;
+let DAEMON;
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
+  DAEMON = join(__dirname, '/static/s3server.js');
+} else {
+  DAEMON = join(__dirname, '../../static/s3server.js');
 }
 
 // var log = require('../log').log;
@@ -19,7 +24,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 // log.info('start');
 
-
+var RPC_PORT = 8379;
 
 global.__net = net;
 
@@ -28,7 +33,40 @@ const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`;
 
+function initRPCServer(callback) {
+  console.log('==initRPCServer===start');
+  let RPCServer = fork(DAEMON, [], { env: { RPC_PORT: RPC_PORT } });
+  process.on('exit', () => {
+    console.log('exit');
+    RPCServer.kill();
+  });
+  RPCServer.on('message', msg => {
+    console.log('message');
+    if (msg.state === 'init') {
+      return callback();
+    } else {
+      RPCServer.removeAllListeners();
+      callback(msg);
+    }
+  });
+  console.log('==initRPCServer===end');
+}
 
+function maybeStartDaemon(callback) {
+  const sock = connect(RPC_PORT);
+
+  sock.on('connect', () => {
+    sock.end();
+    sock.removeAllListeners();
+    callback();
+  });
+
+  sock.on('error', () => {
+    console.log('maybeStartDaemon error');
+    sock.removeAllListeners();
+    initRPCServer(callback);
+  });
+}
 
 function createWindow() {
   /**
@@ -57,6 +95,13 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+  console.log('==启动s3server==start');
+  maybeStartDaemon(() => {
+    initRPCServer(msg => {
+      console.log('==启动s3server==1');
+    });
+  });
+  console.log('==启动s3server==end');
 }
 
 

@@ -11,6 +11,8 @@ const cmd = require('node-cmd');
 const Promise = require('bluebird');
 const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
 
+const YAML = require('yaml')
+
 
 // console.log('electron',electron.app)
 // let BASE_PATH=electron.app.getPath('appData')
@@ -55,12 +57,28 @@ var configData = {
             fs.mkdirSync(this.DataFile);
         }
         settings.setPath(path.join(this.BASE_PATH,'set.json') );
-        //==
+        
+    },
+    s3client:function(){
         if (fs.existsSync(`${this.BASE_PATH}/lamb`) == false) {
             fs.createReadStream(`${__static}/lamb`).pipe(fs.createWriteStream(`${this.BASE_PATH}/lamb`));
             cmd.run(`chmod 777  ${this.BASE_PATH}/lamb `)
           }
-        //==
+          if (fs.existsSync(`${this.BASE_PATH}/order-meta.json`) == false) {
+            fs.createReadStream(`${__static}/order-meta.json`).pipe(fs.createWriteStream(`${this.BASE_PATH}/order-meta.json`));
+            
+          }
+          if (fs.existsSync(`${this.BASE_PATH}/s3.yaml`) == false) {
+            fs.createReadStream(`${__static}/s3.yaml`).pipe(fs.createWriteStream(`${this.BASE_PATH}/s3.yaml`));
+            
+          }
+          const file = fs.readFileSync(`${this.BASE_PATH}/s3.yaml`, 'utf8')
+          var yamlconfig= YAML.parse(file);
+          console.log(yamlconfig)
+          yamlconfig.gateway['order-meta-file']=`${__static}/order-meta.json`;
+          var yamlconfignew = YAML.stringify(yamlconfig);
+          fs.writeFileSync(`${this.BASE_PATH}/s3.yaml`,yamlconfignew,'utf8')
+
     }
     
     
@@ -68,5 +86,6 @@ var configData = {
 };
 
 configData.setUP();
+configData.s3client();
 
 module.exports.DAEMON_CONFIG  = configData;
