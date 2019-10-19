@@ -84,7 +84,7 @@ app.get('/isauthorization', function (req, res) {
   }
 })
 
-app.get('/s3signature', function (req, res) {
+app.post('/s3signature', function (req, res) {
   if(defaultwallet==undefined||password==undefined){
     res.send({ok:false,error:'need defaultwallet or password'})
   }else{
