@@ -10,4 +10,4 @@ gateway:
 
   secret-key: secretkey  
 
-  order-meta-file: "/tmp/extra_order.json"
+  order-meta-file: ""

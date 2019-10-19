@@ -11,7 +11,7 @@ const cmd = require('node-cmd');
 const Promise = require('bluebird');
 const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
 
-const YAML = require('yaml')
+
 
 
 // console.log('electron',electron.app)
@@ -29,6 +29,7 @@ var configData = {
     WalletFile:path.join( BASE_PATH,'Wallet'),
     LogFile:path.join(BASE_PATH,'Log'),
     DataFile:path.join(BASE_PATH,'Data'),
+    OrderS3File:path.join(BASE_PATH,'orderS3'),
     ValidatorIp:function(){
         return settings.get('validator.ipv1')||defaultip;
         // return defaultip;
@@ -56,6 +57,9 @@ var configData = {
         if(fs.existsSync(this.DataFile)==false) {
             fs.mkdirSync(this.DataFile);
         }
+        if(fs.existsSync(this.OrderS3File)==false) {
+            fs.mkdirSync(this.OrderS3File);
+        }
         settings.setPath(path.join(this.BASE_PATH,'set.json') );
         
     },
@@ -64,20 +68,16 @@ var configData = {
             fs.createReadStream(`${__static}/lamb`).pipe(fs.createWriteStream(`${this.BASE_PATH}/lamb`));
             cmd.run(`chmod 777  ${this.BASE_PATH}/lamb `)
           }
-          if (fs.existsSync(`${this.BASE_PATH}/order-meta.json`) == false) {
-            fs.createReadStream(`${__static}/order-meta.json`).pipe(fs.createWriteStream(`${this.BASE_PATH}/order-meta.json`));
+        //   if (fs.existsSync(`${this.BASE_PATH}/order-meta.json`) == false) {
+        //     fs.createReadStream(`${__static}/order-meta.json`).pipe(fs.createWriteStream(`${this.BASE_PATH}/order-meta.json`));
             
-          }
+        //   }
           if (fs.existsSync(`${this.BASE_PATH}/s3.yaml`) == false) {
             fs.createReadStream(`${__static}/s3.yaml`).pipe(fs.createWriteStream(`${this.BASE_PATH}/s3.yaml`));
             
           }
-          const file = fs.readFileSync(`${this.BASE_PATH}/s3.yaml`, 'utf8')
-          var yamlconfig= YAML.parse(file);
-          console.log(yamlconfig)
-          yamlconfig.gateway['order-meta-file']=`${__static}/order-meta.json`;
-          var yamlconfignew = YAML.stringify(yamlconfig);
-          fs.writeFileSync(`${this.BASE_PATH}/s3.yaml`,yamlconfignew,'utf8')
+
+        
 
     }
     

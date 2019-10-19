@@ -104,7 +104,7 @@
             <span class="title">操作:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-             <Button @click="gets3token" type="primary">获取空间管理的token【？？？】</Button>
+             <Button @click="Datacollection" type="primary">获取空间管理的token【？？？】</Button>
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Button type="warning">文件丢失申请仲裁</Button>
           </Col>
@@ -115,6 +115,19 @@
 
       </div>
     </Mycard>
+    <Modal
+
+        v-model="passwordModal"
+        :title="$t('Sign.Enter_password')"
+        :styles="{top: '200px'}"
+      >
+        <p>
+          <Input v-model="walletPassword" type="password"></Input>
+        </p>
+        <div slot="footer">
+          <Button  type="primary" @click="s3authorization">{{$t('Sign.submit')}}</Button>
+        </div>
+      </Modal>
 
 </div>
 </template>
@@ -133,7 +146,9 @@ const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
   data() {
     return {
-      orderinfo: {}
+      orderinfo: {},
+      passwordModal: false,
+      walletPassword: ''
     };
   },
   components: {
@@ -142,10 +157,47 @@ export default {
   },
 
   mounted() {
+    console.log('***********');
     let id = this.$route.params.id;
     this.getorderinfo(id);
   },
   methods: {
+    s3authorization: async function() {
+      console.log('s3authorization');
+      var result = {};
+      try {
+        result = await ipc.callMain('s3authorization', {
+          password: this.$data.walletPassword
+        });
+      } catch (ex) {
+        console.log(ex);
+        this.$Message.error(ex.errormsg);
+      }
+
+      console.log(result);
+      if (result.state == true) {
+        console.log(result.data);
+
+
+        this.$data.passwordModal = false;
+        this.orders3();
+      }
+    },
+    async orders3() {
+      try {
+        var info = await this.machineNameinfo(this.$data.orderinfo);
+      } catch (error) {
+        console.log(error);
+        this.$Message.info({
+          content: JSON.stringify(error),
+          duration: 10,
+          closable: true
+        });
+      }
+    },
+    Datacollection: async function() {
+      this.$data.passwordModal = true;
+    },
     async  getorderinfo(orderId) {
       let res = await ipc.callMain('marketgetOrderinfo', {
         orderId
@@ -154,6 +206,14 @@ export default {
         this.$data.orderinfo = res.data.data;
       }
     },
+    async  machineNameinfo(orderinfo) {
+      console.log('machineNameinfo');
+      let res = await ipc.callMain('sets3orderinfo', orderinfo);
+      if (res.state) {
+        console.log(res.data);
+      }
+    },
+
     async gets3token() {
       console.log('*********');
       try {

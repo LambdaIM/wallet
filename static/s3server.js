@@ -18,22 +18,7 @@ app.all('*', function (req, res, next) {
     next();
   }
 }); 
-app.get('/', function (req, res) {
-  res.send('Hello World elect')
-})
-var defaultwallet,password;
-app.post('/authorization', function (req, res) {
-  defaultwallet=req.body.defaultwallet;
-  password=req.body.defaultwallet;
-  var privatekey = hdkeyjs.keyStore.checkJson(defaultwallet, password);
-  if(privatekey){
-    res.send('授权成功')
-  }else{
-    res.send('授权失败')
-  }
 
-  
-})
 
 
 
@@ -65,6 +50,60 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // account(app);
+app.get('/', function (req, res) {
+  res.send('Hello World elect')
+})
+var defaultwallet,password;
+app.post('/authorization', function (req, res) {
+  
+  defaultwallet=req.body.defaultwallet ;
+  password=req.body.password;
+  if(defaultwallet==undefined||password==undefined){
+    res.send({ok:false,error:'need defaultwallet or password'})
+  }
+  try {
+    var privatekey = hdkeyjs.keyStore.checkJson( defaultwallet, password);
+  if(privatekey){
+    res.send({ok:true})
+  }else{
+    res.send({ok:false})
+  }  
+  } catch (error) {
+    console.log('*****')
+    console.log(error)
+    console.log('*****')
+    res.send({ok:false,error:error})
+  }
+    
+})
+app.get('/isauthorization', function (req, res) {
+  if(defaultwallet==undefined||password==undefined){
+    res.send({ok:false,error:'need defaultwallet or password'})
+  }else{
+    res.send({ok:true})
+  }
+})
+
+app.get('/s3signature', function (req, res) {
+  if(defaultwallet==undefined||password==undefined){
+    res.send({ok:false,error:'need defaultwallet or password'})
+  }else{
+    content=req.body.content ;
+  var contentBuffer = Buffer.from(content);
+
+  var privatekey = hdkeyjs.keyStore.checkJson(defaultwallet, password);
+
+  var sindata = hdkeyjs.crypto.sign(
+    contentBuffer,
+    privatekey
+  );
+    res.send({ok:true,data:sindata})
+  }
+})
+
+
+
+
  
 app.listen(process.env.RPC_PORT)
 
