@@ -1,6 +1,6 @@
 {
     "name": "Wallet",
-    "version": "0.3.13",
+    "version": "0.4.13",
     "author": "lambda wallet developer <544262408@qq.com>",
     "description": "lambda wallet",
     "license": null,
@@ -70,7 +70,7 @@
         }
     },
     "dependencies": {
-        "@jswebfans/rpcapijs": "0.1.22",
+        "@jswebfans/rpcapijs": "0.1.23",
         "@jswebfans/hdkeyjs": "1.2.9",
         "bignumber.js": "^8.1.1",
         "electron-better-ipc": "^0.4.0",
