@@ -662,9 +662,9 @@
     tweetnacl-util "^0.15.0"
     typedarray-to-buffer "^3.1.5"
 
-"@jswebfans/rpcapijs@0.1.19":
-  version "0.1.19"
-  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.1.19.tgz#37ab3ee6f912cdff2348dea57e85500efb8733b2"
+"@jswebfans/rpcapijs@0.1.23":
+  version "0.1.23"
+  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.1.23.tgz#e69b60a272a37c141b0082eb241f3e1c8eedeae7"
   dependencies:
     "@babel/runtime" "^7.5.4"
 
