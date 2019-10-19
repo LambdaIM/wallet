@@ -7,6 +7,10 @@ let BASE_PATH = path.join(os.homedir(), 'lambWallet');
 const settings = require("electron-settings");
 var fs = require('graceful-fs')
 
+const cmd = require('node-cmd');
+const Promise = require('bluebird');
+const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
+
 
 // console.log('electron',electron.app)
 // let BASE_PATH=electron.app.getPath('appData')
@@ -51,6 +55,12 @@ var configData = {
             fs.mkdirSync(this.DataFile);
         }
         settings.setPath(path.join(this.BASE_PATH,'set.json') );
+        //==
+        if (fs.existsSync(`${this.BASE_PATH}/lamb`) == false) {
+            fs.createReadStream(`${__static}/lamb`).pipe(fs.createWriteStream(`${this.BASE_PATH}/lamb`));
+            cmd.run(`chmod 777  ${this.BASE_PATH}/lamb `)
+          }
+        //==
     }
     
     

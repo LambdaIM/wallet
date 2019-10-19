@@ -1,9 +1,12 @@
 import resultView from './result.js';
 import Manager from './marketmanager.js';
-import Promise from 'bluebird';
-import cmd from 'node-cmd';
+
+
 import fs from 'graceful-fs';
-import { app } from 'electron';
+
+import cmd from 'node-cmd';
+import Promise from 'bluebird';
+
 var { DAEMON_CONFIG } = require('../configmain.js');
 const { ipcMain: eipc } = require('electron-better-ipc');
 const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
@@ -130,13 +133,7 @@ export default function() {
   eipc.answerRenderer('cmdtest', async query => {
     try {
       console.log('cmdtest');
-      var appPath = app.getPath('exe');
 
-      if (fs.existsSync(`${DAEMON_CONFIG.BASE_PATH}/lamb`) == false) {
-        fs.createReadStream(`${__static}/lamb`).pipe(fs.createWriteStream(`${DAEMON_CONFIG.BASE_PATH}/lamb`));
-        const result = await getAsync(`chmod 777  ${DAEMON_CONFIG.BASE_PATH}/lamb `);
-      }
-      /// chmod 751 file
 
       // const result = await getAsync(`${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
       console.log(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
