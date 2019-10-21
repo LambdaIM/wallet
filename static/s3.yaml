@@ -1,0 +1,13 @@
+# address used to access dht network
+
+dht-gateway-addr: "10.0.0.24:12010"
+
+gateway:
+
+  address: "127.0.0.1:8899"
+
+  access-key: accesskey  
+
+  secret-key: secretkey  
+
+  order-meta-file: ""

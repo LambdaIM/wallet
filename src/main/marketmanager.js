@@ -2,7 +2,7 @@
 import LambdaApi from './lambdaApi';
 
 const settings = require('electron-settings');
-var { DAEMON_CONFIG } = require('../configmain.js');
+// var { DAEMON_CONFIG } = require('../configmain.js');
 var log = require('../log').log;
 
 
@@ -71,6 +71,11 @@ class marketmanager {
   async getMinermachines(page, limit) {
     console.log('marketinfo');
     var result = await this.CosmosAPI().get.marketminermachines(this.defaultAddress, page, limit);
+    return { data: result };
+  }
+  async getmarketmachineinfo(address, machineName) {
+    console.log('marketinfo');
+    var result = await this.CosmosAPI().get.marketmachineinfo(address, machineName);
     return { data: result };
   }
 
