@@ -154,6 +154,23 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+
+
+  eipc.answerRenderer('lambdastoragemanagerkey', async query => {
+    try {
+      console.log('lambdastoragemanagerkey');
+      const file = fs.readFileSync(`${DAEMON_CONFIG.BASE_PATH}/s3.yaml`, 'utf8');
+      var yamlconfig = YAML.parse(file);
+
+
+      return resultView(yamlconfig, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
+
   eipc.answerRenderer('sets3orderinfo', async query => {
     var { orderId, pubKey, dhtId } = query;
 

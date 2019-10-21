@@ -104,9 +104,21 @@
             <span class="title">操作:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-             <Button @click="Datacollection" type="primary">获取空间管理的token【？？？】</Button>
+             <Button @click="Datacollection" type="primary">在lambda storage 中查看订单空间 </Button>
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Button type="warning">文件丢失申请仲裁</Button>
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            <span class="title">lambda storage 控制台:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+
+            用户名：{{managerkey['access-key']}}<br/>
+            密码：{{managerkey['secret-key']}}<br/>
+            <!-- 访问地址：{{managerkey['address']}}<br/> -->
+
           </Col>
         </Row>
         <br/><br/>
@@ -148,7 +160,8 @@ export default {
     return {
       orderinfo: {},
       passwordModal: false,
-      walletPassword: ''
+      walletPassword: '',
+      managerkey: {}
     };
   },
   components: {
@@ -160,6 +173,7 @@ export default {
     console.log('***********');
     let id = this.$route.params.id;
     this.getorderinfo(id);
+    this.getmanagerkey();
   },
   methods: {
     s3authorization: async function() {
@@ -193,6 +207,12 @@ export default {
           duration: 10,
           closable: true
         });
+      }
+    },
+    async getmanagerkey() {
+      let res = await ipc.callMain('lambdastoragemanagerkey', {});
+      if (res.state) {
+        this.$data.managerkey = res.data.gateway;
       }
     },
     Datacollection: async function() {
