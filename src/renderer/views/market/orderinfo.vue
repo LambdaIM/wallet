@@ -1,10 +1,10 @@
 <template>
 <div class="container">
-    <Mycard cardtitle="订单详情" class="mt20">
+    <Mycard :cardtitle="$t('orderinfo.orderdetails')" class="mt20">
       <div v-if="orderinfo.MatchOrder!=undefined" class="transaction-content" slot="card-content">
           <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">交易市场地址:</span>
+            <span class="title">{{$t('orderinfo.Marketaddress')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{orderinfo.MatchOrder.marketAddress}}
@@ -12,7 +12,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">类型:</span>
+            <span class="title">{{$t('orderinfo.orderType')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{typeFormat(orderinfo.MatchOrder.buyAddress)}}
@@ -20,7 +20,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">订单id:</span>
+            <span class="title">{{$t('orderinfo.orderid')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{orderinfo.MatchOrder.orderId}}
@@ -28,7 +28,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">矿工:</span>
+            <span class="title">{{$t('orderinfo.Mineraddress')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{orderinfo.MatchOrder.askAddress}}
@@ -36,7 +36,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">用户:</span>
+            <span class="title">{{$t('orderinfo.user')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{orderinfo.MatchOrder.buyAddress}}
@@ -44,7 +44,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">空间:</span>
+            <span class="title">{{$t('orderinfo.space')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{orderinfo.MatchOrder.size}}GB
@@ -52,7 +52,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">单价(LAMB/GB/月):</span>
+            <span class="title">{{$t('orderinfo.unitprice')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{orderinfo.MatchOrder.price|Lambformat}}
@@ -60,7 +60,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">支付金额:</span>
+            <span class="title">{{$t('orderinfo.userPay')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
            {{amountFormat(orderinfo.MatchOrder.userPay)}}
@@ -68,7 +68,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">矿工押金:</span>
+            <span class="title">{{$t('orderinfo.minerPay')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
            {{amountFormat(orderinfo.MatchOrder.minerPay)}}
@@ -76,7 +76,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">开始时间:</span>
+            <span class="title">{{$t('orderinfo.Startingtime')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{orderinfo.MatchOrder.createTime|formatDate}}
@@ -84,7 +84,7 @@
         </Row>
                 <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">结束时间:</span>
+            <span class="title">{{$t('orderinfo.EndTime')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{orderinfo.MatchOrder.endTime|formatDate}}
@@ -92,7 +92,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">设备名称:</span>
+            <span class="title">{{$t('orderinfo.Storagedevice')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{orderinfo.MatchOrder.machineName}}

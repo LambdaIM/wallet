@@ -44,33 +44,33 @@
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>购买空间</h2>
+        <h2>{{$t('Dialog.AutoBuy.Buyspace')}}</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">市场名称:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.Marketname')}}:</Col>
           <Col span="20" class-name="value">{{this.$data.marketinfo.name}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">市场地址:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.Marketaddress')}}:</Col>
           <Col span="20" class-name="value">{{this.$data.marketinfo.marketAddress}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">市场单价:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.unitprice')}}:</Col>
           <Col span="20" class-name="value">{{this.$data.marketPrice}} GB/LAMB/month </Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">空间:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.space')}}:</Col>
           <Col span="20" class-name="value">{{spaceSize}} GB</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">时长:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.duration')}}:</Col>
           <Col span="20" class-name="value">{{spaceDuration}} 月</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">支付金额:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.Paymentamount')}}:</Col>
           <Col span="20" class-name="value">{{Paymentamount}} LAMB</Col>
         </Row>
         <Row class-name="item">

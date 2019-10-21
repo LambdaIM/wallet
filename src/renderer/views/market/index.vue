@@ -75,7 +75,7 @@
                     <Table :columns="columns1" :data="data1"></Table>
                 </TabPane> -->
                 <TabPane :label="$t('marketpage.sellspace')" name="name4">
-                <div>最近100条数据 </div>
+                <div>{{$t('marketpage.last100data')}} </div>
                  <Table :columns="SellOrdercolumns" :data="SellOrderslist">
                    <template slot-scope="{ row, index }" slot="price">
                          {{row.price|Lambformat}}
@@ -93,10 +93,10 @@
                     </div>
                  </TabPane>
                 <TabPane :label="$t('marketpage.orderlist')" name="name3">
-                  <div>最近100条数据 </div>
+                  <div>{{$t('marketpage.last100data')}} </div>
                     <Table :columns="UserOrderscolumns" :data="UserOrderslist">
                       <template slot-scope="{ row, index }" slot="action">
-                        <Button  @click="orderinfo(row)"  type="primary" size="small"> 订单详情 </Button>
+                        <Button  @click="orderinfo(row)"  type="primary" size="small"> {{$t('marketpage.ordertable.orderdetails')}} </Button>
                       </template>
                         <template slot-scope="{ row, index }" slot="price">
                          {{row.MatchOrder.price|Lambformat}}

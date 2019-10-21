@@ -6,6 +6,7 @@
       "proposals": "提案",
       "validator": "验证节点",
       "sign": "签名",
+      "market":"市场",
       "action": {
           "You_just_copied": "您刚刚复制了：",
           "Failed_to_copy_texts": "无法复制文本",
@@ -320,6 +321,40 @@
           "month":"月",
           "Paymentamount":"支付金额"
       },
+      "selectBuy":{
+        "Buyspace":"购买空间",
+        "Marketname":"市场名称",
+        "Marketaddress":"市场地址",
+        "unitprice":"单价(LAMB/GB/month)",
+        "space":"空间",
+        "duration":"时长",
+        "month":"月",
+        "Paymentamount":"支付金额",
+        "Minimumtime":"最短购买时长",
+        "Minimumspace":"最小购买空间",
+        "Odds":"赔率",
+        "amountspace":"空间总量",
+        "remainingspace":"剩余空间总量",
+        "Mineraddress":"矿工地址"
+        
+    },
+    "sellorder":{
+      "Sellingspace":"出售空间",
+      "Marketname":"市场名称",
+      "Marketaddress":"市场地址",
+      "Storagedevice":"存储设备",
+       "selectStoragedevicetip":"请选择存储设备（最近的100个设备）",
+       "Storagedevicetip":"一个存储设备只能出售一次，建议一次出售全部空间",
+       "unitprice1":"单价",
+       "unitprice2":"LAMB/GB/month",
+       "Odds":"赔率",
+       "Purchasequota":"购买限额",
+       "Minimumtime":"最短购买时长",
+       "Minimumspace":"最小购买空间",
+       "Maximumtime":"最大购买时长",
+       "times":"倍",
+       "month":"月"
+    },
       "com":{
           "gasfee":"Gas费用",
           "to":" 兑换 ",
@@ -485,6 +520,24 @@
         "orderdetails":"订单详情"
        }
 
+
+   },
+   "orderinfo":{
+    "orderType":"类型",
+    "orderid":"订单id",
+    "space":"空间",
+    "unitprice":"单价(LAMB/GB/month)",
+    "Storagedevice":"存储设备",
+    "Marketaddress":"市场地址",
+    "Startingtime":"开始时间",
+    "EndTime":"结束时间",
+    "userPay":"用户支付金额",
+    "minerPay":"矿工押金",
+    "orderdetails":"订单详情",
+    "Mineraddress":"矿工地址",
+    "user":"用户",
+    "Startingtime":"开始时间",
+    "EndTime":"结束时间"
 
    }
 }

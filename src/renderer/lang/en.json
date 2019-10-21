@@ -7,6 +7,7 @@
       "proposals": "Proposals",
       "validator": "Validator",
       "sign": "Sign",
+      "market":"Market",
 
       "action":{
         "You_just_copied":"You just copied:",
@@ -316,6 +317,33 @@
         "tip2":"2: Click on the latest local transaction record list on the home page to see the status of the current transaction.",
         "tip3":"3: Search the browser for the current transaction hash or lamb address to see if the latest transaction record contains the current transaction hash"
       },
+      "AutoBuy":{
+        "Buyspace":"Buying space",
+        "Marketname":"Market name",
+        "Marketaddress":"Market address",
+        "unitprice":"Unit price(LAMB/GB/month)",
+        "space":"Space",
+        "duration":"Duration",
+        "month":"Month",
+        "Paymentamount":"Payment amount"
+    },
+    "selectBuy":{
+      "Buyspace":"Buying space",
+      "Marketname":"Market name",
+      "Marketaddress":"Market address",
+      "unitprice":"Unit price(LAMB/GB/month)",
+      "space":"Space",
+      "duration":"Duration",
+      "month":"Month",
+      "Paymentamount":"Payment amount",
+      "Minimumtime":"Min time",
+      "Minimumspace":"Min space",
+      "Odds":"Odds",
+      "amountspace":"Amount space",
+      "remainingspace":"Remaining space",
+      "Mineraddress":"Minera ddress"
+      
+    },
       "com":{
           "gasfee":"Gas Fee",
           "to":" to ",
@@ -428,7 +456,79 @@
     "switch_height":"switch height"
 
 
-  }
+  },
+  "marketpage":{
+    "buyingspace":"Buying space",
+    "sellspace":"Sell space",
+    "orderlist":"Order list",
+    "autotitle":"Auto match - one click purchase",
+    "space":"Space",
+    "duration":"Duration",
+    "month":"Month",
+    "One-click-space":"One click purchase",
+    "Pending-order-fee":"Pending order fee",
+    "Single-fee":"Single fee",
+    "unitprice":"Unit Price(LAMB/GB/month)",
+    "Minimumtime":"Minimum purchase time",
+    "Maximumtime":"Maximum purchase time",
+    "Minimumspace":"Minimum purchase space",
+    "Optionaltitle":"Free trade - more options, free trade",
+    "sellspacebtn":"Sale",
+    "last100data":"The last 100 data",
+    "selltable":{
+        "Mineraddress":"Miner address",
+        "amountspace":"Amount space(GB)",
+        "remainingspace":"Remaining space(GB)",
+        "unitprice":"unitprice(LAMB/GB/month)",
+        "minimumspace":"Minimum space(GB)",
+        "minimumduration":"Minimum duration(month)",
+        "operating":"operating",
+        "Odds":"Odds",
+        "Purchasespace":"Purchase"
+    },
+    "myselltable":{
+     "amountspace":"Amount space(GB)",
+     "remainingspace":"Remaining space(GB)",
+     "unitprice":"Unit price(LAMB/GB/month)",
+     "minimumspace":"Min  space(GB)",
+     "minimumduration":"Min duration(month)",
+     "Odds":"Odds",
+     "Storagedevice":"Storage device",
+     "Marketaddress":"Market address"
+    },
+    "ordertable":{
+     "orderType":"Type",
+     "orderid":"Orderid",
+     "amountspace":"Space(GB)",
+     "unitprice":"Unit price(LAMB/GB/month)",
+     "Storagedevice":"Storage device",
+     "Marketaddress":"Market address",
+     "Startingtime":"Start time",
+     "EndTime":"End Time",
+     "userPay":"User Pay",
+     "minerPay":"Miner deposit",
+     "orderdetails":"details"
+    }
+
+
+},
+"orderinfo":{
+ "orderType":"type",
+ "orderid":"order id",
+ "space":"space",
+ "unitprice":"unit price(LAMB/GB/month)",
+ "Storagedevice":"storage device",
+ "Marketaddress":"market address",
+ "Startingtime":"starting time",
+ "EndTime":"end Time",
+ "userPay":"user Pay",
+ "minerPay":"miner deposit",
+ "orderdetails":"details",
+ "Mineraddress":"miner address",
+ "user":"user"
+ 
+
+}
 
 
 }

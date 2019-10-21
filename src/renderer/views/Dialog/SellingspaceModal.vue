@@ -3,35 +3,35 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="出售空间"
+      :title="$t('Dialog.sellorder.Sellingspace')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
     <p>
-        市场地址：{{market.marketAddress}}
+        {{$t('Dialog.sellorder.Marketname')}}：{{market.marketAddress}}
       </p><br/>
       <p>
-        市场名称：{{market.name}}
+        {{$t('Dialog.sellorder.Marketname')}}：{{market.name}}
       </p><br/>
-      <p>存储设备&nbsp;&nbsp;
-        <Select placeholder="请选择存储设备（最近的100个设备）" v-model="machineitem" style="width:300px">
+      <p>{{$t('Dialog.sellorder.Storagedevice')}}&nbsp;&nbsp;
+        <Select :placeholder="$t('Dialog.sellorder.Storagedevicetip')" v-model="machineitem" style="width:300px">
         <Option v-for="item in machineList" :value="item.name" :key="item.name">{{ item.name }}</Option>
     </Select>
       </p>
       <br/>
-      <p>一个存储设备只能出售一次，建议一次出售全部空间</p>
+      <p>{{$t('Dialog.sellorder.Storagedevicetip')}}</p>
       <br/>
       <p>
         <Input  v-model="spaceSize">
-          <span slot="prepend">出售空间</span>
+          <span slot="prepend">{{$t('Dialog.sellorder.Sellingspace')}}</span>
           <span slot="append">GB</span>
         </Input>
       </p><br/>
       <p>
 
           <Input  v-model="unitPrice">
-          <span slot="prepend">单价</span>
-          <span slot="append">LAMB/GB/month</span>
+          <span slot="prepend">{{$t('Dialog.sellorder.unitprice1')}}</span>
+          <span slot="append">{{$t('Dialog.sellorder.unitprice2')}}</span>
         </Input>
 
       </p>
@@ -39,34 +39,34 @@
       <p>
 
           <Input  v-model="rate">
-          <span slot="prepend">赔率</span>
-          <span slot="append">倍</span>
+          <span slot="prepend">{{$t('Dialog.sellorder.Odds')}}</span>
+          <span slot="append">{{$t('Dialog.sellorder.times')}}</span>
         </Input>
 
       </p>
       <br/>
       <p style="margin-top: 20px;">
-        购买限额
+        {{$t('Dialog.sellorder.Purchasequota')}}
       </p>
       <br/>
       <p>
       <Input  v-model="minSpace">
-          <span slot="prepend">最少购买空间</span>
+          <span slot="prepend">{{$t('Dialog.sellorder.Minimumspace')}}</span>
           <span slot="append">GB</span>
         </Input>
       </p>
       <br/>
       <p>
       <Input  v-model="minDuration">
-          <span slot="prepend">最短购买时长</span>
-          <span slot="append">月</span>
+          <span slot="prepend">{{$t('Dialog.sellorder.Minimumtime')}}</span>
+          <span slot="append">{{$t('Dialog.sellorder.month')}}</span>
         </Input>
       </p>
       <br/>
       <p>
       <Input  v-model="maxDuration">
-          <span slot="prepend">最大购买时长</span>
-          <span slot="append">月</span>
+          <span slot="prepend">{{$t('Dialog.sellorder.Maximumtime')}}</span>
+          <span slot="append">{{$t('Dialog.sellorder.month')}}</span>
         </Input>
       </p>
 
@@ -76,39 +76,39 @@
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>出售空间</h2>
+        <h2>{{$t('Dialog.sellorder.Sellingspace')}}</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">存储设备:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.sellorder.Storagedevice')}}:</Col>
           <Col span="20" class-name="value">{{machineitem}} </Col>
         </Row>
 
         <Row class-name="item">
-          <Col span="4" class-name="key">出售空间:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.sellorder.Sellingspace')}}:</Col>
           <Col span="20" class-name="value">{{spaceSize}} GB</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">单价:</Col>
-          <Col span="20" class-name="value">{{unitPrice}} LAMB/GB/month</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.sellorder.unitprice1')}}:</Col>
+          <Col span="20" class-name="value">{{unitPrice}} {{$t('Dialog.sellorder.unitprice2')}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">赔率:</Col>
-          <Col span="20" class-name="value">{{rate}} 倍</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.sellorder.Odds')}}:</Col>
+          <Col span="20" class-name="value">{{rate}} {{$t('Dialog.sellorder.times')}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key"> 最小空间:</Col>
+          <Col span="4" class-name="key"> {{$t('Dialog.sellorder.Minimumspace')}}:</Col>
           <Col span="20" class-name="value">{{minSpace}}GB</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key"> 最短时长:</Col>
-          <Col span="20" class-name="value">{{minDuration}} 月 </Col>
+          <Col span="4" class-name="key"> {{$t('Dialog.sellorder.Minimumtime')}}:</Col>
+          <Col span="20" class-name="value">{{minDuration}} {{$t('Dialog.sellorder.month')}} </Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key"> 最长时长:</Col>
-          <Col span="20" class-name="value">{{maxDuration}} 月 </Col>
+          <Col span="4" class-name="key"> {{$t('Dialog.sellorder.Maximumtime')}}:</Col>
+          <Col span="20" class-name="value">{{maxDuration}} {{$t('Dialog.sellorder.month')}} </Col>
         </Row>
         <Row class-name="item">
             <Input  v-model="gaseFee" >
