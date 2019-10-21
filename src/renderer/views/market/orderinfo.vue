@@ -104,9 +104,21 @@
             <span class="title">操作:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-             <Button @click="gets3token" type="primary">获取空间管理的token</Button>
+             <Button @click="Datacollection" type="primary">在lambda storage 中查看订单空间 </Button>
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Button type="warning">文件丢失申请仲裁</Button>
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            <span class="title">lambda storage 控制台:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+
+            用户名：{{managerkey['access-key']}}<br/>
+            密码：{{managerkey['secret-key']}}<br/>
+            <!-- 访问地址：{{managerkey['address']}}<br/> -->
+
           </Col>
         </Row>
         <br/><br/>
@@ -115,6 +127,19 @@
 
       </div>
     </Mycard>
+    <Modal
+
+        v-model="passwordModal"
+        :title="$t('Sign.Enter_password')"
+        :styles="{top: '200px'}"
+      >
+        <p>
+          <Input v-model="walletPassword" type="password"></Input>
+        </p>
+        <div slot="footer">
+          <Button  type="primary" @click="s3authorization">{{$t('Sign.submit')}}</Button>
+        </div>
+      </Modal>
 
 </div>
 </template>
@@ -133,7 +158,10 @@ const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
   data() {
     return {
-      orderinfo: {}
+      orderinfo: {},
+      passwordModal: false,
+      walletPassword: '',
+      managerkey: {}
     };
   },
   components: {
@@ -142,10 +170,54 @@ export default {
   },
 
   mounted() {
+    console.log('***********');
     let id = this.$route.params.id;
     this.getorderinfo(id);
+    this.getmanagerkey();
   },
   methods: {
+    s3authorization: async function() {
+      console.log('s3authorization');
+      var result = {};
+      try {
+        result = await ipc.callMain('s3authorization', {
+          password: this.$data.walletPassword
+        });
+      } catch (ex) {
+        console.log(ex);
+        this.$Message.error(ex.errormsg);
+      }
+
+      console.log(result);
+      if (result.state == true) {
+        console.log(result.data);
+
+
+        this.$data.passwordModal = false;
+        this.orders3();
+      }
+    },
+    async orders3() {
+      try {
+        var info = await this.machineNameinfo(this.$data.orderinfo);
+      } catch (error) {
+        console.log(error);
+        this.$Message.info({
+          content: JSON.stringify(error),
+          duration: 10,
+          closable: true
+        });
+      }
+    },
+    async getmanagerkey() {
+      let res = await ipc.callMain('lambdastoragemanagerkey', {});
+      if (res.state) {
+        this.$data.managerkey = res.data.gateway;
+      }
+    },
+    Datacollection: async function() {
+      this.$data.passwordModal = true;
+    },
     async  getorderinfo(orderId) {
       let res = await ipc.callMain('marketgetOrderinfo', {
         orderId
@@ -154,8 +226,43 @@ export default {
         this.$data.orderinfo = res.data.data;
       }
     },
+    async  machineNameinfo(orderinfo) {
+      console.log('machineNameinfo');
+      let res = await ipc.callMain('sets3orderinfo', orderinfo);
+      if (res.state) {
+        console.log(res.data);
+      }
+    },
+
     async gets3token() {
       console.log('*********');
+      try {
+        let res = await ipc.callMain('cmdtest', {
+
+        });
+        if (res.state) {
+          console.log(res.data);
+          this.$Message.info({
+            content: JSON.stringify(res.data),
+            duration: 10,
+            closable: true
+          });
+        // alert(JSON.stringify(res.data))
+        } else {
+        // alert('失败')
+          this.$Message.info({
+            content: '失败',
+            duration: 10,
+            closable: true
+          });
+        }
+      } catch (error) {
+        this.$Message.info({
+          content: JSON.stringify(error),
+          duration: 10,
+          closable: true
+        });
+      }
     },
     typeFormat(addeess) {
       if (this.$store.getters.getaddress === addeess) {
