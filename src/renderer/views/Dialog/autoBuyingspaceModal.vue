@@ -3,40 +3,40 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="购买空间"
+      :title="$t('Dialog.AutoBuy.Buyspace')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
       <p>
-        市场名称：{{this.$data.marketinfo.name}}
+        {{$t('Dialog.AutoBuy.Marketname')}}：{{this.$data.marketinfo.name}}
       </p>
       <br/>
       <p>
-        市场地址：{{this.$data.marketinfo.marketAddress}}
+        {{$t('Dialog.AutoBuy.Marketaddress')}}：{{this.$data.marketinfo.marketAddress}}
       </p>
       <br/>
       <p>
-        市场单价：{{marketPrice}}  GB/LAMB/month
+        {{$t('Dialog.AutoBuy.unitprice')}}：{{marketPrice}}
       </p>
       <br/>
 
 
       <p>
         <Input  v-model="spaceSize">
-          <span slot="prepend">空间</span>
+          <span slot="prepend">{{$t('Dialog.AutoBuy.space')}}</span>
           <span slot="append">GB</span>
         </Input>
       </p>
       <br/>
       <p>
         <Input  v-model="spaceDuration">
-          <span slot="prepend">时长</span>
-          <span slot="append">月</span>
+          <span slot="prepend">{{$t('Dialog.AutoBuy.duration')}}</span>
+          <span slot="append">{{$t('Dialog.AutoBuy.month')}}</span>
         </Input>
       </p>
       <br/>
       <p>
-        支付金额：{{Paymentamount}} LAMB
+        {{$t('Dialog.AutoBuy.Paymentamount')}}：{{Paymentamount}} LAMB
       </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>

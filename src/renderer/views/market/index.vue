@@ -4,9 +4,9 @@
       <div class="tableContainer">
 
           <Tabs value="name1">
-                <TabPane label="购买空间" name="name1">
+                <TabPane :label="$t('marketpage.buyingspace')" name="name1">
           <Row>
-        <Col span="22"><h3>自动匹配-一键购买  </h3></Col>
+        <Col span="22"><h3>{{$t('marketpage.autotitle')}}</h3></Col>
 
 
     </Row>
@@ -24,28 +24,33 @@
     </Dropdown>&nbsp;
 
 
-      数量 <Input v-model="autoSpaceSize"  style="width: auto" />GB&nbsp;
-      时间 <Input v-model="autoSpaceDuration"  style="width: auto" />月&nbsp;
-         <Button @click="openautoBuyingspace" type="primary">一键购买空间</Button>
+      {{$t('marketpage.space')}} <Input v-model="autoSpaceSize"  style="width: auto" />GB&nbsp;
+      {{$t('marketpage.duration')}}<Input v-model="autoSpaceDuration"  style="width: auto" />{{$t('marketpage.month')}}&nbsp;
+         <Button @click="openautoBuyingspace" type="primary">{{$t('marketpage.One-click-space')}}</Button>
 
     </div>
     <br/>
 
-        <div style="text-align: center;"> 挂单手续费：{{selectmarket.feeRate|Percentformat}}，成单手续费：{{selectmarket.commissionRate|Percentformat}} 单价(LAMB/GB/month)：{{marketinfo.order_normal_price|Lambformat}}，最短购买时间 {{marketinfo.order_min_buy_duration|formatMonth}}月 最长购买时间{{marketinfo.order_max_buy_duration|formatMonth}}月，空间最小{{marketinfo.order_min_buy_size}}GB  </div>
+        <div style="text-align: center;"> {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
+          {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}} ，
+          {{$t('marketpage.unitprice')}}：{{marketinfo.order_normal_price|Lambformat}}，
+          {{$t('marketpage.Minimumtime')}} {{marketinfo.order_min_buy_duration|formatMonth}}{{$t('marketpage.month')}}
+          {{$t('marketpage.Maximumtime')}}{{marketinfo.order_max_buy_duration|formatMonth}}{{$t('marketpage.month')}}，
+          {{$t('marketpage.Minimumspace')}}{{marketinfo.order_min_buy_size}}GB  </div>
 
 
      <Divider />
 
         <Row>
-        <Col span="22"><h3>自选交易-更多选择，自由交易  </h3></Col>
-        <Col span="2"><Button @click="openSellingspace"  size="small">出售空间</Button></Col>
+        <Col span="22"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
+        <Col span="2"><Button @click="openSellingspace"  size="small">{{$t('marketpage.sellspacebtn')}}</Button></Col>
 
     </Row>
      <br/>
-     <div>最近100条数据 </div>
+     <div>{{$t('marketpage.last100data')}}</div>
                     <Table  :columns="OrderListcolumns" :data="OrderList">
                         <template slot-scope="{ row, index }" slot="action">
-                         <Button  @click="openBuyingspace(row)"  type="primary" size="small"> 购买空间 </Button>
+                         <Button  @click="openBuyingspace(row)"  type="primary" size="small"> {{$t('marketpage.selltable.Purchasespace')}} </Button>
                         </template>
                         <template slot-scope="{ row, index }" slot="price">
                          {{row.price|Lambformat}}
@@ -69,7 +74,7 @@
                 <!-- <TabPane label="出售" name="name1">
                     <Table :columns="columns1" :data="data1"></Table>
                 </TabPane> -->
-                <TabPane label="我出售的空间" name="name4">
+                <TabPane :label="$t('marketpage.sellspace')" name="name4">
                 <div>最近100条数据 </div>
                  <Table :columns="SellOrdercolumns" :data="SellOrderslist">
                    <template slot-scope="{ row, index }" slot="price">
@@ -87,29 +92,35 @@
                      <Page  @on-change="SellOrderListPage"  :total="100" show-elevator />
                     </div>
                  </TabPane>
-                <TabPane label="订单列表" name="name3">
+                <TabPane :label="$t('marketpage.orderlist')" name="name3">
                   <div>最近100条数据 </div>
                     <Table :columns="UserOrderscolumns" :data="UserOrderslist">
                       <template slot-scope="{ row, index }" slot="action">
                         <Button  @click="orderinfo(row)"  type="primary" size="small"> 订单详情 </Button>
                       </template>
                         <template slot-scope="{ row, index }" slot="price">
-                         {{row.price|Lambformat}}
+                         {{row.MatchOrder.price|Lambformat}}
                         </template>
                         <template slot-scope="{ row, index }" slot="userPay">
-                         {{amountFormat(row.userPay)}}
+                         {{amountFormat(row.MatchOrder.userPay)}}
                         </template>
                         <template slot-scope="{ row, index }" slot="buyAddress">
-                         {{typeFormat(row.buyAddress)}}
+                         {{typeFormat(row.MatchOrder.buyAddress)}}
                         </template>
                         <template slot-scope="{ row, index }" slot="minerPay">
-                         {{amountFormat(row.minerPay)}}
+                         {{amountFormat(row.MatchOrder.minerPay)}}
                         </template>
                         <template slot-scope="{ row, index }" slot="createTime">
-                         {{row.createTime|formatDate}}
+                         {{row.MatchOrder.createTime|formatDate}}
                         </template>
                         <template slot-scope="{ row, index }" slot="endTime">
-                         {{row.endTime|formatDate}}
+                         {{row.MatchOrder.endTime|formatDate}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="size">
+                         {{row.MatchOrder.size}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="orderId">
+                         {{row.MatchOrder.orderId}}
                         </template>
 
 
@@ -157,37 +168,37 @@ export default {
       autoSpaceDuration: '',
       OrderList: [],
       OrderListcolumns: [{
-        title: '矿工地址',
+        title: this.$t('marketpage.selltable.Mineraddress'),
         key: 'address'
       },
       {
-        title: '空间总量(GB)',
+        title: this.$t('marketpage.selltable.amountspace'),
         key: 'sellSize'
       },
       {
-        title: '剩余空间总量(GB)',
+        title: this.$t('marketpage.selltable.remainingspace'),
         key: 'unUseSize'
       },
       {
-        title: '单价LAMB/GB/day',
+        title: this.$t('marketpage.selltable.unitprice'),
         key: 'price',
         slot: 'price'
       },
       {
-        title: '最小空间(GB)',
+        title: this.$t('marketpage.selltable.minimumspace'),
         key: 'minBuySize'
       },
       {
-        title: '最小时间(月)',
+        title: this.$t('marketpage.selltable.minimumduration'),
         key: 'minDuration',
         slot: 'minDuration'
       },
       {
-        title: '交易',
+        title: this.$t('marketpage.selltable.operating'),
         key: 'action',
         slot: 'action'
       }, {
-        title: '赔率',
+        title: this.$t('marketpage.selltable.Odds'),
         key: 'rate',
         slot: 'rate'
       }
@@ -195,82 +206,84 @@ export default {
 
       SellOrdercolumns: [
         {
-          title: '空间总量(GB)',
+          title: this.$t('marketpage.myselltable.amountspace'),
           key: 'sellSize'
         },
         {
-          title: '剩余空间总量(GB)',
+          title: this.$t('marketpage.myselltable.remainingspace'),
           key: 'unUseSize'
         },
         {
-          title: '单价LAMB/GB/月',
+          title: this.$t('marketpage.myselltable.unitprice'),
           key: 'price',
           slot: 'price'
         },
         {
-          title: '最小空间(GB)',
+          title: this.$t('marketpage.myselltable.minimumspace'),
           key: 'minBuySize'
         },
         {
-          title: '最小时间(月)',
+          title: this.$t('marketpage.myselltable.minimumduration'),
           key: 'minDuration',
           slot: 'minDuration'
         },
         {
-          title: '赔率',
+          title: this.$t('marketpage.myselltable.Odds'),
           key: 'rate',
           slot: 'rate'
         }, {
-          title: '存储设备',
+          title: this.$t('marketpage.myselltable.Storagedevice'),
           key: 'machineName'
         }, {
-          title: '市场',
+          title: this.$t('marketpage.myselltable.Marketaddress'),
           key: 'marketAddress'
         }
       ],
       SellOrderslist: [],
       UserOrderscolumns: [{
-        title: '类型',
-        key: 'buyAddress',
+        title: this.$t('marketpage.ordertable.orderType'),
+        key: 'MatchOrder.buyAddress',
         slot: 'buyAddress'
       },
       {
-        title: '订单ID',
-        key: 'orderId'
+        title: this.$t('marketpage.ordertable.orderid'),
+        key: 'MatchOrder.orderId',
+        slot: 'orderId'
       },
 
       {
-        title: '数量',
-        key: 'size'
+        title: this.$t('marketpage.ordertable.amountspace'),
+        key: 'MatchOrder.size',
+        slot: 'size'
       },
       {
-        title: '单价(LAMB/GB/月)',
-        key: 'price',
+        title: this.$t('marketpage.ordertable.unitprice'),
+        key: 'MatchOrder.price',
         slot: 'price'
       },
 
       {
-        title: '开始时间',
-        key: 'createTime',
+        title: this.$t('marketpage.ordertable.Startingtime'),
+        key: 'MatchOrder.createTime',
         slot: 'createTime'
       },
       {
-        title: '结束时间',
-        key: 'endTime',
+        title: this.$t('marketpage.ordertable.EndTime'),
+        key: 'MatchOrder.endTime',
         slot: 'endTime'
       },
       {
-        title: '用户支付金额',
-        key: 'userPay',
+        title: this.$t('marketpage.ordertable.userPay'),
+        key: 'MatchOrder.userPay',
         slot: 'userPay'
       },
       {
-        title: '矿工押金',
-        key: 'minerPay',
+        title: this.$t('marketpage.ordertable.minerPay'),
+        key: 'MatchOrder.minerPay',
         slot: 'minerPay'
       },
       {
-        title: '订单详情',
+        title: this.$t('marketpage.ordertable.orderdetails'),
         key: 'action',
         slot: 'action'
       }
@@ -336,7 +349,7 @@ export default {
       console.log('- -');
       let res = await ipc.callMain('marketOrderList', {
         marketName: this.$data.selectmarket.name,
-        orderType: 'all', // premium all
+        orderType: 'premium', // premium all
         page: page || 1,
         limit: 10
       });
@@ -375,7 +388,7 @@ export default {
       }, this.$data.autoSpaceSize, this.$data.autoSpaceDuration);
     },
     orderinfo(item) {
-      this.$router.push(`/orderinfo/${item.orderId}`);
+      this.$router.push(`/orderinfo/${item.MatchOrder.orderId}`);
     },
     selectmarketClick(e) {
       console.log(e);

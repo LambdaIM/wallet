@@ -310,6 +310,16 @@
           "tip2":"2:点击首页本地最新交易记录列表，查看当前交易的状态",
           "tip3":"3:在浏览器中搜索当前交易哈希，或搜索lamb地址，查看最新交易记录是否包含当前交易哈希"
       },
+      "AutoBuy":{
+          "Buyspace":"购买空间",
+          "Marketname":"市场名称",
+          "Marketaddress":"市场地址",
+          "unitprice":"单价(LAMB/GB/month)",
+          "space":"空间",
+          "duration":"时长",
+          "month":"月",
+          "Paymentamount":"支付金额"
+      },
       "com":{
           "gasfee":"Gas费用",
           "to":" 兑换 ",
@@ -421,5 +431,60 @@
        "software":"软件",
        "version":"版本",
        "switch_height":"切换的区块高度"
+   },
+   "marketpage":{
+       "buyingspace":"购买空间",
+       "sellspace":"我出售空间",
+       "orderlist":"订单列表",
+       "autotitle":"自动匹配-一键购买",
+       "space":"空间",
+       "duration":"时长",
+       "month":"月",
+       "One-click-space":"一键购买空间",
+       "Pending-order-fee":"挂单手续费",
+       "Single-fee":"成单手续费",
+       "unitprice":"单价(LAMB/GB/month)",
+       "Minimumtime":"最短购买时长",
+       "Maximumtime":"最长购买时长",
+       "Minimumspace":"最小购买空间",
+       "Optionaltitle":"自选交易-更多选择，自由交易",
+       "sellspacebtn":"出售空间",
+       "last100data":"最近100条数据",
+       "selltable":{
+           "Mineraddress":"矿工地址",
+           "amountspace":"空间总量(GB)",
+           "remainingspace":"剩余空间总量(GB)",
+           "unitprice":"单价(LAMB/GB/month)",
+           "minimumspace":"最小空间(GB)",
+           "minimumduration":"最小时长(月)",
+           "operating":"操作",
+           "Odds":"赔率",
+           "Purchasespace":"购买空间"
+       },
+       "myselltable":{
+        "amountspace":"空间总量(GB)",
+        "remainingspace":"剩余空间总量(GB)",
+        "unitprice":"单价(LAMB/GB/month)",
+        "minimumspace":"最小空间(GB)",
+        "minimumduration":"最小时长(月)",
+        "Odds":"赔率",
+        "Storagedevice":"存储设备",
+        "Marketaddress":"市场地址"
+       },
+       "ordertable":{
+        "orderType":"类型",
+        "orderid":"订单id",
+        "amountspace":"空间(GB)",
+        "unitprice":"单价(LAMB/GB/month)",
+        "Storagedevice":"存储设备",
+        "Marketaddress":"市场地址",
+        "Startingtime":"开始时间",
+        "EndTime":"结束时间",
+        "userPay":"用户支付金额",
+        "minerPay":"矿工押金",
+        "orderdetails":"订单详情"
+       }
+
+
    }
 }

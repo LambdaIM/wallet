@@ -1,13 +1,13 @@
 <template>
 <div class="container">
     <Mycard cardtitle="订单详情" class="mt20">
-      <div  class="transaction-content" slot="card-content">
+      <div v-if="orderinfo.MatchOrder!=undefined" class="transaction-content" slot="card-content">
           <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">交易市场地址:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.marketAddress}}
+            {{orderinfo.MatchOrder.marketAddress}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -15,7 +15,7 @@
             <span class="title">类型:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{typeFormat(orderinfo.buyAddress)}}
+            {{typeFormat(orderinfo.MatchOrder.buyAddress)}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -23,7 +23,7 @@
             <span class="title">订单id:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.orderId}}
+            {{orderinfo.MatchOrder.orderId}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -31,7 +31,7 @@
             <span class="title">矿工:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.askAddress}}
+            {{orderinfo.MatchOrder.askAddress}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -39,7 +39,7 @@
             <span class="title">用户:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.buyAddress}}
+            {{orderinfo.MatchOrder.buyAddress}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -47,7 +47,7 @@
             <span class="title">空间:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.size}}GB
+            {{orderinfo.MatchOrder.size}}GB
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -55,7 +55,7 @@
             <span class="title">单价(LAMB/GB/月):</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.price|Lambformat}}
+            {{orderinfo.MatchOrder.price|Lambformat}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -63,7 +63,7 @@
             <span class="title">支付金额:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-           {{amountFormat(orderinfo.userPay)}}
+           {{amountFormat(orderinfo.MatchOrder.userPay)}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -71,7 +71,7 @@
             <span class="title">矿工押金:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-           {{amountFormat(orderinfo.minerPay)}}
+           {{amountFormat(orderinfo.MatchOrder.minerPay)}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -79,7 +79,7 @@
             <span class="title">开始时间:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.createTime|formatDate}}
+            {{orderinfo.MatchOrder.createTime|formatDate}}
           </Col>
         </Row>
                 <Row class-name="card-item">
@@ -87,7 +87,7 @@
             <span class="title">结束时间:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.endTime|formatDate}}
+            {{orderinfo.MatchOrder.endTime|formatDate}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -95,7 +95,7 @@
             <span class="title">设备名称:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.machineName}}
+            {{orderinfo.MatchOrder.machineName}}
           </Col>
         </Row>
 
