@@ -344,6 +344,23 @@
       "Mineraddress":"Minera ddress"
       
     },
+    "sellorder":{
+      "Sellingspace":"Selling space",
+      "Marketname":"Market name",
+      "Marketaddress":"Market address",
+      "Storagedevice":"Storage device",
+       "selectStoragedevicetip":"Please select a storage device (the last 100 devices)",
+       "Storagedevicetip":"A storage device can only be sold once, it is recommended to sell all the space at once",
+       "unitprice1":"Unitprice",
+       "unitprice2":"LAMB/GB/month",
+       "Odds":"Odds",
+       "Purchasequota":"Purchase limit",
+       "Minimumtime":"Min time",
+       "Minimumspace":"Min space",
+       "Maximumtime":"Max time",
+       "times":"times",
+       "month":"month"
+    },
       "com":{
           "gasfee":"Gas Fee",
           "to":" to ",
