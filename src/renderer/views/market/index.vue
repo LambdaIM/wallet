@@ -34,16 +34,16 @@
         <div style="text-align: center;"> {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
           {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}} ，
           {{$t('marketpage.unitprice')}}：{{marketinfo.order_normal_price|Lambformat}}，
-          {{$t('marketpage.Minimumtime')}} {{marketinfo.order_min_buy_duration|formatMonth}}{{$t('marketpage.month')}}
-          {{$t('marketpage.Maximumtime')}}{{marketinfo.order_max_buy_duration|formatMonth}}{{$t('marketpage.month')}}，
-          {{$t('marketpage.Minimumspace')}}{{marketinfo.order_min_buy_size}}GB  </div>
+          {{$t('marketpage.Minimumtime')}}： {{marketinfo.order_min_buy_duration|formatMonth}}{{$t('marketpage.month')}}
+          {{$t('marketpage.Maximumtime')}}：{{marketinfo.order_max_buy_duration|formatMonth}}{{$t('marketpage.month')}}，
+          {{$t('marketpage.Minimumspace')}}：{{marketinfo.order_min_buy_size}}GB  </div>
 
 
      <Divider />
 
         <Row>
         <Col span="22"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
-        <Col span="2"><Button @click="openSellingspace"  size="small">{{$t('marketpage.sellspacebtn')}}</Button></Col>
+        <Col span="2"><Button @click="openSellingspace" type="primary"  size="small">{{$t('marketpage.sellspacebtn')}}</Button></Col>
 
     </Row>
      <br/>
@@ -382,10 +382,26 @@ export default {
       this.$refs.Sellingspace.open(this.$data.selectmarket);
     },
     openautoBuyingspace() {
+      let spaceSize = parseInt(this.$data.autoSpaceSize);
+      let spaceDuration = parseInt(this.$data.autoSpaceDuration);
+
+      if (isNaN(spaceSize) || spaceSize == 0) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.AutoBuy.action.needspacesize')
+        });
+        return;
+      }
+      if (isNaN(spaceDuration) || spaceDuration == 0) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.AutoBuy.action.needstime')
+        });
+        return;
+      }
+
       this.$refs.autoBuyingspace.open({
         name: this.$data.selectmarket.name,
         marketAddress: this.$data.selectmarket.marketAddress
-      }, this.$data.autoSpaceSize, this.$data.autoSpaceDuration);
+      }, spaceSize, spaceDuration);
     },
     orderinfo(item) {
       this.$router.push(`/orderinfo/${item.MatchOrder.orderId}`);
@@ -400,9 +416,9 @@ export default {
     },
     typeFormat(addeess) {
       if (this.$store.getters.getaddress === addeess) {
-        return '买单';
+        return this.$t('marketpage.payorder');
       } else {
-        return '卖单';
+        return this.$t('marketpage.sellorder');
       }
     }
 

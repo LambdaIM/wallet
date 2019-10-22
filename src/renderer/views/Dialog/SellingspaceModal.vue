@@ -26,7 +26,23 @@
           <span slot="prepend">{{$t('Dialog.sellorder.Sellingspace')}}</span>
           <span slot="append">GB</span>
         </Input>
-      </p><br/>
+      </p>
+      <br/>
+      <p>
+
+          <Input @on-keyup="ratechange"  v-model="rate">
+          <span slot="prepend">{{$t('Dialog.sellorder.Odds')}}</span>
+          <span slot="append">{{$t('Dialog.sellorder.times')}}</span>
+        </Input>
+
+      </p>
+      <br/>
+      <ul class="ultip">
+        <li>赔率=1不能指定价格，只能是5LAMB/G/month</li>
+        <li>赔率>=3需要指定价格,价格>=5LAMB/G/month</li>
+        <li>赔率>=3为优质卖单</li>
+      </ul>
+      <br/>
       <p>
 
           <Input  v-model="unitPrice">
@@ -36,16 +52,7 @@
 
       </p>
       <br/>
-      <p>
-
-          <Input  v-model="rate">
-          <span slot="prepend">{{$t('Dialog.sellorder.Odds')}}</span>
-          <span slot="append">{{$t('Dialog.sellorder.times')}}</span>
-        </Input>
-
-      </p>
-      <br/>
-      <p style="margin-top: 20px;">
+      <p >
         {{$t('Dialog.sellorder.Purchasequota')}}
       </p>
       <br/>
@@ -148,20 +155,13 @@ export default {
   },
   methods: {
     open(market) {
-      console.log('- -');
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
       this.$data.market = market;
 
       this.getMinermachines();
-
-
-      console.log('----------');
     },
     prewithdrawalLAMB() {
-      console.log('- -');
-
-
       let spaceSize = parseInt(this.$data.spaceSize);
       let unitPrice = parseInt(this.$data.unitPrice);
 
@@ -169,10 +169,23 @@ export default {
       let minSpace = parseInt(this.$data.minSpace);
       let minDuration = parseInt(this.$data.minDuration);
       let maxDuration = parseInt(this.$data.maxDuration);
+      if (rate == 1) {
+        unitPrice = 5;
+      }
+      if (rate >= 3 && unitPrice < 5) {
+        unitPrice = 5;
+      }
+
+      this.$data.spaceSize = spaceSize;
+      this.$data.unitPrice = unitPrice;
+      this.$data.rate = rate;
+      this.$data.minSpace = minSpace;
+      this.$data.minDuration = minDuration;
+      this.$data.maxDuration = maxDuration;
 
       if (this.$data.machineitem == '') {
         this.$Notice.warning({
-          title: '请选择存储设备'
+          title: this.$t('Dialog.sellorder.action.needstoragedevice')
         });
         return;
       }
@@ -180,43 +193,44 @@ export default {
 
       if (isNaN(spaceSize) || spaceSize == 0) {
         this.$Notice.warning({
-          title: '检查空间大小'
+          title: this.$t('Dialog.sellorder.action.needspacesize')
         });
         return;
       }
       if (isNaN(unitPrice) || unitPrice == 0) {
         this.$Notice.warning({
-          title: '检查单价'
+          title: this.$t('Dialog.sellorder.action.needunitprice')
         });
         return;
       }
       if (isNaN(rate) || rate == 0) {
         this.$Notice.warning({
-          title: '检查赔率'
+          title: this.$t('Dialog.sellorder.action.needodds')
         });
         return;
       }
       if (isNaN(minSpace) || minSpace == 0) {
         this.$Notice.warning({
-          title: '检查最小空间'
+          title: this.$t('Dialog.sellorder.action.needminspace')
         });
         return;
       }
       if (isNaN(minDuration) || minDuration == 0) {
         this.$Notice.warning({
-          title: '检查最小时长'
+          title: this.$t('Dialog.sellorder.action.needunitmintime')
         });
         return;
       }
       if (isNaN(maxDuration) || maxDuration == 0) {
         this.$Notice.warning({
-          title: '检查最大时长'
+          title: this.$t('Dialog.sellorder.action.needunitmaxtime')
         });
         return;
       }
       unitPrice = this.toBigNumStr(unitPrice);
-      minDuration = minDuration * (1000 * 1000 * 1000 * 60 * 60 * 24 * 30);
-      maxDuration = maxDuration * (1000 * 1000 * 1000 * 60 * 60 * 24 * 30);
+      var monthNum = (1000 * 1000 * 1000 * 60 * 60 * 24 * 30);
+      minDuration = minDuration * monthNum;
+      maxDuration = maxDuration * monthNum;
 
       // maxDuration
 
@@ -231,6 +245,12 @@ export default {
         minDuration,
         maxDuration
       }, 'CreateSellOrder');
+    },
+    ratechange() {
+      let rate = parseInt(this.$data.rate);
+      if (rate == 1) {
+        this.$data.unitPrice = 5;
+      }
     },
     async transfer(sellobj, txType) {
       // let amount = this.LAMBvalue;
@@ -278,7 +298,7 @@ export default {
     },
     confirm() {
       var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
-      if (comparedNum == 1 || comparedNum == null || comparedNum == 0) {
+      if (comparedNum == 1 || comparedNum == null) {
         this.$Notice.warning({
           title: 'error',
           desc: this.$t('Dialog.com.Lesscommission')
@@ -328,6 +348,10 @@ export default {
     margin-top: 20px;
     font-size: 14px;
   }
+}
+.ultip{
+      text-align: center;
+      list-style-type:none
 }
 </style>
 

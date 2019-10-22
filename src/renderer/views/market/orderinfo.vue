@@ -266,9 +266,9 @@ export default {
     },
     typeFormat(addeess) {
       if (this.$store.getters.getaddress === addeess) {
-        return '买单';
+        return this.$t('marketpage.payorder');
       } else {
-        return '卖单';
+        return this.$t('marketpage.sellorder');
       }
     },
     amountFormat(item) {

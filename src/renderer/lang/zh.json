@@ -315,11 +315,15 @@
           "Buyspace":"购买空间",
           "Marketname":"市场名称",
           "Marketaddress":"市场地址",
-          "unitprice":"单价(LAMB/GB/month)",
+          "unitprice":"单价",
           "space":"空间",
           "duration":"时长",
           "month":"月",
-          "Paymentamount":"支付金额"
+          "Paymentamount":"支付金额",
+          "action":{
+            "needspacesize":"检查空间大小，空间只能填写整数",
+            "needstime":"检查时长大小，时长只能填写整数"
+          }
       },
       "selectBuy":{
         "Buyspace":"购买空间",
@@ -331,11 +335,16 @@
         "month":"月",
         "Paymentamount":"支付金额",
         "Minimumtime":"最短购买时长",
+        "Maximumtime":"最大购买时长",
         "Minimumspace":"最小购买空间",
         "Odds":"赔率",
         "amountspace":"空间总量",
         "remainingspace":"剩余空间总量",
-        "Mineraddress":"矿工地址"
+        "Mineraddress":"矿工地址",
+        "action":{
+            "needspacesize":"检查空间大小，空间只能填写整数",
+            "needstime":"检查时长大小，时长只能填写整数"
+          }
         
     },
     "sellorder":{
@@ -353,7 +362,17 @@
        "Minimumspace":"最小购买空间",
        "Maximumtime":"最大购买时长",
        "times":"倍",
-       "month":"月"
+       "month":"月",
+       "action":{
+           "needstoragedevice":"请选择存储设备",
+           "needspacesize":"检查空间大小,只能填写整数",
+           "needunitprice":"检查单价,只能填写整数",
+           "needunitmintime":"检查最小时长,只能填写整数",
+           "needunitmaxtime":"检查最大时长,只能填写整数",
+           "needodds":"检查赔率,只能填写整数",
+           "needminspace":"检查最小空间,只能填写整数"
+
+       }
     },
       "com":{
           "gasfee":"Gas费用",
@@ -485,6 +504,8 @@
        "Optionaltitle":"自选交易-更多选择，自由交易",
        "sellspacebtn":"出售空间",
        "last100data":"最近100条数据",
+       "payorder":"买单",
+       "sellorder":"卖单",
        "selltable":{
            "Mineraddress":"矿工地址",
            "amountspace":"空间总量(GB)",

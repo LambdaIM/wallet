@@ -19,7 +19,11 @@
       </p>
       <br/>
       <p>
-        {{$t('Dialog.selectBuy.Minimumtime')}}：{{orderinfo.minDuration/(1000*1000*1000*60*60*24)}}day
+        {{$t('Dialog.selectBuy.Minimumtime')}}：{{orderinfo.minDuration|formatMonth}}月
+      </p>
+      <br/>
+      <p>
+        {{$t('Dialog.selectBuy.Maximumtime')}}：{{orderinfo.maxDuration|formatMonth}}月
       </p>
       <br/>
       <p>
@@ -80,7 +84,11 @@
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('Dialog.selectBuy.duration')}} :</Col>
-          <Col span="20" class-name="value">{{spaceDuration}} 月</Col>
+          <Col span="20" class-name="value">{{spaceDuration}} {{$t('Dialog.AutoBuy.month')}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="12" class-name="key">{{$t('Dialog.selectBuy.unitprice')}} :</Col>
+          <Col span="12" class-name="value">{{orderinfo.price|Lambformat}}</Col>
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('Dialog.selectBuy.Paymentamount')}} :</Col>
@@ -130,10 +138,18 @@ export default {
 
       let spaceSize = parseInt(this.$data.spaceSize);
       let spaceDuration = parseInt(this.$data.spaceDuration);
+      this.$data.spaceSize = spaceSize;
+      this.$data.spaceDuration = spaceDuration;
 
-      if (isNaN(spaceSize) || isNaN(spaceDuration) || spaceSize == 0 || spaceDuration == 0) {
+      if (isNaN(spaceSize) || spaceSize == 0) {
         this.$Notice.warning({
-          title: '空间大小和时长只能填写整数'
+          title: this.$t('Dialog.selectBuy.action.needspacesize')
+        });
+        return;
+      }
+      if (isNaN(spaceDuration) || spaceDuration == 0) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.selectBuy.action.needstime')
         });
         return;
       }
@@ -178,7 +194,7 @@ export default {
     },
     confirm() {
       var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
-      if (comparedNum == 1 || comparedNum == null || comparedNum == 0) {
+      if (comparedNum == 1 || comparedNum == null) {
         this.$Notice.warning({
           title: 'error',
           desc: this.$t('Dialog.com.Lesscommission')

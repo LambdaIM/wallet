@@ -67,7 +67,7 @@
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.duration')}}:</Col>
-          <Col span="20" class-name="value">{{spaceDuration}} 月</Col>
+          <Col span="20" class-name="value">{{spaceDuration}} {{$t('Dialog.AutoBuy.month')}}</Col>
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.Paymentamount')}}:</Col>
@@ -118,16 +118,18 @@ export default {
 
       let spaceSize = parseInt(this.spaceSize);
       let spaceDuration = parseInt(this.spaceDuration);
+      this.spaceSize = spaceSize;
+      this.spaceDuration = spaceDuration;
 
-      if (spaceSize == '' || spaceSize == 0) {
+      if (isNaN(spaceSize) || spaceSize == 0) {
         this.$Notice.warning({
-          title: '检查空间大小'
+          title: this.$t('Dialog.AutoBuy.action.needspacesize')
         });
         return;
       }
-      if (spaceDuration == '' || spaceDuration == 0) {
+      if (isNaN(spaceDuration) || spaceDuration == 0) {
         this.$Notice.warning({
-          title: '检查时长大小'
+          title: this.$t('Dialog.AutoBuy.action.needstime')
         });
         return;
       }
@@ -175,7 +177,7 @@ export default {
     },
     confirm() {
       var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
-      if (comparedNum == 1 || comparedNum == null || comparedNum == 0) {
+      if (comparedNum == 1 || comparedNum == null) {
         this.$Notice.warning({
           title: 'error',
           desc: this.$t('Dialog.com.Lesscommission')

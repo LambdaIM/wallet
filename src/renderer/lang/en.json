@@ -321,11 +321,15 @@
         "Buyspace":"Buying space",
         "Marketname":"Market name",
         "Marketaddress":"Market address",
-        "unitprice":"Unit price(LAMB/GB/month)",
+        "unitprice":"Unit price",
         "space":"Space",
         "duration":"Duration",
         "month":"Month",
-        "Paymentamount":"Payment amount"
+        "Paymentamount":"Payment amount",
+        "action":{
+          "needspacesize":"Please check the size of the space, the space can only fill in the integer",
+        "needstime":"Please check the duration, only the integer can be filled in."
+        }
     },
     "selectBuy":{
       "Buyspace":"Buying space",
@@ -337,11 +341,16 @@
       "month":"Month",
       "Paymentamount":"Payment amount",
       "Minimumtime":"Min time",
+      "Maximumtime":"Max time",
       "Minimumspace":"Min space",
       "Odds":"Odds",
       "amountspace":"Amount space",
       "remainingspace":"Remaining space",
-      "Mineraddress":"Minera ddress"
+      "Mineraddress":"Minera ddress",
+      "action":{
+        "needspacesize":"Please check the size of the space, the space can only fill in the integer",
+        "needstime":"Please check the duration, only the integer can be filled in."
+      }
       
     },
     "sellorder":{
@@ -359,7 +368,16 @@
        "Minimumspace":"Min space",
        "Maximumtime":"Max time",
        "times":"times",
-       "month":"month"
+       "month":"month",
+       "action":{
+          "needstoragedevice":"Please select a storage device",
+          "needspacesize":"Check space size,Can only fill in integers",
+          "needunitprice":"Check unit price,Can only fill in integers",
+          "needunitmintime":"Check minimum time,Can only fill in integers",
+          "needunitmaxtime":"Check the maximum length,Can only fill in integers",
+          "needodds":"Check odds,Can only fill in integers",
+          "needminspace":"Check the minimum space,Can only fill in integers"
+      }
     },
       "com":{
           "gasfee":"Gas Fee",
@@ -492,6 +510,8 @@
     "Optionaltitle":"Free trade - more options, free trade",
     "sellspacebtn":"Sale",
     "last100data":"The last 100 data",
+    "payorder":"pay",
+    "sellorder":"sell",
     "selltable":{
         "Mineraddress":"Miner address",
         "amountspace":"Amount space(GB)",
