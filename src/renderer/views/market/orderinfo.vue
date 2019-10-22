@@ -228,13 +228,24 @@ export default {
     },
     async  machineNameinfo(orderinfo) {
       console.log('machineNameinfo');
-      let res = await ipc.callMain('sets3orderinfo', orderinfo);
+      var orderId = orderinfo.MatchOrder.orderId;
+      var pubKey = orderinfo.pubKey;
+      var dhtId = orderinfo.dhtId;
+
+      let res = await ipc.callMain('sets3orderinfo', { orderId, pubKey, dhtId });
       if (res.state) {
         console.log(res.data);
+        // this.runs3()//启动cmd 程序
+      } else {
+        this.$Message.info({
+          content: '失败',
+          duration: 10,
+          closable: true
+        });
       }
     },
 
-    async gets3token() {
+    async runs3() {
       console.log('*********');
       try {
         let res = await ipc.callMain('cmdtest', {
