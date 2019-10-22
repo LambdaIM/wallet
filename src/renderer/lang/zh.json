@@ -431,7 +431,9 @@
     "MsgMinerWithDraw": "提取矿工收益",
     "MsgCreateSellOrder": "创建卖单",
     "MsgCancelSellOrder": "取消卖单",
-    "MsgCreateBuyOrder": "创建买单"
+    "MsgCreateBuyOrder": "创建买单",
+    "MsgPDPProofs": "挖矿证明",
+    "MsgStatement": "挖矿声明"
 
    },
    "txTable":{
@@ -509,6 +511,10 @@
        "last100data":"最近100条数据",
        "payorder":"买单",
        "sellorder":"卖单",
+       "Active":"活跃",
+       "Finish":"卖光了",
+       "Expired":"过期",
+       "Status":"状态",
        "selltable":{
            "Mineraddress":"矿工地址",
            "amountspace":"空间总量(GB)",

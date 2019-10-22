@@ -20,6 +20,20 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
+            <span class="title">{{this.$t('marketpage.Status')}}:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+          <span style="color:green" v-if="orderinfo.MatchOrder.status=='1'">
+              {{$t('marketpage.Active')}}
+          </span>
+          <span style="color:red" v-if="orderinfo.MatchOrder.status=='2'">
+              {{$t('marketpage.Expired')}}
+          </span>
+
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('orderinfo.orderid')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">

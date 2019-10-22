@@ -50,7 +50,7 @@
      <div>{{$t('marketpage.last100data')}}</div>
                     <Table  :columns="OrderListcolumns" :data="OrderList">
                         <template slot-scope="{ row, index }" slot="action">
-                         <Button  @click="openBuyingspace(row)"  type="primary" size="small"> {{$t('marketpage.selltable.Purchasespace')}} </Button>
+                         <Button v-if="row.status=='1'"  @click="openBuyingspace(row)"  type="primary" size="small"> {{$t('marketpage.selltable.Purchasespace')}} </Button>
                         </template>
                         <template slot-scope="{ row, index }" slot="price">
                          {{row.price|Lambformat}}
@@ -60,6 +60,15 @@
                         </template>
                         <template slot-scope="{ row, index }" slot="rate">
                          {{parseInt(row.rate)}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="status">
+                         <span style="color:green" v-if="row.status=='1'">
+                           {{$t('marketpage.Active')}}
+                        </span>
+                        <span style="color:red" v-if="row.status=='2'">
+                           {{$t('marketpage.Finish')}}
+                        </span>
+
                         </template>
 
 
@@ -85,6 +94,15 @@
                         </template>
                         <template slot-scope="{ row, index }" slot="rate">
                          {{parseInt(row.rate)}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="status">
+                         <span style="color:green" v-if="row.status=='1'">
+                           {{$t('marketpage.Active')}}
+                        </span>
+                        <span style="color:red" v-if="row.status=='2'">
+                           {{$t('marketpage.Finish')}}
+                        </span>
+
                         </template>
                  </Table>
                  <br/>
@@ -121,6 +139,15 @@
                         </template>
                         <template slot-scope="{ row, index }" slot="orderId">
                          {{row.MatchOrder.orderId}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="status">
+                         <span style="color:green" v-if="row.MatchOrder.status=='1'">
+                           {{$t('marketpage.Active')}}
+                        </span>
+                        <span style="color:red" v-if="row.MatchOrder.status=='2'">
+                           {{$t('marketpage.Expired')}}
+                        </span>
+
                         </template>
 
 
@@ -201,6 +228,11 @@ export default {
         title: this.$t('marketpage.selltable.Odds'),
         key: 'rate',
         slot: 'rate'
+      }, {
+        title: this.$t('marketpage.Status'),
+        key: 'status',
+        slot: 'status'
+
       }
       ],
 
@@ -237,6 +269,11 @@ export default {
         }, {
           title: this.$t('marketpage.myselltable.Marketaddress'),
           key: 'marketAddress'
+        }, {
+          title: this.$t('marketpage.Status'),
+          key: 'status',
+          slot: 'status'
+
         }
       ],
       SellOrderslist: [],
@@ -286,6 +323,11 @@ export default {
         title: this.$t('marketpage.ordertable.orderdetails'),
         key: 'action',
         slot: 'action'
+      }, {
+        title: this.$t('marketpage.Status'),
+        key: 'status',
+        slot: 'status'
+
       }
       ],
       UserOrderslist: []

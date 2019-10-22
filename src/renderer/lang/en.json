@@ -435,7 +435,9 @@
     "MsgMinerWithDraw": "MinerWithDraw",
     "MsgCreateSellOrder": "CreateSellOrder",
     "MsgCancelSellOrder": "CancelSellOrder",
-    "MsgCreateBuyOrder": "CreateBuyOrder"
+    "MsgCreateBuyOrder": "CreateBuyOrder",
+    "MsgPDPProofs": "PDPProofs",
+    "MsgStatement": "Statement"
   },
   "txTable":{
     "action": "Activity",
@@ -515,6 +517,10 @@
     "last100data":"The last 100 data",
     "payorder":"pay",
     "sellorder":"sell",
+    "Active":"Active",
+    "Finish":"Finish",
+    "Expired":"Expired",
+    "Status":"Status",
     "selltable":{
         "Mineraddress":"Miner address",
         "amountspace":"Amount space(GB)",
