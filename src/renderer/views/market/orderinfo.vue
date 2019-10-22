@@ -23,7 +23,7 @@
             <span class="title">{{this.$t('marketpage.Status')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-          <span style="color:green" v-if="orderinfo.MatchOrder.status=='1'">
+          <span style="color:green" v-if="orderinfo.MatchOrder.status=='0'">
               {{$t('marketpage.Active')}}
           </span>
           <span style="color:red" v-if="orderinfo.MatchOrder.status=='2'">

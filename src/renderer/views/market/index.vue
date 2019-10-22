@@ -16,7 +16,7 @@
             {{selectmarket.name}}
             <Icon type="ios-arrow-down"></Icon>
         </a>
-        <DropdownMenu slot="list">
+        <DropdownMenu  v-if="marketList" slot="list">
             <DropdownItem :name="item.name" :key="item.marketAddress" v-for="item in marketList" >{{item.name}}</DropdownItem>
 
 
@@ -48,9 +48,9 @@
     </Row>
      <br/>
      <div>{{$t('marketpage.last100data')}}</div>
-                    <Table  :columns="OrderListcolumns" :data="OrderList">
+                    <Table v-if="OrderList"  :columns="OrderListcolumns" :data="OrderList">
                         <template slot-scope="{ row, index }" slot="action">
-                         <Button v-if="row.status=='1'"  @click="openBuyingspace(row)"  type="primary" size="small"> {{$t('marketpage.selltable.Purchasespace')}} </Button>
+                         <Button v-if="row.status=='0'"  @click="openBuyingspace(row)"  type="primary" size="small"> {{$t('marketpage.selltable.Purchasespace')}} </Button>
                         </template>
                         <template slot-scope="{ row, index }" slot="price">
                          {{row.price|Lambformat}}
@@ -62,10 +62,10 @@
                          {{parseInt(row.rate)}}
                         </template>
                         <template slot-scope="{ row, index }" slot="status">
-                         <span style="color:green" v-if="row.status=='1'">
+                         <span style="color:green" v-if="row.status=='0'">
                            {{$t('marketpage.Active')}}
                         </span>
-                        <span style="color:red" v-if="row.status=='2'">
+                        <span style="color:red" v-if="row.status=='1'">
                            {{$t('marketpage.Finish')}}
                         </span>
 
@@ -85,7 +85,7 @@
                 </TabPane> -->
                 <TabPane :label="$t('marketpage.sellspace')" name="name4">
                 <div>{{$t('marketpage.last100data')}} </div>
-                 <Table :columns="SellOrdercolumns" :data="SellOrderslist">
+                 <Table v-if="SellOrderslist" :columns="SellOrdercolumns" :data="SellOrderslist">
                    <template slot-scope="{ row, index }" slot="price">
                          {{row.price|Lambformat}}
                         </template>
@@ -96,10 +96,10 @@
                          {{parseInt(row.rate)}}
                         </template>
                         <template slot-scope="{ row, index }" slot="status">
-                         <span style="color:green" v-if="row.status=='1'">
+                         <span style="color:green" v-if="row.status=='0'">
                            {{$t('marketpage.Active')}}
                         </span>
-                        <span style="color:red" v-if="row.status=='2'">
+                        <span style="color:red" v-if="row.status=='1'">
                            {{$t('marketpage.Finish')}}
                         </span>
 
@@ -110,9 +110,9 @@
                      <Page  @on-change="SellOrderListPage"  :total="100" show-elevator />
                     </div>
                  </TabPane>
-                <TabPane :label="$t('marketpage.orderlist')" name="name3">
+                <TabPane  :label="$t('marketpage.orderlist')" name="name3">
                   <div>{{$t('marketpage.last100data')}} </div>
-                    <Table :columns="UserOrderscolumns" :data="UserOrderslist">
+                    <Table v-if="UserOrderslist" :columns="UserOrderscolumns" :data="UserOrderslist">
                       <template slot-scope="{ row, index }" slot="action">
                         <Button  @click="orderinfo(row)"  type="primary" size="small"> {{$t('marketpage.ordertable.orderdetails')}} </Button>
                       </template>
@@ -141,7 +141,7 @@
                          {{row.MatchOrder.orderId}}
                         </template>
                         <template slot-scope="{ row, index }" slot="status">
-                         <span style="color:green" v-if="row.MatchOrder.status=='1'">
+                         <span style="color:green" v-if="row.MatchOrder.status=='0'">
                            {{$t('marketpage.Active')}}
                         </span>
                         <span style="color:red" v-if="row.MatchOrder.status=='2'">
@@ -448,10 +448,16 @@ export default {
     orderinfo(item) {
       this.$router.push(`/orderinfo/${item.MatchOrder.orderId}`);
     },
-    selectmarketClick(e) {
-      console.log(e);
-      this.getmarketinfo(e.name);
-      this.getOrderList(e.name);
+    selectmarketClick(name) {
+      console.log(name);
+      var _this = this;
+      this.$data.marketList.forEach(item => {
+        if (name == item.name) {
+          _this.$data.selectmarket = item;
+        }
+      });
+      this.getmarketinfo(name);
+      this.getOrderList();
     },
     amountFormat(item) {
       return this.bigNumTypeFormat(item.amount, item.denom);
