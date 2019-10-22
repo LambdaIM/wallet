@@ -369,6 +369,9 @@
        "Maximumtime":"Max time",
        "times":"times",
        "month":"month",
+       "ratetip1":"Odds = 1 can not specify the price, can only be 5LAMB/G/month",
+       "ratetip2":"Odds >=3 requires a specified price, price >=5LAMB/G/month",
+       "ratetip3":"Odds = 1 for regular sell orders, odds >= 3 for premium sell orders",
        "action":{
           "needstoragedevice":"Please select a storage device",
           "needspacesize":"Check space size,Can only fill in integers",
@@ -516,10 +519,10 @@
         "Mineraddress":"Miner address",
         "amountspace":"Amount space(GB)",
         "remainingspace":"Remaining space(GB)",
-        "unitprice":"unitprice(LAMB/GB/month)",
+        "unitprice":"Unitprice(LAMB/GB/month)",
         "minimumspace":"Minimum space(GB)",
         "minimumduration":"Minimum duration(month)",
-        "operating":"operating",
+        "operating":"Operating",
         "Odds":"Odds",
         "Purchasespace":"Purchase"
     },
@@ -544,7 +547,7 @@
      "EndTime":"End Time",
      "userPay":"User Pay",
      "minerPay":"Miner deposit",
-     "orderdetails":"details"
+     "orderdetails":"Details"
     }
 
 
@@ -562,7 +565,13 @@
  "minerPay":"miner deposit",
  "orderdetails":"details",
  "Mineraddress":"miner address",
- "user":"user"
+ "user":"user",
+ "operating":"operating",
+ "lambdastorageConsole":"Lambda storage console",
+ "Viewlambdastorage":"View order space in lambda storage",
+ "Filelossarbitration":"File loss application arbitration",
+ "Username":"Username",
+ "Password":"Password"
  
 
 }

@@ -51,10 +51,10 @@
           </Col>
         </Row>
         <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
+          <Col span="6" class-name="title-wrapper">
             <span class="title">{{$t('orderinfo.unitprice')}}:</span>
           </Col>
-          <Col span="20" class-name="content-wrapper">
+          <Col span="18" class-name="content-wrapper">
             {{orderinfo.MatchOrder.price|Lambformat}}
           </Col>
         </Row>
@@ -101,22 +101,22 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">操作:</span>
+            <span class="title">{{$t('orderinfo.operating')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-             <Button @click="Datacollection" type="primary">在lambda storage 中查看订单空间 </Button>
+             <Button @click="Datacollection" type="primary">{{$t('orderinfo.Viewlambdastorage')}} </Button>
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Button type="warning">文件丢失申请仲裁</Button>
+              <Button type="warning">{{$t('orderinfo.Filelossarbitration')}}</Button>
           </Col>
         </Row>
         <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">lambda storage 控制台:</span>
+          <Col span="5" class-name="title-wrapper">
+            <span class="title">{{$t('orderinfo.lambdastorageConsole')}}:</span>
           </Col>
-          <Col span="20" class-name="content-wrapper">
+          <Col span="19" class-name="content-wrapper">
 
-            用户名：{{managerkey['access-key']}}<br/>
-            密码：{{managerkey['secret-key']}}<br/>
+            {{$t('orderinfo.Username')}}：{{managerkey['access-key']}}
+            {{$t('orderinfo.Password')}}：{{managerkey['secret-key']}}<br/>
             <!-- 访问地址：{{managerkey['address']}}<br/> -->
 
           </Col>

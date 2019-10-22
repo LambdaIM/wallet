@@ -38,9 +38,9 @@
       </p>
       <br/>
       <ul class="ultip">
-        <li>赔率=1不能指定价格，只能是5LAMB/G/month</li>
-        <li>赔率>=3需要指定价格,价格>=5LAMB/G/month</li>
-        <li>赔率>=3为优质卖单</li>
+        <li>{{$t('Dialog.sellorder.ratetip1')}}</li>
+        <li>{{$t('Dialog.sellorder.ratetip2')}}</li>
+        <li>{{$t('Dialog.sellorder.ratetip3')}}</li>
       </ul>
       <br/>
       <p>
