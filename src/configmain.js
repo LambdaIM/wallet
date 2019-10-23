@@ -35,9 +35,9 @@ var configData = {
         // return defaultip;
     }   ,
     LambdaNetwork:function(){
-        return "http://39.107.249.53:8083/mock/5d82f651098df42dee8e6036/wallet"
+        // return "http://39.107.249.53:8083/mock/5d82f651098df42dee8e6036/wallet"
         // return `http://10.0.0.43:1317`;
-        // return `http://${settings.get('validator.ipv1')||defaultip}:13659`;
+        return `http://${settings.get('validator.ipv1')||defaultip}:13659`;
     
     },
     LambdaExtenNetwork:function(){

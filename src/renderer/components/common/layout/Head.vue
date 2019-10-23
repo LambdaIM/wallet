@@ -47,7 +47,7 @@
           <router-link
             to="/market"
             class="item"
-          >市场</router-link>
+          >{{$t("head.market")}}</router-link>
         </div>
 
         <div class="head-menu-item">

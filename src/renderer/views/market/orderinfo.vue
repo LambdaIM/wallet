@@ -1,122 +1,141 @@
 <template>
 <div class="container">
-    <Mycard cardtitle="订单详情" class="mt20">
-      <div  class="transaction-content" slot="card-content">
+    <Mycard :cardtitle="$t('orderinfo.orderdetails')" class="mt20">
+      <div v-if="orderinfo.MatchOrder!=undefined" class="transaction-content" slot="card-content">
           <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">交易市场地址:</span>
+            <span class="title">{{$t('orderinfo.Marketaddress')}}:</span>
           </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{orderinfo.marketAddress}}
+          <Col span="17" class-name="content-wrapper">
+            {{orderinfo.MatchOrder.marketAddress}}
           </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">类型:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{typeFormat(orderinfo.buyAddress)}}
+          <Col span="3" class-name="content-wrapper">
+
+            <Button to="/market"  icon="ios-arrow-back" type="primary">{{$t('Dialog.com.back')}}</Button>
+        <br><br>
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">订单id:</span>
+            <span class="title">{{$t('orderinfo.orderType')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.orderId}}
+            {{typeFormat(orderinfo.MatchOrder.buyAddress)}}
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">矿工:</span>
+            <span class="title">{{this.$t('marketpage.Status')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.askAddress}}
+          <span style="color:green" v-if="orderinfo.MatchOrder.status=='0'">
+              {{$t('marketpage.Active')}}
+          </span>
+          <span style="color:red" v-if="orderinfo.MatchOrder.status=='2'">
+              {{$t('marketpage.Expired')}}
+          </span>
+
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">用户:</span>
+            <span class="title">{{$t('orderinfo.orderid')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.buyAddress}}
+            {{orderinfo.MatchOrder.orderId}}
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">空间:</span>
+            <span class="title">{{$t('orderinfo.Mineraddress')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.size}}GB
+            {{orderinfo.MatchOrder.askAddress}}
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">单价(LAMB/GB/月):</span>
+            <span class="title">{{$t('orderinfo.user')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.price|Lambformat}}
+            {{orderinfo.MatchOrder.buyAddress}}
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">支付金额:</span>
+            <span class="title">{{$t('orderinfo.space')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-           {{amountFormat(orderinfo.userPay)}}
+            {{orderinfo.MatchOrder.size}}GB
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col span="6" class-name="title-wrapper">
+            <span class="title">{{$t('orderinfo.unitprice')}}:</span>
+          </Col>
+          <Col span="18" class-name="content-wrapper">
+            {{orderinfo.MatchOrder.price|Lambformat}}
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">矿工押金:</span>
+            <span class="title">{{$t('orderinfo.userPay')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-           {{amountFormat(orderinfo.minerPay)}}
+           {{amountFormat(orderinfo.MatchOrder.userPay)}}
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">开始时间:</span>
+            <span class="title">{{$t('orderinfo.minerPay')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.createTime|formatDate}}
+           {{amountFormat(orderinfo.MatchOrder.minerPay)}}
+          </Col>
+        </Row>
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            <span class="title">{{$t('orderinfo.Startingtime')}}:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+            {{orderinfo.MatchOrder.createTime|formatDate}}
           </Col>
         </Row>
                 <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">结束时间:</span>
+            <span class="title">{{$t('orderinfo.EndTime')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.endTime|formatDate}}
+            {{orderinfo.MatchOrder.endTime|formatDate}}
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">设备名称:</span>
+            <span class="title">{{$t('orderinfo.Storagedevice')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.machineName}}
+            {{orderinfo.MatchOrder.machineName}}
           </Col>
         </Row>
 
-        <Row class-name="card-item">
+        <Row v-if="this.$store.getters.getaddress==orderinfo.MatchOrder.buyAddress" class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">操作:</span>
+            <span class="title">{{$t('orderinfo.operating')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-             <Button @click="Datacollection" type="primary">在lambda storage 中查看订单空间 </Button>
+             <Button @click="Datacollection" type="primary">{{$t('orderinfo.Viewlambdastorage')}} </Button>
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Button type="warning">文件丢失申请仲裁</Button>
+              <Button type="warning">{{$t('orderinfo.Filelossarbitration')}}</Button>
           </Col>
         </Row>
         <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">lambda storage 控制台:</span>
+          <Col span="5" class-name="title-wrapper">
+            <span class="title">{{$t('orderinfo.lambdastorageConsole')}}:</span>
           </Col>
-          <Col span="20" class-name="content-wrapper">
+          <Col span="19" class-name="content-wrapper">
 
-            用户名：{{managerkey['access-key']}}<br/>
-            密码：{{managerkey['secret-key']}}<br/>
+            {{$t('orderinfo.Username')}}：{{managerkey['access-key']}}
+            {{$t('orderinfo.Password')}}：{{managerkey['secret-key']}}<br/>
             <!-- 访问地址：{{managerkey['address']}}<br/> -->
 
           </Col>
@@ -228,13 +247,24 @@ export default {
     },
     async  machineNameinfo(orderinfo) {
       console.log('machineNameinfo');
-      let res = await ipc.callMain('sets3orderinfo', orderinfo);
+      var orderId = orderinfo.MatchOrder.orderId;
+      var pubKey = orderinfo.pubKey;
+      var dhtId = orderinfo.dhtId;
+
+      let res = await ipc.callMain('sets3orderinfo', { orderId, pubKey, dhtId });
       if (res.state) {
         console.log(res.data);
+        // this.runs3()//启动cmd 程序
+      } else {
+        this.$Message.info({
+          content: '失败',
+          duration: 10,
+          closable: true
+        });
       }
     },
 
-    async gets3token() {
+    async runs3() {
       console.log('*********');
       try {
         let res = await ipc.callMain('cmdtest', {
@@ -266,9 +296,9 @@ export default {
     },
     typeFormat(addeess) {
       if (this.$store.getters.getaddress === addeess) {
-        return '买单';
+        return this.$t('marketpage.payorder');
       } else {
-        return '卖单';
+        return this.$t('marketpage.sellorder');
       }
     },
     amountFormat(item) {

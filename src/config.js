@@ -18,6 +18,6 @@ var packageJson =require('../package.json')
 module.exports.DAEMON_CONFIG  = {
     BASE_PATH:BASE_PATH,
     pledgeurl: "http://validator.lambdastorage.com/",
-    explore:process.env.NODE_ENV == 'production'?'http://explorer.lambdastorage.com/':"http://47.94.197.75:8080/",
+    explore:process.env.NODE_ENV == 'production'?'http://explorer.lambdastorage.com/':"http://39.107.249.53:8080/",
     version:packageJson.version
 };

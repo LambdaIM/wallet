@@ -3,87 +3,100 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="购买空间"
+      :title="$t('Dialog.selectBuy.Buyspace')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
       <p>
-        市场：{{market.name}}
+        {{$t('Dialog.selectBuy.Marketname')}}：{{market.name}}
       </p><br/>
       <p>
-        矿工地址：{{orderinfo.address}}
+        {{$t('Dialog.selectBuy.Mineraddress')}}：{{orderinfo.address}}
       </p>
       <br/>
       <p>
-        最小空间：{{orderinfo.minBuySize}}GB
+        {{$t('Dialog.selectBuy.Minimumspace')}}：{{orderinfo.minBuySize}}GB
       </p>
       <br/>
       <p>
-        最小时间：{{orderinfo.minDuration/(1000*1000*1000*60*60*24)}}day
+        {{$t('Dialog.selectBuy.Minimumtime')}}：{{orderinfo.minDuration|formatMonth}}月
       </p>
       <br/>
       <p>
-        空间单价(GB/LAMB/DAY)：{{orderinfo.price|Lambformat}}
+        {{$t('Dialog.selectBuy.Maximumtime')}}：{{orderinfo.maxDuration|formatMonth}}月
       </p>
       <br/>
       <p>
-        赔付比率：{{parseInt(orderinfo.rate)}}
+        {{$t('Dialog.selectBuy.unitprice')}}：{{orderinfo.price|Lambformat}}
       </p>
       <br/>
       <p>
-        总空间：{{orderinfo.sellSize}}GB
+        {{$t('Dialog.selectBuy.Odds')}}：{{parseInt(orderinfo.rate)}}
       </p>
       <br/>
       <p>
-        剩余空间：{{orderinfo.unUseSize}}GB
+        {{$t('Dialog.selectBuy.amountspace')}}：{{orderinfo.sellSize}}GB
+      </p>
+      <br/>
+      <p>
+        {{$t('Dialog.selectBuy.remainingspace')}}：{{orderinfo.unUseSize}}GB
       </p>
       <br/>
       <p>
         <Input v-model="spaceSize">
-          <span slot="prepend">空间</span>
+          <span slot="prepend">{{$t('Dialog.selectBuy.space')}}</span>
           <span slot="append">GB</span>
         </Input>
       </p>
             <br/>
       <p>
         <Input  v-model="spaceDuration">
-          <span slot="prepend">时长</span>
-          <span slot="append"> 月</span>
+          <span slot="prepend">{{$t('Dialog.selectBuy.duration')}}</span>
+          <span slot="append">{{$t('Dialog.selectBuy.month')}}</span>
         </Input>
       </p>
       <br/>
       <p>
-        实际付金额：{{Paymentamount|Lambformat}}
+        {{$t('Dialog.selectBuy.Paymentamount')}}：{{Paymentamount|Lambformat}}
       </p>
+              <br />
+        <p>
+          {{$t('home.Balance')}} : {{balance|Lambformat}}
+
+        </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>购买空间</h2>
+        <h2>{{$t('Dialog.selectBuy.Buyspace')}}</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">市场:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.selectBuy.Marketname')}}:</Col>
           <Col span="20" class-name="value">{{market.name}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">矿工地址:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.selectBuy.Mineraddress')}}:</Col>
           <Col span="20" class-name="value">{{orderinfo.address}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">空间 :</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.selectBuy.space')}} :</Col>
           <Col span="20" class-name="value">{{spaceSize}} GB</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">时长 :</Col>
-          <Col span="20" class-name="value">{{spaceDuration}} 月</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.selectBuy.duration')}} :</Col>
+          <Col span="20" class-name="value">{{spaceDuration}} {{$t('Dialog.AutoBuy.month')}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">实际付金额 :</Col>
+          <Col span="8" class-name="key">{{$t('Dialog.selectBuy.unitprice')}} :</Col>
+          <Col span="16" class-name="value">{{orderinfo.price|Lambformat}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">{{$t('Dialog.selectBuy.Paymentamount')}} :</Col>
           <Col span="20" class-name="value">{{Paymentamount|Lambformat}}</Col>
         </Row>
         <Row class-name="item">
@@ -92,6 +105,7 @@
                                 <span slot="append">LAMB</span>
                               </Input>
           </Row>
+
       </div>
       <!-- <p>
           <Input v-model="walletPassword" type="password"></Input>
@@ -114,7 +128,8 @@ export default {
       orderinfo: {},
       market: {},
       spaceSize: '',
-      spaceDuration: ''
+      spaceDuration: '',
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
     };
   },
   methods: {
@@ -131,12 +146,51 @@ export default {
       let spaceSize = parseInt(this.$data.spaceSize);
       let spaceDuration = parseInt(this.$data.spaceDuration);
 
-      if (isNaN(spaceSize) || isNaN(spaceDuration) || spaceSize == 0 || spaceDuration == 0) {
+
+
+      if (isNaN(spaceSize) || spaceSize == 0) {
         this.$Notice.warning({
-          title: '空间大小和时长只能填写整数'
+          title: this.$t('Dialog.selectBuy.action.needspacesize')
         });
         return;
       }
+      this.$data.spaceSize = spaceSize;
+      if (isNaN(spaceDuration) || spaceDuration == 0) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.selectBuy.action.needstime')
+        });
+        return;
+      }
+      this.$data.spaceDuration = spaceDuration;
+      if (spaceSize < this.$data.orderinfo.minBuySize) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.selectBuy.Minimumspace') + this.$data.orderinfo.minBuySize + 'GB'
+        });
+        return;
+      }
+      if (spaceDuration < this.$data.orderinfo.minDuration / this.$data.timeunit) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.selectBuy.Minimumtime') + this.$data.orderinfo.minDuration / this.$data.timeunit + '月'
+        });
+        return;
+      }
+      if (spaceDuration > this.$data.orderinfo.maxDuration / this.$data.timeunit) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.selectBuy.Maximumtime') + this.$data.orderinfo.maxDuration / this.$data.timeunit + '月'
+        });
+        return;
+      }
+
+      if (this.bigLess0OrGreater(this.Paymentamount, this.balance)) {
+        // need to alert
+        this.$Notice.warning({
+          title: this.$t('home.action.check_balance_amount_transfer')
+        });
+        return;
+      }
+
+
+
       this.$data.withdrawalModal = false;
       this.transfer(spaceSize, spaceDuration, 'CreateBuyOrder');
     },
@@ -148,7 +202,7 @@ export default {
 
       try {
         let res = await ipc.callMain(txType, {
-          duration: spaceDuration * (1000 * 1000 * 1000 * 60 * 60 * 24 * 30) + '',
+          duration: spaceDuration * (this.$data.timeunit) + '',
           size: spaceSize + '',
           sellOrderId: this.$data.orderinfo.orderId,
           marketName: this.$data.market.name
@@ -178,7 +232,7 @@ export default {
     },
     confirm() {
       var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
-      if (comparedNum == 1 || comparedNum == null || comparedNum == 0) {
+      if (comparedNum == 1 || comparedNum == null) {
         this.$Notice.warning({
           title: 'error',
           desc: this.$t('Dialog.com.Lesscommission')

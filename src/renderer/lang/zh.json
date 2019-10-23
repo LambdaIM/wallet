@@ -6,6 +6,7 @@
       "proposals": "提案",
       "validator": "验证节点",
       "sign": "签名",
+      "market":"市场",
       "action": {
           "You_just_copied": "您刚刚复制了：",
           "Failed_to_copy_texts": "无法复制文本",
@@ -310,6 +311,72 @@
           "tip2":"2:点击首页本地最新交易记录列表，查看当前交易的状态",
           "tip3":"3:在浏览器中搜索当前交易哈希，或搜索lamb地址，查看最新交易记录是否包含当前交易哈希"
       },
+      "AutoBuy":{
+          "Buyspace":"购买空间",
+          "Marketname":"市场名称",
+          "Marketaddress":"市场地址",
+          "unitprice":"单价",
+          "space":"空间",
+          "duration":"时长",
+          "month":"月",
+          "Paymentamount":"支付金额",
+          "action":{
+            "needspacesize":"检查空间大小，空间只能填写整数",
+            "needstime":"检查时长大小，时长只能填写整数"
+          }
+      },
+      "selectBuy":{
+        "Buyspace":"购买空间",
+        "Marketname":"市场名称",
+        "Marketaddress":"市场地址",
+        "unitprice":"单价(LAMB/GB/month)",
+        "space":"空间",
+        "duration":"时长",
+        "month":"月",
+        "Paymentamount":"支付金额",
+        "Minimumtime":"最短购买时长",
+        "Maximumtime":"最大购买时长",
+        "Minimumspace":"最小购买空间",
+        "Odds":"赔率",
+        "amountspace":"空间总量",
+        "remainingspace":"剩余空间总量",
+        "Mineraddress":"矿工地址",
+        "action":{
+            "needspacesize":"检查空间大小，空间只能填写整数",
+            "needstime":"检查时长大小，时长只能填写整数"
+          }
+        
+    },
+    "sellorder":{
+      "Sellingspace":"出售空间",
+      "Marketname":"市场名称",
+      "Marketaddress":"市场地址",
+      "Storagedevice":"存储设备",
+       "selectStoragedevicetip":"请选择存储设备（最近的100个设备）",
+       "Storagedevicetip":"一个存储设备只能出售一次，建议一次出售全部空间",
+       "unitprice1":"单价",
+       "unitprice2":"LAMB/GB/month",
+       "Odds":"赔率",
+       "Purchasequota":"购买限额",
+       "Minimumtime":"最短购买时长",
+       "Minimumspace":"最小购买空间",
+       "Maximumtime":"最大购买时长",
+       "times":"倍",
+       "month":"月",
+       "ratetip1":"赔率=1不能指定价格，只能是5LAMB/G/month",
+       "ratetip2":"赔率>=3需要指定价格,价格>=5LAMB/G/month",
+       "ratetip3":"赔率=1为普通卖单,赔率>=3为优质卖单",
+       "action":{
+           "needstoragedevice":"请选择存储设备",
+           "needspacesize":"检查空间大小,只能填写整数",
+           "needunitprice":"检查单价,只能填写整数",
+           "needunitmintime":"检查最小时长,只能填写整数",
+           "needunitmaxtime":"检查最大时长,只能填写整数",
+           "needodds":"检查赔率,只能填写整数",
+           "needminspace":"检查最小空间,只能填写整数"
+
+       }
+    },
       "com":{
           "gasfee":"Gas费用",
           "to":" 兑换 ",
@@ -326,7 +393,8 @@
           "Failed":"失败",
           "mintabletrue":"可增发",
           "mintablefalse":"不可增发",
-          "locktime":"锁仓时长"
+          "locktime":"锁仓时长",
+          "back":"返回"
           
           
           
@@ -364,7 +432,9 @@
     "MsgMinerWithDraw": "提取矿工收益",
     "MsgCreateSellOrder": "创建卖单",
     "MsgCancelSellOrder": "取消卖单",
-    "MsgCreateBuyOrder": "创建买单"
+    "MsgCreateBuyOrder": "创建买单",
+    "MsgPDPProofs": "挖矿证明",
+    "MsgStatement": "挖矿声明"
 
    },
    "txTable":{
@@ -421,5 +491,90 @@
        "software":"软件",
        "version":"版本",
        "switch_height":"切换的区块高度"
+   },
+   "marketpage":{
+       "buyingspace":"购买空间",
+       "sellspace":"我出售的空间",
+       "orderlist":"订单列表",
+       "autotitle":"自动匹配-一键购买",
+       "space":"空间",
+       "duration":"时长",
+       "month":"月",
+       "One-click-space":"一键购买空间",
+       "Pending-order-fee":"挂单手续费",
+       "Single-fee":"成单手续费",
+       "unitprice":"单价(LAMB/GB/month)",
+       "Minimumtime":"最短购买时长",
+       "Maximumtime":"最长购买时长",
+       "Minimumspace":"最小购买空间",
+       "Optionaltitle":"自选交易-更多选择，自由交易",
+       "sellspacebtn":"出售空间",
+       "last100data":"链上100条数据",
+       "payorder":"买单",
+       "sellorder":"卖单",
+       "Active":"活跃",
+       "Finish":"卖光了",
+       "Expired":"过期",
+       "Status":"状态",
+       "selltable":{
+           "Mineraddress":"矿工地址",
+           "amountspace":"空间总量(GB)",
+           "remainingspace":"剩余空间总量(GB)",
+           "unitprice":"单价(LAMB/GB/month)",
+           "minimumspace":"最小空间(GB)",
+           "minimumduration":"最小时长(月)",
+           "operating":"操作",
+           "Odds":"赔率",
+           "Purchasespace":"购买空间"
+       },
+       "myselltable":{
+        "amountspace":"空间总量(GB)",
+        "remainingspace":"剩余空间总量(GB)",
+        "unitprice":"单价(LAMB/GB/month)",
+        "minimumspace":"最小空间(GB)",
+        "minimumduration":"最小时长(月)",
+        "Odds":"赔率",
+        "Storagedevice":"存储设备",
+        "Marketaddress":"市场地址"
+       },
+       "ordertable":{
+        "orderType":"类型",
+        "orderid":"订单Id",
+        "amountspace":"空间(GB)",
+        "unitprice":"单价(LAMB/GB/月)",
+        "Storagedevice":"存储设备",
+        "Marketaddress":"市场地址",
+        "Startingtime":"开始时间",
+        "EndTime":"结束时间",
+        "userPay":"用户支付金额",
+        "minerPay":"矿工押金",
+        "orderdetails":"订单详情"
+       }
+
+
+   },
+   "orderinfo":{
+    "orderType":"类型",
+    "orderid":"订单ID",
+    "space":"空间",
+    "unitprice":"单价(LAMB/GB/月)",
+    "Storagedevice":"存储设备",
+    "Marketaddress":"市场地址",
+    "Startingtime":"开始时间",
+    "EndTime":"结束时间",
+    "userPay":"用户支付金额",
+    "minerPay":"矿工押金",
+    "orderdetails":"订单详情",
+    "Mineraddress":"矿工地址",
+    "user":"用户",
+    "Startingtime":"开始时间",
+    "EndTime":"结束时间",
+    "operating":"操作",
+    "lambdastorageConsole":"lambda storage 控制台",
+    "Viewlambdastorage":"在lambda storage 中查看订单空间",
+    "Filelossarbitration":"文件丢失申请仲裁",
+    "Username":"用户名",
+    "Password":"密码"
+
    }
 }
