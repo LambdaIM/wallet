@@ -3,115 +3,10 @@
 
       <div class="tableContainer">
 
-          <Tabs value="name1">
-                <TabPane :label="$t('marketpage.buyingspace')" name="name1">
-          <Row>
-        <Col span="22"><h3>{{$t('marketpage.autotitle')}}</h3></Col>
-
-
-    </Row>
-                  <div style="text-align: center;">
-          <Dropdown @on-click="selectmarketClick">
-        <a href="javascript:void(0)">
-            {{selectmarket.name}}
-            <Icon type="ios-arrow-down"></Icon>
-        </a>
-        <DropdownMenu  v-if="marketList" slot="list">
-            <DropdownItem :name="item.name" :key="item.marketAddress" v-for="item in marketList" >{{item.name}}</DropdownItem>
-
-
-        </DropdownMenu>
-    </Dropdown>&nbsp;
-
-
-      {{$t('marketpage.space')}} <Input v-model="autoSpaceSize"  style="width: auto" />GB&nbsp;
-      {{$t('marketpage.duration')}}<Input v-model="autoSpaceDuration"  style="width: auto" />{{$t('marketpage.month')}}&nbsp;
-         <Button @click="openautoBuyingspace" type="primary">{{$t('marketpage.One-click-space')}}</Button>
-
-    </div>
-    <br/>
-
-        <div style="text-align: center;"> {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
-          {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}} ，
-          {{$t('marketpage.unitprice')}}：{{marketinfo.order_normal_price|Lambformat}}，
-          {{$t('marketpage.Minimumtime')}}： {{marketinfo.order_min_buy_duration|formatMonth}}{{$t('marketpage.month')}}
-          {{$t('marketpage.Maximumtime')}}：{{marketinfo.order_max_buy_duration|formatMonth}}{{$t('marketpage.month')}}，
-          {{$t('marketpage.Minimumspace')}}：{{marketinfo.order_min_buy_size}}GB  </div>
-
-
-     <Divider />
-
-        <Row>
-        <Col span="22"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
-        <Col span="2"><Button @click="openSellingspace" type="primary"  size="small">{{$t('marketpage.sellspacebtn')}}</Button></Col>
-
-    </Row>
-     <br/>
-     <div>{{$t('marketpage.last100data')}}</div>
-                    <Table v-if="OrderList"  :columns="OrderListcolumns" :data="OrderList">
-                        <template slot-scope="{ row, index }" slot="action">
-                         <Button v-if="row.status=='0'"  @click="openBuyingspace(row)"  type="primary" size="small"> {{$t('marketpage.selltable.Purchasespace')}} </Button>
-                        </template>
-                        <template slot-scope="{ row, index }" slot="price">
-                         {{row.price|Lambformat}}
-                        </template>
-                        <template slot-scope="{ row, index }" slot="minDuration">
-                         {{row.minDuration|formatMonth}}
-                        </template>
-                        <template slot-scope="{ row, index }" slot="rate">
-                         {{parseInt(row.rate)}}
-                        </template>
-                        <template slot-scope="{ row, index }" slot="status">
-                         <span style="color:green" v-if="row.status=='0'">
-                           {{$t('marketpage.Active')}}
-                        </span>
-                        <span style="color:red" v-if="row.status=='1'">
-                           {{$t('marketpage.Finish')}}
-                        </span>
-
-                        </template>
-
-
-
-                    </Table>
-                    <br/>
-                    <div style="text-align: center;">
-                     <Page  @on-change="orderListPage" :total="100" show-elevator />
-                    </div>
-                    <br/><br/><br/>
-                </TabPane>
-                <!-- <TabPane label="出售" name="name1">
-                    <Table :columns="columns1" :data="data1"></Table>
-                </TabPane> -->
-                <TabPane :label="$t('marketpage.sellspace')" name="name4">
-                <div>{{$t('marketpage.last100data')}} </div>
-                 <Table v-if="SellOrderslist" :columns="SellOrdercolumns" :data="SellOrderslist">
-                   <template slot-scope="{ row, index }" slot="price">
-                         {{row.price|Lambformat}}
-                        </template>
-                        <template slot-scope="{ row, index }" slot="minDuration">
-                         {{row.minDuration|formatMonth}}
-                        </template>
-                        <template slot-scope="{ row, index }" slot="rate">
-                         {{parseInt(row.rate)}}
-                        </template>
-                        <template slot-scope="{ row, index }" slot="status">
-                         <span style="color:green" v-if="row.status=='0'">
-                           {{$t('marketpage.Active')}}
-                        </span>
-                        <span style="color:red" v-if="row.status=='1'">
-                           {{$t('marketpage.Finish')}}
-                        </span>
-
-                        </template>
-                 </Table>
-                 <br/>
-                    <div style="text-align: center;">
-                     <Page  @on-change="SellOrderListPage"  :total="100" show-elevator />
-                    </div>
-                 </TabPane>
-                <TabPane  :label="$t('marketpage.orderlist')" name="name3">
+          <Tabs value="name3">
+            <TabPane  :label="$t('marketpage.orderlist')" name="name3">
                   <div>{{$t('marketpage.last100data')}} </div>
+                  <br/>
                     <Table v-if="UserOrderslist" :columns="UserOrderscolumns" :data="UserOrderslist">
                       <template slot-scope="{ row, index }" slot="action">
                         <Button  @click="orderinfo(row)"  type="primary" size="small"> {{$t('marketpage.ordertable.orderdetails')}} </Button>
@@ -159,6 +54,122 @@
                     </div>
                     <br/><br/><br/><br/>
                 </TabPane>
+                <TabPane :label="$t('marketpage.buyingspace')" name="name1">
+          <Row>
+        <Col span="22"><h3>{{$t('marketpage.autotitle')}}</h3></Col>
+
+
+    </Row>
+                  <div style="text-align: center;">
+          <Dropdown @on-click="selectmarketClick">
+        <a href="javascript:void(0)">
+            {{selectmarket.name}}
+            <Icon type="ios-arrow-down"></Icon>
+        </a>
+        <DropdownMenu  v-if="marketList" slot="list">
+            <DropdownItem :name="item.name" :key="item.marketAddress" v-for="item in marketList" >{{item.name}}</DropdownItem>
+
+
+        </DropdownMenu>
+    </Dropdown>&nbsp;
+
+
+      {{$t('marketpage.space')}} <Input v-model="autoSpaceSize"  style="width: auto" />GB&nbsp;
+      {{$t('marketpage.duration')}}<Input v-model="autoSpaceDuration"  style="width: auto" />{{$t('marketpage.month')}}&nbsp;
+         <Button @click="openautoBuyingspace" type="primary">{{$t('marketpage.One-click-space')}}</Button>
+
+    </div>
+    <br/>
+
+        <div style="text-align: center;"> {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
+          {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}} ，
+          {{$t('marketpage.unitprice')}}：{{marketinfo.order_normal_price|Lambformat}}，
+          {{$t('marketpage.Minimumtime')}}： {{marketinfo.order_min_buy_duration|formatMonth}}{{$t('marketpage.month')}}
+          {{$t('marketpage.Maximumtime')}}：{{marketinfo.order_max_buy_duration|formatMonth}}{{$t('marketpage.month')}}，
+          {{$t('marketpage.Minimumspace')}}：{{marketinfo.order_min_buy_size}}GB  </div>
+
+
+     <Divider />
+
+        <Row>
+        <Col span="22"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
+        <Col span="2">
+
+        </Col>
+      </Row>
+     <br/>
+     <div>{{$t('marketpage.last100data')}}</div>
+     <br/>
+                    <Table v-if="OrderList"  :columns="OrderListcolumns" :data="OrderList">
+                        <template slot-scope="{ row, index }" slot="action">
+                         <Button v-if="row.status=='0'"  @click="openBuyingspace(row)"  type="primary" size="small"> {{$t('marketpage.selltable.Purchasespace')}} </Button>
+                        </template>
+                        <template slot-scope="{ row, index }" slot="price">
+                         {{row.price|Lambformat}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="minDuration">
+                         {{row.minDuration|formatMonth}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="rate">
+                         {{parseInt(row.rate)}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="status">
+                         <span style="color:green" v-if="row.status=='0'">
+                           {{$t('marketpage.Active')}}
+                        </span>
+                        <span style="color:red" v-if="row.status=='1'">
+                           {{$t('marketpage.Finish')}}
+                        </span>
+
+                        </template>
+
+
+
+                    </Table>
+                    <br/>
+                    <div style="text-align: center;">
+                     <Page  @on-change="orderListPage" :total="100" show-elevator />
+                    </div>
+                    <br/><br/><br/>
+                </TabPane>
+                <!-- <TabPane label="出售" name="name1">
+                    <Table :columns="columns1" :data="data1"></Table>
+                </TabPane> -->
+                <TabPane :label="$t('marketpage.sellspace')" name="name4">
+                  <Row>
+        <Col span="22">&nbsp;</Col>
+        <Col span="2">
+        <Button @click="openSellingspace" type="primary"  size="small">{{$t('marketpage.sellspacebtn')}}</Button>
+        </Col>
+      </Row>
+                <div>{{$t('marketpage.last100data')}} </div>
+                <br/>
+                 <Table v-if="SellOrderslist" :columns="SellOrdercolumns" :data="SellOrderslist">
+                   <template slot-scope="{ row, index }" slot="price">
+                         {{row.price|Lambformat}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="minDuration">
+                         {{row.minDuration|formatMonth}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="rate">
+                         {{parseInt(row.rate)}}
+                        </template>
+                        <template slot-scope="{ row, index }" slot="status">
+                         <span style="color:green" v-if="row.status=='0'">
+                           {{$t('marketpage.Active')}}
+                        </span>
+                        <span style="color:red" v-if="row.status=='1'">
+                           {{$t('marketpage.Finish')}}
+                        </span>
+
+                        </template>
+                 </Table>
+                 <br/>
+                    <div style="text-align: center;">
+                     <Page  @on-change="SellOrderListPage"  :total="100" show-elevator />
+                    </div>
+                 </TabPane>
+
 
             </Tabs>
 

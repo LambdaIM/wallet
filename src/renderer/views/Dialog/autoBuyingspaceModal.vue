@@ -16,7 +16,7 @@
       </p>
       <br/>
       <p>
-        {{$t('Dialog.AutoBuy.unitprice')}}：{{marketPrice}}
+        {{$t('Dialog.AutoBuy.unitprice')}}：{{marketPrice}} GB/LAMB/month
       </p>
       <br/>
 

@@ -106,16 +106,16 @@
           <Col span="20" class-name="value">{{rate}} {{$t('Dialog.sellorder.times')}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key"> {{$t('Dialog.sellorder.Minimumspace')}}:</Col>
-          <Col span="20" class-name="value">{{minSpace}}GB</Col>
+          <Col span="5" class-name="key"> {{$t('Dialog.sellorder.Minimumspace')}}:</Col>
+          <Col span="19" class-name="value">{{minSpace}}GB</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key"> {{$t('Dialog.sellorder.Minimumtime')}}:</Col>
-          <Col span="20" class-name="value">{{minDuration}} {{$t('Dialog.sellorder.month')}} </Col>
+          <Col span="5" class-name="key"> {{$t('Dialog.sellorder.Minimumtime')}}:</Col>
+          <Col span="19" class-name="value">{{minDuration}} {{$t('Dialog.sellorder.month')}} </Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key"> {{$t('Dialog.sellorder.Maximumtime')}}:</Col>
-          <Col span="20" class-name="value">{{maxDuration}} {{$t('Dialog.sellorder.month')}} </Col>
+          <Col span="5" class-name="key"> {{$t('Dialog.sellorder.Maximumtime')}}:</Col>
+          <Col span="19" class-name="value">{{maxDuration}} {{$t('Dialog.sellorder.month')}} </Col>
         </Row>
         <Row class-name="item">
             <Input  v-model="gaseFee" >
@@ -149,7 +149,7 @@ export default {
       rate: '',
       minSpace: '',
       minDuration: '',
-      unitPrice: '',
+      unitPrice: '5',
       maxDuration: ''
     };
   },
@@ -162,6 +162,12 @@ export default {
       this.getMinermachines();
     },
     prewithdrawalLAMB() {
+      if (this.$data.machineitem == '') {
+        this.$Notice.warning({
+          title: this.$t('Dialog.sellorder.action.needstoragedevice')
+        });
+        return;
+      }
       let spaceSize = parseInt(this.$data.spaceSize);
       let unitPrice = parseInt(this.$data.unitPrice);
 
@@ -176,20 +182,6 @@ export default {
         unitPrice = 5;
       }
 
-      this.$data.spaceSize = spaceSize;
-      this.$data.unitPrice = unitPrice;
-      this.$data.rate = rate;
-      this.$data.minSpace = minSpace;
-      this.$data.minDuration = minDuration;
-      this.$data.maxDuration = maxDuration;
-
-      if (this.$data.machineitem == '') {
-        this.$Notice.warning({
-          title: this.$t('Dialog.sellorder.action.needstoragedevice')
-        });
-        return;
-      }
-
 
       if (isNaN(spaceSize) || spaceSize == 0) {
         this.$Notice.warning({
@@ -197,36 +189,62 @@ export default {
         });
         return;
       }
+      this.$data.spaceSize = spaceSize;
+
       if (isNaN(unitPrice) || unitPrice == 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needunitprice')
         });
         return;
       }
+      this.$data.unitPrice = unitPrice;
+
       if (isNaN(rate) || rate == 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needodds')
         });
         return;
       }
+      this.$data.rate = rate;
+
       if (isNaN(minSpace) || minSpace == 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needminspace')
         });
         return;
       }
+      if (minSpace > spaceSize) {
+        minSpace = spaceSize;
+      }
+
+      this.$data.minSpace = minSpace;
+
       if (isNaN(minDuration) || minDuration == 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needunitmintime')
         });
         return;
       }
+
+
+      this.$data.minDuration = minDuration;
+      if (maxDuration > 60) {
+        maxDuration = 60;
+      }
+
       if (isNaN(maxDuration) || maxDuration == 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needunitmaxtime')
         });
         return;
       }
+      if (minDuration > maxDuration) {
+        maxDuration = minDuration;
+      }
+      this.$data.maxDuration = maxDuration;
+
+
+
       unitPrice = this.toBigNumStr(unitPrice);
       var monthNum = (1000 * 1000 * 1000 * 60 * 60 * 24 * 30);
       minDuration = minDuration * monthNum;

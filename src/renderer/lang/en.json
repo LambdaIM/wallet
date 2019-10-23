@@ -398,7 +398,8 @@
           "Failed":"Failed",
           "mintabletrue":"mintable",
           "mintablefalse":"is not mintable",
-          "locktime":"locktime"
+          "locktime":"locktime",
+          "back":"back"
           
           
       }

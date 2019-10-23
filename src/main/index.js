@@ -134,9 +134,9 @@ function creatMenu() {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
-// process.on('uncaughtException', (err)=>{
-//     console.log(err)
-// })
+process.on('uncaughtException', err => {
+  console.log(err);
+});
 
 app.on('ready', () => {
   createWindow();

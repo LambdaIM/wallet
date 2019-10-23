@@ -393,7 +393,8 @@
           "Failed":"失败",
           "mintabletrue":"可增发",
           "mintablefalse":"不可增发",
-          "locktime":"锁仓时长"
+          "locktime":"锁仓时长",
+          "back":"返回"
           
           
           
@@ -493,7 +494,7 @@
    },
    "marketpage":{
        "buyingspace":"购买空间",
-       "sellspace":"我出售空间",
+       "sellspace":"我出售的空间",
        "orderlist":"订单列表",
        "autotitle":"自动匹配-一键购买",
        "space":"空间",
@@ -508,7 +509,7 @@
        "Minimumspace":"最小购买空间",
        "Optionaltitle":"自选交易-更多选择，自由交易",
        "sellspacebtn":"出售空间",
-       "last100data":"最近100条数据",
+       "last100data":"链上100条数据",
        "payorder":"买单",
        "sellorder":"卖单",
        "Active":"活跃",
@@ -538,9 +539,9 @@
        },
        "ordertable":{
         "orderType":"类型",
-        "orderid":"订单id",
+        "orderid":"订单Id",
         "amountspace":"空间(GB)",
-        "unitprice":"单价(LAMB/GB/month)",
+        "unitprice":"单价(LAMB/GB/月)",
         "Storagedevice":"存储设备",
         "Marketaddress":"市场地址",
         "Startingtime":"开始时间",
@@ -554,9 +555,9 @@
    },
    "orderinfo":{
     "orderType":"类型",
-    "orderid":"订单id",
+    "orderid":"订单ID",
     "space":"空间",
-    "unitprice":"单价(LAMB/GB/month)",
+    "unitprice":"单价(LAMB/GB/月)",
     "Storagedevice":"存储设备",
     "Marketaddress":"市场地址",
     "Startingtime":"开始时间",

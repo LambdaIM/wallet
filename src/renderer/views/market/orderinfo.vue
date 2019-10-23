@@ -6,8 +6,13 @@
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('orderinfo.Marketaddress')}}:</span>
           </Col>
-          <Col span="20" class-name="content-wrapper">
+          <Col span="17" class-name="content-wrapper">
             {{orderinfo.MatchOrder.marketAddress}}
+          </Col>
+          <Col span="3" class-name="content-wrapper">
+
+            <Button to="/market"  icon="ios-arrow-back" type="primary">{{$t('Dialog.com.back')}}</Button>
+        <br><br>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -113,7 +118,7 @@
           </Col>
         </Row>
 
-        <Row class-name="card-item">
+        <Row v-if="this.$store.getters.getaddress==orderinfo.MatchOrder.buyAddress" class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('orderinfo.operating')}}:</span>
           </Col>

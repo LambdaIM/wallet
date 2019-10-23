@@ -87,8 +87,8 @@
           <Col span="20" class-name="value">{{spaceDuration}} {{$t('Dialog.AutoBuy.month')}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="12" class-name="key">{{$t('Dialog.selectBuy.unitprice')}} :</Col>
-          <Col span="12" class-name="value">{{orderinfo.price|Lambformat}}</Col>
+          <Col span="8" class-name="key">{{$t('Dialog.selectBuy.unitprice')}} :</Col>
+          <Col span="16" class-name="value">{{orderinfo.price|Lambformat}}</Col>
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('Dialog.selectBuy.Paymentamount')}} :</Col>
@@ -122,7 +122,8 @@ export default {
       orderinfo: {},
       market: {},
       spaceSize: '',
-      spaceDuration: ''
+      spaceDuration: '',
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
     };
   },
   methods: {
@@ -138,8 +139,8 @@ export default {
 
       let spaceSize = parseInt(this.$data.spaceSize);
       let spaceDuration = parseInt(this.$data.spaceDuration);
-      this.$data.spaceSize = spaceSize;
-      this.$data.spaceDuration = spaceDuration;
+
+
 
       if (isNaN(spaceSize) || spaceSize == 0) {
         this.$Notice.warning({
@@ -147,12 +148,35 @@ export default {
         });
         return;
       }
+      this.$data.spaceSize = spaceSize;
       if (isNaN(spaceDuration) || spaceDuration == 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.selectBuy.action.needstime')
         });
         return;
       }
+      this.$data.spaceDuration = spaceDuration;
+      if (spaceSize < this.$data.orderinfo.minBuySize) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.selectBuy.Minimumspace') + this.$data.orderinfo.minBuySize + 'GB'
+        });
+        return;
+      }
+      if (spaceDuration < this.$data.orderinfo.minDuration / this.$data.timeunit) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.selectBuy.Minimumtime') + this.$data.orderinfo.minDuration / this.$data.timeunit + '月'
+        });
+        return;
+      }
+      if (spaceDuration > this.$data.orderinfo.maxDuration / this.$data.timeunit) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.selectBuy.Maximumtime') + this.$data.orderinfo.maxDuration / this.$data.timeunit + '月'
+        });
+        return;
+      }
+
+
+
       this.$data.withdrawalModal = false;
       this.transfer(spaceSize, spaceDuration, 'CreateBuyOrder');
     },
@@ -164,7 +188,7 @@ export default {
 
       try {
         let res = await ipc.callMain(txType, {
-          duration: spaceDuration * (1000 * 1000 * 1000 * 60 * 60 * 24 * 30) + '',
+          duration: spaceDuration * (this.$data.timeunit) + '',
           size: spaceSize + '',
           sellOrderId: this.$data.orderinfo.orderId,
           marketName: this.$data.market.name
