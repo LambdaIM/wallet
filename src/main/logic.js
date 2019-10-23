@@ -17,6 +17,7 @@ const path = require('path');
 
 
 export default function() {
+  DAEMON_CONFIG.s3client();
   walletrpc();
   transactionrpc();
 
