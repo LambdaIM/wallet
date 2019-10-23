@@ -59,6 +59,11 @@
       <p>
         {{$t('Dialog.selectBuy.Paymentamount')}}：{{Paymentamount|Lambformat}}
       </p>
+              <br />
+        <p>
+          {{$t('home.Balance')}} : {{balance|Lambformat}}
+
+        </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>
@@ -100,6 +105,7 @@
                                 <span slot="append">LAMB</span>
                               </Input>
           </Row>
+
       </div>
       <!-- <p>
           <Input v-model="walletPassword" type="password"></Input>
@@ -171,6 +177,14 @@ export default {
       if (spaceDuration > this.$data.orderinfo.maxDuration / this.$data.timeunit) {
         this.$Notice.warning({
           title: this.$t('Dialog.selectBuy.Maximumtime') + this.$data.orderinfo.maxDuration / this.$data.timeunit + '月'
+        });
+        return;
+      }
+
+      if (this.bigLess0OrGreater(this.Paymentamount, this.balance)) {
+        // need to alert
+        this.$Notice.warning({
+          title: this.$t('home.action.check_balance_amount_transfer')
         });
         return;
       }

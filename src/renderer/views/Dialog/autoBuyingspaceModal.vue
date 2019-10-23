@@ -36,8 +36,13 @@
       </p>
       <br/>
       <p>
-        {{$t('Dialog.AutoBuy.Paymentamount')}}：{{Paymentamount}} LAMB
+        {{$t('Dialog.AutoBuy.Paymentamount')}}：{{Paymentamount|Lambformat}}
       </p>
+        <br />
+        <p>
+          {{$t('home.Balance')}} : {{balance|Lambformat}}
+
+        </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>
@@ -100,7 +105,7 @@ export default {
       gaseFee: 0,
       spaceSize: '',
       spaceDuration: '',
-      marketPrice: 2,
+      marketPrice: 0,
       marketinfo: {}
     };
   },
@@ -112,6 +117,7 @@ export default {
       this.$data.spaceSize = Size;
       this.$data.spaceDuration = Duration;
       this.$data.marketinfo = marketinfo;
+      this.$data.marketPrice = marketinfo.unitprice;
     },
     prewithdrawalLAMB() {
       console.log('- -');
@@ -130,6 +136,13 @@ export default {
       if (isNaN(spaceDuration) || spaceDuration == 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.AutoBuy.action.needstime')
+        });
+        return;
+      }
+      if (this.bigLess0OrGreater(this.Paymentamount, this.balance)) {
+        // need to alert
+        this.$Notice.warning({
+          title: this.$t('home.action.check_balance_amount_transfer')
         });
         return;
       }

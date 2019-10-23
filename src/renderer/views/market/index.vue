@@ -453,7 +453,8 @@ export default {
 
       this.$refs.autoBuyingspace.open({
         name: this.$data.selectmarket.name,
-        marketAddress: this.$data.selectmarket.marketAddress
+        marketAddress: this.$data.selectmarket.marketAddress,
+        unitprice: this.$data.marketinfo.order_normal_price
       }, spaceSize, spaceDuration);
     },
     orderinfo(item) {
