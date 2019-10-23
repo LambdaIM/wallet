@@ -4,6 +4,7 @@
     "author": "lambda wallet developer <544262408@qq.com>",
     "description": "lambda wallet",
     "license": null,
+    "runstorage":0,
     "main": "./dist/electron/main.js",
     "scripts": {
         "build": "node .electron-vue/build.js && electron-builder",
