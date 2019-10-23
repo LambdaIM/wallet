@@ -3,74 +3,79 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="购买空间"
+      :title="$t('Dialog.AutoBuy.Buyspace')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
       <p>
-        市场名称：{{this.$data.marketinfo.name}}
+        {{$t('Dialog.AutoBuy.Marketname')}}：{{this.$data.marketinfo.name}}
       </p>
       <br/>
       <p>
-        市场地址：{{this.$data.marketinfo.marketAddress}}
+        {{$t('Dialog.AutoBuy.Marketaddress')}}：{{this.$data.marketinfo.marketAddress}}
       </p>
       <br/>
       <p>
-        市场单价：{{marketPrice}}  GB/LAMB/month
+        {{$t('Dialog.AutoBuy.unitprice')}}：{{marketPrice}} GB/LAMB/month
       </p>
       <br/>
 
 
       <p>
         <Input  v-model="spaceSize">
-          <span slot="prepend">空间</span>
+          <span slot="prepend">{{$t('Dialog.AutoBuy.space')}}</span>
           <span slot="append">GB</span>
         </Input>
       </p>
       <br/>
       <p>
         <Input  v-model="spaceDuration">
-          <span slot="prepend">时长</span>
-          <span slot="append">月</span>
+          <span slot="prepend">{{$t('Dialog.AutoBuy.duration')}}</span>
+          <span slot="append">{{$t('Dialog.AutoBuy.month')}}</span>
         </Input>
       </p>
       <br/>
       <p>
-        支付金额：{{Paymentamount}} LAMB
+        {{$t('Dialog.AutoBuy.Paymentamount')}}：{{Paymentamount|Lambformat}}
       </p>
+        <br />
+        <p>
+          {{$t('home.Balance')}} : {{balance|Lambformat}}
+
+        </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>购买空间</h2>
+        <h2>{{$t('Dialog.AutoBuy.Buyspace')}}</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">市场名称:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.Marketname')}}:</Col>
           <Col span="20" class-name="value">{{this.$data.marketinfo.name}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">市场地址:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.Marketaddress')}}:</Col>
           <Col span="20" class-name="value">{{this.$data.marketinfo.marketAddress}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">市场单价:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.unitprice')}}:</Col>
           <Col span="20" class-name="value">{{this.$data.marketPrice}} GB/LAMB/month </Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">空间:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.space')}}:</Col>
           <Col span="20" class-name="value">{{spaceSize}} GB</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">时长:</Col>
-          <Col span="20" class-name="value">{{spaceDuration}} 月</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.duration')}}:</Col>
+          <Col span="20" class-name="value">{{spaceDuration}} {{$t('Dialog.AutoBuy.month')}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">支付金额:</Col>
+          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.Paymentamount')}}:</Col>
           <Col span="20" class-name="value">{{Paymentamount}} LAMB</Col>
         </Row>
         <Row class-name="item">
@@ -100,7 +105,7 @@ export default {
       gaseFee: 0,
       spaceSize: '',
       spaceDuration: '',
-      marketPrice: 2,
+      marketPrice: 0,
       marketinfo: {}
     };
   },
@@ -112,22 +117,32 @@ export default {
       this.$data.spaceSize = Size;
       this.$data.spaceDuration = Duration;
       this.$data.marketinfo = marketinfo;
+      this.$data.marketPrice = marketinfo.unitprice;
     },
     prewithdrawalLAMB() {
       console.log('- -');
 
       let spaceSize = parseInt(this.spaceSize);
       let spaceDuration = parseInt(this.spaceDuration);
+      this.spaceSize = spaceSize;
+      this.spaceDuration = spaceDuration;
 
-      if (spaceSize == '' || spaceSize == 0) {
+      if (isNaN(spaceSize) || spaceSize == 0) {
         this.$Notice.warning({
-          title: '检查空间大小'
+          title: this.$t('Dialog.AutoBuy.action.needspacesize')
         });
         return;
       }
-      if (spaceDuration == '' || spaceDuration == 0) {
+      if (isNaN(spaceDuration) || spaceDuration == 0) {
         this.$Notice.warning({
-          title: '检查时长大小'
+          title: this.$t('Dialog.AutoBuy.action.needstime')
+        });
+        return;
+      }
+      if (this.bigLess0OrGreater(this.Paymentamount, this.balance)) {
+        // need to alert
+        this.$Notice.warning({
+          title: this.$t('home.action.check_balance_amount_transfer')
         });
         return;
       }
@@ -175,7 +190,7 @@ export default {
     },
     confirm() {
       var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
-      if (comparedNum == 1 || comparedNum == null || comparedNum == 0) {
+      if (comparedNum == 1 || comparedNum == null) {
         this.$Notice.warning({
           title: 'error',
           desc: this.$t('Dialog.com.Lesscommission')

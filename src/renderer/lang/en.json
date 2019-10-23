@@ -7,6 +7,7 @@
       "proposals": "Proposals",
       "validator": "Validator",
       "sign": "Sign",
+      "market":"Market",
 
       "action":{
         "You_just_copied":"You just copied:",
@@ -317,6 +318,71 @@
         "tip2":"2: Click on the latest local transaction record list on the home page to see the status of the current transaction.",
         "tip3":"3: Search the browser for the current transaction hash or lamb address to see if the latest transaction record contains the current transaction hash"
       },
+      "AutoBuy":{
+        "Buyspace":"Buying space",
+        "Marketname":"Market name",
+        "Marketaddress":"Market address",
+        "unitprice":"Unit price",
+        "space":"Space",
+        "duration":"Duration",
+        "month":"Month",
+        "Paymentamount":"Payment amount",
+        "action":{
+          "needspacesize":"Please check the size of the space, the space can only fill in the integer",
+        "needstime":"Please check the duration, only the integer can be filled in."
+        }
+    },
+    "selectBuy":{
+      "Buyspace":"Buying space",
+      "Marketname":"Market name",
+      "Marketaddress":"Market address",
+      "unitprice":"Unit price(LAMB/GB/month)",
+      "space":"Space",
+      "duration":"Duration",
+      "month":"Month",
+      "Paymentamount":"Payment amount",
+      "Minimumtime":"Min time",
+      "Maximumtime":"Max time",
+      "Minimumspace":"Min space",
+      "Odds":"Odds",
+      "amountspace":"Amount space",
+      "remainingspace":"Remaining space",
+      "Mineraddress":"Minera ddress",
+      "action":{
+        "needspacesize":"Please check the size of the space, the space can only fill in the integer",
+        "needstime":"Please check the duration, only the integer can be filled in."
+      }
+      
+    },
+    "sellorder":{
+      "Sellingspace":"Selling space",
+      "Marketname":"Market name",
+      "Marketaddress":"Market address",
+      "Storagedevice":"Storage device",
+       "selectStoragedevicetip":"Please select a storage device (the last 100 devices)",
+       "Storagedevicetip":"A storage device can only be sold once, it is recommended to sell all the space at once",
+       "unitprice1":"Unitprice",
+       "unitprice2":"LAMB/GB/month",
+       "Odds":"Odds",
+       "Purchasequota":"Purchase limit",
+       "Minimumtime":"Min time",
+       "Minimumspace":"Min space",
+       "Maximumtime":"Max time",
+       "times":"times",
+       "month":"month",
+       "ratetip1":"Odds = 1 can not specify the price, can only be 5LAMB/G/month",
+       "ratetip2":"Odds >=3 requires a specified price, price >=5LAMB/G/month",
+       "ratetip3":"Odds = 1 for regular sell orders, odds >= 3 for premium sell orders",
+       "action":{
+          "needstoragedevice":"Please select a storage device",
+          "needspacesize":"Check space size,Can only fill in integers",
+          "needunitprice":"Check unit price,Can only fill in integers",
+          "needunitmintime":"Check minimum time,Can only fill in integers",
+          "needunitmaxtime":"Check the maximum length,Can only fill in integers",
+          "needodds":"Check odds,Can only fill in integers",
+          "needminspace":"Check the minimum space,Can only fill in integers"
+      }
+    },
       "com":{
           "gasfee":"Gas Fee",
           "to":" to ",
@@ -333,7 +399,8 @@
           "Failed":"Failed",
           "mintabletrue":"mintable",
           "mintablefalse":"is not mintable",
-          "locktime":"locktime"
+          "locktime":"locktime",
+          "back":"back"
           
           
       }
@@ -370,7 +437,9 @@
     "MsgMinerWithDraw": "MinerWithDraw",
     "MsgCreateSellOrder": "CreateSellOrder",
     "MsgCancelSellOrder": "CancelSellOrder",
-    "MsgCreateBuyOrder": "CreateBuyOrder"
+    "MsgCreateBuyOrder": "CreateBuyOrder",
+    "MsgPDPProofs": "PDPProofs",
+    "MsgStatement": "Statement"
   },
   "txTable":{
     "action": "Activity",
@@ -429,7 +498,91 @@
     "switch_height":"switch height"
 
 
-  }
+  },
+  "marketpage":{
+    "buyingspace":"Buying space",
+    "sellspace":"Sell space",
+    "orderlist":"Order list",
+    "autotitle":"Auto match - one click purchase",
+    "space":"Space",
+    "duration":"Duration",
+    "month":"Month",
+    "One-click-space":"One click purchase",
+    "Pending-order-fee":"Pending order fee",
+    "Single-fee":"Single fee",
+    "unitprice":"Unit Price(LAMB/GB/month)",
+    "Minimumtime":"Minimum purchase time",
+    "Maximumtime":"Maximum purchase time",
+    "Minimumspace":"Minimum purchase space",
+    "Optionaltitle":"Free trade - more options, free trade",
+    "sellspacebtn":"Sale",
+    "last100data":"The last 100 data",
+    "payorder":"pay",
+    "sellorder":"sell",
+    "Active":"Active",
+    "Finish":"Finish",
+    "Expired":"Expired",
+    "Status":"Status",
+    "selltable":{
+        "Mineraddress":"Miner address",
+        "amountspace":"Amount space(GB)",
+        "remainingspace":"Remaining space(GB)",
+        "unitprice":"Unitprice(LAMB/GB/month)",
+        "minimumspace":"Minimum space(GB)",
+        "minimumduration":"Minimum duration(month)",
+        "operating":"Operating",
+        "Odds":"Odds",
+        "Purchasespace":"Purchase"
+    },
+    "myselltable":{
+     "amountspace":"Amount space(GB)",
+     "remainingspace":"Remaining space(GB)",
+     "unitprice":"Unit price(LAMB/GB/month)",
+     "minimumspace":"Min  space(GB)",
+     "minimumduration":"Min duration(month)",
+     "Odds":"Odds",
+     "Storagedevice":"Storage device",
+     "Marketaddress":"Market address"
+    },
+    "ordertable":{
+     "orderType":"Type",
+     "orderid":"Orderid",
+     "amountspace":"Space(GB)",
+     "unitprice":"Unit price(LAMB/GB/month)",
+     "Storagedevice":"Storage device",
+     "Marketaddress":"Market address",
+     "Startingtime":"Start time",
+     "EndTime":"End Time",
+     "userPay":"User Pay",
+     "minerPay":"Miner deposit",
+     "orderdetails":"Details"
+    }
+
+
+},
+"orderinfo":{
+ "orderType":"type",
+ "orderid":"order id",
+ "space":"space",
+ "unitprice":"unit price(LAMB/GB/month)",
+ "Storagedevice":"storage device",
+ "Marketaddress":"market address",
+ "Startingtime":"starting time",
+ "EndTime":"end Time",
+ "userPay":"user Pay",
+ "minerPay":"miner deposit",
+ "orderdetails":"details",
+ "Mineraddress":"miner address",
+ "user":"user",
+ "operating":"operating",
+ "lambdastorageConsole":"Lambda storage console",
+ "Viewlambdastorage":"View order space in lambda storage",
+ "Filelossarbitration":"File loss application arbitration",
+ "Username":"Username",
+ "Password":"Password"
+ 
+
+}
 
 
 }
