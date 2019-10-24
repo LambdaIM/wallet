@@ -1,11 +1,12 @@
 import { app, BrowserWindow, Menu, net } from 'electron';
 
+
+
 import logicrpc from './logic.js';
 import upgrade from './upgrade.js';
 import { connect } from 'net';
 import { join } from 'path';
 import { fork } from 'child_process';
-
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -18,6 +19,8 @@ if (process.env.NODE_ENV !== 'development') {
 } else {
   DAEMON = join(__dirname, '../../static/s3server.js');
 }
+
+
 
 // var log = require('../log').log;
 // const settings = require('electron-settings');

@@ -86,6 +86,6 @@ var configData = {
 };
 
 configData.setUP();
-configData.s3client();
+// configData.s3client();
 
 module.exports.DAEMON_CONFIG  = configData;
