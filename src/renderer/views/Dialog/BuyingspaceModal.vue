@@ -170,13 +170,13 @@ export default {
       }
       if (spaceDuration < this.$data.orderinfo.minDuration / this.$data.timeunit) {
         this.$Notice.warning({
-          title: this.$t('Dialog.selectBuy.Minimumtime') + this.$data.orderinfo.minDuration / this.$data.timeunit + '月'
+          title: this.$t('Dialog.selectBuy.Minimumtime') + (this.$data.orderinfo.minDuration / this.$data.timeunit).toFixed(2) + '月'
         });
         return;
       }
       if (spaceDuration > this.$data.orderinfo.maxDuration / this.$data.timeunit) {
         this.$Notice.warning({
-          title: this.$t('Dialog.selectBuy.Maximumtime') + this.$data.orderinfo.maxDuration / this.$data.timeunit + '月'
+          title: this.$t('Dialog.selectBuy.Maximumtime') + (this.$data.orderinfo.maxDuration / this.$data.timeunit).toFixed(2) + '月'
         });
         return;
       }

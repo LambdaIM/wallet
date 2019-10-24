@@ -12,7 +12,7 @@
           <Col span="3" class-name="content-wrapper">
 
             <Button to="/market"  icon="ios-arrow-back" type="primary">{{$t('Dialog.com.back')}}</Button>
-        <br><br>
+
           </Col>
         </Row>
         <Row class-name="card-item">
