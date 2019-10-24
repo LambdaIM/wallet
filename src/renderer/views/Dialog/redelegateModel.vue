@@ -130,6 +130,9 @@ export default {
       if (validatorType == undefined) {
         throw new Error('need validatorType');
       }
+      this.$data.LAMBvalue = '';
+      this.$data.Tovaluenew = '';
+
       var result = await this.getListData();
     },
     sendcancel() {
@@ -167,6 +170,7 @@ export default {
         });
         return;
       }
+      this.LAMBvalue = parseFloat(this.LAMBvalue).toFixed(6);
       this.transfer(value);
     },
     async transfer(amount) {
