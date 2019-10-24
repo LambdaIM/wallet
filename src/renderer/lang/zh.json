@@ -247,6 +247,7 @@
       "Partnerlist":"合伙人列表",
       "Unpledge":"解绑中",
       "ExplainTab":"说明",
+      "entername":"请输入名称",
       "pledgeTable":{
           "Nickname":"节点昵称",
           "Mypledge":"我的质押",

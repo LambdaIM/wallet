@@ -253,6 +253,7 @@
       "Partnerlist":"Partner list",
       "Unpledge":"Unbonding",
       "ExplainTab":"Explain",
+      "entername":"Please enter a name",
       "pledgeTable":{
           "Nickname":"Node Nickname",
           "Mypledge":"My pledge",
