@@ -117,29 +117,30 @@
             {{orderinfo.MatchOrder.machineName}}
           </Col>
         </Row>
+        <div v-if="this.$store.getters.getaddress==orderinfo.MatchOrder.buyAddress&&runstorage==1">
+            <Row  class-name="card-item">
+              <Col span="4" class-name="title-wrapper">
+                <span class="title">{{$t('orderinfo.operating')}}:</span>
+              </Col>
+              <Col span="20" class-name="content-wrapper">
+                <Button @click="Datacollection" type="primary">{{$t('orderinfo.Viewlambdastorage')}} </Button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <Button type="warning">{{$t('orderinfo.Filelossarbitration')}}</Button>
+              </Col>
+            </Row>
+            <Row class-name="card-item">
+              <Col span="5" class-name="title-wrapper">
+                <span class="title">{{$t('orderinfo.lambdastorageConsole')}}:</span>
+              </Col>
+              <Col span="19" class-name="content-wrapper">
 
-        <Row v-if="this.$store.getters.getaddress==orderinfo.MatchOrder.buyAddress" class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('orderinfo.operating')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-             <Button @click="Datacollection" type="primary">{{$t('orderinfo.Viewlambdastorage')}} </Button>
-             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Button type="warning">{{$t('orderinfo.Filelossarbitration')}}</Button>
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="5" class-name="title-wrapper">
-            <span class="title">{{$t('orderinfo.lambdastorageConsole')}}:</span>
-          </Col>
-          <Col span="19" class-name="content-wrapper">
+                {{$t('orderinfo.Username')}}：{{managerkey['access-key']}}
+                {{$t('orderinfo.Password')}}：{{managerkey['secret-key']}}<br/>
+                <!-- 访问地址：{{managerkey['address']}}<br/> -->
 
-            {{$t('orderinfo.Username')}}：{{managerkey['access-key']}}
-            {{$t('orderinfo.Password')}}：{{managerkey['secret-key']}}<br/>
-            <!-- 访问地址：{{managerkey['address']}}<br/> -->
-
-          </Col>
-        </Row>
+              </Col>
+            </Row>
+        </div>
         <br/><br/>
 
 
@@ -172,6 +173,7 @@ import Activity from '@/components/txTable/Activity.vue';
 
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+var packagejson = require('../../../../package.json');
 
 
 export default {
@@ -180,7 +182,8 @@ export default {
       orderinfo: {},
       passwordModal: false,
       walletPassword: '',
-      managerkey: {}
+      managerkey: {},
+      runstorage: packagejson.runstorage
     };
   },
   components: {
