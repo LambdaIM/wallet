@@ -453,9 +453,11 @@ export default function() {
               }
               if (txinfo.code) {
                 flag = -2;
-                message = txinfo.logs.map(item => {
-                  return item.log;
-                }).join(',');
+                if (txinfo.logs != undefined) {
+                  message = txinfo.logs.map(item => {
+                    return item.log;
+                  }).join(',');
+                }
               }
             } else {
               flag = 1;

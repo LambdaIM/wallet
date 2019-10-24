@@ -229,6 +229,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+@font-face {
+  font-family: 'Consolas';  //重命名字体名
+  src: url('./assets/CONSOLA.ttf');  //引入字体
+  font-weight: normal;
+  font-style: normal;
+}
    .demo-spin-col{
     width: 100%;
     height: 100%;

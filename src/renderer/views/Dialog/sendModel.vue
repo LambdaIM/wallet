@@ -8,19 +8,19 @@
     @on-cancel="sendcancel"
   >
     <p>
-      <Input v-model="address" readonly>
+      <Input class="address" v-model="address" readonly>
         <span slot="prepend">{{$t('home.Modal1.From')}}</span>
       </Input>
     </p>
     <br />
     <p>
-      <Input v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
+      <Input  class="address" v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
         <span slot="prepend">{{$t('home.Modal1.To')}}</span>
       </Input>
     </p>
     <br />
     <p>
-      <Input v-model="LAMBvalue">
+      <Input  v-model="LAMBvalue">
         <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
         <span slot="append">{{denomShow}}</span>
       </Input>
@@ -37,12 +37,12 @@
         <div class="modal-header" slot="header">
           <h2>{{$t('home.Modal1.Transfer')}}</h2>
           <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
-            <Col span="20" class-name="value">{{address}}</Col>
+            <Col span="4" class-name="key ">{{$t('home.Modal1.From')}}:</Col>
+            <Col span="20" class-name="value address">{{address}}</Col>
           </Row>
           <Row  class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
-            <Col span="20" class-name="value">{{Tovalue}}</Col>
+            <Col span="20" class-name="value address">{{Tovalue}}</Col>
           </Row>
           <Row class-name="item">
             <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
@@ -100,6 +100,7 @@ export default {
     preSendLAMB() {
       let from = this.address;
       let to = this.Tovalue;
+
       let value = this.toBigNumStr(this.LAMBvalue);
       if (to == from) {
         this.$Notice.warning({
@@ -131,6 +132,7 @@ export default {
         });
         return;
       }
+      this.LAMBvalue = parseFloat(this.LAMBvalue).toFixed(6);
       this.transfer(value);
     },
     async transfer(amount) {
@@ -193,6 +195,8 @@ export default {
       this.sendModal = true;
       this.confirmModal = false;
       this.editmemo = false;
+      this.$data.LAMBvalue = '';
+      this.$data.Tovalue = '';
     }
   },
   computed: {
@@ -217,6 +221,10 @@ export default {
     margin-top: 20px;
     font-size: 14px;
   }
+}
+
+.address{
+  font-family: Consolas,Monaco,monospace;
 }
 </style>
 

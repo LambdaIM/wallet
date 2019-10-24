@@ -97,6 +97,7 @@ export default {
         throw new Error('need validatorType');
       }
       this.stakingParameters();
+      this.$data.LAMBvalue = '';
     },
     sendcancel() {
       this.sendModal = false;
@@ -145,6 +146,7 @@ export default {
         });
         return;
       }
+      this.LAMBvalue = parseFloat(this.LAMBvalue).toFixed(6);
       this.transfer(value);
     },
     async transfer(amount) {

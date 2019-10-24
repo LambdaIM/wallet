@@ -15,7 +15,7 @@ export default {
         value = 0;
       }
       var bigvalue = new BigNumber(value);
-      return bigvalue.times(1e6).toString();
+      return bigvalue.times(1e6).toFixed(0).toString();
     };
     Vue.prototype.toBigNumFixed = function (value) {
       if (value == '' || value == undefined || value == null) {
