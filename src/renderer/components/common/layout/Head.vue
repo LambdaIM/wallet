@@ -321,7 +321,10 @@ export default {
         console.log(res);
         if (!res.state) return;
         this.$store.dispatch('setaddress', res.data.address);
-        console.log('WalletBasicinfo', res.data.address);
+        console.log('WalletBasicinfo', res.data.address, res.data.name);
+        if (document.title.length < 25) {
+          document.title += '|' + res.data.name + '|' + res.data.address;
+        }
       } catch (ex) {
         console.log(ex);
         console.log('没有找到默认钱包，是否需要重新创建账号');
