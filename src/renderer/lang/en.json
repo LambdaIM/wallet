@@ -450,6 +450,7 @@
     "MsgWithDrawMarket": "WithDrawMarket",
     "MsgCreateMachine": "CreateMachine",
     "MsgEditMachine": "EditMachine",
+    "MsgMinerWithDrawMachine":"MinerWithDrawMachine",
     "MsgCreateMiner": "CreateMiner",
     "MsgMinerWithDraw": "MinerWithDraw",
     "MsgCreateSellOrder": "CreateSellOrder",
