@@ -2,7 +2,7 @@
     "name": "Wallet",
     "version": "0.4.13",
     "author": "lambda wallet developer <544262408@qq.com>",
-    "description": "lambda wallet",
+    "description": "Lambda Wallet",
     "license": null,
     "runstorage":0,
     "main": "./dist/electron/main.js",

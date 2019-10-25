@@ -16,7 +16,7 @@
       </p>
       <br/>
       <p>
-        {{$t('Dialog.AutoBuy.unitprice')}}：{{marketPrice}} GB/LAMB/month
+        {{$t('Dialog.AutoBuy.unitprice')}}(GB/LAMB/month)：{{marketPrice|Lambformat}}
       </p>
       <br/>
 
@@ -63,8 +63,8 @@
           <Col span="20" class-name="value">{{this.$data.marketinfo.marketAddress}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.unitprice')}}:</Col>
-          <Col span="20" class-name="value">{{this.$data.marketPrice}} GB/LAMB/month </Col>
+          <Col span="8" class-name="key">{{$t('Dialog.AutoBuy.unitprice')}}(GB/LAMB/month):</Col>
+          <Col span="16" class-name="value">{{this.$data.marketPrice|Lambformat}}  </Col>
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.space')}}:</Col>
@@ -76,7 +76,7 @@
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.Paymentamount')}}:</Col>
-          <Col span="20" class-name="value">{{Paymentamount}} LAMB</Col>
+          <Col span="20" class-name="value">{{Paymentamount|Lambformat}} </Col>
         </Row>
         <Row class-name="item">
             <Input  v-model="gaseFee" >

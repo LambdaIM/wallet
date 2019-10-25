@@ -247,6 +247,7 @@
       "Partnerlist":"合伙人列表",
       "Unpledge":"解绑中",
       "ExplainTab":"说明",
+      "entername":"请输入名称",
       "pledgeTable":{
           "Nickname":"节点昵称",
           "Mypledge":"我的质押",
@@ -377,6 +378,13 @@
            "needminspace":"检查最小空间,只能填写整数"
 
        }
+    },
+    "DepositModel":{
+        "tip1":"当投票阶段结束的时候,提案判定为通过，则立即返还众筹到的提案资金",
+        "tip2":"注意：可能会造成众筹的押金被没收的情况(提案创建开始14天之后)",
+        "tip3":"1:存入押金阶段结束的时候，提案仍然没有存够 10000 Lamb",
+        "tip4":"2:投票阶段结束的时候，投票数少于全网 40% 质押量",
+        "tip5":"3:投票阶段结束的时候，大于 33.4% 的强烈反对票"
     },
       "com":{
           "gasfee":"Gas费用",
@@ -547,8 +555,8 @@
         "Marketaddress":"市场地址",
         "Startingtime":"开始时间",
         "EndTime":"结束时间",
-        "userPay":"用户支付金额",
-        "minerPay":"矿工押金",
+        "userPay":"未提取的收益",
+        "minerPay":"未提取的押金",
         "orderdetails":"订单详情"
        }
 
@@ -563,8 +571,8 @@
     "Marketaddress":"市场地址",
     "Startingtime":"开始时间",
     "EndTime":"结束时间",
-    "userPay":"用户支付金额",
-    "minerPay":"矿工押金",
+    "userPay":"未提取的收益",
+    "minerPay":"未提取的押金",
     "orderdetails":"订单详情",
     "Mineraddress":"矿工地址",
     "user":"用户",

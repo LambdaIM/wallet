@@ -54,8 +54,8 @@
                                 <span slot="append">LAMB</span>
                               </Input>
           </Row>
-          <Row v-if="openmemo==true"  class-name="item">
-            <Input readonly type="textarea" :rows="4"  />
+          <Row v-if="editmemo==true"  class-name="item">
+            <Input v-model="memo" readonly type="textarea" :rows="4"  />
           </Row>
 
         </div>

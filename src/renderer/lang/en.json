@@ -253,6 +253,7 @@
       "Partnerlist":"Partner list",
       "Unpledge":"Unbonding",
       "ExplainTab":"Explain",
+      "entername":"Please enter a name",
       "pledgeTable":{
           "Nickname":"Node Nickname",
           "Mypledge":"My pledge",
@@ -383,6 +384,13 @@
           "needminspace":"Check the minimum space,Can only fill in integers"
       }
     },
+    "DepositModel":{
+      "tip1":"At the end of the voting phase, if the proposal is determined to be approved, the crowdfunding funds will be returned immediately.",
+      "tip2":"Note: may result in forfeiture of crowdfunding deposit (14 days after proposal creation)",
+      "tip3":"1: at the end of deposit stage, the proposal still does not have enough 10000 lambs.",
+      "tip4":"2: at the end of the voting stage, the number of votes is less than 40% of the pledged amount of the whole network.",
+      "tip5":"3: at the end of the voting stage, more than 33.4% of the votes were strongly opposed."
+  },
       "com":{
           "gasfee":"Gas Fee",
           "to":" to ",
@@ -553,8 +561,8 @@
      "Marketaddress":"Market address",
      "Startingtime":"Start time",
      "EndTime":"End Time",
-     "userPay":"User Pay",
-     "minerPay":"Miner deposit",
+     "userPay":"Undrawn gain",
+    "minerPay":"Undrawn deposit",
      "orderdetails":"Details"
     }
 
@@ -569,8 +577,8 @@
  "Marketaddress":"market address",
  "Startingtime":"starting time",
  "EndTime":"end Time",
- "userPay":"user Pay",
- "minerPay":"miner deposit",
+ "userPay":"Undrawn gain",
+  "minerPay":"Undrawn deposit",
  "orderdetails":"details",
  "Mineraddress":"miner address",
  "user":"user",

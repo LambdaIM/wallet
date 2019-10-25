@@ -30,7 +30,8 @@
           </Table>
         </TabPane>
         <TabPane  :label="$t('staking.Partnerlist')" >
-          <Table :loading="tabloading2" size="large" :columns="columns" :data="validatorsList" >
+          <Input v-model="searchkey"   search enter-button :placeholder="$t('staking.entername')" />
+          <Table :loading="tabloading2" size="large" :columns="columns" :data="searchlist" >
 
           <template slot-scope="{ row, index }" slot="payment">
             {{row.commission.rate|Percentformat}}
@@ -228,7 +229,8 @@ export default {
       dataParameters: {},
       tabloading1: true,
       tabloading2: true,
-      tabloading3: true
+      tabloading3: true,
+      searchkey: ''
     };
   },
   async mounted() {
@@ -383,6 +385,21 @@ export default {
     },
     balance: function() {
       return this.$store.getters.getbalance;
+    },
+    searchlist() {
+      if (this.$data.searchkey == '') {
+        return this.$data.validatorsList;
+      } else {
+        var _this = this;
+        var resultlist = [];
+        this.$data.validatorsList.forEach(item => {
+          if (item.description.moniker.toLowerCase().indexOf(_this.$data.searchkey.toLowerCase()) > -1) {
+            resultlist.push(item);
+          }
+        });
+
+        return resultlist;
+      }
     }
 
 
