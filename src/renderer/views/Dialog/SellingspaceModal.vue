@@ -177,9 +177,15 @@ export default {
       let maxDuration = parseInt(this.$data.maxDuration);
       if (rate == 1) {
         unitPrice = 5;
+        this.$Message.info(this.$t('Dialog.sellorder.ratetip1'));
       }
       if (rate >= 3 && unitPrice < 5) {
         unitPrice = 5;
+        this.$Message.info(this.$t('Dialog.sellorder.ratetip2'));
+      }
+      if (rate == 2) {
+        this.$Message.info(this.$t('Dialog.sellorder.ratetip4'));
+        return;
       }
 
 
@@ -267,6 +273,12 @@ export default {
     ratechange() {
       let rate = parseInt(this.$data.rate);
       if (rate == 1) {
+        this.$data.unitPrice = 5;
+        this.$Message.info(this.$t('Dialog.sellorder.ratetip1'));
+      }
+      if (rate == 2) {
+        this.$Message.info(this.$t('Dialog.sellorder.ratetip4'));
+        this.$data.rate = 1;
         this.$data.unitPrice = 5;
       }
     },

@@ -382,6 +382,7 @@
        "ratetip1":"Odds = 1 can not specify the price, can only be 5LAMB/G/month",
        "ratetip2":"Odds >=3 requires a specified price, price >=5LAMB/G/month",
        "ratetip3":"Odds = 1 for regular sell orders, odds >= 3 for premium sell orders",
+       "ratetip4":"Odds cannot be = 2",
        "action":{
           "needstoragedevice":"Please select a storage device",
           "needspacesize":"Check space size,Can only fill in integers",
@@ -531,7 +532,7 @@
     "Maximumtime":"Maximum purchase time",
     "Minimumspace":"Minimum purchase space",
     "Optionaltitle":"Free trade - more options, free trade",
-    "sellspacebtn":"Sale",
+    "sellspacebtn":"Selling space",
     "last100data":"The last 100 data",
     "payorder":"pay order",
     "sellorder":"sell order",

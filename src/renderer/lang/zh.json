@@ -376,6 +376,7 @@
        "ratetip1":"赔率=1不能指定价格，只能是5LAMB/G/month",
        "ratetip2":"赔率>=3需要指定价格,价格>=5LAMB/G/month",
        "ratetip3":"赔率=1为普通卖单,赔率>=3为优质卖单",
+       "ratetip4":"赔率不能=2",
        "action":{
            "needstoragedevice":"请选择存储设备",
            "needspacesize":"检查空间大小,只能填写整数",

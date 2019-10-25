@@ -137,8 +137,8 @@
                 </TabPane> -->
                 <TabPane :label="$t('marketpage.sellspace')" name="name4">
                   <Row>
-        <Col span="22">&nbsp;</Col>
-        <Col span="2">
+        <Col span="20">&nbsp;</Col>
+        <Col span="4">
         <Button @click="openSellingspace" type="primary"  size="small">{{$t('marketpage.sellspacebtn')}}</Button>
         </Col>
       </Row>
