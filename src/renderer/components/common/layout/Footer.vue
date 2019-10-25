@@ -2,23 +2,26 @@
   <div class="footer-container">
     <div v-if="getstore.address!==null"  class="footer-wrapper">
       <!-- <span class="item etc">Validator id: -->
-      <span    class="item etc">{{ $t("foot.validator") }}:
+
+      <span    class="item etc">
         <Poptip word-wrap trigger="hover" width="300" :content="getIPAndAddress">
 
           <router-link v-if="login"
             to="/validator"
             class="item"
-          >{{getstore.address}}<Icon   type="ios-arrow-dropdown" /></router-link>
+          ><Badge :text="networkType"></Badge><Icon   type="ios-arrow-dropdown" /></router-link>
           <span v-else>
-            {{getstore.address}}
+            <Badge :text="networkType"></Badge>
           </span>
 
           </Poptip>
+
       </span>
 
       <span  class="item">{{ $t("foot.block_height") }}: {{getstore.height}}</span>
       <span  class="item" v-if="getstore.isSync==true" >{{ $t("foot.sync_block") }}</span>
       <span class="item" v-else>{{ $t("foot.block_time") }}: {{getstore.time | formatRelativeDate}}</span>
+
     </div>
     <div v-else class="footer-wrapper">
 
@@ -30,12 +33,14 @@
             {{ $t("foot.validator_connecting") }}
           </span>
     </div>
+
   </div>
 </template>
 
 <script>
 import eventhub from '../../../common/js/event.js';
 import { mapState } from 'vuex';
+import { DAEMON_CONFIG } from '../../../../config.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 
@@ -152,6 +157,39 @@ export default {
         return '';
       }
     },
+    networkType() {
+      var network = ''; var result = '';
+      try {
+        network = this.$store.getters.info.nodeInfo.network;
+      } catch (error) {
+
+      }
+      var mianpattern = /lambda-chain-?([1-9]\d*.\d*|0.\d*[1-9]\d*)/;
+      var testpattern = /lambda-chain-test-?([1-9]\d*.\d*|0.\d*[1-9]\d*)/;
+      if (mianpattern.test(network)) {
+        result = this.$t('foot.mainnet');
+        window.netType = 1;
+      } else if (testpattern.test(network)) {
+        result = this.$t('foot.testnet');
+        window.netType = 2;
+      } else {
+        result = this.$t('foot.cusnet');
+        window.netType = 2;
+      }
+      if (this.$data.ValidatorIP == DAEMON_CONFIG.mainnetip) {
+        result += this.$t('foot.defaultmaster');
+      } else if (this.$data.ValidatorIP == DAEMON_CONFIG.testnetip) {
+        result += this.$t('foot.Defaulttestnode');
+      } else {
+        result += this.$t('foot.Customnode');
+      }
+      return result;
+      // lambda-chain-test3.0  测试网
+      // lambda-chain-3.0      主网
+      // 主网默认ip 39.107.247.86
+      // 测试网络默认ip 47.93.196.236
+    },
+
     ...mapState({
       login: state => {
         console.log('---******');

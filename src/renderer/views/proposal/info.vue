@@ -320,7 +320,7 @@ export default {
   },
   methods: {
     goexplor(id) {
-      var explorer = DAEMON_CONFIG.explore;
+      var explorer = DAEMON_CONFIG.explore();
       let url = `${explorer}#proposalDetail/${id}`;
       shell.openExternal(url);
     },

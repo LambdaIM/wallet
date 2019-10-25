@@ -345,7 +345,7 @@ export default {
     },
     txinfo(item) {
       // console.log(value);
-      var explorer = DAEMON_CONFIG.explore;
+      var explorer = DAEMON_CONFIG.explore();
       let url = `${explorer}#/txDetail/${item.txhash}`;
       shell.openExternal(url);
     },

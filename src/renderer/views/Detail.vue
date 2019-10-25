@@ -150,13 +150,13 @@ export default {
   methods: {
     checkHash(value, txType) {
       // console.log(value);
-      var explorer = DAEMON_CONFIG.explore;
+      var explorer = DAEMON_CONFIG.explore();
       let url = `${explorer}#/txDetail/${value}`;
       shell.openExternal(url);
     },
     checkAddress(value) {
       // console.log(value);
-      var explorer = DAEMON_CONFIG.explore;
+      var explorer = DAEMON_CONFIG.explore();
       let url;
       if (value.indexOf('lambdavaloper') == 0) {
         url = `${explorer}/#/validatorDetail/${value}`;
@@ -168,7 +168,7 @@ export default {
     },
     checkHeight(value) {
       // console.log(value);
-      var explorer = DAEMON_CONFIG.explore;
+      var explorer = DAEMON_CONFIG.explore();
       let url = `${explorer}/#/blockDetail/${value}`;
       shell.openExternal(url);
     },

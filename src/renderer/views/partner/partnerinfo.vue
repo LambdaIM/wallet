@@ -136,7 +136,7 @@ export default {
     },
     checkAddress(value) {
       // console.log(value);
-      var explorer = DAEMON_CONFIG.explore;
+      var explorer = DAEMON_CONFIG.explore();
       let url;
       if (value.indexOf('lambdavaloper') == 0) {
         url = `${explorer}/#/validatorDetail/${value}`;

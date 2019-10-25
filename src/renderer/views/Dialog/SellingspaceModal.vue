@@ -8,7 +8,7 @@
       @on-cancel="sendcancel"
     >
     <p>
-        {{$t('Dialog.sellorder.Marketname')}}：{{market.marketAddress}}
+        {{$t('Dialog.sellorder.Marketaddress')}}：{{market.marketAddress}}
       </p><br/>
       <p>
         {{$t('Dialog.sellorder.Marketname')}}：{{market.name}}

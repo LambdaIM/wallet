@@ -18,6 +18,20 @@ var packageJson =require('../package.json')
 module.exports.DAEMON_CONFIG  = {
     BASE_PATH:BASE_PATH,
     pledgeurl: "http://validator.lambdastorage.com/",
-    explore:process.env.NODE_ENV == 'production'?'http://explorer.lambdastorage.com/':"http://39.107.249.53:8080/",
-    version:packageJson.version
+    explore:function(){
+      var testurl = process.env.NODE_ENV == "production"?
+      'http://testbrowser.lambda.im/':"http://39.107.249.53:8080/";
+      if(window.netType==1){
+        return  "http://explorer.lambdastorage.com/"
+      }else{
+        return   testurl;
+      }
+
+
+
+
+    },
+    version:packageJson.version,
+    mainnetip:"39.107.247.86",
+    testnetip:"47.93.196.236"
 };

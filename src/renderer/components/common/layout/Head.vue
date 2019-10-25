@@ -85,10 +85,12 @@
               type="ios-copy"
               size="20"
             />
-            {{address}}
+            {{address.slice(-5)}}
           </div>
         </div>
+
       </div>
+
       </Col>
       <Col
         v-else
