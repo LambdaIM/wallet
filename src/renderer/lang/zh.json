@@ -22,6 +22,14 @@
       "sync_block": "同步块…",
       "validator_connecting": "正在连接验证节点…",
       "linkerror": "连接到验证节点异常,请检查网络链接或验证节点",
+      "mainnet":"主网",
+      "testnet":"测试网",
+      "cusnet":"自定义网络",
+      "defaultmaster":"默认主节点",
+      "Defaulttestnode":"默认测试节点",
+      "Customnode":"自定义节点",
+      "DefaultprimaryIP":"默认主网IP",
+      "DefaulttestnetworkIP":"默认测试网IP",
       "action": {
           "Validator_time_out": "验证节点网络连接超时，请检查您的网络。"
       }
