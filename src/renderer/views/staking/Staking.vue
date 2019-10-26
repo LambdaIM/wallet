@@ -73,10 +73,10 @@
 
         </TabPane>
         <TabPane :label="$t('staking.ExplainTab')" >
-          <ul class="ulpanel">
-            <li>{{$t('staking.Explain.unbonding_time')}}:{{(dataParameters.unbonding_time/(1000*1000*1000*60*60*24)).toFixed(5)}}{{$t('staking.Explain.unit')}}</li>
+          <ul v-if="dataParameters!=undefined" class="ulpanel">
+            <li>{{$t('staking.Explain.unbonding_time')}}:{{(dataParameters.unbonding_time/(1000*1000*1000*60*60*24)).toFixed(2)}}{{$t('staking.Explain.unit')}}</li>
             <li>{{$t('staking.Explain.max_validators')}}:{{dataParameters.max_validators}}</li>
-            <li>{{$t('staking.Explain.bond_denom')}}:{{dataParameters.bond_denom}}</li>
+            <li v-if="dataParameters.bond_denom!=undefined">{{$t('staking.Explain.bond_denom')}}:{{dataParameters.bond_denom.substring(1)}}</li>
           </ul>
 
 

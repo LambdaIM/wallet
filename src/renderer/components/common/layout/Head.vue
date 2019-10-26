@@ -322,8 +322,8 @@ export default {
         if (!res.state) return;
         this.$store.dispatch('setaddress', res.data.address);
         console.log('WalletBasicinfo', res.data.address, res.data.name);
-        if (document.title.length < 25) {
-          document.title += '|' + res.data.name + '|' + res.data.address;
+        if (document.title.length < 25 && this.login == true) {
+          document.title = window.title + '|' + res.data.name + '|' + res.data.address;
         }
       } catch (ex) {
         console.log(ex);
