@@ -82,7 +82,10 @@
             <span class="title">{{$t('orderinfo.userPay')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
+          <span v-if="typeBuyType(orderinfo.MatchOrder.buyAddress)">
            {{amountFormat(orderinfo.MatchOrder.userPay)}}
+          </span>
+          <span v-else>--</span>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -90,7 +93,10 @@
             <span class="title">{{$t('orderinfo.minerPay')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
+           <span v-if="typeBuyType(orderinfo.MatchOrder.buyAddress)">
            {{amountFormat(orderinfo.MatchOrder.minerPay)}}
+          </span>
+          <span v-else>--</span>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -315,11 +321,18 @@ export default {
         return;
       }
       return this.bigNumTypeFormat(item.amount, item.denom);
+    },
+    typeBuyType(addeess) {
+      if (this.$store.getters.getaddress === addeess) {
+        return false;
+      } else {
+        return true;
+      }
     }
-    // marketgetOrderinfo
 
   },
   computed: {
+
 
   }
 };
