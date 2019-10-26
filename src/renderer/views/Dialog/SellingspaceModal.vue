@@ -45,7 +45,7 @@
       <br/>
       <p>
 
-          <Input  v-model="unitPrice">
+          <Input @on-keyup="pricechange"  v-model="unitPrice">
           <span slot="prepend">{{$t('Dialog.sellorder.unitprice1')}}</span>
           <span slot="append">{{$t('Dialog.sellorder.unitprice2')}}</span>
         </Input>
@@ -177,7 +177,7 @@ export default {
       let maxDuration = parseInt(this.$data.maxDuration);
       if (rate == 1) {
         unitPrice = 5;
-        this.$Message.info(this.$t('Dialog.sellorder.ratetip1'));
+        // this.$Message.info(this.$t('Dialog.sellorder.ratetip1'));
       }
       if (rate >= 3 && unitPrice < 5) {
         unitPrice = 5;
@@ -272,6 +272,38 @@ export default {
     },
     ratechange() {
       let rate = parseInt(this.$data.rate);
+
+      if (isNaN(rate) || rate == 0) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.sellorder.action.needodds')
+        });
+        return;
+      }
+      if (rate == 1) {
+        this.$data.unitPrice = 5;
+      }
+      if (rate == 2) {
+        this.$Message.info(this.$t('Dialog.sellorder.ratetip4'));
+        // this.$data.rate = 1;
+        // this.$data.unitPrice = 5;
+      }
+    },
+    pricechange() {
+      let rate = parseInt(this.$data.rate);
+      let unitPrice = parseInt(this.$data.unitPrice);
+      if (isNaN(rate) || rate == 0) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.sellorder.action.needodds')
+        });
+        return;
+      }
+      if (isNaN(unitPrice) || unitPrice == 0) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.sellorder.action.needunitprice')
+        });
+        return;
+      }
+
       if (rate == 1) {
         this.$data.unitPrice = 5;
         this.$Message.info(this.$t('Dialog.sellorder.ratetip1'));
@@ -280,6 +312,10 @@ export default {
         this.$Message.info(this.$t('Dialog.sellorder.ratetip4'));
         this.$data.rate = 1;
         this.$data.unitPrice = 5;
+      }
+      if (rate >= 3 && unitPrice < 5) {
+        // this.$data.unitPrice = 5;
+        this.$Message.info(this.$t('Dialog.sellorder.ratetip2'));
       }
     },
     async transfer(sellobj, txType) {
