@@ -9,9 +9,9 @@
           <router-link v-if="login"
             to="/validator"
             class="item"
-          ><Badge :text="networkType"></Badge><Icon   type="ios-arrow-dropdown" /></router-link>
+          ><Badge :type="getNetColour" :text="networkType"></Badge><Icon   type="ios-arrow-dropdown" /></router-link>
           <span v-else>
-            <Badge :text="networkType"></Badge>
+            <Badge :type="getNetColour" :text="networkType"></Badge>
           </span>
 
           </Poptip>
@@ -157,6 +157,51 @@ export default {
         return '';
       }
     },
+    getNetColour() {
+      // 主网测试网和不同的服务器用颜色区分
+      var network = ''; var result = '';
+      try {
+        network = this.$store.getters.info.nodeInfo.network;
+      } catch (error) {
+
+      }
+      var mianpattern = /lambda-chain-?([1-9]\d*.\d*|0.\d*[1-9]\d*)/;
+      var testpattern = /lambda-chain-test-?([1-9]\d*.\d*|0.\d*[1-9]\d*)/;
+
+      if (mianpattern.test(network)) {
+        // result = this.$t('foot.mainnet');
+        result = '1';
+      } else if (testpattern.test(network)) {
+        // result = this.$t('foot.testnet');
+        result = '2';
+      } else {
+        // result = this.$t('foot.cusnet');
+        result = '3';
+      }
+      if (this.$data.ValidatorIP == DAEMON_CONFIG.mainnetip) {
+        // result += this.$t('foot.defaultmaster');
+        result += '.1';
+      } else if (this.$data.ValidatorIP == DAEMON_CONFIG.testnetip) {
+        // result += this.$t('foot.Defaulttestnode');
+        result += '.2';
+      } else {
+        // result += this.$t('foot.Customnode');
+        result += '.3';
+      }
+      var colour = {
+        '1.1': 'success',
+        '1.2': 'warning',
+        '1.3': 'warning',
+        '2.1': 'error',
+        '2.2': 'warning',
+        '2.3': 'warning',
+        '3.1': 'error',
+        '3.2': 'normal',
+        '3.3': 'normal'
+      };
+      // this.$data.netcolour
+      return colour[result];
+    },
     networkType() {
       var network = ''; var result = '';
       try {
@@ -166,22 +211,26 @@ export default {
       }
       var mianpattern = /lambda-chain-?([1-9]\d*.\d*|0.\d*[1-9]\d*)/;
       var testpattern = /lambda-chain-test-?([1-9]\d*.\d*|0.\d*[1-9]\d*)/;
+
       if (mianpattern.test(network)) {
         result = this.$t('foot.mainnet');
-        window.netType = 1;
+        // this.$data.netcolour = '1';
       } else if (testpattern.test(network)) {
         result = this.$t('foot.testnet');
-        window.netType = 2;
+        // this.$data.netcolour = '2';
       } else {
         result = this.$t('foot.cusnet');
-        window.netType = 2;
+        // this.$data.netcolour = '3';
       }
       if (this.$data.ValidatorIP == DAEMON_CONFIG.mainnetip) {
         result += this.$t('foot.defaultmaster');
+        // this.$data.netcolour += '.1';
       } else if (this.$data.ValidatorIP == DAEMON_CONFIG.testnetip) {
         result += this.$t('foot.Defaulttestnode');
+        // this.$data.netcolour += '.2';
       } else {
         result += this.$t('foot.Customnode');
+        // this.$data.netcolour += '.3';
       }
       return result;
       // lambda-chain-test3.0  测试网
