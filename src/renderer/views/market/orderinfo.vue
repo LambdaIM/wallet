@@ -42,7 +42,7 @@
             <span class="title">{{$t('orderinfo.orderid')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{orderinfo.MatchOrder.orderId}}
+           <a @click="openMatchOrder(orderinfo.MatchOrder.orderId)"> {{orderinfo.MatchOrder.orderId}}</a>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -169,11 +169,12 @@
 import Mycard from '@/components/common/useful/Mycard.vue';
 
 import Activity from '@/components/txTable/Activity.vue';
-
+import { DAEMON_CONFIG } from '../../../config.js';
 
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 var packagejson = require('../../../../package.json');
+const { shell } = require('electron');
 
 
 export default {
@@ -198,6 +199,11 @@ export default {
     this.getmanagerkey();
   },
   methods: {
+    openMatchOrder: function(orderId) {
+      var explorer = DAEMON_CONFIG.explore();
+      let url = `${explorer}#/orderDetail/match/${orderId}`;
+      shell.openExternal(url);
+    },
     s3authorization: async function() {
       console.log('s3authorization');
       var result = {};
