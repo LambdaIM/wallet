@@ -15,13 +15,20 @@
                          {{row.MatchOrder.price|Lambformat}}
                         </template>
                         <template slot-scope="{ row, index }" slot="userPay">
+                         <span v-if="typeBuyType(row.MatchOrder.buyAddress)" >
                          {{amountFormat(row.MatchOrder.userPay)}}
+                         </span>
+                         <span  v-else>--</span>
                         </template>
                         <template slot-scope="{ row, index }" slot="buyAddress">
                          {{typeFormat(row.MatchOrder.buyAddress)}}
                         </template>
-                        <template slot-scope="{ row, index }" slot="minerPay">
+                        <template  slot-scope="{ row, index }" slot="minerPay">
+                         <span v-if="typeBuyType(row.MatchOrder.buyAddress)">
                          {{amountFormat(row.MatchOrder.minerPay)}}
+                         </span>
+                         <span v-else>--</span>
+
                         </template>
                         <template slot-scope="{ row, index }" slot="createTime">
                          {{row.MatchOrder.createTime|formatDate}}
@@ -479,6 +486,13 @@ export default {
         return this.$t('marketpage.payorder');
       } else {
         return this.$t('marketpage.sellorder');
+      }
+    },
+    typeBuyType(addeess) {
+      if (this.$store.getters.getaddress === addeess) {
+        return false;
+      } else {
+        return true;
       }
     }
 

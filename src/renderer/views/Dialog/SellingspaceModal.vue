@@ -30,7 +30,7 @@
       <br/>
       <p>
 
-          <Input @on-keyup="ratechange"  v-model="rate">
+          <Input @on-keyup="ratechangedebounce"  v-model="rate">
           <span slot="prepend">{{$t('Dialog.sellorder.Odds')}}</span>
           <span slot="append">{{$t('Dialog.sellorder.times')}}</span>
         </Input>
@@ -45,7 +45,7 @@
       <br/>
       <p>
 
-          <Input @on-keyup="pricechange"  v-model="unitPrice">
+          <Input :disabled="rate==1" @on-keyup="pricechangedebounce"  v-model="unitPrice">
           <span slot="prepend">{{$t('Dialog.sellorder.unitprice1')}}</span>
           <span slot="append">{{$t('Dialog.sellorder.unitprice2')}}</span>
         </Input>
@@ -135,6 +135,7 @@
 </template>
 <script>
 import eventhub from '../../common/js/event.js';
+import { debounce } from 'underscore';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
   data() {
@@ -160,6 +161,8 @@ export default {
       this.$data.market = market;
 
       this.getMinermachines();
+      this.fnrate = debounce(this.ratechange, 1000);
+      this.fnpricerate = debounce(this.pricechange, 1000);
     },
     prewithdrawalLAMB() {
       if (this.$data.machineitem == '') {
@@ -270,6 +273,9 @@ export default {
         maxDuration
       }, 'CreateSellOrder');
     },
+    ratechangedebounce() {
+      this.fnrate();
+    },
     ratechange() {
       let rate = parseInt(this.$data.rate);
 
@@ -287,6 +293,9 @@ export default {
         // this.$data.rate = 1;
         // this.$data.unitPrice = 5;
       }
+    },
+    pricechangedebounce() {
+      this.fnpricerate();
     },
     pricechange() {
       let rate = parseInt(this.$data.rate);
