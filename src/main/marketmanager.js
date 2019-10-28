@@ -23,25 +23,21 @@ class marketmanager {
     }
   }
   async getmarketlist(query) {
-    console.log('marketlist');
     var result = await this.CosmosAPI().get.marketlist();
     return { data: result };
   }
   async getmarketinfo(query) {
-    console.log('marketinfo');
     var { name } = query;
 
     var result = await this.CosmosAPI().get.marketinfo(name);
     return { data: result };
   }
   async getOrderList(marketName, orderType, page, limit) {
-    console.log('marketinfo');
     var result = await this.CosmosAPI().get.marketOrderslist(marketName, orderType, page, limit);
     return { data: result };
   }
 
   async getSellOrderslist(page, limit) {
-    console.log('marketinfo');
     if (this.defaultAddress == null) {
       throw new Error('need address');
     }
@@ -52,7 +48,6 @@ class marketmanager {
   }
 
   async getUserOrderslist(page, limit) {
-    console.log('marketinfo');
     if (this.defaultAddress == null) {
       throw new Error('need address');
     }
@@ -61,20 +56,16 @@ class marketmanager {
   }
 
 
-  async getOrderinfo(query) {
-    console.log('marketinfo');
-    var { orderId } = query;
+  async getOrderinfo(orderId) {
     var result = await this.CosmosAPI().get.marketOrderinfo(orderId);
     return { data: result };
   }
 
   async getMinermachines(page, limit) {
-    console.log('marketinfo');
     var result = await this.CosmosAPI().get.marketminermachines(this.defaultAddress, page, limit);
     return { data: result };
   }
   async getmarketmachineinfo(address, machineName) {
-    console.log('marketinfo');
     var result = await this.CosmosAPI().get.marketmachineinfo(address, machineName);
     return { data: result };
   }

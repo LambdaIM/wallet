@@ -225,15 +225,13 @@ export default {
       console.log(result);
       if (result.state == true) {
         console.log(result.data);
-
-
         this.$data.passwordModal = false;
         this.orders3();
       }
     },
     async orders3() {
       try {
-        var info = await this.machineNameinfo(this.$data.orderinfo);
+        var info = await this.addStorageorder(this.$data.orderinfo);
       } catch (error) {
         console.log(error);
         this.$Message.info({
@@ -260,8 +258,8 @@ export default {
         this.$data.orderinfo = res.data.data;
       }
     },
-    async  machineNameinfo(orderinfo) {
-      console.log('machineNameinfo');
+    async  addStorageorder(orderinfo) {
+      console.log('addStorageorder');
       var orderId = orderinfo.MatchOrder.orderId;
       var pubKey = orderinfo.pubKey;
       var dhtId = orderinfo.dhtId;
@@ -269,7 +267,7 @@ export default {
       let res = await ipc.callMain('sets3orderinfo', { orderId, pubKey, dhtId });
       if (res.state) {
         console.log(res.data);
-        // this.runs3()//启动cmd 程序
+        // this.runStorage()//启动cmd 程序
       } else {
         this.$Message.info({
           content: '失败',
@@ -279,7 +277,7 @@ export default {
       }
     },
 
-    async runs3() {
+    async runStorage() {
       console.log('*********');
       try {
         let res = await ipc.callMain('cmdtest', {
@@ -292,9 +290,7 @@ export default {
             duration: 10,
             closable: true
           });
-        // alert(JSON.stringify(res.data))
         } else {
-        // alert('失败')
           this.$Message.info({
             content: '失败',
             duration: 10,

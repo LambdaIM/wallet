@@ -234,12 +234,13 @@ export default {
         });
         return;
       }
+      if (minDuration > 60) {
+        minDuration = 60;
+      }
 
 
       this.$data.minDuration = minDuration;
-      if (maxDuration > 60) {
-        maxDuration = 60;
-      }
+
 
       if (isNaN(maxDuration) || maxDuration == 0) {
         this.$Notice.warning({
@@ -247,6 +248,11 @@ export default {
         });
         return;
       }
+
+      if (maxDuration > 60) {
+        maxDuration = 60;
+      }
+
       if (minDuration > maxDuration) {
         maxDuration = minDuration;
       }

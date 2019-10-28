@@ -124,8 +124,8 @@ export default {
 
       let spaceSize = parseInt(this.spaceSize);
       let spaceDuration = parseInt(this.spaceDuration);
-      this.spaceSize = spaceSize;
-      this.spaceDuration = spaceDuration;
+
+
 
       if (isNaN(spaceSize) || spaceSize == 0) {
         this.$Notice.warning({
@@ -133,12 +133,14 @@ export default {
         });
         return;
       }
+      this.spaceSize = spaceSize;
       if (isNaN(spaceDuration) || spaceDuration == 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.AutoBuy.action.needstime')
         });
         return;
       }
+      this.spaceDuration = spaceDuration;
       if (this.bigLess0OrGreater(this.Paymentamount, this.balance)) {
         // need to alert
         this.$Notice.warning({

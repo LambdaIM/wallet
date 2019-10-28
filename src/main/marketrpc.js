@@ -107,9 +107,14 @@ export default function() {
 
 
   eipc.answerRenderer('marketgetOrderinfo', async query => {
+    var { orderId } = query;
+    if (orderId == undefined) {
+      throw resultView(null, false, 'need orderId');
+    }
+
     try {
       var M = new Manager();
-      var result = await M.getOrderinfo(query);
+      var result = await M.getOrderinfo(orderId);
 
       return resultView(result, true);
     } catch (ex) {
@@ -142,12 +147,10 @@ export default function() {
 
 
       // const result = await getAsync(`${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
-      console.log(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
-      console.log(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
+      // console.log(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
+      // console.log(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
       var result = cmd.run(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
-      console.log('---------!!!!!!!');
-      // console.log(result);
-      console.log('---------');
+
 
       return resultView(result, true);
     } catch (ex) {
