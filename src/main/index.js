@@ -7,6 +7,7 @@ import upgrade from './upgrade.js';
 import { connect } from 'net';
 import { join } from 'path';
 import { fork } from 'child_process';
+import packageJson from '../../package.json';
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -98,13 +99,15 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-  console.log('==启动s3server==start');
-  maybeStartDaemon(() => {
-    initRPCServer(msg => {
-      console.log('==启动s3server==1');
+  if (packageJson.runstorage == 1) {
+    console.log('==启动s3server==start');
+    maybeStartDaemon(() => {
+      initRPCServer(msg => {
+        console.log('==启动s3server==1');
+      });
     });
-  });
-  console.log('==启动s3server==end');
+    console.log('==启动s3server==end');
+  }
 }
 
 
