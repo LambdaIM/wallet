@@ -214,13 +214,13 @@ export default {
 
       if (mianpattern.test(network)) {
         result = this.$t('foot.mainnet');
-        // this.$data.netcolour = '1';
+        window.netType == 1;
       } else if (testpattern.test(network)) {
         result = this.$t('foot.testnet');
-        // this.$data.netcolour = '2';
+        window.netType == 2;
       } else {
         result = this.$t('foot.cusnet');
-        // this.$data.netcolour = '3';
+        window.netType == 3;
       }
       if (this.$data.ValidatorIP == DAEMON_CONFIG.mainnetip) {
         result += this.$t('foot.defaultmaster');
