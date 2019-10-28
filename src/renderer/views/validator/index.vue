@@ -18,7 +18,13 @@
         </Col>
     </Row> -->
         <Form ref="formInline"  :model="formInline" :rules="ruleInline" :label-width="120" label-position="left">
-        <FormItem prop="ValidatorIP" :label="$t('Validator.ip')">
+          <FormItem>
+             <Button @click="setmainip"  type="success" ghost >{{$t("foot.DefaultprimaryIP")}}</Button>&nbsp;&nbsp;&nbsp;
+             <Button @click="settestip"  type="info" ghost >{{$t("foot.DefaulttestnetworkIP")}}</Button>
+
+
+        </FormItem>
+        <FormItem @click="settestip" prop="ValidatorIP" :label="$t('Validator.ip')">
             <Input type="text"  v-model="formInline.ValidatorIP" :placeholder="$t('Validator_node')">
 
             </Input>
@@ -26,6 +32,8 @@
 
         <FormItem>
             <Button :loading="loadingbtn" type="primary" @click="handleSubmit('formInline')">{{$t('Validator.submit')}}</Button>
+
+
         </FormItem>
     </Form>
 
@@ -93,6 +101,7 @@ import Mycard from '@/components/common/useful/Mycard.vue';
 
 import _ from 'underscore';
 import eventhub from '../../common/js/event.js';
+import { DAEMON_CONFIG } from '../../../config.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
 
@@ -126,6 +135,12 @@ export default {
     };
   },
   methods: {
+    setmainip() {
+      this.$data.formInline.ValidatorIP = DAEMON_CONFIG.mainnetip;
+    },
+    settestip() {
+      this.$data.formInline.ValidatorIP = DAEMON_CONFIG.testnetip;
+    },
     getValidatorIp() {
       ipc.callMain('getValidatorIp', {})
         .then(result => {

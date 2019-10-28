@@ -23,8 +23,10 @@ const settings = require('electron-settings');
 
 const { remote } = require('electron');
 
+var packagejson = require('../../package.json');
 
-
+document.title = packagejson.description + '  v' + packagejson.version;
+window.title = document.title;
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]);
 });

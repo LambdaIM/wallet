@@ -7,6 +7,7 @@ import ActionManager from './utils/ActionManager.js';
 import BigNum from './utils/BigNum';
 import LambdaApi from './lambdaApi';
 import Nedb from './utils/nedb';
+import fetch from './utils/fetch';
 
 var fs = require('graceful-fs');
 var log = require('../log').log;
@@ -404,6 +405,52 @@ walletManger.prototype.TransferVote = async function (ProposalID, option) {
     option:option
   };
 };
+walletManger.prototype.TransferCreateSellOrder = async function (marketName,
+  price,
+  rate,
+  sellSize,
+  machineName,
+  cancelTimeDuration,
+  minBuySize,
+  minBuyDuration,
+  maxBuyDuration) {
+  return {
+    type: transaction.CreateSellOrder,
+    marketName,
+    price,
+    rate,
+    sellSize,
+    machineName,
+    cancelTimeDuration,
+    minBuySize,
+    minBuyDuration,
+    maxBuyDuration
+  };
+};
+
+//CreateBuyOrder
+walletManger.prototype.TransferCreateBuyOrder = async function (duration,
+  size,
+  sellOrderId,
+  marketName) {
+  return {
+    type: transaction.CreateBuyOrder,
+    duration,
+    size,
+    sellOrderId,
+    marketName
+  };
+};
+
+walletManger.prototype.TransferVote = async function (ProposalID, option) {
+  return {
+    type: transaction.VOTE,
+    proposalId:ProposalID,
+    option:option
+  };
+};
+
+
 
 walletManger.prototype.TransferwithdrawalDistribution=async function (to, amount, gas, isdege) {
   console.log('TransferwithdrawalDistribution')
@@ -647,6 +694,34 @@ walletManger.prototype.findFile = function (address) {
     }
   });
   return fileName;
+};
+
+
+walletManger.prototype.s3authorization = async function (password) {
+  
+  try {
+    var body=JSON.stringify({
+      defaultwallet:this.defaultwallet,
+      password:password
+    });
+    
+    const result = await fetch(`http://localhost:8379/authorization`, {
+      method: `POST`,
+      body: body,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    var data = await result.text();
+    return { data: data, state: true };
+  } catch (error) {
+    log.error(error);
+    console.log(error)
+    return { data: error, state: false };
+  }
+  
+
+  
 };
 
 

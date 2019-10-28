@@ -407,122 +407,123 @@
 </template>
 
 <script>
-  import Mycard from "@/components/common/useful/Mycard.vue";
+import Mycard from '@/components/common/useful/Mycard.vue';
+import { DAEMON_CONFIG } from '../../../config.js';
+import _ from 'underscore';
 
-  
-  const {ipcRenderer: ipc} = require('electron-better-ipc');
-  const settings = require("electron-settings");
-  import { DAEMON_CONFIG } from "../../../config.js";
-  import _ from "underscore";
 
-  export default {
-    data() {
-      return {
-        used: 3.04,
-        total: 5,
-        hidden: "*********************************",
-        progressPercent: "",
-        walletInfo: null,
-        pledgeMinerData: null,
-        modal2: false,
-        editvalue: "",
-        lang: "zh",
-        langnow: this.$i18n.locale,
-        versionNumber: DAEMON_CONFIG.version
-      };
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+const settings = require('electron-settings');
+
+export default {
+  data() {
+    return {
+      used: 3.04,
+      total: 5,
+      hidden: '*********************************',
+      progressPercent: '',
+      walletInfo: null,
+      pledgeMinerData: null,
+      modal2: false,
+      editvalue: '',
+      lang: 'zh',
+      langnow: this.$i18n.locale,
+      versionNumber: DAEMON_CONFIG.version
+    };
+  },
+  mounted() {
+    this.getAccountInfo();
+    // this.pledgeMiner();
+  },
+  methods: {
+    onCopy: function(e) {
+      this.$Message.info('You just copied: ' + e.text);
     },
-    mounted() {
-      this.getAccountInfo();
-      // this.pledgeMiner();
+    onError: function(e) {
+      this.$Message.info('Failed to copy texts');
     },
-    methods: {
-      onCopy: function(e) {
-        this.$Message.info("You just copied: " + e.text);
-      },
-      onError: function(e) {
-        this.$Message.info("Failed to copy texts");
-      },
-      logout() {
-        settings.set("isopenfilev1", false);
-        this.$store.dispatch("setLogin", false);
-        this.$router.push("/");
-        // console.log('8888')
-      },
-      async getAccountInfo() {
-        var _this = this;
-        var res = await ipc.callMain("defaultWalletBasicinfo", {});
-        _this.$data.walletInfo = res.data;
-      },
-      openkeystore() {
-        ipc.callMain("openkeystore", {});
-      },
-      async pledgeMiner() {
-        console.log("**********");
-        try {
-          var result = await ipc.callMain("pledgeMiner", {});
-          console.log(result);
-          if (result.state == true) {
-            this.$data.pledgeMinerData = result.data;
-          } else {
-            this.$Message.info("read pledgeMiner info error");
-          }
-        } catch (ex) {
-          console.log(ex);
-          this.$Message.info(ex.errormsg);
+    logout() {
+      settings.set('isopenfilev1', false);
+      document.title = window.title;
+      this.$store.dispatch('setLogin', false);
+      this.$router.push('/');
+      // console.log('8888')
+    },
+    async getAccountInfo() {
+      var _this = this;
+      var res = await ipc.callMain('defaultWalletBasicinfo', {});
+      _this.$data.walletInfo = res.data;
+    },
+    openkeystore() {
+      ipc.callMain('openkeystore', {});
+    },
+    async pledgeMiner() {
+      console.log('**********');
+      try {
+        var result = await ipc.callMain('pledgeMiner', {});
+        console.log(result);
+        if (result.state == true) {
+          this.$data.pledgeMinerData = result.data;
+        } else {
+          this.$Message.info('read pledgeMiner info error');
         }
-      },
-      async editName() {
-        console.log("********** editName");
-        var name = this.$data.editvalue;
-        try {
-          var res = await ipc.callMain("editWalletName", { name });
-
-          console.log(res);
-          if (res.state) {
-            this.$Message.info(this.$t("seting.action.Modified_success"));
-            this.$data.modal2 = false;
-            this.getAccountInfo();
-          } else {
-            this.$Message.info(this.$t("seting.action.Modification_failed"));
-          }
-        } catch (ex) {
-          this.$Message.info(this.$t("seting.action.Modification_failed"));
-        }
-
-        // _this.$data.walletInfo=res.data
-      },
-      selectlang(item) {
-        this.$i18n.locale = item;
-        this.$data.langnow = item;
-        settings.set("set", {
-          language: item
-        });
-        window.location.reload();
+      } catch (ex) {
+        console.log(ex);
+        this.$Message.info(ex.errormsg);
       }
     },
-    computed: {
-      calProgress() {
-        this.progressPercent =
+    async editName() {
+      console.log('********** editName');
+      var name = this.$data.editvalue;
+      try {
+        var res = await ipc.callMain('editWalletName', { name });
+
+        console.log(res);
+        if (res.state) {
+          this.$Message.info(this.$t('seting.action.Modified_success'));
+          this.$data.modal2 = false;
+          this.getAccountInfo();
+        } else {
+          this.$Message.info(this.$t('seting.action.Modification_failed'));
+        }
+      } catch (ex) {
+        this.$Message.info(this.$t('seting.action.Modification_failed'));
+      }
+
+      // _this.$data.walletInfo=res.data
+    },
+    selectlang(item) {
+      this.$i18n.locale = item;
+      this.$data.langnow = item;
+      settings.set('set', {
+        language: item
+      });
+      window.location.reload();
+    }
+  },
+  computed: {
+    calProgress() {
+      this.progressPercent =
           (
             this.$data.pledgeMinerData.use_size / this.$data.pledgeMinerData.size
           ).toFixed(4) * 100;
-        // console.log(this.progressPercent);
-        return this.progressPercent;
-      },
-      getstore() {
-        console.log(" - -");
-        try {
-          // this.$data.node_info=this.$store.getters.info.node_info;
-          return _.pairs(this.$store.getters.info.validator_info);
-        } catch (error) {
-          return [];
-        }
-      }
+      // console.log(this.progressPercent);
+      return this.progressPercent;
     },
-    components: {
-      Mycard
+    getstore() {
+      console.log(' - -');
+      try {
+        // this.$data.node_info=this.$store.getters.info.node_info;
+        return _.pairs(this.$store.getters.info.validator_info);
+      } catch (error) {
+        return [];
+      }
     }
-  };
+  },
+  components: {
+    Mycard
+  }
+};
 </script>
 
 <style lang="less" scoped>

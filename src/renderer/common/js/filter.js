@@ -132,6 +132,11 @@ const formatRelativeDate = value => {
 function formatAmount(Amount) {
   return Amount;
 }
+function formatMonth(num) {
+  return (num / (1000 * 1000 * 1000 * 60 * 60 * 24 * 30)).toFixed(2);
+}
+
+// 1000*1000*1000*60*60*24
 
 export default {
   formatValue,
@@ -147,5 +152,6 @@ export default {
   Stoformat,
   formatRelativeDate,
   formatAmount,
-  formatToTime
+  formatToTime,
+  formatMonth
 };

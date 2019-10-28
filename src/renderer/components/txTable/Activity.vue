@@ -81,7 +81,22 @@ export default {
       }
     },
     isProposal(txItem) {
-      return txItem.action !== 'MsgSubmitProposal' && txItem.action !== 'MsgUnjail' && txItem.action !== 'MsgCreateValidator';
+      return txItem.action !== 'MsgSubmitProposal' &&
+      txItem.action !== 'MsgUnjail' &&
+      txItem.action !== 'MsgCreateValidator' &&
+      txItem.action !== 'MsgCreateMarket' &&
+      txItem.action !== 'MsgEditMarket' &&
+      txItem.action !== 'MsgWithDrawMarket' &&
+      txItem.action !== 'MsgCreateMachine' &&
+      txItem.action !== 'MsgEditMachine' &&
+      txItem.action !== 'MsgCreateMiner' &&
+      txItem.action !== 'MsgMinerWithDraw' &&
+      txItem.action !== 'MsgCreateSellOrder' &&
+      txItem.action !== 'MsgCancelSellOrder' &&
+      txItem.action !== 'MsgCreateBuyOrder' &&
+      txItem.action !== 'MsgMinerWithDrawMachine'
+
+      ;
     },
     showmore() {
       this.$data.more = true;

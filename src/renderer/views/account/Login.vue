@@ -15,20 +15,21 @@
           <Form @submit.native.prevent ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
             <FormItem prop="name">
               <Select :placeholder="selectplaceholder" v-model="value" @on-change="selectName" clearable size="large">
+
                 <Option
                   v-for="(item,index) in walletList"
                   :value="item.address"
                   :key="index"
                   :label="item.name"
                 >
-                
+
                 <div>
                   {{ item.name}}
                 </div>
-                <div>
-                 {{item.address}} 
+                <div class="address">
+                 {{item.address}}
                 </div>
-                
+
                 </Option>
               </Select>
             </FormItem>
@@ -39,7 +40,7 @@
                 v-model="formInline.password"
                 :placeholder="$t('login.Password')"
                  @on-enter="openWallet('formInline')"
-                
+
               >
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
               </Input>
@@ -64,18 +65,18 @@
 
 <script>
 // import RPC from "../../rpc.js";
-import { DAEMON_CONFIG } from "../../../config.js";
+import { DAEMON_CONFIG } from '../../../config.js';
 
-import Mybg from "@/components/common/useful/Mybg.vue";
-const {ipcRenderer: ipc} = require('electron-better-ipc');
-const settings = require("electron-settings");
-import eventHub from "@/common/js/event.js"
+import Mybg from '@/components/common/useful/Mybg.vue';
+import eventHub from '@/common/js/event.js';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+const settings = require('electron-settings');
 
 export default {
   data() {
     return {
       formInline: {
-        password: ""
+        password: ''
       },
       index: null,
       ruleInline: {
@@ -83,21 +84,21 @@ export default {
           {
             required: true,
             message: this.$t('login.action.Please_fill_in_the_password'),
-            trigger: "blur"
+            trigger: 'blur'
           },
           {
-            type: "string",
+            type: 'string',
             min: 1,
             message: this.$t('login.action.password_cannot_less'),
-            trigger: "blur"
+            trigger: 'blur'
           }
         ]
       },
       walletList: [],
-      name: "",
+      name: '',
       value: null,
       address: null,
-      selectplaceholder:this.$t('login.select_Wallet'),
+      selectplaceholder: this.$t('login.select_Wallet'),
       versionNumber: DAEMON_CONFIG.version
     };
   },
@@ -133,57 +134,55 @@ export default {
       });
     },
     async login() {
-      console.log("loginDefaultWallet");
+      console.log('loginDefaultWallet');
       let pass = this.formInline.password;
       try {
-        var res = await ipc.callMain("loginDefaultWallet", {
+        var res = await ipc.callMain('loginDefaultWallet', {
           password: pass
         });
-        console.log("login default wallet", res);
+        console.log('login default wallet', res);
         if (res.state) {
           this.$Notice.success({
             title: this.$t('login.action.Login_success')
           });
-          let login=settings.set("isopenfilev1", true);
+          let login = settings.set('isopenfilev1', true);
           console.log(login);
-          this.$store.dispatch("setLogin", true);
+          this.$store.dispatch('setLogin', true);
           eventHub.$emit('login');
-          this.$router.push("/home");
+          this.$router.push('/home');
         }
       } catch (ex) {
-        
         this.$Notice.error({
-            title: ex.errormsg
-          });
+          title: ex.errormsg
+        });
       }
     },
     async setDefaultWallet() {
       try {
-        var res = await ipc.callMain("setDefaultWallet", {
+        var res = await ipc.callMain('setDefaultWallet', {
           address: this.address
         });
         // this.$store.dispatch("setaddress", this.address);
         // console.log("set default success", res);
-        if (!res.state)  return;
+        if (!res.state) return;
 
         // this.login();
       } catch (ex) {
         // console.log(ex);
-        console.log("密码错误");
+        console.log('密码错误');
       }
     },
     getwalletList() {
       // console.log("- -");
       ipc
-        .callMain("walletList", {})
+        .callMain('walletList', {})
         .then(res => {
           // console.log(res);
           if (!res.state) return;
           this.walletList = res.data;
-          
         })
         .catch(err => {
-          console.log("err");
+          console.log('err');
           console.log(err);
         });
     }
@@ -239,5 +238,8 @@ export default {
       }
     }
   }
+}
+.address{
+  font-family: Consolas,Monaco,monospace;
 }
 </style>

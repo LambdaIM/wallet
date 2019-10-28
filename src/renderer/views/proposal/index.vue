@@ -15,24 +15,27 @@
           <Row slot="title">
 
 
-              <Col span="17"><h4 style=" word-break:break-all;">#{{item.id}}  {{item.content.value.title}}</h4></Col>
-              <Col span="7">
-                <Tag v-if="item.proposal_status==='Passed'" color="success">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
+              <Col span="24"><h4 style=" word-break:break-all;">#{{item.id}}  {{item.content.value.title}}</h4></Col>
+
+        </Row>
+
+        <p style=" word-break:break-all;"   class="clickitem">
+
+            {{item.content.value.description.substring(0,300)}}
+            <Button :size="buttonSize" icon="ios-more"  shape="circle"></Button>
+
+
+
+        </p>
+        <p>
+          <Tag v-if="item.proposal_status==='Passed'" color="success">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 <Tag v-if="item.proposal_status==='Rejected'" color="error">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 <Tag v-if="item.proposal_status==='VotingPeriod'" color="warning">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 <Tag v-if="item.proposal_status==='DepositPeriod'" color="primary">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 <Tag v-if="item.proposal_status==='Failed'" color="default">{{$t(`proposalsPage.typename.${item.proposal_status}`)}}</Tag>
                 {{$t(`proposalsPage.${item.content.type.split('/')[1]}`) }}
-              </Col>
-        </Row>
-
-        <p style=" word-break:break-all;"   class="clickitem">
-
-            {{item.content.value.description.substring(0,300)}}...
-
-
-
         </p>
+
 
         </Card>
 

@@ -13,8 +13,8 @@
       </Col>
 
       <Col
-        span="16"
-        offset="2"
+        span="17"
+        offset="1"
         v-if="login==true"
         class-name="head-menu-wrapper"
       >
@@ -43,6 +43,12 @@
             class="item"
           > {{$t("head.proposals")}} </router-link>
         </div>
+        <div class="head-menu-item">
+          <router-link
+            to="/market"
+            class="item"
+          >{{$t("head.market")}}</router-link>
+        </div>
 
         <div class="head-menu-item">
           <router-link
@@ -50,6 +56,7 @@
             class="item"
           >{{ $t("head.sign") }}</router-link>
         </div>
+
 
 
         <div class="head-menu-item overtext">
@@ -78,10 +85,12 @@
               type="ios-copy"
               size="20"
             />
-            {{address}}
+            {{address.slice(-5)}}
           </div>
         </div>
+
       </div>
+
       </Col>
       <Col
         v-else
@@ -312,7 +321,10 @@ export default {
         console.log(res);
         if (!res.state) return;
         this.$store.dispatch('setaddress', res.data.address);
-        console.log('WalletBasicinfo', res.data.address);
+        console.log('WalletBasicinfo', res.data.address, res.data.name);
+        if (document.title.length < 25 && this.login == true) {
+          document.title = window.title + '|' + res.data.name + '|' + res.data.address;
+        }
       } catch (ex) {
         console.log(ex);
         console.log('没有找到默认钱包，是否需要重新创建账号');

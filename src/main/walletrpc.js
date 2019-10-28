@@ -406,6 +406,25 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('s3authorization', async query => {
+    log.info('s3authorization');
+
+
+    var password = query.password;
+
+    try {
+      var TxMessageload = await WM.s3authorization(password);
+
+
+      log.info(TxMessageload);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+
   eipc.answerRenderer('editWalletName', async query => {
     log.info('Wallettransfer');
     var name = query.name;
@@ -434,9 +453,11 @@ export default function() {
               }
               if (txinfo.code) {
                 flag = -2;
-                message = txinfo.logs.map(item => {
-                  return item.log;
-                }).join(',');
+                if (txinfo.logs != undefined) {
+                  message = txinfo.logs.map(item => {
+                    return item.log;
+                  }).join(',');
+                }
               }
             } else {
               flag = 1;
@@ -504,6 +525,86 @@ export default function() {
     }
     try {
       var TxMessageload = await WM.TransferRedelegate(SourceAddress, DestinationAddress, amount, validatortype);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+  eipc.answerRenderer('CreateSellOrder', async query => {
+    var { marketName,
+      price,
+      rate,
+      sellSize,
+      machineName,
+      cancelTimeDuration,
+      minBuySize,
+      minBuyDuration,
+      maxBuyDuration } = query;
+
+    if (marketName == undefined) {
+      throw resultView(null, false, 'need marketName');
+    }
+    if (price == undefined) {
+      throw resultView(null, false, 'need price');
+    }
+    if (rate == undefined) {
+      throw resultView(null, false, 'need rate');
+    }
+    if (machineName == undefined) {
+      throw resultView(null, false, 'need machineName');
+    }
+    if (cancelTimeDuration == undefined) {
+      throw resultView(null, false, 'need cancelTimeDuration');
+    }
+    if (minBuySize == undefined) {
+      throw resultView(null, false, 'need minBuySize');
+    }
+    if (minBuyDuration == undefined) {
+      throw resultView(null, false, 'need minBuyDuration');
+    }
+    if (maxBuyDuration == undefined) {
+      throw resultView(null, false, 'need maxBuyDuration');
+    }
+
+    try {
+      var TxMessageload = await WM.TransferCreateSellOrder(marketName,
+        price,
+        rate,
+        sellSize,
+        machineName,
+        cancelTimeDuration,
+        minBuySize,
+        minBuyDuration,
+        maxBuyDuration);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('CreateBuyOrder', async query => {
+    var { duration,
+      size,
+      sellOrderId,
+      marketName } = query;
+    if (duration == undefined) {
+      throw resultView(null, false, 'need duration');
+    }
+    if (size == undefined) {
+      throw resultView(null, false, 'need size');
+    }
+    if (marketName == undefined) {
+      throw resultView(null, false, 'need marketName');
+    }
+    try {
+      var TxMessageload = await WM.TransferCreateBuyOrder(duration,
+        size,
+        sellOrderId,
+        marketName);
 
       return resultView(TxMessageload, true);
     } catch (error) {
