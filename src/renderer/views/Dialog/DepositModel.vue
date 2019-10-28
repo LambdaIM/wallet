@@ -30,6 +30,16 @@
           {{$t('home.Balance')}} : {{balanceLamb|Lambformat}}
 
         </p>
+        <br />
+        <p>
+          {{$t('Dialog.DepositModel.tip1')}}<br/>
+          <span style="color:red">{{$t('Dialog.DepositModel.tip2')}}</span><br/>
+          {{$t('Dialog.DepositModel.tip3')}}<br/>
+          {{$t('Dialog.DepositModel.tip4')}}<br/>
+          {{$t('Dialog.DepositModel.tip5')}}
+        </p>
+
+
         <div slot="footer">
           <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
         </div>

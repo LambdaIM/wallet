@@ -3,6 +3,7 @@
   <div class="tableContainer">
        <Tabs >
         <TabPane :label="$t('staking.Mypledge')" >
+
           <Table v-if="mydelegationsList!=null"  size="large" :columns="columnsme" :data="mydelegationsList" >
               <template slot-scope="{ row, index }" slot="payment">
                       {{row.commission.rate|Percentformat}}
@@ -32,7 +33,8 @@
           </Table>
         </TabPane>
         <TabPane  :label="$t('staking.Validatorlist')" >
-          <Table  v-if="validatorsList!=null"  size="large" :columns="columns" :data="validatorsList" >
+          <Input v-model="searchkey"   search enter-button :placeholder="$t('staking.entername')" />
+          <Table  v-if="validatorsList!=null"  size="large" :columns="columns" :data="searchlist" >
 
           <template slot-scope="{ row, index }" slot="payment">
             {{row.commission.rate|Percentformat}}
@@ -71,10 +73,10 @@
 
         </TabPane>
         <TabPane :label="$t('staking.ExplainTab')" >
-          <ul class="ulpanel">
-            <li>{{$t('staking.Explain.unbonding_time')}}:{{(dataParameters.unbonding_time/(1000*1000*1000*60*60*24)).toFixed(5)}}{{$t('staking.Explain.unit')}}</li>
+          <ul v-if="dataParameters!=undefined" class="ulpanel">
+            <li>{{$t('staking.Explain.unbonding_time')}}:{{(dataParameters.unbonding_time/(1000*1000*1000*60*60*24)).toFixed(2)}}{{$t('staking.Explain.unit')}}</li>
             <li>{{$t('staking.Explain.max_validators')}}:{{dataParameters.max_validators}}</li>
-            <li>{{$t('staking.Explain.bond_denom')}}:{{dataParameters.bond_denom}}</li>
+            <li v-if="dataParameters.bond_denom!=undefined">{{$t('staking.Explain.bond_denom')}}:{{dataParameters.bond_denom.substring(1)}}</li>
           </ul>
 
 
@@ -221,7 +223,8 @@ export default {
 
 
       ],
-      dataParameters: {}
+      dataParameters: {},
+      searchkey: ''
     };
   },
   async mounted() {
@@ -373,6 +376,21 @@ export default {
     },
     balance: function() {
       return this.$store.getters.getbalance;
+    },
+    searchlist() {
+      if (this.$data.searchkey == '') {
+        return this.$data.validatorsList;
+      } else {
+        var _this = this;
+        var resultlist = [];
+        this.$data.validatorsList.forEach(item => {
+          if (item.description.moniker.toLowerCase().indexOf(_this.$data.searchkey.toLowerCase()) > -1) {
+            resultlist.push(item);
+          }
+        });
+
+        return resultlist;
+      }
     }
 
 

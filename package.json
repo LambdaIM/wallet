@@ -1,9 +1,10 @@
 {
     "name": "Wallet",
-    "version": "0.3.13",
+    "version": "0.4.15",
     "author": "lambda wallet developer <544262408@qq.com>",
-    "description": "lambda wallet",
+    "description": "Lambda Wallet",
     "license": null,
+    "runstorage": 0,
     "main": "./dist/electron/main.js",
     "scripts": {
         "build": "node .electron-vue/build.js && electron-builder",
@@ -70,16 +71,21 @@
         }
     },
     "dependencies": {
-        "@jswebfans/rpcapijs": "0.1.22",
         "@jswebfans/hdkeyjs": "1.2.9",
+        "@jswebfans/rpcapijs": "0.1.25",
         "bignumber.js": "^8.1.1",
+        "bluebird": "^3.7.1",
+        "body-parser": "^1.18.3",
+        "cross-spawn": "^7.0.1",
         "electron-better-ipc": "^0.4.0",
         "electron-log": "^2.2.17",
         "electron-settings": "^3.2.0",
+        "express": "^4.16.4",
         "graceful-fs": "^4.1.15",
         "iview": "^3.2.0",
         "moment": "^2.24.0",
         "nedb": "^1.8.0",
+        "node-cmd": "^3.0.0",
         "object-assign": "^4.1.1",
         "underscore": "^1.9.1",
         "uuid": "^3.3.2",
@@ -87,7 +93,8 @@
         "vue-clipboard2": "^0.2.1",
         "vue-i18n": "^8.11.2",
         "vue-router": "^3.0.1",
-        "vuex": "^3.0.1"
+        "vuex": "^3.0.1",
+        "yaml": "^1.7.2"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "^3.1.0",
