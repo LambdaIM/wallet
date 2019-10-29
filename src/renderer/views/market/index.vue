@@ -444,13 +444,13 @@ export default {
       let spaceSize = parseInt(this.$data.autoSpaceSize);
       let spaceDuration = parseInt(this.$data.autoSpaceDuration);
 
-      if (isNaN(spaceSize) || spaceSize == 0) {
+      if (isNaN(spaceSize) || spaceSize <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.AutoBuy.action.needspacesize')
         });
         return;
       }
-      if (isNaN(spaceDuration) || spaceDuration == 0) {
+      if (isNaN(spaceDuration) || spaceDuration <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.AutoBuy.action.needstime')
         });

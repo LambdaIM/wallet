@@ -338,7 +338,8 @@
         "Paymentamount":"Payment amount",
         "action":{
           "needspacesize":"Please check the size of the space, the space can only fill in the integer",
-        "needstime":"Please check the duration, only the integer can be filled in."
+          "needstime":"Please check the duration, only the integer can be filled in.",
+          "timebigorsmall":"Check the length of time, between 1 month and 60 months"
         }
     },
     "selectBuy":{

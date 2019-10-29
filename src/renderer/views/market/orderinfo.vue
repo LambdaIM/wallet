@@ -65,18 +65,17 @@
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('orderinfo.space')}}:</span>
           </Col>
-          <Col span="20" class-name="content-wrapper">
+          <Col span="8" class-name="content-wrapper">
             {{orderinfo.MatchOrder.size}}GB
           </Col>
-        </Row>
-        <Row class-name="card-item">
           <Col span="6" class-name="title-wrapper">
             <span class="title">{{$t('orderinfo.unitprice')}}:</span>
           </Col>
-          <Col span="18" class-name="content-wrapper">
+          <Col span="6" class-name="content-wrapper">
             {{orderinfo.MatchOrder.price|Lambformat}}
           </Col>
         </Row>
+
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('orderinfo.userPay')}}:</span>

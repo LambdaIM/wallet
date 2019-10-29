@@ -193,7 +193,7 @@ export default {
       }
 
 
-      if (isNaN(spaceSize) || spaceSize == 0) {
+      if (isNaN(spaceSize) || spaceSize <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needspacesize')
         });
@@ -201,7 +201,7 @@ export default {
       }
       this.$data.spaceSize = spaceSize;
 
-      if (isNaN(unitPrice) || unitPrice == 0) {
+      if (isNaN(unitPrice) || unitPrice <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needunitprice')
         });
@@ -209,7 +209,7 @@ export default {
       }
       this.$data.unitPrice = unitPrice;
 
-      if (isNaN(rate) || rate == 0) {
+      if (isNaN(rate) || rate <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needodds')
         });
@@ -217,7 +217,7 @@ export default {
       }
       this.$data.rate = rate;
 
-      if (isNaN(minSpace) || minSpace == 0) {
+      if (isNaN(minSpace) || minSpace <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needminspace')
         });
@@ -229,7 +229,7 @@ export default {
 
       this.$data.minSpace = minSpace;
 
-      if (isNaN(minDuration) || minDuration == 0) {
+      if (isNaN(minDuration) || minDuration <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needunitmintime')
         });
@@ -243,7 +243,7 @@ export default {
       this.$data.minDuration = minDuration;
 
 
-      if (isNaN(maxDuration) || maxDuration == 0) {
+      if (isNaN(maxDuration) || maxDuration <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needunitmaxtime')
         });
@@ -286,7 +286,7 @@ export default {
     ratechange() {
       let rate = parseInt(this.$data.rate);
 
-      if (isNaN(rate) || rate == 0) {
+      if (isNaN(rate) || rate <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needodds')
         });

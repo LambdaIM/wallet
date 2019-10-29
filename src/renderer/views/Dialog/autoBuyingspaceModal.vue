@@ -141,6 +141,12 @@ export default {
         });
         return;
       }
+      if (spaceDuration > 60 || spaceDuration < 0) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.AutoBuy.action.timebigorsmall')
+        });
+        return;
+      }
       this.spaceDuration = spaceDuration;
       if (this.bigLess0OrGreater(this.Paymentamount, this.balance)) {
         // need to alert

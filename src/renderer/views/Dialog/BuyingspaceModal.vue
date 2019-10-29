@@ -19,11 +19,11 @@
       </p>
       <br/>
       <p>
-        {{$t('Dialog.selectBuy.Minimumtime')}}：{{orderinfo.minDuration|formatMonth}}月
+        {{$t('Dialog.selectBuy.Minimumtime')}}：{{orderinfo.minDuration|formatMonth}}{{$t('Dialog.selectBuy.month')}}
       </p>
       <br/>
       <p>
-        {{$t('Dialog.selectBuy.Maximumtime')}}：{{orderinfo.maxDuration|formatMonth}}月
+        {{$t('Dialog.selectBuy.Maximumtime')}}：{{orderinfo.maxDuration|formatMonth}}{{$t('Dialog.selectBuy.month')}}
       </p>
       <br/>
       <p>
