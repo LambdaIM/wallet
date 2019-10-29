@@ -571,7 +571,7 @@
      "Marketaddress":"Market address",
      "Startingtime":"Start time",
      "EndTime":"End Time",
-     "userPay":"Undrawn gain",
+     "userPay":"Order amount",
     "minerPay":"Undrawn deposit",
      "orderdetails":"Details"
     }
@@ -587,8 +587,8 @@
  "Marketaddress":"market address",
  "Startingtime":"starting time",
  "EndTime":"end Time",
- "userPay":"Undrawn gain",
-  "minerPay":"Undrawn deposit",
+ "userPay":"Order amount",
+ "minerPay":"Undrawn deposit",
  "orderdetails":"details",
  "Mineraddress":"miner address",
  "user":"user",

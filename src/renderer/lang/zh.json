@@ -565,7 +565,7 @@
         "Marketaddress":"市场地址",
         "Startingtime":"开始时间",
         "EndTime":"结束时间",
-        "userPay":"未提取的收益",
+        "userPay":"订单金额",
         "minerPay":"未提取的押金",
         "orderdetails":"订单详情"
        }
@@ -581,7 +581,7 @@
     "Marketaddress":"市场地址",
     "Startingtime":"开始时间",
     "EndTime":"结束时间",
-    "userPay":"未提取的收益",
+    "userPay":"订单金额",
     "minerPay":"未提取的押金",
     "orderdetails":"订单详情",
     "Mineraddress":"矿工地址",

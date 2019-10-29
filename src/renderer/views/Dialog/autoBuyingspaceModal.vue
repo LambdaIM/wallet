@@ -106,7 +106,8 @@ export default {
       spaceSize: '',
       spaceDuration: '',
       marketPrice: 0,
-      marketinfo: {}
+      marketinfo: {},
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
     };
   },
   methods: {
@@ -161,7 +162,7 @@ export default {
 
       try {
         let res = await ipc.callMain(txType, {
-          duration: spaceDuration * (1000 * 1000 * 1000 * 60 * 60 * 24 * 30) + '',
+          duration: spaceDuration * (this.$data.timeunit) + '',
           size: spaceSize + '',
           sellOrderId: '[do-not-input-value]',
           marketName: this.$data.marketinfo.name

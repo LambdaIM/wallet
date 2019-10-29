@@ -151,7 +151,8 @@ export default {
       minSpace: '',
       minDuration: '',
       unitPrice: '5',
-      maxDuration: ''
+      maxDuration: '',
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
     };
   },
   methods: {
@@ -261,9 +262,9 @@ export default {
 
 
       unitPrice = this.toBigNumStr(unitPrice);
-      var monthNum = (1000 * 1000 * 1000 * 60 * 60 * 24 * 30);
-      minDuration = minDuration * monthNum;
-      maxDuration = maxDuration * monthNum;
+
+      minDuration = minDuration * this.$data.timeunit;
+      maxDuration = maxDuration * this.$data.timeunit;
 
       // maxDuration
 

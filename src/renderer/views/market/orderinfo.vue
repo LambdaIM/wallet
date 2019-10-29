@@ -82,10 +82,9 @@
             <span class="title">{{$t('orderinfo.userPay')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-          <span v-if="typeBuyType(orderinfo.MatchOrder.buyAddress)">
+
            {{amountFormat(orderinfo.MatchOrder.userPay)}}
-          </span>
-          <span v-else>--</span>
+
           </Col>
         </Row>
         <Row class-name="card-item">

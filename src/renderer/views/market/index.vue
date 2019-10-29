@@ -15,10 +15,9 @@
                          {{row.MatchOrder.price|Lambformat}}
                         </template>
                         <template slot-scope="{ row, index }" slot="userPay">
-                         <span v-if="typeBuyType(row.MatchOrder.buyAddress)" >
+
                          {{amountFormat(row.MatchOrder.userPay)}}
-                         </span>
-                         <span  v-else>--</span>
+
                         </template>
                         <template slot-scope="{ row, index }" slot="buyAddress">
                          {{typeFormat(row.MatchOrder.buyAddress)}}
