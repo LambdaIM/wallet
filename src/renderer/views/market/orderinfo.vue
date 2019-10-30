@@ -211,10 +211,10 @@ export default {
       shell.openExternal(url);
     },
     s3authorization: async function() {
-      console.log('s3authorization');
+      console.log('runlambdastorage');
       var result = {};
       try {
-        result = await ipc.callMain('s3authorization', {
+        result = await ipc.callMain('runlambdastorage', {
           password: this.$data.walletPassword
         });
       } catch (ex) {
@@ -223,11 +223,8 @@ export default {
       }
 
       console.log(result);
-      if (result.state == true) {
-        console.log(result.data);
-        this.$data.passwordModal = false;
-        this.orders3();
-      }
+      // managerkey['address']
+      shell.openExternal(`http://${this.$data.managerkey['address']}/minio/login`);
     },
     async orders3() {
       try {

@@ -176,9 +176,47 @@
                      <Page  @on-change="SellOrderListPage"  :total="100" show-elevator />
                     </div>
                  </TabPane>
+                 <TabPane label="Lambda storage S3" name="name5">
+                             <Row  class-name="card-item">
+                            <Col span="4" class-name="title-wrapper">
+                              <span class="title">{{$t('orderinfo.operating')}}:</span>
+                            </Col>
+                            <Col span="20" class-name="content-wrapper">
+                              <Button @click="Datacollection" type="primary">{{$t('orderinfo.Viewlambdastorage')}} </Button>
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <Button type="warning">{{$t('orderinfo.Filelossarbitration')}}</Button>
+                            </Col>
+                          </Row>
+                          <Row class-name="card-item">
+                            <Col span="5" class-name="title-wrapper">
+                              <span class="title">{{$t('orderinfo.lambdastorageConsole')}}:</span>
+                            </Col>
+                            <Col span="19" class-name="content-wrapper">
+
+                              {{$t('orderinfo.Username')}}：{{managerkey['access-key']}}
+                              {{$t('orderinfo.Password')}}：{{managerkey['secret-key']}}<br/>
+                              <!-- 访问地址：{{managerkey['address']}}<br/> -->
+
+                            </Col>
+                          </Row>
+
+                 </TabPane>
 
 
             </Tabs>
+            <Modal
+
+        v-model="passwordModal"
+        :title="$t('Sign.Enter_password')"
+        :styles="{top: '200px'}"
+      >
+        <p>
+          <Input v-model="walletPassword" type="password"></Input>
+        </p>
+        <div slot="footer">
+          <Button  type="primary" @click="s3authorization">{{$t('Sign.submit')}}</Button>
+        </div>
+      </Modal>
 
 
 
@@ -200,6 +238,7 @@ import autoBuyingspaceModal from '@/views/Dialog/autoBuyingspaceModal.vue';
 import eventhub from '../../common/js/event.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+const { shell } = require('electron');
 
 export default {
   data() {
@@ -348,7 +387,10 @@ export default {
 
       }
       ],
-      UserOrderslist: []
+      UserOrderslist: [],
+      walletPassword: '',
+      managerkey: {},
+      passwordModal: false
 
 
 
@@ -365,6 +407,7 @@ export default {
     this.getmarketlist();
     this.getSellOrderslist();
     this.getUserOrderslist();
+    this.getmanagerkey();
 
 
     eventhub.$on('TransactionSuccess', data => {
@@ -376,6 +419,31 @@ export default {
     this.getmarketinfo('');
   },
   methods: {
+    s3authorization: async function() {
+      console.log('runlambdastorage');
+      var result = {};
+      try {
+        result = await ipc.callMain('runlambdastorage', {
+          password: this.$data.walletPassword
+        });
+      } catch (ex) {
+        console.log(ex);
+        this.$Message.error(ex.errormsg);
+      }
+
+      console.log(result);
+      // managerkey['address']
+      shell.openExternal(`http://${this.$data.managerkey['address']}/minio/login`);
+    },
+    async getmanagerkey() {
+      let res = await ipc.callMain('lambdastoragemanagerkey', {});
+      if (res.state) {
+        this.$data.managerkey = res.data.gateway;
+      }
+    },
+    Datacollection: async function() {
+      this.$data.passwordModal = true;
+    },
     UserOrdersListPage(page) {
       console.log(page);
       this.getUserOrderslist(page);

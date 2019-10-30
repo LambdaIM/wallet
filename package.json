@@ -4,7 +4,7 @@
     "author": "lambda wallet developer <544262408@qq.com>",
     "description": "Lambda Wallet",
     "license": null,
-    "runstorage":1,
+    "runstorage": 1,
     "main": "./dist/electron/main.js",
     "scripts": {
         "build": "node .electron-vue/build.js && electron-builder",
@@ -87,7 +87,9 @@
         "moment": "^2.24.0",
         "nedb": "^1.8.0",
         "node-cmd": "^3.0.0",
+        "node-run-cmd": "^1.0.1",
         "object-assign": "^4.1.1",
+        "suppose": "^0.6.2",
         "underscore": "^1.9.1",
         "uuid": "^3.3.2",
         "vue": "^2.5.16",
