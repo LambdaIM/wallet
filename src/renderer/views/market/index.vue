@@ -176,7 +176,8 @@
                      <Page  @on-change="SellOrderListPage"  :total="100" show-elevator />
                     </div>
                  </TabPane>
-                 <TabPane label="Lambda  S3" name="name5">
+                 <TabPane v-if="runstorage==1" label="Lambda  S3" name="name5">
+                   <br/><br/>
                              <Row  class-name="card-item">
                             <Col span="4" class-name="title-wrapper">
                               <span class="title">{{$t('orderinfo.operating')}}:</span>
@@ -184,16 +185,16 @@
                             <Col span="20" class-name="content-wrapper">
                               <Button @click="Datacollection" type="primary">{{$t('orderinfo.Viewlambdastorage')}} </Button>
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <Button type="warning">{{$t('orderinfo.Filelossarbitration')}}</Button>
+                                <!-- <Button type="warning">{{$t('orderinfo.Filelossarbitration')}}</Button> -->
                             </Col>
                           </Row>
                           <Row class-name="card-item">
-                            <Col span="5" class-name="title-wrapper">
+                            <Col span="8" class-name="title-wrapper">
                               <span class="title">{{$t('orderinfo.lambdastorageConsole')}}:</span>
                             </Col>
-                            <Col span="19" class-name="content-wrapper">
+                            <Col span="16" class-name="content-wrapper">
 
-                              {{$t('orderinfo.Username')}}：{{managerkey['access-key']}}
+                              {{$t('orderinfo.Username')}}：{{managerkey['access-key']}}，
                               {{$t('orderinfo.Password')}}：{{managerkey['secret-key']}}<br/>
                               <!-- 访问地址：{{managerkey['address']}}<br/> -->
 
@@ -239,7 +240,7 @@ import eventhub from '../../common/js/event.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
-
+var packagejson = require('../../../../package.json');
 export default {
   data() {
     return {
@@ -390,7 +391,8 @@ export default {
       UserOrderslist: [],
       walletPassword: '',
       managerkey: {},
-      passwordModal: false
+      passwordModal: false,
+      runstorage: packagejson.runstorage
 
 
 
@@ -426,17 +428,20 @@ export default {
         result = await ipc.callMain('runlambdastorage', {
           password: this.$data.walletPassword
         });
+        console.log(result);
+        var _this = this;
+        setTimeout(() => {
+          shell.openExternal(`http://${_this.$data.managerkey['address']}/minio/login`);
+          _this.$data.passwordModal = false;
+        }, 1000);
       } catch (ex) {
         console.log(ex);
-        this.$Message.error(ex.errormsg);
-      }
 
-      console.log(result);
-      var _this = this;
-      setTimeout(() => {
-        shell.openExternal(`http://${_this.$data.managerkey['address']}/minio/login`);
-        _this.$data.passwordModal = false;
-      }, 1000);
+        this.$Notice.error({
+          title: 'error',
+          desc: ex.errormsg
+        });
+      }
     },
     async getmanagerkey() {
       let res = await ipc.callMain('lambdastoragemanagerkey', {});

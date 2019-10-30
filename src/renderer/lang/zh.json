@@ -589,11 +589,11 @@
     "Startingtime":"开始时间",
     "EndTime":"结束时间",
     "operating":"操作",
-    "lambdastorageConsole":"lambda storage 控制台",
+    "lambdastorageConsole":"lambda storage 控制台登录信息",
     "Viewlambdastorage":"在lambda storage 中查看订单空间",
     "Filelossarbitration":"文件丢失申请仲裁",
-    "Username":"用户名",
-    "Password":"密码"
+    "Username":"access-key",
+    "Password":"secret-key"
 
    }
 }

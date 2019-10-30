@@ -18,6 +18,7 @@ const hdkeyjs = require('@jswebfans/hdkeyjs');
 const path = require('path');
 const YAML = require('yaml');
 var log = require('../log').log;
+const os = require('os');
 
 
 var suppose = require('suppose');
@@ -179,7 +180,7 @@ export default function() {
   });
 
 
-  eipc.answerRenderer('runlambdastorage', query => {
+  eipc.answerRenderer('runlambdastorage', async query => {
     log.info('runlambdastorage');
 
     var password = query.password;
@@ -208,45 +209,57 @@ export default function() {
 ./lamb  gateway --broker.dht_gateway_addr 47.93.225.51:26662 --broker.validator_addr 47.93.225.51:13659 --broker.extra_key_file /Users/webjs/lambWallet/Wallet/lambda1ry8396ua5z2fsjxcv30v9v8myjfqq7a46zepml.keyinfo --gateway.address 127.0.0.1:9008 --gateway.access_key lambda --gateway.secret_key 12345678
 
  */
-      getAsync(`ps -ef | grep '[l]amb gateway' | awk '{print $2'} | xargs kill`)
-        .then(() => {
-          console.log('kill [l]amb gateway ok');
-          log.info(`kill [l]amb gateway ok`);
-          log.info(`suppose`);
+      //   taskkill /F /IM lamb.exe
+      var mackill = `ps -ef | grep '[l]amb gateway' | awk '{print $2'} | xargs kill`;
+      var winkill = `taskkill /F /IM lamb.exe`;
+      var nowos = os.platform();
+      console.log(nowos);
+      var nowkil = nowos == 'win32' ? winkill : mackill;
+      var killresult = await getAsync(nowkil);
+      var s3result = await runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password);
+      return resultView({
+        s3: s3result
+      }, true);
 
-          suppose(`${DAEMON_CONFIG.BASE_PATH}/lamb`,
-            [
-              `gateway`,
-              `--broker.dht_gateway_addr`,
-              `${ip}:26662`,
-              `--broker.validator_addr`,
-              `${ip}:13659`,
-              `--broker.extra_key_file`,
-              `${keypath}`,
-              `--gateway.address`,
-              gatewayaddress,
-              `--gateway.access_key`,
-              accesskey,
-              `--gateway.secret_key`,
-              secretKey
-            ], { debug: fs.createWriteStream(path.join(DAEMON_CONFIG.BASE_PATH, 'debug.txt')) })
-            .when(/.*/).respond(`${password}\n`)
-            .on('error', function(error) {
-              console.log(error.message);
-              log.info('suppose error');
-              log.info(error.message);
-              throw resultView(null, false, error);
-            })
-            .end(function(code) {
-              log.info('suppose end');
-              log.info(code);
-              return resultView({}, true);
-            });
-        }, () => {
-          console.log('kill [l]amb gateway error');
-          log.info(`kill [l]amb gateway error`);
-          throw resultView(null, false, error);
-        });
+      // getAsync(nowkil)
+      //   .then(() => {
+      //     console.log('kill [l]amb gateway ok');
+      //     log.info(`kill [l]amb gateway ok`);
+      //     log.info(`suppose`);
+
+      //     suppose(path.join(DAEMON_CONFIG.BASE_PATH,'lamb'),
+      //       [
+      //         `gateway`,
+      //         `--broker.dht_gateway_addr`,
+      //         `${ip}:26662`,
+      //         `--broker.validator_addr`,
+      //         `${ip}:13659`,
+      //         `--broker.extra_key_file`,
+      //         `${keypath}`,
+      //         `--gateway.address`,
+      //         gatewayaddress,
+      //         `--gateway.access_key`,
+      //         accesskey,
+      //         `--gateway.secret_key`,
+      //         secretKey
+      //       ], { debug: fs.createWriteStream(path.join(DAEMON_CONFIG.BASE_PATH, 'debug.txt')) })
+      //       .when(/.*/).respond(`${password}\n`)
+      //       .on('error', function(error) {
+      //         console.log(error.message);
+      //         log.info('suppose error');
+      //         log.info(error.message);
+      //         throw resultView(null, false, error);
+      //       })
+      //       .end(function(code) {
+      //         log.info('suppose end');
+      //         log.info(code);
+      //         return resultView({}, true);
+      //       });
+      //   }, () => {
+      //     console.log('kill [l]amb gateway error');
+      //     log.info(`kill [l]amb gateway error`);
+      //     throw resultView(null, false, error);
+      //   });
     } catch (error) {
       console.log(error);
 
@@ -255,6 +268,43 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+  function runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password) {
+    return new Promise(function (resolve, reject) {
+      suppose(path.join(DAEMON_CONFIG.BASE_PATH, 'lamb'),
+        [
+          `gateway`,
+          `--broker.dht_gateway_addr`,
+          `${ip}:26662`,
+          `--broker.validator_addr`,
+          `${ip}:13659`,
+          `--broker.extra_key_file`,
+          `${keypath}`,
+          `--gateway.address`,
+          gatewayaddress,
+          `--gateway.access_key`,
+          accesskey,
+          `--gateway.secret_key`,
+          secretKey,
+          `--home`,
+          DAEMON_CONFIG.OrderS3File
+        ]
+        // , { debug: fs.createWriteStream(path.join(DAEMON_CONFIG.BASE_PATH, 'debug.txt')) }
+      )
+        .when(/.*/).respond(`${password}\n`)
+        .on('error', function(error) {
+          console.log(error.message);
+          log.info('suppose error');
+          log.info(error.message);
+          reject(error.message);
+        })
+        .end(function(code) {
+          log.info('suppose end');
+          log.info(code);
+          resolve(code);
+        });
+    });
+  }
 
 
 
