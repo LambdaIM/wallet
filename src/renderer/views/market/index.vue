@@ -176,7 +176,7 @@
                      <Page  @on-change="SellOrderListPage"  :total="100" show-elevator />
                     </div>
                  </TabPane>
-                 <TabPane label="Lambda storage S3" name="name5">
+                 <TabPane label="Lambda  S3" name="name5">
                              <Row  class-name="card-item">
                             <Col span="4" class-name="title-wrapper">
                               <span class="title">{{$t('orderinfo.operating')}}:</span>
@@ -432,8 +432,11 @@ export default {
       }
 
       console.log(result);
-      // managerkey['address']
-      shell.openExternal(`http://${this.$data.managerkey['address']}/minio/login`);
+      var _this = this;
+      setTimeout(() => {
+        shell.openExternal(`http://${_this.$data.managerkey['address']}/minio/login`);
+        _this.$data.passwordModal = false;
+      }, 1000);
     },
     async getmanagerkey() {
       let res = await ipc.callMain('lambdastoragemanagerkey', {});
