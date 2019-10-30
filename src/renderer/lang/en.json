@@ -594,11 +594,11 @@
  "Mineraddress":"miner address",
  "user":"user",
  "operating":"operating",
- "lambdastorageConsole":"Lambda storage console",
+ "lambdastorageConsole":"Lambda Storage Console login information",
  "Viewlambdastorage":"View order space in lambda storage",
  "Filelossarbitration":"File loss application arbitration",
- "Username":"Username",
- "Password":"Password"
+ "Username":"access-key",
+ "Password":"secret-key"
  
 
 }

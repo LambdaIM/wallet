@@ -16,9 +16,9 @@ let DAEMON;
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
-  DAEMON = join(__dirname, '/static/s3server.js');
+  // DAEMON = join(__dirname, '/static/s3server.js');
 } else {
-  DAEMON = join(__dirname, '../../static/s3server.js');
+  // DAEMON = join(__dirname, '../../static/s3server.js');
 }
 
 
@@ -37,40 +37,40 @@ const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`;
 
-function initRPCServer(callback) {
-  console.log('==initRPCServer===start');
-  let RPCServer = fork(DAEMON, [], { env: { RPC_PORT: RPC_PORT } });
-  process.on('exit', () => {
-    console.log('exit');
-    RPCServer.kill();
-  });
-  RPCServer.on('message', msg => {
-    console.log('message');
-    if (msg.state === 'init') {
-      return callback();
-    } else {
-      RPCServer.removeAllListeners();
-      callback(msg);
-    }
-  });
-  console.log('==initRPCServer===end');
-}
+// function initRPCServer(callback) {
+//   console.log('==initRPCServer===start');
+//   let RPCServer = fork(DAEMON, [], { env: { RPC_PORT: RPC_PORT } });
+//   process.on('exit', () => {
+//     console.log('exit');
+//     RPCServer.kill();
+//   });
+//   RPCServer.on('message', msg => {
+//     console.log('message');
+//     if (msg.state === 'init') {
+//       return callback();
+//     } else {
+//       RPCServer.removeAllListeners();
+//       callback(msg);
+//     }
+//   });
+//   console.log('==initRPCServer===end');
+// }
 
-function maybeStartDaemon(callback) {
-  const sock = connect(RPC_PORT);
+// function maybeStartDaemon(callback) {
+//   const sock = connect(RPC_PORT);
 
-  sock.on('connect', () => {
-    sock.end();
-    sock.removeAllListeners();
-    callback();
-  });
+//   sock.on('connect', () => {
+//     sock.end();
+//     sock.removeAllListeners();
+//     callback();
+//   });
 
-  sock.on('error', () => {
-    console.log('maybeStartDaemon error');
-    sock.removeAllListeners();
-    initRPCServer(callback);
-  });
-}
+//   sock.on('error', () => {
+//     console.log('maybeStartDaemon error');
+//     sock.removeAllListeners();
+//     initRPCServer(callback);
+//   });
+// }
 
 function createWindow() {
   /**
@@ -99,15 +99,6 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-  if (packageJson.runstorage == 1) {
-    console.log('==启动s3server==start');
-    maybeStartDaemon(() => {
-      initRPCServer(msg => {
-        console.log('==启动s3server==1');
-      });
-    });
-    console.log('==启动s3server==end');
-  }
 }
 
 
