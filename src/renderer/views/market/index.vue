@@ -430,14 +430,13 @@ export default {
       try {
         this.$data.timeid = setTimeout(() => {
           this.$data.loading = false;
-          shell.openExternal(`http://${_this.$data.managerkey['address']}/minio/login`);
+          shell.openExternal(`http://${this.$data.managerkey['address']}/minio/login`);
           this.$data.passwordModal = false;
         }, 3000);
         result = await ipc.callMain('runlambdastorage', {
           password: this.$data.walletPassword
         });
         console.log(result);
-        var _this = this;
       } catch (ex) {
         console.log(ex);
         clearTimeout(this.$data.timeid);
