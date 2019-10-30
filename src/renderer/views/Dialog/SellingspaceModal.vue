@@ -151,7 +151,8 @@ export default {
       minSpace: '',
       minDuration: '',
       unitPrice: '5',
-      maxDuration: ''
+      maxDuration: '',
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
     };
   },
   methods: {
@@ -192,7 +193,7 @@ export default {
       }
 
 
-      if (isNaN(spaceSize) || spaceSize == 0) {
+      if (isNaN(spaceSize) || spaceSize <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needspacesize')
         });
@@ -200,7 +201,7 @@ export default {
       }
       this.$data.spaceSize = spaceSize;
 
-      if (isNaN(unitPrice) || unitPrice == 0) {
+      if (isNaN(unitPrice) || unitPrice <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needunitprice')
         });
@@ -208,7 +209,7 @@ export default {
       }
       this.$data.unitPrice = unitPrice;
 
-      if (isNaN(rate) || rate == 0) {
+      if (isNaN(rate) || rate <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needodds')
         });
@@ -216,7 +217,7 @@ export default {
       }
       this.$data.rate = rate;
 
-      if (isNaN(minSpace) || minSpace == 0) {
+      if (isNaN(minSpace) || minSpace <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needminspace')
         });
@@ -228,25 +229,31 @@ export default {
 
       this.$data.minSpace = minSpace;
 
-      if (isNaN(minDuration) || minDuration == 0) {
+      if (isNaN(minDuration) || minDuration <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needunitmintime')
         });
         return;
       }
+      if (minDuration > 60) {
+        minDuration = 60;
+      }
 
 
       this.$data.minDuration = minDuration;
-      if (maxDuration > 60) {
-        maxDuration = 60;
-      }
 
-      if (isNaN(maxDuration) || maxDuration == 0) {
+
+      if (isNaN(maxDuration) || maxDuration <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needunitmaxtime')
         });
         return;
       }
+
+      if (maxDuration > 60) {
+        maxDuration = 60;
+      }
+
       if (minDuration > maxDuration) {
         maxDuration = minDuration;
       }
@@ -255,9 +262,9 @@ export default {
 
 
       unitPrice = this.toBigNumStr(unitPrice);
-      var monthNum = (1000 * 1000 * 1000 * 60 * 60 * 24 * 30);
-      minDuration = minDuration * monthNum;
-      maxDuration = maxDuration * monthNum;
+
+      minDuration = minDuration * this.$data.timeunit;
+      maxDuration = maxDuration * this.$data.timeunit;
 
       // maxDuration
 
@@ -279,7 +286,7 @@ export default {
     ratechange() {
       let rate = parseInt(this.$data.rate);
 
-      if (isNaN(rate) || rate == 0) {
+      if (isNaN(rate) || rate <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.sellorder.action.needodds')
         });

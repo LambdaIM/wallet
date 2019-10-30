@@ -15,10 +15,9 @@
                          {{row.MatchOrder.price|Lambformat}}
                         </template>
                         <template slot-scope="{ row, index }" slot="userPay">
-                         <span v-if="typeBuyType(row.MatchOrder.buyAddress)" >
+
                          {{amountFormat(row.MatchOrder.userPay)}}
-                         </span>
-                         <span  v-else>--</span>
+
                         </template>
                         <template slot-scope="{ row, index }" slot="buyAddress">
                          {{typeFormat(row.MatchOrder.buyAddress)}}
@@ -176,9 +175,48 @@
                      <Page  @on-change="SellOrderListPage"  :total="100" show-elevator />
                     </div>
                  </TabPane>
+                 <TabPane v-if="runstorage==1" label="Lambda  S3" name="name5">
+                   <br/><br/>
+                             <Row  class-name="card-item">
+                            <Col span="4" class-name="title-wrapper">
+                              <span class="title">{{$t('orderinfo.operating')}}:</span>
+                            </Col>
+                            <Col span="20" class-name="content-wrapper">
+                              <Button @click="Datacollection" type="primary">{{$t('orderinfo.Viewlambdastorage')}} </Button>
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <!-- <Button type="warning">{{$t('orderinfo.Filelossarbitration')}}</Button> -->
+                            </Col>
+                          </Row>
+                          <Row class-name="card-item">
+                            <Col span="8" class-name="title-wrapper">
+                              <span class="title">{{$t('orderinfo.lambdastorageConsole')}}:</span>
+                            </Col>
+                            <Col span="16" class-name="content-wrapper">
+
+                              {{$t('orderinfo.Username')}}：{{managerkey['access-key']}}，
+                              {{$t('orderinfo.Password')}}：{{managerkey['secret-key']}}<br/>
+                              <!-- 访问地址：{{managerkey['address']}}<br/> -->
+
+                            </Col>
+                          </Row>
+
+                 </TabPane>
 
 
             </Tabs>
+            <Modal
+
+        v-model="passwordModal"
+        :title="$t('Sign.Enter_password')"
+        :styles="{top: '200px'}"
+      >
+        <p>
+          <Input v-model="walletPassword" type="password"></Input>
+        </p>
+        <div slot="footer">
+          <Button :loading="loading"  type="primary" @click="s3authorization">{{$t('Sign.submit')}}</Button>
+        </div>
+      </Modal>
 
 
 
@@ -200,7 +238,8 @@ import autoBuyingspaceModal from '@/views/Dialog/autoBuyingspaceModal.vue';
 import eventhub from '../../common/js/event.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
-
+const { shell } = require('electron');
+var packagejson = require('../../../../package.json');
 export default {
   data() {
     return {
@@ -348,7 +387,13 @@ export default {
 
       }
       ],
-      UserOrderslist: []
+      UserOrderslist: [],
+      walletPassword: '',
+      managerkey: {},
+      passwordModal: false,
+      runstorage: packagejson.runstorage,
+      loading: false,
+      timeid: ''
 
 
 
@@ -365,6 +410,7 @@ export default {
     this.getmarketlist();
     this.getSellOrderslist();
     this.getUserOrderslist();
+    this.getmanagerkey();
 
 
     eventhub.$on('TransactionSuccess', data => {
@@ -376,6 +422,39 @@ export default {
     this.getmarketinfo('');
   },
   methods: {
+    s3authorization: async function() {
+      console.log('runlambdastorage');
+      this.$data.loading = true;
+      var result = {};
+      try {
+        this.$data.timeid = setTimeout(() => {
+          this.$data.loading = false;
+          shell.openExternal(`http://${this.$data.managerkey['address']}/minio/login`);
+          this.$data.passwordModal = false;
+        }, 3000);
+        result = await ipc.callMain('runlambdastorage', {
+          password: this.$data.walletPassword
+        });
+        console.log(result);
+      } catch (ex) {
+        console.log(ex);
+        clearTimeout(this.$data.timeid);
+        this.$data.loading = false;
+        this.$Notice.error({
+          title: 'error',
+          desc: ex.errormsg
+        });
+      }
+    },
+    async getmanagerkey() {
+      let res = await ipc.callMain('lambdastoragemanagerkey', {});
+      if (res.state) {
+        this.$data.managerkey = res.data.gateway;
+      }
+    },
+    Datacollection: async function() {
+      this.$data.passwordModal = true;
+    },
     UserOrdersListPage(page) {
       console.log(page);
       this.getUserOrderslist(page);
@@ -445,13 +524,13 @@ export default {
       let spaceSize = parseInt(this.$data.autoSpaceSize);
       let spaceDuration = parseInt(this.$data.autoSpaceDuration);
 
-      if (isNaN(spaceSize) || spaceSize == 0) {
+      if (isNaN(spaceSize) || spaceSize <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.AutoBuy.action.needspacesize')
         });
         return;
       }
-      if (isNaN(spaceDuration) || spaceDuration == 0) {
+      if (isNaN(spaceDuration) || spaceDuration <= 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.AutoBuy.action.needstime')
         });

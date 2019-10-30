@@ -19,11 +19,11 @@
       </p>
       <br/>
       <p>
-        {{$t('Dialog.selectBuy.Minimumtime')}}：{{orderinfo.minDuration|formatMonth}}月
+        {{$t('Dialog.selectBuy.Minimumtime')}}：{{orderinfo.minDuration|formatMonth}}{{$t('Dialog.selectBuy.month')}}
       </p>
       <br/>
       <p>
-        {{$t('Dialog.selectBuy.Maximumtime')}}：{{orderinfo.maxDuration|formatMonth}}月
+        {{$t('Dialog.selectBuy.Maximumtime')}}：{{orderinfo.maxDuration|formatMonth}}{{$t('Dialog.selectBuy.month')}}
       </p>
       <br/>
       <p>
@@ -170,13 +170,17 @@ export default {
       }
       if (spaceDuration < this.$data.orderinfo.minDuration / this.$data.timeunit) {
         this.$Notice.warning({
-          title: this.$t('Dialog.selectBuy.Minimumtime') + (this.$data.orderinfo.minDuration / this.$data.timeunit).toFixed(2) + '月'
+          title: this.$t('Dialog.selectBuy.Minimumtime') +
+          (this.$data.orderinfo.minDuration / this.$data.timeunit).toFixed(2) +
+          this.$t('Dialog.AutoBuy.month')
         });
         return;
       }
       if (spaceDuration > this.$data.orderinfo.maxDuration / this.$data.timeunit) {
         this.$Notice.warning({
-          title: this.$t('Dialog.selectBuy.Maximumtime') + (this.$data.orderinfo.maxDuration / this.$data.timeunit).toFixed(2) + '月'
+          title: this.$t('Dialog.selectBuy.Maximumtime') +
+          (this.$data.orderinfo.maxDuration / this.$data.timeunit).toFixed(2) +
+          this.$t('Dialog.AutoBuy.month')
         });
         return;
       }

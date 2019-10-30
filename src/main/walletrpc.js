@@ -406,23 +406,6 @@ export default function() {
     }
   });
 
-  eipc.answerRenderer('s3authorization', async query => {
-    log.info('s3authorization');
-
-
-    var password = query.password;
-
-    try {
-      var TxMessageload = await WM.s3authorization(password);
-
-
-      log.info(TxMessageload);
-      return resultView(TxMessageload, true);
-    } catch (error) {
-      throw resultView(null, false, error);
-    }
-  });
-
 
 
   eipc.answerRenderer('editWalletName', async query => {

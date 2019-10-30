@@ -697,32 +697,6 @@ walletManger.prototype.findFile = function (address) {
 };
 
 
-walletManger.prototype.s3authorization = async function (password) {
-  
-  try {
-    var body=JSON.stringify({
-      defaultwallet:this.defaultwallet,
-      password:password
-    });
-    
-    const result = await fetch(`http://localhost:8379/authorization`, {
-      method: `POST`,
-      body: body,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    var data = await result.text();
-    return { data: data, state: true };
-  } catch (error) {
-    log.error(error);
-    console.log(error)
-    return { data: error, state: false };
-  }
-  
-
-  
-};
 
 
 

@@ -338,7 +338,8 @@
         "Paymentamount":"Payment amount",
         "action":{
           "needspacesize":"Please check the size of the space, the space can only fill in the integer",
-        "needstime":"Please check the duration, only the integer can be filled in."
+          "needstime":"Please check the duration, only the integer can be filled in.",
+          "timebigorsmall":"Check the length of time, between 1 month and 60 months"
         }
     },
     "selectBuy":{
@@ -571,7 +572,7 @@
      "Marketaddress":"Market address",
      "Startingtime":"Start time",
      "EndTime":"End Time",
-     "userPay":"Undrawn gain",
+     "userPay":"Order amount",
     "minerPay":"Undrawn deposit",
      "orderdetails":"Details"
     }
@@ -587,17 +588,17 @@
  "Marketaddress":"market address",
  "Startingtime":"starting time",
  "EndTime":"end Time",
- "userPay":"Undrawn gain",
-  "minerPay":"Undrawn deposit",
+ "userPay":"Order amount",
+ "minerPay":"Undrawn deposit",
  "orderdetails":"details",
  "Mineraddress":"miner address",
  "user":"user",
  "operating":"operating",
- "lambdastorageConsole":"Lambda storage console",
+ "lambdastorageConsole":"Lambda Storage Console login information",
  "Viewlambdastorage":"View order space in lambda storage",
  "Filelossarbitration":"File loss application arbitration",
- "Username":"Username",
- "Password":"Password"
+ "Username":"access-key",
+ "Password":"secret-key"
  
 
 }

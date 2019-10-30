@@ -106,7 +106,8 @@ export default {
       spaceSize: '',
       spaceDuration: '',
       marketPrice: 0,
-      marketinfo: {}
+      marketinfo: {},
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
     };
   },
   methods: {
@@ -124,8 +125,8 @@ export default {
 
       let spaceSize = parseInt(this.spaceSize);
       let spaceDuration = parseInt(this.spaceDuration);
-      this.spaceSize = spaceSize;
-      this.spaceDuration = spaceDuration;
+
+
 
       if (isNaN(spaceSize) || spaceSize == 0) {
         this.$Notice.warning({
@@ -133,12 +134,20 @@ export default {
         });
         return;
       }
+      this.spaceSize = spaceSize;
       if (isNaN(spaceDuration) || spaceDuration == 0) {
         this.$Notice.warning({
           title: this.$t('Dialog.AutoBuy.action.needstime')
         });
         return;
       }
+      if (spaceDuration > 60 || spaceDuration < 0) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.AutoBuy.action.timebigorsmall')
+        });
+        return;
+      }
+      this.spaceDuration = spaceDuration;
       if (this.bigLess0OrGreater(this.Paymentamount, this.balance)) {
         // need to alert
         this.$Notice.warning({
@@ -159,7 +168,7 @@ export default {
 
       try {
         let res = await ipc.callMain(txType, {
-          duration: spaceDuration * (1000 * 1000 * 1000 * 60 * 60 * 24 * 30) + '',
+          duration: spaceDuration * (this.$data.timeunit) + '',
           size: spaceSize + '',
           sellOrderId: '[do-not-input-value]',
           marketName: this.$data.marketinfo.name
