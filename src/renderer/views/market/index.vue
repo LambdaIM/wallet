@@ -215,7 +215,7 @@
           <Input v-model="walletPassword" type="password"></Input>
         </p>
         <div slot="footer">
-          <Button  type="primary" @click="s3authorization">{{$t('Sign.submit')}}</Button>
+          <Button :loading="loading"  type="primary" @click="s3authorization">{{$t('Sign.submit')}}</Button>
         </div>
       </Modal>
 
@@ -392,7 +392,8 @@ export default {
       walletPassword: '',
       managerkey: {},
       passwordModal: false,
-      runstorage: packagejson.runstorage
+      runstorage: packagejson.runstorage,
+      loading: false
 
 
 
@@ -423,6 +424,7 @@ export default {
   methods: {
     s3authorization: async function() {
       console.log('runlambdastorage');
+      this.$data.loading = true;
       var result = {};
       try {
         result = await ipc.callMain('runlambdastorage', {
@@ -431,12 +433,13 @@ export default {
         console.log(result);
         var _this = this;
         setTimeout(() => {
+          _this.$data.loading = false;
           shell.openExternal(`http://${_this.$data.managerkey['address']}/minio/login`);
           _this.$data.passwordModal = false;
         }, 1000);
       } catch (ex) {
         console.log(ex);
-
+        this.$data.loading = false;
         this.$Notice.error({
           title: 'error',
           desc: ex.errormsg

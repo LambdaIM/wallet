@@ -215,7 +215,13 @@ export default function() {
       var nowos = os.platform();
       console.log(nowos);
       var nowkil = nowos == 'win32' ? winkill : mackill;
-      var killresult = await getAsync(nowkil);
+      try {
+        var killresult = await getAsync(nowkil);
+      } catch (error) {
+
+      }
+
+
       var s3result = await runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password);
       return resultView({
         s3: s3result
