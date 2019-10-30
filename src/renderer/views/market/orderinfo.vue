@@ -65,27 +65,25 @@
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('orderinfo.space')}}:</span>
           </Col>
-          <Col span="20" class-name="content-wrapper">
+          <Col span="8" class-name="content-wrapper">
             {{orderinfo.MatchOrder.size}}GB
           </Col>
-        </Row>
-        <Row class-name="card-item">
           <Col span="6" class-name="title-wrapper">
             <span class="title">{{$t('orderinfo.unitprice')}}:</span>
           </Col>
-          <Col span="18" class-name="content-wrapper">
+          <Col span="6" class-name="content-wrapper">
             {{orderinfo.MatchOrder.price|Lambformat}}
           </Col>
         </Row>
+
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('orderinfo.userPay')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-          <span v-if="typeBuyType(orderinfo.MatchOrder.buyAddress)">
+
            {{amountFormat(orderinfo.MatchOrder.userPay)}}
-          </span>
-          <span v-else>--</span>
+
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -123,49 +121,14 @@
             {{orderinfo.MatchOrder.machineName}}
           </Col>
         </Row>
-        <div v-if="this.$store.getters.getaddress==orderinfo.MatchOrder.buyAddress&&runstorage==1">
-            <Row  class-name="card-item">
-              <Col span="4" class-name="title-wrapper">
-                <span class="title">{{$t('orderinfo.operating')}}:</span>
-              </Col>
-              <Col span="20" class-name="content-wrapper">
-                <Button @click="Datacollection" type="primary">{{$t('orderinfo.Viewlambdastorage')}} </Button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <Button type="warning">{{$t('orderinfo.Filelossarbitration')}}</Button>
-              </Col>
-            </Row>
-            <Row class-name="card-item">
-              <Col span="5" class-name="title-wrapper">
-                <span class="title">{{$t('orderinfo.lambdastorageConsole')}}:</span>
-              </Col>
-              <Col span="19" class-name="content-wrapper">
 
-                {{$t('orderinfo.Username')}}：{{managerkey['access-key']}}
-                {{$t('orderinfo.Password')}}：{{managerkey['secret-key']}}<br/>
-                <!-- 访问地址：{{managerkey['address']}}<br/> -->
-
-              </Col>
-            </Row>
-        </div>
         <br/><br/>
 
 
 
       </div>
     </Mycard>
-    <Modal
 
-        v-model="passwordModal"
-        :title="$t('Sign.Enter_password')"
-        :styles="{top: '200px'}"
-      >
-        <p>
-          <Input v-model="walletPassword" type="password"></Input>
-        </p>
-        <div slot="footer">
-          <Button  type="primary" @click="s3authorization">{{$t('Sign.submit')}}</Button>
-        </div>
-      </Modal>
 
 </div>
 </template>
@@ -199,58 +162,14 @@ export default {
   },
 
   mounted() {
-    console.log('***********');
     let id = this.$route.params.id;
     this.getorderinfo(id);
-    this.getmanagerkey();
   },
   methods: {
     openMatchOrder: function(orderId) {
       var explorer = DAEMON_CONFIG.explore();
       let url = `${explorer}#/orderDetail/match/${orderId}`;
       shell.openExternal(url);
-    },
-    s3authorization: async function() {
-      console.log('s3authorization');
-      var result = {};
-      try {
-        result = await ipc.callMain('s3authorization', {
-          password: this.$data.walletPassword
-        });
-      } catch (ex) {
-        console.log(ex);
-        this.$Message.error(ex.errormsg);
-      }
-
-      console.log(result);
-      if (result.state == true) {
-        console.log(result.data);
-
-
-        this.$data.passwordModal = false;
-        this.orders3();
-      }
-    },
-    async orders3() {
-      try {
-        var info = await this.machineNameinfo(this.$data.orderinfo);
-      } catch (error) {
-        console.log(error);
-        this.$Message.info({
-          content: JSON.stringify(error),
-          duration: 10,
-          closable: true
-        });
-      }
-    },
-    async getmanagerkey() {
-      let res = await ipc.callMain('lambdastoragemanagerkey', {});
-      if (res.state) {
-        this.$data.managerkey = res.data.gateway;
-      }
-    },
-    Datacollection: async function() {
-      this.$data.passwordModal = true;
     },
     async  getorderinfo(orderId) {
       let res = await ipc.callMain('marketgetOrderinfo', {
@@ -260,55 +179,7 @@ export default {
         this.$data.orderinfo = res.data.data;
       }
     },
-    async  machineNameinfo(orderinfo) {
-      console.log('machineNameinfo');
-      var orderId = orderinfo.MatchOrder.orderId;
-      var pubKey = orderinfo.pubKey;
-      var dhtId = orderinfo.dhtId;
 
-      let res = await ipc.callMain('sets3orderinfo', { orderId, pubKey, dhtId });
-      if (res.state) {
-        console.log(res.data);
-        // this.runs3()//启动cmd 程序
-      } else {
-        this.$Message.info({
-          content: '失败',
-          duration: 10,
-          closable: true
-        });
-      }
-    },
-
-    async runs3() {
-      console.log('*********');
-      try {
-        let res = await ipc.callMain('cmdtest', {
-
-        });
-        if (res.state) {
-          console.log(res.data);
-          this.$Message.info({
-            content: JSON.stringify(res.data),
-            duration: 10,
-            closable: true
-          });
-        // alert(JSON.stringify(res.data))
-        } else {
-        // alert('失败')
-          this.$Message.info({
-            content: '失败',
-            duration: 10,
-            closable: true
-          });
-        }
-      } catch (error) {
-        this.$Message.info({
-          content: JSON.stringify(error),
-          duration: 10,
-          closable: true
-        });
-      }
-    },
     typeFormat(addeess) {
       if (this.$store.getters.getaddress === addeess) {
         return this.$t('marketpage.payorder');

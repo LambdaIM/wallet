@@ -332,7 +332,8 @@
           "Paymentamount":"支付金额",
           "action":{
             "needspacesize":"检查空间大小，空间只能填写整数",
-            "needstime":"检查时长大小，时长只能填写整数"
+            "needstime":"检查时长大小，时长只能填写整数",
+            "timebigorsmall":"检查时长大小，时长在1个月到60个月之间"
           }
       },
       "selectBuy":{
@@ -565,7 +566,7 @@
         "Marketaddress":"市场地址",
         "Startingtime":"开始时间",
         "EndTime":"结束时间",
-        "userPay":"未提取的收益",
+        "userPay":"订单金额",
         "minerPay":"未提取的押金",
         "orderdetails":"订单详情"
        }
@@ -581,7 +582,7 @@
     "Marketaddress":"市场地址",
     "Startingtime":"开始时间",
     "EndTime":"结束时间",
-    "userPay":"未提取的收益",
+    "userPay":"订单金额",
     "minerPay":"未提取的押金",
     "orderdetails":"订单详情",
     "Mineraddress":"矿工地址",
@@ -589,11 +590,11 @@
     "Startingtime":"开始时间",
     "EndTime":"结束时间",
     "operating":"操作",
-    "lambdastorageConsole":"lambda storage 控制台",
+    "lambdastorageConsole":"lambda storage 控制台登录信息",
     "Viewlambdastorage":"在lambda storage 中查看订单空间",
     "Filelossarbitration":"文件丢失申请仲裁",
-    "Username":"用户名",
-    "Password":"密码"
+    "Username":"access-key",
+    "Password":"secret-key"
 
    }
 }
