@@ -184,6 +184,16 @@ export default function() {
     log.info('runlambdastorage');
 
     var password = query.password;
+    var mackill = `ps -ef | grep '[l]amb gateway' | awk '{print $2'} | xargs kill`;
+    var winkill = `taskkill /F /IM lamb.exe`;
+    var nowos = os.platform();
+    console.log(nowos);
+    var nowkil = nowos == 'win32' ? winkill : mackill;
+    try {
+      var killresult = await getAsync(nowkil);
+    } catch (error) {
+
+    }
 
     try {
       var defaultAddress;
@@ -210,16 +220,7 @@ export default function() {
 
  */
       //   taskkill /F /IM lamb.exe
-      var mackill = `ps -ef | grep '[l]amb gateway' | awk '{print $2'} | xargs kill`;
-      var winkill = `taskkill /F /IM lamb.exe`;
-      var nowos = os.platform();
-      console.log(nowos);
-      var nowkil = nowos == 'win32' ? winkill : mackill;
-      try {
-        var killresult = await getAsync(nowkil);
-      } catch (error) {
 
-      }
 
 
       var s3result = await runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password);

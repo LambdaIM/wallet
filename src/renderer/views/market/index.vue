@@ -393,7 +393,8 @@ export default {
       managerkey: {},
       passwordModal: false,
       runstorage: packagejson.runstorage,
-      loading: false
+      loading: false,
+      timeid: ''
 
 
 
@@ -427,18 +428,19 @@ export default {
       this.$data.loading = true;
       var result = {};
       try {
+        this.$data.timeid = setTimeout(() => {
+          this.$data.loading = false;
+          shell.openExternal(`http://${_this.$data.managerkey['address']}/minio/login`);
+          this.$data.passwordModal = false;
+        }, 3000);
         result = await ipc.callMain('runlambdastorage', {
           password: this.$data.walletPassword
         });
         console.log(result);
         var _this = this;
-        setTimeout(() => {
-          _this.$data.loading = false;
-          shell.openExternal(`http://${_this.$data.managerkey['address']}/minio/login`);
-          _this.$data.passwordModal = false;
-        }, 1000);
       } catch (ex) {
         console.log(ex);
+        clearTimeout(this.$data.timeid);
         this.$data.loading = false;
         this.$Notice.error({
           title: 'error',
