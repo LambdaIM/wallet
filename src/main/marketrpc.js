@@ -181,8 +181,8 @@ export default function() {
 
   eipc.answerRenderer('lambdastorageclose', async query => {
     try {
-      var mackill = `ps -ef | grep '[l]amb gateway' | awk '{print $2'} | xargs kill`;
-      var winkill = `taskkill /F /IM lamb.exe`;
+      var mackill = `ps -ef | grep '[l]ambda gateway' | awk '{print $2'} | xargs kill`;
+      var winkill = `taskkill /F /IM lambda.exe`;
       var nowos = os.platform();
       console.log(nowos);
       var nowkil = nowos == 'win32' ? winkill : mackill;
@@ -201,8 +201,8 @@ export default function() {
     log.info('runlambdastorage');
 
     var password = query.password;
-    var mackill = `ps -ef | grep '[l]amb gateway' | awk '{print $2'} | xargs kill`;
-    var winkill = `taskkill /F /IM lamb.exe`;
+    var mackill = `ps -ef | grep '[l]ambda gateway' | awk '{print $2'} | xargs kill`;
+    var winkill = `taskkill /F /IM lambda.exe`;
     var nowos = os.platform();
     console.log(nowos);
     var nowkil = nowos == 'win32' ? winkill : mackill;
