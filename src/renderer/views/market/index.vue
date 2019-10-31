@@ -440,10 +440,12 @@ export default {
         console.log(ex);
         clearTimeout(this.$data.timeid);
         this.$data.loading = false;
-        this.$Notice.error({
-          title: 'error',
-          desc: ex.errormsg
-        });
+        if (ex.errormsg.indexOf('Got a signal from the OS') == -1) {
+          this.$Notice.error({
+            title: 'error',
+            desc: ex.errormsg
+          });
+        }
       }
     },
     async getmanagerkey() {
