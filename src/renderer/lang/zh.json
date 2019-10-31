@@ -43,7 +43,7 @@
       "voting_power": "voting power",
       "Switch_Validator": "切换验证节点",
       "Privat_Key_Info": "私钥信息",
-      "Keystore_File_Backup": "密钥存储文件备份",
+      "Keystore_File_Backup": "打开钱包配置文件夹",
       "Version": "版本",
       "Current_Version": "现行版本",
       "Logout": "注销",
@@ -593,8 +593,8 @@
     "lambdastorageConsole":"lambda storage 控制台登录信息",
     "Viewlambdastorage":"在lambda storage 中查看订单空间",
     "Filelossarbitration":"文件丢失申请仲裁",
-    "Username":"access-key",
-    "Password":"secret-key"
+    "Username":"密钥",
+    "Password":"私钥"
 
    }
 }

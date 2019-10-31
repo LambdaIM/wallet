@@ -46,7 +46,7 @@
       "voting_power": "voting_power",
       "Switch_Validator": "Switch Validator",
       "Privat_Key_Info": "Private Key Info",
-      "Keystore_File_Backup": "Keystore File Backup",
+      "Keystore_File_Backup": "Open wallet configuration folder",
       "Version": "Version",
       "Current_Version": "Current Version",
       "Logout": "Logout",

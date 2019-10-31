@@ -179,6 +179,23 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('lambdastorageclose', async query => {
+    try {
+      var mackill = `ps -ef | grep '[l]amb gateway' | awk '{print $2'} | xargs kill`;
+      var winkill = `taskkill /F /IM lamb.exe`;
+      var nowos = os.platform();
+      console.log(nowos);
+      var nowkil = nowos == 'win32' ? winkill : mackill;
+      var killresult = await getAsync(nowkil);
+
+
+
+      return resultView({}, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
 
   eipc.answerRenderer('runlambdastorage', async query => {
     log.info('runlambdastorage');
@@ -211,7 +228,7 @@ export default function() {
       console.log(yamlconfig);
       var gatewayaddress = yamlconfig.gateway.address;
       var accesskey = yamlconfig.gateway['access-key'];
-      var secretKey = yamlconfig.gateway['access-key'];
+      var secretKey = yamlconfig.gateway['secret-key'];
 
 
       /*
@@ -295,6 +312,7 @@ export default function() {
           secretKey,
           `--home`,
           DAEMON_CONFIG.OrderS3File
+
         ]
         // , { debug: fs.createWriteStream(path.join(DAEMON_CONFIG.BASE_PATH, 'debug.txt')) }
       )
