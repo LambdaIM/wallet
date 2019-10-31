@@ -43,6 +43,10 @@ var configData = {
     LambdaExtenNetwork:function(){
         return `http://${settings.get('validator.ipv1')||defaultip}:13657`
         // return `http://${defaultip}:13657`
+    },
+    LambdaSfile:function(){
+        var nowos = os.platform();
+        return nowos == 'win32' ? 'lambda.exe' : 'lambda';
     },           
     setUP:function(){
         if(fs.existsSync(this.BASE_PATH)==false) {
@@ -64,9 +68,9 @@ var configData = {
         
     },
     s3client:function(){
-        if (fs.existsSync(`${this.BASE_PATH}/lamb`) == false) {
-            fs.createReadStream(`${__static}/lamb`).pipe(fs.createWriteStream(`${this.BASE_PATH}/lamb`));
-            cmd.run(`chmod 777  ${this.BASE_PATH}/lamb `)
+        if (fs.existsSync(`${this.BASE_PATH}/${this.LambdaSfile()}`) == false) {
+            fs.createReadStream(`${__static}/${this.LambdaSfile()}`).pipe(fs.createWriteStream(`${this.BASE_PATH}/${this.LambdaSfile()}`));
+            cmd.run(`chmod 777  ${this.BASE_PATH}/${this.LambdaSfile()} `)
           }
         //   if (fs.existsSync(`${this.BASE_PATH}/order-meta.json`) == false) {
         //     fs.createReadStream(`${__static}/order-meta.json`).pipe(fs.createWriteStream(`${this.BASE_PATH}/order-meta.json`));

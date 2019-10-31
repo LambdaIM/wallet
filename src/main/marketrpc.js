@@ -295,7 +295,7 @@ export default function() {
 
   function runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password) {
     return new Promise(function (resolve, reject) {
-      suppose(path.join(DAEMON_CONFIG.BASE_PATH, 'lamb'),
+      suppose(path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile()),
         [
           `gateway`,
           `--broker.dht_gateway_addr`,
