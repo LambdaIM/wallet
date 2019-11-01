@@ -148,22 +148,7 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
-  eipc.answerRenderer('cmdtest', async query => {
-    try {
-      console.log('cmdtest');
 
-
-      // const result = await getAsync(`${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
-      // console.log(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
-      // console.log(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
-      var result = cmd.run(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
-
-
-      return resultView(result, true);
-    } catch (ex) {
-      throw resultView(null, false, ex);
-    }
-  });
 
 
   eipc.answerRenderer('lambdastoragemanagerkey', async query => {
@@ -181,8 +166,9 @@ export default function() {
 
   eipc.answerRenderer('lambdastorageclose', async query => {
     try {
-      var mackill = `ps -ef | grep '[l]ambda gateway' | awk '{print $2'} | xargs kill`;
-      var winkill = `taskkill /F /IM lambda.exe`;
+      // [l]ambda
+      var mackill = `ps -ef | grep '${DAEMON_CONFIG.LambdaSfile().replace('lamb', '[l]amb')} gateway' | awk '{print $2'} | xargs kill`;
+      var winkill = `taskkill /F /IM ${DAEMON_CONFIG.LambdaSfile()}`;
       var nowos = os.platform();
       console.log(nowos);
       var nowkil = nowos == 'win32' ? winkill : mackill;
@@ -201,8 +187,8 @@ export default function() {
     log.info('runlambdastorage');
 
     var password = query.password;
-    var mackill = `ps -ef | grep '[l]ambda gateway' | awk '{print $2'} | xargs kill`;
-    var winkill = `taskkill /F /IM lambda.exe`;
+    var mackill = `ps -ef | grep '${DAEMON_CONFIG.LambdaSfile().replace('lamb', '[l]amb')} gateway' | awk '{print $2'} | xargs kill`;
+    var winkill = `taskkill /F /IM ${DAEMON_CONFIG.LambdaSfile()}`;
     var nowos = os.platform();
     console.log(nowos);
     var nowkil = nowos == 'win32' ? winkill : mackill;
@@ -244,46 +230,6 @@ export default function() {
       return resultView({
         s3: s3result
       }, true);
-
-      // getAsync(nowkil)
-      //   .then(() => {
-      //     console.log('kill [l]amb gateway ok');
-      //     log.info(`kill [l]amb gateway ok`);
-      //     log.info(`suppose`);
-
-      //     suppose(path.join(DAEMON_CONFIG.BASE_PATH,'lamb'),
-      //       [
-      //         `gateway`,
-      //         `--broker.dht_gateway_addr`,
-      //         `${ip}:26662`,
-      //         `--broker.validator_addr`,
-      //         `${ip}:13659`,
-      //         `--broker.extra_key_file`,
-      //         `${keypath}`,
-      //         `--gateway.address`,
-      //         gatewayaddress,
-      //         `--gateway.access_key`,
-      //         accesskey,
-      //         `--gateway.secret_key`,
-      //         secretKey
-      //       ], { debug: fs.createWriteStream(path.join(DAEMON_CONFIG.BASE_PATH, 'debug.txt')) })
-      //       .when(/.*/).respond(`${password}\n`)
-      //       .on('error', function(error) {
-      //         console.log(error.message);
-      //         log.info('suppose error');
-      //         log.info(error.message);
-      //         throw resultView(null, false, error);
-      //       })
-      //       .end(function(code) {
-      //         log.info('suppose end');
-      //         log.info(code);
-      //         return resultView({}, true);
-      //       });
-      //   }, () => {
-      //     console.log('kill [l]amb gateway error');
-      //     log.info(`kill [l]amb gateway error`);
-      //     throw resultView(null, false, error);
-      //   });
     } catch (error) {
       console.log(error);
 

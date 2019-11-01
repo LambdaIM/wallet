@@ -191,12 +191,16 @@
                             <Col span="8" class-name="title-wrapper">
                               <span class="title">{{$t('orderinfo.lambdastorageConsole')}}:</span>
                             </Col>
-                            <Col span="16" class-name="content-wrapper">
+                            <Col span="8" class-name="content-wrapper">
 
                               {{$t('orderinfo.Username')}}：{{managerkey['access-key']}}，
                               {{$t('orderinfo.Password')}}：{{managerkey['secret-key']}}<br/>
                               <!-- 访问地址：{{managerkey['address']}}<br/> -->
 
+
+                            </Col>
+                            <Col span="8" class-name="title-wrapper">
+                              <Button type="default" > 修改登录信息 </Button>
                             </Col>
                           </Row>
 
