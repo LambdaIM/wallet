@@ -299,7 +299,7 @@ export default function() {
         [
           `gateway`,
           `--broker.dht_gateway_addr`,
-          `${ip}:26662`,
+          `${ip}:13000`,
           `--broker.validator_addr`,
           `${ip}:13659`,
           `--broker.extra_key_file`,

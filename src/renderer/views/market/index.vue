@@ -438,7 +438,7 @@ export default {
         console.log(result);
       } catch (ex) {
         console.log(ex);
-        clearTimeout(this.$data.timeid);
+
         this.$data.loading = false;
         if (ex.errormsg.indexOf('Got a signal from the OS') == -1) {
           this.$Notice.error({
