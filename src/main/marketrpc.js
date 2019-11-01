@@ -164,6 +164,35 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('editlambdastoragemanagerkey', async query => {
+    var { accesskey, secretkey } = query;
+    if (accesskey == undefined) {
+      throw resultView(null, false, 'need address');
+    }
+    if (secretkey == undefined) {
+      throw resultView(null, false, 'need address');
+    }
+
+    // access-key: lambda
+    // secret-key: 12345678
+
+    try {
+      console.log('lambdastoragemanagerkey');
+      const file = fs.readFileSync(`${DAEMON_CONFIG.BASE_PATH}/s3.yaml`, 'utf8');
+      var yamlconfig = YAML.parse(file);
+
+      yamlconfig.gateway['access-key'] = accesskey;
+      yamlconfig.gateway['secret-key'] = secretkey;
+
+      var result = fs.writeFileSync(`${DAEMON_CONFIG.BASE_PATH}/s3.yaml`, YAML.stringify(yamlconfig), 'utf8');
+
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
   eipc.answerRenderer('lambdastorageclose', async query => {
     try {
       // [l]ambda

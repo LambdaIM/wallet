@@ -200,7 +200,7 @@
 
                             </Col>
                             <Col span="8" class-name="title-wrapper">
-                              <Button type="default" > 修改登录信息 </Button>
+                              <Button @click="editS3user" icon="md-person" type="default" > {{$t('marketpage.edits3userinfo')}} </Button>
                             </Col>
                           </Row>
 
@@ -221,6 +221,27 @@
           <Button :loading="loading"  type="primary" @click="s3authorization">{{$t('Sign.submit')}}</Button>
         </div>
       </Modal>
+    <Modal
+        v-model="editpassword"
+        :title="$t('marketpage.edits3userinfotitle')"
+        footer-hide
+        >
+            <Form ref="formInline" :model="formInline" :rules="ruleInline" >
+        <FormItem prop="user">
+            <Input type="text" v-model="formInline.user" :placeholder="$t('orderinfo.Username')">
+                <Icon type="ios-person-outline" slot="prepend"></Icon>
+            </Input>
+        </FormItem>
+        <FormItem prop="password">
+            <Input type="text" v-model="formInline.password" :placeholder="$t('orderinfo.Password')">
+                <Icon type="ios-lock-outline" slot="prepend"></Icon>
+            </Input>
+        </FormItem>
+        <FormItem>
+            <Button type="primary" @click="handleSubmit('formInline')">{{$t('seting.Submit')}}</Button>
+        </FormItem>
+    </Form>
+    </Modal>
 
 
 
@@ -397,7 +418,22 @@ export default {
       passwordModal: false,
       runstorage: packagejson.runstorage,
       loading: false,
-      timeid: ''
+      timeid: '',
+      editpassword: false,
+      formInline: {
+        user: '',
+        password: ''
+      },
+      ruleInline: {
+        user: [
+          { required: true, message: this.$t('marketpage.action.fillaccesskey'), trigger: 'blur' },
+          { type: 'string', min: 3, message: this.$t('marketpage.action.accesskeytip'), trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: this.$t('marketpage.action.fillsecretkey'), trigger: 'blur' },
+          { type: 'string', min: 8, message: this.$t('marketpage.action.secretkeytip'), trigger: 'blur' }
+        ]
+      }
 
 
 
@@ -426,6 +462,37 @@ export default {
     this.getmarketinfo('');
   },
   methods: {
+    editS3user() {
+      this.$data.editpassword = true;
+    },
+    handleSubmit(name) {
+      this.$refs[name].validate(async valid => {
+        if (valid) {
+          // editlambdastoragemanagerkey
+          try {
+            var result = await ipc.callMain('editlambdastoragemanagerkey', {
+              accesskey: this.$data.formInline.user,
+              secretkey: this.$data.formInline.password
+            });
+
+            console.log(result.state);
+
+            if (result.state) {
+              this.$Message.success(this.$t('seting.action.Modified_success'));
+              this.$data.editpassword = false;
+              this.getmanagerkey();
+            } else {
+              this.$Message.error(this.$t('seting.action.Modification_failed'));
+            }
+          } catch (error) {
+            console.log(error);
+            this.$Message.error(this.$t('seting.action.Modification_failed'));
+          }
+        } else {
+          this.$Message.error(this.$t('seting.action.Modification_failed'));
+        }
+      });
+    },
     s3authorization: async function() {
       console.log('runlambdastorage');
       this.$data.loading = true;
@@ -442,13 +509,15 @@ export default {
         console.log(result);
       } catch (ex) {
         console.log(ex);
-        clearTimeout(this.$data.timeid);
+
         this.$data.loading = false;
+        console.log(ex.errormsg.indexOf('Got a signal from the OS'));
         if (ex.errormsg.indexOf('Got a signal from the OS') == -1) {
           this.$Notice.error({
             title: 'error',
             desc: ex.errormsg
           });
+          clearTimeout(this.$data.timeid);
         }
       }
     },

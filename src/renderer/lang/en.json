@@ -575,7 +575,16 @@
      "userPay":"Order amount",
     "minerPay":"Undrawn deposit",
      "orderdetails":"Details"
-    }
+    },
+    "edits3userinfo":"Modify S3 login information",
+    "edits3userinfotitle":"Modify login information of lambda S3",       
+    "action":{
+      "fillaccesskey":"Please fill in the access-key",
+      "fillsecretkey":"Please fill in the secret-key",
+      "accesskeytip":"The minimum key length cannot be less than 3",
+      "secretkeytip":"The minimum length of private key cannot be less than 8"
+
+  }
 
 
 },
