@@ -43,7 +43,7 @@
       "voting_power": "voting power",
       "Switch_Validator": "切换验证节点",
       "Privat_Key_Info": "私钥信息",
-      "Keystore_File_Backup": "密钥存储文件备份",
+      "Keystore_File_Backup": "打开钱包配置文件夹",
       "Version": "版本",
       "Current_Version": "现行版本",
       "Logout": "注销",
@@ -569,6 +569,17 @@
         "userPay":"订单金额",
         "minerPay":"未提取的押金",
         "orderdetails":"订单详情"
+       },
+       "edits3userinfo":"修改s3登录信息",
+       "edits3userinfotitle":"修改lambda S3 登录信息",
+       
+
+       "action":{
+           "fillaccesskey":"请填写密钥",
+           "fillsecretkey":"请填写私钥",
+           "accesskeytip":"密钥最短长度不能小于3",
+           "secretkeytip":"私钥最短长度不能小于8"
+
        }
 
 
@@ -593,8 +604,8 @@
     "lambdastorageConsole":"lambda storage 控制台登录信息",
     "Viewlambdastorage":"在lambda storage 中查看订单空间",
     "Filelossarbitration":"文件丢失申请仲裁",
-    "Username":"access-key",
-    "Password":"secret-key"
+    "Username":"密钥",
+    "Password":"私钥"
 
    }
 }

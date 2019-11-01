@@ -148,22 +148,7 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
-  eipc.answerRenderer('cmdtest', async query => {
-    try {
-      console.log('cmdtest');
 
-
-      // const result = await getAsync(`${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
-      // console.log(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
-      // console.log(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
-      var result = cmd.run(`echo 12345678| ${DAEMON_CONFIG.BASE_PATH}/lamb gateway start genesis --external_order`);
-
-
-      return resultView(result, true);
-    } catch (ex) {
-      throw resultView(null, false, ex);
-    }
-  });
 
 
   eipc.answerRenderer('lambdastoragemanagerkey', async query => {
@@ -179,13 +164,60 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('editlambdastoragemanagerkey', async query => {
+    var { accesskey, secretkey } = query;
+    if (accesskey == undefined) {
+      throw resultView(null, false, 'need address');
+    }
+    if (secretkey == undefined) {
+      throw resultView(null, false, 'need address');
+    }
+
+    // access-key: lambda
+    // secret-key: 12345678
+
+    try {
+      console.log('lambdastoragemanagerkey');
+      const file = fs.readFileSync(`${DAEMON_CONFIG.BASE_PATH}/s3.yaml`, 'utf8');
+      var yamlconfig = YAML.parse(file);
+
+      yamlconfig.gateway['access-key'] = accesskey;
+      yamlconfig.gateway['secret-key'] = secretkey;
+
+      var result = fs.writeFileSync(`${DAEMON_CONFIG.BASE_PATH}/s3.yaml`, YAML.stringify(yamlconfig), 'utf8');
+
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('lambdastorageclose', async query => {
+    try {
+      // [l]ambda
+      var mackill = `ps -ef | grep '${DAEMON_CONFIG.LambdaSfile().replace('lamb', '[l]amb')} gateway' | awk '{print $2'} | xargs kill`;
+      var winkill = `taskkill /F /IM ${DAEMON_CONFIG.LambdaSfile()}`;
+      var nowos = os.platform();
+      console.log(nowos);
+      var nowkil = nowos == 'win32' ? winkill : mackill;
+      var killresult = await getAsync(nowkil);
+
+
+
+      return resultView({}, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
 
   eipc.answerRenderer('runlambdastorage', async query => {
     log.info('runlambdastorage');
 
     var password = query.password;
-    var mackill = `ps -ef | grep '[l]amb gateway' | awk '{print $2'} | xargs kill`;
-    var winkill = `taskkill /F /IM lamb.exe`;
+    var mackill = `ps -ef | grep '${DAEMON_CONFIG.LambdaSfile().replace('lamb', '[l]amb')} gateway' | awk '{print $2'} | xargs kill`;
+    var winkill = `taskkill /F /IM ${DAEMON_CONFIG.LambdaSfile()}`;
     var nowos = os.platform();
     console.log(nowos);
     var nowkil = nowos == 'win32' ? winkill : mackill;
@@ -211,7 +243,7 @@ export default function() {
       console.log(yamlconfig);
       var gatewayaddress = yamlconfig.gateway.address;
       var accesskey = yamlconfig.gateway['access-key'];
-      var secretKey = yamlconfig.gateway['access-key'];
+      var secretKey = yamlconfig.gateway['secret-key'];
 
 
       /*
@@ -227,46 +259,6 @@ export default function() {
       return resultView({
         s3: s3result
       }, true);
-
-      // getAsync(nowkil)
-      //   .then(() => {
-      //     console.log('kill [l]amb gateway ok');
-      //     log.info(`kill [l]amb gateway ok`);
-      //     log.info(`suppose`);
-
-      //     suppose(path.join(DAEMON_CONFIG.BASE_PATH,'lamb'),
-      //       [
-      //         `gateway`,
-      //         `--broker.dht_gateway_addr`,
-      //         `${ip}:26662`,
-      //         `--broker.validator_addr`,
-      //         `${ip}:13659`,
-      //         `--broker.extra_key_file`,
-      //         `${keypath}`,
-      //         `--gateway.address`,
-      //         gatewayaddress,
-      //         `--gateway.access_key`,
-      //         accesskey,
-      //         `--gateway.secret_key`,
-      //         secretKey
-      //       ], { debug: fs.createWriteStream(path.join(DAEMON_CONFIG.BASE_PATH, 'debug.txt')) })
-      //       .when(/.*/).respond(`${password}\n`)
-      //       .on('error', function(error) {
-      //         console.log(error.message);
-      //         log.info('suppose error');
-      //         log.info(error.message);
-      //         throw resultView(null, false, error);
-      //       })
-      //       .end(function(code) {
-      //         log.info('suppose end');
-      //         log.info(code);
-      //         return resultView({}, true);
-      //       });
-      //   }, () => {
-      //     console.log('kill [l]amb gateway error');
-      //     log.info(`kill [l]amb gateway error`);
-      //     throw resultView(null, false, error);
-      //   });
     } catch (error) {
       console.log(error);
 
@@ -278,7 +270,7 @@ export default function() {
 
   function runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password) {
     return new Promise(function (resolve, reject) {
-      suppose(path.join(DAEMON_CONFIG.BASE_PATH, 'lamb'),
+      suppose(path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile()),
         [
           `gateway`,
           `--broker.dht_gateway_addr`,
@@ -295,6 +287,7 @@ export default function() {
           secretKey,
           `--home`,
           DAEMON_CONFIG.OrderS3File
+
         ]
         // , { debug: fs.createWriteStream(path.join(DAEMON_CONFIG.BASE_PATH, 'debug.txt')) }
       )

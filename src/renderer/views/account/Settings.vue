@@ -442,7 +442,9 @@ export default {
     onError: function(e) {
       this.$Message.info('Failed to copy texts');
     },
-    logout() {
+    async logout() {
+      // lambdastorageclose
+      var res = await ipc.callMain('lambdastorageclose', {});
       settings.set('isopenfilev1', false);
       document.title = window.title;
       this.$store.dispatch('setLogin', false);
