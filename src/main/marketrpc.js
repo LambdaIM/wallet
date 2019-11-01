@@ -274,7 +274,7 @@ export default function() {
         [
           `gateway`,
           `--broker.dht_gateway_addr`,
-          `${ip}:26662`,
+          `${ip}:13000`,
           `--broker.validator_addr`,
           `${ip}:13659`,
           `--broker.extra_key_file`,
@@ -289,7 +289,7 @@ export default function() {
           DAEMON_CONFIG.OrderS3File
 
         ]
-        // , { debug: fs.createWriteStream(path.join(DAEMON_CONFIG.BASE_PATH, 'debug.txt')) }
+        , { debug: fs.createWriteStream(path.join(DAEMON_CONFIG.BASE_PATH, 'debug.txt')) }
       )
         .when(/.*/).respond(`${password}\n`)
         .on('error', function(error) {

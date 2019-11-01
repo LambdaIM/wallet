@@ -238,7 +238,6 @@ export default {
       return this.CalculationMypledge(row.shares, row.delegator_shares, row.tokens);
     },
     link(operator_address) {
-      console.log(operator_address);
       return '/stakinginfo/' + operator_address;
     },
     async getListData() {
