@@ -203,6 +203,24 @@
                               <Button @click="editS3user" icon="md-person" type="default" > {{$t('marketpage.edits3userinfo')}} </Button>
                             </Col>
                           </Row>
+                          <Row class-name="card-item">
+                            <Col span="24" class-name="title-wrapper">
+                              <span style="cursor: pointer;" @click="opencmd"  class="title">打开失败？<Icon v-if="cmdstate==true" type="ios-arrow-dropdown-circle" /> <Icon v-if="cmdstate==false" type="ios-arrow-dropup-circle" /></span>
+                            </Col>
+                            <Col v-if="cmdstate" span="24" class-name="content-wrapper">
+                            自动打开lambda storage 控制台失败后，打开命令行终端，执行如下命令<Button
+              v-clipboard:copy="storagecommandline"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+              type="primary"
+              shape="circle"
+              icon="ios-copy"
+            ></Button><br/>
+
+                            <Input readonly v-model="storagecommandline" type="textarea" :rows="4" />
+
+                            </Col>
+                          </Row>
 
                  </TabPane>
 
@@ -433,7 +451,9 @@ export default {
           { required: true, message: this.$t('marketpage.action.fillsecretkey'), trigger: 'blur' },
           { type: 'string', min: 8, message: this.$t('marketpage.action.secretkeytip'), trigger: 'blur' }
         ]
-      }
+      },
+      storagecommandline: '',
+      cmdstate: false
 
 
 
@@ -451,6 +471,7 @@ export default {
     this.getSellOrderslist();
     this.getUserOrderslist();
     this.getmanagerkey();
+    this.getlambdastoragecommandline();
 
 
     eventhub.$on('TransactionSuccess', data => {
@@ -458,10 +479,20 @@ export default {
       this.getSellOrderslist();
       this.getUserOrderslist();
       this.getOrderList();
+      this.getlambdastoragecommandline();
     });
     this.getmarketinfo('');
   },
   methods: {
+    opencmd() {
+      this.$data.cmdstate = !this.$data.cmdstate;
+    },
+    onCopy: function(e) {
+      this.$Message.info(this.$t('head.action.You_just_copied') + e.text);
+    },
+    onError: function(e) {
+      this.$Message.info(this.$t('head.action.Failed_to_copy_texts'));
+    },
     editS3user() {
       this.$data.editpassword = true;
     },
@@ -617,6 +648,15 @@ export default {
         marketAddress: this.$data.selectmarket.marketAddress,
         unitprice: this.$data.marketinfo.order_normal_price
       }, spaceSize, spaceDuration);
+    },
+    async  getlambdastoragecommandline() {
+      console.log('getlambdastoragecommandline');
+      let res = await ipc.callMain('lambdastoragecommandline', {
+
+      });
+      if (res.state) {
+        this.$data.storagecommandline = res.data;
+      }
     },
     orderinfo(item) {
       this.$router.push(`/orderinfo/${item.MatchOrder.orderId}`);

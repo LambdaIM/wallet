@@ -246,15 +246,6 @@ export default function() {
       var secretKey = yamlconfig.gateway['secret-key'];
 
 
-      /*
-
-./lamb  gateway --broker.dht_gateway_addr 47.93.225.51:26662 --broker.validator_addr 47.93.225.51:13659 --broker.extra_key_file /Users/webjs/lambWallet/Wallet/lambda1ry8396ua5z2fsjxcv30v9v8myjfqq7a46zepml.keyinfo --gateway.address 127.0.0.1:9008 --gateway.access_key lambda --gateway.secret_key 12345678
-
- */
-      //   taskkill /F /IM lamb.exe
-
-
-
       var s3result = await runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password);
       return resultView({
         s3: s3result
@@ -267,6 +258,46 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+
+  eipc.answerRenderer('lambdastoragecommandline', async query => {
+    try {
+      var defaultAddress;
+      if (settings.has('defaultwallet') != false) {
+        defaultAddress = settings.get('defaultwallet');
+        defaultAddress = defaultAddress.toLocaleLowerCase();
+      } else {
+        throw resultView(null, false, 'need defaultAddress');
+      }
+      var ip = DAEMON_CONFIG.ValidatorIp();
+      var keypath = path.join(DAEMON_CONFIG.WalletFile, `${defaultAddress}.keyinfo`);
+
+      const file = fs.readFileSync(`${DAEMON_CONFIG.BASE_PATH}/s3.yaml`, 'utf8');
+      var yamlconfig = YAML.parse(file);
+      console.log(yamlconfig);
+      var gatewayaddress = yamlconfig.gateway.address;
+      var accesskey = yamlconfig.gateway['access-key'];
+      var secretKey = yamlconfig.gateway['secret-key'];
+      var s3result = await getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey);
+
+
+
+      return resultView(s3result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+  function getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey) {
+    return `${path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile())} gateway \
+    --broker.dht_gateway_addr ${ip}:13000 \
+    --broker.validator_addr  ${ip}:13659 \
+    --broker.extra_key_file  ${keypath} \
+    --gateway.address  ${gatewayaddress} \
+    --gateway.access_key  ${accesskey}  \
+    --gateway.secret_key  ${secretKey}  \
+    --home ${DAEMON_CONFIG.OrderS3File} 
+    `;
+  }
 
   function runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password) {
     return new Promise(function (resolve, reject) {
