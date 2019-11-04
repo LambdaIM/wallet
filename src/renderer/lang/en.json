@@ -368,9 +368,9 @@
       "Sellingspace":"Selling space",
       "Marketname":"Market name",
       "Marketaddress":"Market address",
-      "Storagedevice":"Storage device",
-       "selectStoragedevicetip":"Please select a storage device (the last 100 devices)",
-       "Storagedevicetip":"A storage device can only be sold once, it is recommended to sell all the space at once",
+      "Storagedevice":"Storage node",
+       "selectStoragedevicetip":"Please select a storage node (the last 100 storage node)",
+       "Storagedevicetip":"Only one sales order can be attached to a storage node. It is recommended to sell all the space at one time",
        "unitprice1":"Unitprice",
        "unitprice2":"LAMB/GB/month",
        "Odds":"Odds",
@@ -573,7 +573,7 @@
      "Startingtime":"Start time",
      "EndTime":"End Time",
      "userPay":"Order amount",
-    "minerPay":"Undrawn deposit",
+    "minerPay":"Unextracted Order amount order compensation",
      "orderdetails":"Details"
     }
 
@@ -589,7 +589,7 @@
  "Startingtime":"starting time",
  "EndTime":"end Time",
  "userPay":"Order amount",
- "minerPay":"Undrawn deposit",
+ "minerPay":"Unextracted Order amount order compensation",
  "orderdetails":"details",
  "Mineraddress":"miner address",
  "user":"user",

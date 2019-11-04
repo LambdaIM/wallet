@@ -14,7 +14,7 @@
         {{$t('Dialog.sellorder.Marketname')}}：{{market.name}}
       </p><br/>
       <p>{{$t('Dialog.sellorder.Storagedevice')}}&nbsp;&nbsp;
-        <Select :placeholder="$t('Dialog.sellorder.Storagedevicetip')" v-model="machineitem" style="width:300px">
+        <Select :placeholder="$t('Dialog.sellorder.Storagedevicetip')" v-model="machineitem" style="width:400px">
         <Option v-for="item in machineList" :value="item.name" :key="item.name">{{ item.name }}</Option>
     </Select>
       </p>

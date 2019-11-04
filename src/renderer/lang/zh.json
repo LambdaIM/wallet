@@ -362,9 +362,9 @@
       "Sellingspace":"出售空间",
       "Marketname":"市场名称",
       "Marketaddress":"市场地址",
-      "Storagedevice":"存储设备",
-       "selectStoragedevicetip":"请选择存储设备（最近的100个设备）",
-       "Storagedevicetip":"一个存储设备只能出售一次，建议一次出售全部空间",
+      "Storagedevice":"存储节点",
+       "selectStoragedevicetip":"请选择存储节点（最近的100个存储节点）",
+       "Storagedevicetip":"一个存储节点只能挂一个卖单，建议一次出售全部空间",
        "unitprice1":"单价",
        "unitprice2":"LAMB/GB/month",
        "Odds":"赔率",
@@ -567,7 +567,7 @@
         "Startingtime":"开始时间",
         "EndTime":"结束时间",
         "userPay":"订单金额",
-        "minerPay":"未提取的押金",
+        "minerPay":"未提取的订单赔付金",
         "orderdetails":"订单详情"
        }
 
@@ -583,7 +583,7 @@
     "Startingtime":"开始时间",
     "EndTime":"结束时间",
     "userPay":"订单金额",
-    "minerPay":"未提取的押金",
+    "minerPay":"未提取的订单赔付金",
     "orderdetails":"订单详情",
     "Mineraddress":"矿工地址",
     "user":"用户",
