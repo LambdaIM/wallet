@@ -204,7 +204,7 @@
                             </Col>
                           </Row>
                           <Row class-name="card-item">
-                            <Col span="24" class-name="title-wrapper">
+                            <Col span="24" >
                               <span style="cursor: pointer;" @click="opencmd"  class="title">打开失败？<Icon v-if="cmdstate==true" type="ios-arrow-dropdown-circle" /> <Icon v-if="cmdstate==false" type="ios-arrow-dropup-circle" /></span>
                             </Col>
                             <Col v-if="cmdstate" span="24" class-name="content-wrapper">
