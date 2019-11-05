@@ -444,7 +444,13 @@ export default {
     },
     async logout() {
       // lambdastorageclose
-      var res = await ipc.callMain('lambdastorageclose', {});
+      try {
+        var res = await ipc.callMain('lambdastorageclose', {});
+      } catch (error) {
+
+      }
+
+
       settings.set('isopenfilev1', false);
       document.title = window.title;
       this.$store.dispatch('setLogin', false);

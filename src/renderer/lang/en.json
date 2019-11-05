@@ -573,7 +573,7 @@
      "Startingtime":"Start time",
      "EndTime":"End Time",
      "userPay":"Order amount",
-    "minerPay":"Undrawn deposit",
+    "minerPay":"Undrawn order compensation",
      "orderdetails":"Details"
     },
     "edits3userinfo":"Modify S3 login information",
@@ -598,7 +598,7 @@
  "Startingtime":"starting time",
  "EndTime":"end Time",
  "userPay":"Order amount",
- "minerPay":"Undrawn deposit",
+ "minerPay":"Undrawn order compensation",
  "orderdetails":"details",
  "Mineraddress":"miner address",
  "user":"user",
