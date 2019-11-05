@@ -542,6 +542,8 @@
     "Finish":"Finish",
     "Expired":"Expired",
     "Status":"Status",
+    "Openfailure":"Open failure",
+    "Openfailuretip":"After the failure of automatically opening the lambda Storage Console, open the command line terminal and execute the following command to open the console",
     "selltable":{
         "Mineraddress":"Miner address",
         "amountspace":"Amount space(GB)",
@@ -582,7 +584,8 @@
       "fillaccesskey":"Please fill in the access-key",
       "fillsecretkey":"Please fill in the secret-key",
       "accesskeytip":"The minimum key length cannot be less than 3",
-      "secretkeytip":"The minimum length of private key cannot be less than 8"
+      "secretkeytip":"The minimum length of private key cannot be less than 8",
+      "portip":"Please fill in the port number. The port number can only be a number"
 
   }
 
@@ -607,7 +610,8 @@
  "Viewlambdastorage":"View order space in lambda storage",
  "Filelossarbitration":"File loss application arbitration",
  "Username":"access-key",
- "Password":"secret-key"
+ "Password":"secret-key",
+ "Portnumber":"Port number"
  
 
 }

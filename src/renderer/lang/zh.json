@@ -536,6 +536,9 @@
        "Finish":"卖光了",
        "Expired":"过期",
        "Status":"状态",
+       "Openfailure":"打开失败",
+       "Openfailuretip":"自动打开lambda storage 控制台失败后，打开命令行终端，执行如下命令打开控制台",
+       
        "selltable":{
            "Mineraddress":"矿工地址",
            "amountspace":"空间总量(GB)",
@@ -578,8 +581,8 @@
            "fillaccesskey":"请填写密钥",
            "fillsecretkey":"请填写私钥",
            "accesskeytip":"密钥最短长度不能小于3",
-           "secretkeytip":"私钥最短长度不能小于8"
-
+           "secretkeytip":"私钥最短长度不能小于8",
+           "portip":"请填写端口号,端口号只能为数字"
        }
 
 
@@ -605,7 +608,8 @@
     "Viewlambdastorage":"在lambda storage 中查看订单空间",
     "Filelossarbitration":"文件丢失申请仲裁",
     "Username":"密钥",
-    "Password":"私钥"
+    "Password":"私钥",
+    "Portnumber":"端口号"
 
    }
 }

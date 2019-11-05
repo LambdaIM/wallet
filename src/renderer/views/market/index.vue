@@ -205,10 +205,10 @@
                           </Row>
                           <Row class-name="card-item">
                             <Col span="24" >
-                              <span style="cursor: pointer;" @click="opencmd"  class="title">打开失败？<Icon v-if="cmdstate==true" type="ios-arrow-dropdown-circle" /> <Icon v-if="cmdstate==false" type="ios-arrow-dropup-circle" /></span>
+                              <span style="cursor: pointer;" @click="opencmd"  class="title">{{$t('marketpage.Openfailure')}}？<Icon v-if="cmdstate==true" type="ios-arrow-dropdown-circle" /> <Icon v-if="cmdstate==false" type="ios-arrow-dropup-circle" /></span>
                             </Col>
                             <Col v-if="cmdstate" span="24" class-name="content-wrapper">
-                            自动打开lambda storage 控制台失败后，打开命令行终端，执行如下命令<Button
+                            {{$t('marketpage.Openfailuretip')}}<Button
               v-clipboard:copy="storagecommandline"
               v-clipboard:success="onCopy"
               v-clipboard:error="onError"
@@ -253,6 +253,11 @@
         <FormItem prop="password">
             <Input type="text" v-model="formInline.password" :placeholder="$t('orderinfo.Password')">
                 <Icon type="ios-lock-outline" slot="prepend"></Icon>
+            </Input>
+        </FormItem>
+        <FormItem prop="port">
+            <Input type="text" v-model.number="formInline.port" :placeholder="$t('orderinfo.Portnumber')" >
+                <Icon type="ios-disc" slot="prepend"></Icon>
             </Input>
         </FormItem>
         <FormItem>
@@ -440,7 +445,8 @@ export default {
       editpassword: false,
       formInline: {
         user: '',
-        password: ''
+        password: '',
+        port: ''
       },
       ruleInline: {
         user: [
@@ -450,6 +456,10 @@ export default {
         password: [
           { required: true, message: this.$t('marketpage.action.fillsecretkey'), trigger: 'blur' },
           { type: 'string', min: 8, message: this.$t('marketpage.action.secretkeytip'), trigger: 'blur' }
+        ],
+        port: [
+
+          { type: 'integer', message: this.$t('marketpage.action.portip'), trigger: 'blur' }
         ]
       },
       storagecommandline: '',
@@ -503,7 +513,8 @@ export default {
           try {
             var result = await ipc.callMain('editlambdastoragemanagerkey', {
               accesskey: this.$data.formInline.user,
-              secretkey: this.$data.formInline.password
+              secretkey: this.$data.formInline.password,
+              port: this.$data.formInline.port
             });
 
             console.log(result.state);
@@ -517,7 +528,11 @@ export default {
             }
           } catch (error) {
             console.log(error);
-            this.$Message.error(this.$t('seting.action.Modification_failed'));
+            // this.$Message.error(this.$t('seting.action.Modification_failed'));
+            this.$Notice.error({
+              title: this.$t('seting.action.Modification_failed'),
+              desc: error.errormsg
+            });
           }
         } else {
           this.$Message.error(this.$t('seting.action.Modification_failed'));
@@ -556,6 +571,12 @@ export default {
       let res = await ipc.callMain('lambdastoragemanagerkey', {});
       if (res.state) {
         this.$data.managerkey = res.data.gateway;
+        this.$data.formInline.user = this.$data.managerkey['access-key'];
+        this.$data.formInline.password = this.$data.managerkey['secret-key'];
+        this.$data.formInline.port = this.$data.managerkey.address.split(':')[1] || '';
+        // user: '',
+        // password: '',
+        // port:''
       }
     },
     Datacollection: async function() {

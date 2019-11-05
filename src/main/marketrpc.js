@@ -165,7 +165,7 @@ export default function() {
   });
 
   eipc.answerRenderer('editlambdastoragemanagerkey', async query => {
-    var { accesskey, secretkey } = query;
+    var { accesskey, secretkey, port } = query;
     if (accesskey == undefined) {
       throw resultView(null, false, 'need address');
     }
@@ -173,8 +173,14 @@ export default function() {
       throw resultView(null, false, 'need address');
     }
 
-    // access-key: lambda
-    // secret-key: 12345678
+    if (port == undefined) {
+      throw resultView(null, false, 'need port');
+    }
+    if (port >= 65535) {
+      throw resultView(null, false, 'need port and port < 65535 ');
+    }
+
+
 
     try {
       console.log('lambdastoragemanagerkey');
@@ -183,6 +189,8 @@ export default function() {
 
       yamlconfig.gateway['access-key'] = accesskey;
       yamlconfig.gateway['secret-key'] = secretkey;
+      yamlconfig.gateway['address'] = `127.0.0.1:${port}`;
+
 
       var result = fs.writeFileSync(`${DAEMON_CONFIG.BASE_PATH}/s3.yaml`, YAML.stringify(yamlconfig), 'utf8');
 
