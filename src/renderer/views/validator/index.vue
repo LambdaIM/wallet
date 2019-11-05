@@ -18,12 +18,12 @@
         </Col>
     </Row> -->
         <Form ref="formInline"  :model="formInline" :rules="ruleInline" :label-width="120" label-position="left">
-          <FormItem>
+          <!-- <FormItem>
              <Button @click="setmainip"  type="success" ghost >{{$t("foot.DefaultprimaryIP")}}</Button>&nbsp;&nbsp;&nbsp;
              <Button @click="settestip"  type="info" ghost >{{$t("foot.DefaulttestnetworkIP")}}</Button>
 
 
-        </FormItem>
+        </FormItem> -->
         <FormItem @click="settestip" prop="ValidatorIP" :label="$t('Validator.ip')">
             <Input type="text"  v-model="formInline.ValidatorIP" :placeholder="$t('Validator_node')">
 
