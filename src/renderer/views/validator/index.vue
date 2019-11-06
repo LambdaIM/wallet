@@ -18,12 +18,12 @@
         </Col>
     </Row> -->
         <Form ref="formInline"  :model="formInline" :rules="ruleInline" :label-width="120" label-position="left">
-          <FormItem>
+          <!-- <FormItem>
              <Button @click="setmainip"  type="success" ghost >{{$t("foot.DefaultprimaryIP")}}</Button>&nbsp;&nbsp;&nbsp;
              <Button @click="settestip"  type="info" ghost >{{$t("foot.DefaulttestnetworkIP")}}</Button>
 
 
-        </FormItem>
+        </FormItem> -->
         <FormItem @click="settestip" prop="ValidatorIP" :label="$t('Validator.ip')">
             <Input type="text"  v-model="formInline.ValidatorIP" :placeholder="$t('Validator_node')">
 
@@ -42,10 +42,10 @@
     </div>
 
 
-    <div class="demo-spin-container" v-if="node_info.length==0">
+    <div class="demo-spin-container" v-if="node_info&&node_info.length==0">
        <Spin fix></Spin>
     </div>
-      <Mycard  v-if="node_info.length>0" :cardtitle="$t('Validator.Node_info')" class="mb10">
+      <Mycard  v-if="node_info&&node_info.length>0" :cardtitle="$t('Validator.Node_info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row   v-for="item in node_info" class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -57,7 +57,7 @@
           </Row>
         </div>
       </Mycard>
-      <Mycard v-if="sync_info.length>0" :cardtitle="$t('Validator.Sync_info')" class="mb10">
+      <Mycard v-if="node_info&&sync_info.length>0" :cardtitle="$t('Validator.Sync_info')" class="mb10">
         <div class="storage-content" slot="card-content">
           <Row v-for="item in sync_info" class-name="card-item">
             <Col span="4" class-name="title-wrapper">
@@ -202,6 +202,7 @@ export default {
             eventhub.$emit('Refreshbalance');
             _this.getdata();
           } else {
+            _this.$data.node_info = null;
             _this.$Notice.error({
               title: 'error',
               desc: _this.$t('Validator.action.Switching_fail')
@@ -210,6 +211,7 @@ export default {
           }
         })
         .catch(function(err) {
+          _this.$data.node_info = null;
           _this.$data.loadingbtn = false;
           _this.$Notice.error({
             title: 'error',

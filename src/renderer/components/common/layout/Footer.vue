@@ -4,7 +4,7 @@
       <!-- <span class="item etc">Validator id: -->
 
       <span    class="item etc">
-        <Poptip word-wrap trigger="hover" width="300" :content="getIPAndAddress">
+        <!-- <Poptip word-wrap trigger="hover" width="300" :content="getIPAndAddress">
 
           <router-link v-if="login"
             to="/validator"
@@ -14,7 +14,23 @@
             <Badge :type="getNetColour" :text="networkType"></Badge>
           </span>
 
-          </Poptip>
+          </Poptip> -->
+              <Dropdown @on-click="Switchnetwork" >
+                <a style="color:white"  href="javascript:void(0)" >
+                    <Icon :color="getNetColour" type="md-cloud" />{{networkType}}
+                    <Icon type="ios-arrow-down"></Icon>
+                </a>
+
+                <DropdownMenu slot="list">
+                    <DropdownItem name="mainnet" style="text-align: left;"> <Icon color="#19be6b" type="md-cloud" />    主网默认节点  </DropdownItem>
+                    <DropdownItem name="testnet" style="text-align: left;"> <Icon color="#FFC125" type="md-cloud" /> 测试网默认节点 </DropdownItem>
+
+                    <DropdownItem v-if="login" name="customnet" style="text-align: left;" divided><Icon color="#EE30A7" type="md-cloud" />自定义网络 </DropdownItem>
+
+                </DropdownMenu>
+            </Dropdown>
+
+
 
       </span>
 
@@ -42,6 +58,7 @@ import eventhub from '../../../common/js/event.js';
 import { mapState } from 'vuex';
 import { DAEMON_CONFIG } from '../../../../config.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+const settings = require('electron-settings');
 
 
 export default {
@@ -69,6 +86,58 @@ export default {
     });
   },
   methods: {
+    changeValidatorIP(ValidatorIP) {
+      console.log('changeValidatorIP');
+      var nodeBaseUrl = `http://${ValidatorIP}:13659/`;
+
+      var pra = {
+        url: nodeBaseUrl + 'node_info',
+        data: {}
+      };
+      var _this = this;
+
+      ipc.callMain('httpgetstatus', pra)
+        .then(async function(res) {
+          if (res.state && res.data) {
+            settings.set('validator', {
+              ipv1: ValidatorIP
+            });
+
+            _this.$Notice.success({
+              title: _this.$t('Validator.action.Switching_success')
+            });
+            var tempresult = await ipc.callMain('changeip', '');
+            eventhub.$emit('Refreshbalance');
+            setTimeout(() => {
+            // _this.$router.go(0);
+              location.reload();
+            }, 100);
+          } else {
+            _this.$Notice.error({
+              title: 'error',
+              desc: _this.$t('Validator.action.Switching_fail')
+
+            });
+          }
+        })
+        .catch(function(err) {
+          _this.$Notice.error({
+            title: 'error',
+            desc: _this.$t('Validator.action.Switching_fail')
+          });
+        });
+    },
+    Switchnetwork(netType) {
+      if (netType == 'mainnet') {
+        // DAEMON_CONFIG.mainnetip
+        this.changeValidatorIP(DAEMON_CONFIG.mainnetip);
+      } else if (netType == 'testnet') {
+        // DAEMON_CONFIG.testnetip
+        this.changeValidatorIP(DAEMON_CONFIG.testnetip);
+      } else {
+        this.$router.push('/validator');
+      }
+    },
     getValidatorIp() {
       ipc.callMain('getValidatorIp', {})
         .then(result => {
@@ -189,15 +258,15 @@ export default {
         result += '.3';
       }
       var colour = {
-        '1.1': 'success',
-        '1.2': 'warning',
-        '1.3': 'warning',
-        '2.1': 'error',
-        '2.2': 'warning',
-        '2.3': 'warning',
-        '3.1': 'error',
-        '3.2': 'normal',
-        '3.3': 'normal'
+        '1.1': '#19be6b',
+        '1.2': '#EE30A7',
+        '1.3': '#EE30A7',
+        '2.1': '#EE30A7',
+        '2.2': '#FFC125',
+        '2.3': '#EE30A7',
+        '3.1': '#EE30A7',
+        '3.2': '#EE30A7',
+        '3.3': '#EE30A7'
       };
       // this.$data.netcolour
       return colour[result];
@@ -222,17 +291,17 @@ export default {
         result = this.$t('foot.cusnet');
         window.netType = 3;
       }
-      if (this.$data.ValidatorIP == DAEMON_CONFIG.mainnetip) {
-        result += this.$t('foot.defaultmaster');
-        // this.$data.netcolour += '.1';
-      } else if (this.$data.ValidatorIP == DAEMON_CONFIG.testnetip) {
-        result += this.$t('foot.Defaulttestnode');
-        // this.$data.netcolour += '.2';
-      } else {
-        result += this.$t('foot.Customnode');
-        // this.$data.netcolour += '.3';
-      }
-      return result;
+      // if (this.$data.ValidatorIP == DAEMON_CONFIG.mainnetip) {
+      //   result += this.$t('foot.defaultmaster');
+      //   // this.$data.netcolour += '.1';
+      // } else if (this.$data.ValidatorIP == DAEMON_CONFIG.testnetip) {
+      //   result += this.$t('foot.Defaulttestnode');
+      //   // this.$data.netcolour += '.2';
+      // } else {
+      //   result += this.$t('foot.Customnode');
+      //   // this.$data.netcolour += '.3';
+      // }
+      return result + `[${this.$t('foot.validator')}：` + this.$store.getters.info.nodeInfo.moniker + ']';
       // lambda-chain-test3.0  测试网
       // lambda-chain-3.0      主网
       // 主网默认ip 39.107.247.86
