@@ -16,7 +16,7 @@
       }
   },
   "foot": {
-      "validator": "验证节点",
+      "validator": "节点",
       "block_height": "块高",
       "block_time": "Sync",
       "sync_block": "同步块…",

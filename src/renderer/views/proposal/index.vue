@@ -22,7 +22,7 @@
         <p style=" word-break:break-all;"   class="clickitem">
 
             {{item.content.value.description.substring(0,300)}}
-            <Button :size="buttonSize" icon="ios-more"  shape="circle"></Button>
+            <Button icon="ios-more"  shape="circle"></Button>
 
 
 

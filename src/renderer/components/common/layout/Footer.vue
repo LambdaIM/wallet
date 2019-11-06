@@ -108,7 +108,10 @@ export default {
             });
             var tempresult = await ipc.callMain('changeip', '');
             eventhub.$emit('Refreshbalance');
-            _this.$router.go(0);
+            setTimeout(() => {
+            // _this.$router.go(0);
+              location.reload();
+            }, 100);
           } else {
             _this.$Notice.error({
               title: 'error',
@@ -288,17 +291,17 @@ export default {
         result = this.$t('foot.cusnet');
         window.netType = 3;
       }
-      if (this.$data.ValidatorIP == DAEMON_CONFIG.mainnetip) {
-        result += this.$t('foot.defaultmaster');
-        // this.$data.netcolour += '.1';
-      } else if (this.$data.ValidatorIP == DAEMON_CONFIG.testnetip) {
-        result += this.$t('foot.Defaulttestnode');
-        // this.$data.netcolour += '.2';
-      } else {
-        result += this.$t('foot.Customnode');
-        // this.$data.netcolour += '.3';
-      }
-      return result + '(' + this.$store.getters.info.nodeInfo.moniker + ')';
+      // if (this.$data.ValidatorIP == DAEMON_CONFIG.mainnetip) {
+      //   result += this.$t('foot.defaultmaster');
+      //   // this.$data.netcolour += '.1';
+      // } else if (this.$data.ValidatorIP == DAEMON_CONFIG.testnetip) {
+      //   result += this.$t('foot.Defaulttestnode');
+      //   // this.$data.netcolour += '.2';
+      // } else {
+      //   result += this.$t('foot.Customnode');
+      //   // this.$data.netcolour += '.3';
+      // }
+      return result + `[${this.$t('foot.validator')}：` + this.$store.getters.info.nodeInfo.moniker + ']';
       // lambda-chain-test3.0  测试网
       // lambda-chain-3.0      主网
       // 主网默认ip 39.107.247.86
