@@ -98,15 +98,15 @@
      <Divider />
 
         <Row>
-        <Col span="22"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
-        <Col span="2">
-
+        <Col span="8"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
+        <Col span="16" style="text-align: right;">
+           <syncbar :marketName="selectmarket.name"/>
         </Col>
       </Row>
      <br/>
      <div>{{$t('marketpage.last100data')}}</div>
      <br/>
-                    <Table v-if="OrderList"  :columns="OrderListcolumns" :data="OrderList">
+                    <Table @on-sort-change="OrderListSort" v-if="OrderList"  :columns="OrderListcolumns" :data="OrderList">
                         <template slot-scope="{ row, index }" slot="action">
                          <Button v-if="row.status=='0'"  @click="openBuyingspace(row)"  type="primary" size="small"> {{$t('marketpage.selltable.Purchasespace')}} </Button>
                         </template>
@@ -284,10 +284,13 @@ import BuyingspaceModal from '@/views/Dialog/BuyingspaceModal.vue';
 import SellingspaceModal from '@/views/Dialog/SellingspaceModal.vue';
 import autoBuyingspaceModal from '@/views/Dialog/autoBuyingspaceModal.vue';
 import eventhub from '../../common/js/event.js';
+import syncbar from './syncbar.vue';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 var packagejson = require('../../../../package.json');
+
+
 export default {
   data() {
     return {
@@ -305,16 +308,19 @@ export default {
       },
       {
         title: this.$t('marketpage.selltable.amountspace'),
-        key: 'sellSize'
+        key: 'sellSize',
+        sortable: 'custom'
       },
       {
         title: this.$t('marketpage.selltable.remainingspace'),
-        key: 'unUseSize'
+        key: 'unUseSize',
+        sortable: 'custom'
       },
       {
         title: this.$t('marketpage.selltable.unitprice'),
         key: 'price',
-        slot: 'price'
+        slot: 'price',
+        sortable: 'custom'
       },
       {
         title: this.$t('marketpage.selltable.minimumspace'),
@@ -332,7 +338,8 @@ export default {
       }, {
         title: this.$t('marketpage.selltable.Odds'),
         key: 'rate',
-        slot: 'rate'
+        slot: 'rate',
+        sortable: 'custom'
       }, {
         title: this.$t('marketpage.Status'),
         key: 'status',
@@ -354,6 +361,7 @@ export default {
           title: this.$t('marketpage.myselltable.unitprice'),
           key: 'price',
           slot: 'price'
+
         },
         {
           title: this.$t('marketpage.myselltable.minimumspace'),
@@ -463,7 +471,10 @@ export default {
         ]
       },
       storagecommandline: '',
-      cmdstate: false
+      cmdstate: false,
+      orderSortinfo: {},
+      islocal: false,
+      islocalfilter: {}
 
 
 
@@ -474,7 +485,8 @@ export default {
     Mycard,
     BuyingspaceModal,
     SellingspaceModal,
-    autoBuyingspaceModal
+    autoBuyingspaceModal,
+    syncbar
   },
   mounted() {
     this.getmarketlist();
@@ -491,9 +503,40 @@ export default {
       this.getOrderList();
       this.getlambdastoragecommandline();
     });
+
+    // marketsellordersync
+
+    eventhub.$on('marketsellordersync', data => {
+      console.log('marketsellordersync');
+      this.$data.islocal = data;
+      this.getOrderList(1);
+    });
+
+    eventhub.$on('marketconditionfilter', data => {
+      console.log('marketconditionfilter');
+      this.$data.islocalfilter = data;
+      this.getOrderList(1);
+    });
+
+
+    // marketconditionfilter
+
+
+
     this.getmarketinfo('');
   },
   methods: {
+    OrderListSort(columninfo) {
+      console.log(columninfo);
+      var key = columninfo.key;
+      var order = columninfo.order;
+      this.$data.orderSortinfo = {
+        key,
+        order
+      };
+
+      this.getOrderList(1);
+    },
     opencmd() {
       this.$data.cmdstate = !this.$data.cmdstate;
     },
@@ -617,7 +660,11 @@ export default {
         marketName: this.$data.selectmarket.name,
         orderType: 'premium', // premium all
         page: page || 1,
-        limit: 10
+        limit: 10,
+        marketAddress: this.$data.selectmarket.marketAddress,
+        islocal: this.$data.islocal,
+        orderSortinfo: this.$data.orderSortinfo,
+        islocalfilter: this.$data.islocalfilter
       });
       if (res.state) {
         this.$data.OrderList = res.data.data || [];
