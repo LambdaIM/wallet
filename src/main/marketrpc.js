@@ -7,6 +7,8 @@ import fs from 'graceful-fs';
 import cmd from 'node-cmd';
 import Promise from 'bluebird';
 
+import marketNedb from './utils/marketNedb';
+
 var { DAEMON_CONFIG } = require('../configmain.js');
 const { ipcMain: eipc } = require('electron-better-ipc');
 const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
@@ -20,11 +22,11 @@ const YAML = require('yaml');
 var log = require('../log').log;
 const os = require('os');
 
-
 var suppose = require('suppose');
 
 
 export default function() {
+  var Nedbjs = new marketNedb();
   eipc.answerRenderer('marketlist', async query => {
     try {
       var M = new Manager();
@@ -47,6 +49,52 @@ export default function() {
     }
   });
   eipc.answerRenderer('marketOrderList', async query => {
+    var { marketName, orderType, page, limit, islocal, marketAddress, orderSortinfo, islocalfilter } = query;
+    if (marketName == undefined) {
+      throw resultView(null, false, 'need marketName');
+    }
+    if (orderType == undefined) {
+      throw resultView(null, false, 'need orderType');
+    }
+
+    if (page == undefined) {
+      throw resultView(null, false, 'need page');
+    }
+
+    if (limit == undefined) {
+      throw resultView(null, false, 'need limit');
+    }
+
+    if (marketAddress == undefined) {
+      throw resultView(null, false, 'need marketAddress');
+    }
+
+    if (islocal == undefined) {
+      islocal = false;
+    }
+    if (islocalfilter == undefined) {
+      islocalfilter = {};
+    }
+
+    try {
+      var M = new Manager();
+      var result;
+      if (islocal == false) {
+        result = await M.getOrderList(marketName, orderType, page, limit);
+      } else {
+        result = {
+          data: await Nedbjs.getSellOrderbymarket(marketAddress, page, limit, orderSortinfo, islocalfilter)
+        };
+      }
+
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('marketOrderListsync', async query => {
     var { marketName, orderType, page, limit } = query;
     if (marketName == undefined) {
       throw resultView(null, false, 'need marketName');
@@ -67,11 +115,16 @@ export default function() {
       var M = new Manager();
       var result = await M.getOrderList(marketName, orderType, page, limit);
 
-      return resultView(result, true);
+      if (result.data.length > 0) {
+        var flag = await Nedbjs.insertTx(result.data);
+      }
+
+      return resultView(result.data.length, true);
     } catch (ex) {
       throw resultView(null, false, ex);
     }
   });
+
   eipc.answerRenderer('marketSellOrderslist', async query => {
     var { page, limit } = query;
     if (page == undefined) {
