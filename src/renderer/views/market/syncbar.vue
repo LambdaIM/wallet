@@ -30,14 +30,14 @@ export default {
     };
   },
   props: {
-    marketName: 
+    marketName:"" 
   },
   mounted() {
 
   },
   methods: {
     conditionChange() {
-      if (this.$data.condition.priceStart != '' && this.$data.condition.priceEnd != ''&&
+      if (this.$data.condition.priceStart != '' && this.$data.condition.priceEnd != '' &&
       this.$data.condition.priceEnd < this.$data.condition.priceStart) {
         this.$Message.info('结束价格不能小于开始价格');
         return;

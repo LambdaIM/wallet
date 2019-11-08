@@ -110,8 +110,31 @@ var walletRouter = new Router({
   }, {
     path: '/market',
     name: 'market',
-    component: () =>
-            import('@/views/market/index.vue')
+    component: () => import('@/views/market/indexMenu.vue'),
+    children: [
+      {
+        path: '',
+        name: 'market1',
+        component: () => import('@/views/market/myorderlist.vue')
+      },
+      {
+        path: 'buyspace',
+        name: 'market2',
+        component: () => import('@/views/market/buyspace.vue')
+      },
+      {
+        path: 'mysellorder',
+        name: 'market2',
+        component: () => import('@/views/market/mysellorderlist.vue')
+      },
+      {
+        path: 'lambdas3',
+        name: 'market2',
+        component: () => import('@/views/market/lambdas3.vue')
+      }
+    ]
+
+
   }, {
     path: '/orderinfo/:id',
     name: 'orderinfo',
