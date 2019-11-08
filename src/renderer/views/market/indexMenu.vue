@@ -2,22 +2,22 @@
 <template>
   <div class="customer-container">
       <div class="tableContainer">
-           <Menu mode="horizontal"  active-name="1">
-        <MenuItem to="/market" name="1">
+           <Menu mode="horizontal"  :active-name="activeItem">
+        <MenuItem to="/market" name="myorderlist">
             <Icon type="ios-paper" />
-            我的订单
+            {{$t('marketpage.orderlist')}}
         </MenuItem>
-        <MenuItem to="/market/buyspace" name="2">
-            <Icon type="ios-people" />
-            购买空间
+        <MenuItem to="/market/buyspace" name="buyspace">
+            <Icon type="ios-pricetag" />
+            {{$t('marketpage.buyingspace')}}
         </MenuItem>
-        <MenuItem to="/market/mysellorder" name="4">
+        <MenuItem to="/market/mysellorder" name="mysellorderlist">
+            <Icon type="md-pricetags" />
+            {{$t('marketpage.sellspace')}}
+        </MenuItem>
+        <MenuItem to="/market/lambdas3" name="lambdas3">
             <Icon type="ios-construct" />
-            我的卖单
-        </MenuItem>
-        <MenuItem to="/market/lambdas3" name="5">
-            <Icon type="ios-construct" />
-            LambdaS3
+            Lambda S3
         </MenuItem>
     </Menu>
       </div>
@@ -25,6 +25,19 @@
 
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      activeItem: this.$route.name
+    };
+  },
+  mounted() {
+
+  }
+
+};
+</script>
 <style lang="less" scoped>
 .customer-container {
   .container {

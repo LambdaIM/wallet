@@ -114,22 +114,22 @@ var walletRouter = new Router({
     children: [
       {
         path: '',
-        name: 'market1',
+        name: 'myorderlist',
         component: () => import('@/views/market/myorderlist.vue')
       },
       {
         path: 'buyspace',
-        name: 'market2',
+        name: 'buyspace',
         component: () => import('@/views/market/buyspace.vue')
       },
       {
         path: 'mysellorder',
-        name: 'market2',
+        name: 'mysellorderlist',
         component: () => import('@/views/market/mysellorderlist.vue')
       },
       {
         path: 'lambdas3',
-        name: 'market2',
+        name: 'lambdas3',
         component: () => import('@/views/market/lambdas3.vue')
       }
     ]

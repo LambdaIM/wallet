@@ -195,6 +195,39 @@ export default {
           clearTimeout(this.$data.timeid);
         }
       }
+    },
+    handleSubmit(name) {
+      this.$refs[name].validate(async valid => {
+        if (valid) {
+          // editlambdastoragemanagerkey
+          try {
+            var result = await ipc.callMain('editlambdastoragemanagerkey', {
+              accesskey: this.$data.formInline.user,
+              secretkey: this.$data.formInline.password,
+              port: this.$data.formInline.port
+            });
+
+            console.log(result.state);
+
+            if (result.state) {
+              this.$Message.success(this.$t('seting.action.Modified_success'));
+              this.$data.editpassword = false;
+              this.getmanagerkey();
+            } else {
+              this.$Message.error(this.$t('seting.action.Modification_failed'));
+            }
+          } catch (error) {
+            console.log(error);
+            // this.$Message.error(this.$t('seting.action.Modification_failed'));
+            this.$Notice.error({
+              title: this.$t('seting.action.Modification_failed'),
+              desc: error.errormsg
+            });
+          }
+        } else {
+          this.$Message.error(this.$t('seting.action.Modification_failed'));
+        }
+      });
     }
 
 
