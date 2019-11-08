@@ -39,7 +39,7 @@
      <Row>
         <Col span="8"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
         <Col span="16" style="text-align: right;">
-           <!-- <syncbar :marketName="selectmarket.name"/> -->
+           <syncbar :marketName="selectmarket.name"/>
         </Col>
       </Row>
       <br/>
@@ -89,6 +89,8 @@ import MyTable from '@/components/common/useful/Mytable.vue';
 import Mycard from '@/components/common/useful/Mycard.vue';
 import autoBuyingspaceModal from '@/views/Dialog/autoBuyingspaceModal.vue';
 import BuyingspaceModal from '@/views/Dialog/BuyingspaceModal.vue';
+import eventhub from '../../common/js/event.js';
+import syncbar from './syncbar.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 var packagejson = require('../../../../package.json');
@@ -157,10 +159,23 @@ export default {
   mounted() {
     this.getmarketlist();
     this.getmarketinfo('');
+
+    eventhub.$on('marketsellordersync', data => {
+      console.log('marketsellordersync');
+      this.$data.islocal = data;
+      this.getOrderList(1);
+    });
+
+    eventhub.$on('marketconditionfilter', data => {
+      console.log('marketconditionfilter');
+      this.$data.islocalfilter = data;
+      this.getOrderList(1);
+    });
   },
   components: {
     autoBuyingspaceModal,
-    BuyingspaceModal
+    BuyingspaceModal,
+    syncbar
   },
   methods: {
     async getmarketlist() {
@@ -201,15 +216,15 @@ export default {
       this.getOrderList(page);
     },
     OrderListSort(columninfo) {
-      // console.log(columninfo);
-      // var key = columninfo.key;
-      // var order = columninfo.order;
-      // this.$data.orderSortinfo = {
-      //   key,
-      //   order
-      // };
+      console.log(columninfo);
+      var key = columninfo.key;
+      var order = columninfo.order;
+      this.$data.orderSortinfo = {
+        key,
+        order
+      };
 
-      // this.getOrderList(1);
+      this.getOrderList(1);
     },
     selectmarketClick(name) {
       console.log(name);
