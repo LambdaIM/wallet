@@ -538,6 +538,8 @@
        "Status":"状态",
        "Openfailure":"打开失败",
        "Openfailuretip":"自动打开lambda storage 控制台失败后，打开命令行终端，执行如下命令打开控制台",
+       "Localsorting1":"打开本地排序",
+       "Localsorting2":"关闭本地排序",
        
        "selltable":{
            "Mineraddress":"矿工地址",

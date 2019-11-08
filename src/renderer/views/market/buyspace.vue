@@ -37,8 +37,8 @@
 
      <Divider />
      <Row>
-        <Col span="8"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
-        <Col span="16" style="text-align: right;">
+        <Col span="7"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
+        <Col span="17" style="text-align: right;">
            <syncbar :marketName="selectmarket.name"/>
         </Col>
       </Row>
@@ -216,6 +216,10 @@ export default {
       this.getOrderList(page);
     },
     OrderListSort(columninfo) {
+      if (this.$data.islocal == false) {
+        this.$Message.info(this.$t('marketpage.Localsorting3'));
+        return;
+      }
       console.log(columninfo);
       var key = columninfo.key;
       var order = columninfo.order;
