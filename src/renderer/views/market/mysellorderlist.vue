@@ -3,8 +3,21 @@
   <div class="customer-container">
       <div class="tableContainer">
              <Row>
-        <Col span="20">&nbsp;</Col>
-        <Col span="4">
+        <Col span="16">
+        &nbsp;
+        </Col>
+        <Col span="8">
+        <Dropdown @on-click="selectmarketClick">
+        <a href="javascript:void(0)">
+            {{selectmarket.name}}
+            <Icon type="ios-arrow-down"></Icon>
+        </a>
+        <DropdownMenu  v-if="marketList" slot="list">
+            <DropdownItem :name="item.name" :key="item.marketAddress" v-for="item in marketList" >{{item.name}}</DropdownItem>
+
+
+        </DropdownMenu>
+    </Dropdown>
         <Button @click="openSellingspace" type="primary"  size="small">{{$t('marketpage.sellspacebtn')}}</Button>
         </Col>
       </Row>
@@ -35,12 +48,14 @@
                      <Page  @on-change="SellOrderListPage"  :total="100" show-elevator />
                     </div>
       </div>
+      <SellingspaceModal ref="Sellingspace" />
 
   </div>
 </template>
 <script>
 import MyTable from '@/components/common/useful/Mytable.vue';
 import Mycard from '@/components/common/useful/Mycard.vue';
+import SellingspaceModal from '@/views/Dialog/SellingspaceModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 var packagejson = require('../../../../package.json');
@@ -89,12 +104,19 @@ export default {
 
         }
       ],
-      SellOrderslist: []
+      SellOrderslist: [],
+      selectmarket: '',
+      marketList: []
 
     };
   },
   mounted() {
     this.getSellOrderslist(1);
+    this.getmarketlist();
+  },
+  components: {
+    SellingspaceModal
+
   },
   methods: {
     async  getSellOrderslist(page) {
@@ -109,6 +131,26 @@ export default {
     SellOrderListPage(page) {
       console.log(page);
       this.getSellOrderslist(page);
+    },
+    openSellingspace() {
+      this.$refs.Sellingspace.open(this.$data.selectmarket);
+    },
+    async getmarketlist() {
+      console.log('getmarketlist');
+      let res = await ipc.callMain('marketlist', {});
+      if (res.state) {
+        this.$data.marketList = res.data.data;
+        this.$data.selectmarket = this.$data.marketList[0];
+      }
+    },
+    selectmarketClick(name) {
+      console.log(name);
+      var _this = this;
+      this.$data.marketList.forEach(item => {
+        if (name == item.name) {
+          _this.$data.selectmarket = item;
+        }
+      });
     }
 
 

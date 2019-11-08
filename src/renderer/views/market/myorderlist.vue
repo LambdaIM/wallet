@@ -120,6 +120,9 @@ export default {
     this.getUserOrderslist(1);
   },
   methods: {
+    orderinfo(item) {
+      this.$router.push(`/orderinfo/${item.MatchOrder.orderId}`);
+    },
     async getUserOrderslist(page) {
       let res = await ipc.callMain('marketUserOrderslist', {
         page: page || 1,

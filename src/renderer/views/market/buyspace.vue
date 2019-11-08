@@ -80,11 +80,15 @@
 
 
      </div>
+     <autoBuyingspaceModal ref="autoBuyingspace" />
+     <BuyingspaceModal ref="Buyingspace" />
   </div>
 </template>
 <script>
 import MyTable from '@/components/common/useful/Mytable.vue';
 import Mycard from '@/components/common/useful/Mycard.vue';
+import autoBuyingspaceModal from '@/views/Dialog/autoBuyingspaceModal.vue';
+import BuyingspaceModal from '@/views/Dialog/BuyingspaceModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 var packagejson = require('../../../../package.json');
@@ -154,6 +158,10 @@ export default {
     this.getmarketlist();
     this.getmarketinfo('');
   },
+  components: {
+    autoBuyingspaceModal,
+    BuyingspaceModal
+  },
   methods: {
     async getmarketlist() {
       console.log('getmarketlist');
@@ -213,6 +221,32 @@ export default {
       });
       this.getmarketinfo(name);
       this.getOrderList();
+    },
+    openautoBuyingspace() {
+      let spaceSize = parseInt(this.$data.autoSpaceSize);
+      let spaceDuration = parseInt(this.$data.autoSpaceDuration);
+
+      if (isNaN(spaceSize) || spaceSize <= 0) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.AutoBuy.action.needspacesize')
+        });
+        return;
+      }
+      if (isNaN(spaceDuration) || spaceDuration <= 0) {
+        this.$Notice.warning({
+          title: this.$t('Dialog.AutoBuy.action.needstime')
+        });
+        return;
+      }
+
+      this.$refs.autoBuyingspace.open({
+        name: this.$data.selectmarket.name,
+        marketAddress: this.$data.selectmarket.marketAddress,
+        unitprice: this.$data.marketinfo.order_normal_price
+      }, spaceSize, spaceDuration);
+    },
+    openBuyingspace(row) {
+      this.$refs.Buyingspace.open(row, this.$data.selectmarket);
     }
   }
 };
