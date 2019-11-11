@@ -544,6 +544,9 @@
     "Status":"Status",
     "Openfailure":"Open failure",
     "Openfailuretip":"After the failure of automatically opening the lambda Storage Console, open the command line terminal and execute the following command to open the console",
+    "Localsorting1":"Turn on local sorting",
+    "Localsorting2":"Turn off local sorting",
+    "Localsorting3":"Please turn on local sorting",
     "selltable":{
         "Mineraddress":"Miner address",
         "amountspace":"Amount space(GB)",

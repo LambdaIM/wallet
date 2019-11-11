@@ -1,8 +1,8 @@
 <template>
 <div>
   <div style="    display: inline-block;"  v-if="switchstate">
- 单价 <Input @on-keyup="conditionChange"  v-model.number="condition.priceStart" size="small"  style="width: 70px" /> ~<Input @on-keyup="conditionChange"  v-model.number="condition.priceEnd" size="small"  style="width: 70px" />
- 赔率 <Input @on-keyup="conditionChange" v-model.number="condition.rateStart" size="small"  style="width: 70px" /> ~<Input  @on-keyup="conditionChange" v-model.number="condition.rateEnd" size="small"  style="width: 70px" />
+ {{$t('marketpage.selltable.unitprice')}} <Input @on-keyup="conditionChange"  v-model.number="condition.priceStart" size="small"  style="width: 70px" /> ~<Input @on-keyup="conditionChange"  v-model.number="condition.priceEnd" size="small"  style="width: 70px" />
+ {{$t('marketpage.selltable.Odds')}} <Input @on-keyup="conditionChange" v-model.number="condition.rateStart" size="small"  style="width: 70px" /> ~<Input  @on-keyup="conditionChange" v-model.number="condition.rateEnd" size="small"  style="width: 70px" />
   </div>
  <Button :loading="loading" @click="switchfn"  type="primary">{{stateTxt}}</Button>
 
@@ -30,14 +30,16 @@ export default {
     };
   },
   props: {
-    marketName: 
+    marketName: {
+      type: String
+    }
   },
   mounted() {
 
   },
   methods: {
     conditionChange() {
-      if (this.$data.condition.priceStart != '' && this.$data.condition.priceEnd != ''&&
+      if (this.$data.condition.priceStart != '' && this.$data.condition.priceEnd != '' &&
       this.$data.condition.priceEnd < this.$data.condition.priceStart) {
         this.$Message.info('结束价格不能小于开始价格');
         return;
@@ -79,9 +81,9 @@ export default {
   computed: {
     stateTxt() {
       if (this.$data.switchstate) {
-        return '关闭本地排序';
+        return this.$t('marketpage.Localsorting2');
       } else {
-        return '开启本地排序';
+        return this.$t('marketpage.Localsorting1');
       }
     }
   }
