@@ -47,6 +47,10 @@
                     <div style="text-align: center;">
                      <Page  @on-change="SellOrderListPage"  :total="allCount" simple />
                     </div>
+                    <br />
+      <br />
+      <br />
+      <br />
       </div>
       <SellingspaceModal ref="Sellingspace" />
 
