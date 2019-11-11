@@ -18,8 +18,26 @@ var walletRouter = new Router({
   {
     path: '/home',
     name: 'Home',
+    children: [
+      {
+        path: '',
+        name: 'txlist',
+        component: () => import('@/views/Home/txlist.vue')
+      },
+      {
+        path: 'coinlist',
+        name: 'coinlist',
+        component: () => import('@/views/Home/coinlist.vue')
+      },
+      {
+        path: 'localtxlist',
+        name: 'localtxlist',
+        component: () => import('@/views/Home/localtxlist.vue')
+      }
+
+    ],
     component: () =>
-            import('@/views/Home.vue')
+            import('@/views/Home/indexMenu.vue')
   },
   {
     path: '/register',

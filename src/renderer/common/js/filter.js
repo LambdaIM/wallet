@@ -2,6 +2,14 @@ import moment from 'moment';
 const BigNumber = require('bignumber.js');
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_DOWN });
 
+const BlanceValue = value => {
+  if (value == '' || value == undefined || value == null) {
+    return '--';
+  }
+  var bigvalue1 = new BigNumber(value).div(1e6).toFixed(6);
+  var bigvalue = new BigNumber(bigvalue1);
+  return `${bigvalue.toFormat()}`;
+};
 
 const formatValue = value => {
   if (value == '' || value == undefined || value == null) {
@@ -153,5 +161,6 @@ export default {
   formatRelativeDate,
   formatAmount,
   formatToTime,
-  formatMonth
+  formatMonth,
+  BlanceValue
 };
