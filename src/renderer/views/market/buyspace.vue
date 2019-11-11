@@ -73,7 +73,7 @@
                     </Table>
                     <br/>
                     <div style="text-align: center;">
-                     <Page  @on-change="orderListPage" :total="100" show-elevator />
+                     <Page   @on-change="orderListPage" :total="allCount" simple/>
                     </div>
                     <br/><br/><br/>
 
@@ -153,7 +153,11 @@ export default {
       islocal: false,
       islocalfilter: {},
       autoSpaceSize: '',
-      autoSpaceDuration: ''
+      autoSpaceDuration: '',
+      allCount: 1,
+      pageCount: {}
+
+
     };
   },
   mounted() {
@@ -209,6 +213,10 @@ export default {
       });
       if (res.state) {
         this.$data.OrderList = res.data.data || [];
+        if (this.$data.pageCount[page] == undefined) {
+          this.$data.pageCount[page] = 1;
+          this.$data.allCount += this.$data.OrderList.length;
+        }
       }
     },
     orderListPage(page) {

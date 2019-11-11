@@ -45,7 +45,7 @@
                  </Table>
                  <br/>
                     <div style="text-align: center;">
-                     <Page  @on-change="SellOrderListPage"  :total="100" show-elevator />
+                     <Page  @on-change="SellOrderListPage"  :total="allCount" simple />
                     </div>
       </div>
       <SellingspaceModal ref="Sellingspace" />
@@ -106,7 +106,9 @@ export default {
       ],
       SellOrderslist: [],
       selectmarket: '',
-      marketList: []
+      marketList: [],
+      allCount: 1,
+      pageCount: {}
 
     };
   },
@@ -126,6 +128,10 @@ export default {
       });
       if (res.state) {
         this.$data.SellOrderslist = res.data.data || [];
+        if (this.$data.pageCount[page] == undefined) {
+          this.$data.pageCount[page] = 1;
+          this.$data.allCount += this.$data.SellOrderslist.length;
+        }
       }
     },
     SellOrderListPage(page) {

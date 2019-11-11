@@ -41,7 +41,7 @@
       <br />
       <br />
       <div style="text-align: center;">
-        <Page @on-change="UserOrdersListPage" :total="100" show-elevator />
+        <Page @on-change="UserOrdersListPage" :total="allCount" simple />
       </div>
       <br />
       <br />
@@ -113,7 +113,9 @@ export default {
           slot: 'status'
         }
       ],
-      UserOrderslist: []
+      UserOrderslist: [],
+      allCount: 1,
+      pageCount: {}
     };
   },
   mounted() {
@@ -130,6 +132,10 @@ export default {
       });
       if (res.state) {
         this.$data.UserOrderslist = res.data.data || [];
+        if (this.$data.pageCount[page] == undefined) {
+          this.$data.pageCount[page] = 1;
+          this.$data.allCount += this.$data.UserOrderslist.length;
+        }
       }
     },
     UserOrdersListPage(page) {
