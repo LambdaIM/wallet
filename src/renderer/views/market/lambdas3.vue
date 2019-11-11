@@ -139,9 +139,6 @@ export default {
         this.$data.formInline.user = this.$data.managerkey['access-key'];
         this.$data.formInline.password = this.$data.managerkey['secret-key'];
         this.$data.formInline.port = this.$data.managerkey.address.split(':')[1] || '';
-        // user: '',
-        // password: '',
-        // port:''
       }
     },
     async  getlambdastoragecommandline() {
@@ -213,6 +210,7 @@ export default {
               this.$Message.success(this.$t('seting.action.Modified_success'));
               this.$data.editpassword = false;
               this.getmanagerkey();
+              this.getlambdastoragecommandline();
             } else {
               this.$Message.error(this.$t('seting.action.Modification_failed'));
             }
