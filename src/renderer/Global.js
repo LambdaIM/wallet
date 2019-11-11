@@ -66,13 +66,17 @@ export default {
       var bigvalue = BigNumber.sum(value, value2);
       return bigvalue.toString();
     },
-    Vue.prototype.CalculationMypledge = function (shares, delegator_shares, tokens) {
+    Vue.prototype.CalculationMypledge = function (shares, delegator_shares, tokens, notunit) {
       console.log('CalculationMypledge');
       var BN = BigNumber.clone({ ROUNDING_MODE: BigNumber.ROUND_HALF_UP });
       var bigvalue = new BN(shares).div(delegator_shares).times(tokens);
       bigvalue = bigvalue.div(1e6).toFixed(6);
       var bigvalue2 = new BigNumber(bigvalue);
-      return `${bigvalue2.toFormat()} TBB`;
+      if (notunit == true) {
+        return `${bigvalue2.toString()}`;
+      } else {
+        return `${bigvalue2.toFormat()} TBB`;
+      }
     };
   }
 };

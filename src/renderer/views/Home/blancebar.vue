@@ -11,6 +11,12 @@
         </Col>
         <Col span="4" class="account-item">
           <div class="item-wrapper">
+            <p class="title">质押总量(TBB)</p>
+            <p class="value">{{pledgeAmount }}</p>
+          </div>
+        </Col>
+        <Col span="4" class="account-item">
+          <div class="item-wrapper">
             <p class="title">{{$t('home.Reward')}}(LAMB)</p>
             <p class="value">{{DistributionReward|BlanceValue}}</p>
           </div>
@@ -21,12 +27,7 @@
             <p class="value">{{distributionBalance|BlanceValue}}</p>
           </div>
         </Col>
-        <Col span="4" class="account-item">
-          <div class="item-wrapper">
-            <p class="title">质押总量(TBB)</p>
-            <p class="value">500000000.000000</p>
-          </div>
-        </Col>
+
 
 
       </Row>
@@ -42,11 +43,20 @@ export default {
   data() {
     return {
       activeItem: this.$route.name,
-      distributionBalance: 0
+      distributionBalance: 0,
+      mydelegationsList: [],
+      validatorsList: [],
+      pledgeAmount: 0
     };
   },
-  mounted() {
+  async mounted() {
     this.validatorDistribution();
+
+    await this.getvalidatorsList();
+    await this.getdeleData();
+
+    await this.getpartnerListData();
+    await this.getmypartnerDeleData();
   },
   methods: {
     async validatorDistribution() {
@@ -67,6 +77,118 @@ export default {
       } catch (ex) {
         console.log(ex);
       }
+    },
+    async getdeleData() {
+      console.log('getdeleData');
+      try {
+        let res = await ipc.callMain('mydelegations', {
+          operator_address: this.address
+        });
+
+        console.log(res);
+
+        if (res.state) {
+          this.$data.mydelegationsList = res.data || [];
+          this.validatorsListForMe();
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+      console.log('getListDataEnd');
+    },
+    async getvalidatorsList() {
+      console.log('getListData');
+      try {
+        let res = await ipc.callMain('validatorsList', {});
+
+        console.log(res);
+
+        if (res.state) {
+          this.$data.validatorsList = res.data;
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+      console.log('getListDataEnd');
+    },
+    validatorsListForMe() {
+      var list = [];
+      this.$data.mydelegationsList.forEach(myitem => {
+        this.$data.validatorsList.forEach(item => {
+          if (item.operator_address == myitem.validator_address) {
+            myitem = Object.assign({}, myitem, item);
+            myitem.reward = '--';
+            list.push(myitem);
+          }
+        });
+      });
+
+      this.getMyTotalpledge(list);
+    },
+    myMypledge(row) {
+      return this.CalculationMypledge(row.shares, row.delegator_shares, row.tokens, true);
+    },
+    getMyTotalpledge(list) {
+      var shares = 0; var delegator_shares = 0; var tokens = 0;
+      list.forEach(item => {
+        shares = this.bigNumAdd(shares, item.shares);
+        delegator_shares = this.bigNumAdd(delegator_shares, item.delegator_shares);
+        tokens = this.bigNumAdd(tokens, item.tokens);
+      });
+      var temp = this.myMypledge({
+        shares,
+        delegator_shares,
+        tokens
+      });
+      this.$data.pledgeAmount = this.bigNumAdd(this.$data.pledgeAmount, temp);
+    },
+    async getpartnerListData() {
+      console.log('partnerList');
+      try {
+        let res = await ipc.callMain('partnerList', {});
+        if (res.state) {
+          this.$data.partnerList = res.data;
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+      console.log('getListDataEnd');
+    },
+    async getmypartnerDeleData() {
+      console.log('getListData');
+      try {
+        let res = await ipc.callMain('mypartnerDelegations', {
+          operator_address: this.address
+        });
+        // let poolres= await ipc.callMain("pool", {});
+        // console.log(res);
+        console.log(res);
+        // console.log(poolres)
+        if (res.state) {
+          this.$data.mypartnerdelegationsList = res.data || [];
+          this.partnerListForMe();
+        }
+        // if(poolres.state){
+        //   this.$data.pool=poolres.data
+        // }
+      } catch (ex) {
+        console.log(ex);
+      }
+      console.log('getListDataEnd');
+    },
+    partnerListForMe() {
+      var list = [];
+      this.$data.mypartnerdelegationsList.forEach(myitem => {
+        this.$data.partnerList.forEach(item => {
+          if (item.operator_address == myitem.validator_address) {
+            myitem = Object.assign({}, myitem, item);
+            myitem.reward = '--';
+            list.push(myitem);
+          }
+        });
+      });
+
+      this.getMyTotalpledge(list);
     }
   },
   computed: {
@@ -75,6 +197,9 @@ export default {
     },
     DistributionReward: function() {
       return this.$store.getters.getDistributionReward;
+    },
+    address: function() {
+      return this.$store.getters.getaddress;
     }
   }
 
