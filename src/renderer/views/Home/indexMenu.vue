@@ -3,7 +3,7 @@
   <div class="customer-container">
       <div class="tableContainer">
         <blancebar/>
-    <Menu @on-select="transferClick" mode="horizontal"  :active-name="activeItem">
+    <Menu :key="time" ref="menu" @on-select="transferClick" mode="horizontal"  v-bind:active-name="activeItem">
         <MenuItem to="/home" name="txlist">
             <Icon type="ios-paper" />
             {{$t('home.Latest_Transaction')}}
@@ -53,7 +53,8 @@ import DistributionModal from '@/views/Dialog/distributionModal.vue';
 export default {
   data() {
     return {
-      activeItem: this.$route.name
+      activeItem: this.$route.name,
+      time: ''
     };
   },
   components: {
@@ -68,11 +69,19 @@ export default {
   methods: {
     transferClick(name) {
       console.log(name);
+
+      this.$data.time = name;
+
       switch (name) {
-        case 'openTransfer':this.$refs.SendModelDialog.open(); break;
-        case 'openWithdraw':this.$refs.WithdrawalModalDialog.open(); break;
-        case 'openWithdrawprofit':this.$refs.DistributionModal.open(); break;
+        case 'openTransfer':this.$refs.SendModelDialog.open(); this.$data.activeItem = this.$route.name; break;
+        case 'openWithdraw':this.$refs.WithdrawalModalDialog.open(); this.$data.activeItem = this.$route.name; break;
+        case 'openWithdrawprofit':this.$refs.DistributionModal.open(); this.$data.activeItem = this.$route.name; break;
+        default :this.$data.activeItem = name;
       }
+
+      // this.$nextTick(()=>{
+      //   this.$refs.menu.updateActiveName();
+      // })
     }
   }
 
