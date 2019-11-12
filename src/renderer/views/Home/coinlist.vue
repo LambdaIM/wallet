@@ -2,7 +2,23 @@
 <template>
   <div class="customer-container">
       <div class="tableContainer">
-       资产列表
+        <Table :columns="columnsToken" :data="coinList">
+
+
+            <template slot-scope="{ row, index }" slot="amount">
+              {{bigNumTypeFormat(row.amount,row.denom)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="denom">
+              {{denomFormart(row.denom)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="action">
+              <Button @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
+
+              <Button v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
+            </template>
+          </Table>
+
+        </TabPane>
       </div>
 
 
@@ -12,11 +28,38 @@
 export default {
   data() {
     return {
-      activeItem: this.$route.name
+
+      columnsToken: [
+        {
+          title: this.$t('home.Token.name'),
+          key: 'denom',
+          slot: 'denom'
+        },
+        {
+          title: this.$t('home.Token.amount'),
+          key: 'amount',
+          slot: 'amount'
+        },
+        {
+          title: this.$t('home.Token.operation'),
+          key: 'action',
+          slot: 'action'
+        }
+      ]
     };
   },
   mounted() {
 
+  },
+  methods: {
+    denomFormart(denom) {
+      return denom.substr(1).toUpperCase();
+    }
+  },
+  computed: {
+    coinList: function() {
+      return this.$store.getters.getcoinList;
+    }
   }
 
 };

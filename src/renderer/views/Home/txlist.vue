@@ -2,20 +2,75 @@
 <template>
   <div class="customer-container">
       <div class="tableContainer">
-       最新交易列表
+       <TxTable :txData="data" :loading="loading" />
       </div>
 
 
   </div>
 </template>
 <script>
+import TxTable from '@/components/txTable/index.vue';
+import txFormat from '@/common/js/txFormat.js';
+
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 export default {
   data() {
     return {
-      activeItem: this.$route.name
+      data: [],
+      pageNumber: 1,
+      loading: true
     };
   },
   mounted() {
+    this.transactionList();
+  },
+  components: {
+    TxTable
+  },
+  methods: {
+    async transactionList(pagenum) {
+      console.log('transactionList');
+
+
+      // this.$data.loading=false;
+      try {
+        // txType: txPledgeNew
+        let param = {
+          pageNum: this.$data.pageNumber,
+          showNum: 10
+        };
+        // if (this.txType != null || this.txType != '') {
+        //   param.txType = this.txType;
+        // }
+
+        let res = await ipc.callMain('transactionList', param);
+        // console.log(res);
+        if (!res.state) return;
+        let tempData = res.data.data;
+        this.$data.data = null;
+        this.data = [];
+
+        if (tempData) {
+          console.log(tempData);
+          tempData.forEach(item => {
+            if (item.error == undefined) {
+              this.data.push(txFormat(item, this));
+            } else {
+              console.log('读取交易记录失败');
+            }
+          });
+        }
+        this.data.sort((item1, item2) => {
+          return item2.timestampSort - item1.timestampSort;
+        });
+        this.$data.loading = false;
+      } catch (ex) {
+        console.log(ex);
+        this.data = [];
+        this.$data.loading = false;
+      }
+    }
 
   }
 
