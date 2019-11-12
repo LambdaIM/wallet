@@ -11,6 +11,7 @@
 <script>
 import TxTable from '@/components/txTable/index.vue';
 import txFormat from '@/common/js/txFormat.js';
+import eventhub from '../../common/js/event.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
@@ -24,6 +25,18 @@ export default {
   },
   mounted() {
     this.transactionList();
+
+    this.Interval = setInterval(() => {
+      this.transactionList();
+    }, 1000 * 15);
+
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.transactionList();
+    });
+  },
+  beforeDestroy() {
+    clearInterval(this.$data.Interval);
   },
   components: {
     TxTable
@@ -78,6 +91,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .customer-container {
+  padding-bottom: 100px;
   .container {
     margin-top: 40px;
   }
