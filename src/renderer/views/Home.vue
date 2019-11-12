@@ -474,6 +474,7 @@ export default {
 
 <style lang="less" scoped>
 .container {
+    padding-bottom: 100px;
   .balance {
     width: 96%;
     margin: 0 auto;

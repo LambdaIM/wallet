@@ -140,7 +140,7 @@ export default {
         delegator_shares,
         tokens
       });
-      this.$data.pledgeAmount = this.bigNumAdd(this.$data.pledgeAmount, temp);
+      if (temp != 'NaN') { this.$data.pledgeAmount = this.bigNumAdd(this.$data.pledgeAmount, temp); }
     },
     async getpartnerListData() {
       console.log('partnerList');
