@@ -109,6 +109,10 @@ export default {
         key: 'address'
       },
       {
+        title: this.$t('marketpage.myselltable.Storagedevice'),
+        key: 'machineName'
+      },
+      {
         title: this.$t('marketpage.selltable.amountspace'),
         key: 'sellSize',
         sortable: 'custom'
@@ -211,6 +215,7 @@ export default {
         orderSortinfo: this.$data.orderSortinfo,
         islocalfilter: this.$data.islocalfilter
       });
+      console.log('- -');
       if (res.state) {
         this.$data.OrderList = res.data.data || [];
         if (this.$data.pageCount[page] == undefined) {
