@@ -617,9 +617,7 @@ export default {
         this.$data.formInline.user = this.$data.managerkey['access-key'];
         this.$data.formInline.password = this.$data.managerkey['secret-key'];
         this.$data.formInline.port = this.$data.managerkey.address.split(':')[1] || '';
-        // user: '',
-        // password: '',
-        // port:''
+        this.$data.formInline.port = parseInt(this.$data.formInline.port);
       }
     },
     Datacollection: async function() {
