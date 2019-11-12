@@ -6,29 +6,7 @@ var datafile = DAEMON_CONFIG.DataFile + '/market.json';
 var Datastore = require('nedb');
 var db = new Datastore({ filename: datafile, autoload: true });
 
-/*
-{
-	"address": "lambdamineroper1cn24p7x4k0thjxwg7ytgtqpdxsxtscsrg5sgrz",
-	"amount": [{
-		"amount": "30000000000",
-		"denom": "ulamb"
-	}],
-	"cancelTimeDuration": "3600000000000",
-	"createTime": "2019-11-05T19:16:32.793945367Z",
-	"machineName": "IPFSJK",
-	"marketAddress": "lambdamarketoper1thj5fv8d0dsh3aealhpxm9mvgxjfh87srk3887",
-	"maxDuration": "155520000000000000",
-	"minBuySize": "1",
-	"minDuration": "2592000000000000",
-	"orderId": "23F759DB238D3E302289F6B0FA1B8EF814610099",
-	"price": "5000000",
-	"rate": "3.000000000000000000",
-	"reserved1": "",
-	"sellSize": "2000",
-	"status": "0",
-	"unUseSize": "2000"
-}
-*/
+
 
 export default class {
   insertTx(sellorderArry) {
@@ -94,7 +72,7 @@ export default class {
               flag = false;
             }
           }
-          if (islocalfilter.priceEnd != '' && islocalfilter.priceEnd != undefined) {
+          if (flag && islocalfilter.priceEnd != '' && islocalfilter.priceEnd != undefined) {
             if (parseInt(this.price) <= islocalfilter.priceEnd * unit) {
               flag = true;
             } else {
@@ -103,7 +81,7 @@ export default class {
           }
           var rate = this.rate.split('.')[0];
 
-          if (islocalfilter.rateStart != '' && islocalfilter.rateStart != undefined) {
+          if (flag && islocalfilter.rateStart != '' && islocalfilter.rateStart != undefined) {
             if (parseInt(rate) >= islocalfilter.rateStart) {
               flag = true;
             } else {
@@ -111,15 +89,25 @@ export default class {
             }
           }
 
-          if (islocalfilter.rateEnd != '' && islocalfilter.rateEnd != undefined) {
+          if (flag && islocalfilter.rateEnd != '' && islocalfilter.rateEnd != undefined) {
             if (parseInt(rate) <= islocalfilter.rateEnd) {
               flag = true;
             } else {
               flag = false;
             }
           }
+          if (flag && islocalfilter.storagenode != '' && islocalfilter.storagenode != undefined) {
+            if (this.machineName.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1) {
+              flag = true;
+            } else {
+              flag = false;
+            }
+          }
+
+          // storagenode
 
           // rateStart
+          console.log('rate:', rate);
 
 
           console.log(flag, islocalfilter);

@@ -362,7 +362,7 @@
       "Sellingspace":"出售空间",
       "Marketname":"市场名称",
       "Marketaddress":"市场地址",
-      "Storagedevice":"存储设备",
+      "Storagedevice":"存储节点",
        "selectStoragedevicetip":"请选择存储节点（最近的100个存储节点）",
        "Storagedevicetip":"一个存储节点只能挂一个卖单，建议一次出售全部空间",
        "unitprice1":"单价",
@@ -379,7 +379,7 @@
        "ratetip3":"赔率=1为普通卖单,赔率>=3为优质卖单",
        "ratetip4":"赔率不能=2",
        "action":{
-           "needstoragedevice":"请选择存储设备",
+           "needstoragedevice":"请选择存储节点",
            "needspacesize":"检查空间大小,只能填写整数",
            "needunitprice":"检查单价,只能填写整数",
            "needunitmintime":"检查最小时长,只能填写整数",
@@ -539,8 +539,9 @@
        "Openfailure":"打开失败",
        "Openfailuretip":"自动打开lambda storage 控制台失败后，打开命令行终端，执行如下命令打开控制台",
        "Localsorting1":"打开本地排序",
-       "Localsorting2":"关闭本地排序",
-       
+       "Localsorting2":"关闭",
+       "Localsorting3":"请打开本地排序",
+       "Localsorting4":"开始值不能大于结束值",
        "selltable":{
            "Mineraddress":"矿工地址",
            "amountspace":"空间总量(GB)",
@@ -559,7 +560,7 @@
         "minimumspace":"最小空间(GB)",
         "minimumduration":"最小时长(月)",
         "Odds":"赔率",
-        "Storagedevice":"存储设备",
+        "Storagedevice":"存储节点",
         "Marketaddress":"市场地址"
        },
        "ordertable":{
@@ -567,7 +568,7 @@
         "orderid":"订单Id",
         "amountspace":"空间(GB)",
         "unitprice":"单价(LAMB/GB/月)",
-        "Storagedevice":"存储设备",
+        "Storagedevice":"存储节点",
         "Marketaddress":"市场地址",
         "Startingtime":"开始时间",
         "EndTime":"结束时间",
@@ -594,7 +595,7 @@
     "orderid":"订单ID",
     "space":"空间",
     "unitprice":"单价(LAMB/GB/月)",
-    "Storagedevice":"存储设备",
+    "Storagedevice":"存储节点",
     "Marketaddress":"市场地址",
     "Startingtime":"开始时间",
     "EndTime":"结束时间",
