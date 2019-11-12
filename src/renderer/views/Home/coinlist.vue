@@ -20,11 +20,16 @@
 
         </TabPane>
       </div>
+      <SendModelDialog ref="SendModelDialog" />
+      <AssetlModalDialog ref="AssetlModalDialog" />
 
 
   </div>
 </template>
 <script>
+import SendModelDialog from '@/views/Dialog/sendModel.vue';
+import AssetlModalDialog from '@/views/Dialog/assetlModal.vue';
+
 export default {
   data() {
     return {
@@ -51,9 +56,19 @@ export default {
   mounted() {
 
   },
+  components: {
+    SendModelDialog,
+    AssetlModalDialog
+  },
   methods: {
     denomFormart(denom) {
       return denom.substr(1).toUpperCase();
+    },
+    openAssert(row) {
+      this.$refs.AssetlModalDialog.open(row.amount, row.denom);
+    },
+    cointransaction(row) {
+      this.$refs.SendModelDialog.open(row.amount, row.denom);
     }
   },
   computed: {
@@ -66,6 +81,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .customer-container {
+  padding-bottom: 100px;
   .container {
     margin-top: 40px;
   }

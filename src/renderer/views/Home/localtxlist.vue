@@ -40,8 +40,8 @@
 <script>
 
 import { DAEMON_CONFIG } from '../../../config.js';
+import eventhub from '../../common/js/event.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
-
 const { shell } = require('electron');
 
 
@@ -93,6 +93,18 @@ export default {
   },
   mounted() {
     this.getlocaltxlist();
+
+    this.Interval = setInterval(() => {
+      this.getlocaltxlist();
+    }, 1000 * 15);
+
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.getlocaltxlist();
+    });
+  },
+  beforeDestroy() {
+    clearInterval(this.$data.Interval);
   },
   methods: {
     async getlocaltxlist() {
@@ -149,6 +161,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .customer-container {
+  padding-bottom: 100px;
   .container {
     margin-top: 40px;
   }

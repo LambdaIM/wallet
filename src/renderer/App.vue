@@ -243,6 +243,7 @@ export default {
     top: 0;
     left: 0;
     // border: 1px solid #eee;
+    z-index: 9999;
     }
     .demo-spin-icon-load{
         animation: ani-demo-spin 1s linear infinite;

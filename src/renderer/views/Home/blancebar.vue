@@ -11,7 +11,7 @@
         </Col>
         <Col span="4" class="account-item">
           <div class="item-wrapper">
-            <p class="title">质押总量(TBB)</p>
+            <p class="title">{{$t('home.pledge')}}(TBB)</p>
             <p class="value">{{pledgeAmount }}</p>
           </div>
         </Col>
@@ -46,7 +46,8 @@ export default {
       distributionBalance: 0,
       mydelegationsList: [],
       validatorsList: [],
-      pledgeAmount: 0
+      validatorspledgeAmount: 0,
+      partnerpledgeAmount: 0
     };
   },
   async mounted() {
@@ -57,6 +58,19 @@ export default {
 
     await this.getpartnerListData();
     await this.getmypartnerDeleData();
+
+    this.Interval = setInterval(async () => {
+      this.validatorDistribution();
+
+      await this.getvalidatorsList();
+      await this.getdeleData();
+
+      await this.getpartnerListData();
+      await this.getmypartnerDeleData();
+    }, 1000 * 15);
+  },
+  beforeDestroy() {
+    clearInterval(this.$data.Interval);
   },
   methods: {
     async validatorDistribution() {
@@ -123,12 +137,12 @@ export default {
         });
       });
 
-      this.getMyTotalpledge(list);
+      this.getMyTotalpledge(list, 'validatorspledgeAmount');
     },
     myMypledge(row) {
       return this.CalculationMypledge(row.shares, row.delegator_shares, row.tokens, true);
     },
-    getMyTotalpledge(list) {
+    getMyTotalpledge(list, dataType) {
       var shares = 0; var delegator_shares = 0; var tokens = 0;
       list.forEach(item => {
         shares = this.bigNumAdd(shares, item.shares);
@@ -140,7 +154,11 @@ export default {
         delegator_shares,
         tokens
       });
-      if (temp != 'NaN') { this.$data.pledgeAmount = this.bigNumAdd(this.$data.pledgeAmount, temp); }
+      if (temp != 'NaN') {
+        this.$data[dataType] = temp;
+      }
+
+      // if (temp != 'NaN') { this.$data.pledgeAmount = this.bigNumAdd(this.$data.pledgeAmount, temp); }
     },
     async getpartnerListData() {
       console.log('partnerList');
@@ -188,7 +206,7 @@ export default {
         });
       });
 
-      this.getMyTotalpledge(list);
+      this.getMyTotalpledge(list, 'partnerpledgeAmount');
     }
   },
   computed: {
@@ -200,6 +218,9 @@ export default {
     },
     address: function() {
       return this.$store.getters.getaddress;
+    },
+    pledgeAmount: function() {
+      return this.bigNumAdd(this.$data.validatorspledgeAmount, this.$data.partnerpledgeAmount);
     }
   }
 
