@@ -145,8 +145,7 @@ export default {
       }, {
         title: this.$t('marketpage.selltable.Odds'),
         key: 'rate',
-        slot: 'rate',
-        sortable: 'custom'
+        slot: 'rate'
       }, {
         title: this.$t('marketpage.Status'),
         key: 'status',
@@ -227,6 +226,8 @@ export default {
     eventhub.$on('marketconditionfilter', data => {
       console.log('marketconditionfilter');
       this.$data.islocalfilter = data;
+      this.$data.allCount = 1;
+      this.$data.pageCount = {};
       this.getOrderList(1);
     });
   },
@@ -339,6 +340,7 @@ export default {
         return this.OrderListcolumnsNotSort;
       }
     }
+
   }
 };
 </script>

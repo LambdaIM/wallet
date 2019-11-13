@@ -35,6 +35,8 @@ export default function() {
       var nodeSyncing = await CosmosAPIobj().get.nodeSyncing();
       var blockLatest = await CosmosAPIobj().get.nodeBlocklatest();
 
+      global.__lambNodeinfo = nodeInfo;
+
 
       return { data: {
         nodeInfo: nodeInfo,
