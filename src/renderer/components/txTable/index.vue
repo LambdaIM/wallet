@@ -29,8 +29,8 @@
           </div>
         </Row>
       </div>
-      <div v-else>
-        <Spin size="large" fix ></Spin>
+      <div class="demo-spin-col" v-else>
+        <Spin fix></Spin>
       </div>
   </div>
 </template>
@@ -75,5 +75,12 @@ export default {
       padding: 20px 10px;
     }
   }
+}
+.demo-spin-col{
+  	    display: inline-block;
+        width: 100%;
+        height: 100px;
+        position: relative;
+        border: 1px solid #eee;
 }
 </style>

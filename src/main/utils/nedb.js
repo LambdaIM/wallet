@@ -29,7 +29,8 @@ export default class {
         createTime: new Date().getTime(),
         transactiondata: transactiondata,
         gaseFee: gaseFee,
-        message: ''
+        message: '',
+        network: global.__lambNodeinfo.network
       }, function (err, newDoc) {
         // newDoc is the newly inserted document, including its _id
         // newDoc has no key called notToBeSaved since its value was undefined

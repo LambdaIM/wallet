@@ -164,6 +164,7 @@
           "Status": "状态",
           "detail": "详情",
           "no_Transaction": "无交易"
+          
       },
       "Modal1": {
           "Send_LAMB": "发送 {0}",
@@ -193,6 +194,7 @@
           "time":"发送时间",
           "error":"日志",
           "more":"查看详情",
+          "NetworkID":"网络id",
           "types":{
               "-3":"未发送",
               "-2":"失败",
