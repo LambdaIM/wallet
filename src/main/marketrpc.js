@@ -328,7 +328,6 @@ export default function() {
           DAEMON_CONFIG.OrderS3File
 
         ]
-        , { debug: fs.createWriteStream(path.join(DAEMON_CONFIG.BASE_PATH, 'debug.txt')) }
       )
         .when(/.*/).respond(`${password}\n`)
         .on('error', function(error) {
