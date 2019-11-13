@@ -230,6 +230,10 @@ export default {
       this.$data.pageCount = {};
       this.getOrderList(1);
     });
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.getOrderList(1);
+    });
   },
   components: {
     autoBuyingspaceModal,
