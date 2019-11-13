@@ -46,7 +46,7 @@ var configData = {
     },
     LambdaSfile:function(){
         var nowos = os.platform();
-        return nowos == 'win32' ? 'lambda.exe' : 'lambda';
+        return nowos == 'win32' ? 'lambdav1.exe' : 'lambdav1';
     },           
     setUP:function(){
         if(fs.existsSync(this.BASE_PATH)==false) {
