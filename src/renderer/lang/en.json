@@ -170,6 +170,8 @@
         "Status":"Status",
         "detail":"Detail",
         "no_Transaction":"no Transaction"
+        
+
       },
       "Modal1":{
         "Send_LAMB": "Send {0}",
@@ -199,6 +201,7 @@
         "time":"sending time",
         "error":"log",
         "more":"View details",
+        "NetworkID":"Network ID",
         "types":{
           "-3":"Not sent",
           "-2":"Failure",

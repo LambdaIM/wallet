@@ -85,6 +85,10 @@ export default {
           title: this.$t('home.localtable.more'),
           key: 'createTime',
           slot: 'txinfo'
+        },
+        {
+          key: 'network',
+          title: this.$t('home.localtable.NetworkID')
         }
 
 
