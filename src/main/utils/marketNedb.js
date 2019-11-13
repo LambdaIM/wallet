@@ -15,6 +15,10 @@ export default class {
     return new Promise(function (resolve, reject) {
       var newList = [];
       sellorderArry.forEach(async element => {
+        element.sellSize = Number(element.sellSize);
+        element.price = Number(element.price);
+        element.unUseSize = Number(element.unUseSize);
+
         var result = await _this.Checkexist(element.orderId);
         if (result) {
           newList.push(element);
@@ -107,10 +111,10 @@ export default class {
           // storagenode
 
           // rateStart
-          console.log('rate:', rate);
+          // console.log('rate:', rate);
 
 
-          console.log(flag, islocalfilter);
+          // console.log(flag, islocalfilter);
 
           return flag;
         } }).sort(sortinfo).skip((page - 1) * limit).limit(limit).exec(function (err, docs) {

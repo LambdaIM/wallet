@@ -45,7 +45,8 @@
       <br/>
      <div>{{$t('marketpage.last100data')}}</div>
      <br/>
-                         <Table @on-sort-change="OrderListSort" v-if="OrderList"  :columns="OrderListcolumns" :data="OrderList">
+     <!-- OrderListcolumnsNotSort -->
+                         <Table @on-sort-change="OrderListSort" v-if="OrderList"  :columns="OrderListcolumnsisSort" :data="OrderList">
                         <template slot-scope="{ row, index }" slot="action">
                          <Button v-if="row.status=='0'"  @click="openBuyingspace(row)"  type="primary" size="small"> {{$t('marketpage.selltable.Purchasespace')}} </Button>
                         </template>
@@ -146,6 +147,55 @@ export default {
         key: 'rate',
         slot: 'rate',
         sortable: 'custom'
+      }, {
+        title: this.$t('marketpage.Status'),
+        key: 'status',
+        slot: 'status'
+
+      }
+      ],
+      OrderListcolumnsNotSort: [{
+        title: this.$t('marketpage.selltable.Mineraddress'),
+        key: 'address'
+      },
+      {
+        title: this.$t('marketpage.myselltable.Storagedevice'),
+        key: 'machineName'
+      },
+      {
+        title: this.$t('marketpage.selltable.amountspace'),
+        key: 'sellSize'
+
+      },
+      {
+        title: this.$t('marketpage.selltable.remainingspace'),
+        key: 'unUseSize'
+
+      },
+      {
+        title: this.$t('marketpage.selltable.unitprice'),
+        key: 'price',
+        slot: 'price'
+
+      },
+      {
+        title: this.$t('marketpage.selltable.minimumspace'),
+        key: 'minBuySize'
+      },
+      {
+        title: this.$t('marketpage.selltable.minimumduration'),
+        key: 'minDuration',
+        slot: 'minDuration'
+      },
+      {
+        title: this.$t('marketpage.selltable.operating'),
+        key: 'action',
+        slot: 'action'
+      }, {
+        title: this.$t('marketpage.selltable.Odds'),
+        key: 'rate',
+        slot: 'rate'
+
       }, {
         title: this.$t('marketpage.Status'),
         key: 'status',
@@ -279,6 +329,15 @@ export default {
     },
     openBuyingspace(row) {
       this.$refs.Buyingspace.open(row, this.$data.selectmarket);
+    }
+  },
+  computed: {
+    OrderListcolumnsisSort() {
+      if (this.$data.islocal) {
+        return this.OrderListcolumns;
+      } else {
+        return this.OrderListcolumnsNotSort;
+      }
     }
   }
 };
