@@ -60,9 +60,11 @@
 import MyTable from '@/components/common/useful/Mytable.vue';
 import Mycard from '@/components/common/useful/Mycard.vue';
 import SellingspaceModal from '@/views/Dialog/SellingspaceModal.vue';
+import eventhub from '../../common/js/event.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 var packagejson = require('../../../../package.json');
+
 
 export default {
   data() {
@@ -119,6 +121,10 @@ export default {
   mounted() {
     this.getSellOrderslist(1);
     this.getmarketlist();
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.getSellOrderslist(1);
+    });
   },
   components: {
     SellingspaceModal
