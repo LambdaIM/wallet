@@ -77,6 +77,7 @@ export default {
         this.fetchData();
       } else {
         this.$data.loading = false;
+        eventHub.$emit('marketconditionfilter', this.$data.condition);
       }
     }
   },

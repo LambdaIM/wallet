@@ -12,9 +12,17 @@ export default class {
   insertTx(sellorderArry) {
     var address = this.defaultAddress;
     var _this = this;
+
+    // global.lambNodeinfo.network
+
     return new Promise(function (resolve, reject) {
       var newList = [];
       sellorderArry.forEach(async element => {
+        element.sellSize = Number(element.sellSize);
+        element.price = Number(element.price);
+        element.unUseSize = Number(element.unUseSize);
+        element.network = global.__lambNodeinfo.network;
+
         var result = await _this.Checkexist(element.orderId);
         if (result) {
           newList.push(element);
@@ -62,6 +70,7 @@ export default class {
 
     return new Promise(function (resolve, reject) {
       db.find({ marketAddress: marketAddress,
+        network: global.__lambNodeinfo.network,
         $where: function () {
           var flag = true;
           var unit = 1000000;
@@ -107,10 +116,10 @@ export default class {
           // storagenode
 
           // rateStart
-          console.log('rate:', rate);
+          // console.log('rate:', rate);
 
 
-          console.log(flag, islocalfilter);
+          // console.log(flag, islocalfilter);
 
           return flag;
         } }).sort(sortinfo).skip((page - 1) * limit).limit(limit).exec(function (err, docs) {
@@ -124,7 +133,7 @@ export default class {
   }
   Checkexist(orderId) {
     return new Promise(function (resolve, reject) {
-      db.find({ orderId: orderId }, function (err, docs) {
+      db.find({ orderId: orderId, network: global.__lambNodeinfo.network }, function (err, docs) {
         if (err == null) {
           if (docs.length == 0) {
             resolve(true);
@@ -141,7 +150,7 @@ export default class {
     var address = this.defaultAddress;
     return new Promise(function (resolve, reject) {
       // Set an existing field's value
-      db.update({ orderId: orderId }, item, {},
+      db.update({ orderId: orderId, network: global.__lambNodeinfo.network }, item, { multi: true },
         function (err, numReplaced) {
           if (err == null) {
             resolve(true);
