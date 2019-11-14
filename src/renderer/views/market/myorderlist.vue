@@ -3,7 +3,7 @@
   <div class="customer-container">
     <div class="tableContainer">
       <div>{{$t('marketpage.last100data')}}</div>
-      <Table v-if="UserOrderslist" :columns="UserOrderscolumns" :data="UserOrderslist">
+      <Table :loading="loading" :columns="UserOrderscolumns" :data="UserOrderslist">
         <template slot-scope="{ row, index }" slot="action">
           <Button
             @click="orderinfo(row)"
@@ -51,7 +51,7 @@
   </div>
 </template>
 <script>
-import MyTable from '@/components/common/useful/Mytable.vue';
+
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 var packagejson = require('../../../../package.json');
@@ -115,7 +115,8 @@ export default {
       ],
       UserOrderslist: [],
       allCount: 1,
-      pageCount: {}
+      pageCount: {},
+      loading: true
     };
   },
   mounted() {
@@ -126,16 +127,22 @@ export default {
       this.$router.push(`/orderinfo/${item.MatchOrder.orderId}`);
     },
     async getUserOrderslist(page) {
-      let res = await ipc.callMain('marketUserOrderslist', {
-        page: page || 1,
-        limit: 10
-      });
-      if (res.state) {
-        this.$data.UserOrderslist = res.data.data || [];
-        if (this.$data.pageCount[page] == undefined) {
-          this.$data.pageCount[page] = 1;
-          this.$data.allCount += this.$data.UserOrderslist.length;
+      this.$data.loading = true;
+      try {
+        let res = await ipc.callMain('marketUserOrderslist', {
+          page: page || 1,
+          limit: 10
+        });
+        if (res.state) {
+          this.$data.UserOrderslist = res.data.data || [];
+          if (this.$data.pageCount[page] == undefined) {
+            this.$data.pageCount[page] = 1;
+            this.$data.allCount += this.$data.UserOrderslist.length;
+          }
+          this.$data.loading = false;
         }
+      } catch (error) {
+        this.$Message.error(this.$t('foot.linkerror'));
       }
     },
     UserOrdersListPage(page) {

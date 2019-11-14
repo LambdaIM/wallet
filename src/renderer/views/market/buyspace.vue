@@ -46,7 +46,7 @@
      <div>{{$t('marketpage.last100data')}}</div>
      <br/>
      <!-- OrderListcolumnsNotSort -->
-                         <Table @on-sort-change="OrderListSort" v-if="OrderList"  :columns="OrderListcolumnsisSort" :data="OrderList">
+             <Table @on-sort-change="OrderListSort" :loading="loading"  :columns="OrderListcolumnsisSort" :data="OrderList">
                         <template slot-scope="{ row, index }" slot="action">
                          <Button v-if="row.status=='0'"  @click="openBuyingspace(row)"  type="primary" size="small"> {{$t('marketpage.selltable.Purchasespace')}} </Button>
                         </template>
@@ -71,7 +71,7 @@
 
 
 
-                    </Table>
+              </Table>
                     <br/>
                     <div style="text-align: center;">
                      <Page   @on-change="orderListPage" :total="allCount" simple/>
@@ -208,7 +208,8 @@ export default {
       autoSpaceSize: '',
       autoSpaceDuration: '',
       allCount: 1,
-      pageCount: {}
+      pageCount: {},
+      loading: true
 
 
     };
@@ -243,11 +244,15 @@ export default {
   methods: {
     async getmarketlist() {
       console.log('getmarketlist');
-      let res = await ipc.callMain('marketlist', {});
-      if (res.state) {
-        this.$data.marketList = res.data.data;
-        this.$data.selectmarket = this.$data.marketList[0];
-        this.getOrderList(1);
+      try {
+        let res = await ipc.callMain('marketlist', {});
+        if (res.state) {
+          this.$data.marketList = res.data.data;
+          this.$data.selectmarket = this.$data.marketList[0];
+          this.getOrderList(1);
+        }
+      } catch (error) {
+        this.$Message.error(this.$t('foot.linkerror'));
       }
     },
     async   getmarketinfo(name) {
@@ -259,24 +264,29 @@ export default {
       }
     },
     async  getOrderList(page) {
-      console.log('- -');
-      let res = await ipc.callMain('marketOrderList', {
-        marketName: this.$data.selectmarket.name,
-        orderType: 'premium', // premium all
-        page: page || 1,
-        limit: 10,
-        marketAddress: this.$data.selectmarket.marketAddress,
-        islocal: this.$data.islocal,
-        orderSortinfo: this.$data.orderSortinfo,
-        islocalfilter: this.$data.islocalfilter
-      });
-      console.log('- -');
-      if (res.state) {
-        this.$data.OrderList = res.data.data || [];
-        if (this.$data.pageCount[page] == undefined) {
-          this.$data.pageCount[page] = 1;
-          this.$data.allCount += this.$data.OrderList.length;
+      try {
+        this.$data.loading = true;
+        let res = await ipc.callMain('marketOrderList', {
+          marketName: this.$data.selectmarket.name,
+          orderType: 'premium', // premium all
+          page: page || 1,
+          limit: 10,
+          marketAddress: this.$data.selectmarket.marketAddress,
+          islocal: this.$data.islocal,
+          orderSortinfo: this.$data.orderSortinfo,
+          islocalfilter: this.$data.islocalfilter
+        });
+
+        if (res.state) {
+          this.$data.OrderList = res.data.data || [];
+          if (this.$data.pageCount[page] == undefined) {
+            this.$data.pageCount[page] = 1;
+            this.$data.allCount += this.$data.OrderList.length;
+          }
+          this.$data.loading = false;
         }
+      } catch (error) {
+        this.$Message.error(this.$t('foot.linkerror'));
       }
     },
     orderListPage(page) {
