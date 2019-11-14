@@ -23,7 +23,7 @@
       </Row>
                 <div>{{$t('marketpage.last100data')}} </div>
                 <br/>
-                 <Table v-if="SellOrderslist" :columns="SellOrdercolumns" :data="SellOrderslist">
+                 <Table :loading="loading" :columns="SellOrdercolumns" :data="SellOrderslist">
                    <template slot-scope="{ row, index }" slot="price">
                          {{row.price|Lambformat}}
                         </template>
@@ -114,7 +114,8 @@ export default {
       selectmarket: '',
       marketList: [],
       allCount: 1,
-      pageCount: {}
+      pageCount: {},
+      loading: true
 
     };
   },
@@ -132,16 +133,22 @@ export default {
   },
   methods: {
     async  getSellOrderslist(page) {
-      let res = await ipc.callMain('marketSellOrderslist', {
-        page: page || 1,
-        limit: 10
-      });
-      if (res.state) {
-        this.$data.SellOrderslist = res.data.data || [];
-        if (this.$data.pageCount[page] == undefined) {
-          this.$data.pageCount[page] = 1;
-          this.$data.allCount += this.$data.SellOrderslist.length;
+      try {
+        this.$data.loading = true;
+        let res = await ipc.callMain('marketSellOrderslist', {
+          page: page || 1,
+          limit: 10
+        });
+        if (res.state) {
+          this.$data.SellOrderslist = res.data.data || [];
+          if (this.$data.pageCount[page] == undefined) {
+            this.$data.pageCount[page] = 1;
+            this.$data.allCount += this.$data.SellOrderslist.length;
+          }
+          this.$data.loading = false;
         }
+      } catch (error) {
+        this.$Message.error(this.$t('foot.linkerror'));
       }
     },
     SellOrderListPage(page) {
