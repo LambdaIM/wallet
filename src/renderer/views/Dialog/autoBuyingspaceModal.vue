@@ -16,7 +16,7 @@
       </p>
       <br/>
       <p>
-        {{$t('Dialog.AutoBuy.unitprice')}}(GB/LAMB/month)：{{marketPrice|Lambformat}}
+        {{$t('Dialog.AutoBuy.unitprice')}}(GB/LAMB/month)：{{marketPrice|Lambformat}}
       </p>
       <br/>
 
@@ -63,7 +63,7 @@
           <Col span="20" class-name="value">{{this.$data.marketinfo.marketAddress}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="8" class-name="key">{{$t('Dialog.AutoBuy.unitprice')}}(GB/LAMB/month):</Col>
+          <Col span="8" class-name="key">{{$t('Dialog.AutoBuy.unitprice')}}(GB/LAMB/month):</Col>
           <Col span="16" class-name="value">{{this.$data.marketPrice|Lambformat}}  </Col>
         </Row>
         <Row class-name="item">

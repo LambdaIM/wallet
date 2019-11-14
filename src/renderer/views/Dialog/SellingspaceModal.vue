@@ -111,11 +111,11 @@
         </Row>
         <Row class-name="item">
           <Col span="5" class-name="key"> {{$t('Dialog.sellorder.Minimumtime')}}:</Col>
-          <Col span="19" class-name="value">{{minDuration}} {{$t('Dialog.sellorder.month')}} </Col>
+          <Col span="19" class-name="value">{{minDuration}} {{$t('Dialog.sellorder.month')}} </Col>
         </Row>
         <Row class-name="item">
           <Col span="5" class-name="key"> {{$t('Dialog.sellorder.Maximumtime')}}:</Col>
-          <Col span="19" class-name="value">{{maxDuration}} {{$t('Dialog.sellorder.month')}} </Col>
+          <Col span="19" class-name="value">{{maxDuration}} {{$t('Dialog.sellorder.month')}} </Col>
         </Row>
         <Row class-name="item">
             <Input  v-model="gaseFee" >

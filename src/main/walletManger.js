@@ -21,7 +21,7 @@ const hdkeyjs = require('@jswebfans/hdkeyjs');
 
 
 var walletManger = function (dir) {
-  // 遍历文件夹
+  // 遍历文件夹
   //
   this.walletList = [];
   this.defaultwallet = null;
