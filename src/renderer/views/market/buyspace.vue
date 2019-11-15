@@ -305,6 +305,8 @@ export default {
         key,
         order
       };
+      this.$data.allCount = 1;
+      this.$data.pageCount = {};
 
       this.getOrderList(1);
     },
