@@ -22,7 +22,7 @@ const YAML = require('yaml');
 var log = require('../log').log;
 const os = require('os');
 
-var suppose = require('suppose');
+var suppose = require('@jswebfans/suppose');
 
 
 export default function() {
