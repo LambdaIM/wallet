@@ -679,9 +679,9 @@
     lodash.merge "^4.6.2"
     log-update "^1.0.2"
 
-"@jswebfans/rpcapijs@0.1.25":
-  version "0.1.25"
-  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.1.25.tgz#b408f4b8cfd91fe81196e87ab331709ff025eb17"
+"@jswebfans/rpcapijs@0.1.26":
+  version "0.1.26"
+  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.1.26.tgz#ec8cbe79b2a35e7b3d42a19c1d672dcc14dad2d2"
   dependencies:
     "@babel/runtime" "^7.5.4"
 

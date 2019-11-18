@@ -67,4 +67,16 @@ export default function() {
       return { data: error, state: false };
     }
   });
+
+  eipc.answerRenderer('assetAll', async query => {
+    try {
+      var CosmosAPIobj = LambdaApi();
+
+      var assetAll = await CosmosAPIobj().get.assetAll();
+
+      return { data: assetAll, state: true };
+    } catch (error) {
+      return { data: error, state: false };
+    }
+  });
 }
