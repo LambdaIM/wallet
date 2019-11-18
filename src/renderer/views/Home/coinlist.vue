@@ -29,6 +29,9 @@
 <script>
 import SendModelDialog from '@/views/Dialog/sendModel.vue';
 import AssetlModalDialog from '@/views/Dialog/assetlModal.vue';
+import _ from 'underscore';
+import eventhub from '../../common/js/event.js';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 export default {
   data() {
@@ -50,11 +53,22 @@ export default {
           key: 'action',
           slot: 'action'
         }
-      ]
+      ],
+      allassert: []
     };
   },
-  mounted() {
-
+  beforeDestroy() {
+    clearInterval(this.$data.Interval);
+  },
+  async mounted() {
+    this.getAssertAll();
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.getAssertAll();
+    });
+    this.Interval = setInterval(() => {
+      this.getAssertAll();
+    }, 1000 * 15);
   },
   components: {
     SendModelDialog,
@@ -69,11 +83,57 @@ export default {
     },
     cointransaction(row) {
       this.$refs.SendModelDialog.open(row.amount, row.denom);
+    },
+    async  getAssertAll() {
+      // assetAll
+      try {
+        let res = await ipc.callMain('assetAll', {});
+        if (res.state) {
+          this.$data.allassert = res.data || [];
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
     }
+
+
   },
   computed: {
     coinList: function() {
-      return this.$store.getters.getcoinList;
+      var mycoinList = this.$store.getters.getcoinList;
+      if (mycoinList.length == 0) {
+        mycoinList = mycoinList.concat([
+          {
+            amount: '0',
+            denom: 'ulamb'
+          },
+          {
+            amount: '0',
+            denom: 'utbb'
+          }
+        ]);
+      }
+
+      var otherList = [];
+      console.log(mycoinList);
+
+      if (this.$data.allassert == 0) {
+        return this.$store.getters.getcoinList;
+      } else {
+        this.$data.allassert.forEach(item => {
+          // mycoinList
+          var haveitem = _.find(mycoinList, {
+            denom: item.asset.denom
+          });
+          if (haveitem == undefined || haveitem.length == 0) {
+            otherList.push({
+              amount: '0',
+              denom: item.asset.denom
+            });
+          }
+        });
+      }
+      return mycoinList.concat(otherList);
     }
   }
 

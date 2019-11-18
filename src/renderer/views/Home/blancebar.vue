@@ -12,7 +12,7 @@
         <Col span="4" class="account-item">
           <div class="item-wrapper">
             <p class="title">{{$t('home.pledge')}}(TBB)</p>
-            <p class="value">{{pledgeAmount }}</p>
+            <p class="value">{{pledgeAmount|BlanceValue }}</p>
           </div>
         </Col>
         <Col span="4" class="account-item">
@@ -157,8 +157,6 @@ export default {
       if (temp != 'NaN') {
         this.$data[dataType] = temp;
       }
-
-      // if (temp != 'NaN') { this.$data.pledgeAmount = this.bigNumAdd(this.$data.pledgeAmount, temp); }
     },
     async getpartnerListData() {
       console.log('partnerList');
