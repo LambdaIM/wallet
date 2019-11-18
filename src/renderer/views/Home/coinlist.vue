@@ -133,7 +133,23 @@ export default {
           }
         });
       }
-      return mycoinList.concat(otherList);
+      var listneedtosort = mycoinList.concat(otherList);
+
+      listneedtosort.forEach(item => {
+        if (item.denom == 'ulamb') {
+          item.sort = 1;
+        } else if (item.denom == 'utbb') {
+          item.sort = 0;
+        } else {
+          item.sort = -1;
+        }
+      });
+
+      return listneedtosort.sort(function (n, m) {
+        if (m.sort < n.sort) return -1;
+        else if (m.sort > n.sort) return 1;
+        else return 0;
+      });
     }
   }
 
