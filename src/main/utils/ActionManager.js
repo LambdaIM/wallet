@@ -62,6 +62,7 @@ export default class ActionManager {
 
   async simulate(memo) {
     // this.readyCheck()
+    console.log('*******', memo, '||||', typeof memo);
     const gasEstimate = await this.message.simulate({
       memo: memo
     });

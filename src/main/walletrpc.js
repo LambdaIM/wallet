@@ -504,6 +504,49 @@ export default function() {
     }
   });
 
+
+
+  eipc.answerRenderer('CreateMiner', async query => {
+    try {
+      var TxMessageload = await WM.TransferCreateMiner();
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('CreateMachine', async query => {
+    var { name, peerId, dhtId, pubKey } = query;
+
+    if (name == undefined) {
+      throw resultView(null, false, 'need name');
+    }
+
+    if (peerId == undefined) {
+      throw resultView(null, false, 'need peerId');
+    }
+
+    if (dhtId == undefined) {
+      throw resultView(null, false, 'need dhtId');
+    }
+
+    if (pubKey == undefined) {
+      throw resultView(null, false, 'need pubKey');
+    }
+
+
+    try {
+      var TxMessageload = await WM.TransferCreateMachine(name, peerId, dhtId, pubKey);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+
   eipc.answerRenderer('redelegate', async query => {
     var { SourceAddress, DestinationAddress, amount, validatortype } = query;
     if (SourceAddress == undefined) {

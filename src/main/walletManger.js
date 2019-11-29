@@ -457,6 +457,23 @@ walletManger.prototype.TransferVote = async function (ProposalID, option) {
   };
 };
 
+walletManger.prototype.TransferCreateMiner = async function () {
+  return {
+    type: transaction.CreateMiner
+  };
+};
+
+walletManger.prototype.TransferCreateMachine = async function (name,peerId,dhtId,pubKey) {
+  
+  return {
+    type: transaction.CreateMachine,
+    name,
+    peerId,
+    dhtId,
+    pubKey
+  };
+};
+
 
 
 walletManger.prototype.TransferwithdrawalDistribution=async function (to, amount, gas, isdege) {
@@ -523,9 +540,13 @@ walletManger.prototype.Simulate = async function (transactiondata) {
   if (this.actionManager != undefined) {
     this.actionManager.setContext({ url: DAEMON_CONFIG.LambdaNetwork(), userAddress: this.defaultwallet.address });
   }
-
+  console.log('***********')
+  console.log(type, properties)
+  console.log('***********')
   this.actionManager.setMessage(type, properties);
+  
   var gasEstimate = await this.actionManager.simulate(memo || '');
+  
   this.gasEstimate = gasEstimate;
   //  return gasEstimate;
   return (Number(default_gas_price) * Number(gasEstimate)).toFixed(6); // already in lamb
