@@ -31,12 +31,12 @@
             class="item"
           >{{ $t("head.validator") }}</router-link>
         </div>
-        <div class="head-menu-item">
+        <!-- <div class="head-menu-item">
           <router-link
             to="/partner"
             class="item"
           >{{ $t("head.partner") }}</router-link>
-        </div>
+        </div> -->
         <div class="head-menu-item">
           <router-link
             to="/proposal"
