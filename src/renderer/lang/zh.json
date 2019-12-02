@@ -621,5 +621,19 @@
        "txtbtn":"前往领取测试代币",
        "txtbref":"Lambda存储测试大赛火热进行中",
        "miningaward":"存储挖矿奖励"
+   },
+   "sellpageinfo":{
+       "Initializeminer":"矿工初始化",
+       "Initializeminertip":"矿工质押在进行质押操作之后，可以进行初始化矿工操作",
+       "Createstoragenode":"创建存储节点",
+       "Createstoragenodetip":"存储节点初始化之后，创建存储节点",
+       "Storagenodename":"存储节点名称",
+       "action":{
+           "needname":"存储节点名称不能为空",
+           "needdhtid":"DhtId不能为空",
+           "needpubKey":"pubKey不能为空",
+           "needtip":"仅支持数字和字母组合"
+
+       }
    }
 }

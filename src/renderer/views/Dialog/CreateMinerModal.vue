@@ -3,12 +3,12 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="初始化矿工"
+      :title="$t('sellpageinfo.Initializeminer')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
       <p>
-        矿工质押在进行质押操作之后，可以进行初始化矿工操作
+        {{$t('sellpageinfo.Initializeminertip')}}
       </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
@@ -16,7 +16,7 @@
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>{{$t('Dialog.withdrawalModal.title')}}</h2>
+        <h2>{{$t('sellpageinfo.Initializeminer')}}</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
