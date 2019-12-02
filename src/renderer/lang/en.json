@@ -626,6 +626,19 @@
     "txtbtn":"click the button to collect test token",
     "txtbref":"Lambda storage test competition is in progress",
     "miningaward":"Rewards for storage and mining"
+},
+"sellpageinfo":{
+  "Initializeminer":"Initialize miner",
+  "Initializeminertip":"The miner pledge can be initialized after the pledge operation",
+  "Createstoragenode":"Create storagenode",
+  "Createstoragenodetip":"After the storage node is initialized, create the storage node",
+  "Storagenodename":"Storage node name",
+  "action":{
+      "needname":"Storage node name cannot be empty",
+      "needdhtid":"Dhtid cannot be empty",
+      "needpubKey":"Pubkey cannot be empty",
+      "needtip":" only supports combination of numbers and letters"
+  }
 }
 
 

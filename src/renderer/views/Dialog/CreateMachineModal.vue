@@ -3,13 +3,14 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="初始化矿工"
+      :title="$t('sellpageinfo.Createstoragenode')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
       <p>
-        存储节点初始化之后，创建存储节点
+        {{$t('sellpageinfo.Createstoragenodetip')}}
       </p>
+      <br />
       <p>
           <Input v-model="address" readonly>
             <span slot="prepend">{{$t('home.Modal1.From')}}</span>
@@ -17,8 +18,8 @@
         </p>
         <br />
         <p>
-          <Input  v-model="name" placeholder="存储节点名称 仅支持字母数字">
-            <span slot="prepend">存储节点名称</span>
+          <Input  v-model="name" :placeholder="$t('sellpageinfo.action.needtip')">
+            <span slot="prepend">{{$t('sellpageinfo.Storagenodename')}}</span>
           </Input>
         </p><br/>
         <p>
@@ -37,10 +38,22 @@
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>{{$t('Dialog.withdrawalModal.title')}}</h2>
+        <h2>{{$t('sellpageinfo.Createstoragenode')}}</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">{{$t('sellpageinfo.Storagenodename')}}:</Col>
+          <Col span="20" class-name="value">{{name}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">DhtId:</Col>
+          <Col span="20" class-name="value">{{DhtId}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">pubKey:</Col>
+          <Col span="20" class-name="value"><Input  readonly v-model="pubKey" type="textarea"  /></Col>
         </Row>
 
         <Row class-name="item">
@@ -83,21 +96,21 @@ export default {
       console.log('- -');
       if (this.$data.name == '') {
         this.$Notice.warning({
-          title: this.$t('存储节点名称不能为空')
+          title: this.$t('sellpageinfo.action.needname')
         });
         return;
       }
 
       if (this.$data.DhtId == '') {
         this.$Notice.warning({
-          title: this.$t('DhtId不能为空')
+          title: this.$t('sellpageinfo.action.needdhtid')
         });
         return;
       }
 
       if (this.$data.pubKey == '') {
         this.$Notice.warning({
-          title: this.$t('pubKey不能为空')
+          title: this.$t('sellpageinfo.action.needpubKey')
         });
         return;
       }

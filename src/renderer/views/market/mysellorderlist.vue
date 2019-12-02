@@ -3,12 +3,12 @@
   <div class="customer-container">
       <div class="tableContainer">
              <Row>
-        <Col span="11">
+        <Col span="10">
         &nbsp;
         </Col>
-        <Col span="5">
-              <Button @click="openCreateMiner" type="primary"  size="small"> 初始化矿工 </Button>&nbsp;&nbsp;
-              <Button @click="openCreateMachineModal"  type="primary"  size="small"> 创建存储节点 </Button>
+        <Col span="6">
+              <Button @click="openCreateMiner" type="primary"  size="small"> {{$t('sellpageinfo.Initializeminer')}} </Button>&nbsp;&nbsp;
+              <Button @click="openCreateMachineModal"  type="primary"  size="small"> {{$t('sellpageinfo.Createstoragenode')}} </Button>
         </Col>
         <Col span="8">
 
