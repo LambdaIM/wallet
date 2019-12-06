@@ -621,6 +621,10 @@
  "Portnumber":"Port number"
  
 
+},
+"testcoin":{
+    "txtbtn":"Collect immediately",
+    "txtbref":"Collect the test currency and participate in the lamb storage test competition"
 }
 
 
