@@ -3,6 +3,17 @@
   <div class="customer-container">
       <div class="tableContainer">
         <blancebar/>
+    <div class="testcoin">
+
+         <Row>
+        <Col span="10">
+        &nbsp;&nbsp;
+        </Col>
+        <Col span="14" style="    text-align: right;">
+        {{$t('testcoin.txtbref')}} <a @click="gettestcoin">{{$t('testcoin.txtbtn')}}</a>
+        </Col>
+    </Row>
+    </div>
     <Menu :key="time" ref="menu" @on-select="transferClick" mode="horizontal"  v-bind:active-name="activeItem">
         <MenuItem to="/home" name="txlist">
             <Icon type="ios-paper" />
@@ -49,6 +60,7 @@ import eventhub from '../../common/js/event.js';
 import SendModelDialog from '@/views/Dialog/sendModel.vue';
 import WithdrawalModalDialog from '@/views/Dialog/withdrawalModal.vue';
 import DistributionModal from '@/views/Dialog/distributionModal.vue';
+const { shell } = require('electron');
 
 export default {
   data() {
@@ -82,6 +94,10 @@ export default {
       // this.$nextTick(()=>{
       //   this.$refs.menu.updateActiveName();
       // })
+    },
+    gettestcoin() {
+      var url = 'http://faucet.lambda.im/';
+      shell.openExternal(url);
     }
   }
 
@@ -107,5 +123,9 @@ export default {
       .item-value {
         font-size: 14px;
       }
+}
+.testcoin{
+  margin-top: 10px;
+
 }
 </style>
