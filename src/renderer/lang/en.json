@@ -623,8 +623,8 @@
 
 },
 "testcoin":{
-    "txtbtn":"Collect immediately",
-    "txtbref":"Collect the test currency and participate in the lamb storage test competition"
+    "txtbtn":"click the button to collect test token",
+    "txtbref":"Lambda storage test competition is in progress"
 }
 
 
