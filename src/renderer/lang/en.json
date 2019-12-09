@@ -624,7 +624,8 @@
 },
 "testcoin":{
     "txtbtn":"click the button to collect test token",
-    "txtbref":"Lambda storage test competition is in progress"
+    "txtbref":"Lambda storage test competition is in progress",
+    "miningaward":"Mining Award"
 }
 
 

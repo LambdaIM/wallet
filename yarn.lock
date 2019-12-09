@@ -651,9 +651,9 @@
   version "2.4.4"
   resolved "https://registry.npmjs.org/@jswebfans/bcryptjs/-/bcryptjs-2.4.4.tgz#79894242110e73df25ee928b01210f79b558d386"
 
-"@jswebfans/hdkeyjs@1.2.9":
-  version "1.2.9"
-  resolved "https://registry.npmjs.org/@jswebfans/hdkeyjs/-/hdkeyjs-1.2.9.tgz#e28ccd18dcd0db68f59c99c6c607eba68cb97bf9"
+"@jswebfans/hdkeyjs@1.2.10":
+  version "1.2.10"
+  resolved "https://registry.npmjs.org/@jswebfans/hdkeyjs/-/hdkeyjs-1.2.10.tgz#b9f8e1f52e549750030645ea31e467cd1c23cf3a"
   dependencies:
     "@jswebfans/amino-js" "0.4.5"
     "@jswebfans/bcryptjs" "2.4.4"
@@ -679,9 +679,9 @@
     lodash.merge "^4.6.2"
     log-update "^1.0.2"
 
-"@jswebfans/rpcapijs@0.1.26":
-  version "0.1.26"
-  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.1.26.tgz#ec8cbe79b2a35e7b3d42a19c1d672dcc14dad2d2"
+"@jswebfans/rpcapijs@0.1.31":
+  version "0.1.31"
+  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.1.31.tgz#2d332df1af3da48b0eaa9d33ab085df8775b2844"
   dependencies:
     "@babel/runtime" "^7.5.4"
 

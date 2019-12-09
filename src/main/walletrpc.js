@@ -183,6 +183,15 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('MinerRewards', async query => {
+    try {
+      var result = await WM.getMinerRewards();
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
 
 
   eipc.answerRenderer('transfer', async query => {

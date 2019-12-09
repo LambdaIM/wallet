@@ -619,6 +619,7 @@
    },
    "testcoin":{
        "txtbtn":"前往领取测试代币",
-       "txtbref":"Lambda存储测试大赛火热进行中"
+       "txtbref":"Lambda存储测试大赛火热进行中",
+       "miningaward":"挖矿奖励"
    }
 }
