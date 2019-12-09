@@ -348,6 +348,13 @@ walletManger.prototype.DistributionInformation = async function () {
   return result;
 };
 
+walletManger.prototype.getMinerRewards = async function () {
+  var address = this.defaultwallet.address;
+  var result = await this.CosmosAPI().get.MinerRewards(address);
+
+  return result;
+};
+
 
 
 walletManger.prototype.TransferDelegation = async function (to, amount, gas, isdege, validatorType) {

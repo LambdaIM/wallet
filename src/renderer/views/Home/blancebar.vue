@@ -59,7 +59,7 @@ export default {
     await this.getpartnerListData();
     await this.getmypartnerDeleData();
 
-    this.Interval = setInterval(async () => {
+    this.$data.Interval = setInterval(async () => {
       this.validatorDistribution();
 
       await this.getvalidatorsList();
