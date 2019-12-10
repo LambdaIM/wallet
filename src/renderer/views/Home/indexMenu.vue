@@ -7,7 +7,9 @@
 
          <Row>
         <Col span="10">
-        {{$t('testcoin.miningaward')}}：{{MinerRewards|formatValue}}
+        <span style="font-size: medium;">
+          {{$t('testcoin.miningaward')}}：<span style="color: #67a7db;">{{MinerRewards|formatValue}}</span>
+        </span>
         </Col>
         <Col span="14" style="    text-align: right;">
 
