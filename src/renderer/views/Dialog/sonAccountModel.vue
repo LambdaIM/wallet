@@ -5,43 +5,24 @@
       v-model="withdrawalModal"
       :title="$t('Dialog.withdrawalModal.title')"
       :styles="{top: '200px'}"
-      @on-cancel="sendcancel"
+
     >
       <p>
-        <Input readonly v-model="DistributionReward">
-          <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-          <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
-        </Input>
+        <Input v-model="world" type="textarea" :rows="8" placeholder="助记次" />
+      </p>
+      <br/>
+      <p>
+        <Input v-model="name" placeholder="备注"  />
+      </p>
+      <br/>
+      <p>
+        <Input v-model="password" placeholder="密码"  />
       </p>
       <div slot="footer">
-        <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
+        <Button type="primary" @click="Submit">{{$t('home.Modal1.Submit')}}</Button>
       </div>
     </Modal>
-    <Modal v-model="confirmModal" :styles="{top: '200px'}">
-      <div class="modal-header" slot="header">
-        <h2>{{$t('Dialog.withdrawalModal.title')}}</h2>
-        <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
-          <Col span="20" class-name="value">{{address}}</Col>
-        </Row>
-        <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-          <Col span="20" class-name="value">{{DistributionReward}} LAMB</Col>
-        </Row>
-        <Row class-name="item">
-            <Input  v-model="gaseFee" >
-                              <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
-                                <span slot="append">LAMB</span>
-                              </Input>
-          </Row>
-      </div>
-      <!-- <p>
-          <Input v-model="walletPassword" type="password"></Input>
-      </p>-->
-      <div slot="footer">
-        <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
-      </div>
-    </Modal>
+
   </div>
 </template>
 <script>
@@ -52,7 +33,10 @@ export default {
     return {
       withdrawalModal: false,
       confirmModal: false,
-      gaseFee: 0
+      gaseFee: 0,
+      world: '',
+      name: '',
+      password: ''
     };
   },
   methods: {
@@ -60,6 +44,18 @@ export default {
       console.log('- -');
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
+    },
+    async Submit() {
+      var mnemonic = this.$data.world;
+      var password = this.$data.password;
+      var name = this.$data.name;
+      var index = '1';
+
+      let res = await ipc.callMain('createSonAccount', {
+        mnemonic, password, name, index
+      });
+
+      console.log(res);
     }
 
   },

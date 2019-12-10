@@ -217,11 +217,13 @@ walletManger.prototype.generateSonAccount = function (mnemonic, password, name, 
   var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
   //
   // 子账户
+  console.log('-----1');
   const keys = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, index);
+  console.log('-----2');
   const address = hdkeyjs.address.getAddress(keys.publicKey);
   // 父账户
   const keysF = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, 0);
-  const addressF = hdkeyjs.address.getAddress(keys.publicKey);
+  const addressF = hdkeyjs.address.getAddress(keysF.publicKey);
   if (this.defaultwallet.address != addressF) {
     throw new Error(`The main account corresponding to mnemonic times is inconsistent with the current account `);
   }
@@ -234,7 +236,7 @@ walletManger.prototype.generateSonAccount = function (mnemonic, password, name, 
   }
 
   var walletjson = hdkeyjs.keyStore.toJson(keys, password, name);
-  var filepath = path.join(DAEMON_CONFIG.SonAccountFile, address + '.keyinfo');
+  var filepath = path.join(DAEMON_CONFIG.SonAccountFile, this.defaultwallet.address, address + '.keyinfo');
   fs.writeFileSync(filepath, JSON.stringify(walletjson));
 
   this.scann();
@@ -772,7 +774,10 @@ walletManger.prototype.findFile = function (address) {
 
 walletManger.prototype.findSonFile = function (address) {
   this.walletList = [];
-  var dir = DAEMON_CONFIG.SonAccountFile;
+  var dir = path.join(DAEMON_CONFIG.SonAccountFile,this.defaultwallet.address) ;
+  if(fs.existsSync(dir)==false) {
+    fs.mkdirSync(dir);
+  }
   var list = fs.readdirSync(dir);
   var fileName = null;
   list.forEach(file => {
