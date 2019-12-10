@@ -212,6 +212,31 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name, iscr
   };
 };
 
+walletManger.prototype.generateSonAccount = function (mnemonic, password, name, index) {
+  const keys = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, index);
+  // var seed = tenderKeys.generateSeed(mnemonic);
+  // var keyPair = tenderKeys.generateKeyPair(seed);
+  // var address = tenderKeys.getAddressFromPubKey(keyPair.publicKey.toString('hex'));
+
+  const address = hdkeyjs.address.getAddress(keys.publicKey);
+  var file = this.findSonFile(address);
+  if (file != null) {
+    throw new Error(`failed,${address} already exists`);
+  }
+
+  var walletjson = hdkeyjs.keyStore.toJson(keys, password, name);
+  var filepath = path.join(DAEMON_CONFIG.SonAccountFile, address + '.keyinfo');
+  fs.writeFileSync(filepath, JSON.stringify(walletjson));
+
+  this.scann();
+
+  return {
+    mnemonic: mnemonic,
+    address: address,
+    name: name
+  };
+};
+
 walletManger.prototype.deleteWallet = function (address) {
   var dir = DAEMON_CONFIG.WalletFile;
   var list = fs.readdirSync(dir);
@@ -239,6 +264,19 @@ walletManger.prototype.ImportWalletByMnemonic = function (mnemonic, password, na
   var mnemonics = mnemonicList.join(' ');
   return this.generateWallet(mnemonics, password, name,false);
 };
+
+walletManger.prototype.CreatSonAccountByMnemonic = function (mnemonic, password, name,index) {
+  /* eslint-disable */
+  var mnemonicList = mnemonic.match(/[a-z]+[\-\']?[a-z]*/ig);
+
+  if (mnemonicList == null || mnemonicList.length < 12) {
+    throw new Error('make sure  inputting 12 words or more ');
+  }
+  var mnemonics = mnemonicList.join(' ');
+  return this.generateSonAccount(mnemonics, password, name,index);
+};
+
+
 
 
 walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, name) {
@@ -703,6 +741,30 @@ walletManger.prototype.editDefaultName = async function (name) {
 walletManger.prototype.findFile = function (address) {
   this.walletList = [];
   var dir = DAEMON_CONFIG.WalletFile;
+  var list = fs.readdirSync(dir);
+  var fileName = null;
+  list.forEach(file => {
+    if (file.indexOf('.keyinfo') > 0) {
+      file = path.join(dir, file);
+      var v3file = fs.readFileSync(file, 'utf8');
+      try {
+        v3file = JSON.parse(v3file);
+        if (v3file.address == address) {
+          fileName = file;
+        }
+      } catch (err) {
+
+
+
+      }
+    }
+  });
+  return fileName;
+};
+
+walletManger.prototype.findSonFile = function (address) {
+  this.walletList = [];
+  var dir = DAEMON_CONFIG.SonAccountFile;
   var list = fs.readdirSync(dir);
   var fileName = null;
   list.forEach(file => {
