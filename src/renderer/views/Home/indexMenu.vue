@@ -47,6 +47,10 @@
 
 
         </Submenu>
+        <MenuItem to="/home/subaccount" name="subaccount">
+            <Icon type="md-list" />
+            子账户
+        </MenuItem>
 
     </Menu>
       </div>
