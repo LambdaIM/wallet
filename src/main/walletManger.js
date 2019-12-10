@@ -213,12 +213,21 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name, iscr
 };
 
 walletManger.prototype.generateSonAccount = function (mnemonic, password, name, index) {
+  // 校验密码
+  var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
+  //
+  // 子账户
   const keys = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, index);
-  // var seed = tenderKeys.generateSeed(mnemonic);
-  // var keyPair = tenderKeys.generateKeyPair(seed);
-  // var address = tenderKeys.getAddressFromPubKey(keyPair.publicKey.toString('hex'));
-
   const address = hdkeyjs.address.getAddress(keys.publicKey);
+  // 父账户
+  const keysF = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, 0);
+  const addressF = hdkeyjs.address.getAddress(keys.publicKey);
+  if (this.defaultwallet.address != addressF) {
+    throw new Error(`The main account corresponding to mnemonic times is inconsistent with the current account `);
+  }
+
+
+
   var file = this.findSonFile(address);
   if (file != null) {
     throw new Error(`failed,${address} already exists`);
@@ -231,7 +240,6 @@ walletManger.prototype.generateSonAccount = function (mnemonic, password, name, 
   this.scann();
 
   return {
-    mnemonic: mnemonic,
     address: address,
     name: name
   };

@@ -646,6 +646,26 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+  eipc.answerRenderer('createSonAccount', async query => {
+    var { mnemonic, password, name, index } = query;
+    if (mnemonic == undefined) {
+      throw resultView(null, false, 'need mnemonic');
+    }
+    if (password == undefined) {
+      throw resultView(null, false, 'need password');
+    }
+    if (name == undefined) {
+      throw resultView(null, false, 'need name');
+    }
+    try {
+      var TxMessageload = await WM.generateSonAccount(mnemonic, password, name, index);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
 }
 
 
