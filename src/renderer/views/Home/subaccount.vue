@@ -4,7 +4,7 @@
       <div class="tableContainer">
       <div style="    margin-bottom: 10px;">
            <Row>
-               <Button type="primary">初始化矿工账户</Button>&nbsp;&nbsp;
+               <Button @click="openCreateModel" type="primary">初始化矿工账户</Button>&nbsp;&nbsp;
                <Button  type="primary">导入</Button>&nbsp;&nbsp;
                <Button  type="primary">新建</Button>&nbsp;&nbsp;
 
@@ -19,6 +19,7 @@
 
 
       </div>
+      <sonAccountModelDialog ref="sonAccountModel"></sonAccountModelDialog>
 
 
   </div>
@@ -28,6 +29,8 @@
 import TxTable from '@/components/txTable/index.vue';
 import txFormat from '@/common/js/txFormat.js';
 import eventhub from '../../common/js/event.js';
+
+import sonAccountModelDialog from '@/views/Dialog/sonAccountModel.vue';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
@@ -60,15 +63,17 @@ export default {
   mounted() {
 
   },
+  methods: {
+    openCreateModel() {
+      this.$refs.sonAccountModel.open();
+    }
+  },
   beforeDestroy() {
 
   },
   components: {
-    TxTable
-  },
-  methods: {
-
-
+    TxTable,
+    sonAccountModelDialog
   }
 
 };
