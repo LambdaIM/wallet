@@ -17,7 +17,7 @@ var { DAEMON_CONFIG } = require('../configmain.js');
 const settings = require('electron-settings');
 const path = require('path');
 const hdkeyjs = require('@jswebfans/hdkeyjs');
-
+const { shell } = require('electron');
 
 
 var walletManger = function (dir) {
@@ -286,6 +286,32 @@ walletManger.prototype.CreatSonAccountByMnemonic = function (mnemonic, password,
   return this.generateSonAccount(mnemonics, password, name,index);
 };
 
+walletManger.prototype.exportSonAccount = function (address,password) {
+  console.log('exportSonAccount',address,password)
+  
+  var file = this.findSonFile(address);
+  if (file == null) {
+    throw new Error(`failed,${address} not exists`);
+  }
+  console.log(file)
+  var privatekey = hdkeyjs.keyStore.checkJson(file.data, password);
+  var publicKey = hdkeyjs.publicKey.getBytes(file.data.publicKey)
+
+  var exportJson = {
+    "privateKey":privatekey.toString('hex') ,
+    "publicKey":publicKey.toString('hex') ,
+    "address": address
+  }
+  console.log(exportJson)
+  var targetpath = path.join(DAEMON_CONFIG.ExportSonAccountFile, address + '.json');
+  fs.writeFileSync(targetpath, JSON.stringify(exportJson), 'utf8');
+  shell.showItemInFolder(DAEMON_CONFIG.ExportSonAccountFile);
+  return ;
+
+};
+
+
+//exportSonAccount
 
 
 
@@ -779,7 +805,7 @@ walletManger.prototype.findSonFile = function (address) {
     fs.mkdirSync(dir);
   }
   var list = fs.readdirSync(dir);
-  var fileName = null;
+  var fileName = null,data={};
   list.forEach(file => {
     if (file.indexOf('.keyinfo') > 0) {
       file = path.join(dir, file);
@@ -788,6 +814,7 @@ walletManger.prototype.findSonFile = function (address) {
         v3file = JSON.parse(v3file);
         if (v3file.address == address) {
           fileName = file;
+          data=v3file;
         }
       } catch (err) {
 
@@ -796,7 +823,34 @@ walletManger.prototype.findSonFile = function (address) {
       }
     }
   });
-  return fileName;
+  return {fileName,data};
+};
+
+walletManger.prototype.SonFileList = function () {
+  this.walletList = [];
+  var dir = path.join(DAEMON_CONFIG.SonAccountFile,this.defaultwallet.address) ;
+  if(fs.existsSync(dir)==false) {
+    fs.mkdirSync(dir);
+  }
+  var list = fs.readdirSync(dir);
+  var result=[]
+  list.forEach(file => {
+    if (file.indexOf('.keyinfo') > 0) {
+      file = path.join(dir, file);
+      var v3file = fs.readFileSync(file, 'utf8');
+      try {
+        v3file = JSON.parse(v3file);
+        result.push(v3file);
+        
+      } catch (err) {
+
+
+
+      }
+    }
+  });
+  return result;
+  
 };
 
 

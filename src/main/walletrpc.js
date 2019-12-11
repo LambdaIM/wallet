@@ -666,6 +666,33 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+  eipc.answerRenderer('sonAccountList', async query => {
+    try {
+      var TxMessageload = await WM.SonFileList();
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('exportSonAccount', async query => {
+    try {
+      var { address, password } = query;
+      if (address == undefined) {
+        throw resultView(null, false, 'need address');
+      }
+
+      var TxMessageload = await WM.exportSonAccount(address, password);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  // exportSonAccount
 }
 
 
