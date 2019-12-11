@@ -3,18 +3,10 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="创建矿工子账户"
+      title="导出子账户"
       :styles="{top: '200px'}"
 
     >
-      <p>
-        <Input v-model="world" type="textarea" :rows="8" placeholder="助记次" />
-      </p>
-      <br/>
-      <p>
-        <Input v-model="name" placeholder="备注"  />
-      </p>
-      <br/>
       <p>
         <Input type="password" v-model="password" placeholder="密码"  />
       </p>
@@ -36,28 +28,27 @@ export default {
       gaseFee: 0,
       world: '',
       name: '',
-      password: ''
+      password: '',
+      sondata: null
     };
   },
   methods: {
-    open() {
+    open(row) {
       console.log('- -');
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
+      this.$data.sondata = row;
     },
     async Submit() {
-      var mnemonic = this.$data.world;
-      var password = this.$data.password;
-      var name = this.$data.name;
-      var index = '1';
       try {
-        let res = await ipc.callMain('createSonAccount', {
-          mnemonic, password, name, index
+        let res = await ipc.callMain('exportSonAccount', {
+          address: this.$data.sondata.address,
+          password: this.$data.password
         });
 
         if (res.state) {
           this.$data.withdrawalModal = false;
-          eventhub.$emit('createSonAccountConfirm');
+          eventhub.$emit('exportSonConfirm');
         }
       } catch (ex) {
         this.$Notice.warning({
@@ -82,4 +73,3 @@ export default {
   }
 }
 </style>
-
