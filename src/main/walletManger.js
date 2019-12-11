@@ -826,7 +826,7 @@ walletManger.prototype.findSonFile = function (address) {
   return {fileName,data};
 };
 
-walletManger.prototype.SonFileList = function () {
+walletManger.prototype.SonFileList =async function () {
   this.walletList = [];
   var dir = path.join(DAEMON_CONFIG.SonAccountFile,this.defaultwallet.address) ;
   if(fs.existsSync(dir)==false) {
@@ -849,6 +849,12 @@ walletManger.prototype.SonFileList = function () {
       }
     }
   });
+  
+  for (let index = 0; index < result.length; index++) {
+    const element = result[index];
+    result[index].account = await this.CosmosAPI().get.account(element.address);  
+  }
+  
   return result;
   
 };
