@@ -231,7 +231,7 @@ walletManger.prototype.generateSonAccount = function (mnemonic, password, name, 
 
 
   var file = this.findSonFile(address);
-  if (file != null) {
+  if (file.fileName != null) {
     throw new Error(`failed,${address} already exists`);
   }
 
@@ -290,7 +290,7 @@ walletManger.prototype.exportSonAccount = function (address,password) {
   console.log('exportSonAccount',address,password)
   
   var file = this.findSonFile(address);
-  if (file == null) {
+  if (file.fileName == null) {
     throw new Error(`failed,${address} not exists`);
   }
   console.log(file)
@@ -309,6 +309,42 @@ walletManger.prototype.exportSonAccount = function (address,password) {
   return ;
 
 };
+
+walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
+  
+  var file = fs.readFileSync(filepath, 'utf8');
+  file = JSON.parse(file);
+  
+  var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
+
+  if (privatekey == undefined) {
+    throw new Error('Import failed,Please check the wallet file and password');
+  }
+  console.log('file',file)
+  var keyinfo ={
+    "privateKey": Buffer.from(file.privateKey,'hex'),
+    "publicKey": Buffer.from(file.publicKey,'hex'),
+    "address": file.address
+  }
+  var v3file = hdkeyjs.keyStore.toJson(keyinfo,password,name)
+  v3file.address=file.address;
+
+
+  var file = this.findSonFile(v3file.address);
+  if (file.fileName != null) {
+    throw new Error('Import failed,'+v3file.address+' already exists');
+  }
+
+
+  var targetpath = path.join(DAEMON_CONFIG.SonAccountFile,this.defaultwallet.address, v3file.address + '.keyinfo');
+  fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8');
+  
+  return true;
+
+  
+
+};
+
 
 
 //exportSonAccount
