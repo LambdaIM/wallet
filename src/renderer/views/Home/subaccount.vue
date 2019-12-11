@@ -12,7 +12,11 @@
       </div>
         <Table :columns="columns" :data="data">
           <template slot-scope="{ row, index }" slot="action">
-                <Button  @click="exportAccount(row)"  type="primary">导出</Button>
+                <Button size="small"  @click="exportAccount(row)"  type="primary">导出</Button>
+                <Button size="small"  @click="cointransaction(row)"  type="primary">交易</Button>
+            </template>
+            <template slot-scope="{ row, index }" slot="account">
+                {{row.lambdavalue|Lambformat  }}
             </template>
 
 
@@ -24,6 +28,7 @@
       </div>
       <sonAccountModelDialog ref="sonAccountModel"></sonAccountModelDialog>
       <sonAccountExportModelDialog ref="sonAccountExportModel"   ></sonAccountExportModelDialog>
+      <SendModelDialog ref="SendModelDialog" />
 
 
   </div>
@@ -36,6 +41,7 @@ import eventhub from '../../common/js/event.js';
 
 import sonAccountModelDialog from '@/views/Dialog/sonAccountModel.vue';
 import sonAccountExportModelDialog from '@/views/Dialog/sonAccountExportModel.vue';
+import SendModelDialog from '@/views/Dialog/sendModel.vue';
 
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
@@ -54,6 +60,11 @@ export default {
           key: 'name'
         },
         {
+          title: '金额',
+          key: 'account',
+          slot: 'account'
+        },
+        {
           title: '操作',
           key: 'privateKey',
           slot: 'action'
@@ -66,9 +77,11 @@ export default {
   },
   mounted() {
     this.accountList();
+    var _this = this;
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       // 更新余额
+      _this.accountList();
     });
     eventhub.$on('exportSonConfirm', data => {
       console.log('exportSonConfirm', data);
@@ -77,39 +90,51 @@ export default {
     eventhub.$on('createSonAccountConfirm', data => {
       console.log('createSonAccountConfirm');
       // 创建呢成功
-      this.accountList();
+      _this.accountList();
     });
+    this.$data.Interval = setInterval(() => {
+      _this.accountList();
+    }, 1000 * 15);
+  },
+  beforeDestroy() {
+    clearInterval(this.$data.Interval);
   },
   methods: {
     openCreateModel() {
       this.$refs.sonAccountModel.open();
     },
     async accountList() {
+      console.log('accountList');
       // sonAccountList
       let res = await ipc.callMain('sonAccountList', {});
       // console.log(res);
       if (!res.state) return;
       // console.log(res);
+      res.data.forEach(element => {
+        element.lambdavalue = '';
+        if (element.account.coins != null) {
+          element.account.coins.forEach(item => {
+            if (item.denom == 'ulamb') {
+              element.lambdavalue = item.amount;
+            }
+          });
+        }
+      });
       this.$data.data = res.data;
     },
     async exportAccount(row) {
       console.log(this.$refs);
       this.$refs.sonAccountExportModel.open(row);
-
-      // let res = await ipc.callMain('exportSonAccount', {
-      //   row
-      // });
-      // // console.log(res);
-      // if (!res.state) return;
+    },
+    cointransaction(row) {
+      this.$refs.SendModelDialog.open(undefined, 'ulamb', row.address);
     }
-  },
-  beforeDestroy() {
-
   },
   components: {
     TxTable,
     sonAccountModelDialog,
-    sonAccountExportModelDialog
+    sonAccountExportModelDialog,
+    SendModelDialog
   }
 
 };

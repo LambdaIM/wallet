@@ -189,14 +189,14 @@ export default {
       this.sendModal = false;
       // this.confirmModal=true;
     },
-    open(amountBlance, coinType) {
+    open(amountBlance, coinType, Tovalue) {
       this.$data.denomBlance = amountBlance || this.balance;
       this.$data.denom = coinType || 'ulamb';
       this.sendModal = true;
       this.confirmModal = false;
       this.editmemo = false;
       this.$data.LAMBvalue = '';
-      this.$data.Tovalue = '';
+      this.$data.Tovalue = Tovalue || '';
     }
   },
   computed: {
