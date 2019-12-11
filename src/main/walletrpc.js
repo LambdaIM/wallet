@@ -692,7 +692,28 @@ export default function() {
     }
   });
 
-  // exportSonAccount
+  eipc.answerRenderer('ImportSonAccount', async query => {
+    try {
+      var { file, password, name } = query;
+      if (file == undefined) {
+        throw resultView(null, false, 'need file');
+      }
+
+      if (password == undefined) {
+        throw resultView(null, false, 'need password');
+      }
+
+      if (name == undefined) {
+        throw resultView(null, false, 'need name');
+      }
+
+      var TxMessageload = await WM.ImportSonAccount(file, password, name);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
 }
 
 

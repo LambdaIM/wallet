@@ -5,8 +5,8 @@
       <div style="    margin-bottom: 10px;">
            <Row>
                <Button @click="openCreateModel" type="primary">创建矿工子账户</Button>&nbsp;&nbsp;
-               <Button  type="primary">导入</Button>&nbsp;&nbsp;
-               <Button  type="primary">新建</Button>&nbsp;&nbsp;
+               <Button @click="importAccount" type="primary">导入</Button>&nbsp;&nbsp;
+
 
             </Row>
       </div>
@@ -29,6 +29,7 @@
       <sonAccountModelDialog ref="sonAccountModel"></sonAccountModelDialog>
       <sonAccountExportModelDialog ref="sonAccountExportModel"   ></sonAccountExportModelDialog>
       <SendModelDialog ref="SendModelDialog" />
+      <sonAccountImportModelDialog ref="sonAccountImportModel" />
 
 
   </div>
@@ -42,6 +43,8 @@ import eventhub from '../../common/js/event.js';
 import sonAccountModelDialog from '@/views/Dialog/sonAccountModel.vue';
 import sonAccountExportModelDialog from '@/views/Dialog/sonAccountExportModel.vue';
 import SendModelDialog from '@/views/Dialog/sendModel.vue';
+
+import sonAccountImportModelDialog from '@/views/Dialog/sonAccountImportModel.vue';
 
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
@@ -128,13 +131,17 @@ export default {
     },
     cointransaction(row) {
       this.$refs.SendModelDialog.open(undefined, 'ulamb', row.address);
+    },
+    importAccount() {
+      this.$refs.sonAccountImportModel.open();
     }
   },
   components: {
     TxTable,
     sonAccountModelDialog,
     sonAccountExportModelDialog,
-    SendModelDialog
+    SendModelDialog,
+    sonAccountImportModelDialog
   }
 
 };
