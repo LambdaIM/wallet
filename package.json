@@ -71,8 +71,8 @@
         }
     },
     "dependencies": {
-        "@jswebfans/hdkeyjs": "1.2.10",
-        "@jswebfans/rpcapijs": "0.1.31",
+        "@jswebfans/hdkeyjs": "1.2.11",
+        "@jswebfans/rpcapijs": "0.1.32",
         "bignumber.js": "^8.1.1",
         "bluebird": "^3.7.1",
         "body-parser": "^1.18.3",
