@@ -639,6 +639,15 @@
       "needpubKey":"Pubkey cannot be empty",
       "needtip":" only supports combination of numbers and letters"
   }
+},
+"somemodel":{
+  "Extractstorageandmininrewards":"Extract storage and mining rewards",
+  "Miningsubaccount":"Mining sub account",
+  "describe":"Describe",
+  "describetip":"Number with only one decimal place described as greater than 1",
+  "action":{
+    "accountAddress":"Please select mining sub account"
+  }
 }
 
 

@@ -7,7 +7,8 @@ const state = {
   balanceSto: 0,
   coinList: [],
   Delegation: 0,
-  Distribution: 0
+  Distribution: 0,
+  MinerReward: 0
 };
 
 console.log('--------***************');
@@ -37,6 +38,9 @@ const mutations = {
   },
   setDistribution: function(state, value) {
     state.Distribution = value;
+  },
+  setMinerReward: function(state, value) {
+    state.MinerReward = value;
   }
 
 
@@ -69,6 +73,9 @@ const actions = {
   },
   setDistribution: function(context, value) {
     context.commit('setDistribution', value);
+  },
+  setMinerReward: function(context, value) {
+    context.commit('setMinerReward', value);
   }
 };
 const getters = {
@@ -95,6 +102,9 @@ const getters = {
   },
   getDistribution(state) {
     return state.Distribution;
+  },
+  getMinerReward(state) {
+    return state.MinerReward;
   }
 };
 

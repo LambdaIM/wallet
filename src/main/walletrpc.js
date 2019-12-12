@@ -293,6 +293,23 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('minerwithdrawal', async query => {
+    var { to, amount, gas, isdege } = query;
+
+
+
+    if (amount == undefined) {
+      throw resultView(null, false, 'need amount');
+    }
+
+    try {
+      var data = await WM.TransferMinerwithdrawal(to, amount, gas, isdege);
+      return resultView(data, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
 
 
   eipc.answerRenderer('withdrawalDistribution', async query => {

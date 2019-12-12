@@ -635,5 +635,14 @@
            "needtip":"仅支持数字和字母组合"
 
        }
+   },
+   "somemodel":{
+       "Extractstorageandminingrewards":"提取存储挖矿奖励",
+       "Miningsubaccount":"挖矿子账户",
+       "describe":"描述",
+       "describetip":"描述为大于1的 只有一位小数的数字",
+       "action":{
+        "accountAddress":"请选择挖矿子账户"
+      }
    }
 }

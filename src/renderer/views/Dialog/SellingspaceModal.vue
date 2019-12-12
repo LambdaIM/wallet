@@ -14,11 +14,11 @@
         {{$t('Dialog.sellorder.Marketname')}}：{{market.name}}
       </p><br/>
       <p>
-        <Input v-model="description"><span slot="prepend">描述</span> </Input>
+        <Input v-model="description"><span slot="prepend">{{$t('somemodel.describe')}}</span> </Input>
 
       </p>
       <br/>
-      <p>描述为大于1的  只有一位小数的数字</p>
+      <p>{{$t('somemodel.describetip')}}</p>
       <br/>
       <p>
         <Input  v-model="spaceSize">
@@ -88,7 +88,7 @@
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">描述:</Col>
+          <Col span="4" class-name="key">{{$t('somemodel.describe')}}:</Col>
           <Col span="20" class-name="value">{{description}} </Col>
         </Row>
 
@@ -189,7 +189,7 @@ export default {
       }
       if (description <= 1) {
         this.$Notice.warning({
-          title: '描述的值为大于1的  只有一位小数的数字'
+          title: this.$t('somemodel.describetip')
         });
         return;
       }

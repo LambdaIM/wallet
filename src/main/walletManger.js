@@ -495,6 +495,12 @@ walletManger.prototype.TransferWithdrawal = async function (to, amount, gas, isd
     denom: 'ulamb'
   };
 };
+walletManger.prototype.TransferMinerwithdrawal = async function (to, amount, gas, isdege) {
+  return {
+    type: transaction.WithdrawMinerRewards,
+    minerAddress:hdkeyjs.address.MinerAddress(this.defaultwallet.address)
+  };
+};
 
 walletManger.prototype.TransferRedelegate = async function (validatorSourceAddress,validatorDestinationAddress ,amount,validatortype) {
   return {
@@ -654,7 +660,9 @@ walletManger.prototype.Simulate = async function (transactiondata) {
     this.actionManager.setContext({ url: DAEMON_CONFIG.LambdaNetwork(), userAddress: this.defaultwallet.address });
   }
   console.log('***********')
-  console.log(type, properties)
+  console.log(type)
+  console.log('***********')
+  console.log(properties)
   console.log('***********')
   this.actionManager.setMessage(type, properties);
   
