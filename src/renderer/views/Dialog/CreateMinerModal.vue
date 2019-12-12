@@ -10,6 +10,32 @@
       <p>
         {{$t('sellpageinfo.Initializeminertip')}}
       </p>
+      <br />
+      <p>
+          <Input v-model="address" readonly>
+            <span slot="prepend">{{$t('home.Modal1.From')}}</span>
+          </Input>
+        </p>
+        <br />
+        <p>
+        <Select @on-change="selectvalue" v-model="accountAddress" >
+            <Option v-for="item in accountlist" :value="item.address" :label="item.address" :key="item.address">
+               <span>{{ item.address }}</span>
+            <span style="float:right;color:red">{{item.name}}</span>
+
+            </Option>
+        </Select>
+        </p><br/>
+        <p>
+          <Input  v-model="DhtId" placeholder="">
+            <span slot="prepend">DhtId</span>
+          </Input>
+        </p><br/>
+        <p>
+          <Input  v-model="pubKey" placeholder="">
+            <span slot="prepend">pubKey</span>
+          </Input>
+        </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>
@@ -20,6 +46,18 @@
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">挖矿子账户:</Col>
+          <Col span="20" class-name="value">{{accountAddress}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">DhtId:</Col>
+          <Col span="20" class-name="value">{{DhtId}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">pubKey:</Col>
+          <Col span="20" class-name="value"><Input  readonly v-model="pubKey" type="textarea"  /></Col>
         </Row>
 
         <Row class-name="item">
@@ -46,7 +84,11 @@ export default {
     return {
       withdrawalModal: false,
       confirmModal: false,
-      gaseFee: 0
+      gaseFee: 0,
+      accountlist: [],
+      accountAddress: '',
+      DhtId: '',
+      pubKey: ''
     };
   },
   methods: {
@@ -54,19 +96,65 @@ export default {
       console.log('- -');
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
+      this.accountList();
+    },
+    selectvalue(e) {
+      console.log(e);
+      this.$data.accountAddress = e;
     },
     prewithdrawalLAMB() {
       console.log('- -');
+      if (this.$data.accountAddress == '') {
+        this.$Notice.warning({
+          title: this.$t('sellpageinfo.action.accountAddress')
+        });
+        return;
+      }
+
+      if (this.$data.DhtId == '') {
+        this.$Notice.warning({
+          title: this.$t('sellpageinfo.action.needdhtid')
+        });
+        return;
+      }
+
+      if (this.$data.pubKey == '') {
+        this.$Notice.warning({
+          title: this.$t('sellpageinfo.action.needpubKey')
+        });
+        return;
+      }
 
       this.$data.withdrawalModal = false;
-      this.transfer('', 'CreateMiner');
+      this.transfer({
+        miningAddress: this.$data.accountAddress,
+        dhtId: this.$data.DhtId,
+        pubKey: this.$data.pubKey
+      }, 'CreateMiner');
     },
-    async transfer(amount, txType) {
+    async accountList() {
+      console.log('accountList');
+      // sonAccountList
+      let res = await ipc.callMain('sonAccountList', {});
+      // console.log(res);
+      if (!res.state) return;
+      // console.log(res);
+      res.data.forEach(element => {
+        element.lambdavalue = '';
+        if (element.account.coins != null) {
+          element.account.coins.forEach(item => {
+            if (item.denom == 'ulamb') {
+              element.lambdavalue = item.amount;
+            }
+          });
+        }
+      });
+      this.$data.accountlist = res.data;
+    },
+    async transfer(objpra, txType) {
       this.$data.transactiondata = null;
       try {
-        let res = await ipc.callMain(txType, {
-
-        });
+        let res = await ipc.callMain(txType, objpra);
         // console.log(res);
         if (res.state) {
           console.log(res.data);

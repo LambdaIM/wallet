@@ -567,9 +567,12 @@ walletManger.prototype.TransferVote = async function (ProposalID, option) {
   };
 };
 
-walletManger.prototype.TransferCreateMiner = async function () {
+walletManger.prototype.TransferCreateMiner = async function (miningAddress, dhtId, pubKey) {
   return {
-    type: transaction.CreateMiner
+    type: transaction.CreateMiner,
+    miningAddress, 
+    dhtId, 
+    pubKey
   };
 };
 
