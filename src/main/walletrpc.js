@@ -587,7 +587,7 @@ export default function() {
       price,
       rate,
       sellSize,
-      machineName,
+      description,
       cancelTimeDuration,
       minBuySize,
       minBuyDuration,
@@ -602,8 +602,8 @@ export default function() {
     if (rate == undefined) {
       throw resultView(null, false, 'need rate');
     }
-    if (machineName == undefined) {
-      throw resultView(null, false, 'need machineName');
+    if (description == undefined) {
+      throw resultView(null, false, 'need description');
     }
     if (cancelTimeDuration == undefined) {
       throw resultView(null, false, 'need cancelTimeDuration');
@@ -623,7 +623,7 @@ export default function() {
         price,
         rate,
         sellSize,
-        machineName,
+        description,
         cancelTimeDuration,
         minBuySize,
         minBuyDuration,
