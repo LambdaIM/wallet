@@ -13,13 +13,12 @@
       <p>
         {{$t('Dialog.sellorder.Marketname')}}：{{market.name}}
       </p><br/>
-      <p>{{$t('Dialog.sellorder.Storagedevice')}}&nbsp;&nbsp;
-        <Select :placeholder="$t('Dialog.sellorder.selectStoragedevicetip')" v-model="machineitem" style="width:300px">
-        <Option v-for="item in machineList" :value="item.name" :key="item.name">{{ item.name }}</Option>
-    </Select>
+      <p>
+        <Input v-model="description"><span slot="prepend">描述</span> </Input>
+
       </p>
       <br/>
-      <p>{{$t('Dialog.sellorder.Storagedevicetip')}}</p>
+      <p>描述为大于1的  只有一位小数的数字</p>
       <br/>
       <p>
         <Input  v-model="spaceSize">
@@ -89,8 +88,8 @@
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('Dialog.sellorder.Storagedevice')}}:</Col>
-          <Col span="20" class-name="value">{{machineitem}} </Col>
+          <Col span="4" class-name="key">描述:</Col>
+          <Col span="20" class-name="value">{{description}} </Col>
         </Row>
 
         <Row class-name="item">
@@ -152,7 +151,8 @@ export default {
       minDuration: '',
       unitPrice: '5',
       maxDuration: '',
-      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30,
+      description: ''
     };
   },
   methods: {
@@ -166,12 +166,16 @@ export default {
       this.fnpricerate = debounce(this.pricechange, 1000);
     },
     prewithdrawalLAMB() {
-      if (this.$data.machineitem == '') {
-        this.$Notice.warning({
-          title: this.$t('Dialog.sellorder.action.needstoragedevice')
-        });
-        return;
-      }
+      // if (this.$data.description == '') {
+      //   this.$Notice.warning({
+      //     title: this.$t('Dialog.sellorder.action.needstoragedevice')
+      //   });
+      //   return;
+      // }
+      let description = parseFloat(this.$data.description).toFixed(1);
+
+
+
       let spaceSize = parseInt(this.$data.spaceSize);
       let unitPrice = parseInt(this.$data.unitPrice);
 
@@ -183,6 +187,14 @@ export default {
         unitPrice = 5;
         // this.$Message.info(this.$t('Dialog.sellorder.ratetip1'));
       }
+      if (description <= 1) {
+        this.$Notice.warning({
+          title: '描述的值为大于1的  只有一位小数的数字'
+        });
+        return;
+      }
+      this.$data.description = description;
+
       if (rate >= 3 && unitPrice < 5) {
         unitPrice = 5;
         this.$Message.info(this.$t('Dialog.sellorder.ratetip2'));
@@ -345,7 +357,7 @@ export default {
         let res = await ipc.callMain(txType, {
           marketName: this.$data.market.name,
           price: sellobj.unitPrice,
-
+          description: this.$data.description,
           rate: sellobj.rate + '.000000000000000000',
           sellSize: sellobj.spaceSize + '',
           machineName: this.$data.machineitem,
