@@ -13,7 +13,8 @@ const transactionTypes = {
   CreateSellOrder: `MsgCreateSellOrder`,
   CreateBuyOrder: `MsgCreateBuyOrder`,
   CreateMiner: `MsgCreateMiner`,
-  CreateMachine: `MsgCreateMachine`
+  CreateMachine: `MsgCreateMachine`,
+  WithdrawMinerRewards: `MsgWithdrawMinerRewards`
 };
 
 export default transactionTypes;

@@ -3,63 +3,31 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      :title="$t('sellpageinfo.Initializeminer')"
+      :title="$t('somemodel.Extractstorageandmininrewards')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
       <p>
-        {{$t('sellpageinfo.Initializeminertip')}}
+        <Input readonly v-model="DistributionReward">
+          <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
+          <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
+        </Input>
       </p>
-      <br />
-      <p>
-          <Input v-model="address" readonly>
-            <span slot="prepend">{{$t('home.Modal1.From')}}</span>
-          </Input>
-        </p>
-        <br />
-        <p>
-        <Select :placeholder="$t('somemodel.Miningsubaccount')" @on-change="selectvalue" v-model="accountAddress" >
-            <Option v-for="item in accountlist" :value="item.address" :label="item.address" :key="item.address">
-               <span>{{ item.address }}</span>
-            <span style="float:right;color:red">{{item.name}}</span>
-
-            </Option>
-        </Select>
-        </p><br/>
-        <p>
-          <Input  v-model="DhtId" placeholder="">
-            <span slot="prepend">DhtId</span>
-          </Input>
-        </p><br/>
-        <p>
-          <Input  v-model="pubKey" placeholder="">
-            <span slot="prepend">pubKey</span>
-          </Input>
-        </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>
     </Modal>
     <Modal v-model="confirmModal" :styles="{top: '200px'}">
       <div class="modal-header" slot="header">
-        <h2>{{$t('sellpageinfo.Initializeminer')}}</h2>
+        <h2>{{$t('somemodel.Extractstorageandmininrewards')}}</h2>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
         <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('somemodel.Miningsubaccount')}}:</Col>
-          <Col span="20" class-name="value">{{accountAddress}}</Col>
+          <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+          <Col span="20" class-name="value">{{DistributionReward}} LAMB</Col>
         </Row>
-        <Row class-name="item">
-          <Col span="4" class-name="key">DhtId:</Col>
-          <Col span="20" class-name="value">{{DhtId}}</Col>
-        </Row>
-        <Row class-name="item">
-          <Col span="4" class-name="key">pubKey:</Col>
-          <Col span="20" class-name="value"><Input  readonly v-model="pubKey" type="textarea"  /></Col>
-        </Row>
-
         <Row class-name="item">
             <Input  v-model="gaseFee" >
                               <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
@@ -84,11 +52,7 @@ export default {
     return {
       withdrawalModal: false,
       confirmModal: false,
-      gaseFee: 0,
-      accountlist: [],
-      accountAddress: '',
-      DhtId: '',
-      pubKey: ''
+      gaseFee: 0
     };
   },
   methods: {
@@ -96,65 +60,41 @@ export default {
       console.log('- -');
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
-      this.accountList();
-    },
-    selectvalue(e) {
-      console.log(e);
-      this.$data.accountAddress = e;
     },
     prewithdrawalLAMB() {
       console.log('- -');
-      if (this.$data.accountAddress == '') {
+      this.LAMBvalue = this.DistributionReward;
+      let value = this.toBigNumStr(this.LAMBvalue);
+
+      // if (value <= 0 || value > this.$data.DistributionReward ) {
+      //   // need to alert
+      //   this.$Notice.warning({
+      //     title: this.$t('home.action.check_balance_amount_transfer')
+      //   });
+      //   return;
+      // }
+
+      if (isNaN(value)) {
         this.$Notice.warning({
-          title: this.$t('somemodel.action.accountAddress')
+          title: this.$t('home.action.Check_the_amount')
         });
         return;
       }
-
-      if (this.$data.DhtId == '') {
-        this.$Notice.warning({
-          title: this.$t('sellpageinfo.action.needdhtid')
-        });
-        return;
-      }
-
-      if (this.$data.pubKey == '') {
-        this.$Notice.warning({
-          title: this.$t('sellpageinfo.action.needpubKey')
-        });
-        return;
-      }
-
       this.$data.withdrawalModal = false;
-      this.transfer({
-        miningAddress: this.$data.accountAddress,
-        dhtId: this.$data.DhtId,
-        pubKey: this.$data.pubKey
-      }, 'CreateMiner');
+      this.transfer(value, 'minerwithdrawal');
     },
-    async accountList() {
-      console.log('accountList');
-      // sonAccountList
-      let res = await ipc.callMain('sonAccountList', {});
-      // console.log(res);
-      if (!res.state) return;
-      // console.log(res);
-      res.data.forEach(element => {
-        element.lambdavalue = '';
-        if (element.account.coins != null) {
-          element.account.coins.forEach(item => {
-            if (item.denom == 'ulamb') {
-              element.lambdavalue = item.amount;
-            }
-          });
-        }
-      });
-      this.$data.accountlist = res.data;
-    },
-    async transfer(objpra, txType) {
+    async transfer(amount, txType) {
+      let to = this.Tovalue;
+      // let amount = this.LAMBvalue;
+      let gas = 1;
+      // amount = amount * 10000;
       this.$data.transactiondata = null;
       try {
-        let res = await ipc.callMain(txType, objpra);
+        let res = await ipc.callMain(txType, {
+          to,
+          amount,
+          gas
+        });
         // console.log(res);
         if (res.state) {
           console.log(res.data);
@@ -194,7 +134,7 @@ export default {
   },
   computed: {
     DistributionReward() {
-      return this.bigNumType(this.$store.getters.getDistributionReward);
+      return this.bigNumType(this.$store.getters.getMinerReward);
     },
     address: function() {
       return this.$store.getters.getaddress;
