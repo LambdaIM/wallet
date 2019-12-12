@@ -507,8 +507,22 @@ export default function() {
 
 
   eipc.answerRenderer('CreateMiner', async query => {
+    var { miningAddress, dhtId, pubKey } = query;
+
+    if (miningAddress == undefined) {
+      throw resultView(null, false, 'need miningAddress');
+    }
+
+    if (dhtId == undefined) {
+      throw resultView(null, false, 'need dhtId');
+    }
+
+    if (pubKey == undefined) {
+      throw resultView(null, false, 'need pubKey');
+    }
+
     try {
-      var TxMessageload = await WM.TransferCreateMiner();
+      var TxMessageload = await WM.TransferCreateMiner(miningAddress, dhtId, pubKey);
 
       return resultView(TxMessageload, true);
     } catch (error) {

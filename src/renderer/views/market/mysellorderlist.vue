@@ -3,12 +3,12 @@
   <div class="customer-container">
       <div class="tableContainer">
              <Row>
-        <Col span="10">
+        <Col span="13">
         &nbsp;
         </Col>
-        <Col span="6">
-              <Button @click="openCreateMiner" type="primary"  size="small"> {{$t('sellpageinfo.Initializeminer')}} </Button>&nbsp;&nbsp;
-              <Button @click="openCreateMachineModal"  type="primary"  size="small"> {{$t('sellpageinfo.Createstoragenode')}} </Button>
+        <Col span="3">
+              <Button @click="openCreateMiner" type="primary"  size="small"> {{$t('sellpageinfo.Initializeminer')}} </Button>
+
         </Col>
         <Col span="8">
 
@@ -62,7 +62,7 @@
       </div>
       <SellingspaceModal ref="Sellingspace" />
       <CreateMinerModal ref="CreateMiner" />
-      <CreateMachineModal ref="CreateMachine"/>
+
 
   </div>
 </template>
@@ -73,7 +73,7 @@ import SellingspaceModal from '@/views/Dialog/SellingspaceModal.vue';
 import eventhub from '../../common/js/event.js';
 import CreateMinerModal from '@/views/Dialog/CreateMinerModal.vue';
 
-import CreateMachineModal from '@/views/Dialog/CreateMachineModal.vue';
+
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 var packagejson = require('../../../../package.json');
@@ -142,8 +142,8 @@ export default {
   },
   components: {
     SellingspaceModal,
-    CreateMinerModal,
-    CreateMachineModal
+    CreateMinerModal
+
 
   },
   methods: {
@@ -175,9 +175,6 @@ export default {
     },
     openCreateMiner() {
       this.$refs.CreateMiner.open();
-    },
-    openCreateMachineModal() {
-      this.$refs.CreateMachine.open();
     },
     async getmarketlist() {
       console.log('getmarketlist');
