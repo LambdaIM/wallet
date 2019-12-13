@@ -3,7 +3,7 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="创建矿工子账户"
+      :title="$t('somemodel.Importminersubaccount')"
       :styles="{top: '200px'}"
 
     >
@@ -12,19 +12,19 @@
             :before-upload="handleUpload"
             action
             >
-            <Button icon="ios-cloud-upload-outline">Select the file </Button>
+            <Button icon="ios-cloud-upload-outline">{{$t('somemodel.Select file')}}</Button>
         </Upload>
       </p>
       <br/>
       <p>
-        <Input v-model="name" placeholder="备注"  />
+        <Input v-model="name" :placeholder="$t('somemodel.remarks')"  />
       </p>
       <br/>
       <p>
-        <Input type="password" v-model="password" placeholder="密码"  />
+        <Input type="password" v-model="password" :placeholder="$t('somemodel.Walletpassword')"  />
       </p>
       <div slot="footer">
-        <Button type="primary" @click="Submit">{{$t('home.Modal1.Submit')}}</Button>
+        <Button type="primary" @click="Submit">{{$t('home.Modal1.Confirm')}}</Button>
       </div>
     </Modal>
 

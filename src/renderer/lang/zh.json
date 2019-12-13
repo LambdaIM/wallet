@@ -155,6 +155,7 @@
       "profits_pledge_system": "挖矿奖励与质押系统的提现额度有关。详情请参阅质押系统。",
       "View_Detail": "查看详情",
       "token": "资产",
+      "subaccount": "子账户",
       "table": {
           "Amount": "金额",
           "From":"发送",
@@ -641,8 +642,23 @@
        "Miningsubaccount":"挖矿子账户",
        "describe":"描述",
        "describetip":"描述为大于1的 只有一位小数的数字",
+       "Createminersubaccount":"创建矿工子账户",
+       "Mnemonicword":"助记词",
+       "remarks":"备注",
+       "Walletpassword":"钱包密码",
+       "Importminersubaccount":"导入矿工子账户",
        "action":{
         "accountAddress":"请选择挖矿子账户"
       }
+   },
+   "subaccount":{
+       "Createminersubaccount":"创建矿工子账户",
+       "Import":"导入",
+       "export":"导出",
+       "transaction":"交易",
+       "address":"地址",
+       "remarks":"备注",
+       "amount":"金额",
+       "operation":"操作"
    }
 }

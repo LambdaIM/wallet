@@ -3,23 +3,23 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="创建矿工子账户"
+      :title="$t('somemodel.Miningsubaccount')"
       :styles="{top: '200px'}"
 
     >
       <p>
-        <Input v-model="world" type="textarea" :rows="8" placeholder="助记次" />
+        <Input v-model="world" type="textarea" :rows="8" :placeholder="$t('somemodel.Mnemonicword')" />
       </p>
       <br/>
       <p>
-        <Input v-model="name" placeholder="备注"  />
+        <Input v-model="name" :placeholder="$t('somemodel.remarks')"  />
       </p>
       <br/>
       <p>
-        <Input type="password" v-model="password" placeholder="密码"  />
+        <Input type="password" v-model="password" :placeholder="$t('somemodel.Walletpassword')"  />
       </p>
       <div slot="footer">
-        <Button type="primary" @click="Submit">{{$t('home.Modal1.Submit')}}</Button>
+        <Button type="primary" @click="Submit">{{$t('home.Modal1.Confirm')}}</Button>
       </div>
     </Modal>
 
