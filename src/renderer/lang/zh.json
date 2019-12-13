@@ -647,6 +647,7 @@
        "remarks":"备注",
        "Walletpassword":"钱包密码",
        "Importminersubaccount":"导入矿工子账户",
+       "Select file":"选择文件",
        "action":{
         "accountAddress":"请选择挖矿子账户"
       }
