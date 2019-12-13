@@ -160,6 +160,7 @@
       "profits_pledge_system":"The profits of miners'mining are related to the withdrawal amount in the storage miners' system. Details are referred to the pledge system",
       "View_Detail":"View Detail",
       "token": "Assets",
+      "subaccount": "Sub account",
       "table":{
         "Amount":"Amount",
         "Source":"Source",
@@ -645,9 +646,25 @@
   "Miningsubaccount":"Mining sub account",
   "describe":"Describe",
   "describetip":"Number with only one decimal place described as greater than 1",
+  "Createminersubaccount":"Create miner sub  account",
+  "Mnemonicword":"Mnemonic",
+  "remarks":"remarks",
+  "Walletpassword":"Wallet password",
+  "Importminersubaccount":"Import miner sub account",
+  "Select file":"Select file",
   "action":{
     "accountAddress":"Please select mining sub account"
   }
+},
+"subaccount":{
+    "Createminersubaccount":"Create miner sub account",
+    "Import":"Import",
+    "export":"export",
+    "transaction":"transaction",
+    "address":"address",
+    "remarks":"remarks",
+    "amount":"amount",
+    "operation":"operation"
 }
 
 

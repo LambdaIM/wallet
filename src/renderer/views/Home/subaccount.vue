@@ -4,16 +4,16 @@
       <div class="tableContainer">
       <div style="    margin-bottom: 10px;">
            <Row>
-               <Button @click="openCreateModel" type="primary">创建矿工子账户</Button>&nbsp;&nbsp;
-               <Button @click="importAccount" type="primary">导入</Button>&nbsp;&nbsp;
+               <Button @click="openCreateModel" type="primary">{{$t('subaccount.Createminersubaccount')}}</Button>&nbsp;&nbsp;
+               <Button @click="importAccount" type="primary">{{$t('subaccount.Import')}}</Button>&nbsp;&nbsp;
 
 
             </Row>
       </div>
         <Table :columns="columns" :data="data">
           <template slot-scope="{ row, index }" slot="action">
-                <Button size="small"  @click="exportAccount(row)"  type="primary">导出</Button>
-                <Button size="small"  @click="cointransaction(row)"  type="primary">交易</Button>
+                <Button size="small"  @click="exportAccount(row)"  type="primary">{{$t('subaccount.export')}}</Button>
+                <Button size="small"  @click="cointransaction(row)"  type="primary">{{$t('subaccount.transaction')}}</Button>
             </template>
             <template slot-scope="{ row, index }" slot="account">
                 {{row.lambdavalue|Lambformat  }}
@@ -55,20 +55,20 @@ export default {
     return {
       columns: [
         {
-          title: '地址',
+          title: this.$t('subaccount.address'),
           key: 'address'
         },
         {
-          title: '备注',
+          title: this.$t('subaccount.remarks'),
           key: 'name'
         },
         {
-          title: '金额',
+          title: this.$t('subaccount.amount'),
           key: 'account',
           slot: 'account'
         },
         {
-          title: '操作',
+          title: this.$t('subaccount.operation'),
           key: 'privateKey',
           slot: 'action'
         }
