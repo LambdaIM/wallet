@@ -534,9 +534,9 @@ export default function() {
       throw resultView(null, false, 'need dhtId');
     }
 
-    if (pubKey == undefined) {
-      throw resultView(null, false, 'need pubKey');
-    }
+    // if (pubKey == undefined) {
+    //   throw resultView(null, false, 'need pubKey');
+    // }
 
     try {
       var TxMessageload = await WM.TransferCreateMiner(miningAddress, dhtId, pubKey);
@@ -554,17 +554,17 @@ export default function() {
       throw resultView(null, false, 'need name');
     }
 
-    if (peerId == undefined) {
-      throw resultView(null, false, 'need peerId');
-    }
+    // if (peerId == undefined) {
+    //   throw resultView(null, false, 'need peerId');
+    // }
 
     if (dhtId == undefined) {
       throw resultView(null, false, 'need dhtId');
     }
 
-    if (pubKey == undefined) {
-      throw resultView(null, false, 'need pubKey');
-    }
+    // if (pubKey == undefined) {
+    //   throw resultView(null, false, 'need pubKey');
+    // }
 
 
     try {
