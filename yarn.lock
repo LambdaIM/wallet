@@ -651,15 +651,9 @@
   version "2.4.4"
   resolved "https://registry.npmjs.org/@jswebfans/bcryptjs/-/bcryptjs-2.4.4.tgz#79894242110e73df25ee928b01210f79b558d386"
 
-<<<<<<< HEAD
-"@jswebfans/hdkeyjs@1.2.10":
-  version "1.2.10"
-  resolved "https://registry.npmjs.org/@jswebfans/hdkeyjs/-/hdkeyjs-1.2.10.tgz#b9f8e1f52e549750030645ea31e467cd1c23cf3a"
-=======
 "@jswebfans/hdkeyjs@1.2.11":
   version "1.2.11"
   resolved "https://registry.npmjs.org/@jswebfans/hdkeyjs/-/hdkeyjs-1.2.11.tgz#3a5b8904b82657af073ca99be2c889da0274b710"
->>>>>>> b931223... 更新版本号
   dependencies:
     "@jswebfans/amino-js" "0.4.5"
     "@jswebfans/bcryptjs" "2.4.4"
@@ -685,9 +679,9 @@
     lodash.merge "^4.6.2"
     log-update "^1.0.2"
 
-"@jswebfans/rpcapijs@0.1.32":
-  version "0.1.32"
-  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.1.32.tgz#976652a4e21f2c3ba21bc6ed336708c53ada8cfa"
+"@jswebfans/rpcapijs@0.1.33":
+  version "0.1.33"
+  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.1.33.tgz#19e4fb2e06359784ae3fc148ab0c7a9d0b41fd26"
   dependencies:
     "@babel/runtime" "^7.5.4"
 

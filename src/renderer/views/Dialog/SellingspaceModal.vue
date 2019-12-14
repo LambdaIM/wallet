@@ -12,13 +12,8 @@
       </p><br/>
       <p>
         {{$t('Dialog.sellorder.Marketname')}}：{{market.name}}
-      </p><br/>
-      <p>
-        <Input v-model="description"><span slot="prepend">{{$t('somemodel.describe')}}</span> </Input>
-
       </p>
-      <br/>
-      <p>{{$t('somemodel.describetip')}}</p>
+
       <br/>
       <p>
         <Input  v-model="spaceSize">
@@ -75,6 +70,12 @@
           <span slot="append">{{$t('Dialog.sellorder.month')}}</span>
         </Input>
       </p>
+      <br/>
+      <p>
+        <Input v-model="description"   type="textarea" :placeholder="$t('somemodel.describe')"  />
+
+
+      </p>
 
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
@@ -87,10 +88,7 @@
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
-        <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('somemodel.describe')}}:</Col>
-          <Col span="20" class-name="value">{{description}} </Col>
-        </Row>
+
 
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('Dialog.sellorder.Sellingspace')}}:</Col>
@@ -122,6 +120,9 @@
                                 <span slot="append">LAMB</span>
                               </Input>
           </Row>
+        <Row class-name="item">
+          <Input readonly v-model="description"   type="textarea" :placeholder="$t('somemodel.describe')"  />
+        </Row>
       </div>
       <!-- <p>
           <Input v-model="walletPassword" type="password"></Input>
@@ -172,7 +173,6 @@ export default {
       //   });
       //   return;
       // }
-      let description = parseFloat(this.$data.description).toFixed(1);
 
 
 
@@ -187,13 +187,7 @@ export default {
         unitPrice = 5;
         // this.$Message.info(this.$t('Dialog.sellorder.ratetip1'));
       }
-      if (description <= 1) {
-        this.$Notice.warning({
-          title: this.$t('somemodel.describetip')
-        });
-        return;
-      }
-      this.$data.description = description;
+
 
       if (rate >= 3 && unitPrice < 5) {
         unitPrice = 5;

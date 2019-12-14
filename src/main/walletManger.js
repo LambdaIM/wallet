@@ -543,14 +543,14 @@ walletManger.prototype.TransferCreateSellOrder = async function (marketName,
     price,
     rate,
     sellSize,
-    description,
+    memo:description||'',
     cancelTimeDuration,
     minBuySize,
     minBuyDuration,
     maxBuyDuration
   };
 };
-
+//memo: memo || ''
 //CreateBuyOrder
 walletManger.prototype.TransferCreateBuyOrder = async function (duration,
   size,

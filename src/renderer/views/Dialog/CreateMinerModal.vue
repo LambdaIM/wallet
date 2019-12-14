@@ -31,11 +31,7 @@
             <span slot="prepend">DhtId</span>
           </Input>
         </p><br/>
-        <p>
-          <Input  v-model="pubKey" placeholder="">
-            <span slot="prepend">pubKey</span>
-          </Input>
-        </p>
+
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>
@@ -55,10 +51,7 @@
           <Col span="4" class-name="key">DhtId:</Col>
           <Col span="20" class-name="value">{{DhtId}}</Col>
         </Row>
-        <Row class-name="item">
-          <Col span="4" class-name="key">pubKey:</Col>
-          <Col span="20" class-name="value"><Input  readonly v-model="pubKey" type="textarea"  /></Col>
-        </Row>
+
 
         <Row class-name="item">
             <Input  v-model="gaseFee" >
@@ -118,18 +111,13 @@ export default {
         return;
       }
 
-      if (this.$data.pubKey == '') {
-        this.$Notice.warning({
-          title: this.$t('sellpageinfo.action.needpubKey')
-        });
-        return;
-      }
+
 
       this.$data.withdrawalModal = false;
       this.transfer({
         miningAddress: this.$data.accountAddress,
-        dhtId: this.$data.DhtId,
-        pubKey: this.$data.pubKey
+        dhtId: this.$data.DhtId
+
       }, 'CreateMiner');
     },
     async accountList() {
