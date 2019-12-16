@@ -899,7 +899,12 @@ walletManger.prototype.SonFileList =async function () {
   
   for (let index = 0; index < result.length; index++) {
     const element = result[index];
-    result[index].account = await this.CosmosAPI().get.account(element.address);  
+    try {
+      result[index].account = await this.CosmosAPI().get.account(element.address);    
+    } catch (error) {
+    console.log(error)
+    }
+    
   }
   
   return result;

@@ -50,6 +50,13 @@ export default {
       var password = this.$data.password;
       var name = this.$data.name;
       var index = '1';
+      if (mnemonic == '' || password == '' || name == '') {
+        this.$Notice.warning({
+          title: this.$t('somemodel.action.needwordpass1'),
+          desc: this.$t('somemodel.action.needwordpass1')
+        });
+        return;
+      }
       try {
         let res = await ipc.callMain('createSonAccount', {
           mnemonic, password, name, index

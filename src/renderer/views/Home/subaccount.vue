@@ -115,7 +115,7 @@ export default {
       // console.log(res);
       res.data.forEach(element => {
         element.lambdavalue = '';
-        if (element.account.coins != null) {
+        if (element.account && element.account.coins != null) {
           element.account.coins.forEach(item => {
             if (item.denom == 'ulamb') {
               element.lambdavalue = item.amount;
