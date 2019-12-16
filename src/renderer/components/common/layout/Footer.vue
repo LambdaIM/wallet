@@ -22,10 +22,9 @@
                 </a>
 
                 <DropdownMenu slot="list">
-                    <DropdownItem name="mainnet" style="text-align: left;"> <Icon color="#19be6b" type="md-cloud" />    主网默认节点  </DropdownItem>
-                    <DropdownItem name="testnet" style="text-align: left;"> <Icon color="#FFC125" type="md-cloud" /> 测试网默认节点 </DropdownItem>
-
-                    <DropdownItem v-if="login" name="customnet" style="text-align: left;" divided><Icon color="#EE30A7" type="md-cloud" />自定义网络 </DropdownItem>
+                    <DropdownItem name="mainnet" style="text-align: left;"> <Icon color="#19be6b" type="md-cloud" />   {{$t('foot.defaultmaster')}}  </DropdownItem>
+                    <DropdownItem name="testnet" style="text-align: left;"> <Icon color="#FFC125" type="md-cloud" /> {{$t('foot.Defaulttestnode')}} </DropdownItem>
+                    <DropdownItem v-if="login" name="customnet" style="text-align: left;" divided><Icon color="#EE30A7" type="md-cloud" />{{$t('foot.Customnode')}} </DropdownItem>
 
                 </DropdownMenu>
             </Dropdown>
@@ -41,13 +40,19 @@
     </div>
     <div v-else class="footer-wrapper">
 
-      <router-link v-if="login"
-            to="/validator"
-            class="item"
-          >{{ $t("foot.validator_connecting") }}<Icon   type="ios-arrow-dropdown" /></router-link>
-          <span v-else>
+       <span    class="item etc">
+    <Dropdown @on-click="Switchnetwork">
+        <a class="item" href="javascript:void(0)">
             {{ $t("foot.validator_connecting") }}
-          </span>
+            <Icon type="ios-arrow-down"></Icon>
+        </a>
+        <DropdownMenu slot="list">
+            <DropdownItem name="mainnet" style="text-align: left;"> <Icon color="#19be6b" type="md-cloud" />   {{$t('foot.defaultmaster')}}  </DropdownItem>
+            <DropdownItem name="testnet" style="text-align: left;"> <Icon color="#FFC125" type="md-cloud" /> {{$t('foot.Defaulttestnode')}} </DropdownItem>
+            <DropdownItem v-if="login" name="customnet" style="text-align: left;" divided><Icon color="#EE30A7" type="md-cloud" />{{$t('foot.Customnode')}} </DropdownItem>
+        </DropdownMenu>
+    </Dropdown>
+       </span>
     </div>
 
   </div>

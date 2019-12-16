@@ -902,7 +902,7 @@ walletManger.prototype.SonFileList =async function () {
     try {
       result[index].account = await this.CosmosAPI().get.account(element.address);    
     } catch (error) {
-    console.log(error)
+      console.log(error)
     }
     
   }
