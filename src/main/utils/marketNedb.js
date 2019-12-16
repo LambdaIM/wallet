@@ -113,6 +113,14 @@ export default class {
             }
           }
 
+          if (flag && islocalfilter.statusType) {
+            if (this.status == islocalfilter.statusType) {
+              flag = true;
+            } else {
+              flag = false;
+            }
+          }
+
           // storagenode
 
           // rateStart

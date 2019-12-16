@@ -49,7 +49,7 @@ export default function() {
     }
   });
   eipc.answerRenderer('marketOrderList', async query => {
-    var { marketName, orderType, page, limit, islocal, marketAddress, orderSortinfo, islocalfilter } = query;
+    var { marketName, orderType, page, limit, islocal, marketAddress, orderSortinfo, islocalfilter, statusType } = query;
     if (marketName == undefined) {
       throw resultView(null, false, 'need marketName');
     }
@@ -69,6 +69,12 @@ export default function() {
       throw resultView(null, false, 'need marketAddress');
     }
 
+    if (statusType == undefined) {
+      throw resultView(null, false, 'need statusType');
+    }
+
+
+
     if (islocal == undefined) {
       islocal = false;
     }
@@ -80,7 +86,7 @@ export default function() {
       var M = new Manager();
       var result;
       if (islocal == false) {
-        result = await M.getOrderList(marketName, orderType, page, limit);
+        result = await M.getOrderList(marketName, orderType, statusType, page, limit);
       } else {
         result = {
           data: await Nedbjs.getSellOrderbymarket(marketAddress, page, limit, orderSortinfo, islocalfilter)
@@ -95,7 +101,7 @@ export default function() {
   });
 
   eipc.answerRenderer('marketOrderListsync', async query => {
-    var { marketName, orderType, page, limit } = query;
+    var { marketName, orderType, page, limit, statusType } = query;
     if (marketName == undefined) {
       throw resultView(null, false, 'need marketName');
     }
@@ -110,10 +116,17 @@ export default function() {
     if (limit == undefined) {
       throw resultView(null, false, 'need limit');
     }
+    // if (statusType == undefined) {
+    //   throw resultView(null, false, 'need statusType');
+    // }
+    statusType = 'whole';
 
     try {
       var M = new Manager();
-      var result = await M.getOrderList(marketName, orderType, page, limit);
+      var result = await M.getOrderList(marketName, orderType, statusType, page, limit);
+      if (result.data == null) {
+        return resultView(0, true);
+      }
 
       if (result.data.length > 0) {
         var flag = await Nedbjs.insertTx(result.data);
