@@ -55,6 +55,14 @@ export default {
       var password = this.$data.password;
       var name = this.$data.name;
       var file = this.$data.path;
+      if (file == '' || name == '' || password == '') {
+        this.$Notice.warning({
+          title: this.$t('somemodel.action.needwordpass2'),
+          desc: this.$t('somemodel.action.needwordpass2')
+
+        });
+        return;
+      }
       try {
         let res = await ipc.callMain('ImportSonAccount', {
           password, name, file

@@ -3,12 +3,12 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="导出子账户"
+      :title="$t('somemodel.Exportsubaccount')"
       :styles="{top: '200px'}"
 
     >
       <p>
-        <Input type="password" v-model="password" placeholder="密码"  />
+        <Input type="password" v-model="password" :placeholder="$t('somemodel.Walletpassword')"  />
       </p>
       <div slot="footer">
         <Button type="primary" @click="Submit">{{$t('home.Modal1.Submit')}}</Button>

@@ -638,7 +638,7 @@
        }
    },
    "somemodel":{
-       "Extractstorageandminingrewards":"提取存储挖矿奖励",
+       "Extractstorageandmininrewards":"提取存储挖矿奖励",
        "Miningsubaccount":"挖矿子账户",
        "describe":"描述",
        "describetip":"描述为大于1的 只有一位小数的数字",
@@ -648,8 +648,12 @@
        "Walletpassword":"钱包密码",
        "Importminersubaccount":"导入矿工子账户",
        "Select file":"选择文件",
+       "Exportsubaccount":"导出子账户",
        "action":{
-        "accountAddress":"请选择挖矿子账户"
+        "accountAddress":"请选择挖矿子账户",
+        "needwordpass1":"请填写 助记次、备注、和钱包密码",
+        "needwordpass2":"请选择需要导入的文件、填写备注、和钱包密码"
+        
       }
    },
    "subaccount":{

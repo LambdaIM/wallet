@@ -652,8 +652,11 @@
   "Walletpassword":"Wallet password",
   "Importminersubaccount":"Import miner sub account",
   "Select file":"Select file",
+  "Exportsubaccount":"Export sub account",
   "action":{
-    "accountAddress":"Please select mining sub account"
+    "accountAddress":"Please select mining sub account",
+    "needwordpass1":"Please fill in mnemonics, notes, and wallet code",
+    "needwordpass2":"Please select the file to import, fill in the notes, and wallet password"
   }
 },
 "subaccount":{
