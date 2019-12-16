@@ -107,23 +107,28 @@ export default {
       this.$refs.sonAccountModel.open();
     },
     async accountList() {
-      console.log('accountList');
-      // sonAccountList
-      let res = await ipc.callMain('sonAccountList', {});
-      // console.log(res);
-      if (!res.state) return;
-      // console.log(res);
-      res.data.forEach(element => {
-        element.lambdavalue = '';
-        if (element.account && element.account.coins != null) {
-          element.account.coins.forEach(item => {
-            if (item.denom == 'ulamb') {
-              element.lambdavalue = item.amount;
-            }
-          });
-        }
-      });
-      this.$data.data = res.data;
+      try {
+        console.log('accountList');
+        // sonAccountList
+
+        let res = await ipc.callMain('sonAccountList', {});
+        console.log(res);
+        if (!res.state) return;
+        // console.log(res);
+        res.data.forEach(element => {
+          element.lambdavalue = '';
+          if (element.account && element.account.coins != null) {
+            element.account.coins.forEach(item => {
+              if (item.denom == 'ulamb') {
+                element.lambdavalue = item.amount;
+              }
+            });
+          }
+        });
+        this.$data.data = res.data;
+      } catch (error) {
+        console.log(error);
+      }
     },
     async exportAccount(row) {
       console.log(this.$refs);
