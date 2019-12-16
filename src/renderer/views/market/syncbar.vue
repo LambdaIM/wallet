@@ -27,7 +27,8 @@ export default {
         priceEnd: '',
         rateStart: '',
         rateEnd: '',
-        storagenode: ''
+        storagenode: '',
+        'statusType': '0'
       }
     };
   },
@@ -52,6 +53,7 @@ export default {
         this.$Message.info(this.$t('marketpage.Localsorting4'));
         return;
       }
+      this.$data.condition['statusType'] = this.$store.getters.statusType == 'active' ? '0' : '1';
 
       eventHub.$emit('marketconditionfilter', this.$data.condition);
     },
@@ -66,11 +68,13 @@ export default {
       }
     },
     async fetchData() {
+      console.log('-----');
       let res = await ipc.callMain('marketOrderListsync', {
         marketName: this.$props.marketName,
         orderType: 'premium', // premium all
         page: this.$data.page,
-        limit: 10
+        limit: 10,
+        statusType: this.$store.getters.statusType
       });
       if (res.data == 10) {
         this.$data.page += 1;
