@@ -300,8 +300,11 @@ walletManger.prototype.exportSonAccount = function (address,password) {
   var exportJson = {
     "privateKey":privatekey.toString('hex') ,
     "publicKey":publicKey.toString('hex') ,
-    "address": address
+    "address": address,
+    "masterAddress":this.defaultwallet.address
   }
+  
+
   console.log(exportJson)
   var targetpath = path.join(DAEMON_CONFIG.ExportSonAccountFile, address + '.json');
   fs.writeFileSync(targetpath, JSON.stringify(exportJson), 'utf8');
@@ -328,6 +331,8 @@ walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
   }
   var v3file = hdkeyjs.keyStore.toJson(keyinfo,password,name)
   v3file.address=file.address;
+
+  
 
 
   var file = this.findSonFile(v3file.address);
