@@ -552,6 +552,8 @@
     "Localsorting2":"Turn off",
     "Localsorting3":"Please turn on local sorting",
     "Localsorting4":"Start value cannot be greater than end value",
+    "active":"Hot",
+    "unActive":"Sold out",
     "selltable":{
         "Mineraddress":"Miner address",
         "amountspace":"Amount space(GB)",
