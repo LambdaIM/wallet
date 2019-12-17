@@ -545,6 +545,8 @@
        "Localsorting2":"关闭",
        "Localsorting3":"请打开本地排序",
        "Localsorting4":"开始值不能大于结束值",
+       "active":"热卖中",
+       "unActive":"卖光了",
        "selltable":{
            "Mineraddress":"矿工地址",
            "amountspace":"空间总量(GB)",

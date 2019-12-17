@@ -52,8 +52,8 @@
 
         <Col span="8">
           <RadioGroup  @on-change="statusTypeChange"  v-model="statusType" type="button" size="large">
-              <Radio label="active">热卖中</Radio>
-              <Radio label="unActive">卖光了</Radio>
+              <Radio label="active">{{$t('marketpage.active')}}</Radio>
+              <Radio label="unActive">{{$t('marketpage.unActive')}}</Radio>
           </RadioGroup>
 
         </Col>
