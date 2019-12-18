@@ -156,6 +156,7 @@
       "View_Detail": "查看详情",
       "token": "资产",
       "subaccount": "子账户",
+      "moreonbrowser":"更多历史交易记录请查看区块链浏览器",
       "table": {
           "Amount": "金额",
           "From":"发送",
@@ -457,7 +458,8 @@
     "MsgCancelSellOrder": "取消卖单",
     "MsgCreateBuyOrder": "创建买单",
     "MsgPDPProofs": "挖矿证明",
-    "MsgStatement": "挖矿声明"
+    "MsgStatement": "挖矿声明",
+    "MsgWithdrawMinerRewards":"提取存储挖矿收益"
 
    },
    "txTable":{

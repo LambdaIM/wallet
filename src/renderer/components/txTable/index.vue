@@ -32,6 +32,9 @@
       <div class="demo-spin-col" v-else>
         <Spin fix></Spin>
       </div>
+      <div style="    text-align: center;">
+        {{$t('home.moreonbrowser')}}
+      </div>
   </div>
 </template>
 

@@ -26,7 +26,7 @@ export default {
   mounted() {
     this.transactionList();
 
-    this.Interval = setInterval(() => {
+    this.$data.Interval = setInterval(() => {
       this.transactionList();
     }, 1000 * 15);
 

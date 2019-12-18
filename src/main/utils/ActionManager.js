@@ -54,7 +54,10 @@ export default class ActionManager {
 
     this.messageTypeCheck(type);
     this.messageType = type;
-    console.log(this.cosmos);
+
+    // console.log(this.cosmos);
+
+
     this.message = this.cosmos[type](
       this.context.userAddress,
       transactionProperties
