@@ -44,7 +44,7 @@ const Percentformat = value => {
   }
   var bigvalue = new BigNumber(value);
 
-  return `${bigvalue.div(1).times(100).toFormat()}%`;
+  return `${bigvalue.div(1).times(100).toFormat(2)}%`;
 };
 const formatDate = value => {
   // 具体时间格式待定

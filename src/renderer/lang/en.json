@@ -161,6 +161,7 @@
       "View_Detail":"View Detail",
       "token": "Assets",
       "subaccount": "Sub account",
+      "moreonbrowser":"More historical transactions view blockchain browser",
       "table":{
         "Amount":"Amount",
         "Source":"Source",
@@ -462,7 +463,8 @@
     "MsgCancelSellOrder": "CancelSellOrder",
     "MsgCreateBuyOrder": "CreateBuyOrder",
     "MsgPDPProofs": "PDPProofs",
-    "MsgStatement": "Statement"
+    "MsgStatement": "Statement",
+    "MsgWithdrawMinerRewards":"WithdrawMinerRewards"
   },
   "txTable":{
     "action": "Activity",
