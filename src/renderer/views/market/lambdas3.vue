@@ -1,99 +1,92 @@
 
 <template>
   <div class="customer-container">
-      <div class="tableContainer">
-           <Row  class-name="card-item">
-                            <Col span="4" class-name="title-wrapper">
-                              <span class="title">{{$t('orderinfo.operating')}}:</span>
-                            </Col>
-                            <Col span="20" class-name="content-wrapper">
-                              <Button @click="Datacollection" type="primary">{{$t('orderinfo.Viewlambdastorage')}} </Button>
-                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <!-- <Button type="warning">{{$t('orderinfo.Filelossarbitration')}}</Button> -->
-                            </Col>
-                          </Row>
-                          <Row class-name="card-item">
-                            <Col span="8" class-name="title-wrapper">
-                              <span class="title">{{$t('orderinfo.lambdastorageConsole')}}:</span>
-                            </Col>
-                            <Col span="8" class-name="content-wrapper">
+    <div class="tableContainer">
+      <!-- <Row class-name="card-item">
+        <Col span="4" class-name="title-wrapper">
+          <span class="title">{{ $t('orderinfo.operating') }}:</span>
+        </Col>
+        <Col span="20" class-name="content-wrapper">
+          <Button @click="Datacollection" type="primary">{{ $t('orderinfo.Viewlambdastorage') }}</Button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </Col>
+      </Row> -->
+      <Row class-name="card-item mt20">
+        <Col span="8" class-name="title-wrapper">
+          <span class="title">{{ $t('orderinfo.lambdastorageConsole') }}:</span>
+        </Col>
+        <Col span="8" class-name="content-wrapper">
+          {{ $t('orderinfo.Username') }}：{{ managerkey['access-key'] }}， {{ $t('orderinfo.Password') }}：{{
+            managerkey['secret-key']
+          }}
+          <br />
+          <!-- 访问地址：{{managerkey['address']}}<br/> -->
+        </Col>
+        <Col span="8" class-name="title-wrapper">
+          <Button @click="editS3user" icon="md-person" type="default">{{ $t('marketpage.edits3userinfo') }}</Button>
+        </Col>
+      </Row>
 
-                              {{$t('orderinfo.Username')}}：{{managerkey['access-key']}}，
-                              {{$t('orderinfo.Password')}}：{{managerkey['secret-key']}}<br/>
-                              <!-- 访问地址：{{managerkey['address']}}<br/> -->
+      <!-- <Row class-name="card-item">
+        <Col span="24">
+          <span style="cursor: pointer;" @click="opencmd" class="title">
+            {{ $t('marketpage.Openfailure') }}？
+            <Icon v-if="cmdstate == true" type="ios-arrow-dropdown-circle" />
+            <Icon v-if="cmdstate == false" type="ios-arrow-dropup-circle" />
+          </span>
+        </Col>
+        <Col v-if="cmdstate" span="24" class-name="content-wrapper">
+          {{ $t('marketpage.Openfailuretip') }}
+          <Button
+            v-clipboard:copy="storagecommandline"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError"
+            type="primary"
+            shape="circle"
+            icon="ios-copy"
+          ></Button>
+          <br />
 
-
-                            </Col>
-                            <Col span="8" class-name="title-wrapper">
-                              <Button @click="editS3user" icon="md-person" type="default" > {{$t('marketpage.edits3userinfo')}} </Button>
-                            </Col>
-                          </Row>
-                          <Row class-name="card-item">
-                            <Col span="24" >
-                              <span style="cursor: pointer;" @click="opencmd"  class="title">{{$t('marketpage.Openfailure')}}？<Icon v-if="cmdstate==true" type="ios-arrow-dropdown-circle" /> <Icon v-if="cmdstate==false" type="ios-arrow-dropup-circle" /></span>
-                            </Col>
-                            <Col v-if="cmdstate" span="24" class-name="content-wrapper">
-                            {{$t('marketpage.Openfailuretip')}}<Button
-              v-clipboard:copy="storagecommandline"
-              v-clipboard:success="onCopy"
-              v-clipboard:error="onError"
-              type="primary"
-              shape="circle"
-              icon="ios-copy"
-            ></Button><br/>
-
-                            <Input readonly v-model="storagecommandline" type="textarea" :rows="4" />
-
-                            </Col>
-                          </Row>
+          <Input readonly v-model="storagecommandline" type="textarea" :rows="4" />
+        </Col>
+      </Row> -->
+    </div>
+    <!-- <Modal v-model="passwordModal" :title="$t('Sign.Enter_password')" :styles="{ top: '200px' }">
+      <p>
+        <Input v-model="walletPassword" type="password"></Input>
+      </p>
+      <div slot="footer">
+        <Button :loading="loading" type="primary" @click="s3authorization">{{ $t('Sign.submit') }}</Button>
       </div>
-      <Modal
+    </Modal> -->
 
-        v-model="passwordModal"
-        :title="$t('Sign.Enter_password')"
-        :styles="{top: '200px'}"
-      >
-        <p>
-          <Input v-model="walletPassword" type="password"></Input>
-        </p>
-        <div slot="footer">
-          <Button :loading="loading"  type="primary" @click="s3authorization">{{$t('Sign.submit')}}</Button>
-        </div>
-      </Modal>
-
-          <Modal
-        v-model="editpassword"
-        :title="$t('marketpage.edits3userinfotitle')"
-        footer-hide
-        >
-            <Form ref="formInline" :model="formInline" :rules="ruleInline" >
+    <Modal v-model="editpassword" :title="$t('marketpage.edits3userinfotitle')" footer-hide>
+      <Form ref="formInline" :model="formInline" :rules="ruleInline">
         <FormItem prop="user">
-            <Input type="text" v-model="formInline.user" :placeholder="$t('orderinfo.Username')">
-                <Icon type="ios-person-outline" slot="prepend"></Icon>
-            </Input>
+          <Input type="text" v-model="formInline.user" :placeholder="$t('orderinfo.Username')">
+            <Icon type="ios-person-outline" slot="prepend"></Icon>
+          </Input>
         </FormItem>
         <FormItem prop="password">
-            <Input type="text" v-model="formInline.password" :placeholder="$t('orderinfo.Password')">
-                <Icon type="ios-lock-outline" slot="prepend"></Icon>
-            </Input>
+          <Input type="text" v-model="formInline.password" :placeholder="$t('orderinfo.Password')">
+            <Icon type="ios-lock-outline" slot="prepend"></Icon>
+          </Input>
         </FormItem>
         <FormItem prop="port">
-            <Input type="text" v-model.number="formInline.port" :placeholder="$t('orderinfo.Portnumber')" >
-                <Icon type="ios-disc" slot="prepend"></Icon>
-            </Input>
+          <Input type="text" v-model.number="formInline.port" :placeholder="$t('orderinfo.Portnumber')">
+            <Icon type="ios-disc" slot="prepend"></Icon>
+          </Input>
         </FormItem>
         <FormItem>
-            <Button type="primary" @click="handleSubmit('formInline')">{{$t('seting.Submit')}}</Button>
+          <Button type="primary" @click="handleSubmit('formInline')">{{ $t('seting.Submit') }}</Button>
         </FormItem>
-    </Form>
+      </Form>
     </Modal>
-
   </div>
 </template>
 <script>
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
-
 
 export default {
   data() {
@@ -113,10 +106,7 @@ export default {
           { required: true, message: this.$t('marketpage.action.fillsecretkey'), trigger: 'blur' },
           { type: 'string', min: 8, message: this.$t('marketpage.action.secretkeytip'), trigger: 'blur' }
         ],
-        port: [
-
-          { type: 'integer', message: this.$t('marketpage.action.portip'), trigger: 'blur' }
-        ]
+        port: [{ type: 'integer', message: this.$t('marketpage.action.portip'), trigger: 'blur' }]
       },
       storagecommandline: '',
       cmdstate: false,
@@ -124,12 +114,11 @@ export default {
       passwordModal: false,
       walletPassword: '',
       loading: false
-
     };
   },
   async mounted() {
     await this.getmanagerkey();
-    await this.getlambdastoragecommandline();
+    // await this.getlambdastoragecommandline();
   },
   methods: {
     async getmanagerkey() {
@@ -141,11 +130,9 @@ export default {
         this.$data.formInline.port = this.$data.managerkey.address.split(':')[1] || '';
       }
     },
-    async  getlambdastoragecommandline() {
+    async getlambdastoragecommandline() {
       console.log('getlambdastoragecommandline');
-      let res = await ipc.callMain('lambdastoragecommandline', {
-
-      });
+      let res = await ipc.callMain('lambdastoragecommandline', {});
       if (res.state) {
         this.$data.storagecommandline = res.data;
       }
@@ -227,8 +214,6 @@ export default {
         }
       });
     }
-
-
   }
 };
 </script>
@@ -245,13 +230,13 @@ export default {
   }
 }
 .card-item {
-      margin-bottom: 20px;
-      .title {
-        font-size: 14px;
-        font-weight: 600;
-      }
-      .item-value {
-        font-size: 14px;
-      }
+  margin-bottom: 20px;
+  .title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .item-value {
+    font-size: 14px;
+  }
 }
 </style>
