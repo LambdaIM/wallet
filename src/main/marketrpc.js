@@ -293,6 +293,7 @@ export default function() {
     var mackill = `ps -ef | grep '${DAEMON_CONFIG.LambdaSfile().replace('lamb', '[l]amb')} gateway' | awk '{print $2'} | xargs kill`;
     var winkill = `taskkill /F /IM ${DAEMON_CONFIG.LambdaSfile()}`;
     var nowos = os.platform();
+    var orderId = query.orderid;
     console.log(nowos);
     var nowkil = nowos == 'win32' ? winkill : mackill;
     try {
@@ -320,7 +321,7 @@ export default function() {
       var secretKey = yamlconfig.gateway['secret-key'];
 
 
-      var s3result = await runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password);
+      var s3result = await runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password, orderId);
       return resultView({
         s3: s3result
       }, true);
@@ -335,6 +336,7 @@ export default function() {
 
 
   eipc.answerRenderer('lambdastoragecommandline', async query => {
+    var orderId = query.orderid;
     try {
       var defaultAddress;
       if (settings.has('defaultwallet') != false) {
@@ -352,7 +354,7 @@ export default function() {
       var gatewayaddress = yamlconfig.gateway.address;
       var accesskey = yamlconfig.gateway['access-key'];
       var secretKey = yamlconfig.gateway['secret-key'];
-      var s3result = await getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey);
+      var s3result = await getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey, orderId);
 
 
 
@@ -361,7 +363,7 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
-  function getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey) {
+  function getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey, orderid) {
     return `${path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile())} gateway \
     --broker.dht_gateway_addr ${ip}:13000 \
     --broker.validator_addr  ${ip}:13659 \
@@ -369,11 +371,12 @@ export default function() {
     --gateway.address  ${gatewayaddress} \
     --gateway.access_key  ${accesskey}  \
     --gateway.secret_key  ${secretKey}  \
+    --orderid  ${orderid}  \
     --home ${DAEMON_CONFIG.OrderS3File} 
     `;
   }
 
-  function runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password) {
+  function runS3(ip, keypath, gatewayaddress, accesskey, secretKey, password, orderid) {
     return new Promise(function (resolve, reject) {
       suppose(path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile()),
         [
@@ -390,11 +393,13 @@ export default function() {
           accesskey,
           `--gateway.secret_key`,
           secretKey,
+          '--orderid',
+          orderid,
           `--home`,
           DAEMON_CONFIG.OrderS3File
 
         ]
-        , { debug: fs.createWriteStream(path.join(DAEMON_CONFIG.BASE_PATH, 'debug.txt')) }
+
       )
         .when(/.*/).respond(`${password}\n`)
         .on('error', function(error) {
