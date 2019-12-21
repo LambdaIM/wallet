@@ -8,6 +8,9 @@ import { connect } from 'net';
 import { join } from 'path';
 import { fork } from 'child_process';
 import packageJson from '../../package.json';
+import s3tool from './utils/s3tool';
+
+
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -143,9 +146,12 @@ app.on('ready', () => {
 
 app.on('window-all-closed', () => {
   // if (process.platform !== 'darwin') {
+  s3tool.killS3();
   app.quit();
   // }
 });
+
+
 
 app.on('activate', () => {
   if (mainWindow === null) {
