@@ -1,4 +1,4 @@
-    
+
 {
     "head": {
       "home": "Home",
@@ -71,7 +71,7 @@
           "password_cannot_less":"The password length cannot be less than 6 bits",
           "Login_fail":"Login fail",
           "Login_success":"Login success"
-  
+
         }
       },
       "create":{
@@ -172,7 +172,7 @@
         "Status":"Status",
         "detail":"Detail",
         "no_Transaction":"no Transaction"
-        
+
 
       },
       "Modal1":{
@@ -367,7 +367,7 @@
         "needspacesize":"Please check the size of the space, the space can only fill in the integer",
         "needstime":"Please check the duration, only the integer can be filled in."
       }
-      
+
     },
     "sellorder":{
       "Sellingspace":"Selling space",
@@ -424,8 +424,8 @@
           "mintablefalse":"is not mintable",
           "locktime":"locktime",
           "back":"back"
-          
-          
+
+
       }
   },
   "txType": {
@@ -482,7 +482,7 @@
       "ProposalID":"Proposal ID",
       "SubmitTime":"Submit Time",
       "VotingStartTime":"Voting Start Time",
-      
+
       "EndVotingTime":"End Voting Time",
       "TotalVoteCount":"Total Vote Count",
       "Yes":"Yes",
@@ -591,7 +591,7 @@
      "orderdetails":"Details"
     },
     "edits3userinfo":"Modify S3 login information",
-    "edits3userinfotitle":"Modify login information of lambda S3",       
+    "edits3userinfotitle":"Modify login information of lambda S3",
     "action":{
       "fillaccesskey":"Please fill in the access-key",
       "fillsecretkey":"Please fill in the secret-key",
@@ -604,6 +604,7 @@
 
 },
 "orderinfo":{
+ "orderBucket": "Open order bucket",
  "orderType":"type",
  "orderid":"order id",
  "space":"space",
@@ -624,7 +625,7 @@
  "Username":"access-key",
  "Password":"secret-key",
  "Portnumber":"Port number"
- 
+
 
 },
 "testcoin":{

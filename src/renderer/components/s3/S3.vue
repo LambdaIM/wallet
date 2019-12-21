@@ -86,7 +86,9 @@ export default {
 
     async getlambdastoragecommandline() {
       try {
-        let res = await ipc.callMain('lambdastoragecommandline', {});
+        let res = await ipc.callMain('lambdastoragecommandline', {
+          orderid: this.$props.orderid
+        });
         if (res.state) {
           this.storagecommandline = res.data;
         }
@@ -124,7 +126,8 @@ export default {
           this.open = false;
         }, 3000);
         result = await ipc.callMain('runlambdastorage', {
-          password: this.walletPassword
+          password: this.walletPassword,
+          orderid: this.$props.orderid
         });
         // console.log(result);
       } catch (ex) {

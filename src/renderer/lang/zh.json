@@ -166,7 +166,7 @@
           "Status": "状态",
           "detail": "详情",
           "no_Transaction": "无交易"
-          
+
       },
       "Modal1": {
           "Send_LAMB": "发送 {0}",
@@ -360,7 +360,7 @@
             "needspacesize":"检查空间大小，空间只能填写整数",
             "needstime":"检查时长大小，时长只能填写整数"
           }
-        
+
     },
     "sellorder":{
       "Sellingspace":"出售空间",
@@ -418,9 +418,9 @@
           "mintablefalse":"不可增发",
           "locktime":"锁仓时长",
           "back":"返回"
-          
-          
-          
+
+
+
       }
   },
   "txType": {
@@ -585,7 +585,7 @@
        },
        "edits3userinfo":"修改s3登录信息",
        "edits3userinfotitle":"修改lambda S3 登录信息",
-       
+
 
        "action":{
            "fillaccesskey":"请填写密钥",
@@ -598,14 +598,13 @@
 
    },
    "orderinfo":{
+    "orderBucket": "查看订单空间",
     "orderType":"类型",
     "orderid":"订单ID",
     "space":"空间",
     "unitprice":"单价(LAMB/GB/月)",
     "Storagedevice":"存储节点",
     "Marketaddress":"市场地址",
-    "Startingtime":"开始时间",
-    "EndTime":"结束时间",
     "userPay":"订单金额",
     "minerPay":"未提取的订单赔付金",
     "orderdetails":"订单详情",
@@ -658,7 +657,7 @@
         "accountAddress":"请选择挖矿子账户",
         "needwordpass1":"请填写 助记次、备注、和钱包密码",
         "needwordpass2":"请选择需要导入的文件、填写备注、和钱包密码"
-        
+
       }
    },
    "subaccount":{

@@ -2,7 +2,7 @@
   <div class="container">
     <Mycard :cardtitle="$t('orderinfo.orderdetails')" class="mt20">
       <div class="s3Operation" slot="operation">
-        <Button type="primary" @click="openS3">查看订单空间</Button>
+        <Button type="primary" @click="openS3">{{$t('orderinfo.orderBucket')}}</Button>
       </div>
 
       <div v-if="orderinfo.MatchOrder != undefined" class="transaction-content" slot="card-content">
