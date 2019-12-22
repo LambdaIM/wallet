@@ -465,7 +465,8 @@
     "MsgPDPProofs": "PDPProofs",
     "MsgStatement": "Statement",
     "MsgWithdrawMinerRewards":"WithdrawMinerRewards",
-    "MsgMinerWithDrawCount":"MinerWithDrawCount"
+    "MsgMinerWithDrawCount":"MinerWithDrawCount",
+    "MsgEditMiner":"MsgEditMiner"
   },
   "txTable":{
     "action": "Activity",
