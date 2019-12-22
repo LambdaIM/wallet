@@ -3,6 +3,9 @@
     <div class="card-wrapper">
       <Card dis-hover :title="cardtitle">
         <slot name="card-content"></slot>
+        <div class="operation" slot="extra">
+          <slot name="operation"></slot>
+        </div>
       </Card>
     </div>
   </div>
