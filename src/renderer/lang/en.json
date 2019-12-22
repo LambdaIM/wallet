@@ -464,7 +464,8 @@
     "MsgCreateBuyOrder": "CreateBuyOrder",
     "MsgPDPProofs": "PDPProofs",
     "MsgStatement": "Statement",
-    "MsgWithdrawMinerRewards":"WithdrawMinerRewards"
+    "MsgWithdrawMinerRewards":"WithdrawMinerRewards",
+    "MsgMinerWithDrawCount":"MinerWithDrawCount"
   },
   "txTable":{
     "action": "Activity",

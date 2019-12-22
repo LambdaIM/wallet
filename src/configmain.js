@@ -100,6 +100,12 @@ var configData = {
             
           }
 
+          if (fs.existsSync(`${this.BASE_PATH}/debug.txt`) ==true) {
+            fs.unlinkSync(`${this.BASE_PATH}/debug.txt`)
+             
+            
+          }
+
         
 
     }
