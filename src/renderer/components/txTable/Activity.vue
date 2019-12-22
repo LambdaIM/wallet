@@ -93,7 +93,8 @@ export default {
       txItem.action !== 'MsgMinerWithDraw' &&
       txItem.action !== 'MsgCreateSellOrder' &&
       txItem.action !== 'MsgCancelSellOrder' &&
-      txItem.action !== 'MsgCreateBuyOrder'
+      txItem.action !== 'MsgCreateBuyOrder' &&
+      txItem.action !== 'MsgEditMiner'
 
       ;
     },

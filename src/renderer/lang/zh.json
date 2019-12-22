@@ -460,7 +460,8 @@
     "MsgPDPProofs": "挖矿证明",
     "MsgStatement": "挖矿声明",
     "MsgWithdrawMinerRewards":"提取存储挖矿收益",
-    "MsgMinerWithDrawCount":"批量提取订单收益"
+    "MsgMinerWithDrawCount":"批量提取订单收益",
+    "MsgEditMiner":"修改矿工信息"
 
    },
    "txTable":{
