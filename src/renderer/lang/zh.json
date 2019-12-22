@@ -155,6 +155,8 @@
       "profits_pledge_system": "挖矿奖励与质押系统的提现额度有关。详情请参阅质押系统。",
       "View_Detail": "查看详情",
       "token": "资产",
+      "subaccount": "子账户",
+      "moreonbrowser":"更多历史交易记录请查看区块链浏览器",
       "table": {
           "Amount": "金额",
           "From":"发送",
@@ -164,7 +166,7 @@
           "Status": "状态",
           "detail": "详情",
           "no_Transaction": "无交易"
-          
+
       },
       "Modal1": {
           "Send_LAMB": "发送 {0}",
@@ -358,7 +360,7 @@
             "needspacesize":"检查空间大小，空间只能填写整数",
             "needstime":"检查时长大小，时长只能填写整数"
           }
-        
+
     },
     "sellorder":{
       "Sellingspace":"出售空间",
@@ -416,9 +418,9 @@
           "mintablefalse":"不可增发",
           "locktime":"锁仓时长",
           "back":"返回"
-          
-          
-          
+
+
+
       }
   },
   "txType": {
@@ -456,7 +458,9 @@
     "MsgCancelSellOrder": "取消卖单",
     "MsgCreateBuyOrder": "创建买单",
     "MsgPDPProofs": "挖矿证明",
-    "MsgStatement": "挖矿声明"
+    "MsgStatement": "挖矿声明",
+    "MsgWithdrawMinerRewards":"提取存储挖矿收益",
+    "MsgMinerWithDrawCount":"批量提取订单收益"
 
    },
    "txTable":{
@@ -544,6 +548,8 @@
        "Localsorting2":"关闭",
        "Localsorting3":"请打开本地排序",
        "Localsorting4":"开始值不能大于结束值",
+       "active":"热卖中",
+       "unActive":"卖光了",
        "selltable":{
            "Mineraddress":"矿工地址",
            "amountspace":"空间总量(GB)",
@@ -580,7 +586,7 @@
        },
        "edits3userinfo":"修改s3登录信息",
        "edits3userinfotitle":"修改lambda S3 登录信息",
-       
+
 
        "action":{
            "fillaccesskey":"请填写密钥",
@@ -593,14 +599,13 @@
 
    },
    "orderinfo":{
+    "orderBucket": "查看订单空间",
     "orderType":"类型",
     "orderid":"订单ID",
     "space":"空间",
     "unitprice":"单价(LAMB/GB/月)",
     "Storagedevice":"存储节点",
     "Marketaddress":"市场地址",
-    "Startingtime":"开始时间",
-    "EndTime":"结束时间",
     "userPay":"订单金额",
     "minerPay":"未提取的订单赔付金",
     "orderdetails":"订单详情",
@@ -621,5 +626,49 @@
        "txtbtn":"前往领取测试代币",
        "txtbref":"Lambda存储测试大赛火热进行中",
        "miningaward":"存储挖矿奖励"
+   },
+   "sellpageinfo":{
+       "Initializeminer":"矿工初始化",
+       "Initializeminertip":"矿工质押在进行质押操作之后，可以进行初始化矿工操作",
+       "Createstoragenode":"创建存储节点",
+       "Createstoragenodetip":"存储节点初始化之后，创建存储节点",
+       "Storagenodename":"存储节点名称",
+       "action":{
+           "needname":"存储节点名称不能为空",
+           "needdhtid":"DhtId不能为空",
+           "needpubKey":"pubKey不能为空",
+           "needtip":"仅支持数字和字母组合"
+
+       }
+   },
+   "somemodel":{
+       "Extractstorageandmininrewards":"提取存储挖矿奖励",
+       "Miningsubaccount":"挖矿子账户",
+       "describe":"描述",
+       "describetip":"描述为大于1的 只有一位小数的数字",
+       "Createminersubaccount":"创建矿工子账户",
+       "Mnemonicword":"助记词",
+       "remarks":"备注",
+       "Walletpassword":"钱包密码",
+       "Importminersubaccount":"导入矿工子账户",
+       "Select file":"选择文件",
+       "Exportsubaccount":"导出子账户",
+       "assertTbbTip":"LAMB兑换生成的TBB是根据您的Lambda钱包私钥确认的，TBB转账无法转移TBB兑回LAMB的权益。",
+       "action":{
+        "accountAddress":"请选择挖矿子账户",
+        "needwordpass1":"请填写 助记次、备注、和钱包密码",
+        "needwordpass2":"请选择需要导入的文件、填写备注、和钱包密码"
+
+      }
+   },
+   "subaccount":{
+       "Createminersubaccount":"创建矿工子账户",
+       "Import":"导入",
+       "export":"导出",
+       "transaction":"交易",
+       "address":"地址",
+       "remarks":"备注",
+       "amount":"金额",
+       "operation":"操作"
    }
 }

@@ -12,14 +12,8 @@
       </p><br/>
       <p>
         {{$t('Dialog.sellorder.Marketname')}}：{{market.name}}
-      </p><br/>
-      <p>{{$t('Dialog.sellorder.Storagedevice')}}&nbsp;&nbsp;
-        <Select :placeholder="$t('Dialog.sellorder.selectStoragedevicetip')" v-model="machineitem" style="width:300px">
-        <Option v-for="item in machineList" :value="item.name" :key="item.name">{{ item.name }}</Option>
-    </Select>
       </p>
-      <br/>
-      <p>{{$t('Dialog.sellorder.Storagedevicetip')}}</p>
+
       <br/>
       <p>
         <Input  v-model="spaceSize">
@@ -76,6 +70,12 @@
           <span slot="append">{{$t('Dialog.sellorder.month')}}</span>
         </Input>
       </p>
+      <br/>
+      <p>
+        <Input v-model="description"   type="textarea" :placeholder="$t('somemodel.describe')"  />
+
+
+      </p>
 
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
@@ -88,10 +88,7 @@
           <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
           <Col span="20" class-name="value">{{address}}</Col>
         </Row>
-        <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('Dialog.sellorder.Storagedevice')}}:</Col>
-          <Col span="20" class-name="value">{{machineitem}} </Col>
-        </Row>
+
 
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('Dialog.sellorder.Sellingspace')}}:</Col>
@@ -123,6 +120,9 @@
                                 <span slot="append">LAMB</span>
                               </Input>
           </Row>
+        <Row class-name="item">
+          <Input readonly v-model="description"   type="textarea" :placeholder="$t('somemodel.describe')"  />
+        </Row>
       </div>
       <!-- <p>
           <Input v-model="walletPassword" type="password"></Input>
@@ -152,7 +152,8 @@ export default {
       minDuration: '',
       unitPrice: '5',
       maxDuration: '',
-      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30,
+      description: ''
     };
   },
   methods: {
@@ -166,12 +167,15 @@ export default {
       this.fnpricerate = debounce(this.pricechange, 1000);
     },
     prewithdrawalLAMB() {
-      if (this.$data.machineitem == '') {
-        this.$Notice.warning({
-          title: this.$t('Dialog.sellorder.action.needstoragedevice')
-        });
-        return;
-      }
+      // if (this.$data.description == '') {
+      //   this.$Notice.warning({
+      //     title: this.$t('Dialog.sellorder.action.needstoragedevice')
+      //   });
+      //   return;
+      // }
+
+
+
       let spaceSize = parseInt(this.$data.spaceSize);
       let unitPrice = parseInt(this.$data.unitPrice);
 
@@ -183,6 +187,8 @@ export default {
         unitPrice = 5;
         // this.$Message.info(this.$t('Dialog.sellorder.ratetip1'));
       }
+
+
       if (rate >= 3 && unitPrice < 5) {
         unitPrice = 5;
         this.$Message.info(this.$t('Dialog.sellorder.ratetip2'));
@@ -345,7 +351,7 @@ export default {
         let res = await ipc.callMain(txType, {
           marketName: this.$data.market.name,
           price: sellobj.unitPrice,
-
+          description: this.$data.description,
           rate: sellobj.rate + '.000000000000000000',
           sellSize: sellobj.spaceSize + '',
           machineName: this.$data.machineitem,

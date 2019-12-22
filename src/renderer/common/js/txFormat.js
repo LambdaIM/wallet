@@ -117,6 +117,20 @@ function getamount(msg0, item, vueIns, index) {
 
           indexNative++;
         }
+        if (item.key == 'miner_rewards' && item.value) {
+          if (indexNative == index) {
+            result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
+          }
+
+          indexNative++;
+        }
+        if (item.key == 'withdrawMiner' && item.value) {
+          if (indexNative == index) {
+            result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
+          }
+
+          indexNative++;
+        }
         if (item.key == 'commission' && item.value) {
           if (indexNative == index) {
             result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);

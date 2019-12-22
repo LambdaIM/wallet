@@ -17,7 +17,7 @@ var { DAEMON_CONFIG } = require('../configmain.js');
 const settings = require('electron-settings');
 const path = require('path');
 const hdkeyjs = require('@jswebfans/hdkeyjs');
-
+const { shell } = require('electron');
 
 
 var walletManger = function (dir) {
@@ -212,6 +212,41 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name, iscr
   };
 };
 
+walletManger.prototype.generateSonAccount = function (mnemonic, password, name, index) {
+  // 校验密码
+  var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
+  //
+  // 子账户
+  console.log('-----1');
+  const keys = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, index);
+  console.log('-----2');
+  const address = hdkeyjs.address.getAddress(keys.publicKey);
+  // 父账户
+  const keysF = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, 0);
+  const addressF = hdkeyjs.address.getAddress(keysF.publicKey);
+  if (this.defaultwallet.address != addressF) {
+    throw new Error(`The main account corresponding to mnemonic times is inconsistent with the current account `);
+  }
+
+
+
+  var file = this.findSonFile(address);
+  if (file.fileName != null) {
+    throw new Error(`failed,${address} already exists`);
+  }
+
+  var walletjson = hdkeyjs.keyStore.toJson(keys, password, name);
+  var filepath = path.join(DAEMON_CONFIG.SonAccountFile, this.defaultwallet.address, address + '.keyinfo');
+  fs.writeFileSync(filepath, JSON.stringify(walletjson));
+
+  this.scann();
+
+  return {
+    address: address,
+    name: name
+  };
+};
+
 walletManger.prototype.deleteWallet = function (address) {
   var dir = DAEMON_CONFIG.WalletFile;
   var list = fs.readdirSync(dir);
@@ -239,6 +274,86 @@ walletManger.prototype.ImportWalletByMnemonic = function (mnemonic, password, na
   var mnemonics = mnemonicList.join(' ');
   return this.generateWallet(mnemonics, password, name,false);
 };
+
+walletManger.prototype.CreatSonAccountByMnemonic = function (mnemonic, password, name,index) {
+  /* eslint-disable */
+  var mnemonicList = mnemonic.match(/[a-z]+[\-\']?[a-z]*/ig);
+
+  if (mnemonicList == null || mnemonicList.length < 12) {
+    throw new Error('make sure  inputting 12 words or more ');
+  }
+  var mnemonics = mnemonicList.join(' ');
+  return this.generateSonAccount(mnemonics, password, name,index);
+};
+
+walletManger.prototype.exportSonAccount = function (address,password) {
+  console.log('exportSonAccount',address,password)
+  
+  var file = this.findSonFile(address);
+  if (file.fileName == null) {
+    throw new Error(`failed,${address} not exists`);
+  }
+  console.log(file)
+  var privatekey = hdkeyjs.keyStore.checkJson(file.data, password);
+  var publicKey = hdkeyjs.publicKey.getBytes(file.data.publicKey)
+
+  var exportJson = {
+    "privateKey":privatekey.toString('hex') ,
+    "publicKey":publicKey.toString('hex') ,
+    "address": address,
+    "masterAddress":this.defaultwallet.address
+  }
+  
+
+  console.log(exportJson)
+  var targetpath = path.join(DAEMON_CONFIG.ExportSonAccountFile, address + '.json');
+  fs.writeFileSync(targetpath, JSON.stringify(exportJson), 'utf8');
+  shell.showItemInFolder(DAEMON_CONFIG.ExportSonAccountFile);
+  return ;
+
+};
+
+walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
+  
+  var file = fs.readFileSync(filepath, 'utf8');
+  file = JSON.parse(file);
+  
+  var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
+
+  if (privatekey == undefined) {
+    throw new Error('Import failed,Please check the wallet file and password');
+  }
+  console.log('file',file)
+  var keyinfo ={
+    "privateKey": Buffer.from(file.privateKey,'hex'),
+    "publicKey": Buffer.from(file.publicKey,'hex'),
+    "address": file.address
+  }
+  var v3file = hdkeyjs.keyStore.toJson(keyinfo,password,name)
+  v3file.address=file.address;
+
+  
+
+
+  var file = this.findSonFile(v3file.address);
+  if (file.fileName != null) {
+    throw new Error('Import failed,'+v3file.address+' already exists');
+  }
+
+
+  var targetpath = path.join(DAEMON_CONFIG.SonAccountFile,this.defaultwallet.address, v3file.address + '.keyinfo');
+  fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8');
+  
+  return true;
+
+  
+
+};
+
+
+
+//exportSonAccount
+
 
 
 walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, name) {
@@ -385,6 +500,12 @@ walletManger.prototype.TransferWithdrawal = async function (to, amount, gas, isd
     denom: 'ulamb'
   };
 };
+walletManger.prototype.TransferMinerwithdrawal = async function (to, amount, gas, isdege) {
+  return {
+    type: transaction.WithdrawMinerRewards,
+    minerAddress:hdkeyjs.address.MinerAddress(this.defaultwallet.address)
+  };
+};
 
 walletManger.prototype.TransferRedelegate = async function (validatorSourceAddress,validatorDestinationAddress ,amount,validatortype) {
   return {
@@ -416,7 +537,7 @@ walletManger.prototype.TransferCreateSellOrder = async function (marketName,
   price,
   rate,
   sellSize,
-  machineName,
+  description,
   cancelTimeDuration,
   minBuySize,
   minBuyDuration,
@@ -427,14 +548,14 @@ walletManger.prototype.TransferCreateSellOrder = async function (marketName,
     price,
     rate,
     sellSize,
-    machineName,
+    memo:description||'',
     cancelTimeDuration,
     minBuySize,
     minBuyDuration,
     maxBuyDuration
   };
 };
-
+//memo: memo || ''
 //CreateBuyOrder
 walletManger.prototype.TransferCreateBuyOrder = async function (duration,
   size,
@@ -454,6 +575,26 @@ walletManger.prototype.TransferVote = async function (ProposalID, option) {
     type: transaction.VOTE,
     proposalId:ProposalID,
     option:option
+  };
+};
+
+walletManger.prototype.TransferCreateMiner = async function (miningAddress, dhtId, pubKey) {
+  return {
+    type: transaction.CreateMiner,
+    miningAddress, 
+    dhtId, 
+    pubKey
+  };
+};
+
+walletManger.prototype.TransferCreateMachine = async function (name,peerId,dhtId,pubKey) {
+  
+  return {
+    type: transaction.CreateMachine,
+    name,
+    peerId,
+    dhtId,
+    pubKey
   };
 };
 
@@ -523,9 +664,15 @@ walletManger.prototype.Simulate = async function (transactiondata) {
   if (this.actionManager != undefined) {
     this.actionManager.setContext({ url: DAEMON_CONFIG.LambdaNetwork(), userAddress: this.defaultwallet.address });
   }
-
+  console.log('***********')
+  console.log(type)
+  console.log('***********')
+  console.log(properties)
+  console.log('***********')
   this.actionManager.setMessage(type, properties);
+  
   var gasEstimate = await this.actionManager.simulate(memo || '');
+  
   this.gasEstimate = gasEstimate;
   //  return gasEstimate;
   return (Number(default_gas_price) * Number(gasEstimate)).toFixed(6); // already in lamb
@@ -701,6 +848,72 @@ walletManger.prototype.findFile = function (address) {
     }
   });
   return fileName;
+};
+
+walletManger.prototype.findSonFile = function (address) {
+  this.walletList = [];
+  var dir = path.join(DAEMON_CONFIG.SonAccountFile,this.defaultwallet.address) ;
+  if(fs.existsSync(dir)==false) {
+    fs.mkdirSync(dir);
+  }
+  var list = fs.readdirSync(dir);
+  var fileName = null,data={};
+  list.forEach(file => {
+    if (file.indexOf('.keyinfo') > 0) {
+      file = path.join(dir, file);
+      var v3file = fs.readFileSync(file, 'utf8');
+      try {
+        v3file = JSON.parse(v3file);
+        if (v3file.address == address) {
+          fileName = file;
+          data=v3file;
+        }
+      } catch (err) {
+
+
+
+      }
+    }
+  });
+  return {fileName,data};
+};
+
+walletManger.prototype.SonFileList =async function () {
+  this.walletList = [];
+  var dir = path.join(DAEMON_CONFIG.SonAccountFile,this.defaultwallet.address) ;
+  if(fs.existsSync(dir)==false) {
+    fs.mkdirSync(dir);
+  }
+  var list = fs.readdirSync(dir);
+  var result=[]
+  list.forEach(file => {
+    if (file.indexOf('.keyinfo') > 0) {
+      file = path.join(dir, file);
+      var v3file = fs.readFileSync(file, 'utf8');
+      try {
+        v3file = JSON.parse(v3file);
+        result.push(v3file);
+        
+      } catch (err) {
+
+
+
+      }
+    }
+  });
+  
+  for (let index = 0; index < result.length; index++) {
+    const element = result[index];
+    try {
+      result[index].account = await this.CosmosAPI().get.account(element.address);    
+    } catch (error) {
+      console.log(error)
+    }
+    
+  }
+  
+  return result;
+  
 };
 
 

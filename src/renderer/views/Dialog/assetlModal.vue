@@ -32,6 +32,10 @@
             <span slot="append">TBB</span>
           </Input>
         </p>
+        <br />
+        <p>
+          {{$t('somemodel.assertTbbTip')}}
+        </p>
       </div>
       <div v-else>
         <p>
@@ -48,6 +52,9 @@
           </Input>
         </p>
         <br />
+        <p>
+          {{$t('somemodel.assertTbbTip')}}
+        </p>
       </div>
 
       <div slot="footer">

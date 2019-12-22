@@ -33,6 +33,11 @@ var walletRouter = new Router({
         path: 'localtxlist',
         name: 'localtxlist',
         component: () => import('@/views/Home/localtxlist.vue')
+      },
+      {
+        path: 'subaccount',
+        name: 'subaccount',
+        component: () => import('@/views/Home/subaccount.vue')
       }
 
     ],

@@ -3,10 +3,15 @@
   <div class="customer-container">
       <div class="tableContainer">
              <Row>
-        <Col span="16">
+        <Col span="13">
         &nbsp;
         </Col>
+        <Col span="3">
+              <Button @click="openCreateMiner" type="primary"  size="small"> {{$t('sellpageinfo.Initializeminer')}} </Button>
+
+        </Col>
         <Col span="8">
+
         <Dropdown @on-click="selectmarketClick">
         <a href="javascript:void(0)">
             {{selectmarket.name}}
@@ -19,6 +24,9 @@
         </DropdownMenu>
     </Dropdown>
         <Button @click="openSellingspace" type="primary"  size="small">{{$t('marketpage.sellspacebtn')}}</Button>
+
+
+
         </Col>
       </Row>
                 <div>{{$t('marketpage.last100data')}} </div>
@@ -53,6 +61,8 @@
       <br />
       </div>
       <SellingspaceModal ref="Sellingspace" />
+      <CreateMinerModal ref="CreateMiner" />
+
 
   </div>
 </template>
@@ -61,6 +71,9 @@ import MyTable from '@/components/common/useful/Mytable.vue';
 import Mycard from '@/components/common/useful/Mycard.vue';
 import SellingspaceModal from '@/views/Dialog/SellingspaceModal.vue';
 import eventhub from '../../common/js/event.js';
+import CreateMinerModal from '@/views/Dialog/CreateMinerModal.vue';
+
+
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 var packagejson = require('../../../../package.json');
@@ -128,7 +141,9 @@ export default {
     });
   },
   components: {
-    SellingspaceModal
+    SellingspaceModal,
+    CreateMinerModal
+
 
   },
   methods: {
@@ -157,6 +172,9 @@ export default {
     },
     openSellingspace() {
       this.$refs.Sellingspace.open(this.$data.selectmarket);
+    },
+    openCreateMiner() {
+      this.$refs.CreateMiner.open();
     },
     async getmarketlist() {
       console.log('getmarketlist');

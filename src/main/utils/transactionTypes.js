@@ -11,7 +11,10 @@ const transactionTypes = {
   AssetDrop: `MsgAssetDrop`,
   WithdrawValidatorCommission: `MsgWithdrawValidatorCommission`,
   CreateSellOrder: `MsgCreateSellOrder`,
-  CreateBuyOrder: `MsgCreateBuyOrder`
+  CreateBuyOrder: `MsgCreateBuyOrder`,
+  CreateMiner: `MsgCreateMiner`,
+  CreateMachine: `MsgCreateMachine`,
+  WithdrawMinerRewards: `MsgWithdrawMinerRewards`
 };
 
 export default transactionTypes;

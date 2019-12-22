@@ -293,6 +293,23 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('minerwithdrawal', async query => {
+    var { to, amount, gas, isdege } = query;
+
+
+
+    if (amount == undefined) {
+      throw resultView(null, false, 'need amount');
+    }
+
+    try {
+      var data = await WM.TransferMinerwithdrawal(to, amount, gas, isdege);
+      return resultView(data, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
 
 
   eipc.answerRenderer('withdrawalDistribution', async query => {
@@ -504,6 +521,63 @@ export default function() {
     }
   });
 
+
+
+  eipc.answerRenderer('CreateMiner', async query => {
+    var { miningAddress, dhtId, pubKey } = query;
+
+    if (miningAddress == undefined) {
+      throw resultView(null, false, 'need miningAddress');
+    }
+
+    if (dhtId == undefined) {
+      throw resultView(null, false, 'need dhtId');
+    }
+
+    // if (pubKey == undefined) {
+    //   throw resultView(null, false, 'need pubKey');
+    // }
+
+    try {
+      var TxMessageload = await WM.TransferCreateMiner(miningAddress, dhtId, pubKey);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('CreateMachine', async query => {
+    var { name, peerId, dhtId, pubKey } = query;
+
+    if (name == undefined) {
+      throw resultView(null, false, 'need name');
+    }
+
+    // if (peerId == undefined) {
+    //   throw resultView(null, false, 'need peerId');
+    // }
+
+    if (dhtId == undefined) {
+      throw resultView(null, false, 'need dhtId');
+    }
+
+    // if (pubKey == undefined) {
+    //   throw resultView(null, false, 'need pubKey');
+    // }
+
+
+    try {
+      var TxMessageload = await WM.TransferCreateMachine(name, peerId, dhtId, pubKey);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+
   eipc.answerRenderer('redelegate', async query => {
     var { SourceAddress, DestinationAddress, amount, validatortype } = query;
     if (SourceAddress == undefined) {
@@ -530,7 +604,7 @@ export default function() {
       price,
       rate,
       sellSize,
-      machineName,
+      description,
       cancelTimeDuration,
       minBuySize,
       minBuyDuration,
@@ -545,8 +619,8 @@ export default function() {
     if (rate == undefined) {
       throw resultView(null, false, 'need rate');
     }
-    if (machineName == undefined) {
-      throw resultView(null, false, 'need machineName');
+    if (description == undefined) {
+      throw resultView(null, false, 'need description');
     }
     if (cancelTimeDuration == undefined) {
       throw resultView(null, false, 'need cancelTimeDuration');
@@ -566,7 +640,7 @@ export default function() {
         price,
         rate,
         sellSize,
-        machineName,
+        description,
         cancelTimeDuration,
         minBuySize,
         minBuyDuration,
@@ -597,6 +671,74 @@ export default function() {
         size,
         sellOrderId,
         marketName);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('createSonAccount', async query => {
+    var { mnemonic, password, name, index } = query;
+    if (mnemonic == undefined) {
+      throw resultView(null, false, 'need mnemonic');
+    }
+    if (password == undefined) {
+      throw resultView(null, false, 'need password');
+    }
+    if (name == undefined) {
+      throw resultView(null, false, 'need name');
+    }
+    try {
+      var TxMessageload = await WM.generateSonAccount(mnemonic, password, name, index);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('sonAccountList', async query => {
+    try {
+      var TxMessageload = await WM.SonFileList();
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('exportSonAccount', async query => {
+    try {
+      var { address, password } = query;
+      if (address == undefined) {
+        throw resultView(null, false, 'need address');
+      }
+
+      var TxMessageload = await WM.exportSonAccount(address, password);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('ImportSonAccount', async query => {
+    try {
+      var { file, password, name } = query;
+      if (file == undefined) {
+        throw resultView(null, false, 'need file');
+      }
+
+      if (password == undefined) {
+        throw resultView(null, false, 'need password');
+      }
+
+      if (name == undefined) {
+        throw resultView(null, false, 'need name');
+      }
+
+      var TxMessageload = await WM.ImportSonAccount(file, password, name);
 
       return resultView(TxMessageload, true);
     } catch (error) {

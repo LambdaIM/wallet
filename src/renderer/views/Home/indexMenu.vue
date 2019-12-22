@@ -43,10 +43,15 @@
             <MenuGroup :title="$t('home.Withdraw')">
                 <MenuItem name="openWithdraw">{{$t('home.Withdraw')}}</MenuItem>
                 <MenuItem name="openWithdrawprofit">{{$t('home.Withdrawprofit')}}</MenuItem>
+                <MenuItem name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
             </MenuGroup>
 
 
         </Submenu>
+        <MenuItem to="/home/subaccount" name="subaccount">
+            <Icon type="md-list" />
+            {{$t('home.subaccount')}}
+        </MenuItem>
 
     </Menu>
       </div>
@@ -55,6 +60,7 @@
     <SendModelDialog ref="SendModelDialog" />
     <WithdrawalModalDialog ref="WithdrawalModalDialog" />
     <DistributionModal ref="DistributionModal" />
+    <MinerWithdrawalModal ref="MinerWithdrawalModalDialog"/>
 
   </div>
 </template>
@@ -65,6 +71,8 @@ import eventhub from '../../common/js/event.js';
 import SendModelDialog from '@/views/Dialog/sendModel.vue';
 import WithdrawalModalDialog from '@/views/Dialog/withdrawalModal.vue';
 import DistributionModal from '@/views/Dialog/distributionModal.vue';
+
+import MinerWithdrawalModal from '@/views/Dialog/MinerWithdrawalModal.vue';
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
@@ -80,7 +88,8 @@ export default {
     blancebar,
     SendModelDialog,
     WithdrawalModalDialog,
-    DistributionModal
+    DistributionModal,
+    MinerWithdrawalModal
   },
   mounted() {
     this.getMinerRewards();
@@ -101,6 +110,7 @@ export default {
         case 'openTransfer':this.$refs.SendModelDialog.open(); this.$data.activeItem = this.$route.name; break;
         case 'openWithdraw':this.$refs.WithdrawalModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         case 'openWithdrawprofit':this.$refs.DistributionModal.open(); this.$data.activeItem = this.$route.name; break;
+        case 'openMinerprofit':this.$refs.MinerWithdrawalModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         default :this.$data.activeItem = name;
       }
 
@@ -129,6 +139,7 @@ export default {
           });
 
           this.$data.MinerRewards = result;
+          this.$store.dispatch('setMinerReward', result);
         }
       } catch (ex) {
         console.log(ex);

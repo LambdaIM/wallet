@@ -43,7 +43,22 @@
         </Col>
       </Row>
       <br/>
-     <div>{{$t('marketpage.last100data')}}</div>
+     <div>
+
+    <Row>
+        <Col span="8">
+          {{$t('marketpage.last100data')}}
+        </Col>
+
+        <Col span="8">
+          <RadioGroup  @on-change="statusTypeChange"  v-model="statusType" type="button" size="large">
+              <Radio label="active">{{$t('marketpage.active')}}</Radio>
+              <Radio label="unActive">{{$t('marketpage.unActive')}}</Radio>
+          </RadioGroup>
+
+        </Col>
+    </Row>
+     </div>
      <br/>
      <!-- OrderListcolumnsNotSort -->
              <Table @on-sort-change="OrderListSort" :loading="loading"  :columns="OrderListcolumnsisSort" :data="OrderList">
@@ -209,7 +224,8 @@ export default {
       autoSpaceDuration: '',
       allCount: 1,
       pageCount: {},
-      loading: true
+      loading: true,
+      statusType: 'active'
 
 
     };
@@ -274,7 +290,10 @@ export default {
           marketAddress: this.$data.selectmarket.marketAddress,
           islocal: this.$data.islocal,
           orderSortinfo: this.$data.orderSortinfo,
-          islocalfilter: this.$data.islocalfilter
+          islocalfilter: this.$data.islocalfilter,
+          statusType: this.$data.statusType // active表示筛选可用   unActive表示筛选不可用  whole表示不筛选
+
+
         });
 
         if (res.state) {
@@ -346,6 +365,13 @@ export default {
     },
     openBuyingspace(row) {
       this.$refs.Buyingspace.open(row, this.$data.selectmarket);
+    },
+    statusTypeChange(e) {
+      console.log(e);
+
+      this.$store.dispatch('setstatusType', this.$data.statusType);
+      this.$data.islocalfilter['statusType'] = this.$store.getters.statusType == 'active' ? '0' : '1';
+      this.getOrderList(1);
     }
   },
   computed: {

@@ -27,6 +27,8 @@ var defaultip='39.107.247.86'
 var configData = {
     BASE_PATH:BASE_PATH,
     WalletFile:path.join( BASE_PATH,'Wallet'),
+    SonAccountFile:path.join( BASE_PATH,'SonAccount'),
+    ExportSonAccountFile:path.join( BASE_PATH,'ExportSonAccount'),
     LogFile:path.join(BASE_PATH,'Log'),
     DataFile:path.join(BASE_PATH,'Data'),
     OrderS3File:path.join(BASE_PATH,'orderS3'),
@@ -64,6 +66,14 @@ var configData = {
         if(fs.existsSync(this.OrderS3File)==false) {
             fs.mkdirSync(this.OrderS3File);
         }
+        if(fs.existsSync(this.SonAccountFile)==false) {
+            fs.mkdirSync(this.SonAccountFile);
+        }
+        if(fs.existsSync(this.ExportSonAccountFile)==false) {
+            fs.mkdirSync(this.ExportSonAccountFile);
+        }
+
+        
         settings.setPath(path.join(this.BASE_PATH,'set.json') );
         
     },
@@ -87,6 +97,12 @@ var configData = {
         
           if (fs.existsSync(`${this.BASE_PATH}/s3.yaml`) == false) {
             fs.createReadStream(`${__static}/s3.yaml`).pipe(fs.createWriteStream(`${this.BASE_PATH}/s3.yaml`));
+            
+          }
+
+          if (fs.existsSync(`${this.BASE_PATH}/debug.txt`) ==true) {
+            fs.unlinkSync(`${this.BASE_PATH}/debug.txt`)
+             
             
           }
 

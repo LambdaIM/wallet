@@ -26,7 +26,7 @@ export default {
   mounted() {
     this.transactionList();
 
-    this.Interval = setInterval(() => {
+    this.$data.Interval = setInterval(() => {
       this.transactionList();
     }, 1000 * 15);
 
@@ -68,7 +68,11 @@ export default {
           console.log(tempData);
           tempData.forEach(item => {
             if (item.error == undefined) {
-              this.data.push(txFormat(item, this));
+              try {
+                this.data.push(txFormat(item, this));
+              } catch (error) {
+                console.log('解析交易失败');
+              }
             } else {
               console.log('读取交易记录失败');
             }
