@@ -12,7 +12,7 @@
         <Col span="4" class="account-item">
           <div class="item-wrapper">
             <p class="title">{{$t('home.pledge')}}(TBB)</p>
-            <p class="value">{{pledgeAmount|BlanceValue }}</p>
+            <p class="value">{{pledgeAmount|TbbBlanceValue }}</p>
           </div>
         </Col>
         <Col span="4" class="account-item">
