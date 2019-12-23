@@ -364,14 +364,14 @@ export default function() {
     }
   });
   function getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey, orderid) {
-    return `${path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile())} gateway \
+    return `${path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile())} gateway run \
     --broker.dht_gateway_addr ${ip}:13000 \
     --broker.validator_addr  ${ip}:13659 \
     --broker.extra_key_file  ${keypath} \
     --gateway.address  ${gatewayaddress} \
     --gateway.access_key  ${accesskey}  \
     --gateway.secret_key  ${secretKey}  \
-    --orderid  ${orderid}  \
+    --broker.extra_order_id  ${orderid}  \
     --home ${DAEMON_CONFIG.OrderS3File} 
     `;
   }
@@ -381,6 +381,7 @@ export default function() {
       suppose(path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile()),
         [
           `gateway`,
+          'run',
           `--broker.dht_gateway_addr`,
           `${ip}:13000`,
           `--broker.validator_addr`,
@@ -393,7 +394,7 @@ export default function() {
           accesskey,
           `--gateway.secret_key`,
           secretKey,
-          '--orderid',
+          '--broker.extra_order_id',
           orderid,
           `--home`,
           DAEMON_CONFIG.OrderS3File
