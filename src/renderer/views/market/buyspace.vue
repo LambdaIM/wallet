@@ -368,7 +368,8 @@ export default {
     },
     statusTypeChange(e) {
       console.log(e);
-
+      this.$data.allCount = 1;
+      this.$data.pageCount = {};
       this.$store.dispatch('setstatusType', this.$data.statusType);
       this.$data.islocalfilter['statusType'] = this.$store.getters.statusType == 'active' ? '0' : '1';
       this.getOrderList(1);
