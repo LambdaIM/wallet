@@ -655,8 +655,8 @@
        "Select file":"选择文件",
        "Exportsubaccount":"导出子账户",
        "assertTbbTip":"LAMB兑换生成的TBB是根据您的Lambda钱包私钥确认的，TBB转账无法转移TBB兑回LAMB的权益。",
-       "highquality":"优质卖单",
-       "ordinary":"普通卖单",
+       "highquality":"1(优质卖单)",
+       "ordinary":"0.5(普通卖单)",
        "action":{
         "accountAddress":"请选择挖矿子账户",
         "needwordpass1":"请填写 助记次、备注、和钱包密码",
