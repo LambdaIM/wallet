@@ -39,7 +39,6 @@
       <ul class="ultip">
         <li>{{$t('Dialog.sellorder.ratetip1')}}</li>
         <li>{{$t('Dialog.sellorder.ratetip2')}}</li>
-        <li>{{$t('Dialog.sellorder.ratetip3')}}</li>
       </ul>
       <br/>
       <p>
