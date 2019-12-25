@@ -24,10 +24,15 @@
       <br/>
       <p>
 
-          <Input @on-keyup="ratechangedebounce"  v-model="rate">
+          <!-- <Input @on-keyup="ratechangedebounce"  v-model="rate">
           <span slot="prepend">{{$t('Dialog.sellorder.Odds')}}</span>
           <span slot="append">{{$t('Dialog.sellorder.times')}}</span>
-        </Input>
+        </Input> -->
+        {{$t('Dialog.sellorder.Odds')}}：
+         <RadioGroup @on-change="ratechangedebounce" v-model="rate">
+          <Radio value="0.5" label="0.5"> <span>{{$t('somemodel.ordinary')}}</span></Radio>
+          <Radio value="1" label="1"><span>{{$t('somemodel.highquality')}}</span></Radio>
+        </RadioGroup>
 
       </p>
       <br/>
@@ -39,7 +44,7 @@
       <br/>
       <p>
 
-          <Input :disabled="rate==1" @on-keyup="pricechangedebounce"  v-model="unitPrice">
+          <Input :disabled="rate==0.5" @on-keyup="pricechangedebounce"  v-model="unitPrice">
           <span slot="prepend">{{$t('Dialog.sellorder.unitprice1')}}</span>
           <span slot="append">{{$t('Dialog.sellorder.unitprice2')}}</span>
         </Input>
@@ -147,7 +152,7 @@ export default {
       machineList: [],
       market: {},
       spaceSize: '',
-      rate: '',
+      rate: '0.5',
       minSpace: '',
       minDuration: '',
       unitPrice: '5',
@@ -161,6 +166,7 @@ export default {
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
       this.$data.market = market;
+      this.$data.rate = '0.5';
 
       this.getMinermachines();
       this.fnrate = debounce(this.ratechange, 1000);
@@ -179,21 +185,21 @@ export default {
       let spaceSize = parseInt(this.$data.spaceSize);
       let unitPrice = parseInt(this.$data.unitPrice);
 
-      let rate = parseInt(this.$data.rate);
+      let rate = parseFloat(this.$data.rate);
       let minSpace = parseInt(this.$data.minSpace);
       let minDuration = parseInt(this.$data.minDuration);
       let maxDuration = parseInt(this.$data.maxDuration);
-      if (rate == 1) {
+      if (rate == 0.5) {
         unitPrice = 5;
         // this.$Message.info(this.$t('Dialog.sellorder.ratetip1'));
       }
 
 
-      if (rate >= 3 && unitPrice < 5) {
+      if (rate == 1 && unitPrice < 5) {
         unitPrice = 5;
         this.$Message.info(this.$t('Dialog.sellorder.ratetip2'));
       }
-      if (rate == 2) {
+      if (rate < 0.5 || rate > 1) {
         this.$Message.info(this.$t('Dialog.sellorder.ratetip4'));
         return;
       }
@@ -290,7 +296,8 @@ export default {
       this.fnrate();
     },
     ratechange() {
-      let rate = parseInt(this.$data.rate);
+      console.log('- -');
+      let rate = parseFloat(this.$data.rate);
 
       if (isNaN(rate) || rate <= 0) {
         this.$Notice.warning({
@@ -298,7 +305,7 @@ export default {
         });
         return;
       }
-      if (rate == 1) {
+      if (rate == 0.5) {
         this.$data.unitPrice = 5;
       }
       if (rate == 2) {
@@ -311,7 +318,7 @@ export default {
       this.fnpricerate();
     },
     pricechange() {
-      let rate = parseInt(this.$data.rate);
+      let rate = parseFloat(this.$data.rate);
       let unitPrice = parseInt(this.$data.unitPrice);
       if (isNaN(rate) || rate == 0) {
         this.$Notice.warning({
@@ -326,7 +333,7 @@ export default {
         return;
       }
 
-      if (rate == 1) {
+      if (rate == 0.5) {
         this.$data.unitPrice = 5;
         this.$Message.info(this.$t('Dialog.sellorder.ratetip1'));
       }
@@ -345,14 +352,19 @@ export default {
       let gas = 1;
       // amount = amount * 10000;
       this.$data.transactiondata = null;
-
+      var prarate;
+      if (sellobj.rate == 0.5) {
+        prarate = sellobj.rate + '00000000000000000';
+      } else {
+        prarate = sellobj.rate + '.000000000000000000';
+      }
 
       try {
         let res = await ipc.callMain(txType, {
           marketName: this.$data.market.name,
           price: sellobj.unitPrice,
           description: this.$data.description,
-          rate: sellobj.rate + '.000000000000000000',
+          rate: prarate,
           sellSize: sellobj.spaceSize + '',
           machineName: this.$data.machineitem,
           cancelTimeDuration: 1 + '',
