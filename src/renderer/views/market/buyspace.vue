@@ -72,7 +72,7 @@
                          {{row.minDuration|formatMonth}}
                         </template>
                         <template slot-scope="{ row, index }" slot="rate">
-                         {{parseInt(row.rate)}}
+                         {{parseFloat(row.rate)}}
                         </template>
                         <template slot-scope="{ row, index }" slot="status">
                          <span style="color:green" v-if="row.status=='0'">
