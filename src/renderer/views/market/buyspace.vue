@@ -124,10 +124,10 @@ export default {
         title: this.$t('marketpage.selltable.Mineraddress'),
         key: 'address'
       },
-      {
-        title: this.$t('marketpage.myselltable.Storagedevice'),
-        key: 'machineName'
-      },
+      // {
+      //   title: this.$t('marketpage.myselltable.Storagedevice'),
+      //   key: 'machineName'
+      // },
       {
         title: this.$t('marketpage.selltable.amountspace'),
         key: 'sellSize',
@@ -172,10 +172,10 @@ export default {
         title: this.$t('marketpage.selltable.Mineraddress'),
         key: 'address'
       },
-      {
-        title: this.$t('marketpage.myselltable.Storagedevice'),
-        key: 'machineName'
-      },
+      // {
+      //   title: this.$t('marketpage.myselltable.Storagedevice'),
+      //   key: 'machineName'
+      // },
       {
         title: this.$t('marketpage.selltable.amountspace'),
         key: 'sellSize'
