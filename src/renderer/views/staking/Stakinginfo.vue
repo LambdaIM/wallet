@@ -198,7 +198,7 @@ export default {
         });
 
         if (res.state) {
-          this.$data.mydelegationsList = res.data;
+          this.$data.mydelegationsList = res.data || [];
           this.getME(operator_address);
         }
       } catch (ex) {
@@ -210,6 +210,7 @@ export default {
       if (this.$data.mydelegationsList instanceof Array == false) {
         return;
       }
+      this.$data.shares = null;
       this.$data.mydelegationsList.forEach(myitem => {
         if (operator_address == myitem.validator_address) {
           this.$data.shares = myitem.shares;
