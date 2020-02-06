@@ -84,7 +84,7 @@ export default {
       console.log('CalculationMypledge', shares, delegator_shares, tokens);
       var BN = BigNumber.clone({ ROUNDING_MODE: BigNumber.ROUND_HALF_UP });
       // var BN = BigNumber;
-      var bigvalue = new BN(shares).div(delegator_shares).times(tokens);
+      var bigvalue = new BN(tokens).div(delegator_shares).times(shares);
 
       if (notunit == true) {
         return `${new BigNumber(bigvalue).toString()}`;
