@@ -69,15 +69,27 @@ export default {
       var bigvalue = BigNumber.sum(value, value2);
       return bigvalue.toString();
     };
+    Vue.prototype.bigNumTBB = function (value) {
+      if (value == undefined) {
+        value = 0;
+      }
+
+
+      var bigvalue1 = new BigNumber(value);
+      bigvalue1 = bigvalue1.div(1e6).toFixed(6);
+      console.log('bigvalue1');
+      return new BigNumber(bigvalue1).toNumber();
+    };
     Vue.prototype.CalculationMypledge = function (shares, delegator_shares, tokens, notunit) {
       console.log('CalculationMypledge', shares, delegator_shares, tokens);
-      // var BN = BigNumber.clone({ ROUNDING_MODE: BigNumber.ROUND_HALF_UP });
-      var BN = BigNumber;
+      var BN = BigNumber.clone({ ROUNDING_MODE: BigNumber.ROUND_HALF_UP });
+      // var BN = BigNumber;
       var bigvalue = new BN(shares).div(delegator_shares).times(tokens);
 
       if (notunit == true) {
         return `${new BigNumber(bigvalue).toString()}`;
       } else {
+        bigvalue = new BigNumber(bigvalue);
         bigvalue = bigvalue.div(1e6).toFixed(6);
         return `${new BigNumber(bigvalue).toFormat()} TBB`;
       }
