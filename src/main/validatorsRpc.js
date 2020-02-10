@@ -140,4 +140,17 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('mintingAnnualprovisions', async query => {
+    try {
+      var minting = await LambdaRpcApi().get.mintingAnnualprovisions();
+      var distribution = await LambdaRpcApi().get.distributionParameters();
+
+      return resultView({
+        minting,
+        distribution
+      }, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
 }

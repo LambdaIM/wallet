@@ -1,6 +1,7 @@
 <template>
   <div class="customer-container">
   <div class="tableContainer">
+    <div>质押1TBB挖矿，1天获取{{tbbreturnlamb/365|BlanceValue}}LAMB，1个月获取{{tbbreturnlamb/12|BlanceValue}}LAMB，1年获取{{tbbreturnlamb|BlanceValue}}LAMB</div>
        <Tabs >
         <TabPane :label="$t('staking.Mypledge')" >
 
@@ -224,7 +225,8 @@ export default {
 
       ],
       dataParameters: {},
-      searchkey: ''
+      searchkey: '',
+      tbbreturnlamb: 0
     };
   },
   async mounted() {
@@ -232,6 +234,7 @@ export default {
     var r2 = await this.getmyListData();
     this.getmyUnListData();
     this.stakingParameters();
+    this.TBBYield();
   },
   methods: {
     myMypledge(row) {
@@ -364,6 +367,36 @@ export default {
       } catch (error) {
 
       }
+    },
+    async TBBYield() {
+      try {
+        console.log('TBBYield');
+        let mintingres = await ipc.callMain('mintingAnnualprovisions', {});
+        let poolres = await ipc.callMain('pool', {});
+        let stakingres = await ipc.callMain('stakingParameters', {});
+
+        if (mintingres.state && poolres.state && stakingres.state) {
+          // https://github.com/LambdaIM/wallet/issues/181
+          let { community_tax, base_proposer_reward, bonus_proposer_reward, pdp_reward } = mintingres.data.distribution;
+          let { consensus_validator_fixed_commission_rate } = stakingres.data;
+          community_tax = parseFloat(community_tax);
+          base_proposer_reward = parseFloat(base_proposer_reward);
+          bonus_proposer_reward = parseFloat(bonus_proposer_reward);
+          pdp_reward = parseFloat(pdp_reward);
+          consensus_validator_fixed_commission_rate = parseFloat(consensus_validator_fixed_commission_rate);
+
+          var ProfitProportion = (1 - community_tax - base_proposer_reward - bonus_proposer_reward - pdp_reward) *
+           (1 - consensus_validator_fixed_commission_rate);
+
+          var NewlyLamb = mintingres.data.minting.replace(/\"/g, '');
+          var { bonded_tokens } = poolres.data;
+          var result = this.bigNum(1e6).div(bonded_tokens).times(NewlyLamb).times(ProfitProportion);
+          console.log(result);
+          this.$data.tbbreturnlamb = result;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
   components: {
@@ -390,6 +423,10 @@ export default {
 
         return resultlist;
       }
+    },
+    Rateofreturn() {
+      console.log(this.$data.tbbreturnlamb);
+      return (this.$data.tbbreturnlamb - 3000) / 3000 * 100 + '%';
     }
 
 
