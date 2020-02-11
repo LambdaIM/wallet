@@ -4,7 +4,7 @@
       "miner": "矿工",
       "partner":"合伙人",
       "proposals": "提案",
-      "validator": "验证节点",
+      "validator": "质押挖矿",
       "sign": "签名",
       "market":"市场",
       "action": {
@@ -296,7 +296,12 @@
     "VotingPower":"投票权重",
     "pledge":"质押",
     "Cancelpledge":"取消质押",
-    "Myreward":"我的奖励"
+    "Myreward":"我的奖励",
+    "Pledge1tbbmining":"质押1TBB挖矿",
+    "dayacquisition":"1天获取{0}LAMB",
+    "monthacquisition":"1个月获取{0}LAMB",
+    "yearsacquisition":"1年获取{0}LAMB"
+
   },
   "Dialog":{
       "withdrawalModal":{

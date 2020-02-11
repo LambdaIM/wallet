@@ -1,6 +1,8 @@
 <template>
   <div class="customer-container">
   <div class="tableContainer">
+    <div v-if="isNaN(tbbday)!=true" class="Earningstips" >{{$t('stakinginfo.Pledge1tbbmining')}}，{{$t('stakinginfo.dayacquisition',[tbbday])}}，{{$t('stakinginfo.monthacquisition',[tbbmonth])}}，{{$t('stakinginfo.yearsacquisition',[tbbyear])}}</div>
+
        <Tabs >
         <TabPane :label="$t('staking.Mypledge')" >
 
@@ -224,7 +226,8 @@ export default {
 
       ],
       dataParameters: {},
-      searchkey: ''
+      searchkey: '',
+      tbbreturnlamb: 0
     };
   },
   async mounted() {
@@ -232,6 +235,7 @@ export default {
     var r2 = await this.getmyListData();
     this.getmyUnListData();
     this.stakingParameters();
+    this.TBBYield();
   },
   methods: {
     myMypledge(row) {
@@ -364,6 +368,36 @@ export default {
       } catch (error) {
 
       }
+    },
+    async TBBYield() {
+      try {
+        console.log('TBBYield');
+        let mintingres = await ipc.callMain('mintingAnnualprovisions', {});
+        let poolres = await ipc.callMain('pool', {});
+        let stakingres = await ipc.callMain('stakingParameters', {});
+
+        if (mintingres.state && poolres.state && stakingres.state) {
+          // https://github.com/LambdaIM/wallet/issues/181
+          let { community_tax, base_proposer_reward, bonus_proposer_reward, pdp_reward } = mintingres.data.distribution;
+          let { consensus_validator_fixed_commission_rate } = stakingres.data;
+          community_tax = parseFloat(community_tax);
+          base_proposer_reward = parseFloat(base_proposer_reward);
+          bonus_proposer_reward = parseFloat(bonus_proposer_reward);
+          pdp_reward = parseFloat(pdp_reward);
+          consensus_validator_fixed_commission_rate = parseFloat(consensus_validator_fixed_commission_rate);
+
+          var ProfitProportion = (1 - community_tax - base_proposer_reward - bonus_proposer_reward - pdp_reward) *
+           (1 - consensus_validator_fixed_commission_rate);
+
+          var NewlyLamb = mintingres.data.minting.replace(/\"/g, '');
+          var { bonded_tokens } = poolres.data;
+          var result = this.bigNum(1e6).div(bonded_tokens).times(NewlyLamb).times(ProfitProportion);
+          console.log(result);
+          this.$data.tbbreturnlamb = result;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
   components: {
@@ -390,7 +424,19 @@ export default {
 
         return resultlist;
       }
+    },
+    tbbday() {
+      console.log(this.$data.tbbreturnlamb);
+      // tbbreturnlamb/365|BlanceValueint
+      return this.bigNum(this.$data.tbbreturnlamb).div(365).div(1e6).toFixed(2);
+    },
+    tbbmonth() {
+      return this.bigNum(this.$data.tbbreturnlamb).div(12).div(1e6).toFixed(2);
+    },
+    tbbyear() {
+      return this.bigNum(this.$data.tbbreturnlamb).div(1e6).toFixed(2);
     }
+
 
 
   }
@@ -412,4 +458,11 @@ export default {
     line-height: 28px;
   }
 }
+
+.Earningstips{
+font-size: 16px;
+
+}
+
+
 </style>

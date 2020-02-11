@@ -12,6 +12,16 @@ const BlanceValue = value => {
 };
 
 
+const BlanceValueint = value => {
+  if (value == '' || value == undefined || value == null) {
+    return '--';
+  }
+  var bigvalue1 = new BigNumber(value).div(1e6).toFixed(2);
+  var bigvalue = new BigNumber(bigvalue1);
+  return `${bigvalue.toFormat()}`;
+};
+
+
 const TbbBlanceValue = value => {
   if (value == '' || value == undefined || value == null) {
     return '--';
@@ -175,5 +185,6 @@ export default {
   formatToTime,
   formatMonth,
   BlanceValue,
-  TbbBlanceValue
+  TbbBlanceValue,
+  BlanceValueint
 };
