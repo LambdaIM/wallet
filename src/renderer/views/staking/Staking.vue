@@ -1,7 +1,8 @@
 <template>
   <div class="customer-container">
   <div class="tableContainer">
-    <div>质押1TBB挖矿，1天获取{{tbbreturnlamb/365|BlanceValue}}LAMB，1个月获取{{tbbreturnlamb/12|BlanceValue}}LAMB，1年获取{{tbbreturnlamb|BlanceValue}}LAMB</div>
+    <div v-if="isNaN(tbbday)!=true" class="Earningstips" >{{$t('stakinginfo.Pledge1tbbmining')}}，{{$t('stakinginfo.dayacquisition',[tbbday])}}，{{$t('stakinginfo.monthacquisition',[tbbmonth])}}，{{$t('stakinginfo.yearsacquisition',[tbbyear])}}</div>
+
        <Tabs >
         <TabPane :label="$t('staking.Mypledge')" >
 
@@ -424,10 +425,18 @@ export default {
         return resultlist;
       }
     },
-    Rateofreturn() {
+    tbbday() {
       console.log(this.$data.tbbreturnlamb);
-      return (this.$data.tbbreturnlamb - 3000) / 3000 * 100 + '%';
+      // tbbreturnlamb/365|BlanceValueint
+      return this.bigNum(this.$data.tbbreturnlamb).div(365).div(1e6).toFixed(2);
+    },
+    tbbmonth() {
+      return this.bigNum(this.$data.tbbreturnlamb).div(12).div(1e6).toFixed(2);
+    },
+    tbbyear() {
+      return this.bigNum(this.$data.tbbreturnlamb).div(1e6).toFixed(2);
     }
+
 
 
   }
@@ -449,4 +458,11 @@ export default {
     line-height: 28px;
   }
 }
+
+.Earningstips{
+font-size: 16px;
+
+}
+
+
 </style>

@@ -5,7 +5,7 @@
       "miner": "Miner",
       "partner":"Partner",
       "proposals": "Proposals",
-      "validator": "Pledge mining",
+      "validator": "Mining",
       "sign": "Sign",
       "market":"Market",
 
@@ -303,7 +303,11 @@
     "VotingPower":"Voting Power",
     "pledge":"Pledge",
     "Cancelpledge":"Cancel pledge",
-    "Myreward":"My reward"
+    "Myreward":"My reward",
+    "Pledge1tbbmining":"1TBB mining",
+    "dayacquisition":"Get {0} LAMB in 1 day ",
+    "monthacquisition":"Get {0} LAMB in 1 month ",
+    "yearsacquisition":"Get {0} LAMB in 1 year "
   },
   "Dialog":{
       "withdrawalModal":{
