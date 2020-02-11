@@ -38,6 +38,57 @@ var walletRouter = new Router({
         path: 'subaccount',
         name: 'subaccount',
         component: () => import('@/views/Home/subaccount.vue')
+      },
+      {
+        path: 'guide',
+        name: 'guide',
+        component: () => import('@/views/Home/guide.vue'),
+        children: [{
+          path: '',
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/gettbb.vue')
+        },
+        {
+          path: 'pledge',
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/pledge.vue')
+        },
+        {
+          path: 'subaccount',
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/subaccount.vue')
+        },
+        {
+          path: 'miningmanagement',
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/miningmanagement.vue')
+        },
+        {
+          path: 'initializeminer',
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/Initializeminer.vue')
+        },
+        {
+          path: 'configminer',
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/configminer.vue')
+        },
+        {
+          path: 'addstorage',
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/addstorage.vue')
+        },
+        {
+          path: 'configstorage',
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/configstorage.vue')
+        },
+        {
+          path: 'sellingspace',
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/sellingspace.vue')
+        }
+        ]
       }
 
     ],
