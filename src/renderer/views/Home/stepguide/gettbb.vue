@@ -4,7 +4,7 @@
         <Col span="12">
         <h4>1通过lamb 兑换TBB</h4>
         <br/><br/>
-        <Button type="primary" >兑换TBB</Button>
+        <Button  @click="openAssert" type="primary" >兑换TBB</Button>
 
 
         </Col>
@@ -17,8 +17,23 @@
 
         </Col>
     </Row>
+    <AssetlModalDialog ref="AssetDialog" />
 </div>
 </template>
+<script>
+import AssetlModalDialog from '@/views/Dialog/assetlModal.vue';
+export default {
+  methods: {
+    openAssert() {
+      this.$refs.AssetDialog.open(0, 'ulamb');
+    }
+  },
+  components: {
+    AssetlModalDialog
+  }
+
+};
+</script>
 <style lang="less" scoped>
 
 </style>
