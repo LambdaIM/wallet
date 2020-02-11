@@ -12,7 +12,7 @@
         <Col span="4" class="account-item">
           <div class="item-wrapper">
             <p class="title">{{$t('home.pledge')}}(TBB)</p>
-            <p class="value">{{pledgeAmount|TbbBlanceValue }}</p>
+            <p class="value">{{pledgeAmount }}</p>
           </div>
         </Col>
         <Col span="4" class="account-item">
@@ -143,20 +143,22 @@ export default {
       return this.CalculationMypledge(row.shares, row.delegator_shares, row.tokens, true);
     },
     getMyTotalpledge(list, dataType) {
-      var shares = 0; var delegator_shares = 0; var tokens = 0;
+      var shares = 0; var delegator_shares = 0; var tokens = 0; var tbblist = [];
       list.forEach(item => {
-        shares = this.bigNumAdd(shares, item.shares);
-        delegator_shares = this.bigNumAdd(delegator_shares, item.delegator_shares);
-        tokens = this.bigNumAdd(tokens, item.tokens);
+        var itemtbb = this.myMypledge({
+          shares: item.shares,
+          delegator_shares: item.delegator_shares,
+          tokens: item.tokens
+        });
+        if (itemtbb != 'NaN') {
+          tbblist.push(itemtbb);
+        }
       });
-      var temp = this.myMypledge({
-        shares,
-        delegator_shares,
-        tokens
+      var tbb = 0; var _this = this;
+      tbblist.forEach(item => {
+        tbb += _this.bigNumTBB(item);
       });
-      if (temp != 'NaN') {
-        this.$data[dataType] = temp;
-      }
+      this.$data[dataType] = tbb;
     },
     async getpartnerListData() {
       console.log('partnerList');

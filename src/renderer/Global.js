@@ -10,6 +10,7 @@ export default {
       var bigvalue = new BigNumber(value);
       return bigvalue;
     };
+
     Vue.prototype.toBigNumStr = function (value) {
       if (value == '' || value == undefined || value == null) {
         value = 0;
@@ -17,6 +18,7 @@ export default {
       var bigvalue = new BigNumber(value);
       return bigvalue.times(1e6).toFixed(0).toString();
     };
+
     Vue.prototype.toBigNumFixed = function (value) {
       if (value == '' || value == undefined || value == null) {
         value = 0;
@@ -47,7 +49,8 @@ export default {
       } else {
         return `${bigvalue.toFormat()} ${type.substr(1).toUpperCase()}`;
       }
-    },
+    };
+
     Vue.prototype.bigNumType = function (value) {
       if (value == '' || value == undefined || value == null) {
         value = 0;
@@ -65,15 +68,28 @@ export default {
       }
       var bigvalue = BigNumber.sum(value, value2);
       return bigvalue.toString();
-    },
+    };
+    Vue.prototype.bigNumTBB = function (value) {
+      if (value == undefined) {
+        value = 0;
+      }
+
+
+      var bigvalue1 = new BigNumber(value);
+      bigvalue1 = bigvalue1.div(1e6).toFixed(6);
+      console.log('bigvalue1');
+      return new BigNumber(bigvalue1).toNumber();
+    };
     Vue.prototype.CalculationMypledge = function (shares, delegator_shares, tokens, notunit) {
-      console.log('CalculationMypledge');
+      console.log('CalculationMypledge', shares, delegator_shares, tokens);
       var BN = BigNumber.clone({ ROUNDING_MODE: BigNumber.ROUND_HALF_UP });
-      var bigvalue = new BN(shares).div(delegator_shares).times(tokens);
+      // var BN = BigNumber;
+      var bigvalue = new BN(tokens).div(delegator_shares).times(shares);
 
       if (notunit == true) {
         return `${new BigNumber(bigvalue).toString()}`;
       } else {
+        bigvalue = new BigNumber(bigvalue);
         bigvalue = bigvalue.div(1e6).toFixed(6);
         return `${new BigNumber(bigvalue).toFormat()} TBB`;
       }
