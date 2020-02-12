@@ -38,6 +38,22 @@ export default {
       current: 0
     };
   },
+  mounted() {
+    console.log('guide');
+    console.log(this.$router);
+    var pagename = this.$route.meta.path;
+    switch (pagename) {
+      case 'guide':break;
+      case 'pledge':this.current = 1; break;
+      case 'subaccount':this.current = 2; break;
+      case 'miningmanagement':this.current = 3; break;
+      case 'initializeminer':this.current = 4; break;
+      case 'configminer':this.current = 5; break;
+      case 'addstorage':this.current = 6; break;
+      case 'configstorage':this.current = 7; break;
+      case 'sellingspace':this.current = 8; break;
+    }
+  },
   methods: {
     next () {
       if (this.current == 8) {
