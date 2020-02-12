@@ -55,6 +55,7 @@ var walletRouter = new Router({
         },
         {
           path: 'subaccount',
+
           name: 'guide',
           component: () => import('@/views/Home/stepguide/subaccount.vue')
         },

@@ -1,5 +1,12 @@
 <template>
-<div>
-创建挖矿子账户
-</div>
+<subaccount/>
 </template>
+<script>
+import subaccount from '../subaccount.vue';
+export default {
+  components: {
+    subaccount
+  }
+
+};
+</script>
