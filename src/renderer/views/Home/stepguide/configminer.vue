@@ -1,6 +1,6 @@
 <template>
 <div>
-   <p>在矿工管理程序中操作 </p>
+   <storagehelp/>
    <br/>
    <div>
        <p>1添加成功后点击初始化</p>
@@ -16,6 +16,7 @@
 
 import miner3 from '@/assets/miner3.png';
 import miner4 from '@/assets/miner4.png';
+import storagehelp from './storagehelp.vue';
 
 export default {
   data() {
@@ -26,6 +27,9 @@ export default {
 
 
     };
+  },
+  components: {
+    storagehelp
   }
 
 };

@@ -44,7 +44,7 @@ export default {
     },
     selectchange(addr) {
       console.log(addr);
-      this.$data.marketList.array.forEach(element => {
+      this.$data.marketList.forEach(element => {
         if (element.marketAddress == addr) {
           this.$data.selectmarket = element;
         }

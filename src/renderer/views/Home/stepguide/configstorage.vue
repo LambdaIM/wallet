@@ -1,6 +1,6 @@
 <template>
 <div>
-  <p>配置存储服务</p>
+  <storagehelp/>
   <br/><br/>
   <div>
     <p>1点击配置存储节点按钮，打开配置对话框</p>
@@ -17,6 +17,7 @@
 import storage1 from '@/assets/storage2.png';
 import storage4 from '@/assets/storage3.png';
 import storage5 from '@/assets/storage5.png';
+import storagehelp from './storagehelp.vue';
 
 
 export default {
@@ -27,6 +28,9 @@ export default {
       storage5
 
     };
+  },
+  components: {
+    storagehelp
   }
 
 };

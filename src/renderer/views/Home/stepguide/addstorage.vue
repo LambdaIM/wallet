@@ -1,6 +1,6 @@
 <template>
 <div>
-  <p>添加存储矿工</p>
+  <storagehelp/>
   <br/><br/>
   <div>
     <p>1在矿工服务的详情页面，点击添加服务器，通过用密码或私钥方式添加服务器</p>
@@ -20,6 +20,7 @@ import storage1 from '@/assets/storage1.png';
 import storage4 from '@/assets/storage4.png';
 import storage3 from '@/assets/storage3.png';
 import storage2 from '@/assets/storage2.png';
+import storagehelp from './storagehelp.vue';
 
 
 export default {
@@ -32,6 +33,9 @@ export default {
 
 
     };
+  },
+  components: {
+    storagehelp
   }
 
 };
