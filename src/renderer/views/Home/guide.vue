@@ -6,23 +6,24 @@
     <Row>
         <Col span="7">
          <Steps :current="current" direction="vertical">
-            <Step title="获取TBB" content="钱包"></Step>
-            <Step title="质押挖矿" content="钱包"></Step>
-            <Step title="创建挖矿子账户并导出" content="钱包"></Step>
-            <Step title="添加矿工服务器并初始化矿工服务" content="矿工管理程序"></Step>
-            <Step title="配置矿工服务并启动" content="矿工管理程序"></Step>
-            <Step title="初始化矿工" content="钱包"></Step>
+            <Step :title="$t('miningguide.steptitle.title1')" :content="$t('miningguide.wallet')"></Step>
+            <Step :title="$t('miningguide.steptitle.title2')" :content="$t('miningguide.wallet')"></Step>
+            <Step :title="$t('miningguide.steptitle.title3')" :content="$t('miningguide.wallet')"></Step>
+            <Step :title="$t('miningguide.steptitle.title4')" :content="$t('miningguide.minermanagement')"></Step>
+            <Step :title="$t('miningguide.steptitle.title5')" :content="$t('miningguide.minermanagement')"></Step>
+            <Step :title="$t('miningguide.steptitle.title6')" :content="$t('miningguide.wallet')"></Step>
 
-            <Step title="添加存储节点服务器并初始化" content="矿工管理程序"></Step>
-            <Step title="配置存储节点服务并启动" content="矿工管理程序"></Step>
-            <Step title="出售空间" content="钱包"></Step>
+            <Step :title="$t('miningguide.steptitle.title7')" :content="$t('miningguide.minermanagement')"></Step>
+            <Step :title="$t('miningguide.steptitle.title8')" :content="$t('miningguide.minermanagement')"></Step>
+            <Step :title="$t('miningguide.steptitle.title9')" :content="$t('miningguide.wallet')"></Step>
         </Steps>
         </Col>
         <Col span="17">
             <div style="    text-align: center;">
-                <Button :disabled="previousdisable" @click="previous" type="primary" >上一步</Button>
+                <Button :disabled="previousdisable" @click="previous" type="primary" >{{$t('miningguide.previous')}}</Button>
+                &nbsp;&nbsp;
 
-                <Button :disabled="nextdisable" type="primary" @click="next">下一步</Button>
+                <Button :disabled="nextdisable" type="primary" @click="next">{{$t('miningguide.next')}}</Button>
             </div>
             <br><br>
             <router-view></router-view>

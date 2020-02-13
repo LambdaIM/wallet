@@ -54,7 +54,7 @@
         </MenuItem>
         <MenuItem to="/home/guide" name="guide">
             <Icon type="md-map" />
-            挖矿向导
+            {{$t('home.miningguide')}}
         </MenuItem>
 
     </Menu>

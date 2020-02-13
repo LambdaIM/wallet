@@ -157,6 +157,7 @@
       "token": "资产",
       "subaccount": "子账户",
       "moreonbrowser":"更多历史交易记录请查看区块链浏览器",
+      "miningguide":"挖矿向导",
       "table": {
           "Amount": "金额",
           "From":"发送",
@@ -673,5 +674,22 @@
        "remarks":"备注",
        "amount":"金额",
        "operation":"操作"
+   },
+   "miningguide":{
+       "steptitle":{
+           "title1":"获取TBB",
+           "title2":"质押挖矿",
+           "title3":"创建挖矿子账户并导出",
+           "title4":"添加矿工服务器并初始化矿工服务",
+           "title5":"配置矿工服务并启动",
+           "title6":"初始化矿工",
+           "title7":"添加存储节点服务器并初始化",
+           "title8":"配置存储节点服务并启动",
+           "title9":"出售空间"
+       },
+       "wallet":"钱包",
+       "minermanagement":"存储管理程序",
+       "previous":"上一步",
+       "next":"下一步"
    }
 }
