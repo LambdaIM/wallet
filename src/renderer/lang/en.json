@@ -150,8 +150,8 @@
     "home":{
       "Balance":"Balance",
       "Validatorprofit": "Validator profit",
-      "Latest_Transaction":"Latest  Transaction Records",
-      "Latest_Transaction_local": "Latest Local  Transaction Records",
+      "Latest_Transaction":"Latest  Transaction",
+      "Latest_Transaction_local": "Latest Local  Transaction",
       "Reward":"Reward",
       "Withdraw":"Withdraw",
       "Withdrawprofit":"Withdraw validator  profit",
@@ -162,6 +162,7 @@
       "token": "Assets",
       "subaccount": "Sub account",
       "moreonbrowser":"More historical transactions view blockchain browser",
+      "miningguide":"Mining guide",
       "table":{
         "Amount":"Amount",
         "Source":"Source",
@@ -682,6 +683,31 @@
     "remarks":"remarks",
     "amount":"amount",
     "operation":"operation"
+},
+"miningguide":{
+    "steptitle":{
+        "title1":"Get TBB",
+        "title2":"Pledge mining",
+        "title3":"Create mining sub account and export",
+        "title4":"Add miner server and initialize miner service",
+        "title5":"Configure miner service and start",
+        "title6":"Initialize miner",
+        "title7":"Add storage node server and initialize",
+        "title8":"Configure storage node services and start",
+        "title9":"Selling space"
+    },
+    "wallet":"wallet",
+    "minermanagement":"Storage manager",
+    "previous":"Previous",
+    "next":"Next",
+    "guidepage":{
+      "selectnode":"Please select a validation node",
+      "pledge":"pledge",
+      "Initializeminer":"Miner initialization",
+      "Initializeminerhelp":"The initial dhtid needed by the miner can be obtained in the miner management program",
+      "selectmarket":"Please select the market",
+      "sellingspace":"Selling space"
+  }
 }
 
 

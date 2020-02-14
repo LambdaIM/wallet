@@ -38,6 +38,84 @@ var walletRouter = new Router({
         path: 'subaccount',
         name: 'subaccount',
         component: () => import('@/views/Home/subaccount.vue')
+      },
+      {
+        path: 'guide',
+        name: 'guide',
+        component: () => import('@/views/Home/guide.vue'),
+        children: [{
+          path: '',
+          name: 'guide',
+          meta: {
+            path: ''
+          },
+          component: () => import('@/views/Home/stepguide/gettbb.vue')
+        },
+        {
+          path: 'pledge',
+          meta: {
+            path: 'pledge'
+          },
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/pledge.vue')
+        },
+        {
+          path: 'subaccount',
+          meta: {
+            path: 'subaccount'
+          },
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/subaccount.vue')
+        },
+        {
+          path: 'miningmanagement',
+          meta: {
+            path: 'miningmanagement'
+          },
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/miningmanagement.vue')
+        },
+        {
+          path: 'initializeminer',
+          meta: {
+            path: 'initializeminer'
+          },
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/Initializeminer.vue')
+        },
+        {
+          path: 'configminer',
+          meta: {
+            path: 'configminer'
+          },
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/configminer.vue')
+        },
+        {
+          path: 'addstorage',
+          meta: {
+            path: 'addstorage'
+          },
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/addstorage.vue')
+        },
+        {
+          path: 'configstorage',
+          meta: {
+            path: 'configstorage'
+          },
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/configstorage.vue')
+        },
+        {
+          path: 'sellingspace',
+          meta: {
+            path: 'sellingspace'
+          },
+          name: 'guide',
+          component: () => import('@/views/Home/stepguide/sellingspace.vue')
+        }
+        ]
       }
 
     ],
