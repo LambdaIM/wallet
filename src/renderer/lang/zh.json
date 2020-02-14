@@ -690,6 +690,14 @@
        "wallet":"钱包",
        "minermanagement":"存储管理程序",
        "previous":"上一步",
-       "next":"下一步"
+       "next":"下一步",
+       "guidepage":{
+           "selectnode":"请选择验证节点",
+           "pledge":"质押",
+           "Initializeminer":"矿工初始化",
+           "Initializeminerhelp":"初始化矿工所需要的dhtid 在矿工管理程序中可以获取到",
+           "selectmarket":"请选择市场",
+           "sellingspace":"出售空间"
+       }
    }
 }

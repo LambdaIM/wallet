@@ -39,7 +39,7 @@ export default {
   data () {
     return {
       current: 0,
-      previousdisable: true,
+      previousdisable: false,
       nextdisable: false
     };
   },

@@ -695,7 +695,15 @@
     "wallet":"wallet",
     "minermanagement":"Storage manager",
     "previous":"Previous",
-    "next":"Next"
+    "next":"Next",
+    "guidepage":{
+      "selectnode":"Please select a validation node",
+      "pledge":"pledge",
+      "Initializeminer":"Miner initialization",
+      "Initializeminerhelp":"The initial dhtid needed by the miner can be obtained in the miner management program",
+      "selectmarket":"Please select the market",
+      "sellingspace":"Selling space"
+  }
 }
 
 

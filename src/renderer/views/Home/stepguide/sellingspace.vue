@@ -3,13 +3,13 @@
 
  <br/>
  <div>
-      <Select @on-change="selectchange" placeholder="请选择市场" v-model="marketaddress" style="width:200px">
+      <Select @on-change="selectchange" :placeholder="$t('miningguide.guidepage.selectmarket')" v-model="marketaddress" style="width:200px">
         <Option v-for="item in marketList" :value="item.marketAddress" :key="item.marketAddress">{{ item.name }}</Option>
         </Select>
  </div>
  <br/>
  <div>
-     <Button @click="openSellingspace" type="primary">出售空间</Button>
+     <Button @click="openSellingspace" type="primary">{{$t('miningguide.guidepage.sellingspace')}}</Button>
  </div>
  <SellingspaceModal ref="Sellingspace" />
 </div>

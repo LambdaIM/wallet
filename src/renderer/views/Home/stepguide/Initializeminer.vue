@@ -1,9 +1,9 @@
 <template>
 <div>
     <div>
-        <Button @click="openCreateMiner" type="primary">初始化矿工</Button>
+        <Button @click="openCreateMiner" type="primary">{{$t('miningguide.guidepage.Initializeminer')}}</Button>
     </div><br/>
-    <div>初始化矿工所需要的dhtid 在矿工管理程序中可以获取到</div>
+    <div>{{$t('miningguide.guidepage.Initializeminerhelp')}}</div>
 <CreateMinerModal ref="CreateMiner" />
 </div>
 </template>

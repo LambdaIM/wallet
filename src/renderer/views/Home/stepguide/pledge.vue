@@ -1,6 +1,6 @@
 <template>
 <div>
-请选择验证节点
+{{$t('miningguide.guidepage.selectnode')}}
  <Select v-model="selectvalue" filterable>
                 <Option v-for="item in validatorsList"
                  :value="item.operator_address"
@@ -20,7 +20,7 @@
                 </Option>
             </Select>
 <br/><br/>
-<Button @click="openSend" type="primary">质押</Button>
+<Button @click="openSend" type="primary">{{$t('miningguide.guidepage.pledge')}}</Button>
 <StakingModelDialog ref="StakingModelDialog" />
 </div>
 </template>
