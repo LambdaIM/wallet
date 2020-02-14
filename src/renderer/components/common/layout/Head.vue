@@ -49,13 +49,13 @@
             class="item"
           >{{$t("head.market")}}</router-link>
         </div>
-
+<!--
         <div class="head-menu-item">
           <router-link
             to="/sign"
             class="item"
           >{{ $t("head.sign") }}</router-link>
-        </div>
+        </div> -->
 
 
 
@@ -354,8 +354,6 @@ export default {
       var role = this.$store.getters.role;
       if (role == null) {
         // this.$data.showrole=true;
-        this.$refs.roleModal.open();
-      } else {
         this.$refs.roleModal.open();
       }
     }

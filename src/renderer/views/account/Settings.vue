@@ -169,6 +169,26 @@
 
             </Col>
           </Row>
+          <Row class-name="card-item">
+            <Col
+              span="4"
+              class-name="title-wrapper"
+            >
+            <span class="title">角色</span>
+            </Col>
+            <Col
+              span="12"
+              class-name="content-wrapper"
+            >
+            <span>{{getrole}}</span>
+            <Button
+              @click="openroleModal"
+              type="primary"
+              shape="circle"
+              icon="ios-create"
+            ></Button>
+            </Col>
+          </Row>
         </div>
       </Mycard>
 
@@ -403,6 +423,7 @@
         </div>
       </Modal>
     </div>
+    <roleModalDialog ref="roleModal" />
   </div>
 </template>
 
@@ -410,6 +431,8 @@
 import Mycard from '@/components/common/useful/Mycard.vue';
 import { DAEMON_CONFIG } from '../../../config.js';
 import _ from 'underscore';
+
+import roleModalDialog from '@/views/Dialog/roleModal.vue';
 
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
@@ -507,6 +530,9 @@ export default {
         language: item
       });
       window.location.reload();
+    },
+    openroleModal() {
+      this.$refs.roleModal.open();
     }
   },
   computed: {
@@ -526,10 +552,22 @@ export default {
       } catch (error) {
         return [];
       }
+    },
+    getrole() {
+      var role = this.$store.getters.role;
+      var reslt = '';
+      switch (role) {
+        case 'simple': reslt = '普通用户'; break;
+        case 'order': reslt = '订单用户'; break;
+        case 'miner': reslt = '矿工'; break;
+        case 'validator': reslt = '验证节点'; break;
+      }
+      return reslt;
     }
   },
   components: {
-    Mycard
+    Mycard,
+    roleModalDialog
   }
 };
 </script>
