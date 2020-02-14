@@ -210,17 +210,22 @@
     <div  class="demo-spin-col" v-if="balanceLoading" >
     <Spin  fix> <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>{{$t("head.action.txloading")}}</Spin>
     </div>
+    <roleModalDialog ref="roleModal" />
+
   </div>
 </template>
 
 <script>
 import eventhub from '../../../common/js/event.js';
 import { mapState } from 'vuex';
+import roleModalDialog from '@/views/Dialog/roleModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
 
-
 export default {
+  components: {
+    roleModalDialog
+  },
   data() {
     return {
       // log: false
@@ -231,6 +236,7 @@ export default {
       langnow: this.$i18n.locale,
       balanceLoading: false,
       balanceLoadingPre: ''
+
     };
   },
   created() {
@@ -264,6 +270,7 @@ export default {
     if (login) {
       this.$store.dispatch('setLogin', login);
       eventhub.$emit('login');
+      this.getuserrole();
     }
   },
   methods: {
@@ -341,6 +348,16 @@ export default {
       this.$data.langnow = item;
       settings.set('set', { language: item });
       window.location.reload();
+    },
+    getuserrole() {
+      console.log('getuserrole');
+      var role = this.$store.getters.role;
+      if (role == null) {
+        // this.$data.showrole=true;
+        this.$refs.roleModal.open();
+      } else {
+        this.$refs.roleModal.open();
+      }
     }
   },
   computed: {
@@ -435,4 +452,7 @@ export default {
     z-index: 901;
     // border: 1px solid #eee;
     }
+
+
+
 </style>
