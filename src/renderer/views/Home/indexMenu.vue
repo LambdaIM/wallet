@@ -52,6 +52,10 @@
             <Icon type="md-list" />
             {{$t('home.subaccount')}}
         </MenuItem>
+        <MenuItem to="/home/guide" name="guide">
+            <Icon type="md-map" />
+            {{$t('home.miningguide')}}
+        </MenuItem>
 
     </Menu>
       </div>
