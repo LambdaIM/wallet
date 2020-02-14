@@ -7,6 +7,7 @@ import register from './modules/Register';
 import account from './modules/Account';
 import validator from './modules/Validator';
 import market from './modules/Market';
+import role from './modules/Role';
 
 Vue.use(Vuex);
 
@@ -15,7 +16,8 @@ export default new Vuex.Store({
     register,
     account,
     validator,
-    market
+    market,
+    role
   },
   plugins: [
     // createPersistedState(),
