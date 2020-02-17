@@ -21,7 +21,7 @@
             <p class="value">{{DistributionReward|BlanceValue}}</p>
           </div>
         </Col>
-        <Col v-if="distributionBalance > 0" span="4" class="account-item">
+        <Col v-if="$role('validatorbalance')"   span="4" class="account-item">
           <div class="item-wrapper">
             <p class="title">{{$t('home.Validatorprofit')}}(LAMB)</p>
             <p class="value">{{distributionBalance|BlanceValue}}</p>

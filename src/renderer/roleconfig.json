@@ -3,6 +3,18 @@
       "market":["order","miner"]
 
     },
+    "home":{
+      "tx":{
+        "Withdrawprofit":["miner","validator"],
+        "Minerprofit":["miner"]
+      },
+      "subaccount":["miner"],
+      "guide":["miner"]
+    },
+    "market":{
+      "sellspace":["miner","validator"]
+    },
+    "validatorbalance":["validator"],
     "comtent":{
 
     },

@@ -11,7 +11,7 @@
             <Icon type="ios-pricetag" />
             {{$t('marketpage.buyingspace')}}
         </MenuItem>
-        <MenuItem to="/market/mysellorder" name="mysellorderlist">
+        <MenuItem v-if="$role('market.sellspace')" to="/market/mysellorder" name="mysellorderlist">
             <Icon type="md-pricetags" />
             {{$t('marketpage.sellspace')}}
         </MenuItem>
