@@ -1,5 +1,8 @@
+import roleconfig from '@/roleconfig.json';
+
 const BigNumber = require('bignumber.js');
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_DOWN });
+const settings = require('electron-settings');
 
 export default {
   install (Vue, options) {
@@ -93,6 +96,36 @@ export default {
         bigvalue = bigvalue.div(1e6).toFixed(6);
         return `${new BigNumber(bigvalue).toFormat()} TBB`;
       }
+    };
+
+    Vue.prototype.$role = function(name) {
+      var namelist = name.split('.');
+
+      var roledata = null;
+
+      //  var  roleconfig = this.$store.getters.roleconfig;
+
+      namelist.forEach(function(item) {
+        if (item != '' && roledata == null) {
+          roledata = roleconfig[item];
+        } else {
+          roledata = roledata[item];
+        }
+      });
+
+
+      var role = settings.get('userrole') || null;
+      console.log('=============');
+      console.log(roledata);
+      console.log(name);
+      console.log(role);
+
+      console.log('=============');
+      var result = false;
+      if (roledata instanceof Array) {
+        result = !(roledata.indexOf(role) < 0);
+      }
+      return result;
     };
   }
 };

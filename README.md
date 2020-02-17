@@ -15,4 +15,20 @@ npm run dev
 npm run build
 
 ```
+# role
+
+simple
+普通用户
+
+order
+订单用户
+
+
+miner
+矿工
+
+validator
+验证节点
+
+
 

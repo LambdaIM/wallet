@@ -43,7 +43,7 @@
             class="item"
           > {{$t("head.proposals")}} </router-link>
         </div>
-        <div class="head-menu-item">
+        <div  v-if="$role('menu.market')" class="head-menu-item">
           <router-link
             to="/market"
             class="item"
@@ -377,6 +377,7 @@ export default {
         return true;
       }
     }
+
     // login:function(){
     //   return this.$store.getters.getLogin;
     // }
