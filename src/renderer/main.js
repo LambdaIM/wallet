@@ -19,11 +19,14 @@ import VueClipboard from 'vue-clipboard2';
 import VueI18n from 'vue-i18n';
 import messages from './lang/index.js';
 import GlobalFn from './Global.js';
+
+import Role from './role.js';
 const settings = require('electron-settings');
 
 const { remote } = require('electron');
 
 var packagejson = require('../../package.json');
+
 
 document.title = packagejson.description + '  v' + packagejson.version;
 window.title = document.title;
@@ -34,7 +37,7 @@ Object.keys(filters).forEach(key => {
 Vue.use(VueClipboard);
 Vue.use(GlobalFn);
 // if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
-
+Role(Vue);
 Vue.config.productionTip = false;
 
 
