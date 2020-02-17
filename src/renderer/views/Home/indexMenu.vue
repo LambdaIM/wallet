@@ -41,18 +41,18 @@
                 <MenuItem  name="openTransfer">{{$t('home.Transfer')}}</MenuItem>
             </MenuGroup>
             <MenuGroup :title="$t('home.Withdraw')">
-                <MenuItem name="openWithdraw">{{$t('home.Withdraw')}}</MenuItem>
-                <MenuItem name="openWithdrawprofit">{{$t('home.Withdrawprofit')}}</MenuItem>
-                <MenuItem name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
+                <MenuItem  name="openWithdraw">{{$t('home.Withdraw')}}</MenuItem>
+                <MenuItem v-if="$role('home.tx.Withdrawprofit')" name="openWithdrawprofit">{{$t('home.Withdrawprofit')}}</MenuItem>
+                <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
             </MenuGroup>
 
 
         </Submenu>
-        <MenuItem to="/home/subaccount" name="subaccount">
+        <MenuItem v-if="$role('home.subaccount')"   to="/home/subaccount" name="subaccount">
             <Icon type="md-list" />
             {{$t('home.subaccount')}}
         </MenuItem>
-        <MenuItem to="/home/guide" name="guide">
+        <MenuItem v-if="$role('home.guide')" to="/home/guide" name="guide">
             <Icon type="md-map" />
             {{$t('home.miningguide')}}
         </MenuItem>
