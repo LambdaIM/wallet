@@ -2,7 +2,7 @@
   <div class="head-container">
     <Row class="head-wrapper">
       <Col
-        span="5"
+        span="4"
         class-name="head-logo-wrapper"
       >
       <img
@@ -13,7 +13,7 @@
       </Col>
 
       <Col
-        span="17"
+        span="18"
         offset="1"
         v-if="login==true"
         class-name="head-menu-wrapper"
@@ -49,13 +49,13 @@
             class="item"
           >{{$t("head.market")}}</router-link>
         </div>
-<!--
-        <div class="head-menu-item">
+
+        <div class="head-menu-item" v-if="$role('home.guide')">
           <router-link
-            to="/sign"
+            to="/guide"
             class="item"
-          >{{ $t("head.sign") }}</router-link>
-        </div> -->
+          >{{$t('home.miningguide')}}</router-link>
+        </div>
 
 
 
@@ -391,12 +391,17 @@ export default {
     height: 100px;
     background: url(../../../assets/img/bgs_01.jpg);
     background-size: cover;
+    .head-logo{
+      width:150px;
+      margin-top: 30px;
+    }
     .head-wrapper {
       width: 100%;
       height: 100px;
       .head-logo-wrapper {
         margin-left: 20px;
-        padding-top: 20px;
+        // padding-top: 20px;
+        // line-height: 100px;
       }
       .head-menu-wrapper {
         height: 100px;

@@ -52,10 +52,10 @@
             <Icon type="md-list" />
             {{$t('home.subaccount')}}
         </MenuItem>
-        <MenuItem v-if="$role('home.guide')" to="/home/guide" name="guide">
+        <!-- <MenuItem v-if="$role('home.guide')" to="/home/guide" name="guide">
             <Icon type="md-map" />
             {{$t('home.miningguide')}}
-        </MenuItem>
+        </MenuItem> -->
 
     </Menu>
       </div>
