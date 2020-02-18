@@ -50,11 +50,10 @@
           >{{$t("head.market")}}</router-link>
         </div>
 
-        <div class="head-menu-item" v-if="$role('home.guide')">
+        <div  class="head-menu-item" v-if="$role('home.guide')">
           <router-link
             to="/guide"
-            class="item"
-          >{{$t('home.miningguide')}}</router-link>
+            class="item"><Icon type="md-map" />{{$t('home.miningguide')}}</router-link>
         </div>
 
 

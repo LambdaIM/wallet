@@ -9,10 +9,12 @@
         "Minerprofit":["miner"]
       },
       "subaccount":["miner"],
-      "guide":["miner"]
+      "guide":["miner"],
+      "Myorderlist":["order"],
+      "lambdas3":["order"]
     },
     "market":{
-      "sellspace":["miner","validator"]
+      "sellspace":["miner"]
     },
     "validatorbalance":["validator"],
     "comtent":{

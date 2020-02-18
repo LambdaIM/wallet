@@ -146,7 +146,7 @@
       "Balance": "余额",
       "Validatorprofit": "节点收益",
       "Latest_Transaction": "最新交易记录",
-      "Latest_Transaction_local": "本地最新交易记录",
+      "Latest_Transaction_local": "交易日志",
       "Transfer": "交易",
       "Reward":"奖励",
       "Withdraw":"提取奖励",

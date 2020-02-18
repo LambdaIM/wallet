@@ -151,7 +151,7 @@
       "Balance":"Balance",
       "Validatorprofit": "Validator profit",
       "Latest_Transaction":"Latest  Transaction",
-      "Latest_Transaction_local": "Latest Local  Transaction",
+      "Latest_Transaction_local": "Transaction log",
       "Reward":"Reward",
       "Withdraw":"Withdraw",
       "Withdrawprofit":"Withdraw validator  profit",
