@@ -7,7 +7,8 @@
         &nbsp;
         </Col>
         <Col span="3">
-              <Button @click="openCreateMiner" type="primary"  size="small"> {{$t('sellpageinfo.Initializeminer')}} </Button>
+              <!-- <Button @click="openCreateMiner" type="primary"  size="small"> {{$t('sellpageinfo.Initializeminer')}} </Button> -->
+              &nbsp;
 
         </Col>
         <Col span="8">
