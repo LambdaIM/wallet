@@ -5,7 +5,7 @@
     },
     "home":{
       "tx":{
-        "Withdrawprofit":["miner","validator"],
+        "Withdrawprofit":["validator"],
         "Minerprofit":["miner"]
       },
       "subaccount":["miner"],

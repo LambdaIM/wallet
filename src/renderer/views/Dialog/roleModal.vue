@@ -9,19 +9,19 @@
         <div class="roleselect">
             <div @click="selectitem('simple')"   :class="{item:true, active:activeitem=='simple'}">
             <h3> 普通用户 </h3>
-            <p>查看资产，转账，质押挖矿，提案投票 </p>
+            <p>查看资产，转账，质押挖矿，提案投票，提取质押奖励 </p>
             </div>
             <div @click="selectitem('order')"    :class="{item:true, active:activeitem=='order'}">
             <h3>  订单用户</h3>
-            <p>查看资产，转账，质押挖矿，提案投票 </p>
+            <p>查看资产，转账，质押挖矿，提案投票，购买空间，使用lambdas3，提取质押奖励 </p>
             </div>
             <div @click="selectitem('miner')"     :class="{item:true, active:activeitem=='miner'}">
             <h3>矿工</h3>
-            <p>查看资产，转账，质押挖矿，提案投票 </p>
+            <p>查看资产，转账，质押挖矿，提案投票，市场买卖空间，挖矿向导，提取质押奖励，提取存储挖矿奖励 </p>
             </div>
             <div @click="selectitem('validator')" :class="{item:true, active:activeitem=='validator'}">
             <h3>验证节点</h3>
-            <p>查看资产，转账，质押挖矿，提案投票 </p>
+            <p>查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益</p>
             </div>
 
         </div>
