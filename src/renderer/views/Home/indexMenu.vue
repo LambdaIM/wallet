@@ -7,8 +7,11 @@
 
          <Row>
         <Col span="11">
-        <span style="    font-size: 15px;">
+        <span v-if="$role('home.guide')" style="    font-size: 15px;">
           {{$t('testcoin.miningaward')}}：<span style="color: #67a7db;">{{MinerRewards|Lambformat}}</span>
+        </span>
+        <span v-else>
+          &nbsp;
         </span>
         </Col>
         <Col span="13" style="    text-align: right;">
@@ -56,6 +59,19 @@
             <Icon type="md-map" />
             {{$t('home.miningguide')}}
         </MenuItem> -->
+        <MenuItem v-if="$role('market.sellspace')" to="/market/mysellorder" name="mysellorderlist">
+            <Icon type="md-pricetags" />
+            {{$t('marketpage.sellspace')}}
+        </MenuItem>
+
+        <MenuItem v-if="$role('home.Myorderlist')"  to="/market" name="myorderlist">
+            <Icon type="ios-paper" />
+            {{$t('marketpage.orderlist')}}
+        </MenuItem>
+        <MenuItem v-if="$role('home.lambdas3')"  to="/market/lambdas3" name="lambdas3">
+            <Icon type="ios-construct" />
+            Lambda S3
+        </MenuItem>
 
     </Menu>
       </div>
