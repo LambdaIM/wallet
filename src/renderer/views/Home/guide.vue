@@ -87,16 +87,16 @@ export default {
     },
     pageroute() {
       switch (this.current) {
-        case 0: this.$router.push('/home/guide'); break;
-        case 1: this.$router.push('/home/guide/pledge'); break;
-        case 2: this.$router.push('/home/guide/subaccount'); break;
-        case 3: this.$router.push('/home/guide/miningmanagement'); break;
-        case 4: this.$router.push('/home/guide/configminer'); break;
-        case 5: this.$router.push('/home/guide/initializeminer'); break;
+        case 0: this.$router.push('/guide'); break;
+        case 1: this.$router.push('/guide/pledge'); break;
+        case 2: this.$router.push('/guide/subaccount'); break;
+        case 3: this.$router.push('/guide/miningmanagement'); break;
+        case 4: this.$router.push('/guide/configminer'); break;
+        case 5: this.$router.push('/guide/initializeminer'); break;
 
-        case 6: this.$router.push('/home/guide/addstorage'); break;
-        case 7: this.$router.push('/home/guide/configstorage'); break;
-        case 8: this.$router.push('/home/guide/sellingspace'); break;
+        case 6: this.$router.push('/guide/addstorage'); break;
+        case 7: this.$router.push('/guide/configstorage'); break;
+        case 8: this.$router.push('/guide/sellingspace'); break;
       }
     },
     btndisable() {
