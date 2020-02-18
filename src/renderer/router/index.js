@@ -38,6 +38,21 @@ var walletRouter = new Router({
         path: 'subaccount',
         name: 'subaccount',
         component: () => import('@/views/Home/subaccount.vue')
+      },
+      {
+        path: 'myorderlist',
+        name: 'myorderlist',
+        component: () => import('@/views/Home/marketorderlistlink.vue')
+      },
+      {
+        path: 'lambdas3',
+        name: 'lambdas3',
+        component: () => import('@/views/Home/markets3link.vue')
+      },
+      {
+        path: 'mysellorder',
+        name: 'mysellorder',
+        component: () => import('@/views/Home/marketsellorderlink.vue')
       }
 
     ],
