@@ -59,16 +59,16 @@
             <Icon type="md-map" />
             {{$t('home.miningguide')}}
         </MenuItem> -->
-        <MenuItem v-if="$role('market.sellspace')" to="/market/mysellorder" name="mysellorderlist">
+        <MenuItem v-if="$role('market.sellspace')" to="/home/mysellorder" name="mysellorder">
             <Icon type="md-pricetags" />
             {{$t('marketpage.sellspace')}}
         </MenuItem>
 
-        <MenuItem v-if="$role('home.Myorderlist')"  to="/market" name="myorderlist">
+        <MenuItem v-if="$role('home.Myorderlist')"  to="/home/myorderlist" name="myorderlist">
             <Icon type="ios-paper" />
             {{$t('marketpage.orderlist')}}
         </MenuItem>
-        <MenuItem v-if="$role('home.lambdas3')"  to="/market/lambdas3" name="lambdas3">
+        <MenuItem v-if="$role('home.lambdas3')"  to="/home/lambdas3" name="lambdas3">
             <Icon type="ios-construct" />
             Lambda S3
         </MenuItem>
