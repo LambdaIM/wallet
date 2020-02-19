@@ -20,6 +20,7 @@ const hdkeyjs = require('@jswebfans/hdkeyjs');
 const { shell } = require('electron');
 
 
+
 var walletManger = function (dir) {
   // 遍历文件夹
   //
@@ -659,8 +660,10 @@ walletManger.prototype.Transfer = async function (to, amount, gas, denom, memo) 
   return result;
 };
 walletManger.prototype.Simulate = async function (transactiondata) {
-  var default_gas_price = 2.5e-6; // recommended from Cosmos Docs
+  var gasprice = settings.get('gasprice') || 0.0000025;
+  var default_gas_price = gasprice; // recommended from Cosmos Docs
   const { type, memo, ...properties } = transactiondata;
+  console.log('default_gas_price',default_gas_price)
   if (this.actionManager != undefined) {
     this.actionManager.setContext({ url: DAEMON_CONFIG.LambdaNetwork(), userAddress: this.defaultwallet.address });
   }
@@ -689,12 +692,12 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
 
   //= ========
   const { type, memo, ...transactionProperties } = transactiondata;
-
+  var gasprice = settings.get('gasprice') || 0.0000025;
 
   var gasEstimate = this.gasEstimate || 500000; // 需要接口读取
-  var default_gas_price = 2.5e-6; // recommended from Cosmos Docs
+  var default_gas_price = gasprice; // recommended from Cosmos Docs
   if (gaseFee == undefined) {
-    default_gas_price = 2.5e-6; // recommended from Cosmos Docs
+    default_gas_price = gasprice; // recommended from Cosmos Docs
   } else {
     default_gas_price = Number(gaseFee) / Number(gasEstimate);
   }
