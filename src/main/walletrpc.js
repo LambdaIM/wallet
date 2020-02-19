@@ -15,6 +15,8 @@ var { DAEMON_CONFIG } = require('../configmain.js');
 
 var log = require('../log').log;
 
+const settings = require('electron-settings');
+
 
 var lastTime;
 export default function() {
@@ -741,6 +743,38 @@ export default function() {
       var TxMessageload = await WM.ImportSonAccount(file, password, name);
 
       return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('getgasprice', async query => {
+    try {
+      var gasprice = settings.get('gasprice') || 0.0000025;
+
+
+      return resultView({ data: gasprice }, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('setgasprice', async query => {
+    try {
+      var { gasprice } = query;
+      if (gasprice == undefined) {
+        throw resultView(null, false, 'need gasprice');
+      }
+      gasprice = parseFloat(gasprice);
+      if (isNaN(gasprice)) {
+        throw resultView(null, false, 'gaspricemust be numeric ');
+      }
+
+      settings.set('gasprice', gasprice);
+
+      return resultView({
+        data: true
+      }, true);
     } catch (error) {
       throw resultView(null, false, error);
     }
