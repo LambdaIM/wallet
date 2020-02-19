@@ -692,9 +692,9 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
 
 
   var gasEstimate = this.gasEstimate || 500000; // 需要接口读取
-  var default_gas_price = 2.5e-8; // recommended from Cosmos Docs
+  var default_gas_price = 2.5e-6; // recommended from Cosmos Docs
   if (gaseFee == undefined) {
-    default_gas_price = 2.5e-8; // recommended from Cosmos Docs
+    default_gas_price = 2.5e-6; // recommended from Cosmos Docs
   } else {
     default_gas_price = Number(gaseFee) / Number(gasEstimate);
   }

@@ -174,6 +174,26 @@
               span="4"
               class-name="title-wrapper"
             >
+            <span class="title">GAS 价格</span>
+            </Col>
+            <Col
+              span="12"
+              class-name="content-wrapper"
+            >
+            <span>{{Gasprisevalue}}</span>
+            <Button
+              @click="opengasprise"
+              type="primary"
+              shape="circle"
+              icon="ios-create"
+            ></Button>
+            </Col>
+          </Row>
+          <Row class-name="card-item">
+            <Col
+              span="4"
+              class-name="title-wrapper"
+            >
             <span class="title">角色</span>
             </Col>
             <Col
@@ -182,13 +202,14 @@
             >
             <span>{{getrole}}</span>
             <Button
-              @click="openroleModal"
+              @click="opengasprise"
               type="primary"
               shape="circle"
               icon="ios-create"
             ></Button>
             </Col>
           </Row>
+
         </div>
       </Mycard>
 
@@ -309,7 +330,7 @@
 
         </div>
       </Mycard>
-      <Mycard
+      <!-- <Mycard
         v-if="getstore.length==0"
         :cardtitle="$t('seting.Validator_Node_info')"
         class="mb10"
@@ -338,7 +359,7 @@
             </Col>
           </Row>
         </div>
-      </Mycard>
+      </Mycard> -->
 
       <!-- <Mycard cardtitle="Store Path for File" class="mb10">
         <div class="storage-content" slot="card-content">
@@ -424,6 +445,7 @@
       </Modal>
     </div>
     <roleModalDialog ref="roleModal" />
+    <Gasprise ref="Gasprise"/>
   </div>
 </template>
 
@@ -433,6 +455,7 @@ import { DAEMON_CONFIG } from '../../../config.js';
 import _ from 'underscore';
 
 import roleModalDialog from '@/views/Dialog/roleModal.vue';
+import Gasprise from '@/views/Dialog/Gasprise.vue';
 
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
@@ -457,6 +480,7 @@ export default {
   mounted() {
     this.getAccountInfo();
     // this.pledgeMiner();
+    // this.getgasprise();
   },
   methods: {
     onCopy: function(e) {
@@ -533,6 +557,14 @@ export default {
     },
     openroleModal() {
       this.$refs.roleModal.open();
+    },
+    async getgasprise() {
+      var _this = this;
+      var res = await ipc.callMain('getgasprice', {});
+      _this.$data.gasprise = res.data.gasprice;
+    },
+    opengasprise() {
+      this.$refs.Gasprise.open();
     }
   },
   computed: {
@@ -563,11 +595,16 @@ export default {
         case 'validator': reslt = '验证节点'; break;
       }
       return reslt;
+    },
+    Gasprisevalue() {
+      return this.$store.getters.gasprise;
     }
   },
   components: {
     Mycard,
-    roleModalDialog
+    roleModalDialog,
+    Gasprise
+
   }
 };
 </script>
