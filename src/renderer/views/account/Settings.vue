@@ -202,7 +202,7 @@
             >
             <span>{{getrole}}</span>
             <Button
-              @click="opengasprise"
+              @click="openroleModal"
               type="primary"
               shape="circle"
               icon="ios-create"
