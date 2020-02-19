@@ -53,7 +53,7 @@
         <div  class="head-menu-item" v-if="$role('home.guide')">
           <router-link
             to="/guide"
-            class="item"><Icon type="md-map" />{{$t('home.miningguide')}}</router-link>
+            class="item">{{$t('home.miningguide')}}</router-link>
         </div>
 
 
