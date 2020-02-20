@@ -4,10 +4,10 @@
     <Row className="cardTable__header cardTable__header-media">
       <Card class="cardTable__header-card">
         <Col :md="24" :lg="13">{{$t('txTable.action')}}</Col>
-        <Col :md="8" :lg="3">{{$t('txTable.Date')}}</Col>
-        <Col :md="8" :lg="2">{{$t('txTable.block_height')}}</Col>
-        <Col :md="8" :lg="3">{{$t('txTable.fee')}}</Col>
-        <Col  :md="24" :lg="3">{{$t('txTable.Transactionhash')}}</Col>
+        <Col :md="6" :lg="3">{{$t('txTable.Date')}}</Col>
+        <Col :md="6" :lg="2">{{$t('txTable.block_height')}}</Col>
+        <Col :md="6" :lg="3">{{$t('txTable.fee')}}</Col>
+        <Col  :md="6" :lg="3">{{$t('txTable.Transactionhash')}}</Col>
       </Card>
     </Row>
   </div>

@@ -174,7 +174,7 @@
               span="4"
               class-name="title-wrapper"
             >
-            <span class="title">GAS 价格</span>
+            <span class="title">{{ $t("seting.gasprise") }}</span>
             </Col>
             <Col
               span="12"
@@ -194,7 +194,7 @@
               span="4"
               class-name="title-wrapper"
             >
-            <span class="title">角色</span>
+            <span class="title">{{ $t("seting.role") }}</span>
             </Col>
             <Col
               span="12"
