@@ -750,7 +750,10 @@ export default function() {
 
   eipc.answerRenderer('getgasprice', async query => {
     try {
-      var gasprice = settings.get('gasprice') || 0.0000025;
+      var gasprice = settings.get('gasprice');
+      if (gasprice == undefined) {
+        gasprice = 0.0000025;
+      }
 
 
       return resultView({ data: gasprice }, true);
