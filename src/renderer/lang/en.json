@@ -54,6 +54,8 @@
       "edit_name":"Edit name",
       "Submit":"Submit",
       "switch-lang":"Switch language",
+      "gasprise":"Gas prise",
+      "role":"Role",
       "action":{
         "Modified_success":"Modified success",
         "Modification_failed":"Modification failed"
@@ -708,6 +710,14 @@
       "selectmarket":"Please select the market",
       "sellingspace":"Selling space"
   }
+},
+"gaspage":{
+    "title":"Set gas price",
+    "placeholder":"Please fill in the price",
+    "action":{
+        "gasneednum":"Gas price must be a number",
+        "gas0":"Gas price cannot be less than 0"
+    }
 }
 
 

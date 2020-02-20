@@ -5,18 +5,18 @@
         <Row className="cardTable__content-item" v-for="(item, index) in txData" :key="index">
           <Card class="cardTable__card-item">
             <Activity :showError="showError" :md="24" :lg="13" :activityData="txData[index].txs"></Activity>
-            <Col :xs="6" :md="8" :lg="3"
+            <Col :xs="6" :md="6" :lg="3"
               ><Icon type="md-time" size="24" class="mr5 txIcon" />{{ item.create_time | formatRelativeDate }}</Col
             >
-            <Col :xs="6" :md="8" :lg="2">
+            <Col :xs="6" :md="6" :lg="2">
               <Icon type="md-list" size="22" class="mr5 txIcon" />
 
               {{ item.height || 0 }}</Col
             >
-            <Col :xs="6" :md="8" :lg="3"
+            <Col :xs="6" :md="6" :lg="3"
               ><Icon type="logo-usd" size="22" class="mr5 txIcon" />{{ item.fee  }}</Col
             >
-            <Col :xs="6" :md="24" :lg="3">
+            <Col :xs="6" :md="6" :lg="3">
               <router-link :to="`/detail/${item.tx_com_hash}`"
                 >{{ item.tx_com_hash.slice(0, addressLength) }}...</router-link
               ></Col
