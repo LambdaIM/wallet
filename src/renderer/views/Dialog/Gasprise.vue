@@ -2,11 +2,11 @@
 <div>
      <Modal
         v-model="showmodel"
-        title="设置gas价格"
+        :title="$t('gaspage.title')"
         @on-ok="submitdata"
         >
-        <Input v-model="gasprise" placeholder="请填写价格"  />
-        <div>
+        <Input v-model="gasprise" :placeholder="$t('gaspage.placeholder')"  />
+         <div>
           <br/>
           验证节点gas价格为{{Validatorgasprise}}，
           您设置的gas的价格不得小于{{Validatorgasprise}},
@@ -51,11 +51,11 @@ export default {
       var gasprise = this.$data.gasprise;
       gasprise = parseFloat(gasprise);
       if (isNaN(gasprise)) {
-        this.$Message.error('gas 的价格 必须为是数字');
+        this.$Message.error(this.$t('gaspage.action.gasneednum'));
         return;
       }
       if (gasprise < 0) {
-        this.$Message.error('gas 的价格不能小于0');
+        this.$Message.error(this.$t('gaspage.action.gas0'));
         return;
       }
       var res = await ipc.callMain('setgasprice', {

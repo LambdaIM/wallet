@@ -51,6 +51,8 @@
       "edit_name": "编辑名称",
       "Submit": "提交",
       "switch-lang":"切换语言",
+      "gasprise":"gas价格",
+      "role":"角色",
       "action": {
           "Modified_success": "修改成功",
           "Modification_failed": "修改失败"
@@ -703,6 +705,14 @@
            "Initializeminerhelp":"初始化矿工所需要的dhtid 在矿工管理程序中可以获取到",
            "selectmarket":"请选择市场",
            "sellingspace":"出售空间"
+       }
+   },
+   "gaspage":{
+       "title":"设置gas价格",
+       "placeholder":"请填写价格",
+       "action":{
+           "gasneednum":"gas 的价格 必须为是数字",
+           "gas0":"gas 的价格不能小于0"
        }
    }
 }
