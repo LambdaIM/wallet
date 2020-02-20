@@ -568,14 +568,14 @@ export default {
     }
   },
   computed: {
-    calProgress() {
-      this.progressPercent =
-          (
-            this.$data.pledgeMinerData.use_size / this.$data.pledgeMinerData.size
-          ).toFixed(4) * 100;
-      // console.log(this.progressPercent);
-      return this.progressPercent;
-    },
+    // calProgress() {
+    //   this.progressPercent =
+    //       (
+    //         this.$data.pledgeMinerData.use_size / this.$data.pledgeMinerData.size
+    //       ).toFixed(4) * 100;
+    //   // console.log(this.progressPercent);
+    //   return this.progressPercent;
+    // },
     getstore() {
       console.log(' - -');
       try {
@@ -589,10 +589,10 @@ export default {
       var role = this.$store.getters.role;
       var reslt = '';
       switch (role) {
-        case 'simple': reslt = '普通用户'; break;
-        case 'order': reslt = '订单用户'; break;
-        case 'miner': reslt = '矿工'; break;
-        case 'validator': reslt = '验证节点'; break;
+        case 'simple': reslt = this.$t('rolepage.roletype.simpleuser'); break;
+        case 'order': reslt = this.$t('rolepage.roletype.orderuser'); break;
+        case 'miner': reslt = this.$t('rolepage.roletype.miner'); break;
+        case 'validator': reslt = this.$t('rolepage.roletype.validator'); break;
       }
       return reslt;
     },
