@@ -1,6 +1,6 @@
 <template>
     <Modal
-        title="请选择使用钱包的主要角色"
+        :title="$t('rolepage.title')"
         v-model="showrole"
         :closable="false"
         :mask-closable="false"
@@ -8,20 +8,20 @@
         >
         <div class="roleselect">
             <div @click="selectitem('simple')"   :class="{item:true, active:activeitem=='simple'}">
-            <h3> 普通用户 </h3>
-            <p>查看资产，转账，质押挖矿，提案投票，提取质押奖励 </p>
+            <h3>{{$t('rolepage.roletype.simpleuser')}}</h3>
+            <p>{{$t('rolepage.simpleuserbrief')}}</p>
             </div>
             <div @click="selectitem('order')"    :class="{item:true, active:activeitem=='order'}">
-            <h3>  订单用户</h3>
-            <p>查看资产，转账，质押挖矿，提案投票，购买空间，使用lambdas3，提取质押奖励 </p>
+            <h3>{{$t('rolepage.roletype.orderuser')}}</h3>
+            <p>{{$t('rolepage.orderuserbrief')}} </p>
             </div>
             <div @click="selectitem('miner')"     :class="{item:true, active:activeitem=='miner'}">
-            <h3>矿工</h3>
-            <p>查看资产，转账，质押挖矿，提案投票，市场买卖空间，挖矿向导，提取质押奖励，提取存储挖矿奖励 </p>
+            <h3>{{$t('rolepage.roletype.miner')}}</h3>
+            <p>{{$t('rolepage.minerbrief')}}</p>
             </div>
             <div @click="selectitem('validator')" :class="{item:true, active:activeitem=='validator'}">
-            <h3>验证节点</h3>
-            <p>查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益</p>
+            <h3>{{$t('rolepage.roletype.validator')}}</h3>
+            <p>{{$t('rolepage.validatorbrief')}}</p>
             </div>
 
         </div>

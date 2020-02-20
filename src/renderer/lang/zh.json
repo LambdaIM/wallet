@@ -714,5 +714,18 @@
            "gasneednum":"gas 的价格 必须为是数字",
            "gas0":"gas 的价格不能小于0"
        }
+   },
+   "rolepage":{
+       "title":"请选择使用钱包的角色",
+       "roletype":{
+            "simpleuser":"钱包用户",
+            "orderuser":"购买空间的用户",
+            "miner":"矿工",
+            "validator":"验证节点"
+       },
+       "simpleuserbrief":"查看资产，转账，质押挖矿，提案投票，提取质押奖励",
+       "orderuserbrief":"查看资产，转账，质押挖矿，提案投票，购买空间，使用lambdas3，提取质押奖励",
+       "minerbrief":"查看资产，转账，质押挖矿，提案投票，市场买卖空间，挖矿向导，提取质押奖励，提取存储挖矿奖励",
+       "validatorbrief":"查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益"
    }
 }

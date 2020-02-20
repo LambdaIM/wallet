@@ -718,6 +718,19 @@
         "gasneednum":"Gas price must be a number",
         "gas0":"Gas price cannot be less than 0"
     }
+},
+"rolepage":{
+  "title":"Please select a role to use Wallet",
+  "roletype":{
+       "simpleuser":"Wallet user",
+       "orderuser":"Space users",
+       "miner":"Miner",
+       "validator":"Validator"
+  },
+  "simpleuserbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward",
+  "orderuserbrief":"View assets, transfer, pledge mining, proposal voting, purchase space, use lambdas3, withdraw pledge reward",
+  "minerbrief":"View assets, transfer, pledge mining, proposal voting, market trading space, mining guide, withdraw pledge reward, withdraw deposit mining reward",
+  "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income"
 }
 
 
