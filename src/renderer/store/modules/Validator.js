@@ -1,5 +1,8 @@
 const settings = require('electron-settings');
-var gaspriceconfig = settings.get('gasprice') || 0.0000025;
+var gaspriceconfig = settings.get('gasprice');
+if (gaspriceconfig == undefined) {
+  gaspriceconfig = 0.0000025;
+}
 const state = {
   info: null,
   gas_prise: gaspriceconfig

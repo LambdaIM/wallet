@@ -5,7 +5,7 @@
         title="设置gas价格"
         @on-ok="submitdata"
         >
-        <Input v-model="gasprise" placeholder="Enter something..."  />
+        <Input v-model="gasprise" placeholder="请填写价格"  />
         <div>
           <br/>
           验证节点gas价格为{{Validatorgasprise}}，
