@@ -660,7 +660,10 @@ walletManger.prototype.Transfer = async function (to, amount, gas, denom, memo) 
   return result;
 };
 walletManger.prototype.Simulate = async function (transactiondata) {
-  var gasprice = settings.get('gasprice') || 0.0000025;
+  var gasprice = settings.get('gasprice') ;
+  if(gasprice==undefined){
+    gasprice=0.0000025;
+  }
   var default_gas_price = gasprice; // recommended from Cosmos Docs
   const { type, memo, ...properties } = transactiondata;
   console.log('default_gas_price',default_gas_price)
@@ -692,7 +695,10 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
 
   //= ========
   const { type, memo, ...transactionProperties } = transactiondata;
-  var gasprice = settings.get('gasprice') || 0.0000025;
+  var gasprice = settings.get('gasprice') ;
+  if(gasprice==undefined){
+    gasprice=0.0000025;
+  }
 
   var gasEstimate = this.gasEstimate || 500000; // 需要接口读取
   var default_gas_price = gasprice; // recommended from Cosmos Docs
