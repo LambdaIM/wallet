@@ -8,9 +8,7 @@
         <Input v-model="gasprise" :placeholder="$t('gaspage.placeholder')"  />
          <div>
           <br/>
-          验证节点gas价格为{{Validatorgasprise}}，
-          您设置的gas的价格不得小于{{Validatorgasprise}},
-          gas的价格小于{{Validatorgasprise}},钱包发出的交易无法被打包
+          {{$t('gaspage.gashelper',[Validatorgasprise])}}
         </div>
     </Modal>
 </div>
