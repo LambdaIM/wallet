@@ -534,6 +534,7 @@
 
   },
   "marketpage":{
+    "datasync":"Data sync",
     "buyingspace":"Buying space",
     "sellspace":"Sell space",
     "orderlist":"Order list",
@@ -565,6 +566,7 @@
     "Localsorting4":"Start value cannot be greater than end value",
     "active":"Hot",
     "unActive":"Sold out",
+    
     "selltable":{
         "Mineraddress":"Miner address",
         "amountspace":"Amount space(GB)",
@@ -714,6 +716,7 @@
 "gaspage":{
     "title":"Set gas price",
     "placeholder":"Please fill in the price",
+    "gashelper":"Verify that the price of the node gas is {0}, the price of the gas you set must not be less than {0}, the price of the gas must be less than {0}, and the transaction sent by the wallet cannot be packaged",
     "action":{
         "gasneednum":"Gas price must be a number",
         "gas0":"Gas price cannot be less than 0"
