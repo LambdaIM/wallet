@@ -731,6 +731,17 @@
   "orderuserbrief":"View assets, transfer, pledge mining, proposal voting, purchase space, use lambdas3, withdraw pledge reward",
   "minerbrief":"View assets, transfer, pledge mining, proposal voting, market trading space, mining guide, withdraw pledge reward, withdraw deposit mining reward",
   "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income"
+},
+"guidepage":{
+    "step1":{
+        "title1":"1 exchange TBB through lamb",
+        "title2":"2 purchase TBB through exchange",
+        "title3":"3. The test currency needs to be obtained before mining on the test network",
+        "btnConvert":"Exchange TBB",
+        "title2brief":"You can buy TBB KangBo exchange at KangBo exchange",
+        "title3brief":"Get test currency address"
+    }
+
 }
 
 
