@@ -22,6 +22,14 @@ export default {
       return bigvalue.times(1e6).toFixed(0).toString();
     };
 
+    Vue.prototype.toBigNumTonum = function (value) {
+      if (value == '' || value == undefined || value == null) {
+        value = 0;
+      }
+      var bigvalue = new BigNumber(value);
+      return bigvalue.div(1e6).toFixed(0).toString();
+    };
+
     Vue.prototype.toBigNumFixed = function (value) {
       if (value == '' || value == undefined || value == null) {
         value = 0;
