@@ -727,5 +727,16 @@
        "orderuserbrief":"查看资产，转账，质押挖矿，提案投票，购买空间，使用lambdas3，提取质押奖励",
        "minerbrief":"查看资产，转账，质押挖矿，提案投票，市场买卖空间，挖矿向导，提取质押奖励，提取存储挖矿奖励",
        "validatorbrief":"查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益"
+   },
+   "guidepage":{
+       "step1":{
+           "title1":"1通过lamb 兑换TBB",
+           "title2":"2通过交易所 购买TBB",
+           "title3":"3测试网进行挖矿需要先获取测试币",
+           "btnConvert":"兑换TBB",
+           "title2brief":"可以到康波交易所购买TBB康波交易所",
+           "title3brief":"获取测试币地址"
+       }
+
    }
 }
