@@ -8,7 +8,9 @@
         <Input v-model="gasprise" placeholder="Enter something..."  />
         <div>
           <br/>
-          验证节点最低gas价格为{{Validatorgasprise}}
+          验证节点gas价格为{{Validatorgasprise}}，
+          您设置的gas的价格不得小于{{Validatorgasprise}},
+          gas的价格小于{{Validatorgasprise}},钱包发出的交易无法被打包
         </div>
     </Modal>
 </div>
