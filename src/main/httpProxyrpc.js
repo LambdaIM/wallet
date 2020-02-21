@@ -31,7 +31,7 @@ export default function() {
       var data = await result.json();
       console.log('httpgasprise', data);
       var gasbase64 = data.result.response.value;
-      var gasprise = 0;
+      var gasprise = '';
       if (gasbase64 != '') {
         gasprise = Buffer.from(gasbase64, 'base64').toString();
       }

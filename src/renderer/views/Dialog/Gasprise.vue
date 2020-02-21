@@ -7,6 +7,7 @@
         >
         <Input v-model="gasprise" placeholder="Enter something..."  />
         <div>
+          <br/>
           验证节点最低gas价格为{{Validatorgasprise}}
         </div>
     </Modal>
@@ -41,6 +42,8 @@ export default {
       var _this = this;
       var res = await ipc.callMain('httpgasprise', {});
       _this.$data.Validatorgasprise = res.data.gasprice;
+      _this.$data.Validatorgasprise = _this.$data.Validatorgasprise.replace('ulamb', '');
+      _this.$data.Validatorgasprise = this.bigNum(_this.$data.Validatorgasprise).toString();
     },
     async  submitdata() {
       var gasprise = this.$data.gasprise;
