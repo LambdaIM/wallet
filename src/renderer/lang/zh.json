@@ -528,6 +528,7 @@
        "switch_height":"切换的区块高度"
    },
    "marketpage":{
+       "datasync":"数据同步",
        "buyingspace":"购买空间",
        "sellspace":"我出售的空间",
        "orderlist":"订单列表",
@@ -559,6 +560,7 @@
        "Localsorting4":"开始值不能大于结束值",
        "active":"热卖中",
        "unActive":"卖光了",
+       
        "selltable":{
            "Mineraddress":"矿工地址",
            "amountspace":"空间总量(GB)",
@@ -710,6 +712,7 @@
    "gaspage":{
        "title":"设置gas价格",
        "placeholder":"请填写价格",
+       "gashelper":"验证节点gas价格为{0}，您设置的gas的价格不得小于{0},gas的价格小于{0},钱包发出的交易无法被打包",
        "action":{
            "gasneednum":"gas 的价格 必须为是数字",
            "gas0":"gas 的价格不能小于0"
