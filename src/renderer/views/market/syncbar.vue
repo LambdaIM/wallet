@@ -2,7 +2,7 @@
 <div>
   <div style="    display: inline-block;"  v-if="switchstate">
    <span>
-  <Button shape="circle" icon="md-sync" :loading="loading" @click="datasync"  >   </Button>
+  <Button :loading="loading" @click="datasync"  > 同步数据  </Button>
   </span>
  <!-- {{$t('marketpage.myselltable.Storagedevice')}}<Input @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 70px" /> -->
  {{$t('marketpage.selltable.unitprice')}} <Input @on-keyup="conditionChange"  v-model.number="condition.priceStart" size="small"  style="width: 50px" /> ~<Input @on-keyup="conditionChange"  v-model.number="condition.priceEnd" size="small"  style="width: 50px" />

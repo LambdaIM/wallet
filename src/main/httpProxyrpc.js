@@ -32,7 +32,7 @@ export default function() {
       console.log('httpgasprise', data);
       var gasbase64 = data.result.response.value;
       var gasprise = '';
-      if (gasbase64 != '') {
+      if (gasbase64 != undefined && gasbase64 != '') {
         gasprise = Buffer.from(gasbase64, 'base64').toString();
       }
 
