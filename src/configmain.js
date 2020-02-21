@@ -46,6 +46,10 @@ var configData = {
         return `http://${settings.get('validator.ipv1')||defaultip}:13657`
         // return `http://${defaultip}:13657`
     },
+    LambdaValidator:function(){
+        return `http://${settings.get('validator.ipv1')||defaultip}:26657`
+        // return `http://${defaultip}:13657`
+    },
     LambdaSfile:function(){
         var nowos = os.platform();
         return nowos == 'win32' ? 'lambdastoragecli.exe' : 'lambdastoragecli';

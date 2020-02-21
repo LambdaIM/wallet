@@ -678,7 +678,7 @@ walletManger.prototype.Simulate = async function (transactiondata) {
   
   this.gasEstimate = gasEstimate;
   //  return gasEstimate;
-  return (Number(default_gas_price) * Number(gasEstimate)).toFixed(6); // already in lamb
+  return (Number(default_gas_price) * Number(gasEstimate)/1e6).toFixed(6); // already in lamb
 };
 
 walletManger.prototype.TransferConfirm = async function (password, transactiondata, gaseFee) {

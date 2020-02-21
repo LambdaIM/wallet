@@ -138,6 +138,16 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('clearlocalmarketdata', async query => {
+    try {
+      var result = await Nedbjs.cleardata();
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
   eipc.answerRenderer('marketSellOrderslist', async query => {
     var { page, limit } = query;
     if (page == undefined) {

@@ -1,11 +1,14 @@
 <template>
 <div>
   <div style="    display: inline-block;"  v-if="switchstate">
+   <span>
+  <Button shape="circle" icon="md-sync" :loading="loading" @click="datasync"  >   </Button>
+  </span>
  <!-- {{$t('marketpage.myselltable.Storagedevice')}}<Input @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 70px" /> -->
  {{$t('marketpage.selltable.unitprice')}} <Input @on-keyup="conditionChange"  v-model.number="condition.priceStart" size="small"  style="width: 50px" /> ~<Input @on-keyup="conditionChange"  v-model.number="condition.priceEnd" size="small"  style="width: 50px" />
  {{$t('marketpage.selltable.Odds')}} <Input @on-keyup="conditionChange" v-model.number="condition.rateStart" size="small"  style="width: 50px" /> ~<Input  @on-keyup="conditionChange" v-model.number="condition.rateEnd" size="small"  style="width: 50px" />
   </div>
- <Button :loading="loading" @click="switchfn"  type="primary">{{stateTxt}}</Button>
+ <Button  @click="switchfn"  type="primary">{{stateTxt}}</Button>
 
 </div>
 </template>
@@ -62,10 +65,21 @@ export default {
 
       this.$data.switchstate = !this.$data.switchstate;
       eventHub.$emit('marketsellordersync', this.$data.switchstate);
+      // if (this.$data.switchstate) {
+      //   this.$data.loading = true;
+      //   this.fetchData();
+      // }
+    },
+    datasync() {
+      // eventHub.$emit('marketsellordersync', this.$data.switchstate);
       if (this.$data.switchstate) {
         this.$data.loading = true;
+        this.cleardata();
         this.fetchData();
       }
+    },
+    async cleardata() {
+      let res = await ipc.callMain('clearlocalmarketdata', {});
     },
     async fetchData() {
       console.log('-----');

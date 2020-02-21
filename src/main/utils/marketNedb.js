@@ -168,4 +168,17 @@ export default class {
         });
     });
   }
+  cleardata() {
+    return new Promise(function (resolve, reject) {
+      db.remove({ network: global.__lambNodeinfo.network },
+        { multi: true },
+        function (err, numRemoved) {
+          if (err == null) {
+            resolve(true);
+          } else {
+            reject(err);
+          }
+        });
+    });
+  }
 }
