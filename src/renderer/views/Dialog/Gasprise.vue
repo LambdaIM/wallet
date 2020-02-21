@@ -6,6 +6,9 @@
         @on-ok="submitdata"
         >
         <Input v-model="gasprise" placeholder="Enter something..."  />
+        <div>
+          验证节点最低gas价格为{{Validatorgasprise}}
+        </div>
     </Modal>
 </div>
 </template>
@@ -16,7 +19,8 @@ export default {
   data() {
     return {
       showmodel: false,
-      gasprise: ''
+      gasprise: '',
+      Validatorgasprise: ''
     };
   },
   mounted() {
@@ -26,11 +30,17 @@ export default {
     open() {
       this.$data.showmodel = true;
       this.$data.gasprise = this.$store.getters.gasprise;
+      this.getValidatorgasprise();
     },
     async getgasprise() {
       var _this = this;
       var res = await ipc.callMain('getgasprice', {});
       _this.$data.gasprise = res.data.gasprice;
+    },
+    async getValidatorgasprise() {
+      var _this = this;
+      var res = await ipc.callMain('httpgasprise', {});
+      _this.$data.Validatorgasprise = res.data.gasprice;
     },
     async  submitdata() {
       var gasprise = this.$data.gasprise;
