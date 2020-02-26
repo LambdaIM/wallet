@@ -81,7 +81,7 @@ export default function() {
     if (islocalfilter == undefined) {
       islocalfilter = {};
     }
-
+    console.log('islocal', islocal);
     try {
       var M = new Manager();
       var result;
@@ -116,10 +116,10 @@ export default function() {
     if (limit == undefined) {
       throw resultView(null, false, 'need limit');
     }
-    // if (statusType == undefined) {
-    //   throw resultView(null, false, 'need statusType');
-    // }
-    statusType = 'whole';
+    if (statusType == undefined) {
+      statusType = 'whole';
+    }
+
 
     try {
       var M = new Manager();
