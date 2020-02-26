@@ -169,6 +169,11 @@ var walletRouter = new Router({
         path: 'lambdas3',
         name: 'lambdas3',
         component: () => import('@/views/market/lambdas3.vue')
+      },
+      {
+        path: 'syncdata/:marketname/:marketAddress',
+        name: 'buyspace',
+        component: () => import('@/views/market/syncsellorder.vue')
       }
     ]
 
