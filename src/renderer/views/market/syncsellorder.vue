@@ -5,11 +5,16 @@
     <br/>
 
     <!-- OrderListcolumnsNotSort -->
+    <!-- <div v-if="OrderList.length==0" class="emptydata">
+      点击数据同步，获取最新数据
+    </div> -->
     <Table
       @on-sort-change="OrderListSort"
       :loading="loading"
       :columns="OrderListcolumns"
       :data="OrderList"
+      :no-data-text="$t('syncorderpage.no-data-text')"
+
     >
       <template slot-scope="{ row, index }" slot="action">
         <Button
@@ -27,6 +32,7 @@
         <span style="color:red" v-if="row.status=='1'">{{$t('marketpage.Finish')}}</span>
       </template>
     </Table>
+
     <br />
     <div style="text-align: center;">
       <Page @on-change="orderListPage" :total="allCount" simple />
@@ -211,5 +217,12 @@ export default {
   .item-value {
     font-size: 14px;
   }
+}
+
+.emptydata{
+  text-align: center;
+  // background-color: #fff5f5;
+  border-radius: 3px;
+  color: #fa795e;
 }
 </style>
