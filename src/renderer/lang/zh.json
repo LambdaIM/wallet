@@ -614,7 +614,8 @@
        "Searchsort":"搜索",
        "typedata1":"同步1万条数据",
        "typedata2":"同步10万条数据",
-       "typedata3":"同步100万条数据"
+       "typedata3":"同步100万条数据",
+       "no-data-text":"点击数据同步，获取最新数据"
 
    },
    "orderinfo":{

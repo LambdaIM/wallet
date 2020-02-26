@@ -619,7 +619,8 @@
   "Searchsort":"search",
   "typedata1":"Synchronize 10000 pieces of data",
   "typedata2":"Synchronize 100000 pieces of data",
-  "typedata3":"Synchronize 1 million pieces of data"
+  "typedata3":"Synchronize 1 million pieces of data",
+  "no-data-text":"Click data synchronization to get the latest data"
 
 },
 "orderinfo":{
