@@ -1,15 +1,33 @@
 <template>
 <div>
-  <div style="    display: inline-block;"  v-if="switchstate">
-   <span>
+  <!-- <div style="    display: inline-block;"  v-if="switchstate">
+
+ {{$t('marketpage.myselltable.Storagedevice')}}<Input @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 70px" />
+ {{$t('marketpage.selltable.unitprice')}} <Input @on-keyup="conditionChange"  v-model.number="condition.priceStart" size="small"  style="width: 50px" /> ~<Input @on-keyup="conditionChange"  v-model.number="condition.priceEnd" size="small"  style="width: 50px" />
+ {{$t('marketpage.selltable.Odds')}} <Input @on-keyup="conditionChange" v-model.number="condition.rateStart" size="small"  style="width: 50px" /> ~<Input  @on-keyup="conditionChange" v-model.number="condition.rateEnd" size="small"  style="width: 50px" />
+  </div>
+  <span>
   <Button :loading="loading" @click="datasync"  > {{$t('marketpage.datasync')}}  </Button>
   </span>
+ <Button  @click="switchfn"  type="primary">{{stateTxt}}</Button> -->
+ <Row>
+        <Col span="17">
+        <div style="    display: inline-block;"  >
+
  <!-- {{$t('marketpage.myselltable.Storagedevice')}}<Input @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 70px" /> -->
  {{$t('marketpage.selltable.unitprice')}} <Input @on-keyup="conditionChange"  v-model.number="condition.priceStart" size="small"  style="width: 50px" /> ~<Input @on-keyup="conditionChange"  v-model.number="condition.priceEnd" size="small"  style="width: 50px" />
  {{$t('marketpage.selltable.Odds')}} <Input @on-keyup="conditionChange" v-model.number="condition.rateStart" size="small"  style="width: 50px" /> ~<Input  @on-keyup="conditionChange" v-model.number="condition.rateEnd" size="small"  style="width: 50px" />
   </div>
- <Button  @click="switchfn"  type="primary">{{stateTxt}}</Button>
 
+
+        </Col>
+        <Col span="3">
+        <Button :loading="loading" @click="datasync"  > {{$t('marketpage.datasync')}}  </Button>
+        </Col>
+        <Col span="2">
+        <Button  @click="switchfn"  type="primary">{{stateTxt}}</Button>
+        </Col>
+    </Row>
 </div>
 </template>
 
@@ -22,7 +40,7 @@ export default {
   data() {
     return {
       searchkey: '',
-      switchstate: false,
+      switchstate: true,
       page: 1,
       loading: false,
       condition: {
@@ -88,7 +106,7 @@ export default {
         orderType: 'premium', // premium all
         page: this.$data.page,
         limit: 10,
-        statusType: this.$store.getters.statusType
+        statusType: 'active'
       });
       if (res.data == 10) {
         this.$data.page += 1;

@@ -555,7 +555,7 @@
        "Openfailure":"打开失败",
        "Openfailuretip":"自动打开lambda storage 控制台失败后，打开命令行终端，执行如下命令打开控制台",
        "Localsorting1":"打开本地排序",
-       "Localsorting2":"关闭",
+       "Localsorting2":"返回",
        "Localsorting3":"请打开本地排序",
        "Localsorting4":"开始值不能大于结束值",
        "active":"热卖中",

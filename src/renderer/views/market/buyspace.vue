@@ -39,7 +39,8 @@
      <Row>
         <Col span="7"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
         <Col span="17" style="text-align: right;">
-           <syncbar :marketName="selectmarket.name"/>
+           <!-- <syncbar :marketName="selectmarket.name"/> -->
+           <Button :to="`/market/syncdata/${selectmarket.name}/${selectmarket.marketAddress}`">排序视图</Button>
         </Col>
       </Row>
       <br/>
