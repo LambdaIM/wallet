@@ -22,7 +22,21 @@
 
         </Col>
         <Col span="3">
-        <Button :loading="loading" @click="datasync"  > {{$t('marketpage.datasync')}}  </Button>
+
+            <Dropdown @on-click="datasync">
+        <!-- @click="datasync" -->
+        <Button :loading="loading"   >
+          {{$t('marketpage.datasync')}}
+          <Icon type="ios-arrow-down"></Icon>
+          </Button>
+
+        <DropdownMenu slot="list">
+            <DropdownItem name="some">同步1万条数据</DropdownItem>
+            <DropdownItem name="more">同步10万条数据</DropdownItem>
+            <DropdownItem name="all" divided>同步100万条数据</DropdownItem>
+
+        </DropdownMenu>
+    </Dropdown>
         </Col>
         <Col span="2">
         <Button  @click="switchfn"  type="primary">{{stateTxt}}</Button>
@@ -88,18 +102,29 @@ export default {
       //   this.fetchData();
       // }
     },
-    datasync() {
+    datasync(nameType) {
       // eventHub.$emit('marketsellordersync', this.$data.switchstate);
-      if (this.$data.switchstate) {
-        this.$data.loading = true;
-        this.cleardata();
-        this.fetchData();
+      // if (this.$data.switchstate) {
+      console.log(nameType);
+      var stoppagenum = 1000;
+      if (nameType == 'some') {
+        stoppagenum = 1000;
+      } else if (nameType == 'more') {
+        stoppagenum = 10000;
+      } else {
+        stoppagenum = 100000;
       }
+
+      this.$data.loading = true;
+      this.$data.page = 1;
+      this.cleardata();
+      this.fetchData(stoppagenum);
+      // }
     },
     async cleardata() {
       let res = await ipc.callMain('clearlocalmarketdata', {});
     },
-    async fetchData() {
+    async fetchData(stoppagenum) {
       console.log('-----');
       let res = await ipc.callMain('marketOrderListsync', {
         marketName: this.$props.marketName,
@@ -108,9 +133,9 @@ export default {
         limit: 10,
         statusType: 'active'
       });
-      if (res.data == 10) {
+      if (res.data == 10 && stoppagenum >= this.$data.page) {
         this.$data.page += 1;
-        this.fetchData();
+        this.fetchData(stoppagenum);
       } else {
         this.$data.loading = false;
         eventHub.$emit('marketconditionfilter', this.$data.condition);
