@@ -11,12 +11,13 @@
   </span>
  <Button  @click="switchfn"  type="primary">{{stateTxt}}</Button> -->
  <Row>
-        <Col span="17">
-        <div style="    display: inline-block;"  >
+        <Col span="18">
+        <div class="searchtxt" style="    display: inline-block;"  >
 
- <!-- {{$t('marketpage.myselltable.Storagedevice')}}<Input @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 70px" /> -->
+
  {{$t('marketpage.selltable.unitprice')}} <Input @on-keyup="conditionChange"  v-model.number="condition.priceStart" size="small"  style="width: 50px" /> ~<Input @on-keyup="conditionChange"  v-model.number="condition.priceEnd" size="small"  style="width: 50px" />
  {{$t('marketpage.selltable.Odds')}} <Input @on-keyup="conditionChange" v-model.number="condition.rateStart" size="small"  style="width: 50px" /> ~<Input  @on-keyup="conditionChange" v-model.number="condition.rateEnd" size="small"  style="width: 50px" />
+ {{$t('syncorderpage.mineraddress')}}<Input @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 180px" />
   </div>
 
 
@@ -31,15 +32,15 @@
           </Button>
 
         <DropdownMenu slot="list">
-            <DropdownItem name="some">同步1万条数据</DropdownItem>
-            <DropdownItem name="more">同步10万条数据</DropdownItem>
-            <DropdownItem name="all" divided>同步100万条数据</DropdownItem>
+            <DropdownItem name="some">{{$t('syncorderpage.typedata1')}}</DropdownItem>
+            <DropdownItem name="more">{{$t('syncorderpage.typedata2')}}</DropdownItem>
+            <DropdownItem name="all" divided>{{$t('syncorderpage.typedata3')}}</DropdownItem>
 
         </DropdownMenu>
     </Dropdown>
         </Col>
-        <Col span="2">
-        <Button  @click="switchfn"  type="primary">{{stateTxt}}</Button>
+        <Col span="1">
+        <Button  to="/market/buyspace"  type="primary">{{stateTxt}}</Button>
         </Col>
     </Row>
 </div>
@@ -63,7 +64,7 @@ export default {
         rateStart: '',
         rateEnd: '',
         storagenode: '',
-        'statusType': '0'
+        statusType: '0'
       }
     };
   },
@@ -88,7 +89,8 @@ export default {
         this.$Message.info(this.$t('marketpage.Localsorting4'));
         return;
       }
-      this.$data.condition['statusType'] = this.$store.getters.statusType == 'active' ? '0' : '1';
+      this.$data.condition['statusType'] = '0';
+      // this.$data.condition['statusType'] = this.$store.getters.statusType == 'active' ? '0' : '1';
 
       eventHub.$emit('marketconditionfilter', this.$data.condition);
     },
@@ -105,6 +107,7 @@ export default {
     datasync(nameType) {
       // eventHub.$emit('marketsellordersync', this.$data.switchstate);
       // if (this.$data.switchstate) {
+      this.$Spin.show();
       console.log(nameType);
       var stoppagenum = 1000;
       if (nameType == 'some') {
@@ -138,6 +141,7 @@ export default {
         this.fetchData(stoppagenum);
       } else {
         this.$data.loading = false;
+        this.$Spin.hide();
         eventHub.$emit('marketconditionfilter', this.$data.condition);
       }
     }

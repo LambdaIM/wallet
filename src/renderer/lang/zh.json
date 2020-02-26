@@ -609,6 +609,14 @@
 
 
    },
+   "syncorderpage":{
+       "mineraddress":"矿工地址",
+       "Searchsort":"搜索",
+       "typedata1":"同步1万条数据",
+       "typedata2":"同步10万条数据",
+       "typedata3":"同步100万条数据"
+
+   },
    "orderinfo":{
     "orderBucket": "查看订单空间",
     "orderType":"类型",

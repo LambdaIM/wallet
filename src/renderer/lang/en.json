@@ -614,6 +614,14 @@
 
 
 },
+"syncorderpage":{
+  "mineraddress":"Miner address",
+  "Searchsort":"search",
+  "typedata1":"Synchronize 10000 pieces of data",
+  "typedata2":"Synchronize 100000 pieces of data",
+  "typedata3":"Synchronize 1 million pieces of data"
+
+},
 "orderinfo":{
  "orderBucket": "Open order bucket",
  "orderType":"type",

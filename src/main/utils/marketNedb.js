@@ -106,7 +106,7 @@ export default class {
             }
           }
           if (flag && islocalfilter.storagenode != '' && islocalfilter.storagenode != undefined) {
-            if (this.machineName.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1) {
+            if (this.address.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1) {
               flag = true;
             } else {
               flag = false;
