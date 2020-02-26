@@ -2,7 +2,8 @@
   <div class="customer-container">
     <div class="tableContainer">
       <syncbar :marketName="name" />
-    </div>
+    <br/>
+
     <!-- OrderListcolumnsNotSort -->
     <Table
       @on-sort-change="OrderListSort"
@@ -33,6 +34,8 @@
     <br />
     <br />
     <br />
+    </div>
+
   </div>
 </template>
 <script>
@@ -165,6 +168,7 @@ export default {
 
         if (res.state) {
           this.$data.OrderList = res.data.data || [];
+          console.log('this.$data.OrderList', this.$data.OrderList);
           if (this.$data.pageCount[page] == undefined) {
             this.$data.pageCount[page] = 1;
             this.$data.allCount += this.$data.OrderList.length;
