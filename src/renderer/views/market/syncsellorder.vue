@@ -35,17 +35,20 @@
     <br />
     <br />
     </div>
-
+    <BuyingspaceModal ref="Buyingspace" />
   </div>
 </template>
 <script>
 import syncbar from './syncbar.vue';
 import eventhub from '../../common/js/event.js';
+import BuyingspaceModal from '@/views/Dialog/BuyingspaceModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 
 export default {
   components: {
-    syncbar
+    syncbar,
+    BuyingspaceModal
   },
   data() {
     return {
@@ -178,6 +181,12 @@ export default {
       } catch (error) {
         this.$Message.error(this.$t('foot.linkerror'));
       }
+    },
+    openBuyingspace(row) {
+      this.$refs.Buyingspace.open(row, {
+        name: this.$data.name,
+        marketAddress: this.$data.marketAddress
+      });
     }
   }
 };
