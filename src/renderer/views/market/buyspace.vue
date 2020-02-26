@@ -235,19 +235,20 @@ export default {
     this.getmarketlist();
     this.getmarketinfo('');
 
-    eventhub.$on('marketsellordersync', data => {
-      console.log('marketsellordersync');
-      this.$data.islocal = data;
-      this.getOrderList(1);
-    });
+    // eventhub.$on('marketsellordersync', data => {
+    //   console.log('marketsellordersync');
+    //   this.$data.islocal = data;
+    //   this.getOrderList(1);
+    // });
 
-    eventhub.$on('marketconditionfilter', data => {
-      console.log('marketconditionfilter');
-      this.$data.islocalfilter = data;
-      this.$data.allCount = 1;
-      this.$data.pageCount = {};
-      this.getOrderList(1);
-    });
+    // eventhub.$on('marketconditionfilter', data => {
+    //   console.log('marketconditionfilter');
+    //   this.$data.islocalfilter = data;
+    //   this.$data.allCount = 1;
+    //   this.$data.pageCount = {};
+    //   this.getOrderList(1);
+    // });
+
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.getOrderList(1);
