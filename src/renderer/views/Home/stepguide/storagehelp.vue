@@ -2,7 +2,7 @@
 <div>
   在矿工管理程序中操作<br/>
   操作手册
-  <a @click="openweb('https://github.com/LambdaIM/launch/blob/master/StorageManager-Guide0.1.11.md')"> https://github.com/LambdaIM/launch/blob/master/StorageManager-Guide0.1.11.md</a>
+  <a @click="openweb('http://docs.lambda.im/StorageManager-Guide/')"> http://docs.lambda.im/StorageManager-Guide/</a>
 </div>
 </template>
 <script>
