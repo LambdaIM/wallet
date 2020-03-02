@@ -206,7 +206,7 @@
           </Dropdown>
           <div class="helpone">
               <div @click="helplink" class="link">
-                使用手册<Icon type="md-help-circle" />
+                <Icon type="md-help-circle" />{{$t('head.help')}}
               </div>
             </div>
 
