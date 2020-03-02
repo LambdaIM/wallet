@@ -70,6 +70,9 @@
             />
           </router-link>
         </div>
+        <div @click="helplink" class="item linkitem">
+          <Icon type="md-help-circle" />
+        </div>
 
         <div
           v-clipboard:copy="address"
@@ -201,6 +204,12 @@
               <DropdownItem name="zh">简体中文</DropdownItem>
             </DropdownMenu>
           </Dropdown>
+          <div class="helpone">
+              <div @click="helplink" class="link">
+                使用手册<Icon type="md-help-circle" />
+              </div>
+            </div>
+
         </div>
       </div>
       </Col>
@@ -220,6 +229,7 @@ import { mapState } from 'vuex';
 import roleModalDialog from '@/views/Dialog/roleModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
+const { shell } = require('electron');
 
 export default {
   components: {
@@ -355,6 +365,10 @@ export default {
         // this.$data.showrole=true;
         this.$refs.roleModal.open();
       }
+    },
+    helplink() {
+      // window.open('http://docs.lambda.im/Lambda%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/','','width=700')
+      shell.openExternal('http://docs.lambda.im/Lambda%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/');
     }
   },
   computed: {
@@ -454,6 +468,23 @@ export default {
     left: 0;
     z-index: 901;
     // border: 1px solid #eee;
+    }
+
+    .helpone{
+      display: inline-block;
+      height: 30px;
+      float: right;
+      margin-left: 20px;
+      color: white;
+      line-height: 30px;
+      .link{
+        cursor: pointer;
+      }
+    }
+
+    .linkitem{
+      color: white;
+      font-size: 20px;
     }
 
 
