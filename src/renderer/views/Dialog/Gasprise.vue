@@ -5,7 +5,9 @@
         :title="$t('gaspage.title')"
         @on-ok="submitdata"
         >
-        <Input v-model="gasprise" :placeholder="$t('gaspage.placeholder')"  />
+        <Input v-model="gasprise" :placeholder="$t('gaspage.placeholder')"  >
+         <span slot="append">LAMB</span>
+        </Input>
          <div>
           <br/>
           {{$t('gaspage.gashelper',[Validatorgasprise])}}

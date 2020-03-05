@@ -752,6 +752,16 @@
         "btnConvert":"Exchange TBB",
         "title2brief":"You can buy TBB KangBo exchange at KangBo exchange",
         "title3brief":"Get test currency address"
+    },
+    "storagehelper":{
+        "p1":"Operate in miner management procedure",
+        "p2":"Operation manual"
+    },
+    "addminer":{
+        "p1":"1 click Add server to add server by password or private key",
+        "p2":"2 for example, password mode",
+        "p3":"3 Click initialize after adding successfully",
+        "p4":"4. Open the initialization pop-up window to complete the initialization of miner service"
     }
 
 }
