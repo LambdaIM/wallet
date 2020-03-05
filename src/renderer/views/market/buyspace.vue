@@ -48,7 +48,8 @@
 
     <Row>
         <Col span="8">
-          {{$t('marketpage.last100data')}}
+          <!-- {{$t('marketpage.last100data')}} -->
+          &nbsp;
         </Col>
 
         <Col span="8">
