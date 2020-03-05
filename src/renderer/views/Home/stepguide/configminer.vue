@@ -4,7 +4,7 @@
    <br/>
    <div>
 
-       <p>3点击配置节点按钮，打开配置窗口，进行必要配置后，启动矿工服务</p>
+       <p>{{$t('guidepage.configminer.p1')}}</p>
        <img width="600" :src="miner3" />
        <br/>
        <img width="600" :src="miner4" />

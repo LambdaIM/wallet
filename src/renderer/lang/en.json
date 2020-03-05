@@ -762,9 +762,12 @@
         "p2":"2 for example, password mode",
         "p3":"3 Click initialize after adding successfully",
         "p4":"4. Open the initialization pop-up window to complete the initialization of miner service"
-    }
+    },
+    "configminer":{
+     "p1":"Click the configuration node button to open the configuration window. After necessary configuration, start the miner service"
+     }
+    
 
-}
-
+  }
 
 }
