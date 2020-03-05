@@ -53,7 +53,9 @@
         <div  class="head-menu-item" v-if="$role('home.guide')">
           <router-link
             to="/guide"
-            class="item">{{$t('home.miningguide')}}</router-link>
+            class="item">
+            <span style="display: inline-block;width: 120px;"> {{$t('home.miningguide')}}</span>
+            </router-link>
         </div>
 
 
