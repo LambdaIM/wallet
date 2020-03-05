@@ -8,9 +8,9 @@
                  :label="item.description.moniker"
                  >
                     <span>{{ item.description.moniker }}</span>
-                    <span style="float:right;color:red">
-                        <Icon v-if="item.status==2" type="md-checkmark" />
-                        <Icon v-if="item.status!=2" type="md-close" />
+                    <span style="float:right;">
+                        <Icon style="color:green" v-if="item.status==2" type="md-checkmark" />
+                        <Icon style="color:red" v-if="item.status!=2" type="md-close" />
 
                     </span>
                     <p>

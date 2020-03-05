@@ -19,7 +19,7 @@
 import storage1 from '@/assets/storage1.png';
 import storage4 from '@/assets/storage4.png';
 import storage3 from '@/assets/storage3.png';
-import storage2 from '@/assets/storage2.png';
+import storage2 from '@/assets/Storage_initia_btn.png';
 import storagehelp from './storagehelp.vue';
 
 
