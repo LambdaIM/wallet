@@ -2,7 +2,7 @@
 <template>
   <div class="customer-container">
     <div class="tableContainer">
-      <div>{{$t('marketpage.last100data')}}</div>
+      <!-- <div>{{$t('marketpage.last100data')}}</div> -->
       <Table :loading="loading" :columns="UserOrderscolumns" :data="UserOrderslist">
         <template slot-scope="{ row, index }" slot="action">
           <Button

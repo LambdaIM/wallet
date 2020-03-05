@@ -30,7 +30,7 @@
 
         </Col>
       </Row>
-                <div>{{$t('marketpage.last100data')}} </div>
+                <!-- <div>{{$t('marketpage.last100data')}} </div> -->
                 <br/>
                  <Table :loading="loading" :columns="SellOrdercolumns" :data="SellOrderslist">
                    <template slot-scope="{ row, index }" slot="price">

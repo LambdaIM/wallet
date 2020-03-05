@@ -33,6 +33,17 @@ const TbbBlanceValue = value => {
   return `${bigvalue.toFormat()}`;
 };
 
+const Fixed6 = value => {
+  if (value == '' || value == undefined || value == null) {
+    return '--';
+  }
+  // var BN = BigNumber.clone({ ROUNDING_MODE: BigNumber.ROUND_HALF_UP });
+  var BN = BigNumber;
+  var bigvalue1 = new BN(value).toFixed(6);
+  var bigvalue = new BN(bigvalue1);
+  return `${bigvalue.toFormat()}`;
+};
+
 const formatValue = value => {
   if (value == '' || value == undefined || value == null) {
     return '--';
@@ -186,5 +197,6 @@ export default {
   formatMonth,
   BlanceValue,
   TbbBlanceValue,
-  BlanceValueint
+  BlanceValueint,
+  Fixed6
 };

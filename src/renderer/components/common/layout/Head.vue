@@ -70,9 +70,7 @@
             />
           </router-link>
         </div>
-        <div @click="helplink" class="item linkitem">
-          <Icon type="md-help-circle" />
-        </div>
+
 
         <div
           v-clipboard:copy="address"
@@ -89,6 +87,9 @@
             />
             {{address.slice(-5)}}
           </div>
+        </div>
+        <div @click="helplink" class="item linkitem">
+          <Icon type="md-help-circle" />
         </div>
 
       </div>
