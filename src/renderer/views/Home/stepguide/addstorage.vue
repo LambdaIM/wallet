@@ -3,13 +3,13 @@
   <storagehelp/>
   <br/><br/>
   <div>
-    <p>1在矿工服务的详情页面，点击添加服务器，通过用密码或私钥方式添加服务器</p>
+    <p>{{$t('guidepage.addstorage.p1')}}</p>
     <img width="600" :src="storage1" />
-    <p>2密码方式</p>
+    <p>{{$t('guidepage.addstorage.p2')}}</p>
     <img width="600" :src="storage4" />
-    <p>3点击初始化按钮</p>
+    <p>{{$t('guidepage.addstorage.p3')}}</p>
     <img width="600" :src="storage2" />
-    <p>4打开初始化弹窗,完成存储服务初始化</p>
+    <p>{{$t('guidepage.addstorage.p4')}}</p>
     <img width="600" :src="storage3" />
 
   </div>

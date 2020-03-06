@@ -3,11 +3,11 @@
   <storagehelp/>
   <br/><br/>
   <div>
-    <p>1点击配置存储节点按钮，打开配置对话框</p>
+    <p>{{$t('guidepage.configstorage.p1')}}</p>
     <img width="600" :src="storage1" />
-    <p>2进行配置后</p>
+    <p>{{$t('guidepage.configstorage.p2')}}</p>
     <img width="600" :src="storage5" />
-    <p>3选择需要启动的存储节点,点击启动按钮启动存储服务</p>
+    <p>{{$t('guidepage.configstorage.p3')}}</p>
     <img width="600" :src="storage4" />
 
   </div>

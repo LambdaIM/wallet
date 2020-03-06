@@ -765,7 +765,18 @@
     },
     "configminer":{
      "p1":"Click the configuration node button to open the configuration window. After necessary configuration, start the miner service"
-     }
+     },
+     "addstorage":{
+         "p1":"1 On the details page of the miner service, click Add Server and add the server by password or private key",
+         "p2":"2 password method",
+         "p3":"3 Click the initialization button",
+         "p4":"4Open the initialization pop-up window to complete the storage service initialization"
+     },
+     "configstorage":{
+      "p1":"1 Click the Configure Storage Node button to open the configuration dialog",
+      "p2":"2 After configuration",
+      "p3":"3 Select the storage node that needs to be started, and click the start button to start the storage service"
+      }
     
 
   }
