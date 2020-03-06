@@ -752,7 +752,7 @@ export default function() {
     try {
       var gasprice = settings.get('gasprice');
       if (gasprice == undefined) {
-        gasprice = 0.0000025;
+        gasprice = 0.025;
       }
 
 
