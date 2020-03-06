@@ -662,7 +662,7 @@ walletManger.prototype.Transfer = async function (to, amount, gas, denom, memo) 
 walletManger.prototype.Simulate = async function (transactiondata) {
   var gasprice = settings.get('gasprice') ;
   if(gasprice==undefined){
-    gasprice=0.0000025;
+    gasprice=0.025;
   }
   var default_gas_price = gasprice; // recommended from Cosmos Docs
   const { type, memo, ...properties } = transactiondata;
@@ -697,7 +697,7 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   const { type, memo, ...transactionProperties } = transactiondata;
   var gasprice = settings.get('gasprice') ;
   if(gasprice==undefined){
-    gasprice=0.0000025;
+    gasprice=0.025;
   }
 
   var gasEstimate = this.gasEstimate || 500000; // 需要接口读取

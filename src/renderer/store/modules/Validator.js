@@ -1,7 +1,7 @@
 const settings = require('electron-settings');
 var gaspriceconfig = settings.get('gasprice');
 if (gaspriceconfig == undefined) {
-  gaspriceconfig = 0.0000025;
+  gaspriceconfig = 0.025;
 }
 const state = {
   info: null,
