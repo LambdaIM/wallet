@@ -21,8 +21,8 @@
 
       </span>
       <AddressLink :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
-      <Tag v-if="txItem.valid" color="success">{{$t('Dialog.com.Success')}}   </Tag>
-      <Tag v-if="!txItem.valid" color="error">{{$t('Dialog.com.Failed')}}</Tag>
+
+
       <p v-if="!txItem.valid && showError == true" class="error">
         {{$t('Dialog.com.Reason')}} : <Tag color="error"> {{ txItem.log }}</Tag>
       </p>
@@ -31,7 +31,8 @@
        :lg="lg"
         :xs="xs" >
     <div style="text-align: right;    padding-right: 20px">
-        <Icon size="24" v-if="more==false" @click="showmore" type="md-more" />
+        <!-- <Icon size="24" v-if="more==false" @click="showmore" type="md-more" /> -->
+        <Button type="primary" v-if="more==false" @click="showmore"  shape="circle" icon="ios-more"></Button>
         <span v-else>&nbsp;</span>
     </div>
     </Col>
@@ -138,5 +139,12 @@ export default {
   .error {
     margin-top: 10px !important;
   }
+}
+
+.successc{
+ color: #2D8cF0;
+}
+.errorc{
+  color: #ed4014;
 }
 </style>

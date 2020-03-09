@@ -17,6 +17,17 @@
           </Col>
           <Col span="20" class-name="content-wrapper">{{$t(`txType.${getType(data)}`)}}</Col>
         </Row> -->
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            <span class="title">{{$t('home.table.Status')}}:</span>
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+
+            <Tag v-if="txerrororsuccess(data)===true" color="success">{{$t('Dialog.com.Success')}} </Tag>
+            <Tag v-if="txerrororsuccess(data)===false" color="error">{{$t('Dialog.com.Failed')}}</Tag>
+
+          </Col>
+        </Row>
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
@@ -195,6 +206,13 @@ export default {
     getType(data) {
       var list = data.tx.value.msg[0].type.split('/');
       return list[1] || list[0];
+    },
+    txerrororsuccess(item) {
+      if (item.code != undefined) {
+        return false;
+      } else {
+        return true;
+      }
     }
   },
   computed: {
