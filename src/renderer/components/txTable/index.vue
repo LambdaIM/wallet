@@ -5,15 +5,20 @@
         <Row className="cardTable__content-item" v-for="(item, index) in txData" :key="index">
           <Card class="cardTable__card-item">
             <Activity :showError="showError" :md="24" :lg="13" :activityData="txData[index].txs"></Activity>
-            <Col :xs="6" :md="6" :lg="3"
-              ><Icon type="md-time" size="24" class="mr5 txIcon" />{{ item.create_time | formatRelativeDate }}</Col
-            >
-            <Col :xs="6" :md="6" :lg="2">
+            <Col :xs="5" :md="6" :lg="3"
+              >
+                <Tag v-if="txerrororsuccess(item)===true" color="success">{{$t('Dialog.com.Success')}} </Tag>
+                <Tag v-if="txerrororsuccess(item)===false" color="error">{{$t('Dialog.com.Failed')}}</Tag>
+              </Col>
+            <Col :xs="4" :md="6" :lg="3"
+              >
+              <Icon type="md-time" size="24" class="mr5 txIcon" />{{ item.create_time | formatRelativeDate }}</Col>
+            <Col :xs="4" :md="6" :lg="2">
               <Icon type="md-list" size="22" class="mr5 txIcon" />
 
               {{ item.height || 0 }}</Col
             >
-            <Col :xs="6" :md="6" :lg="3"
+            <Col :xs="5" :md="6" :lg="3"
               ><Icon type="logo-usd" size="22" class="mr5 txIcon" />{{ item.fee  }}</Col
             >
             <Col :xs="6" :md="6" :lg="3">
@@ -44,6 +49,19 @@ export default {
     Activity: () => import('./Activity.vue'),
     CardTableHead: () => import('./CardTableHead.vue')
   },
+  methods: {
+    txerrororsuccess(item) {
+      console.log(item);
+      var result = true;
+      item.txs.forEach(item => {
+        if (item.log != '') {
+          result = false;
+        }
+      });
+      return result;
+    }
+
+  },
   props: {
     txData: {
       type: Array
@@ -60,6 +78,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  computed: {
+
   }
 };
 </script>
@@ -80,10 +101,10 @@ export default {
   }
 }
 .demo-spin-col{
-  	    display: inline-block;
-        width: 100%;
-        height: 100px;
-        position: relative;
-        border: 1px solid #eee;
+  display: inline-block;
+  width: 100%;
+  height: 100px;
+  position: relative;
+  border: 1px solid #eee;
 }
 </style>
