@@ -4,6 +4,7 @@ import LambdaApi from './lambdaApi';
 const settings = require('electron-settings');
 // var { DAEMON_CONFIG } = require('../configmain.js');
 var log = require('../log').log;
+const { throwErrorCode, errorList } = require('./throwErrorCode.js');
 
 
 
@@ -39,7 +40,8 @@ class marketmanager {
 
   async getSellOrderslist(page, limit) {
     if (this.defaultAddress == null) {
-      throw new Error('need address');
+      throwErrorCode(errorList.need_address);
+      // throw new Error('need address');
     }
 
 
@@ -49,7 +51,7 @@ class marketmanager {
 
   async getUserOrderslist(page, limit) {
     if (this.defaultAddress == null) {
-      throw new Error('need address');
+      throwErrorCode(errorList.need_address);
     }
     var result = await this.CosmosAPI().get.marketUserOrderslist(this.defaultAddress, page, limit);
     return { data: result };

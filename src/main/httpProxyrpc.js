@@ -6,6 +6,8 @@ var log = require('../log').log;
 const { ipcMain: eipc } = require('electron-better-ipc');
 
 var { DAEMON_CONFIG } = require('../configmain.js');
+
+const { throwErrorCode, errorList } = require('./throwErrorCode.js');
 // Override timeout default for the library
 // Now all requests using this instance will wait 2.5 seconds before timing out
 
