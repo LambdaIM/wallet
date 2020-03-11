@@ -737,8 +737,7 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   const feeProperties = {
     gasEstimate: gasEstimate,
     gasPrice: gasPrice,
-    submitType: SIGN_METHODS.LOCAL,
-    password: password
+    submitType: SIGN_METHODS.LOCAL
   };
 
 
