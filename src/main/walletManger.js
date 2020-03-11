@@ -21,6 +21,7 @@ const { shell } = require('electron');
 
 const bip39 = require('bip39');
 
+const { throwErrorCode, errorList } = require('./throwErrorCode.js');
 
 
 var walletManger = function (dir) {
@@ -79,7 +80,8 @@ walletManger.prototype.scann = function () {
 
 walletManger.prototype.getDefaultwalletBasicinfo = function () {
   if (this.defaultwallet == null) {
-    throw new Error('not find DefaultWallet');
+    throwErrorCode(errorList.not_find_DefaultWallet);
+    // throw new Error('not find DefaultWallet');
   }
   return {
     address: this.defaultwallet.address,
@@ -92,7 +94,7 @@ walletManger.prototype.OpenDefaultwallet = function (password) {
   log.info('OpenDefaultwallet');
   log.info(this.defaultwallet.address);
   if (this.defaultwallet == null) {
-    throw new Error('not find DefaultWallet');
+    throwErrorCode(errorList.not_find_DefaultWallet);
   }
 
   var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
@@ -171,7 +173,8 @@ walletManger.prototype.creatWallet = function (password, name) {
 };
 walletManger.prototype.creatWalletComplete = function (password, name) {
   if (this.filepath_create == null || this.walletjson__create == null) {
-    throw new Error('can not find  mnemonic');
+    throwErrorCode(errorList.can_not_find_mnemonic);
+    // throw new Error('can not find  mnemonic');
   }
   fs.writeFileSync(this.filepath_create, JSON.stringify(this.walletjson__create));
   this.scann();
@@ -188,7 +191,8 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name, iscr
   const address = hdkeyjs.address.getAddress(keys.publicKey);
   var file = this.findFile(address);
   if (file != null) {
-    throw new Error(`Import failed,${address} already exists`);
+    throwErrorCode(errorList.Import_failed_address_already_exists, address);
+    // throw new Error(`Import failed,${address} already exists`);
   }
 
 
@@ -228,14 +232,16 @@ walletManger.prototype.generateSonAccount = function (mnemonic, password, name, 
   const keysF = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, 0);
   const addressF = hdkeyjs.address.getAddress(keysF.publicKey);
   if (this.defaultwallet.address != addressF) {
-    throw new Error(`The main account corresponding to mnemonic times is inconsistent with the current account `);
+    throwErrorCode(errorList.main_account_not_current_account);
+    // throw new Error(`The main account corresponding to mnemonic times is inconsistent with the current account `);
   }
 
 
 
   var file = this.findSonFile(address);
   if (file.fileName != null) {
-    throw new Error(`failed,${address} already exists`);
+    throwErrorCode(errorList.failed_already_exists, address);
+    // throw new Error(`failed,${address} already exists`);
   }
 
   var walletjson = hdkeyjs.keyStore.toJson(keys, password, name);
@@ -272,7 +278,8 @@ walletManger.prototype.ImportWalletByMnemonic = function (mnemonic, password, na
   var mnemonicList = mnemonic.match(/[a-z]+[\-\']?[a-z]*/ig);
 
   if (mnemonicList == null || mnemonicList.length < 12) {
-    throw new Error('make sure  inputting 12 words or more ');
+    throwErrorCode(errorList.more12_words)
+    // throw new Error('make sure  inputting 12 words or more ');
   }
   checkBip39wordList(mnemonicList);
 
@@ -287,7 +294,8 @@ function checkBip39wordList(mnemonicList){
   mnemonicList.forEach((item)=>{
     console.log(wordlist)
     if(wordlist.indexOf(item)<0){
-      throw new Error(`${item}  is an invalid mnemonic, please check`)
+      throwErrorCode(errorList.invalid_mnemonic,item)
+      // throw new Error(`${item}  is an invalid mnemonic, please check`)
     } 
 
   })
@@ -302,7 +310,8 @@ walletManger.prototype.CreatSonAccountByMnemonic = function (mnemonic, password,
   var mnemonicList = mnemonic.match(/[a-z]+[\-\']?[a-z]*/ig);
 
   if (mnemonicList == null || mnemonicList.length < 12) {
-    throw new Error('make sure  inputting 12 words or more ');
+    throwErrorCode(errorList.more12_words)
+    // throw new Error('make sure  inputting 12 words or more ');
   }
   var mnemonics = mnemonicList.join(' ');
   return this.generateSonAccount(mnemonics, password, name,index);
@@ -313,7 +322,9 @@ walletManger.prototype.exportSonAccount = function (address,password) {
   
   var file = this.findSonFile(address);
   if (file.fileName == null) {
-    throw new Error(`failed,${address} not exists`);
+    throwErrorCode(errorList.failed_address_not_exists,address)
+    
+    // throw new Error(`failed,${address} not exists`);
   }
   console.log(file)
   var privatekey = hdkeyjs.keyStore.checkJson(file.data, password);
@@ -343,7 +354,8 @@ walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
   var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
 
   if (privatekey == undefined) {
-    throw new Error('Import failed,Please check the wallet file and password');
+    throwErrorCode(errorList.Import_failed_check_password)
+    // throw new Error('Import failed,Please check the wallet file and password');
   }
   console.log('file',file)
   var keyinfo ={
@@ -359,7 +371,8 @@ walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
 
   var file = this.findSonFile(v3file.address);
   if (file.fileName != null) {
-    throw new Error('Import failed,'+v3file.address+' already exists');
+    throwErrorCode(errorList.Import_failed_address_exists,v3file.address)
+    // throw new Error('Import failed,'+v3file.address+' already exists');
   }
 
 
@@ -386,13 +399,14 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
 
 
   if (privatekey == undefined) {
-    throw new Error('Import failed,Please check the wallet file and password');
+    throwErrorCode(errorList.Import_failed_check_password)
   }
 
 
   var file = this.findFile(v3file.address);
   if (file != null) {
-    throw new Error('Import failed,'+v3file.address+' already exists');
+    throwErrorCode(errorList.Import_failed_address_exists,v3file.address)
+    // throw new Error('Import failed,'+v3file.address+' already exists');
   }
 
 
@@ -407,7 +421,8 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
   log.info('walletManger getDefaultWalletBlance');
 
   if (this.defaultwallet == null) {
-    throw new Error('not find DefaultWallet');
+    throwErrorCode(errorList.not_find_DefaultWallet)
+    // throw new Error('not find DefaultWallet');
   }
 
 
@@ -850,7 +865,8 @@ walletManger.prototype.editDefaultName = async function (name) {
   this.defaultwallet.name = name;
   var filepath = this.findFile(this.defaultwallet.address);
   if (filepath == null) {
-    throw new Error('not find DefaultWallet');
+    throwErrorCode(errorList.not_find_DefaultWallet)
+    // throw new Error('not find DefaultWallet');
   }
   fs.writeFileSync(filepath, JSON.stringify(this.defaultwallet));
   this.scann();

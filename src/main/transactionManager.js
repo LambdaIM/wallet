@@ -5,6 +5,8 @@ const settings = require('electron-settings');
 var { DAEMON_CONFIG } = require('../configmain.js');
 var log = require('../log').log;
 
+const { throwErrorCode, errorList } = require('./throwErrorCode.js');
+
 
 
 class Transaction {
@@ -24,7 +26,7 @@ class Transaction {
   }
   async getTransactionList(query) {
     if (this.defaultAddress == null) {
-      throw new Error('need address');
+      throwErrorCode(errorList.need_address);
     }
     console.log('getTransactionList');
     var blockinfo = await this.CosmosAPI().get.nodeBlocklatest();

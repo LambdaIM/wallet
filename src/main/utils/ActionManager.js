@@ -5,6 +5,8 @@ import transaction from './transactionTypes';
 
 // var config = {};
 
+const { throwErrorCode, errorList } = require('../throwErrorCode.js');
+
 export default class ActionManager {
   constructor() {
     this.context = null;
@@ -14,7 +16,8 @@ export default class ActionManager {
 
   setContext(context = null) {
     if (!context) {
-      throw Error('Context cannot be empty');
+      throwErrorCode(errorList.Context_cannot_empty);
+      // throw Error('Context cannot be empty');
     }
     this.context = context;
     this.cosmos = new Rpcapijs(this.context.url || '', this.context.chainId || '');
@@ -22,34 +25,40 @@ export default class ActionManager {
 
   readyCheck() {
     if (!this.context) {
-      throw Error('This modal has no context.');
+      throwErrorCode(errorList.This_modal_no_context);
+      // throw Error('This modal has no context.');
     }
 
     if (!this.context.connected) {
-      throw Error(
-        `Currently not connected to a secure node. Please try again when Lunie has secured a connection.`
-      );
+      throwErrorCode(errorList.not_connected);
+      // throw Error(
+      //   `Currently not connected to a secure node. Please try again when Lunie has secured a connection.`
+      // );
     }
 
     if (!this.message) {
-      throw Error(`No message to send.`);
+      throwErrorCode(errorList.no_message_send);
+      // throw Error(`No message to send.`);
     }
   }
 
   messageTypeCheck(msgType) {
     if (!msgType) {
-      throw Error('No message type present.');
+      throwErrorCode(errorList.no_message_send);
+      // throw Error('No message type present.');
     }
 
     const isKnownType = Object.values(transaction).includes(msgType);
     if (!isKnownType) {
-      throw Error(`Invalid message type: ${msgType}.`);
+      throwErrorCode(errorList.Invalid_message_type, msgType);
+      // throw Error(`Invalid message type: ${msgType}.`);
     }
   }
 
   setMessage(type, transactionProperties) {
     if (!this.context) {
-      throw Error('This modal has no context.');
+      throwErrorCode(errorList.This_modal_no_context);
+      // throw Error('This modal has no context.');
     }
 
     this.messageTypeCheck(type);
@@ -97,27 +106,27 @@ export default class ActionManager {
   }
 
 
-  async getTxhash(memo, txMetaData, signerFn) {
-    // this.readyCheck()
+  // async getTxhash(memo, txMetaData, signerFn) {
+  //   // this.readyCheck()
 
-    const { gasEstimate, gasPrice } = txMetaData;
+  //   const { gasEstimate, gasPrice } = txMetaData;
 
 
-    if (this.messageType === transaction.WITHDRAW) {
-      this.message = await this.createWithdrawTransaction();
-    }
+  //   if (this.messageType === transaction.WITHDRAW) {
+  //     this.message = await this.createWithdrawTransaction();
+  //   }
 
-    const hash = await this.message.getTxhash(
-      {
-        gas: String(gasEstimate),
-        gasPrices: convertCurrencyData([gasPrice]),
-        memo
-      },
-      signerFn
-    );
+  //   const hash = await this.message.getTxhash(
+  //     {
+  //       gas: String(gasEstimate),
+  //       gasPrices: convertCurrencyData([gasPrice]),
+  //       memo
+  //     },
+  //     signerFn
+  //   );
 
-    return hash;
-  }
+  //   return hash;
+  // }
 
   async createWithdrawTransaction() {
     const addresses = await getTop5RewardsValidators(this.context.userAddress, this.cosmos);
