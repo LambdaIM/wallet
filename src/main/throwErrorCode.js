@@ -57,7 +57,20 @@ exports.errorList = {
   need_miningAddress: 'rpc617|need miningAddress',
   need_dhtId: 'rpc618|need dhtId',
   need_SourceAddress: 'rpc619|need need SourceAddress',
-  need_DestinationAddress: 'rpc620|need DestinationAddress'
+  need_DestinationAddress: 'rpc620|need DestinationAddress',
+
+  need_price: 'rpc622|need price',
+  need_rate: 'rpc623|need_rate',
+  need_description: 'rpc624|need_description',
+  need_cancelTimeDuration: 'rpc625|need cancelTimeDuration',
+  need_minBuySize: 'rpc626|need minBuySize',
+  need_minBuyDuration: 'rpc627|need minBuyDuration',
+  need_maxBuyDuration: 'rpc628|need maxBuyDuration',
+  need_duration: 'rpc629|need duration',
+  need_size: 'rpc629|need size',
+  need_file: 'rpc630|need file',
+  need_gasprice: 'rpc631|need gasprice',
+  gaspricemust_be_numeric: 'rpc632|gaspricemust be numeric'
 
 
 
