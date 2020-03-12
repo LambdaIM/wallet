@@ -17,6 +17,7 @@ var log = require('../log').log;
 
 const settings = require('electron-settings');
 
+const { errorList } = require('./throwErrorCode.js');
 
 var lastTime;
 export default function() {
@@ -33,12 +34,12 @@ export default function() {
   eipc.answerRenderer('setDefaultWallet', async query => {
     var address = query.address;
     if (address == undefined) {
-      throw resultView(null, false, 'need address');
+      throw resultView(null, false, errorList.need_address);
     }
     // if(isAddress(address)==false){
     // 暂时注释地址合法的判断
     if (address == false) {
-      throw resultView(null, false, 'Incorrect address format');
+      throw resultView(null, false, errorList.Incorrect_address_format);
     }
     try {
       WM.setDefaultWallet(address);
@@ -52,7 +53,7 @@ export default function() {
     log.info('loginDefaultWallet');
     var password = query.password;
     if (password == undefined) {
-      throw resultView(null, false, 'need password');
+      throw resultView(null, false, errorList.need_password);
     }
     try {
       var info = WM.OpenDefaultwallet(password);
@@ -91,10 +92,10 @@ export default function() {
 
     var { password, name } = query;
     if (password == undefined) {
-      throw resultView(null, false, 'need password');
+      throw resultView(null, false, errorList.need_password);
     }
     if (name == undefined) {
-      throw resultView(null, false, 'need name');
+      throw resultView(null, false, errorList.need_name);
     }
     try {
       var info = WM.creatWallet(password, name);
@@ -120,13 +121,13 @@ export default function() {
   eipc.answerRenderer('importWalletBykeyStore', async query => {
     var { filepath, password, name } = query;
     if (filepath == undefined) {
-      throw resultView(null, false, 'need filepath');
+      throw resultView(null, false, errorList.need_filepath);
     }
     if (password == undefined) {
-      throw resultView(null, false, 'need password');
+      throw resultView(null, false, errorList.need_password);
     }
     if (name == undefined) {
-      throw resultView(null, false, 'need name');
+      throw resultView(null, false, errorList.need_name);
     }
 
     try {
@@ -141,13 +142,13 @@ export default function() {
     var { mnemonic, password, name } = query;
 
     if (mnemonic == undefined) {
-      throw resultView(null, false, 'need mnemonic');
+      throw resultView(null, false, errorList.need_mnemonic);
     }
     if (password == undefined) {
-      throw resultView(null, false, 'need password');
+      throw resultView(null, false, errorList.need_password);
     }
     if (name == undefined) {
-      throw resultView(null, false, 'need name');
+      throw resultView(null, false, errorList.need_name);
     }
 
     try {
@@ -202,7 +203,7 @@ export default function() {
     // amount 需要判断  转账金额大小 数据类型
     // gas 目前默认值位1  转账金额大小 数据类型
     if (to == undefined) {
-      throw resultView(null, false, 'need to address');
+      throw resultView(null, false, errorList.need_to_address);
     }
     // 需要寻找新的考验地址格式
     // if(isAddress(to)==false){
@@ -211,21 +212,21 @@ export default function() {
 
 
     if (amount == undefined) {
-      throw resultView(null, false, 'need amount');
+      throw resultView(null, false, errorList.need_amount);
     }
     if (isNaN(parseInt(amount))) {
-      throw resultView(null, false, 'Incorrect amount format');
+      throw resultView(null, false, errorList.Incorrect_amount_format);
     }
 
     if (gas == undefined) {
-      throw resultView(null, false, 'need to gas');
+      throw resultView(null, false, errorList.need_to_gas);
     }
     if (denom == undefined) {
       denom = 'lamb';
     }
 
     if (isNaN(parseInt(gas))) {
-      throw resultView(null, false, 'Incorrect gas format');
+      throw resultView(null, false, errorList.Incorrect_gas_format);
     }
 
     try {
@@ -243,7 +244,7 @@ export default function() {
     // amount 需要判断  转账金额大小 数据类型
     // gas 目前默认值位1  转账金额大小 数据类型
     if (to == undefined) {
-      throw resultView(null, false, 'need to address');
+      throw resultView(null, false, errorList.need_to_address);
     }
     // 需要寻找新的考验地址格式
     // if(isAddress(to)==false){
@@ -252,18 +253,18 @@ export default function() {
 
 
     if (amount == undefined) {
-      throw resultView(null, false, 'need amount');
+      throw resultView(null, false, errorList.need_amount);
     }
     if (isNaN(parseInt(amount))) {
-      throw resultView(null, false, 'Incorrect amount format');
+      throw resultView(null, false, errorList.Incorrect_amount_format);
     }
 
     if (gas == undefined) {
-      throw resultView(null, false, 'need to gas');
+      throw resultView(null, false, errorList.need_to_gas);
     }
 
     if (isNaN(parseInt(gas))) {
-      throw resultView(null, false, 'Incorrect gas format');
+      throw resultView(null, false, errorList.Incorrect_gas_format);
     }
     if (isdege == undefined) {
       isdege = true;
@@ -285,7 +286,7 @@ export default function() {
 
 
     if (amount == undefined) {
-      throw resultView(null, false, 'need amount');
+      throw resultView(null, false, errorList.need_amount);
     }
 
     try {
@@ -301,7 +302,7 @@ export default function() {
 
 
     if (amount == undefined) {
-      throw resultView(null, false, 'need amount');
+      throw resultView(null, false, errorList.need_amount);
     }
 
     try {
@@ -320,7 +321,7 @@ export default function() {
 
 
     if (amount == undefined) {
-      throw resultView(null, false, 'need amount');
+      throw resultView(null, false, errorList.need_amount);
     }
 
     try {
@@ -338,10 +339,10 @@ export default function() {
 
 
     if (amount == undefined) {
-      throw resultView(null, false, 'need amount');
+      throw resultView(null, false, errorList.need_amount);
     }
     if (asset == undefined) {
-      throw resultView(null, false, 'need asset');
+      throw resultView(null, false, errorList.need_asset);
     }
     if (denom == undefined) {
       denom = 'ulamb';
@@ -492,10 +493,10 @@ export default function() {
   eipc.answerRenderer('deposit', async query => {
     var { ProposalID, amount } = query;
     if (ProposalID == undefined) {
-      throw resultView(null, false, 'need ProposalID');
+      throw resultView(null, false, errorList.need_ProposalID);
     }
     if (amount == undefined) {
-      throw resultView(null, false, 'need amount');
+      throw resultView(null, false, errorList.need_amount);
     }
     try {
       var TxMessageload = await WM.TransferDeposit(ProposalID, amount);
@@ -509,10 +510,10 @@ export default function() {
   eipc.answerRenderer('vote', async query => {
     var { ProposalID, option } = query;
     if (ProposalID == undefined) {
-      throw resultView(null, false, 'need ProposalID');
+      throw resultView(null, false, errorList.need_ProposalID);
     }
     if (option == undefined) {
-      throw resultView(null, false, 'need option');
+      throw resultView(null, false, errorList.need_option);
     }
     try {
       var TxMessageload = await WM.TransferVote(ProposalID, option);
@@ -529,11 +530,11 @@ export default function() {
     var { miningAddress, dhtId, pubKey } = query;
 
     if (miningAddress == undefined) {
-      throw resultView(null, false, 'need miningAddress');
+      throw resultView(null, false, errorList.need_miningAddress);
     }
 
     if (dhtId == undefined) {
-      throw resultView(null, false, 'need dhtId');
+      throw resultView(null, false, errorList.need_dhtId);
     }
 
     // if (pubKey == undefined) {
@@ -553,7 +554,7 @@ export default function() {
     var { name, peerId, dhtId, pubKey } = query;
 
     if (name == undefined) {
-      throw resultView(null, false, 'need name');
+      throw resultView(null, false, errorList.need_name);
     }
 
     // if (peerId == undefined) {
@@ -561,7 +562,7 @@ export default function() {
     // }
 
     if (dhtId == undefined) {
-      throw resultView(null, false, 'need dhtId');
+      throw resultView(null, false, errorList.need_dhtId);
     }
 
     // if (pubKey == undefined) {
@@ -583,13 +584,13 @@ export default function() {
   eipc.answerRenderer('redelegate', async query => {
     var { SourceAddress, DestinationAddress, amount, validatortype } = query;
     if (SourceAddress == undefined) {
-      throw resultView(null, false, 'need SourceAddress');
+      throw resultView(null, false, errorList.need_SourceAddress);
     }
     if (DestinationAddress == undefined) {
-      throw resultView(null, false, 'need DestinationAddress');
+      throw resultView(null, false, errorList.need_DestinationAddress);
     }
     if (amount == undefined) {
-      throw resultView(null, false, 'need amount');
+      throw resultView(null, false, errorList.need_amount);
     }
     try {
       var TxMessageload = await WM.TransferRedelegate(SourceAddress, DestinationAddress, amount, validatortype);

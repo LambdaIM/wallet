@@ -32,11 +32,33 @@ exports.errorList = {
   need_marketAddress: 'rpc55|need marketAddress',
   need_statusType: 'rpc56|need statusType',
   need_orderId: 'rpc57:need orderId',
-  need_address: 'rpc58|need address',
+
   need_accesskey: 'rpc59|need accesskey',
   need_secretkey: 'rpc510|need secretkey',
   need_port: 'rpc511|need port',
   need_port_and: 'rpc512|need port and port < 65535 ',
-  need_defaultAddress: 'rpc513|need defaultAddress'
+  need_defaultAddress: 'rpc513|need defaultAddress',
+
+  Incorrect_address_format: 'rpc62|Incorrect address format',
+  need_password: 'rpc63|need password',
+  need_name: 'rpc64|need name',
+  need_filepath: 'rpc65|need filepath',
+
+  need_mnemonic: 'rpc67|need mnemonic',
+  need_to_address: 'rpc68|need to address',
+  need_amount: 'rpc69|need amount',
+  Incorrect_amount_format: 'rpc610|Incorrect amount format',
+  need_to_gas: 'rpc611|need to gas',
+  Incorrect_gas_format: 'rpc612|Incorrect gas format',
+  need_asset: 'rpc613|need asset',
+  need_ProposalID: 'rpc614|need ProposalID',
+
+  need_option: 'rpc616|need option',
+  need_miningAddress: 'rpc617|need miningAddress',
+  need_dhtId: 'rpc618|need dhtId',
+  need_SourceAddress: 'rpc619|need need SourceAddress',
+  need_DestinationAddress: 'rpc620|need DestinationAddress'
+
+
 
 };
