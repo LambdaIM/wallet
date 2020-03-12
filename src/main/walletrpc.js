@@ -614,28 +614,28 @@ export default function() {
       maxBuyDuration } = query;
 
     if (marketName == undefined) {
-      throw resultView(null, false, 'need marketName');
+      throw resultView(null, false, errorList.need_marketName);
     }
     if (price == undefined) {
-      throw resultView(null, false, 'need price');
+      throw resultView(null, false, errorList.need_price);
     }
     if (rate == undefined) {
-      throw resultView(null, false, 'need rate');
+      throw resultView(null, false, errorList.need_rate);
     }
     if (description == undefined) {
-      throw resultView(null, false, 'need description');
+      throw resultView(null, false, errorList.need_description);
     }
     if (cancelTimeDuration == undefined) {
-      throw resultView(null, false, 'need cancelTimeDuration');
+      throw resultView(null, false, errorList.need_cancelTimeDuration);
     }
     if (minBuySize == undefined) {
-      throw resultView(null, false, 'need minBuySize');
+      throw resultView(null, false, errorList.need_minBuySize);
     }
     if (minBuyDuration == undefined) {
-      throw resultView(null, false, 'need minBuyDuration');
+      throw resultView(null, false, errorList.need_minBuyDuration);
     }
     if (maxBuyDuration == undefined) {
-      throw resultView(null, false, 'need maxBuyDuration');
+      throw resultView(null, false, errorList.need_maxBuyDuration);
     }
 
     try {
@@ -661,13 +661,13 @@ export default function() {
       sellOrderId,
       marketName } = query;
     if (duration == undefined) {
-      throw resultView(null, false, 'need duration');
+      throw resultView(null, false, errorList.need_duration);
     }
     if (size == undefined) {
-      throw resultView(null, false, 'need size');
+      throw resultView(null, false, errorList.need_size);
     }
     if (marketName == undefined) {
-      throw resultView(null, false, 'need marketName');
+      throw resultView(null, false, errorList.need_marketName);
     }
     try {
       var TxMessageload = await WM.TransferCreateBuyOrder(duration,
@@ -684,13 +684,13 @@ export default function() {
   eipc.answerRenderer('createSonAccount', async query => {
     var { mnemonic, password, name, index } = query;
     if (mnemonic == undefined) {
-      throw resultView(null, false, 'need mnemonic');
+      throw resultView(null, false, errorList.need_mnemonic);
     }
     if (password == undefined) {
-      throw resultView(null, false, 'need password');
+      throw resultView(null, false, errorList.need_password);
     }
     if (name == undefined) {
-      throw resultView(null, false, 'need name');
+      throw resultView(null, false, errorList.need_name);
     }
     try {
       var TxMessageload = await WM.generateSonAccount(mnemonic, password, name, index);
@@ -715,7 +715,7 @@ export default function() {
     try {
       var { address, password } = query;
       if (address == undefined) {
-        throw resultView(null, false, 'need address');
+        throw resultView(null, false, errorList.need_address);
       }
 
       var TxMessageload = await WM.exportSonAccount(address, password);
@@ -730,15 +730,15 @@ export default function() {
     try {
       var { file, password, name } = query;
       if (file == undefined) {
-        throw resultView(null, false, 'need file');
+        throw resultView(null, false, errorList.need_file);
       }
 
       if (password == undefined) {
-        throw resultView(null, false, 'need password');
+        throw resultView(null, false, errorList.need_password);
       }
 
       if (name == undefined) {
-        throw resultView(null, false, 'need name');
+        throw resultView(null, false, errorList.need_name);
       }
 
       var TxMessageload = await WM.ImportSonAccount(file, password, name);
@@ -767,11 +767,11 @@ export default function() {
     try {
       var { gasprice } = query;
       if (gasprice == undefined) {
-        throw resultView(null, false, 'need gasprice');
+        throw resultView(null, false, errorList.need_gasprice);
       }
       gasprice = parseFloat(gasprice);
       if (isNaN(gasprice)) {
-        throw resultView(null, false, 'gaspricemust be numeric ');
+        throw resultView(null, false, errorList.gaspricemust_be_numeric);
       }
 
       settings.set('gasprice', gasprice);
