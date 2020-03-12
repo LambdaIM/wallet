@@ -23,6 +23,7 @@ var log = require('../log').log;
 const os = require('os');
 
 var suppose = require('@jswebfans/suppose');
+const { errorList } = require('./throwErrorCode.js');
 
 
 export default function() {
@@ -51,26 +52,26 @@ export default function() {
   eipc.answerRenderer('marketOrderList', async query => {
     var { marketName, orderType, page, limit, islocal, marketAddress, orderSortinfo, islocalfilter, statusType } = query;
     if (marketName == undefined) {
-      throw resultView(null, false, 'need marketName');
+      throw resultView(null, false, errorList.need_marketName);
     }
     if (orderType == undefined) {
-      throw resultView(null, false, 'need orderType');
+      throw resultView(null, false, errorList.need_orderType);
     }
 
     if (page == undefined) {
-      throw resultView(null, false, 'need page');
+      throw resultView(null, false, errorList.need_page);
     }
 
     if (limit == undefined) {
-      throw resultView(null, false, 'need limit');
+      throw resultView(null, false, errorList.need_limit);
     }
 
     if (marketAddress == undefined) {
-      throw resultView(null, false, 'need marketAddress');
+      throw resultView(null, false, errorList.need_marketAddress);
     }
 
     if (statusType == undefined) {
-      throw resultView(null, false, 'need statusType');
+      throw resultView(null, false, errorList.need_statusType);
     }
 
 
@@ -103,18 +104,18 @@ export default function() {
   eipc.answerRenderer('marketOrderListsync', async query => {
     var { marketName, orderType, page, limit, statusType } = query;
     if (marketName == undefined) {
-      throw resultView(null, false, 'need marketName');
+      throw resultView(null, false, errorList.need_marketName);
     }
     if (orderType == undefined) {
-      throw resultView(null, false, 'need orderType');
+      throw resultView(null, false, errorList.need_orderType);
     }
 
     if (page == undefined) {
-      throw resultView(null, false, 'need page');
+      throw resultView(null, false, errorList.need_page);
     }
 
     if (limit == undefined) {
-      throw resultView(null, false, 'need limit');
+      throw resultView(null, false, errorList.need_limit);
     }
     if (statusType == undefined) {
       statusType = 'whole';
@@ -151,11 +152,11 @@ export default function() {
   eipc.answerRenderer('marketSellOrderslist', async query => {
     var { page, limit } = query;
     if (page == undefined) {
-      throw resultView(null, false, 'need page');
+      throw resultView(null, false, errorList.need_page);
     }
 
     if (limit == undefined) {
-      throw resultView(null, false, 'need limit');
+      throw resultView(null, false, errorList.need_limit);
     }
 
     try {
@@ -171,10 +172,10 @@ export default function() {
   eipc.answerRenderer('marketUserOrderslist', async query => {
     var { page, limit } = query;
     if (page == undefined) {
-      throw resultView(null, false, 'need page');
+      throw resultView(null, false, errorList.need_page);
     }
     if (limit == undefined) {
-      throw resultView(null, false, 'need limit');
+      throw resultView(null, false, errorList.need_limit);
     }
 
 
@@ -192,7 +193,7 @@ export default function() {
   eipc.answerRenderer('marketgetOrderinfo', async query => {
     var { orderId } = query;
     if (orderId == undefined) {
-      throw resultView(null, false, 'need orderId');
+      throw resultView(null, false, errorList.need_orderId);
     }
 
     try {
@@ -209,10 +210,10 @@ export default function() {
   eipc.answerRenderer('minermachines', async query => {
     var { page, limit } = query;
     if (page == undefined) {
-      throw resultView(null, false, 'need address');
+      throw resultView(null, false, errorList.need_address);
     }
     if (limit == undefined) {
-      throw resultView(null, false, 'need limit');
+      throw resultView(null, false, errorList.need_limit);
     }
 
     try {
@@ -243,17 +244,17 @@ export default function() {
   eipc.answerRenderer('editlambdastoragemanagerkey', async query => {
     var { accesskey, secretkey, port } = query;
     if (accesskey == undefined) {
-      throw resultView(null, false, 'need address');
+      throw resultView(null, false, errorList.need_accesskey);
     }
     if (secretkey == undefined) {
-      throw resultView(null, false, 'need address');
+      throw resultView(null, false, errorList.need_secretkey);
     }
 
     if (port == undefined) {
-      throw resultView(null, false, 'need port');
+      throw resultView(null, false, errorList.need_port);
     }
     if (port >= 65535) {
-      throw resultView(null, false, 'need port and port < 65535 ');
+      throw resultView(null, false, errorList.need_port_and);
     }
 
 
@@ -353,7 +354,7 @@ export default function() {
         defaultAddress = settings.get('defaultwallet');
         defaultAddress = defaultAddress.toLocaleLowerCase();
       } else {
-        throw resultView(null, false, 'need defaultAddress');
+        throw resultView(null, false, errorList.need_defaultAddress);
       }
       var ip = DAEMON_CONFIG.ValidatorIp();
       var keypath = path.join(DAEMON_CONFIG.WalletFile, `${defaultAddress}.keyinfo`);
