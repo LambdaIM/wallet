@@ -62,6 +62,7 @@ export default function() {
         name: info.name
       }, true);
     } catch (ex) {
+      console.log('捕获错误');
       throw resultView(null, false, ex);
     }
   });
