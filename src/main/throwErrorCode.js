@@ -24,5 +24,19 @@ exports.errorList = {
   invalid_mnemonic: '37|invalid mnemonic, please check,',
   failed_address_not_exists: '38|failed,address not exists,',
   Import_failed_check_password: '39|Import failed,Please check the wallet file and password',
-  Import_failed_address_exists: '40|Import failed,address already exists,'
+  Import_failed_address_exists: '40|Import failed,address already exists,',
+  need_marketName: 'rpc51|need marketName',
+  need_orderType: 'rpc52|need orderType',
+  need_page: 'rpc53|need page',
+  need_limit: 'rpc54|need limit',
+  need_marketAddress: 'rpc55|need marketAddress',
+  need_statusType: 'rpc56|need statusType',
+  need_orderId: 'rpc57:need orderId',
+  need_address: 'rpc58|need address',
+  need_accesskey: 'rpc59|need accesskey',
+  need_secretkey: 'rpc510|need secretkey',
+  need_port: 'rpc511|need port',
+  need_port_and: 'rpc512|need port and port < 65535 ',
+  need_defaultAddress: 'rpc513|need defaultAddress'
+
 };
