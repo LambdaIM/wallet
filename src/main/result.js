@@ -1,11 +1,13 @@
 
 
 var log = require('../log').log;
-
+const settings = require('electron-settings');
 export default function(result, state, errormsg, errorcode) {
   if (errormsg != undefined) {
     log.error(errormsg);
   }
+  var language = settings.get('set.language') || 'en';
+
   var msg = errormsg instanceof Error ? errormsg.message : errormsg;
   var msgJson = null;
   var msgcode = null;
@@ -20,6 +22,7 @@ export default function(result, state, errormsg, errorcode) {
     if (msgJson.code && msgJson.message) {
       msginfo = msgJson.message + '！！！！';
       msgcode = msgJson.code;
+
       errorType = msgJson.errorType;
       // 根据这个做多语言
     }
