@@ -694,7 +694,7 @@ export default function() {
       throw resultView(null, false, errorList.need_name);
     }
     try {
-      var TxMessageload = await WM.generateSonAccount(mnemonic, password, name, index);
+      var TxMessageload = await WM.CreatSonAccountByMnemonic(mnemonic, password, name, index);
 
       return resultView(TxMessageload, true);
     } catch (error) {

@@ -4,7 +4,8 @@ export var throwErrorCode = function (codemsg, Othermsg) {
   throw new Error(JSON.stringify({
     code: 'wallet-' + info[1],
     errorType: info[0],
-    message: info[2] + Othermsg
+    message: info[2],
+    othermsg: Othermsg || ''
   }));
 };
 
