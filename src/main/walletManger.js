@@ -314,6 +314,7 @@ walletManger.prototype.CreatSonAccountByMnemonic = function (mnemonic, password,
     throwErrorCode(errorList.more12_words)
     // throw new Error('make sure  inputting 12 words or more ');
   }
+  checkBip39wordList(mnemonicList);
   var mnemonics = mnemonicList.join(' ');
   return this.generateSonAccount(mnemonics, password, name,index);
 };

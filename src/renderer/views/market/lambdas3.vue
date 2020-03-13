@@ -95,7 +95,7 @@ export default {
       formInline: {
         user: '',
         password: '',
-        port: ''
+        port: 0
       },
       ruleInline: {
         user: [
@@ -127,7 +127,8 @@ export default {
         this.$data.managerkey = res.data.gateway;
         this.$data.formInline.user = this.$data.managerkey['access-key'];
         this.$data.formInline.password = this.$data.managerkey['secret-key'];
-        this.$data.formInline.port = this.$data.managerkey.address.split(':')[1] || '';
+        this.$data.formInline.port = this.$data.managerkey.address.split(':')[1] || 0;
+        this.$data.formInline.port = parseInt(this.$data.formInline.port);
       }
     },
     async getlambdastoragecommandline() {
