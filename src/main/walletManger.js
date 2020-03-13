@@ -278,6 +278,7 @@ walletManger.prototype.ImportWalletByMnemonic = function (mnemonic, password, na
   var mnemonicList = mnemonic.match(/[a-z]+[\-\']?[a-z]*/ig);
 
   if (mnemonicList == null || mnemonicList.length < 12) {
+    
     throwErrorCode(errorList.more12_words)
     // throw new Error('make sure  inputting 12 words or more ');
   }

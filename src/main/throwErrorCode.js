@@ -1,4 +1,4 @@
-exports.throwErrorCode = function(codemsg, Othermsg) {
+export var throwErrorCode = function (codemsg, Othermsg) {
   var info = codemsg.split('|');
   Othermsg = Othermsg || '';
   throw new Error(JSON.stringify({
@@ -9,7 +9,7 @@ exports.throwErrorCode = function(codemsg, Othermsg) {
 };
 
 
-exports.errorList = {
+export var errorList = {
   'Context_cannot_empty': 'Context_cannot_empty|1|Context cannot be empty',
   'This_modal_no_context': 'This_modal_no_context|2|This modal has no context',
   'not_connected': 'not_connected|3|Currently not connected to a secure node. Please try again when Lunie has secured a connection',

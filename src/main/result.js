@@ -1,8 +1,9 @@
 
 
+// const langmsg = require('./lang/index.js');
+import langmsg from './lang/index.js';
 var log = require('../log').log;
 const settings = require('electron-settings');
-const langmsg = require('./lang/index.js');
 
 export default function(result, state, errormsg, errorcode) {
   if (errormsg != undefined) {
@@ -15,24 +16,33 @@ export default function(result, state, errormsg, errorcode) {
   var msgcode = null;
   var msginfo = null;
   var errorType = null;
-  console.log('开始格式化处理错误信息');
-  console.log(errormsg);
-  console.log(msg);
+  console.log('开始格式化处理错误信息', language);
+  console.log('errormsg', errormsg);
+  console.log('msg', msg);
   try {
     console.log('开始格式化处理错误信息1');
     msgJson = JSON.parse(msg);
     if (msgJson.code && msgJson.message) {
-      msginfo = msgJson.message + '..';
+      msginfo = msgJson.message;
       msgcode = msgJson.code;
 
       errorType = msgJson.errorType;
-      if (langmsg[language] != undefined) {
-        msginfo = langmsg[language][errorType] || errorType + '';
+
+
+      var objlanglist = langmsg[language];
+      console.log('objlanglist', objlanglist);
+      if (objlanglist != undefined) {
+        try {
+          msginfo = objlanglist[errorType];
+        } catch (error) {
+          msginfo = errorType;
+        }
       }
       // 根据这个做多语言
     }
   } catch (ex) {
     console.log('开始格式化处理错误信息1 异常');
+    msginfo = msg;
   }
   return {
     data: result,
