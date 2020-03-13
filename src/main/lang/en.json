@@ -51,11 +51,11 @@
 	"need_option": "need option",
 	"need_miningAddress": "need miningAddress",
 	"need_dhtId": "need dhtId",
-	"need_SourceAddress": "need need SourceAddress",
+	"need_SourceAddress": "need  SourceAddress",
 	"need_DestinationAddress": "need DestinationAddress",
 	"need_price": "need price",
-	"need_rate": "need_rate",
-	"need_description": "need_description",
+	"need_rate": "need rate",
+	"need_description": "need description",
 	"need_cancelTimeDuration": "need cancelTimeDuration",
 	"need_minBuySize": "need minBuySize",
 	"need_minBuyDuration": "need minBuyDuration",
@@ -64,5 +64,5 @@
 	"need_size": "need size",
 	"need_file": "need file",
 	"need_gasprice": "need gasprice",
-	"gaspricemust_be_numeric": "gaspricemust be numeric"
+	"gaspricemust_be_numeric": "gasprice must be numeric"
 }
