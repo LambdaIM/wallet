@@ -68,5 +68,6 @@ export var errorList = {
   'need_size': 'need_size|rpc629|need size',
   'need_file': 'need_file|rpc630|need file',
   'need_gasprice': 'need_gasprice|rpc631|need gasprice',
-  'gaspricemust_be_numeric': 'gaspricemust_be_numeric|rpc632|gaspricemust be numeric'
+  'gaspricemust_be_numeric': 'gaspricemust_be_numeric|rpc632|gaspricemust be numeric',
+  'file_format_error': 'file_format_error|rpc71|File format error'
 };

@@ -64,5 +64,6 @@
 	"need_size": "need size",
 	"need_file": "need file",
 	"need_gasprice": "need gasprice",
-	"gaspricemust_be_numeric": "gasprice must be numeric"
+	"gaspricemust_be_numeric": "gasprice must be numeric",
+	"file_format_error":"File format error"
 }

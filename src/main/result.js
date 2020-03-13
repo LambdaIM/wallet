@@ -33,7 +33,7 @@ export default function(result, state, errormsg, errorcode) {
 
 
         var objlanglist = langmsg[language];
-        console.log('objlanglist', objlanglist);
+        // console.log('objlanglist', objlanglist);
         if (objlanglist != undefined) {
           try {
             msginfo = objlanglist[errorType] + othermsg;

@@ -351,7 +351,11 @@ walletManger.prototype.exportSonAccount = function (address,password) {
 walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
   
   var file = fs.readFileSync(filepath, 'utf8');
-  file = JSON.parse(file);
+  try {
+    file = JSON.parse(file);  
+  } catch (error) {
+    throwErrorCode(errorList.file_format_error) 
+  }
   
   var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
 
@@ -395,7 +399,14 @@ walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
 
 walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, name) {
   var v3file = fs.readFileSync(filepath, 'utf8');
-  v3file = JSON.parse(v3file);
+  try {
+    v3file = JSON.parse(v3file);  
+  } catch (error) {
+    throwErrorCode(errorList.file_format_error)
+    
+  }
+  
+
   v3file.name = name;
   var privatekey = hdkeyjs.keyStore.checkJson(v3file, password);
 

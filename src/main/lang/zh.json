@@ -64,5 +64,6 @@
 	"need_size": "需要参数 size",
 	"need_file": "需要参数 file",
 	"need_gasprice": "需要参数 gasprice",
-	"gaspricemust_be_numeric": "gas价格必须是数字"
+	"gaspricemust_be_numeric": "gas价格必须是数字",
+	"file_format_error":"文件格式错误"
 }
