@@ -14,6 +14,7 @@
             >
             <Button icon="ios-cloud-upload-outline">{{$t('somemodel.Select file')}}</Button>
         </Upload>
+        {{path}}
       </p>
       <br/>
       <p>
