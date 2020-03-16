@@ -37,6 +37,7 @@ export default function(result, state, errormsg, errorcode) {
         if (objlanglist != undefined) {
           try {
             msginfo = objlanglist[errorType] + othermsg;
+            log.error(msginfo);
           } catch (error) {
             msginfo = errorType;
           }
@@ -46,6 +47,7 @@ export default function(result, state, errormsg, errorcode) {
     } catch (ex) {
       console.log('开始格式化处理错误信息1 异常');
       msginfo = msg;
+      log.error(msginfo);
     }
   }
 

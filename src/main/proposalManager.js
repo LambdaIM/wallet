@@ -16,9 +16,6 @@ class proposalManager {
     this.CosmosAPI = LambdaApi();
   }
   readconfig() {
-    log.info('Transaction readconfig');
-
-
     if (settings.has('defaultwallet') != false) {
       this.defaultAddress = settings.get('defaultwallet');
       // this.defaultAddress=this.defaultAddress.toLocaleLowerCase();

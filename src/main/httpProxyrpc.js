@@ -50,9 +50,6 @@ export default function() {
 
 
   eipc.answerRenderer('blockchainstate', async query => {
-    log.info('blockchainstate');
-
-
     try {
       var CosmosAPIobj = LambdaApi();
 

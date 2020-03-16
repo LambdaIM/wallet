@@ -162,7 +162,6 @@ export default function() {
 
 
   eipc.answerRenderer('defaultWalletBlance', async query => {
-    log.info('defaultWalletBlance start');
     try {
       var Liquid = await WM.getDefaultWalletBlance();
       // var Delegation = await WM.getDelegationsBalance();
