@@ -5,7 +5,7 @@ import Nedb from './utils/nedb';
 
 import TransactionManager from './transactionManager.js';
 // import isAddress from '../utils/isaddress.js';
-
+import path from 'path';
 
 const { ipcMain: eipc } = require('electron-better-ipc');
 
@@ -401,6 +401,10 @@ export default function() {
 
   eipc.answerRenderer('openkeystore', async query => {
     shell.showItemInFolder(DAEMON_CONFIG.BASE_PATH);
+  });
+
+  eipc.answerRenderer('openLog', async query => {
+    shell.showItemInFolder(path.join(DAEMON_CONFIG.BASE_PATH, 'Log'));
   });
 
   // eipc.answerRenderer('ViewDefaultWalletPrivatekey',async(query)=>{

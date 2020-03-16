@@ -8,6 +8,7 @@
       "sign": "签名",
       "market":"市场",
       "help":"使用手册",
+      
       "action": {
           "You_just_copied": "您刚刚复制了：",
           "Failed_to_copy_texts": "无法复制文本",
@@ -161,6 +162,7 @@
       "subaccount": "子账户",
       "moreonbrowser":"更多历史交易记录请查看区块链浏览器",
       "miningguide":"挖矿向导",
+      "Viewlog":"查看日志",
       "table": {
           "Amount": "金额",
           "From":"发送",
