@@ -46,7 +46,7 @@ export default class {
     this.readconfig();
     var address = this.defaultAddress;
     return new Promise(function (resolve, reject) {
-      db.find({ address: address, dataType: 'localSendTx' }).sort({ createTime: -1 }).limit(100).exec(function (err, docs) {
+      db.find({ address: address, dataType: 'localSendTx', network: global.__lambNodeinfo.network }).sort({ createTime: -1 }).limit(100).exec(function (err, docs) {
         if (err == null) {
           resolve(docs);
         } else {

@@ -1,7 +1,13 @@
 
 <template>
   <div class="customer-container">
+
       <div class="tableContainer">
+        <div>
+          <Button @click="openlog" type="primary"> {{$t('home.Viewlog')}} </Button>
+        </div>
+        <br/>
+
          <Table :columns="localTxcolumns" :data="localTxList">
 
             <template slot-scope="{ row, index }" slot="state">
@@ -111,6 +117,9 @@ export default {
     clearInterval(this.$data.Interval);
   },
   methods: {
+    async openlog() {
+      await ipc.callMain('openLog', {});
+    },
     async getlocaltxlist() {
       let res = await ipc.callMain('localtxlist', {});
       // console.log(res);

@@ -9,6 +9,7 @@
       "sign": "Sign",
       "market":"Market",
       "help":"manual",
+      
       "action":{
         "You_just_copied":"You just copied:",
         "Failed_to_copy_texts":"Failed to copy texts",
@@ -165,6 +166,7 @@
       "subaccount": "Sub account",
       "moreonbrowser":"More historical transactions view blockchain browser",
       "miningguide":"Mining guide",
+      "Viewlog":"Viewlog",
       "table":{
         "Amount":"Amount",
         "Source":"Source",
