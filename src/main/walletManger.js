@@ -431,7 +431,7 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
 
 
 walletManger.prototype.getDefaultWalletBlance = async function () {
-  log.info('walletManger getDefaultWalletBlance');
+  
 
   if (this.defaultwallet == null) {
     throwErrorCode(errorList.not_find_DefaultWallet)
@@ -440,14 +440,7 @@ walletManger.prototype.getDefaultWalletBlance = async function () {
 
 
   var result = await this.CosmosAPI().get.account(this.defaultwallet.address);
-  log.info('账户信息');
-  log.info(result);
-  // 返回结果 1  { sequence: '0', accountNumber: '0' }
-  // 返回结果2
-
-  // const delegations = await this.CosmosAPI.get.delegations(this.defaultwallet.address)
-
-
+  
 
   var balanceLamb = 0;
   var balanceSto = 0;
@@ -805,7 +798,7 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   
   
   
-  log.info('transactiondata');
+  log.info('User input transactiondata');
   log.info(transactiondata);
   log.info('TransferConfirmresult');
   log.info(hash);
@@ -839,9 +832,9 @@ walletManger.prototype.getSigner = function (config, submitType = '', { address,
 
   var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
   var publicKey = hdkeyjs.publicKey.getBytes(this.defaultwallet.publicKey);
-  log.info('校验密码ok');
+  log.info('Verify password OK');
   return signMessage => {
-    log.info('数据签名');
+    log.info('Data signature');
     log.info(signMessage);
     const signature = hdkeyjs.crypto.sign(
       Buffer.from(signMessage),

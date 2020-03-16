@@ -7,5 +7,5 @@ log.transports.file.file=path;
 log.transports.file.level='debug';
 
 // console.log(path)
-
+global.__log = log;
 module.exports.log = log
