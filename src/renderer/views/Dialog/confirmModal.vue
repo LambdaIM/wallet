@@ -88,6 +88,22 @@
               </Row>
 
           </div>
+          <div v-if="txtype=='AssetPledge'">
+            <h2>{{$t('Dialog.com.AssetConversion')}}</h2>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+                <Col span="20" class-name="value address">{{address}}</Col>
+              </Row>
+                <Row v-if="transactiondata.type=='MsgAssetPledge'" class-name="item">
+                  <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+                  <Col span="20" class-name="value">{{transactiondata.amounts.amount|BlanceValue}} LAMB {{$t('Dialog.com.to')}}  {{transactiondata.asset.amount|BlanceValue}} TBB</Col>
+                </Row>
+                <Row v-else class-name="item">
+                  <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+                  <Col span="20" class-name="value"> {{transactiondata.asset.amount|BlanceValue}} TBB  {{$t('Dialog.com.to')}} {{transactiondata.amounts.amount|BlanceValue}} LAMB</Col>
+                </Row>
+
+          </div>
           <Row class-name="item">
             <Input ref="gasinput_"  v-model="gaseFee" >
               <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>

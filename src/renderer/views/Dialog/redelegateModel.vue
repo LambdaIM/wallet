@@ -108,7 +108,7 @@ export default {
       this.$data.LAMBvalue = '';
       this.$data.Tovaluenew = '';
 
-      var result = await this.getListData();
+      await this.getListData();
       this.stakingParameters();
     },
     sendcancel() {
