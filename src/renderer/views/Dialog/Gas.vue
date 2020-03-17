@@ -1,6 +1,6 @@
 <template>
 <div>
-    <Input @on-change="changegase"  v-model="gaseFee" >
+    <Input ref="gasinput_" autofocus @on-change="changegase"  v-model="gaseFee" >
         <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
         <span slot="append">LAMB</span>
     </Input>
@@ -44,6 +44,13 @@ export default {
       console.log(data);
 
       eventhub.$emit('gaseValue', this.$data.gaseFee);
+    },
+    focus() {
+      console.log('focus');
+      var _this = this;
+      setTimeout(() => {
+        _this.$refs.gasinput_.focus();
+      }, 100);
     }
   }
 };
