@@ -24,8 +24,8 @@
               <span slot="append">LAMB</span>
           </Input>
           </Row>
-          <Row v-if="editmemo==true"  class-name="item">
-            <Input  v-model="memo" readonly type="textarea" :rows="4"  />
+          <Row v-if="transactiondata.memo!=undefined "  class-name="item">
+            <Input  v-model="transactiondata.memo" readonly type="textarea" :rows="4"  />
           </Row>
           </Form>
 
