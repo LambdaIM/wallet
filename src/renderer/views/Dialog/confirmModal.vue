@@ -3,7 +3,7 @@
 
         <div class="modal-header" slot="header">
           <Form  @keydown.native.enter.prevent ="confirm" >
-          <div v-if="txtype='send'">
+          <div v-if="txtype=='send'">
               <h2>{{$t('home.Modal1.Transfer')}}</h2>
                 <Row class-name="item">
                     <Col span="4" class-name="key ">{{$t('home.Modal1.From')}}:</Col>
@@ -16,6 +16,39 @@
                 <Row class-name="item" v-if="transactiondata.amounts">
                     <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
                     <Col span="20" class-name="value">{{transactiondata.amounts[0].amount}} {{denomShow}}</Col>
+                </Row>
+          </div>
+          <div v-if="txtype=='withdrawal'">
+            <h2>{{$t('Dialog.withdrawalModal.title')}}</h2>
+                <Row class-name="item">
+                    <Col span="4" class-name="key ">{{$t('home.Modal1.From')}}:</Col>
+                    <Col span="20" class-name="value address">{{address}}</Col>
+                </Row>
+                <Row class-name="item" v-if="transactiondata.amount">
+                    <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+                    <Col span="20" class-name="value">{{transactiondata.amount|BlanceValue }} {{denomShort(transactiondata.denom)}}</Col>
+                </Row>
+          </div>
+          <div v-if="txtype=='minerwithdrawal'">
+            <h2>{{$t('somemodel.Extractstorageandmininrewards')}}</h2>
+                <Row class-name="item">
+                    <Col span="4" class-name="key ">{{$t('home.Modal1.From')}}:</Col>
+                    <Col span="20" class-name="value address">{{address}}</Col>
+                </Row>
+                <Row class-name="item" >
+                    <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+                    <Col span="20" class-name="value">{{MinerDistributionReward }} LAMB</Col>
+                </Row>
+          </div>
+          <div v-if="txtype=='withdrawalDistribution'">
+                <h2>{{$t('home.Withdrawprofit')}}</h2>
+                <Row class-name="item">
+                    <Col span="4" class-name="key ">{{$t('home.Modal1.From')}}:</Col>
+                    <Col span="20" class-name="value address">{{address}}</Col>
+                </Row>
+                <Row class-name="item" >
+                    <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+                    <Col span="20" class-name="value">{{DistributionReward }} LAMB</Col>
                 </Row>
           </div>
           <Row class-name="item">
@@ -55,9 +88,7 @@ export default {
     };
   },
   mounted() {
-    eventhub.$on('gaseValue', data => {
-      this.$data.gaseFee = data;
-    });
+
   },
   methods: {
     open(txtype, transactiondata) {
@@ -101,6 +132,9 @@ export default {
         });
         console.log(ex);
       }
+    },
+    denomShort: function(denom) {
+      return denom.substr(1).toUpperCase();
     }
   },
   computed: {
@@ -109,6 +143,13 @@ export default {
     },
     denomShow: function() {
       return this.transactiondata.amounts[0].denom.substr(1).toUpperCase();
+    },
+    MinerDistributionReward() {
+      return this.bigNumType(this.$store.getters.getMinerReward);
+    },
+    DistributionReward() {
+      // 节点收益
+      return this.bigNumType(this.$store.getters.getDistribution);
     }
   }
 
