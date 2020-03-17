@@ -49,10 +49,7 @@
             <Col span="20" class-name="value">{{LAMBvalue}} {{denomShow}}</Col>
           </Row>
           <Row class-name="item">
-            <Input v-model="gaseFee" >
-                              <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
-                                <span slot="append">LAMB</span>
-                              </Input>
+            <Gasinput/>
           </Row>
           <Row v-if="editmemo==true"  class-name="item">
             <Input v-model="memo" readonly type="textarea" :rows="4"  />
@@ -71,8 +68,8 @@
 <script>
 import eventhub from '../../common/js/event.js';
 import isaddress from '../../../utils/isaddress';
+import Gasinput from './Gas.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
-
 
 export default {
   props: {
@@ -92,6 +89,16 @@ export default {
       memo: '',
       memoNum: 255
     };
+  },
+  components: {
+    Gasinput
+  },
+  mounted() {
+    eventhub.$on('gaseValue', data => {
+      this.sendcancel();
+      this.confirmModal = true;
+      this.$data.gaseFee = data;
+    });
   },
   methods: {
     openmemo() {
@@ -153,15 +160,8 @@ export default {
         });
         // console.log(res);
         if (res.state) {
-          let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
-          if (gasres.state) {
-            console.log(gasres.data);
-            this.$data.gaseFee = gasres.data;
-            this.confirmModal = true;
-            this.$data.transactiondata = res.data;
-            this.sendcancel();
-          }
-          // 触发事件活着回掉函数
+          eventhub.$emit('GetGase', res.data);
+          this.$data.transactiondata = res.data;
         }
       } catch (ex) {
         this.$Notice.warning({
