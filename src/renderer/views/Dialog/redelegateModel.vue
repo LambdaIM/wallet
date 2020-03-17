@@ -7,6 +7,7 @@
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
+      <Form  @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
           <Input v-model="address" readonly>
             <span slot="prepend">{{$t('home.Modal1.From')}}</span>
@@ -40,52 +41,22 @@
         <p style="color:red">
           {{$t('Dialog.redelegateModel.tip',[this.days()])}}
         </p>
+        </Form >
 
         <div slot="footer">
           <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
         </div>
       </Modal>
 
-      <Modal v-model="confirmModal" :styles="{top: '200px'}">
-        <div class="modal-header" slot="header">
-          <h2>{{isdegeTxt}}</h2>
-          <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
-            <Col span="20" class-name="value">{{address}}</Col>
-          </Row>
-          <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('Dialog.redelegateModel.turnout')}}:</Col>
-            <Col span="20" class-name="value">{{Tovalue}}</Col>
-          </Row>
-          <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('Dialog.redelegateModel.turnin')}}:</Col>
-            <Col span="20" class-name="value">{{Tovaluenew}}</Col>
-          </Row>
-          <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('Dialog.redelegateModel.validatorname')}}:</Col>
-            <Col span="20" class-name="value">{{validatorName}}</Col>
-          </Row>
-          <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{LAMBvalue}} TBB</Col>
-          </Row>
-          <Row class-name="item">
-            <Input v-model="gaseFee" >
-                              <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
-                                <span slot="append">LAMB</span>
-                              </Input>
-          </Row>
-        </div>
 
-        <div slot="footer">
-          <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
-        </div>
-      </Modal>
+      <ConfirmModal ref="ConfirmModal" />
 </div>
 </template>
 <script>
-import eventhub from '../../common/js/event.js';
+
+import ConfirmModal from './confirmModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 
 export default {
   data() {
@@ -101,6 +72,9 @@ export default {
       validatorName: '',
       dataParameters: {}
     };
+  },
+  components: {
+    ConfirmModal
   },
   methods: {
     getselectvalue(item) {
@@ -189,13 +163,16 @@ export default {
         });
         // console.log(res);
         if (res.state) {
-          let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
-          if (gasres.state) {
-            this.$data.gaseFee = gasres.data;
-            this.$data.transactiondata = res.data;
-            this.sendcancel();
-            this.confirmModal = true;
-          }
+          this.sendcancel();
+          this.$refs.ConfirmModal.open('redelegate', res.data);
+
+          // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
+          // if (gasres.state) {
+          //   this.$data.gaseFee = gasres.data;
+          //   this.$data.transactiondata = res.data;
+          //   this.sendcancel();
+          //   this.confirmModal = true;
+          // }
         }
       } catch (ex) {
         this.$Notice.warning({
@@ -204,19 +181,6 @@ export default {
         });
         console.log(ex);
       }
-    },
-    confirm() {
-      var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
-      if (comparedNum == 1 || comparedNum == null) {
-        this.$Notice.warning({
-          title: 'error',
-          desc: this.$t('Dialog.com.Lesscommission')
-        });
-        return;
-      }
-      this.confirmModal = false;
-      // this.passwordModal = true;
-      eventhub.$emit('TxConfirm', this.$data.transactiondata, this.toBigNumStr(this.$data.gaseFee));
     },
     async stakingParameters() {
       try {

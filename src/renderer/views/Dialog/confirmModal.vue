@@ -52,19 +52,40 @@
                 </Row>
           </div>
           <div v-if="txtype=='transferDelegation'">
-            <h2>{{$t('Dialog.stakingModel.title1')}}</h2>
-            <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
-            <Col span="20" class-name="value">{{address}}</Col>
-          </Row>
-          <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
-            <Col span="20" class-name="value">{{transactiondata.validatorAddress}}</Col>
-          </Row>
-          <Row class-name="item">
-            <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-            <Col span="20" class-name="value">{{transactiondata.amount|BlanceValue}} TBB</Col>
-          </Row>
+              <h2 v-if="transactiondata.type=='MsgDelegate'">{{$t('Dialog.stakingModel.title1')}}</h2>
+              <h2 v-if="transactiondata.type=='MsgUndelegate'">{{$t('Dialog.stakingModel.title2')}}</h2>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+                <Col span="20" class-name="value">{{address}}</Col>
+              </Row>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
+                <Col span="20" class-name="value">{{transactiondata.validatorAddress}}</Col>
+              </Row>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+                <Col span="20" class-name="value">{{transactiondata.amount|BlanceValue}} TBB</Col>
+              </Row>
+
+          </div>
+          <div v-if="txtype=='redelegate'">
+             <h2>{{$t('Dialog.redelegateModel.redelegate')}}</h2>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+                <Col span="20" class-name="value address">{{address}}</Col>
+              </Row>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('Dialog.redelegateModel.turnout')}}:</Col>
+                <Col span="20" class-name="value address">{{transactiondata.validatorSourceAddress}}</Col>
+              </Row>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('Dialog.redelegateModel.turnin')}}:</Col>
+                <Col span="20" class-name="value address">{{transactiondata.validatorDestinationAddress}}</Col>
+              </Row>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+                <Col span="20" class-name="value">{{transactiondata.amount|BlanceValue}} TBB</Col>
+              </Row>
 
           </div>
           <Row class-name="item">
