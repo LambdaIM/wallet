@@ -51,6 +51,22 @@
                     <Col span="20" class-name="value">{{DistributionReward }} LAMB</Col>
                 </Row>
           </div>
+          <div v-if="txtype=='transferDelegation'">
+            <h2>{{$t('Dialog.stakingModel.title1')}}</h2>
+            <Row class-name="item">
+            <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+            <Col span="20" class-name="value">{{address}}</Col>
+          </Row>
+          <Row class-name="item">
+            <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
+            <Col span="20" class-name="value">{{transactiondata.validatorAddress}}</Col>
+          </Row>
+          <Row class-name="item">
+            <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+            <Col span="20" class-name="value">{{transactiondata.amount|BlanceValue}} TBB</Col>
+          </Row>
+
+          </div>
           <Row class-name="item">
             <Input ref="gasinput_"  v-model="gaseFee" >
               <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
