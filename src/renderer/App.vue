@@ -5,9 +5,9 @@
 
     <router-view></router-view>
     <Modal  :title="$t('apppage.Modal1.Please_enter_password')" v-model="passwordModal" :styles="{top: '200px'}">
-        <p>
-          <Input v-model="walletPassword" type="password"></Input>
-        </p>
+        <Form  @keydown.native.enter.prevent ="TransferConfirmTimeOut" >
+          <Input autofocus v-model="walletPassword" type="password"></Input>
+        </Form>
         <div slot="footer">
           <Button v-if="loadingsendLAMBTx==false" :loading="loadingsendLAMBTx" type="primary" @click="TransferConfirmTimeOut">{{$t('apppage.Modal1.Confirm')}}</Button>
           <Button v-else :loading="loadingsendLAMBTx" type="primary" > {{$t('apppage.Modal1.loading10')}}</Button>

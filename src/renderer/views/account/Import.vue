@@ -21,7 +21,7 @@
       <div class="demo-tabs-style2">
         <Tabs value="name1">
           <TabPane :label="$t('Import.by_keyStore_file')" name="name1">
-            <Form ref="formbyfile" :model="formInline" :rules="ruleInline" class="form-container">
+            <Form @keydown.native.enter.prevent ="handleSubmit('formbyfile')" ref="formbyfile" :model="formInline" :rules="ruleInline" class="form-container">
               <FormItem prop="keystorefile">
                 <Upload
                   :before-upload="beforeUpload"
@@ -69,6 +69,7 @@
                 :model="Mnemonic"
                 :rules="ruleMnemonic"
                 class="form-container"
+                @keydown.native.enter.prevent ="handleSubmit('formInMnemonic')"
               >
                 <FormItem prop="word">
                   <Input

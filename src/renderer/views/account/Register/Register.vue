@@ -9,7 +9,7 @@
               <!-- <p class="notice">WARNING: Password can NOT be reset or recovered, do remember it!</p> -->
             </div>
           </div>
-          <Form ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
+          <Form @keydown.native.enter.prevent ="submit('formInline')" ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
             <FormItem prop="walletName">
               <Input type="text" v-model="formInline.walletName" :placeholder="$t('create.Wallet_Name')">
                 <Icon type="ios-person-outline" slot="prepend"></Icon>
@@ -54,50 +54,50 @@
 </template>
 
 <script>
-import Mybg from "@/components/common/useful/Mybg.vue";
-import { DAEMON_CONFIG } from "../../../../config.js";
+import Mybg from '@/components/common/useful/Mybg.vue';
+import { DAEMON_CONFIG } from '../../../../config.js';
 
 
-const {ipcRenderer: ipc} = require('electron-better-ipc');
+const { ipcRenderer: ipc } = require('electron-better-ipc');
 // const settings = require("electron-settings");
 
 export default {
   data() {
     return {
       formInline: {
-        walletName: "",
-        password: ""
+        walletName: '',
+        password: ''
       },
       ruleInline: {
         walletName: [
           {
             required: true,
-            message: this.$t("create.action.fill_walletName"),
-            trigger: "blur"
+            message: this.$t('create.action.fill_walletName'),
+            trigger: 'blur'
           }
         ],
         password: [
           {
             required: true,
-            message: this.$t("create.action.fill_password"),
-            trigger: "blur"
+            message: this.$t('create.action.fill_password'),
+            trigger: 'blur'
           },
           {
-            type: "string",
+            type: 'string',
             min: 6,
-            max:20,
-            message: this.$t("create.action.password_length"),
-            trigger: "blur"
+            max: 20,
+            message: this.$t('create.action.password_length'),
+            trigger: 'blur'
           }
         ],
         confirmPassword: [
           {
             validator: this.validateConfirmPass,
-            trigger: "blur"
+            trigger: 'blur'
           }
-        ],
+        ]
       },
-      loading:false
+      loading: false
     };
   },
   components: {
@@ -105,72 +105,68 @@ export default {
   },
   methods: {
     submit(name) {
-      this.$data.loading=true;
+      this.$data.loading = true;
       this.$refs[name].validate(valid => {
         if (valid) {
           this.create();
-        }else{
-          this.$data.loading=false;
+        } else {
+          this.$data.loading = false;
         }
       });
-
-      
-
     },
     async create() {
-      console.log("createWallet");
-      ipc.callMain('log','createWallet JS')
+      console.log('createWallet');
+      ipc.callMain('log', 'createWallet JS');
       let password = this.formInline.password;
       let name = this.formInline.walletName;
-      
+
       // debugger;
-      
-      
+
+
       try {
-        let res = await ipc.callMain("createWallet", {
+        let res = await ipc.callMain('createWallet', {
           password,
           name
         });
         console.log(res);
         if (!res.state) {
           this.$Notice.error({
-            desc: this.$t("create.action.create_fail"),
+            desc: this.$t('create.action.create_fail'),
             duration: 1000
           });
         } else {
-          let word = res.data.mnemonic.split(" ");
+          let word = res.data.mnemonic.split(' ');
           // console.log(word);
           let combineWords = res.data.mnemonic;
-          this.$store.dispatch("setCombineWord", combineWords);
-          this.$store.dispatch("setWord", word);
+          this.$store.dispatch('setCombineWord', combineWords);
+          this.$store.dispatch('setWord', word);
           // this.$store.state.combineWords = result.mnemonic;
-          this.$router.push("/success");
+          this.$router.push('/success');
         }
       } catch (ex) {
         console.log(ex);
         this.$Notice.error({
-            desc: this.$t("create.action.create_fail"),
-            duration: 1000
-          });
-
+          desc: this.$t('create.action.create_fail'),
+          duration: 1000
+        });
       }
-      this.$data.loading=false;
+      this.$data.loading = false;
     },
     validatePass(rule, value, callback) {
-      if (value === "") {
-        callback(new Error(this.$t("create.action.enter_password")));
+      if (value === '') {
+        callback(new Error(this.$t('create.action.enter_password')));
       } else {
-        if (this.formInline.confirmPassword !== "") {
-          this.$refs.formInline.validateField("confirmPassword");
+        if (this.formInline.confirmPassword !== '') {
+          this.$refs.formInline.validateField('confirmPassword');
         }
         callback();
       }
     },
     validateConfirmPass(rule, value, callback) {
-      if (value === "") {
-        callback(new Error(this.$t("create.action.enter_password_again")));
+      if (value === '') {
+        callback(new Error(this.$t('create.action.enter_password_again')));
       } else if (value !== this.formInline.password) {
-        callback(new Error(this.$t("create.action.passwords_match")));
+        callback(new Error(this.$t('create.action.passwords_match')));
       } else {
         callback();
       }

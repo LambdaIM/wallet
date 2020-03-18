@@ -8,7 +8,7 @@
       @on-cancel="sendcancel"
     >
       <p>
-        <Input readonly v-model="DistributionReward">
+        <Input  readonly v-model="DistributionReward">
           <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
           <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
         </Input>
@@ -17,36 +17,15 @@
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>
     </Modal>
-    <Modal v-model="confirmModal" :styles="{top: '200px'}">
-      <div class="modal-header" slot="header">
-        <h2>{{$t('Dialog.withdrawalModal.title')}}</h2>
-        <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
-          <Col span="20" class-name="value">{{address}}</Col>
-        </Row>
-        <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-          <Col span="20" class-name="value">{{DistributionReward}} LAMB</Col>
-        </Row>
-        <Row class-name="item">
-            <Input  v-model="gaseFee" >
-                              <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
-                                <span slot="append">LAMB</span>
-                              </Input>
-          </Row>
-      </div>
-      <!-- <p>
-          <Input v-model="walletPassword" type="password"></Input>
-      </p>-->
-      <div slot="footer">
-        <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
-      </div>
-    </Modal>
+
+    <ConfirmModal ref="ConfirmModal" />
   </div>
 </template>
 <script>
 import eventhub from '../../common/js/event.js';
+import ConfirmModal from './confirmModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 export default {
   data() {
     return {
@@ -54,6 +33,9 @@ export default {
       confirmModal: false,
       gaseFee: 0
     };
+  },
+  components: {
+    ConfirmModal
   },
   methods: {
     open() {
@@ -98,13 +80,8 @@ export default {
         // console.log(res);
         if (res.state) {
           console.log(res.data);
-          let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
-          if (gasres.state) {
-            this.$data.gaseFee = gasres.data;
-            this.$data.transactiondata = res.data;
-            this.sendcancel();
-            this.confirmModal = true;
-          }
+          this.sendcancel();
+          this.$refs.ConfirmModal.open('withdrawal', res.data);
         }
       } catch (ex) {
         this.$Notice.warning({
@@ -117,20 +94,8 @@ export default {
     sendcancel() {
       this.withdrawalModal = false;
       // this.confirmModal=true;
-    },
-    confirm() {
-      var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
-      if (comparedNum == 1 || comparedNum == null) {
-        this.$Notice.warning({
-          title: 'error',
-          desc: this.$t('Dialog.com.Lesscommission')
-        });
-        return;
-      }
-      this.confirmModal = false;
-      console.log(this.$data.transactiondata);
-      eventhub.$emit('TxConfirm', this.$data.transactiondata, this.toBigNumStr(this.$data.gaseFee));
     }
+
   },
   computed: {
     DistributionReward() {

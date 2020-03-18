@@ -7,6 +7,7 @@
       :styles="{top: '200px'}"
 
     >
+    <Form  @keydown.native.enter.prevent ="Submit" >
       <p>
         <Input v-model="world" type="textarea" :rows="8" :placeholder="$t('somemodel.Mnemonicword')" />
       </p>
@@ -18,6 +19,7 @@
       <p>
         <Input type="password" v-model="password" :placeholder="$t('somemodel.Walletpassword')"  />
       </p>
+    </Form >
       <div slot="footer">
         <Button type="primary" @click="Submit">{{$t('home.Modal1.Confirm')}}</Button>
       </div>

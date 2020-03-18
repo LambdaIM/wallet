@@ -400,7 +400,7 @@ export default function() {
   });
 
   eipc.answerRenderer('openkeystore', async query => {
-    shell.showItemInFolder(DAEMON_CONFIG.BASE_PATH);
+    shell.showItemInFolder(path.join(DAEMON_CONFIG.BASE_PATH, 'Wallet'));
   });
 
   eipc.answerRenderer('openLog', async query => {

@@ -372,6 +372,7 @@
       "amountspace":"Amount space",
       "remainingspace":"Remaining space",
       "Mineraddress":"Minera ddress",
+      "OrderID":"Order ID",
       "action":{
         "needspacesize":"Please check the size of the space, the space can only fill in the integer",
         "needstime":"Please check the duration, only the integer can be filled in."
