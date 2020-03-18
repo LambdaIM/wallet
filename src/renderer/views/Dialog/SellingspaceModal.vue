@@ -7,6 +7,7 @@
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
+    <Form  @keydown.native.enter.prevent ="prewithdrawalLAMB" >
     <p>
         {{$t('Dialog.sellorder.Marketaddress')}}：{{market.marketAddress}}
       </p><br/>
@@ -80,6 +81,7 @@
 
 
       </p>
+      </Form >
 
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
@@ -135,12 +137,15 @@
         <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
       </div>
     </Modal>
+    <ConfirmModal ref="ConfirmModal" />
   </div>
 </template>
 <script>
 import eventhub from '../../common/js/event.js';
 import { debounce } from 'underscore';
+import ConfirmModal from './confirmModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 export default {
   data() {
     return {
@@ -159,6 +164,9 @@ export default {
       timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30,
       description: ''
     };
+  },
+  components: {
+    ConfirmModal
   },
   methods: {
     open(market) {
@@ -374,14 +382,8 @@ export default {
         });
         // console.log(res);
         if (res.state) {
-          console.log(res.data);
-          let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
-          if (gasres.state) {
-            this.$data.gaseFee = gasres.data;
-            this.$data.transactiondata = res.data;
-            this.sendcancel();
-            this.confirmModal = true;
-          }
+          this.sendcancel();
+          this.$refs.ConfirmModal.open('CreateSellOrder', res.data);
         }
       } catch (ex) {
         this.$Notice.warning({

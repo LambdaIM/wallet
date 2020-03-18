@@ -162,6 +162,40 @@
 
 
           </div>
+          <div v-if="txtype=='CreateSellOrder'">
+            <h2>{{$t('Dialog.sellorder.Sellingspace')}}</h2>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+
+        <Row class-name="item">
+          <Col span="4" class-name="key">{{$t('Dialog.sellorder.Sellingspace')}}:</Col>
+          <Col span="20" class-name="value">{{transactiondata.spaceSize}} GB</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">{{$t('Dialog.sellorder.unitprice1')}}:</Col>
+          <Col span="20" class-name="value">{{transactiondata.price|BlanceValue}} {{$t('Dialog.sellorder.unitprice2')}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">{{$t('Dialog.sellorder.Odds')}}:</Col>
+          <Col span="20" class-name="value">{{parseFloat(transactiondata.rate).toFixed(2)}} {{$t('Dialog.sellorder.times')}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="5" class-name="key"> {{$t('Dialog.sellorder.Minimumspace')}}:</Col>
+          <Col span="19" class-name="value">{{transactiondata.minBuySize}}GB</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="5" class-name="key"> {{$t('Dialog.sellorder.Minimumtime')}}:</Col>
+          <Col span="19" class-name="value">{{transactiondata.minBuyDuration|formatMonth}} {{$t('Dialog.sellorder.month')}} </Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="5" class-name="key"> {{$t('Dialog.sellorder.Maximumtime')}}:</Col>
+          <Col span="19" class-name="value">{{transactiondata.maxBuyDuration|formatMonth}} {{$t('Dialog.sellorder.month')}} </Col>
+        </Row>
+
+
+          </div>
 
 
 
