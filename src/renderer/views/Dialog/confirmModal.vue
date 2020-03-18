@@ -104,13 +104,49 @@
                 </Row>
 
           </div>
+
+          <div v-if="txtype=='deposit'">
+            <h2>{{$t('proposalsPage.Deposit')}}</h2>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+                <Col span="20" class-name="value address">{{address}}</Col>
+              </Row>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t("head.proposals")}}:</Col>
+                <Col span="20" class-name="value">{{transactiondata.proposalId}}</Col>
+              </Row>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
+                <Col span="20" class-name="value">{{transactiondata.amounts[0].amount|BlanceValue}} {{denomShort(transactiondata.amounts[0].denom)}}</Col>
+              </Row>
+
+          </div>
+          <div v-if="txtype=='vote'">
+            <h2>{{$t('proposalsPage.Vote')}}</h2>
+            <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+                <Col span="20" class-name="value address">{{address}}</Col>
+            </Row>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t("head.proposals")}}:</Col>
+                <Col span="20" class-name="value">{{transactiondata.proposalId}}</Col>
+              </Row>
+              <Row class-name="item">
+                <Col span="4" class-name="key">{{$t("proposalsPage.Vote")}}:</Col>
+                <Col span="20" class-name="value">{{$t(`proposalsPage.${transactiondata.option}`)}} </Col>
+              </Row>
+
+          </div>
+
+
+
           <Row class-name="item">
             <Input ref="gasinput_"  v-model="gaseFee" >
               <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
               <span slot="append">LAMB</span>
           </Input>
           </Row>
-          <Row v-if="transactiondata.memo!='' "  class-name="item">
+          <Row v-if="transactiondata.memo!=''&&transactiondata.memo!=undefined "  class-name="item">
             <Input  v-model="transactiondata.memo" readonly type="textarea" :rows="4"  />
           </Row>
           </Form>
