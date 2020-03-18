@@ -137,6 +137,31 @@
               </Row>
 
           </div>
+          <div v-if="txtype=='CreateBuyOrder'">
+            <h2>{{$t('Dialog.AutoBuy.Buyspace')}}</h2>
+            <Row class-name="item">
+                <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+                <Col span="20" class-name="value address">{{address}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.Marketname')}}:</Col>
+              <Col span="20" class-name="value">{{transactiondata.marketName}}</Col>
+            </Row>
+            <Row class-name="item" v-if="transactiondata.sellOrderId">
+              <Col span="4" class-name="key">{{$t('Dialog.selectBuy.OrderID')}}:</Col>
+              <Col span="20" class-name="value">{{transactiondata.sellOrderId}}</Col>
+            </Row>
+            <Row class-name="item">
+            <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.space')}}:</Col>
+            <Col span="20" class-name="value">{{transactiondata.size}} GB</Col>
+          </Row>
+          <Row class-name="item">
+            <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.duration')}}:</Col>
+            <Col span="20" class-name="value">{{transactiondata.duration|formatMonth}} {{$t('Dialog.AutoBuy.month')}}</Col>
+          </Row>
+
+
+          </div>
 
 
 
