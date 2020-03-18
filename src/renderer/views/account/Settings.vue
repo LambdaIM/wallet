@@ -424,9 +424,11 @@
         v-model="modal2"
         width="360"
       >
+
         <p slot="header">
           <span>{{$t('seting.edit_name')}}</span>
         </p>
+      <Form  @keydown.native.enter.prevent ="editName" >
         <div style="text-align:center">
           <p v-if="walletInfo!=null"> <Input
               v-model="editvalue"
@@ -434,6 +436,7 @@
             /></p>
 
         </div>
+      </Form>
         <div slot="footer">
           <Button
             type="primary"

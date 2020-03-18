@@ -5,9 +5,11 @@
         :title="$t('gaspage.title')"
         @on-ok="submitdata"
         >
-        <Input v-model="gasprise" :placeholder="$t('gaspage.placeholder')"  >
-         <span slot="append">LAMB</span>
-        </Input>
+        <Form  @keydown.native.enter.prevent ="submitdata" >
+          <Input v-model="gasprise" :placeholder="$t('gaspage.placeholder')"  >
+          <span slot="append">LAMB</span>
+          </Input>
+        </Form >
          <div>
           <br/>
           {{$t('gaspage.gashelper',[Validatorgasprise])}}
@@ -62,6 +64,7 @@ export default {
         gasprice: gasprise
       });
       if (res.state) {
+        this.$data.showmodel = false;
         console.log('gas 价格更新成功');
         this.$store.dispatch('setgasprise', gasprise);
       }
