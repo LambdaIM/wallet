@@ -196,6 +196,22 @@
 
 
           </div>
+          <div v-if="txtype=='CreateMiner'">
+            <h2>{{$t('sellpageinfo.Initializeminer')}}</h2>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+            <Row class-name="item">
+          <Col span="4" class-name="key">{{$t('somemodel.Miningsubaccount')}}:</Col>
+          <Col span="20" class-name="value">{{transactiondata.miningAddress}}</Col>
+        </Row>
+        <Row class-name="item">
+          <Col span="4" class-name="key">DhtId:</Col>
+          <Col span="20" class-name="value">{{transactiondata.dhtId}}</Col>
+        </Row>
+
+          </div>
 
 
 
