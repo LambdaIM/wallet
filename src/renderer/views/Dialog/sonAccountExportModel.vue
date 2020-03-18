@@ -7,9 +7,11 @@
       :styles="{top: '200px'}"
 
     >
+    <Form  @keydown.native.enter.prevent ="Submit" >
       <p>
         <Input type="password" v-model="password" :placeholder="$t('somemodel.Walletpassword')"  />
       </p>
+    </Form >
       <div slot="footer">
         <Button type="primary" @click="Submit">{{$t('home.Modal1.Submit')}}</Button>
       </div>

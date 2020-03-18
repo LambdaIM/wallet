@@ -110,7 +110,7 @@
               <span slot="append">LAMB</span>
           </Input>
           </Row>
-          <Row v-if="transactiondata.memo!=undefined "  class-name="item">
+          <Row v-if="transactiondata.memo!='' "  class-name="item">
             <Input  v-model="transactiondata.memo" readonly type="textarea" :rows="4"  />
           </Row>
           </Form>
