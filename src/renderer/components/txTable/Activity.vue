@@ -95,7 +95,10 @@ export default {
       txItem.action !== 'MsgCreateSellOrder' &&
       txItem.action !== 'MsgCancelSellOrder' &&
       txItem.action !== 'MsgCreateBuyOrder' &&
-      txItem.action !== 'MsgEditMiner'
+      txItem.action !== 'MsgEditMiner' &&
+      txItem.action !== 'MsgMaintain' &&
+      txItem.action !== 'MsgUnMaintain' &&
+      txItem.action !== 'MsgUnLoose'
 
       ;
     },
