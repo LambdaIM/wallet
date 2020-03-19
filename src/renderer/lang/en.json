@@ -476,7 +476,10 @@
     "MsgStatement": "Statement",
     "MsgWithdrawMinerRewards":"WithdrawMinerRewards",
     "MsgMinerWithDrawCount":"MinerWithDrawCount",
-    "MsgEditMiner":"MsgEditMiner"
+    "MsgEditMiner":"MsgEditMiner",
+    "MsgMaintain": "MsgMaintain",
+    "MsgUnMaintain": "MsgUnMaintain",
+    "MsgUnLoose": "MsgUnLoose"
   },
   "txTable":{
     "action": "Activity",
