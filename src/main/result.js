@@ -30,18 +30,30 @@ export default function(result, state, errormsg, errorcode) {
         othermsg = msgJson.othermsg || '';
 
         errorType = msgJson.errorType;
-
-
-        var objlanglist = langmsg[language];
-        // console.log('objlanglist', objlanglist);
-        if (objlanglist != undefined) {
+        if (errorType == undefined) {
           try {
-            msginfo = objlanglist[errorType] + othermsg;
-            log.error(msginfo);
+            var msginfoObj = JSON.parse(msginfo);
+            if (msginfoObj.message) {
+              msginfo = msginfoObj.message;
+            }
           } catch (error) {
-            msginfo = errorType;
+
+          }
+        } else {
+          var objlanglist = langmsg[language];
+          // console.log('objlanglist', objlanglist);
+          if (objlanglist != undefined) {
+            try {
+              msginfo = objlanglist[errorType] + othermsg;
+              log.error(msginfo);
+            } catch (error) {
+              msginfo = errorType;
+            }
           }
         }
+
+
+
         // 根据这个做多语言
       }
     } catch (ex) {
