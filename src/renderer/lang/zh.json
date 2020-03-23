@@ -447,7 +447,7 @@
     "MsgBeginRedelegate": "转质押",
     "MsgUnjail":"释放",
     "MsgEditValidator": "修改节点",
-    "MsgSetWithdrawAddress":"修改提取收益地址",
+    "MsgModifyWithdrawAddress":"修改提取收益地址",
     "MsgWithdrawValidatorCommission": "提取节点收益",
     "MsgSubmitProposal":"发起提案",
     "MsgDeposit":"存入押金",
