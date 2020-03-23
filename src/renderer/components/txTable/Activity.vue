@@ -23,6 +23,7 @@
       <AddressLink :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
 
 
+
       <p v-if="!txItem.valid && showError == true" class="error">
         {{$t('Dialog.com.Reason')}} : <Tag color="error"> {{ txItem.log }}</Tag>
       </p>
@@ -98,7 +99,10 @@ export default {
       txItem.action !== 'MsgEditMiner' &&
       txItem.action !== 'MsgMaintain' &&
       txItem.action !== 'MsgUnMaintain' &&
-      txItem.action !== 'MsgUnLoose'
+      txItem.action !== 'MsgUnLoose' &&
+      txItem.action !== 'MsgEditValidator' &&
+      txItem.action !== 'MsgModifyWithdrawAddress'
+
 
       ;
     },

@@ -450,7 +450,7 @@
     "MsgBeginRedelegate": "BeginReDelegate",
     "MsgUnjail":"Unjail",
     "MsgEditValidator": "EditValidator",
-    "MsgSetWithdrawAddress":"MsgSetWithdrawAddress",
+    "MsgModifyWithdrawAddress":"MsgModifyWithdrawAddress",
     "MsgWithdrawValidatorCommission": "WithdrawRewards",
     "MsgSubmitProposal":"SubmitProposal",
     "MsgDeposit":"Deposit",
