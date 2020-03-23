@@ -17,6 +17,8 @@ const settings = require('electron-settings');
 const path = require('path');
 const hdkeyjs = require('@jswebfans/hdkeyjs');
 
+const bip39 = require('bip39');
+
 
 
 var walletManger = function (dir) {
@@ -235,10 +237,24 @@ walletManger.prototype.ImportWalletByMnemonic = function (mnemonic, password, na
   if (mnemonicList == null || mnemonicList.length < 12) {
     throw new Error('make sure  inputting 12 words or more ');
   }
+  checkBip39wordList(mnemonicList);
+
   var mnemonics = mnemonicList.join(' ');
   return this.generateWallet(mnemonics, password, name,false);
 };
 
+function checkBip39wordList(mnemonicList){
+  //bip39
+  var wordlist = bip39.wordlists.english;
+  mnemonicList.forEach((item)=>{
+    
+    if(wordlist.indexOf(item)<0){
+      throw new Error(`“${item}”  is an invalid mnemonic, please check`)
+    } 
+
+  })
+    
+}
 
 walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, name) {
   var v3file = fs.readFileSync(filepath, 'utf8');
