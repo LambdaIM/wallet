@@ -6,7 +6,7 @@
         class-name="head-logo-wrapper"
       >
       <img
-        src="../../../assets/img/IMG_4430@2x 2.png"
+        src="../../../assets/img/logosvg.svg"
         class="head-logo"
         alt="lambda"
       >
@@ -409,7 +409,7 @@ export default {
     background: url(../../../assets/img/bgs_01.jpg);
     background-size: cover;
     .head-logo{
-      width:150px;
+      width:180px;
       margin-top: 23px;
     }
     .head-wrapper {
