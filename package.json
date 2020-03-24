@@ -36,7 +36,7 @@
         ]
     },
     "build": {
-        "productName": "Wallet",
+        "productName": "Lambda Wallet",
         "appId": "com.lambda.wallet",
         "directories": {
             "output": "build"
