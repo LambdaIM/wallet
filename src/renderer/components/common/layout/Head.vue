@@ -6,7 +6,7 @@
         class-name="head-logo-wrapper"
       >
       <img
-        src="../../../assets/img/logo.png"
+        src="../../../assets/img/logosvg.svg"
         class="head-logo"
         alt="lambda"
       >
@@ -366,6 +366,9 @@ export default {
     .head-wrapper {
       width: 100%;
       height: 100px;
+      .head-logo{
+        // width: 150px;
+      }
       .head-logo-wrapper {
         margin-left: 20px;
         padding-top: 20px;
