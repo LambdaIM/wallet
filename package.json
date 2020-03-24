@@ -60,10 +60,10 @@
             ]
         },
         "mac": {
-            "icon": "build/icons/512LOGO.png"
+            "icon": "build/icons/512x512.png"
         },
         "win": {
-            "icon": "build/icons/logo2.png_256x256.png"
+            "icon": "build/icons/256x256.png"
         },
         "linux": {
             "icon": "build/icons"
