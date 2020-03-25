@@ -11,6 +11,7 @@
     <msgSend :msg="txItem" :txtype="getType(txItem.type)"  v-if="isType(txItem.type,send)"   />
     <msgExchange :msg="txItem" :txtype="getType(txItem.type)"  v-if="isType(txItem.type,assert)"   />
     <msgPledge v-if="isType(txItem.type,pledge)" :msg="txItem" :txtype="getType(txItem.type)"     />
+    <msgReward v-if="isType(txItem.type,Reward)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
 
 
       <p v-if="getlogs(txIndex)!=null" class="error">
@@ -33,13 +34,15 @@
 import msgSend from './msgSend.vue';
 import msgExchange from './msgExchange.vue';
 import msgPledge from './msgPledge.vue';
+import msgReward from './msgReward.vue';
 
 export default {
   components: {
     AddressLink: () => import('./AddressLink.vue'),
     msgSend,
     msgPledge,
-    msgExchange
+    msgExchange,
+    msgReward
   },
   props: {
     activityData: {
@@ -69,6 +72,13 @@ export default {
       default() {
         return [];
       }
+    },
+    tags: {
+      type: Array,
+      default() {
+        return [];
+      }
+
     }
   },
   data() {
@@ -76,7 +86,8 @@ export default {
       more: !(this.$props.activityData.length > 2),
       assert: ['MsgAssetPledge', 'MsgAssetDrop'],
       send: ['MsgSend'],
-      pledge: ['MsgDelegate', 'MsgUndelegate', 'MsgBeginRedelegate']
+      pledge: ['MsgDelegate', 'MsgUndelegate', 'MsgBeginRedelegate'],
+      Reward: ['MsgWithdrawDelegationReward']
     };
   },
   methods: {

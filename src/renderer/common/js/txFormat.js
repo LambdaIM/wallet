@@ -6,7 +6,8 @@ export default function (tx, vueIns) {
     'create_time': tx.timestamp,
     'timestampSort': new Date(tx.timestamp).getTime(),
     'msg': tx.tx.value.msg,
-    'logs': tx.logs
+    'logs': tx.logs,
+    'tags': tx.tags
   };
 }
 

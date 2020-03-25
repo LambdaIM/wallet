@@ -187,6 +187,22 @@ function formatAmountdenom (obj) {
   return `${bigvalue.toFormat()} ${denom.substr(1).toUpperCase()}`;
 }
 
+function uAmountDenom(str) {
+  if (str == undefined) {
+    return '';
+  }
+  var falg = str.indexOf('u');
+  if (falg > -1) {
+    return formatAmountdenom({
+      amount: str.slice(0, falg),
+      denom: str.slice(falg)
+    });
+  } else {
+    return '';
+  }
+}
+
+
 // 1000*1000*1000*60*60*24
 
 export default {
@@ -209,5 +225,6 @@ export default {
   TbbBlanceValue,
   BlanceValueint,
   Fixed6,
-  formatAmountdenom
+  formatAmountdenom,
+  uAmountDenom
 };
