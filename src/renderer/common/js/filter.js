@@ -177,6 +177,16 @@ function formatMonth(num) {
   return (num / (1000 * 1000 * 1000 * 60 * 60 * 24 * 30)).toFixed(2);
 }
 
+function formatAmountdenom (obj) {
+  var { amount, denom } = obj;
+  if (amount == '' || amount == undefined || amount == null) {
+    amount = 0;
+  }
+  var bigvalue1 = new BigNumber(amount).div(1e6).toFixed(6);
+  var bigvalue = new BigNumber(bigvalue1);
+  return `${bigvalue.toFormat()} ${denom.substr(1).toUpperCase()}`;
+}
+
 // 1000*1000*1000*60*60*24
 
 export default {
@@ -198,5 +208,6 @@ export default {
   BlanceValue,
   TbbBlanceValue,
   BlanceValueint,
-  Fixed6
+  Fixed6,
+  formatAmountdenom
 };

@@ -4,7 +4,7 @@
       <div v-if="loading==false">
         <Row className="cardTable__content-item" v-for="(item, index) in txData" :key="index">
           <Card class="cardTable__card-item">
-            <Activity :showError="showError" :md="24" :lg="13" :activityData="txData[index].txs"></Activity>
+            <Activity :showError="showError" :md="24" :lg="13" :activityData="item.msg" :logs="item.logs"></Activity>
             <Col :xs="5" :md="6" :lg="3"
               >
                 <Tag v-if="txerrororsuccess(item)===true" color="success">{{$t('Dialog.com.Success')}} </Tag>
@@ -53,8 +53,9 @@ export default {
     txerrororsuccess(item) {
       console.log(item);
       var result = true;
-      item.txs.forEach(item => {
-        if (item.log != '') {
+      console.log('txerrororsuccess');
+      item.logs.forEach(element => {
+        if (element.success == false) {
           result = false;
         }
       });

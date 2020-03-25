@@ -8,24 +8,13 @@
       :key="txIndex"
       className="cardTable__content-activity"
     >
-
-      <AddressLink :addressLength="addressLength" :to="txItem.from">{{ txItem.from }}</AddressLink
-      >&nbsp;
-
-      <Tag color="primary">{{$t(`txType.${txItem.action}`)}}</Tag>
-      <span v-if="isProposal(txItem)">
-        <span class="value">{{ txItem.amount | formatAmount }}</span>
-        <span v-if="txItem.to">
-        {{getToWord(txItem)}}
-      </span>
-
-      </span>
-      <AddressLink :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
+    <msgSend :msg="txItem" :txtype="getType(txItem.type)"  v-if="isType(txItem.type,send)"   />
+    <msgExchange :msg="txItem" :txtype="getType(txItem.type)"  v-if="isType(txItem.type,assert)"   />
+    <msgPledge v-if="isType(txItem.type,pledge)" :msg="txItem" :txtype="getType(txItem.type)"     />
 
 
-
-      <p v-if="!txItem.valid && showError == true" class="error">
-        {{$t('Dialog.com.Reason')}} : <Tag color="error"> {{ txItem.log }}</Tag>
+      <p v-if="getlogs(txIndex)!=null" class="error">
+        {{$t('Dialog.com.Reason')}} : <Tag color="error"> {{ getlogs(logs,txIndex).log }}</Tag>
       </p>
     </Col>
    <Col :md="md"
@@ -41,9 +30,16 @@
 </template>
 
 <script>
+import msgSend from './msgSend.vue';
+import msgExchange from './msgExchange.vue';
+import msgPledge from './msgPledge.vue';
+
 export default {
   components: {
-    AddressLink: () => import('./AddressLink.vue')
+    AddressLink: () => import('./AddressLink.vue'),
+    msgSend,
+    msgPledge,
+    msgExchange
   },
   props: {
     activityData: {
@@ -67,11 +63,20 @@ export default {
     showError: {
       type: Boolean,
       default: true
+    },
+    logs: {
+      type: Array,
+      default() {
+        return [];
+      }
     }
   },
   data() {
     return {
-      more: !(this.$props.activityData.length > 2)
+      more: !(this.$props.activityData.length > 2),
+      assert: ['MsgAssetPledge', 'MsgAssetDrop'],
+      send: ['MsgSend'],
+      pledge: ['MsgDelegate', 'MsgUndelegate', 'MsgBeginRedelegate']
     };
   },
   methods: {
@@ -109,6 +114,32 @@ export default {
     },
     showmore() {
       this.$data.more = true;
+    },
+    getType(typename) {
+      return typename.split('/')[1];
+    },
+    isType(typename, list) {
+      console.log('getType');
+      var name = typename.split('/')[1];
+
+      if (list != undefined && list.indexOf(name) > -1) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    getlogs(index) {
+      var result = null;
+      this.logs.forEach(element => {
+        if (element.msg_index == index) {
+          result = element;
+        }
+      });
+      if (result == null || result.success == true) {
+        return null;
+      }
+
+      return result;
     }
   },
   computed: {
