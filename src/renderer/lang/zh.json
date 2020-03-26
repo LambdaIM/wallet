@@ -306,7 +306,8 @@
     "Pledge1tbbmining":"质押1TBB挖矿",
     "dayacquisition":"1天获取{0}LAMB",
     "monthacquisition":"1个月获取{0}LAMB",
-    "yearsacquisition":"1年获取{0}LAMB"
+    "yearsacquisition":"1年获取{0}LAMB",
+    "Pledgeamountlessthan1":"质押金额不能小于1"
 
   },
   "Dialog":{

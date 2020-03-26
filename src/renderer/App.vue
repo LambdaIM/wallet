@@ -200,7 +200,8 @@ export default {
                           <a  href="#/detail/${txinfo.data.txhash}">
                           ${txinfo.data.txhash}
                         </a>`,
-          okText: 'OK'
+          okText: 'OK',
+          closable: true
         });
         eventHub.$emit('TransactionSuccess');
       } catch (err) {
@@ -222,6 +223,7 @@ export default {
                         ${this.$t('Dialog.txhash.tip3')}<br/>
 
                         `,
+          closable: true,
           okText: 'OK'
         });
       }

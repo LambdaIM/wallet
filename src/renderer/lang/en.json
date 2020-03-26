@@ -312,7 +312,8 @@
     "Pledge1tbbmining":"1TBB mining",
     "dayacquisition":"Get {0} LAMB in 1 day ",
     "monthacquisition":"Get {0} LAMB in 1 month ",
-    "yearsacquisition":"Get {0} LAMB in 1 year "
+    "yearsacquisition":"Get {0} LAMB in 1 year ",
+    "Pledgeamountlessthan1":"Pledge amount cannot be less than 1"
   },
   "Dialog":{
       "withdrawalModal":{
