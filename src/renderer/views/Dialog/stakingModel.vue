@@ -87,6 +87,20 @@ export default {
       console.log('-----');
       let from = this.address;
       let to = this.Tovalue;
+      try {
+        var valuenum = parseFloat(this.LAMBvalue);
+        if (isNaN(valuenum) == false) {
+          if (valuenum < 1) {
+            this.$Notice.warning({
+              title: this.$t('stakinginfo.Pledgeamountlessthan1')
+            });
+            return;
+          }
+        }
+      } catch (error) {
+
+      }
+
       let value = this.toBigNumStr(this.LAMBvalue);
       if (to == from) {
         this.$Notice.warning({
@@ -127,6 +141,7 @@ export default {
         });
         return;
       }
+
       this.LAMBvalue = parseFloat(this.LAMBvalue).toFixed(6);
       this.transfer(value);
     },
