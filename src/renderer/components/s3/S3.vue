@@ -6,9 +6,11 @@
       :styles="{ top: '200px' }"
       @on-visible-change="changeStatus"
     >
+    <Form  @keydown.native.enter.prevent ="s3authorization" >
       <p>
         <Input v-model="walletPassword" type="password"></Input>
       </p>
+    </Form>
 
       <Row class-name="fail">
         <Col span="24">
