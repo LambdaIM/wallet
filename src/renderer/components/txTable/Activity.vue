@@ -15,6 +15,7 @@
     <msgReward v-if="isType(txItem.type,Reward)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
     <msgProposal v-if="isType(txItem.type,Proposal)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
     <msgAsset v-if="isType(txItem.type,Asset)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
+    <msgValidator v-if="isType(txItem.type,Validator)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
 
 
       <p v-if="getlogs(txIndex)!=null" class="error">
@@ -41,6 +42,8 @@ import msgReward from './msgReward.vue';
 import msgProposal from './msgProposal.vue';
 import msgAsset from './msgAsset.vue';
 
+import msgValidator from './msgValidator.vue';
+
 export default {
   components: {
     AddressLink: () => import('./AddressLink.vue'),
@@ -49,7 +52,8 @@ export default {
     msgExchange,
     msgReward,
     msgProposal,
-    msgAsset
+    msgAsset,
+    msgValidator
   },
   props: {
     activityData: {
@@ -96,7 +100,8 @@ export default {
       pledge: ['MsgDelegate', 'MsgUndelegate', 'MsgBeginRedelegate'],
       Reward: ['MsgWithdrawDelegationReward', 'MsgWithdrawValidatorCommission', 'MsgMinerWithDrawCount', 'MsgModifyWithdrawAddress'],
       Proposal: ['MsgSubmitProposal', 'MsgDeposit', 'MsgVote'],
-      Asset: ['MsgCreateAsset', 'MsgMintAsset', 'MsgLockAsset', 'MsgUnLockAsset', 'MsgDestroyAsset', 'MsgRuinAsset']
+      Asset: ['MsgCreateAsset', 'MsgMintAsset', 'MsgLockAsset', 'MsgUnLockAsset', 'MsgDestroyAsset', 'MsgRuinAsset'],
+      Validator: ['MsgCreateValidator', 'MsgEditValidator']
     };
   },
   methods: {
