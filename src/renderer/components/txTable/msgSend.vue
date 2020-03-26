@@ -41,6 +41,9 @@ export default {
 
 };
 </script>
-<style lang="less" scoped>
-
+<style lang="less">
+  .value {
+    // font-weight: 600;
+    color: #ff9800;
+  }
 </style>

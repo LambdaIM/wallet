@@ -1,11 +1,11 @@
 <template>
 <div>
 
-    <AddressLink :addressLength="15" :to="msg.value.delegator_address">{{msg.value.delegator_address }}</AddressLink
+
+      <span v-if="txtype=='MsgWithdrawDelegationReward'">
+        <AddressLink :addressLength="15" :to="msg.value.delegator_address">{{msg.value.delegator_address }}</AddressLink
       >&nbsp;
       <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
-      <span v-if="txtype=='MsgWithdrawDelegationReward'">
-        <!-- <span  class="value">{{msg.value.amount | formatAmountdenom }}</span> -->
         {{$t('txTable.Withdraw')}}
         <AddressLink :addressLength="15" :to="msg.value.validator_address">{{msg.value.validator_address }}</AddressLink
         >(节点名称)
@@ -13,6 +13,36 @@
         {{getvalueformtags(msg.value.validator_address)|uAmountDenom}}
         </span>
       </span>
+      <span v-if="txtype=='MsgWithdrawValidatorCommission'">
+
+
+
+        <AddressLink :addressLength="15" :to="msg.value.validator_address">{{msg.value.validator_address }}</AddressLink
+        >(节点名称)
+        <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+        <span class="value">
+        {{getvalueformtags2(msg.value.validator_address)|uAmountDenom}}
+        </span>
+      </span>
+      <span v-if="txtype=='MsgMinerWithDrawCount'">
+
+      <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address }}</AddressLink>
+        <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+
+
+        <span class="value">
+        {{getvalueformtags3(msg.value.address)|uAmountDenom}}
+        </span>
+      </span>
+      <span v-if="txtype=='MsgModifyWithdrawAddress'">
+
+      <AddressLink :addressLength="15" :to="msg.value.delegator_address">{{msg.value.delegator_address }}</AddressLink>
+        <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+        <AddressLink :addressLength="15" :to="msg.value.withdraw_address">{{msg.value.withdraw_address }}</AddressLink>
+      </span>
+
+
+
 </div>
 </template>
 <script>
@@ -53,8 +83,40 @@ export default {
         }
       });
       return result;
+    },
+    getvalueformtags2(address) {
+      var result = '';
+      var key = 'commission';
+      var tempresult;
+      this.tags.forEach((item, index) => {
+        if (item.key == key) {
+          tempresult = item.value;
+        }
+        if (item.key == 'source-validator' && item.value == address) {
+          result = tempresult;
+        }
+      });
+      return result;
+    },
+    getvalueformtags3(address) {
+      var result = '';
+      var key = 'withdrawMiner';
+      var tempresult;
+      this.tags.forEach((item, index) => {
+        if (item.key == key) {
+          tempresult = item.value;
+          result = tempresult;
+        }
+      });
+      return result;
     }
   }
 
 };
 </script>
+<style lang="less">
+  .value {
+    // font-weight: 600;
+    color: #ff9800;
+  }
+</style>

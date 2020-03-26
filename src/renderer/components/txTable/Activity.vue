@@ -8,10 +8,12 @@
       :key="txIndex"
       className="cardTable__content-activity"
     >
+    {{txItem.type}}
     <msgSend :msg="txItem" :txtype="getType(txItem.type)"  v-if="isType(txItem.type,send)"   />
     <msgExchange :msg="txItem" :txtype="getType(txItem.type)"  v-if="isType(txItem.type,assert)"   />
     <msgPledge v-if="isType(txItem.type,pledge)" :msg="txItem" :txtype="getType(txItem.type)"     />
     <msgReward v-if="isType(txItem.type,Reward)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
+    <msgProposal v-if="isType(txItem.type,Proposal)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
 
 
       <p v-if="getlogs(txIndex)!=null" class="error">
@@ -35,6 +37,7 @@ import msgSend from './msgSend.vue';
 import msgExchange from './msgExchange.vue';
 import msgPledge from './msgPledge.vue';
 import msgReward from './msgReward.vue';
+import msgProposal from './msgProposal.vue';
 
 export default {
   components: {
@@ -42,7 +45,8 @@ export default {
     msgSend,
     msgPledge,
     msgExchange,
-    msgReward
+    msgReward,
+    msgProposal
   },
   props: {
     activityData: {
@@ -87,7 +91,8 @@ export default {
       assert: ['MsgAssetPledge', 'MsgAssetDrop'],
       send: ['MsgSend'],
       pledge: ['MsgDelegate', 'MsgUndelegate', 'MsgBeginRedelegate'],
-      Reward: ['MsgWithdrawDelegationReward']
+      Reward: ['MsgWithdrawDelegationReward', 'MsgWithdrawValidatorCommission', 'MsgMinerWithDrawCount', 'MsgModifyWithdrawAddress'],
+      Proposal: ['MsgSubmitProposal', 'MsgDeposit', 'MsgVote']
     };
   },
   methods: {
