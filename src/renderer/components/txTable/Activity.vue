@@ -16,6 +16,8 @@
     <msgProposal v-if="isType(txItem.type,Proposal)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
     <msgAsset v-if="isType(txItem.type,Asset)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
     <msgValidator v-if="isType(txItem.type,Validator)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
+    <msgMiner v-if="isType(txItem.type,Miner)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
+    <msgMarket v-if="isType(txItem.type,Market)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
 
 
       <p v-if="getlogs(txIndex)!=null" class="error">
@@ -43,6 +45,10 @@ import msgProposal from './msgProposal.vue';
 import msgAsset from './msgAsset.vue';
 
 import msgValidator from './msgValidator.vue';
+import msgMiner from './msgMiner.vue';
+import msgMarket from './msgMarket.vue';
+
+
 
 export default {
   components: {
@@ -53,7 +59,9 @@ export default {
     msgReward,
     msgProposal,
     msgAsset,
-    msgValidator
+    msgValidator,
+    msgMiner,
+    msgMarket
   },
   props: {
     activityData: {
@@ -101,7 +109,9 @@ export default {
       Reward: ['MsgWithdrawDelegationReward', 'MsgWithdrawValidatorCommission', 'MsgMinerWithDrawCount', 'MsgModifyWithdrawAddress'],
       Proposal: ['MsgSubmitProposal', 'MsgDeposit', 'MsgVote'],
       Asset: ['MsgCreateAsset', 'MsgMintAsset', 'MsgLockAsset', 'MsgUnLockAsset', 'MsgDestroyAsset', 'MsgRuinAsset'],
-      Validator: ['MsgCreateValidator', 'MsgEditValidator']
+      Validator: ['MsgCreateValidator', 'MsgEditValidator'],
+      Miner: ['MsgUnLoose', 'MsgMaintain', 'MsgUnMaintain', 'MsgCreateMiner', 'MsgEditMiner'],
+      Market: ['MsgCreateSellOrder', 'MsgCreateMarket', 'MsgEditMarket', 'MsgCancelSellOrder', 'MsgCreateBuyOrder']
     };
   },
   methods: {
