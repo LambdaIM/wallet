@@ -477,7 +477,7 @@
     "MsgEditMiner":"修改矿工信息",
     "MsgMaintain": "发起维护",
     "MsgUnMaintain": "解除维护",
-    "MsgUnLoose": "解除限制"
+    "MsgUnjailMiner": "解除限制"
 
    },
    "txTable":{

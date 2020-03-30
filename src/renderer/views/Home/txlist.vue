@@ -75,6 +75,10 @@ export default {
               }
             } else {
               console.log('读取交易记录失败');
+              this.$Notice.warning({
+                title: 'error',
+                desc: item.error
+              });
             }
           });
         }

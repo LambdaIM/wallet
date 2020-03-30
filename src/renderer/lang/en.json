@@ -480,7 +480,7 @@
     "MsgEditMiner":"MsgEditMiner",
     "MsgMaintain": "MsgMaintain",
     "MsgUnMaintain": "MsgUnMaintain",
-    "MsgUnLoose": "MsgUnLoose"
+    "MsgUnjailMiner": "MsgUnjailMiner"
   },
   "txTable":{
     "action": "Activity",

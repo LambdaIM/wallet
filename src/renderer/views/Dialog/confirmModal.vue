@@ -147,7 +147,7 @@
               <Col span="4" class-name="key">{{$t('Dialog.AutoBuy.Marketname')}}:</Col>
               <Col span="20" class-name="value">{{transactiondata.marketName}}</Col>
             </Row>
-            <Row class-name="item" v-if="transactiondata.sellOrderId">
+            <Row class-name="item" v-if="transactiondata.sellOrderId&&transactiondata.sellOrderId!='[do-not-input-value]'">
               <Col span="4" class-name="key">{{$t('Dialog.selectBuy.OrderID')}}:</Col>
               <Col span="20" class-name="value">{{transactiondata.sellOrderId}}</Col>
             </Row>
