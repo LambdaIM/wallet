@@ -99,7 +99,7 @@ export default {
       txItem.action !== 'MsgEditMiner' &&
       txItem.action !== 'MsgMaintain' &&
       txItem.action !== 'MsgUnMaintain' &&
-      txItem.action !== 'MsgUnLoose' &&
+      txItem.action !== 'MsgUnjailMiner' &&
       txItem.action !== 'MsgEditValidator' &&
       txItem.action !== 'MsgModifyWithdrawAddress'
 
