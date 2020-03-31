@@ -8,16 +8,20 @@
       :key="txIndex"
       className="cardTable__content-activity"
     >
-    {{txItem.type}}
-    <msgSend :msg="txItem" :txtype="getType(txItem.type)"  v-if="isType(txItem.type,send)"   />
-    <msgExchange :msg="txItem" :txtype="getType(txItem.type)"  v-if="isType(txItem.type,assert)"   />
-    <msgPledge v-if="isType(txItem.type,pledge)" :msg="txItem" :txtype="getType(txItem.type)"     />
-    <msgReward v-if="isType(txItem.type,Reward)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
-    <msgProposal v-if="isType(txItem.type,Proposal)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
-    <msgAsset v-if="isType(txItem.type,Asset)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
-    <msgValidator v-if="isType(txItem.type,Validator)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
-    <msgMiner v-if="isType(txItem.type,Miner)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
-    <msgMarket v-if="isType(txItem.type,Market)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
+    <!-- {{txItem.type}} -->
+    <msgSend  v-if="isType(txItem.type,send)"  :msg="txItem" :txtype="getType(txItem.type)"   />
+    <msgExchange v-else-if="isType(txItem.type,assert)" :msg="txItem" :txtype="getType(txItem.type)"     />
+    <msgPledge v-else-if="isType(txItem.type,pledge)" :msg="txItem" :txtype="getType(txItem.type)"     />
+    <msgReward v-else-if="isType(txItem.type,Reward)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
+    <msgProposal v-else-if="isType(txItem.type,Proposal)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
+    <msgAsset v-else-if="isType(txItem.type,Asset)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
+    <msgValidator v-else-if="isType(txItem.type,Validator)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
+    <msgMiner v-else-if="isType(txItem.type,Miner)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
+    <msgMarket v-else-if="isType(txItem.type,Market)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
+    <div v-else>
+
+      {{txItem.type}} ，New type not adapted
+    </div>
 
 
       <p v-if="getlogs(txIndex)!=null" class="error">
@@ -110,43 +114,11 @@ export default {
       Proposal: ['MsgSubmitProposal', 'MsgDeposit', 'MsgVote'],
       Asset: ['MsgCreateAsset', 'MsgMintAsset', 'MsgLockAsset', 'MsgUnLockAsset', 'MsgDestroyAsset', 'MsgRuinAsset'],
       Validator: ['MsgCreateValidator', 'MsgEditValidator'],
-      Miner: ['MsgUnLoose', 'MsgMaintain', 'MsgUnMaintain', 'MsgCreateMiner', 'MsgEditMiner'],
-      Market: ['MsgCreateSellOrder', 'MsgCreateMarket', 'MsgEditMarket', 'MsgCancelSellOrder', 'MsgCreateBuyOrder']
+      Miner: ['MsgMaintain', 'MsgUnMaintain', 'MsgCreateMiner', 'MsgEditMiner', 'MsgUnjailMiner'],
+      Market: ['MsgCreateSellOrder', 'MsgCreateMarket', 'MsgEditMarket', 'MsgCancelSellOrder', 'MsgCreateBuyOrder', 'MsgWithDrawMarket', 'MsgMinerWithDraw']
     };
   },
   methods: {
-    getToWord(txItem) {
-      if (txItem.action == 'MsgWithdrawDelegationReward' || txItem.action == 'MsgWithdrawValidatorCommission' || txItem.action == 'MsgUndelegate') {
-        return this.$t('txTable.Withdraw');
-      } else {
-        return this.$t('txTable.to');
-      }
-    },
-    isProposal(txItem) {
-      return txItem.action !== 'MsgSubmitProposal' &&
-      txItem.action !== 'MsgUnjail' &&
-      txItem.action !== 'MsgCreateValidator' &&
-      txItem.action !== 'MsgCreateMarket' &&
-      txItem.action !== 'MsgEditMarket' &&
-      txItem.action !== 'MsgWithDrawMarket' &&
-      txItem.action !== 'MsgCreateMachine' &&
-      txItem.action !== 'MsgEditMachine' &&
-      txItem.action !== 'MsgCreateMiner' &&
-      txItem.action !== 'MsgMinerWithDraw' &&
-      txItem.action !== 'MsgCreateSellOrder' &&
-      txItem.action !== 'MsgCancelSellOrder' &&
-      txItem.action !== 'MsgCreateBuyOrder' &&
-      txItem.action !== 'MsgEditMiner' &&
-      txItem.action !== 'MsgMaintain' &&
-      txItem.action !== 'MsgUnMaintain' &&
-      txItem.action !== 'MsgUnjailMiner' &&
-      txItem.action !== 'MsgEditValidator' &&
-      txItem.action !== 'MsgModifyWithdrawAddress' &&
-      txItem.action !== 'MsgOrderRenewal'
-
-
-      ;
-    },
     showmore() {
       this.$data.more = true;
     },

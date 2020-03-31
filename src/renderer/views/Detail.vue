@@ -106,7 +106,8 @@
             <span class="title">{{$t('transactiondetails.action')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-              <Activity :activityData="activityData"/>
+
+              <Activity  :md="24" :lg="13" :activityData="activityData.msg" :logs="activityData.logs" :tags="activityData.tags"></Activity>
 
           </Col>
         </Row>
@@ -196,7 +197,7 @@ export default {
         console.log(res.data);
 
         this.$data.data = res.data;
-        this.$data.activityData = txFormat(res.data, this).txs;
+        this.$data.activityData = txFormat(res.data, this);
         this.loading = false;
       } catch (ex) {
         this.loading = false;
