@@ -19,13 +19,12 @@
     <msgMiner v-else-if="isType(txItem.type,Miner)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
     <msgMarket v-else-if="isType(txItem.type,Market)" :msg="txItem" :txtype="getType(txItem.type)"  :tags="tags"   />
     <div v-else>
-
-      {{txItem.type}} ，New type not adapted
+      {{txItem.type}} ，{{$t('txkey.Newtypenotadapted')}}
     </div>
 
 
       <p v-if="getlogs(txIndex)!=null" class="error">
-        {{$t('Dialog.com.Reason')}} : <Tag color="error"> {{ getlogs(logs,txIndex).log }}</Tag>
+        {{$t('Dialog.com.Reason')}} : <Tag color="error"> {{ getlogs(txIndex).log }}</Tag>
       </p>
     </Col>
    <Col :md="md"
@@ -136,6 +135,7 @@ export default {
       }
     },
     getlogs(index) {
+      console.log('getlogs');
       var result = null;
       this.logs.forEach(element => {
         if (element.msg_index == index) {
@@ -164,6 +164,10 @@ export default {
           otherList.push(item);
         }
       });
+      if (meList.length == 0) {
+        meList = this.$props.activityData.slice(0, 2);
+        otherList = this.$props.activityData.slice(2);
+      }
 
       if (this.more) {
         return meList.concat(otherList);

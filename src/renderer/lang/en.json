@@ -803,7 +803,8 @@
 
   },
   "txkey":{
-    "pledge":"pledge"
+    "pledge":"pledge",
+    "Newtypenotadapted":"New type not adapted"
   }
 
 }

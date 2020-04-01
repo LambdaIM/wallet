@@ -801,6 +801,7 @@
         }
     },
     "txkey":{
-        "pledge":"质押"
+        "pledge":"质押",
+        "Newtypenotadapted":"未适配的类型"
     }
 }
