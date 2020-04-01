@@ -2,13 +2,19 @@ import resultView from './result.js';
 
 import * as LambdaApi from './lambdaApi';
 
+<<<<<<< HEAD
 const { ipcMain: eipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
+=======
+import synchronousData from './synchronousData.js';
+>>>>>>> 37531ad... 显示节点名称
 
+const { ipcMain: eipc } = require('electron-better-ipc');
 
 
 export default function() {
   var LambdaRpcApi = LambdaApi.default();
+  var syncData = new synchronousData();
   eipc.answerRenderer('validatorsList', async query => {
     try {
       var result = await LambdaRpcApi().get.validators();
@@ -161,6 +167,32 @@ export default function() {
       var operator_address = settings.get('defaultwallet');
       var result = await LambdaRpcApi().get.redelegations(operator_address);
       return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('syncValidator', async query => {
+    try {
+      var result = await syncData.syncValidator();
+
+
+      return resultView({
+        result
+      }, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+  
+  eipc.answerRenderer('getsyncValidator', async query => {
+    var { operator_addres } = query;
+
+    try {
+      var result = await syncData.getValidator(operator_addres);
+      return resultView({
+        result
+      }, true);
     } catch (ex) {
       throw resultView(null, false, ex);
     }

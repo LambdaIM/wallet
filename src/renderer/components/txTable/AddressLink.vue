@@ -3,7 +3,7 @@
 
       <Poptip v-if="to" word-wrap trigger="hover" width="400" :content="to" placement="left-start">
                 <a v-if="isme">{{$t('Dialog.com.me')}}</a>
-                <a v-else>{{to.slice(0,addressLength)}}</a>
+                <a v-else>{{name||to.slice(0,addressLength)}}</a>
               </Poptip>
 
   </span>
@@ -17,6 +17,10 @@ export default {
     addressLength: {
       type: Number,
       default: 15
+    },
+    name: {
+      type: String,
+      default: ''
     }
   },
 

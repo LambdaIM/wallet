@@ -123,12 +123,7 @@ export default {
 
 
       var role = settings.get('userrole') || null;
-      console.log('=============');
-      console.log(roledata);
-      console.log(name);
-      console.log(role);
 
-      console.log('=============');
       var result = false;
       if (roledata instanceof Array) {
         result = !(roledata.indexOf(role) < 0);

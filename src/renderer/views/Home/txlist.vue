@@ -24,6 +24,7 @@ export default {
     };
   },
   mounted() {
+    this.syncdata();
     this.transactionList();
 
     this.$data.Interval = setInterval(() => {
@@ -42,6 +43,9 @@ export default {
     TxTable
   },
   methods: {
+    async syncdata() {
+      let res = await ipc.callMain('syncValidator');
+    },
     async transactionList(pagenum) {
       console.log('transactionList');
 
