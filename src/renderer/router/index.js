@@ -107,33 +107,13 @@ var walletRouter = new Router({
     component: () =>
             import('@/views/staking/Stakinginfo.vue')
   },
-  {
-    path: '/partner',
-    name: 'partner',
-    component: () =>
-            import('@/views/partner/index.vue')
-  },
-  {
-    path: '/partnerinfo/:operator_address',
-    name: 'partnerinfo',
-    component: () =>
-            import('@/views/partner/partnerinfo.vue')
-  },
-  {
-    path: '*',
-    redirect: '/'
-  },
+
+
   {
     path: '/validator',
     name: 'validator',
     component: () =>
             import('@/views/validator/index.vue')
-  },
-  {
-    path: '/sign',
-    name: 'sign',
-    component: () =>
-            import('@/views/sign/index.vue')
   },
   {
     path: '/proposal',
@@ -261,6 +241,9 @@ var walletRouter = new Router({
       component: () => import('@/views/Home/stepguide/sellingspace.vue')
     }
     ]
+  }, {
+    path: '*',
+    redirect: '/'
   }
   ]
 });

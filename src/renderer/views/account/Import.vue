@@ -186,6 +186,12 @@ export default {
             required: true,
             message: this.$t('Import.action.fill_password'),
             trigger: 'blur'
+          }, {
+            type: 'string',
+            min: 8,
+            max: 20,
+            message: this.$t('create.action.password_length'),
+            trigger: 'blur'
           }
         ],
         confirmPassword: [
@@ -258,15 +264,6 @@ export default {
         if (this.formInline.confirmPassword !== '') {
           this.$refs.formInline.validateField('confirmPassword');
         }
-        callback();
-      }
-    },
-    validateConfirmPass(rule, value, callback) {
-      if (value === '') {
-        callback(new Error(this.$t('Import.action.enter_password_again')));
-      } else if (value !== this.formInline.password) {
-        callback(new Error(this.$t('Import.action.passwords_not_match')));
-      } else {
         callback();
       }
     },
