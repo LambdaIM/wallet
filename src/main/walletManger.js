@@ -55,7 +55,7 @@ walletManger.prototype.readconfig = function () {
 };
 walletManger.prototype.writeSyncJson = function(path, data) {
   console.log('writeSyncJson');
-  log.info('writeSyncJson');
+
 
   return fs.writeFileSync(path, JSON.stringify(data, null, 2), { mode: '0600', encoding: 'utf8' });
 };
