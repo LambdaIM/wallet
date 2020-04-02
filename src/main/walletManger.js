@@ -7,7 +7,7 @@ import ActionManager from './utils/ActionManager.js';
 import BigNum from './utils/BigNum';
 import LambdaApi from './lambdaApi';
 import Nedb from './utils/nedb';
-import fetch from './utils/fetch';
+// import fetch from './utils/fetch';
 
 var fs = require('graceful-fs');
 var log = require('../log').log;
@@ -52,6 +52,12 @@ walletManger.prototype.readconfig = function () {
   if (settings.has('defaultwallet') != undefined) {
     return settings.get('defaultwallet');
   }
+};
+walletManger.prototype.writeSyncJson = function(path, data) {
+  console.log('writeSyncJson');
+  log.info('writeSyncJson');
+
+  return fs.writeFileSync(path, JSON.stringify(data, null, 2), { mode: '0600', encoding: 'utf8' });
 };
 
 walletManger.prototype.setconfig = function (address) {
@@ -176,7 +182,8 @@ walletManger.prototype.creatWalletComplete = function (password, name) {
     throwErrorCode(errorList.can_not_find_mnemonic);
     // throw new Error('can not find  mnemonic');
   }
-  fs.writeFileSync(this.filepath_create, JSON.stringify(this.walletjson__create));
+  // fs.writeFileSync(this.filepath_create, JSON.stringify(this.walletjson__create));
+  this.writeSyncJson(this.filepath_create, this.walletjson__create);
   this.scann();
   return true;
 };
@@ -207,7 +214,8 @@ walletManger.prototype.generateWallet = function (mnemonic, password, name, iscr
     this.filepath_create = filepath;
     this.walletjson__create = walletjson;
   } else {
-    fs.writeFileSync(filepath, JSON.stringify(walletjson));
+    // fs.writeFileSync(filepath, JSON.stringify(walletjson));
+    this.writeSyncJson(filepath, walletjson);
     this.scann();
   }
 
@@ -246,7 +254,8 @@ walletManger.prototype.generateSonAccount = function (mnemonic, password, name, 
 
   var walletjson = hdkeyjs.keyStore.toJson(keys, password, name);
   var filepath = path.join(DAEMON_CONFIG.SonAccountFile, this.defaultwallet.address, address + '.keyinfo');
-  fs.writeFileSync(filepath, JSON.stringify(walletjson));
+  // fs.writeFileSync(filepath, JSON.stringify(walletjson));
+  this.writeSyncJson(filepath, walletjson);
 
   this.scann();
 
@@ -342,7 +351,8 @@ walletManger.prototype.exportSonAccount = function (address,password) {
 
   console.log(exportJson)
   var targetpath = path.join(DAEMON_CONFIG.ExportSonAccountFile, address + '.json');
-  fs.writeFileSync(targetpath, JSON.stringify(exportJson), 'utf8');
+  // fs.writeFileSync(targetpath, JSON.stringify(exportJson), 'utf8');
+  this.writeSyncJson(targetpath,exportJson)
   shell.showItemInFolder(DAEMON_CONFIG.ExportSonAccountFile);
   return ;
 
@@ -383,7 +393,8 @@ walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
 
 
   var targetpath = path.join(DAEMON_CONFIG.SonAccountFile,this.defaultwallet.address, v3file.address + '.keyinfo');
-  fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8');
+  // fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8');
+  this.writeSyncJson(targetpath,v3file)
   
   return true;
 
@@ -424,7 +435,8 @@ walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, na
 
 
   var targetpath = path.join(DAEMON_CONFIG.WalletFile, v3file.address + '.keyinfo');
-  fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8');
+  // fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8');
+  this.writeSyncJson(targetpath,v3file)
   this.scann();
   return true;
 };
@@ -874,7 +886,8 @@ walletManger.prototype.editDefaultName = async function (name) {
     throwErrorCode(errorList.not_find_DefaultWallet)
     // throw new Error('not find DefaultWallet');
   }
-  fs.writeFileSync(filepath, JSON.stringify(this.defaultwallet));
+  // fs.writeFileSync(filepath, JSON.stringify(this.defaultwallet));
+  this.writeSyncJson(filepath,this.defaultwallet)
   this.scann();
 };
 walletManger.prototype.findFile = function (address) {

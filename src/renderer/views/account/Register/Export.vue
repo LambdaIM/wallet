@@ -41,6 +41,13 @@
         <div v-else class="button-wrapper">
           <button class="btn next-button" @click="back">{{ $t("Confirm.backtoword") }}  </button>
         </div>
+
+        <div class="bottom-wrapper tc">
+            <router-link class="bottom-wrapper-item" to="/">{{ $t("create.Login_Wallet") }}</router-link>
+            <span class="line"></span>
+            <router-link class="bottom-wrapper-item" to="/import">{{ $t("create.Import_Wallet") }}</router-link>
+        </div>
+
       </div>
     </Mybg>
   </div>
@@ -225,6 +232,20 @@ export default {
           position: relative;
           top: 6px;
         }
+      }
+    }
+    .bottom-wrapper {
+      margin-top: 30px;
+      .bottom-wrapper-item {
+        font-size: 14px;
+        color: #fff !important;
+      }
+      .line {
+        display: inline-block;
+        margin: 0 22px;
+        width: 2px;
+        height: 14px;
+        border-left: 2px solid rgb(83, 102, 128);
       }
     }
   }

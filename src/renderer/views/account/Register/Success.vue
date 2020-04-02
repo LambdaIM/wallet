@@ -19,14 +19,19 @@
         <div class="button-wrapper">
           <button class="btn next-button" @click="next">{{$t('success.Next_Step')}}</button>
         </div>
+        <div class="bottom-wrapper tc">
+            <router-link class="bottom-wrapper-item" to="/">{{ $t("create.Login_Wallet") }}</router-link>
+            <span class="line"></span>
+            <router-link class="bottom-wrapper-item" to="/import">{{ $t("create.Import_Wallet") }}</router-link>
+          </div>
       </div>
     </Mybg>
   </div>
 </template>
 
 <script>
-import Mybg from "@/components/common/useful/Mybg.vue";
-import { DAEMON_CONFIG } from "../../../..//config.js";
+import Mybg from '@/components/common/useful/Mybg.vue';
+import { DAEMON_CONFIG } from '../../../..//config.js';
 
 // import { mapState, mapMutations } from "vuex";
 export default {
@@ -42,11 +47,10 @@ export default {
   },
   methods: {
     getWords() {
-      this.words=this.$store.getters.getCombineWords.split(" ");
-      
+      this.words = this.$store.getters.getCombineWords.split(' ');
     },
     next() {
-      this.$router.push("/export");
+      this.$router.push('/export');
     }
   },
   components: {
@@ -135,6 +139,20 @@ export default {
           position: relative;
           top: 6px;
         }
+      }
+    }
+    .bottom-wrapper {
+      margin-top: 30px;
+      .bottom-wrapper-item {
+        font-size: 14px;
+        color: #fff !important;
+      }
+      .line {
+        display: inline-block;
+        margin: 0 22px;
+        width: 2px;
+        height: 14px;
+        border-left: 2px solid rgb(83, 102, 128);
       }
     }
   }

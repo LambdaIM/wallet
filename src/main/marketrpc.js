@@ -12,10 +12,10 @@ import marketNedb from './utils/marketNedb';
 var { DAEMON_CONFIG } = require('../configmain.js');
 const { ipcMain: eipc } = require('electron-better-ipc');
 const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
-const runAsync = Promise.promisify(cmd.run, { multiArgs: true, context: cmd });
+// const runAsync = Promise.promisify(cmd.run, { multiArgs: true, context: cmd });
 
 const settings = require('electron-settings');
-const hdkeyjs = require('@jswebfans/hdkeyjs');
+// const hdkeyjs = require('@jswebfans/hdkeyjs');
 
 const path = require('path');
 const YAML = require('yaml');
@@ -269,7 +269,7 @@ export default function() {
       yamlconfig.gateway['address'] = `127.0.0.1:${port}`;
 
 
-      var result = fs.writeFileSync(`${DAEMON_CONFIG.BASE_PATH}/s3.yaml`, YAML.stringify(yamlconfig), 'utf8');
+      var result = fs.writeFileSync(`${DAEMON_CONFIG.BASE_PATH}/s3.yaml`, YAML.stringify(yamlconfig), { mode: '0600', encoding: 'utf8' });
 
 
       return resultView(result, true);
