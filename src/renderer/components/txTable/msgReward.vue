@@ -7,8 +7,8 @@
       >&nbsp;
       <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
         {{$t('txTable.Withdraw')}}
-        <AddressLink :addressLength="15" :to="msg.value.validator_address">{{msg.value.validator_address }}</AddressLink
-        >(节点名称)
+        <AddressLink :name="validator_name" :addressLength="15" :to="msg.value.validator_address">{{msg.value.validator_address }}</AddressLink
+        >
         <span class="value">
         {{getvalueformtags(msg.value.validator_address)|uAmountDenom}}
         </span>
@@ -17,8 +17,8 @@
 
 
 
-        <AddressLink :addressLength="15" :to="msg.value.validator_address">{{msg.value.validator_address }}</AddressLink
-        >(节点名称)
+        <AddressLink :name="validator_name" :addressLength="15" :to="msg.value.validator_address">{{msg.value.validator_address }}</AddressLink
+        >
         <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
         <span class="value">
         {{getvalueformtags2(msg.value.validator_address)|uAmountDenom}}
@@ -46,6 +46,8 @@
 </div>
 </template>
 <script>
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 export default {
   components: {
     AddressLink: () => import('./AddressLink.vue')
@@ -69,7 +71,29 @@ export default {
 
     }
   },
+  data() {
+    return {
+      validator_name: ''
+    };
+  },
+  async mounted() {
+    if (this.msg.value.validator_address) {
+      this.$data.validator_name = await this.getname(this.msg.value.validator_address);
+    }
+  },
   methods: {
+    async getname(operator_addres) {
+      // getsyncValidator
+      var name = '';
+      let res = await ipc.callMain('getsyncValidator', {
+        operator_addres: operator_addres
+      });
+      if (res.state) {
+        name = res.data.result.description.moniker;
+      }
+      console.log('name', name);
+      return name;
+    },
     getvalueformtags(address) {
       var result = '';
       var key = 'rewards';
