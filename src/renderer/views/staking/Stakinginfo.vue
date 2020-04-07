@@ -91,6 +91,33 @@
             {{validator.tokens/pool.bonded_tokens|Percentformat}}
           </Col>
         </Row>
+           <Tabs>
+              <TabPane :label="$t('Dialog.redelegateModel.redelegatelist')">
+                <Table size="large"  :columns="redelegationcolumns" :data="redelegationlistdata">
+                  <template slot-scope="{ row, index }" slot="amount">
+                    {{row.entries[0].initial_balance|TbbBlanceValue}}
+                  </template>
+                  <template slot-scope="{ row, index }" slot="time">
+                    {{row.entries[0].completion_time|blockFormatDate}}
+                  </template>
+              </Table>
+              </TabPane>
+              <TabPane :label="$t('staking.Unpledge')" >
+                <Table size="large" :columns="uncolumns" :data="undelegationlistdata" >
+                  <template slot-scope="{ row, index }" slot="completion_time">
+                    {{row.entries[0].completion_time|formatDate}}
+                  </template>
+                  <template slot-scope="{ row, index }" slot="initial_balance">
+                    {{row.entries[0].initial_balance|Stoformat}}
+                  </template>
+
+
+                </Table>
+              </TabPane>
+
+          </Tabs>
+
+
       </div>
     </Mycard>
 
@@ -121,7 +148,49 @@ export default {
       mydelegationsList: [],
       shares: null,
       isdege: true,
-      reward: null
+      reward: null,
+      redelegationlistdata: [],
+      redelegationcolumns: [
+        {
+          title: this.$t('stakinginfo.Originalnode'),
+          key: 'validator_src_address'
+        },
+        {
+          title: this.$t('stakinginfo.Newnode'),
+          key: 'validator_dst_address'
+        },
+        {
+          title: this.$t('stakinginfo.Amount'),
+          key: 'amount',
+          slot: 'amount'
+        },
+        {
+          title: this.$t('stakinginfo.Completiontime'),
+          key: 'time',
+          slot: 'time'
+        }
+      ],
+      undelegationlistdata: [],
+      uncolumns: [{
+        title: this.$t('staking.UnpledgeTable.PledgeAddress'),
+        key: 'validator_address'
+      },
+      {
+        title: this.$t('staking.UnpledgeTable.UntyingAddress'),
+        key: 'delegator_address'
+      },
+      {
+        title: this.$t('staking.UnpledgeTable.Amount'),
+        key: 'initial_balance',
+        slot: 'initial_balance'
+
+      }, {
+        title: this.$t('staking.UnpledgeTable.Completiontime'),
+        key: 'completion_time',
+        slot: 'completion_time'
+
+      }]
+
     };
   },
   async mounted() {
@@ -137,6 +206,9 @@ export default {
       var r2 = await this.getmyListData(operator_address);
       this.getMyreword(operator_address);
     });
+    //= =============
+    this.getredelegationlist();
+    this.getundelegationlist();
   },
   methods: {
     myMypledge() {
@@ -238,7 +310,39 @@ export default {
         result.push(this.bigNumTypeFormat(item.amount, item.denom));
       });
       return result.join(',');
+    },
+    async getredelegationlist() {
+      console.log('getredelegationlist');
+      let res = await ipc.callMain('redelegationlist', {});
+      let datalist = []; let result = [];
+      if (res.state && res.data) {
+        datalist = res.data || [];
+      }
+      console.log(datalist);
+      var _this = this;
+      datalist.forEach(item => {
+        if (item.validator_dst_address == _this.$data.Tovalue) {
+          result.push(item);
+        }
+      });
+      this.$data.redelegationlistdata = result;
+    },
+    async getundelegationlist() {
+      let res = await ipc.callMain('myUndelegations', {});
+      let datalist = []; let result = [];
+      if (res.state && res.data) {
+        datalist = res.data || [];
+      }
+      console.log(datalist);
+      var _this = this;
+      datalist.forEach(item => {
+        if (item.validator_address == _this.$data.Tovalue) {
+          result.push(item);
+        }
+      });
+      this.$data.undelegationlistdata = result;
     }
+
   },
   components: {
     MyTable,

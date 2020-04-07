@@ -3,6 +3,7 @@ import resultView from './result.js';
 import * as LambdaApi from './lambdaApi';
 
 const { ipcMain: eipc } = require('electron-better-ipc');
+const settings = require('electron-settings');
 
 
 
@@ -100,8 +101,7 @@ export default function() {
 
 
   eipc.answerRenderer('myUndelegations', async query => {
-    var operator_address = query.operator_address;
-
+    var operator_address = settings.get('defaultwallet');
     try {
       var result = await LambdaRpcApi().get.undelegations(operator_address);
 
@@ -149,6 +149,18 @@ export default function() {
         minting,
         distribution
       }, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
+  eipc.answerRenderer('redelegationlist', async query => {
+    try {
+      // var operator_address = query.operator_address;
+      var operator_address = settings.get('defaultwallet');
+      var result = await LambdaRpcApi().get.redelegations(operator_address);
+      return resultView(result, true);
     } catch (ex) {
       throw resultView(null, false, ex);
     }

@@ -39,12 +39,22 @@
         </p>
         <br />
         <p style="color:red">
-          {{$t('Dialog.redelegateModel.tip',[this.days()])}}
+
+          <ul class="helpul">
+            <li>- {{$t('Dialog.redelegateModel.tip',[this.days()])}}。</li>
+            <li>- {{$t('Dialog.redelegateModel.tip2')}}。</li>
+            <li>- {{$t('Dialog.redelegateModel.tip3')}}。</li>
+            <li>- {{$t('Dialog.redelegateModel.tip4')}}。</li>
+            <li>- {{$t('Dialog.redelegateModel.tip5')}}。</li>
+          </ul>
+
+
+
         </p>
         </Form >
 
         <div slot="footer">
-          <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
+          <Button :disabled="havetredelegation" type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
         </div>
       </Modal>
 
@@ -70,7 +80,8 @@ export default {
       gaseFee: 0,
       validatorsList: [],
       validatorName: '',
-      dataParameters: {}
+      dataParameters: {},
+      havetredelegation: false
     };
   },
   components: {
@@ -110,6 +121,26 @@ export default {
 
       await this.getListData();
       this.stakingParameters();
+      await this.getredelegationlist();
+    },
+    async getredelegationlist() {
+      console.log('getredelegationlist');
+      let res = await ipc.callMain('redelegationlist', {});
+      let datalist = []; let result = [];
+      if (res.state && res.data) {
+        datalist = res.data || [];
+      }
+      console.log(datalist);
+      var _this = this;
+      datalist.forEach(item => {
+        if (item.validator_dst_address == _this.$data.Tovalue) {
+          result.push(item);
+        }
+      });
+      // this.$data.redelegationlistdata=result;
+      if (result.length > 0) {
+        this.$data.havetredelegation = true;
+      }
     },
     sendcancel() {
       this.sendModal = false;
@@ -225,6 +256,9 @@ export default {
     margin-top: 20px;
     font-size: 14px;
   }
+}
+.helpul{
+   list-style-type:none
 }
 </style>
 

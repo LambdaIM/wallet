@@ -58,22 +58,7 @@
           <Table :loading="validatorsList==null"   v-else>
           </Table>
         </TabPane>
-        <TabPane :label="$t('staking.Unpledge')" >
 
-            <Table v-if="myUndelegationsList!=null"   size="large" :columns="uncolumns" :data="myUndelegationsList" >
-              <template slot-scope="{ row, index }" slot="completion_time">
-                {{row.completion_time|formatDate}}
-              </template>
-              <template slot-scope="{ row, index }" slot="initial_balance">
-                {{row.initial_balance|Stoformat}}
-              </template>
-
-
-            </Table>
-            <Table :loading="myUndelegationsList==null" v-else>
-            </Table>
-
-        </TabPane>
         <TabPane :label="$t('staking.ExplainTab')" >
           <ul v-if="dataParameters!=undefined" class="ulpanel">
             <li>{{$t('staking.Explain.unbonding_time')}}:{{(dataParameters.unbonding_time/(1000*1000*1000*60*60*24)).toFixed(2)}}{{$t('staking.Explain.unit')}}</li>
@@ -233,7 +218,7 @@ export default {
   async mounted() {
     var r1 = await this.getListData();
     var r2 = await this.getmyListData();
-    this.getmyUnListData();
+    // this.getmyUnListData();
     this.stakingParameters();
     this.TBBYield();
   },

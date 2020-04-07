@@ -313,7 +313,11 @@
     "dayacquisition":"Get {0} LAMB in 1 day ",
     "monthacquisition":"Get {0} LAMB in 1 month ",
     "yearsacquisition":"Get {0} LAMB in 1 year ",
-    "Pledgeamountlessthan1":"Pledge amount cannot be less than 1"
+    "Pledgeamountlessthan1":"Pledge amount cannot be less than 1",
+    "Originalnode":"Original node",
+    "Newnode":"New node",
+    "Amount":"Amount",
+    "Completiontime":"Completion time"
   },
   "Dialog":{
       "withdrawalModal":{
@@ -321,7 +325,11 @@
       },
       "stakingModel":{
           "title1":"Pledge",
-          "title2":"Cancel pledge"
+          "title2":"Cancel pledge",
+          "tip":"Counter pledge period: {0} days",
+          "tip2":"It is not allowed to reverse pledge more than 7 times from the same node in the anti pledge cycle",
+          "tip3":"In the anti pledge cycle, if the node is punished, the currency of the anti pledge will be deducted according to the punishment proportion",
+          "tip4":"The pledged currency in the anti pledge period will not generate income"
       },
       "redelegateModel":{
          "redelegate":"Redelegate",
@@ -329,8 +337,12 @@
          "turnin":"New validator",
          "choosepledge":"Please choose the validator of the pledge.",
          "validatorname":"Validator name",
-         "tip":"Note: Within {0} days, it can only be transferred to pledge 7 times, and can not be transferred out from the new node. In the pledge period, the original node is punished. The part of the currency that was transferred to the pledge will still be deducted according to the penalty ratio.",
-         "tip2":"Note: You can only cancel the pledge 7 times in {0} days, and there is no reward in {0} days after the pledge is cancelled. During the anti-pledge period, the original nodethe original node is punished, and the currency in the anti-pledge will be deducted according to the penalty ratio.",
+         "tip":"Transfer pledge period: {0} days",
+         "tip2":"It is not allowed to transfer pledge to the same node (a - > A)",
+         "tip3":"It is not allowed to transfer pledge from node a to another node within the period of transferring pledge to node a",
+         "tip4":"In the pledge transfer cycle, there can be no more than 7 transfers from the same original node to the same target node",
+         "tip5":"In the period of pledge transfer, if the original node is punished, the part of currency pledged will still be deducted according to the punishment proportion",
+         "redelegatelist":"Transfer pledge list",
          "action":{
              "differentaddresses":"New and old validator cannot be the same",
              "selectaddresses":"Select the validator to delegate"
