@@ -105,10 +105,10 @@
               <TabPane :label="$t('staking.Unpledge')" >
                 <Table size="large" :columns="uncolumns" :data="undelegationlistdata" >
                   <template slot-scope="{ row, index }" slot="completion_time">
-                    {{row.entries[0].completion_time|formatDate}}
+                    {{row.completion_time|formatDate}}
                   </template>
                   <template slot-scope="{ row, index }" slot="initial_balance">
-                    {{row.entries[0].initial_balance|Stoformat}}
+                    {{row.initial_balance|Stoformat}}
                   </template>
 
 
@@ -205,6 +205,8 @@ export default {
       var r1 = await this.getinfo(operator_address);
       var r2 = await this.getmyListData(operator_address);
       this.getMyreword(operator_address);
+      this.getredelegationlist();
+      this.getundelegationlist();
     });
     //= =============
     this.getredelegationlist();
@@ -337,7 +339,13 @@ export default {
       var _this = this;
       datalist.forEach(item => {
         if (item.validator_address == _this.$data.Tovalue) {
-          result.push(item);
+          item.entries.forEach(entrie => {
+            var data = Object.assign({}, entrie, {
+              validator_address: item.validator_address,
+              delegator_address: item.delegator_address
+            });
+            result.push(data);
+          });
         }
       });
       this.$data.undelegationlistdata = result;
