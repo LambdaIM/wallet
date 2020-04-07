@@ -307,7 +307,12 @@
     "dayacquisition":"1天获取{0}LAMB",
     "monthacquisition":"1个月获取{0}LAMB",
     "yearsacquisition":"1年获取{0}LAMB",
-    "Pledgeamountlessthan1":"质押金额不能小于1"
+    "Pledgeamountlessthan1":"质押金额不能小于1",
+    "Originalnode":"原节点",
+    "Newnode":"新节点",
+    "Amount":"金额",
+    "Completiontime":"完成时间"
+    
 
   },
   "Dialog":{
@@ -316,7 +321,11 @@
       },
       "stakingModel":{
           "title1":"质押",
-          "title2":"取消质押"
+          "title2":"取消质押",
+          "tip":" 反质押周期:{0}天",
+          "tip2":"反质押周期内，不允许从同一节点反质押超过7次",
+          "tip3":"反质押周期内，节点被惩罚了，反质押的币也会按照惩罚比例进行扣除",
+          "tip4":"反质押周期内的质押币不会产生收益"
       },
       "redelegateModel":{
          "redelegate":"转质押",
@@ -324,8 +333,13 @@
          "turnin":"新节点",
          "choosepledge":"请选择转质押的节点",
          "validatorname":"节点名称",
-         "tip":"注意：{0}天内只能转质押7笔,且不能从新节点再转出，转质押周期内，原节点被惩罚了，转质押的那部分币，仍会按照惩罚比例进行扣除",
-         "tip2":"注意：{0}天内只能取消质押7笔 ,取消质押后将不再发放奖励，解除质押周期内，节点被惩罚了，解除质押的币也会按照惩罚比例进行扣除",
+         "tip":" 转质押周期:{0}天",
+         "tip2":"不允许转质押到同一节点（A -> A）",
+         "tip3":"不允许在向A节点转质押的周期内，再从A节点转质押到别的节点",
+         "tip4":"转质押周期内，从同一原节点转质押到同一目标节点，不能超过7笔",
+         "tip5":"转质押周期内，原节点被惩罚了，转质押的那部分币，仍会按照惩罚比例进行扣除",
+         "redelegatelist":"转质押列表",
+         
          "action":{
              "differentaddresses":"新节点和旧节点不能相同",
              "selectaddresses":"请选择转入的节点"

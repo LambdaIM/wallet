@@ -30,7 +30,14 @@
 
         <br/>
         <p v-if="isdege==false" style="color:red">
-          {{$t('Dialog.redelegateModel.tip2',[this.days()])}}
+
+            <ul class="helpul">
+            <li>- {{$t('Dialog.stakingModel.tip',[this.days()])}}。</li>
+            <li>- {{$t('Dialog.stakingModel.tip2')}}。</li>
+            <li>- {{$t('Dialog.stakingModel.tip3')}}。</li>
+            <li>- {{$t('Dialog.stakingModel.tip4')}}。</li>
+
+          </ul>
         </p>
         <p v-else>
           {{$t('home.Balance')}} : {{balance|Stoformat}}
@@ -223,6 +230,10 @@ export default {
     margin-top: 20px;
     font-size: 14px;
   }
+}
+
+.helpul{
+   list-style-type:none
 }
 </style>
 
