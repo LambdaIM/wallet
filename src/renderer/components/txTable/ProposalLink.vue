@@ -2,7 +2,7 @@
   <span>
 
 
-                <a>{{name||id}}</a>
+                <a>{{getname(name)||id}}</a>
 
 
   </span>
@@ -20,6 +20,15 @@ export default {
     name: {
       type: String,
       default: ''
+    }
+  },
+  methods: {
+    getname(title) {
+      if (title && title.length > 50) {
+        return title.slice(0, 50) + '...';
+      } else {
+        return '';
+      }
     }
   },
 
