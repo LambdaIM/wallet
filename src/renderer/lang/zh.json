@@ -493,7 +493,8 @@
     "MsgEditMiner":"修改矿工信息",
     "MsgMaintain": "发起维护",
     "MsgUnMaintain": "解除维护",
-    "MsgUnjailMiner": "解除限制"
+    "MsgUnjailMiner": "解除限制",
+    "MsgOrderRenewal":"订单续期"
 
    },
    "txTable":{

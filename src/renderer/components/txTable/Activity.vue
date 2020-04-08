@@ -101,7 +101,8 @@ export default {
       txItem.action !== 'MsgUnMaintain' &&
       txItem.action !== 'MsgUnjailMiner' &&
       txItem.action !== 'MsgEditValidator' &&
-      txItem.action !== 'MsgModifyWithdrawAddress'
+      txItem.action !== 'MsgModifyWithdrawAddress' &&
+      txItem.action !== 'MsgOrderRenewal'
 
 
       ;
