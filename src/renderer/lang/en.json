@@ -446,7 +446,9 @@
           "mintabletrue":"mintable",
           "mintablefalse":"is not mintable",
           "locktime":"locktime",
-          "back":"back"
+          "back":"back",
+          "gastip":"Tip: The handling fee will be deducted from the LAMB balance in your account. When transferring, you must ensure that the amount of LAMB in the account is sufficient to deduct the handling fee, otherwise the transaction will fail",
+          "muchcommission":"Too much Gas Fee"
 
 
       }

@@ -216,10 +216,12 @@
 
 
           <Row class-name="item">
-            <Input ref="gasinput_"  v-model="gaseFee" >
+            <Input @on-change="gaseFeechange" ref="gasinput_"  v-model="gaseFee" >
               <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
               <span slot="append">LAMB</span>
           </Input>
+          <div class="tiptxt">{{$t('Dialog.com.gastip')}}</div>
+
           </Row>
           <Row v-if="transactiondata.memo!=''&&transactiondata.memo!=undefined "  class-name="item">
             <Input  v-model="transactiondata.memo" readonly type="textarea" :rows="4"  />
@@ -269,6 +271,7 @@ export default {
       });
     },
     confirm() {
+      this.gaseFeechange();
       var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
       if (comparedNum == 1 || comparedNum == null) {
         this.$Notice.warning({
@@ -299,6 +302,19 @@ export default {
     },
     denomShort: function(denom) {
       return denom.substr(1).toUpperCase();
+    },
+    gaseFeechange: function() {
+      var value = parseFloat(this.$data.gaseFee);
+      if (isNaN(value)) {
+        return false;
+      }
+      if (value > 1) {
+        this.$data.gaseFee = 0.001;
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Dialog.com.muchcommission')
+        });
+      }
     }
   },
   computed: {
@@ -329,5 +345,11 @@ export default {
 
 .address{
   font-family: Consolas,Monaco,monospace;
+}
+
+.tiptxt{
+  color: red;
+  padding-top: 20px;
+  line-height: 20px;
 }
 </style>

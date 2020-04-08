@@ -428,7 +428,7 @@
         "tip5":"3:投票阶段结束的时候，大于 33.4% 的强烈反对票"
     },
       "com":{
-          "gasfee":"Gas费用",
+          "gasfee":"手续费",
           "to":" 兑换 ",
           "AssetConversion":"资产兑换",
           "Transactionhash":"交易哈希",
@@ -444,7 +444,9 @@
           "mintabletrue":"可增发",
           "mintablefalse":"不可增发",
           "locktime":"锁仓时长",
-          "back":"返回"
+          "back":"返回",
+          "gastip":"提示：手续费将从您账户内的LAMB余额中抵扣，在转账时需保证账户内的LAMB 金额足够抵扣手续费，否则交易失败",
+          "muchcommission":"手续费太多了"
 
 
 
