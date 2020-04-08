@@ -175,6 +175,7 @@ export default function() {
   eipc.answerRenderer('syncValidator', async query => {
     try {
       var result = await syncData.syncValidator();
+      var result2 = await syncData.asyncproposal();
 
 
       return resultView({
@@ -190,6 +191,19 @@ export default function() {
 
     try {
       var result = await syncData.getValidator(operator_addres);
+      return resultView({
+        result
+      }, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('getsyncproposalTitle', async query => {
+    var { id } = query;
+
+    try {
+      var result = await syncData.getproposalTitle(id);
       return resultView({
         result
       }, true);
