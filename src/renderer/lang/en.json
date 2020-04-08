@@ -491,10 +491,11 @@
     "MsgStatement": "Statement",
     "MsgWithdrawMinerRewards":"WithdrawMinerRewards",
     "MsgMinerWithDrawCount":"MinerWithDrawCount",
-    "MsgEditMiner":"MsgEditMiner",
-    "MsgMaintain": "MsgMaintain",
-    "MsgUnMaintain": "MsgUnMaintain",
-    "MsgUnjailMiner": "MsgUnjailMiner"
+    "MsgEditMiner":"EditMiner",
+    "MsgMaintain": "Maintain",
+    "MsgUnMaintain": "UnMaintain",
+    "MsgUnjailMiner": "UnjailMiner",
+    "MsgOrderRenewal":"OrderRenewal"
   },
   "txTable":{
     "action": "Activity",
