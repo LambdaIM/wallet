@@ -114,7 +114,8 @@ export default {
       Asset: ['MsgCreateAsset', 'MsgMintAsset', 'MsgLockAsset', 'MsgUnLockAsset', 'MsgDestroyAsset', 'MsgRuinAsset'],
       Validator: ['MsgCreateValidator', 'MsgEditValidator'],
       Miner: ['MsgMaintain', 'MsgUnMaintain', 'MsgCreateMiner', 'MsgEditMiner', 'MsgUnjailMiner'],
-      Market: ['MsgCreateSellOrder', 'MsgCreateMarket', 'MsgEditMarket', 'MsgCancelSellOrder', 'MsgCreateBuyOrder', 'MsgWithDrawMarket', 'MsgMinerWithDraw']
+      Market: ['MsgCreateSellOrder', 'MsgCreateMarket', 'MsgEditMarket', 'MsgCancelSellOrder',
+        'MsgCreateBuyOrder', 'MsgWithDrawMarket', 'MsgMinerWithDraw', 'MsgOrderRenewal']
     };
   },
   methods: {

@@ -26,6 +26,16 @@
       {{getvalueformtags2()|uAmountDenom}}
 
     </div>
+    <div v-if="txtype=='MsgOrderRenewal'">
+        <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address }}</AddressLink
+      >&nbsp;
+      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+      {{msg.value.duration|formatMonth}}{{$t('Dialog.AutoBuy.month')}}
+
+    </div>
+
+
+
 </div>
 </template>
 
