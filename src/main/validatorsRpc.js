@@ -1,15 +1,11 @@
 import resultView from './result.js';
 
 import * as LambdaApi from './lambdaApi';
+import synchronousData from './synchronousData.js';
 
-<<<<<<< HEAD
 const { ipcMain: eipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
-=======
-import synchronousData from './synchronousData.js';
->>>>>>> 37531ad... 显示节点名称
 
-const { ipcMain: eipc } = require('electron-better-ipc');
 
 
 export default function() {
@@ -185,7 +181,7 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
-  
+
   eipc.answerRenderer('getsyncValidator', async query => {
     var { operator_addres } = query;
 
