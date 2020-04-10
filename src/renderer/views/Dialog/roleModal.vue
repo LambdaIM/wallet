@@ -32,12 +32,12 @@ export default {
   data() {
     return {
       showrole: false,
-      activeitem: this.$store.getters.role
+      activeitem: this.$store.getters.role || 'simple'
 
     };
   },
   mounted() {
-    this.$data.activeitem = this.$store.getters.role;
+    this.$data.activeitem = this.$store.getters.role || 'simple';
   },
   methods: {
     open() {
@@ -50,6 +50,9 @@ export default {
       console.log('Submit');
 
       console.log(this.$data.activeitem);
+      // var rolelist=['simple','order','miner','validator'];
+
+
       this.$store.dispatch('setrole', this.$data.activeitem);
       setTimeout(function() {
         window.location.reload();
@@ -63,6 +66,7 @@ export default {
 .roleselect{
       .item{
           border: 2px solid white;
+          cursor: pointer;
           &:hover{
             border: 2px solid #2d8cf0;
           }
