@@ -140,7 +140,13 @@ export default {
             Options.steps.push(item);
           }
         });
-        introJs().setOptions(Options).start();
+        introJs().setOptions(Options).start()
+          .oncomplete(function() {
+            alert('end of introduction');
+          })
+          .onexit(function() {
+            alert('exit of introduction');
+          });
       }, 1000);
     }
   },
