@@ -11,11 +11,11 @@
                 </Row>
                 <Row  class-name="item">
                     <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
-                    <Col span="20" class-name="value address">{{transactiondata.toAddress}}</Col>
+                    <Col span="20" class-name="value address Highlight">{{transactiondata.toAddress}}</Col>
                 </Row>
                 <Row class-name="item" v-if="transactiondata.amounts">
                     <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-                    <Col span="20" class-name="value">{{transactiondata.amounts[0].amount|BlanceValue}} {{denomShow}}</Col>
+                    <Col span="20" class-name="value Highlight">{{transactiondata.amounts[0].amount|BlanceValue}} {{denomShow}}</Col>
                 </Row>
           </div>
           <div v-if="txtype=='withdrawal'">
@@ -271,7 +271,9 @@ export default {
       });
     },
     confirm() {
-      this.gaseFeechange();
+      if (this.gaseFeechange() == false) {
+        return;
+      }
       var comparedNum = this.bigNum(this.toBigNumStr(this.$data.gaseFee)).comparedTo(this.$store.getters.balanceLamb);
       if (comparedNum == 1 || comparedNum == null) {
         this.$Notice.warning({
@@ -314,6 +316,7 @@ export default {
           title: 'error',
           desc: this.$t('Dialog.com.muchcommission')
         });
+        return false;
       }
     }
   },
@@ -351,5 +354,8 @@ export default {
   color: red;
   padding-top: 20px;
   line-height: 20px;
+}
+.Highlight{
+  color: #19be6b;
 }
 </style>
