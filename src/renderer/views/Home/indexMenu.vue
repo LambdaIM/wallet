@@ -95,9 +95,10 @@ import DistributionModal from '@/views/Dialog/distributionModal.vue';
 import MinerWithdrawalModal from '@/views/Dialog/MinerWithdrawalModal.vue';
 
 import introJs from 'intro.js';
+
+import homesteps from './homesteps.js';
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
-
 
 
 export default {
@@ -121,14 +122,26 @@ export default {
       this.getMinerRewards();
     }, 1000 * 15);
 
-    var Options = {
-      prevLabel: '<strong>skip1</strong>',
-      skipLabel: '<strong>skip2</strong>',
-      doneLabel: '<strong>skip3</strong>'
-    };
+
+
     var role = this.$store.getters.role;
     if (role != null) {
-      introJs().setOption('nextLabel', ' 下一步 ').start();
+      setTimeout(() => {
+        console.log('|||||=========|||||||');
+        var Options = {
+          prevLabel: '上一步',
+          nextLabel: '下一步',
+          skipLabel: '跳过',
+          doneLabel: '完成',
+          steps: []
+        };
+        homesteps.forEach(item => {
+          if (document.querySelector(item.element)) {
+            Options.steps.push(item);
+          }
+        });
+        introJs().setOptions(Options).start();
+      }, 1000);
     }
   },
   beforeDestroy() {

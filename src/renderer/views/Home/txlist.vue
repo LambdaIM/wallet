@@ -1,7 +1,7 @@
 
 <template>
   <div class="customer-container">
-      <div data-step="5" data-intro="This is a tooltip!" class="tableContainer">
+      <div  class="tableContainer">
        <TxTable :txData="data" :loading="loading" />
       </div>
 

@@ -259,3 +259,9 @@ export default {
         to   { transform: rotate(360deg);}
     }
 </style>
+<style lang="less">
+.introjs-helperLayer{
+  background-color:rgba(45, 140, 240, 0.2);
+  border: 2px solid #2b85e4;
+}
+</style>

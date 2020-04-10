@@ -3,19 +3,19 @@
   <div class="customer-container">
    <div class="account-info-container">
       <Row class-name="account-info-wrapper" type="flex" justify="space-between">
-        <Col data-step="2" data-intro="This is a tooltip!" span="4" class="account-item">
-          <div class="item-wrapper">
+        <Col  span="4" class="account-item">
+          <div id="accountlambdaBlance" class="item-wrapper">
             <p class="title">{{$t('home.Balance')}}(LAMB)</p>
             <p class="value">{{balance|BlanceValue}} </p>
           </div>
         </Col>
-        <Col data-step="3" data-intro="This is a tooltip!" span="4" class="account-item">
+        <Col  span="4" class="account-item">
           <div class="item-wrapper">
             <p class="title">{{$t('home.pledge')}}(TBB)</p>
             <p class="value">{{pledgeAmount|Fixed6 }}</p>
           </div>
         </Col>
-        <Col data-step="4" data-intro="This is a tooltip!" span="4" class="account-item">
+        <Col   span="4" class="account-item">
           <div class="item-wrapper">
             <p class="title">{{$t('home.Reward')}}(LAMB)</p>
             <p class="value">{{DistributionReward|BlanceValue}}</p>

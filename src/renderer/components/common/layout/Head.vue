@@ -25,7 +25,7 @@
             class="item"
           >{{ $t("head.home") }}</router-link>
         </div>
-        <div class="head-menu-item">
+        <div id="staking"  class="head-menu-item">
           <router-link
             to="/staking"
             class="item"
@@ -37,7 +37,7 @@
             class="item"
           >{{ $t("head.partner") }}</router-link>
         </div> -->
-        <div data-step="5" data-intro="This is a tooltip!" class="head-menu-item">
+        <div  class="head-menu-item">
           <router-link
             to="/proposal"
             class="item"
@@ -50,7 +50,7 @@
           >{{$t("head.market")}}</router-link>
         </div>
 
-        <div data-step="6" data-intro="This is a tooltip!" class="head-menu-item" v-if="$role('home.guide')">
+        <div  class="head-menu-item" v-if="$role('home.guide')">
           <router-link
             to="/guide"
             class="item">
