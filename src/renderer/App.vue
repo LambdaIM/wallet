@@ -34,8 +34,9 @@
 import Footer from '@/components/common/layout/Footer.vue';
 import Header from '@/components/common/layout/Head.vue';
 import eventHub from '@/common/js/event.js';
-import { setTimeout } from 'timers';
+// import { setTimeout } from 'timers';
 
+import 'intro.js/minified/introjs.min.css';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 

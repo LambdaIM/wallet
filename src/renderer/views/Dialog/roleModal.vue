@@ -5,9 +5,11 @@
         :closable="false"
         :mask-closable="false"
         @on-ok="setrole"
+
         >
-        <div class="roleselect">
-            <div @click="selectitem('simple')"   :class="{item:true, active:activeitem=='simple'}">
+
+          <div class="roleselect" >
+            <div   @click="selectitem('simple')"   :class="{item:true, active:activeitem=='simple'}">
             <h3>{{$t('rolepage.roletype.simpleuser')}}</h3>
             <p>{{$t('rolepage.simpleuserbrief')}}</p>
             </div>
@@ -24,7 +26,9 @@
             <p>{{$t('rolepage.validatorbrief')}}</p>
             </div>
 
-        </div>
+
+          </div>
+
     </Modal>
 </template>
 <script>
