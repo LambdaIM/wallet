@@ -97,6 +97,8 @@ import MinerWithdrawalModal from '@/views/Dialog/MinerWithdrawalModal.vue';
 import introJs from 'intro.js';
 
 import homesteps from './homesteps.js';
+
+import Introtip from '../../common/js/Introtip.js';
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
@@ -125,7 +127,9 @@ export default {
 
 
     var role = this.$store.getters.role;
-    if (role != null) {
+    console.log(Introtip);
+    var hasreadtip = Introtip.gettip('home');
+    if (role != null && hasreadtip != true) {
       setTimeout(() => {
         console.log('|||||=========|||||||');
         var Options = {
@@ -142,10 +146,10 @@ export default {
         });
         introJs().setOptions(Options).start()
           .oncomplete(function() {
-            alert('end of introduction');
+            Introtip.settip('home');
           })
           .onexit(function() {
-            alert('exit of introduction');
+            Introtip.settip('home');
           });
       }, 1000);
     }
