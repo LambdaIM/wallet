@@ -15,7 +15,7 @@
                 </Row>
                 <Row class-name="item" v-if="transactiondata.amounts">
                     <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-                    <Col span="20" class-name="value">{{transactiondata.amounts[0].amount}} {{denomShow}}</Col>
+                    <Col span="20" class-name="value">{{transactiondata.amounts[0].amount|BlanceValue}} {{denomShow}}</Col>
                 </Row>
           </div>
           <div v-if="txtype=='withdrawal'">
