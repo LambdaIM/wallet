@@ -372,7 +372,7 @@ export default {
     },
     helplink() {
       // window.open('http://docs.lambda.im/Lambda%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/','','width=700')
-      shell.openExternal('http://docs.lambda.im/Lambda%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/');
+      shell.openExternal('http://docs.lambda.im/Lambda-Wallet-Guide/');
     }
   },
   computed: {
