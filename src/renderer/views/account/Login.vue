@@ -149,6 +149,9 @@ export default {
           console.log(login);
           this.$store.dispatch('setLogin', true);
           eventHub.$emit('login');
+
+          this.$store.dispatch('readrole');
+
           this.$router.push('/home');
         }
       } catch (ex) {

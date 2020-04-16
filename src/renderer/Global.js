@@ -121,8 +121,12 @@ export default {
         }
       });
 
+      var defaultwallet = settings.get('defaultwallet');
 
-      var role = settings.get('userrole') || null;
+
+
+      var roleobj = settings.get('userrole') || {};
+      var role = roleobj[defaultwallet];
       console.log('=============');
       console.log(roledata);
       console.log(name);

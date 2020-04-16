@@ -88,6 +88,7 @@
               size="20"
             />
             {{address.slice(-5)}}
+            <span class="rolename">{{getrole}}</span>
           </div>
         </div>
         <div @click="helplink" class="item linkitem">
@@ -275,6 +276,9 @@ export default {
 
       this.WalletBasicinfo();
       this.getBalance();
+
+      this.getuserrole();
+
       setInterval(() => {
         this.WalletBasicinfo();
         this.getBalance();
@@ -283,7 +287,6 @@ export default {
     if (login) {
       this.$store.dispatch('setLogin', login);
       eventhub.$emit('login');
-      this.getuserrole();
     }
   },
   methods: {
@@ -376,6 +379,18 @@ export default {
     }
   },
   computed: {
+
+    getrole() {
+      var role = this.$store.getters.role;
+      var reslt = '';
+      switch (role) {
+        case 'simple': reslt = this.$t('rolepage.roletype.simpleuser'); break;
+        case 'order': reslt = this.$t('rolepage.roletype.orderuser'); break;
+        case 'miner': reslt = this.$t('rolepage.roletype.miner'); break;
+        case 'validator': reslt = this.$t('rolepage.roletype.validator'); break;
+      }
+      return reslt;
+    },
     address: function() {
       return this.$store.getters.getaddress;
     },
@@ -492,5 +507,8 @@ export default {
     }
 
 
-
+.rolename{
+      font-size: 10px;
+    color: yellow;
+}
 </style>
