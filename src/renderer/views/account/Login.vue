@@ -148,10 +148,10 @@ export default {
           let login = settings.set('isopenfilev1', true);
           console.log(login);
           this.$store.dispatch('setLogin', true);
-          eventHub.$emit('login');
 
           this.$store.dispatch('readrole');
 
+          eventHub.$emit('login');
           this.$router.push('/home');
         }
       } catch (ex) {
