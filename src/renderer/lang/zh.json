@@ -756,7 +756,7 @@
        "title":"请选择使用钱包的角色",
        "roletype":{
             "simpleuser":"钱包用户",
-            "orderuser":"购买空间的用户",
+            "orderuser":"空间用户",
             "miner":"矿工",
             "validator":"验证节点"
        },
