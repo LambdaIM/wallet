@@ -255,6 +255,7 @@ export default {
   },
   created() {
     // this.isLogin();
+    this.$store.dispatch('readrole');
   },
   mounted() {
     let login = settings.get('isopenfilev1');

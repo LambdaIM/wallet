@@ -1,7 +1,7 @@
 import roleconfig from '@/roleconfig.json';
 const settings = require('electron-settings');
 console.log('加载role');
-var rolelist = settings.get('userrole') || {};
+var rolelist = settings.get('userrolelist') || {};
 var defaultwallet = settings.get('defaultwallet');
 var defaultrole = rolelist[defaultwallet];
 const state = {
@@ -15,13 +15,13 @@ const mutations = {
     state.role = role;
     // state.roleconfig.role;
     var defaultwallet = settings.get('defaultwallet');
-    settings.set(`userrole.${defaultwallet}`, role);
+    settings.set(`userrolelist.${defaultwallet}`, role);
   },
   readrole: function(state) {
     var defaultwallet = settings.get('defaultwallet');
-    var rolelist = settings.get('userrole') || {};
+    var rolelist = settings.get('userrolelist') || {};
     var result = rolelist[defaultwallet];
-    state.role = result;
+    state.role = result || null;
   }
 };
 const actions = {
