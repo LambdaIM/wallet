@@ -6,14 +6,14 @@
 
     <!-- OrderListcolumnsNotSort -->
     <!-- <div v-if="OrderList.length==0" class="emptydata">
-      点击数据同步，获取最新数据
+      {{$t('syncorderpage.no-data-text')}}
     </div> -->
     <Table
       @on-sort-change="OrderListSort"
       :loading="loading"
       :columns="OrderListcolumns"
       :data="OrderList"
-      :no-data-text="$t('syncorderpage.no-data-text')"
+
 
     >
       <template slot-scope="{ row, index }" slot="action">
