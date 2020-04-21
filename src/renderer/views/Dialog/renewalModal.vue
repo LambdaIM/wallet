@@ -22,11 +22,36 @@
     <br />
 
     <p>
-      <Input  v-model="Duration">
+      <Input  v-model.number="Duration">
         <span slot="prepend">{{$t('renewal.Duration')}}</span>
         <span slot="append">{{$t('renewal.month')}}</span>
       </Input>
     </p>
+    <br/>
+    <Row class-name="card-item">
+          <Col span="6" class-name="title-wrapper">
+            <span class="title">{{ $t('orderinfo.space') }}:</span>
+          </Col>
+          <Col span="6" class-name="content-wrapper">{{ size }}GB</Col>
+          <Col span="8" class-name="title-wrapper">
+            <span class="title">{{ $t('orderinfo.unitprice') }}:</span>
+          </Col>
+          <Col span="4" class-name="content-wrapper">
+            {{ price | Lambformat }}
+          </Col>
+        </Row>
+      <Row class-name="card-item">
+          <!-- <Col span="4" class-name="title-wrapper">
+            <span class="title">{{$t('home.Balance')}}:</span>
+          </Col>
+          <Col span="8" class-name="content-wrapper">{{balance|Lambformat}}</Col> -->
+          <Col span="6" class-name="title-wrapper">
+            <span class="title">{{$t('Dialog.AutoBuy.Paymentamount')}}:</span>
+          </Col>
+          <Col span="6" class-name="content-wrapper">
+            {{ renewaLamount | Lambformat }}
+          </Col>
+        </Row>
 
     </Form >
     <div slot="footer">
@@ -65,7 +90,9 @@ export default {
       memoNum: 255,
       orderid: '',
       Duration: '',
-      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30,
+      size: 0,
+      price: 0
     };
   },
   components: {
@@ -89,6 +116,23 @@ export default {
       } catch (error) {
 
       }
+      if (Duration > 60) {
+        this.$Notice.warning({
+          // title: this.$t('home.action.check_balance_amount_transfer')
+          title: '续费时长需要小于60个月'
+        });
+        return;
+      }
+      /// ////
+      if (this.bigLess0OrGreater(this.renewaLamount, this.$store.getters.getblance)) {
+        // need to alert
+        this.$Notice.warning({
+          title: this.$t('home.action.check_balance_amount_transfer')
+        });
+        return;
+      }
+
+      /// ////
 
 
       if (isNaN(Duration)) {
@@ -131,10 +175,11 @@ export default {
       this.sendModal = false;
       // this.confirmModal=true;
     },
-    open(orderid) {
+    open(orderid, orderinfo) {
       this.$data.orderid = orderid;
       this.sendModal = true;
-      console.log('orderid');
+      this.$data.size = orderinfo.MatchOrder.size;
+      this.$data.price = orderinfo.MatchOrder.price;
     }
   },
   computed: {
@@ -149,6 +194,9 @@ export default {
     },
     denomtitleShow: function() {
       return this.$t('home.Modal1.Send_LAMB', [this.$data.denom.substr(1).toUpperCase()]);
+    },
+    renewaLamount: function() {
+      return this.$data.size * this.$data.price * this.$data.Duration;
     }
   }
 };

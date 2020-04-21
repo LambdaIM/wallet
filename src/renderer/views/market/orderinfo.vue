@@ -118,7 +118,8 @@
             &nbsp;
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <Alert v-if="timeend>=0" type="warning">{{$t('renewal.expirationwarning',[timeend])}}</Alert>
+
+            <Alert v-if="timeend>=0" :type='timeend>=30?"success":"warning"'>{{$t('renewal.expirationwarning',[timeend])}}</Alert>
             <Alert v-else type="error">{{$t('renewal.expirationwarning2')}}</Alert>
             <Button @click="renewalModal" type="info">{{$t('renewal.Orderrenewal')}}</Button>
           </Col>
@@ -227,7 +228,7 @@ export default {
       this.$refs.s3Modal.openDialog();
     },
     renewalModal() {
-      this.$refs.renewalModal.open(this.orderid);
+      this.$refs.renewalModal.open(this.orderid, this.$data.orderinfo);
     }
   },
   computed: {
