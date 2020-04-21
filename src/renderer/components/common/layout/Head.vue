@@ -87,7 +87,7 @@
               type="ios-copy"
               size="20"
             />
-            {{address.slice(-5)}}
+            {{address.slice(-4)}}
             <span class="rolename">{{getrole}}</span>
           </div>
         </div>

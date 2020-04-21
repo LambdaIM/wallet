@@ -685,6 +685,28 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('marketOrderRenewal', async query => {
+    var { duration, orderId } = query;
+
+    if (duration == undefined) {
+      throw resultView(null, false, errorList.need_duration);
+    }
+
+    if (orderId == undefined) {
+      throw resultView(null, false, errorList.need_orderId);
+    }
+
+    try {
+      var TxMessageload = await WM.OrderRenewal(orderId, duration, '');
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+
   eipc.answerRenderer('createSonAccount', async query => {
     var { mnemonic, password, name, index } = query;
     if (mnemonic == undefined) {

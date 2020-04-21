@@ -799,5 +799,15 @@
             "p2":"2进行配置后",
             "p3":"3选择需要启动的存储节点,点击启动按钮启动存储服务"
         }
-    }
+    },
+   "renewal":{
+       "Orderrenewal":"订单续期",
+       "Duration":"时长",
+       "month":"月",
+       "orderid":"订单id",
+       "needDuration":"请填写时长",
+       "expirationwarning":"{0}天后订单过期，请及时续期，过期后无法续期",
+       "expirationwarning2":"订单已经过期,过期的订单无法需求"
+
+   }
 }

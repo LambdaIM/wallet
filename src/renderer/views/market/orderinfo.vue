@@ -109,7 +109,20 @@
           </Col>
           <Col span="20" class-name="content-wrapper">
             {{ orderinfo.MatchOrder.endTime | formatDate }}
+
           </Col>
+
+        </Row>
+        <Row class-name="card-item">
+          <Col span="4" class-name="title-wrapper">
+            &nbsp;
+          </Col>
+          <Col span="20" class-name="content-wrapper">
+            <Alert v-if="timeend>=0" type="warning">{{$t('renewal.expirationwarning',[timeend])}}</Alert>
+            <Alert v-else type="error">{{$t('renewal.expirationwarning2')}}</Alert>
+            <Button @click="renewalModal" type="info">{{$t('renewal.Orderrenewal')}}</Button>
+          </Col>
+
         </Row>
         <!-- <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
@@ -126,6 +139,7 @@
     </Mycard>
 
     <s3 ref="s3Modal" :orderid="orderid"></s3>
+    <renewalModal ref="renewalModal" :orderid="orderid"/>
   </div>
 </template>
 
@@ -135,10 +149,14 @@ import Mycard from '@/components/common/useful/Mycard.vue';
 
 import Activity from '@/components/txTable/Activity.vue';
 import { DAEMON_CONFIG } from '../../../config.js';
+import moment from 'moment';
+
+import renewalModal from '@/views/Dialog/renewalModal.vue';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 var packagejson = require('../../../../package.json');
 const { shell } = require('electron');
+
 
 export default {
   data() {
@@ -154,12 +172,14 @@ export default {
   components: {
     Mycard,
     Activity,
-    s3: () => import('../../components/s3/S3.vue')
+    s3: () => import('../../components/s3/S3.vue'),
+    renewalModal
   },
 
   mounted() {
     this.orderid = this.$route.params.id;
     this.getorderinfo(this.orderid);
+    console.log('order info');
   },
   methods: {
     openMatchOrder: function(orderId) {
@@ -205,9 +225,22 @@ export default {
     },
     openS3() {
       this.$refs.s3Modal.openDialog();
+    },
+    renewalModal() {
+      this.$refs.renewalModal.open(this.orderid);
     }
   },
-  computed: {}
+  computed: {
+    timeend() {
+      var createTime = moment(this.$data.orderinfo.MatchOrder.createTime);
+      var endTime = moment(this.$data.orderinfo.MatchOrder.endTime);
+      var duration = moment.duration(endTime.diff(createTime));
+      //  var duration = createTime.diff(endTime)
+
+      return duration.asDays();
+    }
+
+  }
 };
 </script>
 
