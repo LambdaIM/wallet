@@ -175,7 +175,7 @@ export default {
       this.$data.market = market;
       this.$data.rate = '0.5';
 
-      this.getMinermachines();
+      // this.getMinermachines();
       this.fnrate = debounce(this.ratechange, 1000);
       this.fnpricerate = debounce(this.pricechange, 1000);
     },

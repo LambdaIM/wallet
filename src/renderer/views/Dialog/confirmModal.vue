@@ -203,13 +203,30 @@
               <Col span="20" class-name="value">{{address}}</Col>
             </Row>
             <Row class-name="item">
-          <Col span="4" class-name="key">{{$t('somemodel.Miningsubaccount')}}:</Col>
-          <Col span="20" class-name="value">{{transactiondata.miningAddress}}</Col>
-        </Row>
-        <Row class-name="item">
-          <Col span="4" class-name="key">DhtId:</Col>
-          <Col span="20" class-name="value">{{transactiondata.dhtId}}</Col>
-        </Row>
+              <Col span="4" class-name="key">{{$t('somemodel.Miningsubaccount')}}:</Col>
+              <Col span="20" class-name="value">{{transactiondata.miningAddress}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">DhtId:</Col>
+              <Col span="20" class-name="value">{{transactiondata.dhtId}}</Col>
+            </Row>
+
+          </div>
+
+          <div v-if="txtype=='OrderRenewal'">
+            <h2>{{$t('renewal.Orderrenewal')}}</h2>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('renewal.Duration')}}:</Col>
+              <Col span="20" class-name="value">{{transactiondata.duration|formatMonth}}{{$t('Dialog.sellorder.month')}} </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('renewal.orderid')}}:</Col>
+              <Col span="20" class-name="value">{{transactiondata.orderId}}</Col>
+            </Row>
 
           </div>
 

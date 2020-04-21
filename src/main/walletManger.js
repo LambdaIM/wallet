@@ -713,6 +713,21 @@ walletManger.prototype.Transfer = async function (to, amount, gas, denom, memo) 
   };
   return result;
 };
+
+
+walletManger.prototype.OrderRenewal = async function (orderId,duration,memo) {
+  var result = {
+    type: transaction.OrderRenewal,
+    orderId: orderId,
+    duration:duration,
+    memo: memo || ''
+  };
+  return result;
+};
+
+
+
+
 walletManger.prototype.Simulate = async function (transactiondata) {
   var gasprice = settings.get('gasprice') ;
   if(gasprice==undefined){
