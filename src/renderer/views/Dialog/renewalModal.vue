@@ -118,8 +118,8 @@ export default {
       }
       if (Duration > 60) {
         this.$Notice.warning({
-          // title: this.$t('home.action.check_balance_amount_transfer')
-          title: '续费时长需要小于60个月'
+          title: this.$t('renewal.maxDuration')
+          // title: '续费时长需要小于60个月'
         });
         return;
       }
