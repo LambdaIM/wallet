@@ -47,6 +47,7 @@
                 <MenuItem  name="openWithdraw">{{$t('home.Withdraw')}}</MenuItem>
                 <MenuItem v-if="$role('home.tx.Withdrawprofit')" name="openWithdrawprofit">{{$t('home.Withdrawprofit')}}</MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
+                <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">提取订单佣金 </MenuItem>
             </MenuGroup>
 
 
@@ -81,6 +82,7 @@
     <WithdrawalModalDialog ref="WithdrawalModalDialog" />
     <DistributionModal ref="DistributionModal" />
     <MinerWithdrawalModal ref="MinerWithdrawalModalDialog"/>
+    <MinerWithdrawaOrderlModal ref="MinerWithdrawaOrderlModalDialog"/>
 
   </div>
 </template>
@@ -93,6 +95,8 @@ import WithdrawalModalDialog from '@/views/Dialog/withdrawalModal.vue';
 import DistributionModal from '@/views/Dialog/distributionModal.vue';
 
 import MinerWithdrawalModal from '@/views/Dialog/MinerWithdrawalModal.vue';
+import MinerWithdrawaOrderlModal from '@/views/Dialog/MinerWithdrawaOrderlModal.vue';
+
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
@@ -109,7 +113,8 @@ export default {
     SendModelDialog,
     WithdrawalModalDialog,
     DistributionModal,
-    MinerWithdrawalModal
+    MinerWithdrawalModal,
+    MinerWithdrawaOrderlModal
   },
   mounted() {
     this.getMinerRewards();
@@ -131,6 +136,7 @@ export default {
         case 'openWithdraw':this.$refs.WithdrawalModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         case 'openWithdrawprofit':this.$refs.DistributionModal.open(); this.$data.activeItem = this.$route.name; break;
         case 'openMinerprofit':this.$refs.MinerWithdrawalModalDialog.open(); this.$data.activeItem = this.$route.name; break;
+        case 'openMinerOrder':this.$refs.MinerWithdrawaOrderlModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         default :this.$data.activeItem = name;
       }
 

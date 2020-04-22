@@ -313,6 +313,26 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('minerMinerWithDrawCount', async query => {
+    var { page, limit } = query;
+
+
+
+    if (page == undefined) {
+      throw resultView(null, false, errorList.need_page);
+    }
+    if (limit == undefined) {
+      throw resultView(null, false, errorList.need_limit);
+    }
+
+    try {
+      var data = await WM.TransferMinerWithDrawCount(page, limit);
+      return resultView(data, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
 
 
   eipc.answerRenderer('withdrawalDistribution', async query => {
