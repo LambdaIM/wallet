@@ -113,7 +113,7 @@
           </Col>
 
         </Row>
-        <Row class-name="card-item">
+        <Row v-if="ispayorder(orderinfo.MatchOrder.buyAddress)" class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             &nbsp;
           </Col>
