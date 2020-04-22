@@ -3,7 +3,7 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="提取订单佣金"
+      :title="$t('orderrevenue.WithdraworderCommission')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
@@ -13,19 +13,20 @@
       </Input>
       <br/>
       <Input class="address" v-model.number="page" >
-        <span slot="prepend">页码</span>
+        <span slot="prepend">{{$t('orderrevenue.Pagenumber')}}</span>
       </Input>
       <br/>
       <Input class="address" v-model.number="limit" readonly>
-        <span slot="prepend">数量</span>
+        <span slot="prepend">{{$t('orderrevenue.Number')}}</span>
       </Input>
       <br/>
       <p>
         <ul style="padding-left: 15px;">
-          <li>每90个订单为1页，订单数量比较多，页码可以填写1、2、3、4、5、6等</li>
-          <li>一次只能同时提取90个订单的收益</li>
-          <li>提取操作时间限制{{orderduration|formatHour}}小时提取一次</li>
-          <li>订单中的收益是{{minerduration|formatHour}}小时计算一次，如果未到{{minerduration|formatHour}}小时发起提取，提取到的金额为0</li>
+          <li>{{$t('orderrevenue.tip1',[90])}}</li>
+          <li>{{$t('orderrevenue.tip2',[90])}}</li>
+          <li>{{$t('orderrevenue.tip3',[this.formatHour(orderduration)])}}</li>
+          <li>{{$t('orderrevenue.tip4',[this.formatHour(orderduration)])}}</li>
+
         </ul>
 
 
@@ -116,6 +117,9 @@ export default {
         this.$data.orderduration = order_with_draw_min_duration;
         this.$data.minerduration = miner_with_draw_duration;
       }
+    },
+    formatHour(num) {
+      return (num / (1000 * 1000 * 1000 * 60 * 60)).toFixed(2);
     }
 
   },
