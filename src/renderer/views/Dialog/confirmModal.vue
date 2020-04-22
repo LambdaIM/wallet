@@ -171,7 +171,7 @@
 
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('Dialog.sellorder.Sellingspace')}}:</Col>
-          <Col span="20" class-name="value">{{transactiondata.spaceSize}} GB</Col>
+          <Col span="20" class-name="value">{{transactiondata.sellSize}} GB</Col>
         </Row>
         <Row class-name="item">
           <Col span="4" class-name="key">{{$t('Dialog.sellorder.unitprice1')}}:</Col>
@@ -229,6 +229,25 @@
             </Row>
 
           </div>
+
+          <div v-if="txtype=='MsgMinerWithDrawCount'">
+            <h2> 提取订单收益   </h2>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">页码:</Col>
+              <Col span="20" class-name="value">{{transactiondata.page}} </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">数量:</Col>
+              <Col span="20" class-name="value">{{transactiondata.limit}}</Col>
+            </Row>
+
+          </div>
+
+          <!-- MsgMinerWithDrawCount -->
 
 
 

@@ -555,6 +555,15 @@ walletManger.prototype.TransferWithdrawal = async function (to, amount, gas, isd
     denom: 'ulamb'
   };
 };
+
+walletManger.prototype.TransferMinerWithDrawCount = async function (page,limit) {
+  return {
+    type: transaction.MinerWithDrawCount,
+    page: page,
+    limit: limit
+  };
+};
+
 walletManger.prototype.TransferMinerwithdrawal = async function (to, amount, gas, isdege) {
   return {
     type: transaction.WithdrawMinerRewards,

@@ -177,6 +177,10 @@ function formatMonth(num) {
   return (num / (1000 * 1000 * 1000 * 60 * 60 * 24 * 30)).toFixed(2);
 }
 
+function formatHour(num) {
+  return (num / (1000 * 1000 * 1000 * 60 * 60)).toFixed(2);
+}
+
 // 1000*1000*1000*60*60*24
 
 export default {
@@ -198,5 +202,6 @@ export default {
   BlanceValue,
   TbbBlanceValue,
   BlanceValueint,
-  Fixed6
+  Fixed6,
+  formatHour
 };
