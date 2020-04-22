@@ -47,7 +47,7 @@
                 <MenuItem  name="openWithdraw">{{$t('home.Withdraw')}}</MenuItem>
                 <MenuItem v-if="$role('home.tx.Withdrawprofit')" name="openWithdrawprofit">{{$t('home.Withdrawprofit')}}</MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
-                <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">提取订单佣金 </MenuItem>
+                <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">{{$t('orderrevenue.WithdraworderCommission')}} </MenuItem>
             </MenuGroup>
 
 

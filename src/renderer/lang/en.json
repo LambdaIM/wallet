@@ -812,6 +812,16 @@
       "expirationwarning2":"The order has expired. The expired order cannot be demanded",
       "maxDuration":"Renewal time is less than 60 months"
 
+  },
+  "orderrevenue":{
+      "WithdraworderCommission":"Withdraw order Commission",
+      "Pagenumber":"Page number",
+      "Number":"Number",
+      "tip1":"Each {0} order is 1 page, with a large number of orders. The page number can be filled in as 1, 2, 3, 4, 5, 6, etc",
+      "tip2":"Only {0} orders can be withdrawn at one time",
+      "tip3":"Extraction operation time limit {0} hour extraction once",
+      "tip4":"The revenue in the order is calculated every {0} hour. If the withdrawal is initiated before {0} hour, the amount withdrawn is 0"
+
   }
 
 }

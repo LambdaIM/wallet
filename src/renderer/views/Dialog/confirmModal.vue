@@ -231,18 +231,18 @@
           </div>
 
           <div v-if="txtype=='MsgMinerWithDrawCount'">
-            <h2> 提取订单收益   </h2>
+            <h2>{{$t('orderrevenue.WithdraworderCommission')}}   </h2>
             <Row class-name="item">
               <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
               <Col span="20" class-name="value">{{address}}</Col>
             </Row>
             <Row class-name="item">
-              <Col span="4" class-name="key">页码:</Col>
-              <Col span="20" class-name="value">{{transactiondata.page}} </Col>
+              <Col span="8" class-name="key">{{$t('orderrevenue.Pagenumber')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.page}} </Col>
             </Row>
             <Row class-name="item">
-              <Col span="4" class-name="key">数量:</Col>
-              <Col span="20" class-name="value">{{transactiondata.limit}}</Col>
+              <Col span="8" class-name="key">{{$t('orderrevenue.Number')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.limit}}</Col>
             </Row>
 
           </div>
