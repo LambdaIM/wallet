@@ -233,12 +233,12 @@ export default {
   },
   computed: {
     timeend() {
-      var createTime = moment(this.$data.orderinfo.MatchOrder.createTime);
+      var createTime = moment.now();
       var endTime = moment(this.$data.orderinfo.MatchOrder.endTime);
       var duration = moment.duration(endTime.diff(createTime));
       //  var duration = createTime.diff(endTime)
 
-      return duration.asDays();
+      return duration.asDays().toFixed(2);
     }
 
   }
