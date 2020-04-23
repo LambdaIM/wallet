@@ -22,8 +22,8 @@
       <br/>
       <p>
         <ul style="padding-left: 15px;">
-          <li>{{$t('orderrevenue.tip1',[90])}}</li>
-          <li>{{$t('orderrevenue.tip2',[90])}}</li>
+          <li>{{$t('orderrevenue.tip1',[limit])}}</li>
+          <li>{{$t('orderrevenue.tip2',[limit])}}</li>
           <li>{{$t('orderrevenue.tip3',[this.formatHour(orderduration)])}}</li>
           <li>{{$t('orderrevenue.tip4',[this.formatHour(orderduration)])}}</li>
 
@@ -50,7 +50,7 @@ export default {
       withdrawalModal: false,
       confirmModal: false,
       gaseFee: 0,
-      limit: 90,
+      limit: 100,
       page: 1,
       orderduration: 0,
       minerduration: 0
