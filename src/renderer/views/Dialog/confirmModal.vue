@@ -237,11 +237,11 @@
               <Col span="20" class-name="value">{{address}}</Col>
             </Row>
             <Row class-name="item">
-              <Col span="8" class-name="key">{{$t('orderrevenue.Pagenumber')}}:</Col>
+              <Col span="5" class-name="key">{{$t('orderrevenue.Pagenumber')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.page}} </Col>
             </Row>
             <Row class-name="item">
-              <Col span="8" class-name="key">{{$t('orderrevenue.Number')}}:</Col>
+              <Col span="5" class-name="key">{{$t('orderrevenue.Number')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.limit}}</Col>
             </Row>
 
@@ -346,7 +346,8 @@ export default {
       if (isNaN(value)) {
         return false;
       }
-      if (value > 1) {
+
+      if (value > 50 && this.txtype != 'MsgMinerWithDrawCount') {
         this.$data.gaseFee = 0.001;
         this.$Notice.warning({
           title: 'error',

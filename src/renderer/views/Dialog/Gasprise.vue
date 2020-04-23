@@ -7,7 +7,7 @@
         >
         <Form  @keydown.native.enter.prevent ="submitdata" >
           <Input v-model="gasprise" :placeholder="$t('gaspage.placeholder')"  >
-          <span slot="append">LAMB</span>
+          <span slot="append">uLAMB</span>
           </Input>
         </Form >
          <div>

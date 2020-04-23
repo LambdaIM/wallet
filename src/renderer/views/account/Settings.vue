@@ -180,7 +180,7 @@
               span="12"
               class-name="content-wrapper"
             >
-            <span>{{Gasprisevalue}}LAMB</span>
+            <span>{{Gasprisevalue}}uLAMB</span>
             <Button
               @click="opengasprise"
               type="primary"
