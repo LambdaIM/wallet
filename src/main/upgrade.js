@@ -13,7 +13,7 @@ export default async function(isstartup) {
   try {
     var language = settings.get('set.language') || 'en';
 
-    var result = await fetch('https://lambdaim.github.io/launch/version/wallet.json?t=' + (new Date()).getTime());
+    var result = await fetch('http://docs.lambdastorage.com/version/wallet.json?t=' + (new Date()).getTime());
     if (result.status != 200) {
       return;
     }
