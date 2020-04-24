@@ -102,4 +102,17 @@ export default function() {
       return { data: error, state: false };
     }
   });
+  eipc.answerRenderer('blocktime', async query => {
+    try {
+      var CosmosAPIobj = LambdaApi();
+      var blockLatest = await CosmosAPIobj().get.nodeBlocklatest();
+      return { data: {
+        blockLatest: blockLatest
+      },
+      state: true };
+    } catch (error) {
+      log.error(error);
+      return { data: error, state: false };
+    }
+  });
 }

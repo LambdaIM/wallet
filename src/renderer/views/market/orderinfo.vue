@@ -117,10 +117,11 @@
           <Col span="4" class-name="title-wrapper">
             &nbsp;
           </Col>
-          <Col span="20" class-name="content-wrapper">
-
-            <Alert v-if="timeend>=0" :type='timeend>=30?"success":"warning"'>{{$t('renewal.expirationwarning',[timeend])}}</Alert>
-            <Alert v-else type="error">{{$t('renewal.expirationwarning2')}}</Alert>
+          <Col  span="20" class-name="content-wrapper">
+            <div v-if="blocktime!=''">
+              <Alert v-if="timeend>=0" :type='timeend>=30?"success":"warning"'>{{$t('renewal.expirationwarning',[timeend])}}</Alert>
+              <Alert v-else type="error">{{$t('renewal.expirationwarning2')}}</Alert>
+            </div>
             <Button @click="renewalModal" type="info">{{$t('renewal.Orderrenewal')}}</Button>
           </Col>
 
@@ -167,7 +168,8 @@ export default {
       passwordModal: false,
       walletPassword: '',
       managerkey: {},
-      runstorage: packagejson.runstorage
+      runstorage: packagejson.runstorage,
+      blocktime: ''
     };
   },
   components: {
@@ -179,6 +181,7 @@ export default {
 
   mounted() {
     this.orderid = this.$route.params.id;
+    this.getblocktime();
     this.getorderinfo(this.orderid);
     console.log('order info');
   },
@@ -194,6 +197,16 @@ export default {
       });
       if (res.state) {
         this.$data.orderinfo = res.data.data;
+      }
+    },
+    async getblocktime() {
+      let res = await ipc.callMain('blocktime', {});
+      if (res.state) {
+        try {
+          this.$data.blocktime = res.data.blockLatest.block.header.time;
+        } catch (error) {
+
+        }
       }
     },
 
@@ -233,7 +246,7 @@ export default {
   },
   computed: {
     timeend() {
-      var createTime = moment.now();
+      var createTime = moment(this.$data.blocktime);
       var endTime = moment(this.$data.orderinfo.MatchOrder.endTime);
       var duration = moment.duration(endTime.diff(createTime));
       //  var duration = createTime.diff(endTime)
