@@ -125,7 +125,10 @@ export default {
       // }
     },
     async cleardata() {
-      let res = await ipc.callMain('clearlocalmarketdata', {});
+      var marketAddress = this.$store.getters.getselectMarket;
+      let res = await ipc.callMain('clearlocalmarketdata', {
+        marketAddress: marketAddress
+      });
     },
     async fetchData(stoppagenum) {
       console.log('-----');

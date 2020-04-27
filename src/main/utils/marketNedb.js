@@ -168,9 +168,9 @@ export default class {
         });
     });
   }
-  cleardata() {
+  cleardata(marketAddress) {
     return new Promise(function (resolve, reject) {
-      db.remove({ network: global.__lambNodeinfo.network },
+      db.remove({ network: global.__lambNodeinfo.network, marketAddress: marketAddress },
         { multi: true },
         function (err, numRemoved) {
           if (err == null) {

@@ -2,40 +2,7 @@
 <template>
   <div class="customer-container">
       <div class="tableContainer">
-           <Row>
-        <Col span="22"><h3>{{$t('marketpage.autotitle')}}</h3></Col>
 
-
-    </Row>
-                  <div style="text-align: center;">
-          <Dropdown @on-click="selectmarketClick">
-        <a href="javascript:void(0)">
-            {{selectmarket.name}}
-            <Icon type="ios-arrow-down"></Icon>
-        </a>
-        <DropdownMenu  v-if="marketList" slot="list">
-            <DropdownItem :name="item.name" :key="item.marketAddress" v-for="item in marketList" >{{item.name}}</DropdownItem>
-
-
-        </DropdownMenu>
-    </Dropdown>&nbsp;
-
-
-      {{$t('marketpage.space')}} <Input v-model="autoSpaceSize"  style="width: auto" />GB&nbsp;
-      {{$t('marketpage.duration')}}<Input v-model="autoSpaceDuration"  style="width: auto" />{{$t('marketpage.month')}}&nbsp;
-         <Button @click="openautoBuyingspace" type="primary">{{$t('marketpage.One-click-space')}}</Button>
-
-    </div>
-
-      <div style="text-align: center;"> {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
-          {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}} ，
-          {{$t('marketpage.unitprice')}}：{{marketinfo.order_normal_price|Lambformat}}，
-          {{$t('marketpage.Minimumtime')}}： {{marketinfo.order_min_buy_duration|formatMonth}}{{$t('marketpage.month')}}
-          {{$t('marketpage.Maximumtime')}}：{{marketinfo.order_max_buy_duration|formatMonth}}{{$t('marketpage.month')}}，
-          {{$t('marketpage.Minimumspace')}}：{{marketinfo.order_min_buy_size}}GB  </div>
-
-
-     <Divider />
      <Row>
         <Col span="7"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
         <Col span="17" style="text-align: right;">
@@ -47,12 +14,25 @@
      <div>
 
     <Row>
-        <Col span="8">
+        <Col span="14">
           <!-- {{$t('marketpage.last100data')}} -->
-          &nbsp;
+          市场
+          <Dropdown @on-click="selectmarketClick">
+        <a href="javascript:void(0)">
+            {{selectmarket.name}}
+            <Icon type="ios-arrow-down"></Icon>
+        </a>
+        <DropdownMenu  v-if="marketList" slot="list">
+            <DropdownItem :name="item.name" :key="item.marketAddress" v-for="item in marketList" >{{item.name}}</DropdownItem>
+
+
+        </DropdownMenu>
+    </Dropdown>&nbsp;
+    {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
+    {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}}
         </Col>
 
-        <Col span="8">
+        <Col span="10">
           <RadioGroup  @on-change="statusTypeChange"  v-model="statusType" type="button" size="large">
               <Radio label="active">{{$t('marketpage.active')}}</Radio>
               <Radio label="unActive">{{$t('marketpage.unActive')}}</Radio>
@@ -123,8 +103,9 @@ export default {
       marketinfo: '',
       OrderList: [],
       OrderListcolumns: [{
-        title: this.$t('marketpage.selltable.Mineraddress'),
-        key: 'address'
+        // title: this.$t('marketpage.selltable.Mineraddress'),
+        title: '订单id',
+        key: 'orderId'
       },
       // {
       //   title: this.$t('marketpage.myselltable.Storagedevice'),
@@ -171,8 +152,9 @@ export default {
       }
       ],
       OrderListcolumnsNotSort: [{
-        title: this.$t('marketpage.selltable.Mineraddress'),
-        key: 'address'
+        // title: this.$t('marketpage.selltable.Mineraddress'),
+        title: '订单id',
+        key: 'orderId'
       },
       // {
       //   title: this.$t('marketpage.myselltable.Storagedevice'),
@@ -340,8 +322,11 @@ export default {
           _this.$data.selectmarket = item;
         }
       });
+
       this.getmarketinfo(name);
       this.getOrderList();
+
+      this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
     },
     openautoBuyingspace() {
       let spaceSize = parseInt(this.$data.autoSpaceSize);

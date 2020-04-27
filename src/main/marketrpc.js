@@ -140,8 +140,9 @@ export default function() {
   });
 
   eipc.answerRenderer('clearlocalmarketdata', async query => {
+    let { marketAddress } = query;
     try {
-      var result = await Nedbjs.cleardata();
+      var result = await Nedbjs.cleardata(marketAddress);
 
       return resultView(result, true);
     } catch (ex) {

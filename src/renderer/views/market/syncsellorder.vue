@@ -1,7 +1,27 @@
 <template>
   <div class="customer-container">
     <div class="tableContainer">
+      <h3 style="   ">
+         市场
+          <Dropdown @on-click="selectmarketClick">
+        <a href="javascript:void(0)">
+            {{selectmarket.name}}
+            <Icon type="ios-arrow-down"></Icon>
+        </a>
+        <DropdownMenu  v-if="marketList" slot="list">
+            <DropdownItem :name="item.name" :key="item.marketAddress" v-for="item in marketList" >{{item.name}}</DropdownItem>
+
+
+        </DropdownMenu>
+    </Dropdown>&nbsp;
+    {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
+    {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}}
+        市场{{name}}数据同步时间：****
+      </h3>
+      <br/>
       <syncbar :marketName="name" />
+
+
     <br/>
 
     <!-- OrderListcolumnsNotSort -->
@@ -68,8 +88,9 @@ export default {
       islocalfilter: {},
       OrderListcolumns: [
         {
-          title: this.$t('marketpage.selltable.Mineraddress'),
-          key: 'address'
+          // title: this.$t('marketpage.selltable.Mineraddress'),
+          title: '订单id',
+          key: 'orderId'
         },
         // {
         //   title: this.$t('marketpage.myselltable.Storagedevice'),
@@ -115,7 +136,10 @@ export default {
           key: 'status',
           slot: 'status'
         }
-      ]
+      ],
+      marketList: [],
+      marketinfo: '',
+      selectmarket: ''
     };
   },
   mounted() {
@@ -137,6 +161,8 @@ export default {
       console.log('TransactionSuccess');
       this.getOrderList(1);
     });
+    this.getmarketlist();
+    this.getmarketinfo(this.$route.params.marketname);
   },
   methods: {
     OrderListSort(columninfo) {
@@ -193,6 +219,46 @@ export default {
         name: this.$data.name,
         marketAddress: this.$data.marketAddress
       });
+    },
+    async getmarketlist() {
+      console.log('getmarketlist');
+      try {
+        let res = await ipc.callMain('marketlist', {});
+        if (res.state) {
+          this.$data.marketList = res.data.data;
+          this.$data.selectmarket = this.$data.marketList[0];
+        }
+      } catch (error) {
+        this.$Message.error(this.$t('foot.linkerror'));
+      }
+    },
+    async   getmarketinfo(name) {
+      let res = await ipc.callMain('marketinfo', {
+        name
+      });
+      if (res.state) {
+        this.$data.marketinfo = res.data.data;
+      }
+    },
+    selectmarketClick(name) {
+      console.log(name);
+      var _this = this;
+      this.$data.marketList.forEach(item => {
+        if (name == item.name) {
+          _this.$data.selectmarket = item;
+        }
+      });
+
+      // name: this.$route.params.marketname,
+      // marketAddress: this.$route.params.marketAddress,
+      this.$data.name = this.$data.selectmarket.name;
+      this.$data.marketAddress = this.$data.selectmarket.marketAddress;
+
+      this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
+      this.getmarketinfo(name);
+      this.$data.allCount = 1;
+      this.$data.pageCount = {};
+      this.getOrderList(1);
     }
   }
 };
