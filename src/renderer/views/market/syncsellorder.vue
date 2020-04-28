@@ -78,8 +78,8 @@ export default {
   },
   data() {
     return {
-      name: this.$route.params.marketname,
-      marketAddress: this.$route.params.marketAddress,
+      name: '',
+      marketAddress: '',
       loading: false,
       allCount: 1,
       pageCount: {},
@@ -96,6 +96,11 @@ export default {
         //   title: this.$t('marketpage.myselltable.Storagedevice'),
         //   key: 'machineName'
         // },
+        {
+          title: this.$t('marketpage.selltable.Mineraddress'),
+          key: 'address'
+          // slot: 'rate'
+        },
         {
           title: this.$t('marketpage.selltable.amountspace'),
           key: 'sellSize',
@@ -126,11 +131,7 @@ export default {
           key: 'action',
           slot: 'action'
         },
-        {
-          title: this.$t('marketpage.selltable.Odds'),
-          key: 'rate',
-          slot: 'rate'
-        },
+
         {
           title: this.$t('marketpage.Status'),
           key: 'status',
@@ -139,12 +140,11 @@ export default {
       ],
       marketList: [],
       marketinfo: '',
-      selectmarket: '',
+      selectmarket: {},
       syncTime: ''
     };
   },
   async mounted() {
-    this.getOrderList(1);
     eventhub.$on('marketsellordersync', data => {
       console.log('marketsellordersync');
       this.$data.islocal = data;
@@ -165,8 +165,10 @@ export default {
       this.getOrderList(1);
     });
     await this.getmarketlist();
-    await this.getmarketinfo(this.$route.params.marketname);
+
+    await this.getmarketinfo(this.$data.selectmarket.marketname);
     await this.getmarketsyncTime();
+    this.getOrderList(1);
   },
   methods: {
     OrderListSort(columninfo) {
@@ -245,6 +247,8 @@ export default {
         if (res.state) {
           this.$data.marketList = res.data.data;
           this.$data.selectmarket = this.finddefaultmarket();
+          this.$data.name = this.$data.selectmarket.name;
+          this.$data.marketAddress = this.$data.selectmarket.marketAddress;
         }
       } catch (error) {
         this.$Message.error(this.$t('foot.linkerror'));

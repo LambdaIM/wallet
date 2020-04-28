@@ -113,6 +113,14 @@ export default class {
             }
           }
 
+          if (flag && islocalfilter.orderid != '' && islocalfilter.orderid != undefined) {
+            if (this.orderId.toLowerCase().indexOf(islocalfilter.orderid.toLowerCase()) > -1) {
+              flag = true;
+            } else {
+              flag = false;
+            }
+          }
+
           if (flag && islocalfilter.statusType) {
             if (this.status == islocalfilter.statusType) {
               flag = true;
