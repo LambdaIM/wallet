@@ -106,20 +106,15 @@ export default class {
             }
           }
           if (flag && islocalfilter.storagenode != '' && islocalfilter.storagenode != undefined) {
-            if (this.address.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1) {
+            if (this.address.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1 ||
+            this.orderId.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1) {
               flag = true;
             } else {
               flag = false;
             }
           }
 
-          if (flag && islocalfilter.orderid != '' && islocalfilter.orderid != undefined) {
-            if (this.orderId.toLowerCase().indexOf(islocalfilter.orderid.toLowerCase()) > -1) {
-              flag = true;
-            } else {
-              flag = false;
-            }
-          }
+
 
           if (flag && islocalfilter.statusType) {
             if (this.status == islocalfilter.statusType) {

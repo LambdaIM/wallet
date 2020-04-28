@@ -7,8 +7,8 @@
 
 
 
- {{$t('syncorderpage.mineraddress')}} <Input @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 280px" />
- {{$t('syncorderpage.orderID')}} <Input @on-keyup="conditionChange"  v-model="condition.orderid" size="small"  style="width: 280px" />
+  <Input :placeholder="`${$t('syncorderpage.mineraddress')}、${$t('syncorderpage.orderID')}`" @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 280px" />
+ <!-- {{$t('syncorderpage.orderID')}} <Input @on-keyup="conditionChange"  v-model="condition.orderid" size="small"  style="width: 280px" /> -->
   </div>
 
 
@@ -25,32 +25,17 @@
         <DropdownMenu slot="list">
             <DropdownItem name="some">{{$t('syncorderpage.typedata1')}}</DropdownItem>
             <DropdownItem name="more">{{$t('syncorderpage.typedata2')}}</DropdownItem>
-            <DropdownItem name="all" divided>{{$t('syncorderpage.typedata3')}}</DropdownItem>
+            <!-- <DropdownItem name="all" divided>{{$t('syncorderpage.typedata3')}}</DropdownItem> -->
 
         </DropdownMenu>
     </Dropdown>
         </Col>
 
     </Row>
+    <br/>
+      <Progress  v-if="loading==true" :percent="percentage"  />
 <br/>
- <Row>
-        <Col span="21">
-        <div class="searchtxt" style="    display: inline-block;"  >
 
-
- {{$t('marketpage.selltable.unitprice')}} <Input @on-keyup="conditionChange"  v-model.number="condition.priceStart" size="small"  style="width: 120px" /> ~<Input @on-keyup="conditionChange"  v-model.number="condition.priceEnd" size="small"  style="width: 120px" />
- <!-- {{$t('marketpage.selltable.Odds')}} <Input @on-keyup="conditionChange" v-model.number="condition.rateStart" size="small"  style="width: 120px" /> ~<Input  @on-keyup="conditionChange" v-model.number="condition.rateEnd" size="small"  style="width: 120px" /> -->
-
-  </div>
-
-
-        </Col>
-        <!-- <Col span="3">
-
-            1
-        </Col> -->
-
-    </Row>
 
 </div>
 </template>
@@ -75,7 +60,8 @@ export default {
         storagenode: '',
         statusType: '0',
         orderid: ''
-      }
+      },
+      percentage: 0
     };
   },
   props: {
@@ -117,7 +103,7 @@ export default {
     datasync(nameType) {
       // eventHub.$emit('marketsellordersync', this.$data.switchstate);
       // if (this.$data.switchstate) {
-      this.$Spin.show();
+      // this.$Spin.show();
       console.log(nameType);
       var stoppagenum = 1000;
       if (nameType == 'some') {
@@ -132,6 +118,7 @@ export default {
       this.$data.page = 1;
       this.cleardata();
       this.fetchData(stoppagenum);
+
       // }
     },
     async cleardata() {
@@ -149,12 +136,15 @@ export default {
         limit: 10,
         statusType: 'active'
       });
+
+
       if (res.data == 10 && stoppagenum >= this.$data.page) {
         this.$data.page += 1;
+        this.$data.percentage = parseFloat((this.$data.page / stoppagenum * 100).toFixed(2));
         this.fetchData(stoppagenum);
       } else {
         this.$data.loading = false;
-        this.$Spin.hide();
+        // this.$Spin.hide();
         eventHub.$emit('marketconditionfilter', this.$data.condition);
       }
     }
