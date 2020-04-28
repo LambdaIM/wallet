@@ -640,7 +640,10 @@
        "typedata1":"同步1万条数据",
        "typedata2":"同步10万条数据",
        "typedata3":"同步100万条数据",
-       "no-data-text":"点击数据同步，获取最新数据"
+       "no-data-text":"点击数据同步，获取最新数据",
+       "orderSynchronizationTime":"数据同步时间",
+       "needSync":"尚未同步订单数据，请点击数据同步按钮，同步订单数据",
+       "orderID":"订单id"
 
    },
    "orderinfo":{

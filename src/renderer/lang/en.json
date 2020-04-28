@@ -642,7 +642,10 @@
   "typedata1":"Synchronize 10000 pieces of data",
   "typedata2":"Synchronize 100000 pieces of data",
   "typedata3":"Synchronize 1 million pieces of data",
-  "no-data-text":"Click data synchronization to get the latest data"
+  "no-data-text":"Click data synchronization to get the latest data",
+  "orderSynchronizationTime":"Data synchronization time",
+  "needSync":"The order data has not been synchronized. Please click the data synchronization button to synchronize the order data",
+  "orderID":"Order id"
 
 },
 "orderinfo":{

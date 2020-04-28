@@ -2,7 +2,7 @@
   <div class="customer-container">
     <div class="tableContainer">
       <h3 style="   ">
-         市场
+         {{$t('head.market')}}
           <Dropdown @on-click="selectmarketClick">
         <a href="javascript:void(0)">
             {{selectmarket.name}}
@@ -16,9 +16,13 @@
     </Dropdown>&nbsp;
     {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
     {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}}
-        订单同步时间：{{syncTime|formatToTime}}
+    {{$t('syncorderpage.orderSynchronizationTime')}}：{{syncTime|formatToTime}}
       </h3>
-      <br/>
+      <div v-if="syncTime==undefined">
+
+       <Alert type="warning">{{$t('syncorderpage.needSync')}}</Alert>
+      </div>
+      <br v-else />
       <syncbar :marketName="name" />
 
 
@@ -89,7 +93,7 @@ export default {
       OrderListcolumns: [
         {
           // title: this.$t('marketpage.selltable.Mineraddress'),
-          title: '订单id',
+          title: this.$t('syncorderpage.orderID'),
           key: 'orderId'
         },
         // {
