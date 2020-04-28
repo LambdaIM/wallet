@@ -249,12 +249,23 @@ export default {
         let res = await ipc.callMain('marketlist', {});
         if (res.state) {
           this.$data.marketList = res.data.data;
-          this.$data.selectmarket = this.$data.marketList[0];
+          this.$data.selectmarket = this.finddefaultmarket(this.$data.marketList);
           this.getOrderList(1);
         }
       } catch (error) {
         this.$Message.error(this.$t('foot.linkerror'));
       }
+    },
+    finddefaultmarket(list) {
+      var defaultaddress = this.$store.getters.getselectMarket;
+      var result = list[0];
+      list.forEach(item => {
+        if (item.marketAddress == defaultaddress) {
+          result = item;
+        }
+      });
+
+      return result;
     },
     async   getmarketinfo(name) {
       let res = await ipc.callMain('marketinfo', {

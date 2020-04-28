@@ -143,12 +143,23 @@ export default function() {
     let { marketAddress } = query;
     try {
       var result = await Nedbjs.cleardata(marketAddress);
+      settings.set(`Market.synctime.${global.__lambNodeinfo.network}.${marketAddress}`, new Date().getTime());
 
       return resultView(result, true);
     } catch (ex) {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('getmarketsyncTime', async query => {
+    let { marketAddress } = query;
+    try {
+      var result = settings.get(`Market.synctime.${global.__lambNodeinfo.network}.${marketAddress}`);
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
 
   eipc.answerRenderer('marketSellOrderslist', async query => {
     var { page, limit } = query;

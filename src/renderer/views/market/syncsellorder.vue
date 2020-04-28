@@ -16,7 +16,7 @@
     </Dropdown>&nbsp;
     {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
     {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}}
-        市场{{name}}数据同步时间：****
+        订单同步时间：{{syncTime|formatToTime}}
       </h3>
       <br/>
       <syncbar :marketName="name" />
@@ -139,15 +139,17 @@ export default {
       ],
       marketList: [],
       marketinfo: '',
-      selectmarket: ''
+      selectmarket: '',
+      syncTime: ''
     };
   },
-  mounted() {
+  async mounted() {
     this.getOrderList(1);
     eventhub.$on('marketsellordersync', data => {
       console.log('marketsellordersync');
       this.$data.islocal = data;
       this.getOrderList(1);
+      this.getmarketsyncTime();
     });
 
     eventhub.$on('marketconditionfilter', data => {
@@ -156,13 +158,15 @@ export default {
       this.$data.allCount = 1;
       this.$data.pageCount = {};
       this.getOrderList(1);
+      this.getmarketsyncTime();
     });
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.getOrderList(1);
     });
-    this.getmarketlist();
-    this.getmarketinfo(this.$route.params.marketname);
+    await this.getmarketlist();
+    await this.getmarketinfo(this.$route.params.marketname);
+    await this.getmarketsyncTime();
   },
   methods: {
     OrderListSort(columninfo) {
@@ -181,6 +185,20 @@ export default {
       this.$data.pageCount = {};
 
       this.getOrderList(1);
+    },
+    async    getmarketsyncTime() {
+      console.log('getmarketsyncTime');
+      var selectItem = this.finddefaultmarket();
+      try {
+        let res = await ipc.callMain('getmarketsyncTime', {
+          marketAddress: selectItem.marketAddress
+        });
+        if (res.state) {
+          this.$data.syncTime = res.data;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     orderListPage(page) {
       console.log(page);
@@ -226,11 +244,23 @@ export default {
         let res = await ipc.callMain('marketlist', {});
         if (res.state) {
           this.$data.marketList = res.data.data;
-          this.$data.selectmarket = this.$data.marketList[0];
+          this.$data.selectmarket = this.finddefaultmarket();
         }
       } catch (error) {
         this.$Message.error(this.$t('foot.linkerror'));
       }
+    },
+    finddefaultmarket() {
+      var list = this.$data.marketList;
+      var defaultaddress = this.$store.getters.getselectMarket;
+      var result = list[0];
+      list.forEach(item => {
+        if (item.marketAddress == defaultaddress) {
+          result = item;
+        }
+      });
+
+      return result;
     },
     async   getmarketinfo(name) {
       let res = await ipc.callMain('marketinfo', {
@@ -259,6 +289,7 @@ export default {
       this.$data.allCount = 1;
       this.$data.pageCount = {};
       this.getOrderList(1);
+      this.getmarketsyncTime();
     }
   }
 };
