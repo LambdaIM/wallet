@@ -31,7 +31,7 @@
         </Input> -->
         {{$t('Dialog.sellorder.Odds')}}：
          <RadioGroup @on-change="ratechangedebounce" v-model="rate">
-          <Radio value="0.5" label="0.5"> <span>{{$t('somemodel.ordinary')}}</span></Radio>
+          <!-- <Radio value="0.5" label="0.5"> <span>{{$t('somemodel.ordinary')}}</span></Radio> -->
           <Radio value="1" label="1"><span>{{$t('somemodel.highquality')}}</span></Radio>
         </RadioGroup>
 
@@ -156,7 +156,7 @@ export default {
       machineList: [],
       market: {},
       spaceSize: '',
-      rate: '0.5',
+      rate: '1',
       minSpace: '',
       minDuration: '',
       unitPrice: '5',
@@ -173,7 +173,7 @@ export default {
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
       this.$data.market = market;
-      this.$data.rate = '0.5';
+      this.$data.rate = '1';
 
       // this.getMinermachines();
       this.fnrate = debounce(this.ratechange, 1000);

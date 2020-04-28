@@ -1,15 +1,6 @@
 <template>
 <div>
-  <!-- <div style="    display: inline-block;"  v-if="switchstate">
 
- {{$t('marketpage.myselltable.Storagedevice')}}<Input @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 70px" />
- {{$t('marketpage.selltable.unitprice')}} <Input @on-keyup="conditionChange"  v-model.number="condition.priceStart" size="small"  style="width: 50px" /> ~<Input @on-keyup="conditionChange"  v-model.number="condition.priceEnd" size="small"  style="width: 50px" />
- {{$t('marketpage.selltable.Odds')}} <Input @on-keyup="conditionChange" v-model.number="condition.rateStart" size="small"  style="width: 50px" /> ~<Input  @on-keyup="conditionChange" v-model.number="condition.rateEnd" size="small"  style="width: 50px" />
-  </div>
-  <span>
-  <Button :loading="loading" @click="datasync"  > {{$t('marketpage.datasync')}}  </Button>
-  </span>
- <Button  @click="switchfn"  type="primary">{{stateTxt}}</Button> -->
  <Row>
         <Col span="18">
         <div class="searchtxt" style="    display: inline-block;"  >
@@ -17,7 +8,7 @@
 
  {{$t('marketpage.selltable.unitprice')}} <Input @on-keyup="conditionChange"  v-model.number="condition.priceStart" size="small"  style="width: 50px" /> ~<Input @on-keyup="conditionChange"  v-model.number="condition.priceEnd" size="small"  style="width: 50px" />
  {{$t('marketpage.selltable.Odds')}} <Input @on-keyup="conditionChange" v-model.number="condition.rateStart" size="small"  style="width: 50px" /> ~<Input  @on-keyup="conditionChange" v-model.number="condition.rateEnd" size="small"  style="width: 50px" />
- {{$t('syncorderpage.mineraddress')}}<Input @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 180px" />
+
   </div>
 
 
@@ -42,6 +33,21 @@
         <Col span="1">
         <Button  to="/market/buyspace"  type="primary">{{stateTxt}}</Button>
         </Col>
+    </Row>
+      <br/>
+     <Row>
+        <Col span="18">
+        <div class="searchtxt" style="    display: inline-block;"  >
+
+
+
+ {{$t('syncorderpage.mineraddress')}}<Input @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 280px" />
+ 订单ID<Input @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 280px" />
+  </div>
+
+
+        </Col>
+
     </Row>
 </div>
 </template>
