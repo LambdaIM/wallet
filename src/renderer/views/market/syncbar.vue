@@ -2,7 +2,7 @@
 <div>
 
      <Row>
-        <Col span="19">
+        <Col span="18">
         <div class="searchtxt" style="    display: inline-block;"  >
 
 
@@ -13,8 +13,8 @@
 
 
         </Col>
-        <Col span="2">
-        <!-- <Button  to="/market/buyspace"  type="primary">{{stateTxt}}</Button> -->
+        <Col span="4">
+
         <Dropdown @on-click="datasync">
         <!-- @click="datasync" -->
         <Button :loading="loading"   >
@@ -29,6 +29,11 @@
 
         </DropdownMenu>
     </Dropdown>
+
+        </Col>
+        <Col span="2">
+        <Button  to="/market/buyspace"  type="primary">{{stateTxt}}</Button>
+
         </Col>
 
     </Row>

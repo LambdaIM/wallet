@@ -16,7 +16,7 @@
     <Row>
         <Col span="14">
           <!-- {{$t('marketpage.last100data')}} -->
-          市场
+          {{$t('head.market')}}
           <Dropdown @on-click="selectmarketClick">
         <a href="javascript:void(0)">
             {{selectmarket.name}}
@@ -104,7 +104,7 @@ export default {
       OrderList: [],
       OrderListcolumns: [{
         // title: this.$t('marketpage.selltable.Mineraddress'),
-        title: '订单id',
+        title: this.$t('syncorderpage.orderID'),
         key: 'orderId'
       },
       // {
@@ -153,7 +153,7 @@ export default {
       ],
       OrderListcolumnsNotSort: [{
         // title: this.$t('marketpage.selltable.Mineraddress'),
-        title: '订单id',
+        title: this.$t('syncorderpage.orderID'),
         key: 'orderId'
       },
       // {
