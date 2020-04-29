@@ -123,24 +123,26 @@ export default {
         },
         {
           title: this.$t('marketpage.selltable.minimumspace'),
-          key: 'minBuySize'
+          key: 'minBuySize',
+          sortable: 'custom'
         },
         {
           title: this.$t('marketpage.selltable.minimumduration'),
           key: 'minDuration',
-          slot: 'minDuration'
+          slot: 'minDuration',
+          sortable: 'custom'
         },
         {
           title: this.$t('marketpage.selltable.operating'),
           key: 'action',
           slot: 'action'
-        },
-
-        {
-          title: this.$t('marketpage.Status'),
-          key: 'status',
-          slot: 'status'
         }
+
+        // {
+        //   title: this.$t('marketpage.Status'),
+        //   key: 'status',
+        //   slot: 'status'
+        // }
       ],
       marketList: [],
       marketinfo: '',

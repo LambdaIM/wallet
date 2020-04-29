@@ -22,6 +22,9 @@ export default class {
         element.price = Number(element.price);
         element.unUseSize = Number(element.unUseSize);
         element.network = global.__lambNodeinfo.network;
+        element.minBuySize = Number(element.minBuySize);
+        element.minDuration = Number(element.minDuration);
+
 
         var result = await _this.Checkexist(element.orderId);
         if (result) {
