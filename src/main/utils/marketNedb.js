@@ -1,12 +1,24 @@
 var { DAEMON_CONFIG } = require('../../configmain.js');
 const settings = require('electron-settings');
 
+var LinvoDB = require('linvodb3');
+
+
 var datafile = DAEMON_CONFIG.DataFile + '/market.json';
 
 var Datastore = require('nedb');
 var db = new Datastore({ filename: datafile, autoload: true });
+/// //
+var LinvoDB = require('linvodb3');
+var modelName = 'orderlist';
+var schema = { }; // Non-strict always, can be left empty
+var options = { };
+options.filename = DAEMON_CONFIG.DataFile + '/market'; // Path to database - not necessary
 
+var Doc = new LinvoDB(modelName, schema, options); // New model; Doc is the constructor
 
+console.log('LinvoDB.dbPath', LinvoDB.dbPath);
+console.log('LinvoDB.defaults', LinvoDB.defaults);
 
 export default class {
   insertTx(sellorderArry) {
@@ -33,7 +45,8 @@ export default class {
           var result2 = _this.updateTxState(element.orderId, element);
         }
       });
-      db.insert(newList, function (err, newDoc) {
+      console.log('==插入数据==');
+      Doc.insert(newList, function (err, newDoc) {
         // newDoc is the newly inserted document, including its _id
         // newDoc has no key called notToBeSaved since its value was undefined
         if (err == null) {
@@ -147,7 +160,7 @@ export default class {
   }
   Checkexist(orderId) {
     return new Promise(function (resolve, reject) {
-      db.find({ orderId: orderId, network: global.__lambNodeinfo.network }, function (err, docs) {
+      Doc.find({ orderId: orderId, network: global.__lambNodeinfo.network }, function (err, docs) {
         if (err == null) {
           if (docs.length == 0) {
             resolve(true);
@@ -164,7 +177,7 @@ export default class {
     var address = this.defaultAddress;
     return new Promise(function (resolve, reject) {
       // Set an existing field's value
-      db.update({ orderId: orderId, network: global.__lambNodeinfo.network }, item, { multi: true },
+      Doc.update({ orderId: orderId, network: global.__lambNodeinfo.network }, item, { multi: true },
         function (err, numReplaced) {
           if (err == null) {
             resolve(true);
@@ -176,7 +189,7 @@ export default class {
   }
   cleardata(marketAddress) {
     return new Promise(function (resolve, reject) {
-      db.remove({ network: global.__lambNodeinfo.network, marketAddress: marketAddress },
+      Doc.remove({ network: global.__lambNodeinfo.network, marketAddress: marketAddress },
         { multi: true },
         function (err, numRemoved) {
           if (err == null) {
