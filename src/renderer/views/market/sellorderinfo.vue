@@ -18,7 +18,7 @@
 
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">市场地址:</span>
+            <span class="title">{{$t('Dialog.AutoBuy.Marketaddress')}}:</span>
           </Col>
           <Col span="17" class-name="content-wrapper">
             {{marketAddress}}
@@ -27,7 +27,7 @@
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
-            <span class="title">市场名称:</span>
+            <span class="title">{{$t('Dialog.AutoBuy.Marketname')}}:</span>
           </Col>
           <Col span="17" class-name="content-wrapper">
             {{marketname}}
