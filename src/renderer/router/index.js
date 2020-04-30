@@ -154,6 +154,11 @@ var walletRouter = new Router({
         path: 'syncdata/:marketname/:marketAddress',
         name: 'buyspace',
         component: () => import('@/views/market/syncsellorder.vue')
+      },
+      {
+        path: 'sellorderinfo/:orderid',
+        name: 'sellorderinfo',
+        component: () => import('@/views/market/sellorderinfo.vue')
       }
     ]
 

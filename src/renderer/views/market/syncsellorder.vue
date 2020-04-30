@@ -42,11 +42,11 @@
     >
       <template slot-scope="{ row, index }" slot="action">
         <Button
-          v-if="row.status=='0'"
-          @click="openBuyingspace(row)"
+          :to="`/market/sellorderinfo/${row.orderId}`"
+
           type="primary"
           size="small"
-        >{{$t('marketpage.selltable.Purchasespace')}}</Button>
+        >详情</Button>
       </template>
       <template slot-scope="{ row, index }" slot="price">{{row.price|Lambformat}}</template>
       <template slot-scope="{ row, index }" slot="minDuration">{{row.minDuration|formatMonth}}</template>
