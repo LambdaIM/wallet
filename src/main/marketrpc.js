@@ -253,6 +253,8 @@ export default function() {
     }
   });
 
+
+
   eipc.answerRenderer('editlambdastoragemanagerkey', async query => {
     var { accesskey, secretkey, port } = query;
     if (accesskey == undefined) {
@@ -386,6 +388,23 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+
+  eipc.answerRenderer('sellorderinfo', async query => {
+    var { orderid } = query;
+    if (orderid == undefined) {
+      throw resultView(null, false, errorList.need_orderId);
+    }
+
+    try {
+      var M = new Manager();
+      var result = await M.sellOrderinfo(orderid);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
   function getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey, orderid) {
     return `${path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile())} gateway run \
     --broker.dht_gateway_addr ${ip}:13000 \

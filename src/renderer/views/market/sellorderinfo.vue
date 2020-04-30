@@ -11,7 +11,8 @@
           </Col>
           <Col span="3" class-name="content-wrapper">
 
-            <router-link to="/market/syncdata/1/1/">{{ $t('Dialog.com.back') }}</router-link>
+            <Button type="primary" to="/market/syncdata">{{ $t('Dialog.com.back') }}</Button>
+
           </Col>
         </Row>
 
@@ -159,8 +160,9 @@ export default {
       }
     };
   },
-  mounted() {
-    this.getmarketlist();
+  async mounted() {
+    await this.getmarketlist();
+    this.getsellorderinfo();
   },
   methods: {
     openBuyingspace(row) {
@@ -194,6 +196,14 @@ export default {
       });
 
       return result;
+    },
+    async  getsellorderinfo() {
+      let res = await ipc.callMain('sellorderinfo', {
+        name
+      });
+      if (res.state) {
+        this.$data._sellorderinfo = res.data.data;
+      }
     }
   }
 

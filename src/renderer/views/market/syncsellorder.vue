@@ -46,7 +46,7 @@
 
           type="primary"
           size="small"
-        >详情</Button>
+        >{{$t('marketpage.ordertable.orderdetails')}}</Button>
       </template>
       <template slot-scope="{ row, index }" slot="price">{{row.price|Lambformat}}</template>
       <template slot-scope="{ row, index }" slot="minDuration">{{row.minDuration|formatMonth}}</template>

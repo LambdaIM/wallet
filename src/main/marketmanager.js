@@ -69,6 +69,12 @@ class marketmanager {
     return { data: result };
   }
 
+  async sellOrderinfo(sellorderid) {
+    var result = await this.CosmosAPI().get.sellorderinfo(id);
+
+    return { data: result };
+  }
+
 
 
   // marketminermachines
