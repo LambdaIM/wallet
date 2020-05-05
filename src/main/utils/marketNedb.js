@@ -2,18 +2,21 @@ var { DAEMON_CONFIG } = require('../../configmain.js');
 const settings = require('electron-settings');
 
 var LinvoDB = require('linvodb3');
-
+var fs = require('graceful-fs');
 
 var datafile = DAEMON_CONFIG.DataFile + '/market.json';
 
 var Datastore = require('nedb');
 var db = new Datastore({ filename: datafile, autoload: true });
 /// //
-var LinvoDB = require('linvodb3');
+
 var modelName = 'orderlist';
 var schema = { }; // Non-strict always, can be left empty
 var options = { };
 options.filename = DAEMON_CONFIG.DataFile + '/market'; // Path to database - not necessary
+if (fs.existsSync(options.filename) == false) {
+  fs.mkdirSync(options.filename);
+}
 
 var Doc = new LinvoDB(modelName, schema, options); // New model; Doc is the constructor
 
