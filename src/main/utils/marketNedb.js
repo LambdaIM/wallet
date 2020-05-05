@@ -30,22 +30,25 @@ export default class {
     return new Promise(function (resolve, reject) {
       var newList = [];
       sellorderArry.forEach(async element => {
+        // 这里主干钱包会不会也有这个问题
         element.sellSize = Number(element.sellSize);
         element.price = Number(element.price);
         element.unUseSize = Number(element.unUseSize);
         element.network = global.__lambNodeinfo.network;
         element.minBuySize = Number(element.minBuySize);
         element.minDuration = Number(element.minDuration);
+        element.network = global.__lambNodeinfo.network;
 
-
-        var result = await _this.Checkexist(element.orderId);
-        if (result) {
-          newList.push(element);
-        } else {
-          var result2 = _this.updateTxState(element.orderId, element);
-        }
+        console.log(element);
+        newList.push(element);
+        // var result = await _this.Checkexist(element.orderId);
+        // if (result) {
+        //   newList.push(element);
+        // } else {
+        //   var result2 = _this.updateTxState(element.orderId, element);
+        // }
       });
-      console.log('==插入数据==');
+      console.log('==插入数据==', newList);
       Doc.insert(newList, function (err, newDoc) {
         // newDoc is the newly inserted document, including its _id
         // newDoc has no key called notToBeSaved since its value was undefined
@@ -85,26 +88,29 @@ export default class {
 
 
     return new Promise(function (resolve, reject) {
-      db.find({ marketAddress: marketAddress,
-        network: global.__lambNodeinfo.network,
-        $where: function () {
+      Doc.find({ marketAddress: marketAddress,
+        network: global.__lambNodeinfo.network
+      })
+        .filter(item => {
+          console.log('filter');
+          console.log(item);
           var flag = true;
           var unit = 1000000;
           if (islocalfilter.priceStart != '' && islocalfilter.priceStart != undefined) {
-            if (parseInt(this.price) >= islocalfilter.priceStart * unit) {
+            if (parseInt(item.price) >= islocalfilter.priceStart * unit) {
               flag = true;
             } else {
               flag = false;
             }
           }
           if (flag && islocalfilter.priceEnd != '' && islocalfilter.priceEnd != undefined) {
-            if (parseInt(this.price) <= islocalfilter.priceEnd * unit) {
+            if (parseInt(item.price) <= islocalfilter.priceEnd * unit) {
               flag = true;
             } else {
               flag = false;
             }
           }
-          var rate = this.rate.split('.')[0];
+          var rate = item.rate.split('.')[0];
 
           if (flag && islocalfilter.rateStart != '' && islocalfilter.rateStart != undefined) {
             if (parseInt(rate) >= islocalfilter.rateStart) {
@@ -122,8 +128,8 @@ export default class {
             }
           }
           if (flag && islocalfilter.storagenode != '' && islocalfilter.storagenode != undefined) {
-            if (this.address.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1 ||
-            this.orderId.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1) {
+            if (item.address.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1 ||
+          item.orderId.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1) {
               flag = true;
             } else {
               flag = false;
@@ -133,7 +139,7 @@ export default class {
 
 
           if (flag && islocalfilter.statusType) {
-            if (this.status == islocalfilter.statusType) {
+            if (item.status == islocalfilter.statusType) {
               flag = true;
             } else {
               flag = false;
@@ -141,26 +147,27 @@ export default class {
           }
 
           // storagenode
-
           // rateStart
           // console.log('rate:', rate);
-
-
           // console.log(flag, islocalfilter);
+          console.log(flag);
 
           return flag;
-        } }).sort(sortinfo).skip((page - 1) * limit).limit(limit).exec(function (err, docs) {
-        if (err == null) {
-          resolve(docs);
-        } else {
-          reject(err);
-        }
-      });
+        })
+        .sort(sortinfo).skip((page - 1) * limit).limit(limit)
+        .exec(function (err, docs) {
+          if (err == null) {
+            resolve(docs);
+          } else {
+            reject(err);
+          }
+        });
     });
   }
   Checkexist(orderId) {
     return new Promise(function (resolve, reject) {
       Doc.find({ orderId: orderId, network: global.__lambNodeinfo.network }, function (err, docs) {
+        console.log('Checkexist', orderId, err, docs);
         if (err == null) {
           if (docs.length == 0) {
             resolve(true);
