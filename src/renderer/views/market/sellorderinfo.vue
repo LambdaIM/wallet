@@ -1,6 +1,13 @@
 <template>
 <div class="container" style="margin-top: 10px;">
 <Mycard :cardtitle="$t('orderinfo.orderdetails')" >
+  <div v-if="sellorderinfo"  class="s3Operation" slot="operation">
+        <Button
+                type="primary"
+                size="small"
+                @click="openBuyingspace(sellorderinfo)"
+              >{{$t('marketpage.selltable.Purchasespace')}}</Button>
+      </div>
 <div v-if="sellorderinfo" class="card-content" slot="card-content">
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
@@ -61,11 +68,7 @@
           </Col>
           <Col span="3" class-name="content-wrapper">
 
-            <Button
-                type="primary"
-                size="small"
-                @click="openBuyingspace(sellorderinfo)"
-              >{{$t('marketpage.selltable.Purchasespace')}}</Button>
+
           </Col>
 
         </Row>
@@ -136,31 +139,13 @@ export default {
       marketList: [],
       marketname: '',
       marketAddress: '',
-      sellorderinfo: {
-        'orderId': '627ABAC4C4718CFA3CBD756C6C390524D122B5A3',
-        'address': 'lambdamineroper123sh3r55u0pykvu8y4gl0trfle550c4wd4z0gw',
-        'price': 6000000,
-        'rate': '1.000000000000000000',
-        'amount': [{
-          'denom': 'ulamb',
-          'amount': '12000000'
-        }],
-        'sellSize': 2,
-        'unUseSize': 2,
-        'status': '0',
-        'createTime': '2020-04-28T11:01:27.483376441Z',
-        'cancelTimeDuration': '3600000000000',
-        'marketAddress': 'lambdamarketoper1thj5fv8d0dsh3aealhpxm9mvgxjfh87srk3887',
-        'minBuySize': '1',
-        'minDuration': '2592000000000000',
-        'maxDuration': '155520000000000000',
-        'reserve1': '',
-        'network': 'lambda-bdd',
-        '_id': '4gTiqTHGsN3xs5U4'
-      }
+      orderId: this.$route.params.orderid,
+      sellorderinfo: null
     };
   },
   async mounted() {
+    console.log();
+
     await this.getmarketlist();
     this.getsellorderinfo();
   },
@@ -198,11 +183,12 @@ export default {
       return result;
     },
     async  getsellorderinfo() {
+      console.log('getsellorderinfo');
       let res = await ipc.callMain('sellorderinfo', {
-        name
+        orderId: this.$data.orderId
       });
       if (res.state) {
-        this.$data._sellorderinfo = res.data.data;
+        this.$data.sellorderinfo = res.data.data;
       }
     }
   }

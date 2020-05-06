@@ -70,7 +70,7 @@ class marketmanager {
   }
 
   async sellOrderinfo(sellorderid) {
-    var result = await this.CosmosAPI().get.sellorderinfo(id);
+    var result = await this.CosmosAPI().get.marketsellorderinfo(sellorderid);
 
     return { data: result };
   }

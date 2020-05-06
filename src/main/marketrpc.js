@@ -390,14 +390,14 @@ export default function() {
   });
 
   eipc.answerRenderer('sellorderinfo', async query => {
-    var { orderid } = query;
-    if (orderid == undefined) {
+    var { orderId } = query;
+    if (orderId == undefined) {
       throw resultView(null, false, errorList.need_orderId);
     }
 
     try {
       var M = new Manager();
-      var result = await M.sellOrderinfo(orderid);
+      var result = await M.sellOrderinfo(orderId);
 
       return resultView(result, true);
     } catch (ex) {

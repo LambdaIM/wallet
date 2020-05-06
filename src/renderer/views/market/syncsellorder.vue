@@ -110,11 +110,11 @@ export default {
           key: 'sellSize',
           sortable: 'custom'
         },
-        {
-          title: this.$t('marketpage.selltable.remainingspace'),
-          key: 'unUseSize',
-          sortable: 'custom'
-        },
+        // {
+        //   title: this.$t('marketpage.selltable.remainingspace'),
+        //   key: 'unUseSize',
+        //   sortable: 'custom'
+        // },
         {
           title: this.$t('marketpage.selltable.unitprice'),
           key: 'price',
