@@ -247,6 +247,25 @@
 
           </div>
 
+          <div v-if="txtype=='marketTransferDelegateMarket'">
+            <h2> 市场质押   </h2>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+              <Col span="16" class-name="value">{{address}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">市场名称:</Col>
+              <Col span="16" class-name="value">{{transactiondata.marketName}} </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">金额:</Col>
+              <Col span="16" class-name="value">{{transactiondata.amount|Lambformat}}</Col>
+            </Row>
+
+          </div>
+
+
+
           <!-- MsgMinerWithDrawCount -->
 
 

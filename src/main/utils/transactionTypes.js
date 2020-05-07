@@ -16,7 +16,8 @@ const transactionTypes = {
   CreateMachine: `MsgCreateMachine`,
   WithdrawMinerRewards: `MsgWithdrawMinerRewards`,
   OrderRenewal: `MsgOrderRenewal`,
-  MinerWithDrawCount: `MsgMinerWithDrawCount`
+  MinerWithDrawCount: `MsgMinerWithDrawCount`,
+  DelegateMarket: 'MsgDelegateMarket'
 };
 
 export default transactionTypes;

@@ -11,31 +11,31 @@
             size="small"
           >{{$t('marketpage.ordertable.orderdetails')}}</Button>
         </template>
-        <template slot-scope="{ row, index }" slot="price">{{row.MatchOrder.price|Lambformat}}</template>
+        <template slot-scope="{ row, index }" slot="price">{{row.price|Lambformat}}</template>
         <template
           slot-scope="{ row, index }"
           slot="userPay"
-        >{{amountFormat(row.MatchOrder.userPay)}}</template>
+        >{{amountFormat(row.userPay)}}</template>
         <template
           slot-scope="{ row, index }"
           slot="buyAddress"
-        >{{typeFormat(row.MatchOrder.buyAddress)}}</template>
+        >{{typeFormat(row.buyAddress)}}</template>
         <template slot-scope="{ row, index }" slot="minerPay">
           <span
-            v-if="typeBuyType(row.MatchOrder.buyAddress)"
-          >{{amountFormat(row.MatchOrder.minerPay)}}</span>
+            v-if="typeBuyType(row.buyAddress)"
+          >{{amountFormat(row.minerPay)}}</span>
           <span v-else>--</span>
         </template>
         <template
           slot-scope="{ row, index }"
           slot="createTime"
-        >{{row.MatchOrder.createTime|formatDate}}</template>
-        <template slot-scope="{ row, index }" slot="endTime">{{row.MatchOrder.endTime|formatDate}}</template>
-        <template slot-scope="{ row, index }" slot="size">{{row.MatchOrder.size}}</template>
-        <template slot-scope="{ row, index }" slot="orderId">{{row.MatchOrder.orderId}}</template>
+        >{{row.createTime|formatDate}}</template>
+        <template slot-scope="{ row, index }" slot="endTime">{{row.endTime|formatDate}}</template>
+        <template slot-scope="{ row, index }" slot="size">{{row.size}}</template>
+        <template slot-scope="{ row, index }" slot="orderId">{{row.orderId}}</template>
         <template slot-scope="{ row, index }" slot="status">
-          <span style="color:green" v-if="row.MatchOrder.status=='0'">{{$t('marketpage.Active')}}</span>
-          <span style="color:red" v-if="row.MatchOrder.status=='2'">{{$t('marketpage.Expired')}}</span>
+          <span style="color:green" v-if="row.status=='0'">{{$t('marketpage.Active')}}</span>
+          <span style="color:red" v-if="row.status=='2'">{{$t('marketpage.Expired')}}</span>
         </template>
       </Table>
       <br />
@@ -62,44 +62,44 @@ export default {
       UserOrderscolumns: [
         {
           title: this.$t('marketpage.ordertable.orderType'),
-          key: 'MatchOrder.buyAddress',
+          key: 'buyAddress',
           slot: 'buyAddress'
         },
         {
           title: this.$t('marketpage.ordertable.orderid'),
-          key: 'MatchOrder.orderId',
+          key: 'orderId',
           slot: 'orderId'
         },
 
         {
           title: this.$t('marketpage.ordertable.amountspace'),
-          key: 'MatchOrder.size',
+          key: 'size',
           slot: 'size'
         },
         {
           title: this.$t('marketpage.ordertable.unitprice'),
-          key: 'MatchOrder.price',
+          key: 'price',
           slot: 'price'
         },
 
         {
           title: this.$t('marketpage.ordertable.Startingtime'),
-          key: 'MatchOrder.createTime',
+          key: 'createTime',
           slot: 'createTime'
         },
         {
           title: this.$t('marketpage.ordertable.EndTime'),
-          key: 'MatchOrder.endTime',
+          key: 'endTime',
           slot: 'endTime'
         },
         {
           title: this.$t('marketpage.ordertable.userPay'),
-          key: 'MatchOrder.userPay',
+          key: 'userPay',
           slot: 'userPay'
         },
         {
           title: this.$t('marketpage.ordertable.minerPay'),
-          key: 'MatchOrder.minerPay',
+          key: 'minerPay',
           slot: 'minerPay'
         },
         {
@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     orderinfo(item) {
-      this.$router.push(`/orderinfo/${item.MatchOrder.orderId}`);
+      this.$router.push(`/orderinfo/${item.orderId}`);
     },
     async getUserOrderslist(page) {
       this.$data.loading = true;

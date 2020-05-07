@@ -75,6 +75,12 @@ class marketmanager {
     return { data: result };
   }
 
+  async marketdelegationinfo(marketName) {
+    var result = await this.CosmosAPI().get.marketdelegationinfo(marketName, this.defaultAddress);
+
+    return { data: result };
+  }
+
 
 
   // marketminermachines

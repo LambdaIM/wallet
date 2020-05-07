@@ -556,6 +556,16 @@ walletManger.prototype.TransferWithdrawal = async function (to, amount, gas, isd
   };
 };
 
+
+walletManger.prototype.TransferDelegateMarket = async function (to, amount) {
+  return {
+    type: transaction.DelegateMarket,
+    marketName:to,
+    amount: amount,
+    denom: 'ulamb'
+  };
+};
+
 walletManger.prototype.TransferMinerWithDrawCount = async function (page,limit) {
   return {
     type: transaction.MinerWithDrawCount,

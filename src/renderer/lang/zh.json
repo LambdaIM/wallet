@@ -405,8 +405,8 @@
        "Maximumtime":"最大购买时长",
        "times":"倍",
        "month":"月",
-       "ratetip1":"普通卖单：赔率=0.5，价格只能是5LAMB/G/month",
-       "ratetip2":"优质卖单：赔率=1，需要指定价格>=5LAMB/G/month",
+       "ratetip1":"普通卖单：赔率=0.5，价格只能是{0}LAMB/G/month",
+       "ratetip2":"优质卖单：赔率=1，需要指定价格>={0}LAMB/G/month",
        "ratetip3":"赔率=0.5为普通卖单,赔率=1为优质卖单",
        "ratetip4":"赔率不能=2",
        "action":{
@@ -494,7 +494,8 @@
     "MsgMaintain": "发起维护",
     "MsgUnMaintain": "解除维护",
     "MsgUnjailMiner": "解除限制",
-    "MsgOrderRenewal":"订单续期"
+    "MsgOrderRenewal":"订单续期",
+    "MsgDelegateMarket":"市场质押"
 
    },
    "txTable":{

@@ -405,6 +405,25 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('marketdelegationinfo', async query => {
+    var { marketName } = query;
+    console.log('marketdelegationinfo', query);
+    if (marketName == undefined) {
+      throw resultView(null, false, errorList.need_marketName);
+    }
+
+    try {
+      var M = new Manager();
+      var result = await M.marketdelegationinfo(marketName);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
+
   function getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey, orderid) {
     return `${path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile())} gateway run \
     --broker.dht_gateway_addr ${ip}:13000 \

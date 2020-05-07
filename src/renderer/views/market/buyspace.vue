@@ -11,6 +11,7 @@
         </Col>
       </Row>
       <br/>
+
      <div>
 
     <Row>
@@ -40,6 +41,17 @@
 
         </Col>
     </Row>
+      <br/>
+      <Row>
+        <Col span="24">
+              <Button @click="openDelegateMarket" type="primary">市场质押</Button>
+             市场质押说明：********，**************************
+             <div v-if="delegationinfo">
+             质押金额 {{delegationinfo.delegateAmount|Lambformat}} 质押收益{{Pledgeincome(delegationinfo)|Lambformat}}
+             </div>
+
+        </Col>
+      </Row>
      </div>
      <br/>
      <!-- OrderListcolumnsNotSort -->
@@ -80,6 +92,7 @@
      </div>
      <autoBuyingspaceModal ref="autoBuyingspace" />
      <BuyingspaceModal ref="Buyingspace" />
+     <DelegateMarketModal ref="DelegateMarket" />
   </div>
 </template>
 <script>
@@ -89,6 +102,8 @@ import autoBuyingspaceModal from '@/views/Dialog/autoBuyingspaceModal.vue';
 import BuyingspaceModal from '@/views/Dialog/BuyingspaceModal.vue';
 import eventhub from '../../common/js/event.js';
 import syncbar from './syncbar.vue';
+
+import DelegateMarketModal from '@/views/Dialog/DelegateMarketModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 var packagejson = require('../../../../package.json');
@@ -209,7 +224,8 @@ export default {
       allCount: 1,
       pageCount: {},
       loading: true,
-      statusType: 'active'
+      statusType: 'active',
+      delegationinfo: null
 
 
     };
@@ -217,6 +233,8 @@ export default {
   mounted() {
     this.getmarketlist();
     this.getmarketinfo('');
+
+
 
     // eventhub.$on('marketsellordersync', data => {
     //   console.log('marketsellordersync');
@@ -240,7 +258,8 @@ export default {
   components: {
     autoBuyingspaceModal,
     BuyingspaceModal,
-    syncbar
+    syncbar,
+    DelegateMarketModal
   },
   methods: {
     async getmarketlist() {
@@ -251,6 +270,7 @@ export default {
           this.$data.marketList = res.data.data;
           this.$data.selectmarket = this.finddefaultmarket(this.$data.marketList);
           this.getOrderList(1);
+          this.getmarketdelegationinfo();
         }
       } catch (error) {
         this.$Message.error(this.$t('foot.linkerror'));
@@ -336,6 +356,7 @@ export default {
 
       this.getmarketinfo(name);
       this.getOrderList();
+      this.getmarketdelegationinfo();
 
       this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
     },
@@ -372,6 +393,37 @@ export default {
       this.$store.dispatch('setstatusType', this.$data.statusType);
       this.$data.islocalfilter['statusType'] = this.$store.getters.statusType == 'active' ? '0' : '1';
       this.getOrderList(1);
+    },
+    openDelegateMarket() {
+      this.$refs.DelegateMarket.open(this.$data.selectmarket.name);
+    },
+    async getmarketdelegationinfo() {
+      console.log('getmarketdelegationinfo');
+      let res = await ipc.callMain('marketdelegationinfo', {
+        marketName: this.$data.selectmarket.name,
+        aaa: 'zzz'
+      });
+      if (res.state && res.data.data.error == undefined) {
+        this.$data.delegationinfo = res.data.data;
+      }
+    },
+    Pledgeincome(data) {
+      var list = []; var result = 0;
+      if (data.inCome.commissionInCome instanceof Array) {
+        list = list.concat(data.inCome.commissionInCome);
+      }
+
+      if (data.inCome.feeInCome instanceof Array) {
+        list = list.concat(data.inCome.feeInCome);
+      }
+
+      for (let index = 0; index < list.length; index++) {
+        const element = list[index];
+        var amount = Number(element.amount);
+        result += amount;
+      }
+
+      return result;
     }
   },
   computed: {

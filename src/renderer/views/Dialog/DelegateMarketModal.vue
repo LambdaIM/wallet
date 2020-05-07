@@ -1,0 +1,224 @@
+<template>
+<div>
+          <Modal
+        loading
+        v-model="sendModal"
+        title="市场质押"
+        :styles="{top: '200px'}"
+        @on-cancel="sendcancel"
+      >
+      <Form  @keydown.native.enter.prevent ="preSendLAMB" >
+        <p>
+          <Input v-model="address" readonly>
+            <span slot="prepend">{{$t('home.Modal1.From')}}</span>
+          </Input>
+        </p>
+        <br />
+        <p>
+          <Input v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
+            <span slot="prepend">{{$t('home.Modal1.To')}}</span>
+          </Input>
+        </p>
+        <br />
+        <p>
+          <Input v-model="LAMBvalue">
+            <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
+            <span slot="append">LAMB</span>
+          </Input>
+        </p>
+
+
+        <br/>
+        <p v-if="isdege==false" style="color:red">
+
+            <ul class="helpul">
+            <li>- {{$t('Dialog.stakingModel.tip',[this.days()])}}。</li>
+            <li>- {{$t('Dialog.stakingModel.tip2')}}。</li>
+            <li>- {{$t('Dialog.stakingModel.tip3')}}。</li>
+            <li>- {{$t('Dialog.stakingModel.tip4')}}。</li>
+
+          </ul>
+        </p>
+
+        </Form >
+        <div slot="footer">
+          <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
+        </div>
+      </Modal>
+
+
+      <ConfirmModal ref="ConfirmModal" />
+</div>
+</template>
+<script>
+import eventhub from '../../common/js/event.js';
+import ConfirmModal from './confirmModal.vue';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+
+
+
+export default {
+  data() {
+    return {
+      sendModal: false,
+      confirmModal: false,
+      Tovalue: '',
+      LAMBvalue: '',
+      isdege: true,
+      gaseFee: 0,
+      dataParameters: {}
+    };
+  },
+  components: {
+    ConfirmModal
+  },
+  methods: {
+    open(toaddress) {
+      this.$data.Tovalue = toaddress;
+
+
+      this.sendModal = true;
+
+
+      this.$data.LAMBvalue = '';
+    },
+    sendcancel() {
+      this.sendModal = false;
+    },
+    preSendLAMB() {
+      console.log('-----');
+      let from = this.address;
+      let to = this.Tovalue;
+      try {
+        var valuenum = parseFloat(this.LAMBvalue);
+        if (isNaN(valuenum) == false) {
+          if (valuenum < 1) {
+            this.$Notice.warning({
+              title: this.$t('stakinginfo.Pledgeamountlessthan1')
+            });
+            return;
+          }
+        }
+      } catch (error) {
+
+      }
+
+      let value = this.toBigNumStr(this.LAMBvalue);
+      if (to == from) {
+        this.$Notice.warning({
+          title: this.$t('home.action.not_transfer_LAMB_to_yourself')
+        });
+        return;
+      }
+
+      if (this.bigLess0OrGreater(value, this.balance)) {
+        // need to alert
+        this.$Notice.warning({
+          title: this.$t('home.action.check_balance_amount_transfer')
+        });
+        return;
+      }
+
+      // value = wUtils.numberToBig(value) ;
+      // 还需要新的校验地址方法
+      // if (Utils.isAddress(to) == false) {
+      //   // need to alert
+      //   this.$Notice.warning({
+      //     title:this.$t('home.action.Check_forwarding_address')
+      //   });
+
+      //   return;
+      // }
+
+      if (isNaN(value)) {
+        this.$Notice.warning({
+          title: this.$t('home.action.Check_the_amount')
+        });
+        return;
+      }
+
+      this.LAMBvalue = parseFloat(this.LAMBvalue).toFixed(6);
+      this.transfer(Number(value));
+    },
+    async transfer(amount) {
+      let to = this.Tovalue;
+      // let amount = this.LAMBvalue;
+      let gas = 1;
+      // amount = amount * 10000;
+      this.$data.transactiondata = null;
+      let isdege = this.$data.isdege;
+      try {
+        let res = await ipc.callMain('marketTransferDelegateMarket', {
+          marketName: to,
+          amount
+
+        });
+        // console.log(res);
+        if (res.state) {
+          this.sendcancel();
+          this.$refs.ConfirmModal.open('marketTransferDelegateMarket', res.data);
+        }
+      } catch (ex) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: ex.errormsg
+        });
+        console.log(ex);
+      }
+    },
+    async stakingParameters() {
+      try {
+        let res = await ipc.callMain('stakingParameters', {});
+        if (res.state) {
+          console.log('--');
+          console.log(res);
+          this.$data.dataParameters = res.data;
+        }
+      } catch (error) {
+
+      }
+    },
+    days() {
+      if (this.$data.dataParameters.unbonding_time == undefined) {
+        return '';
+      }
+      return (this.$data.dataParameters.unbonding_time / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(2);
+    }
+
+  },
+  computed: {
+    address: function() {
+      return this.$store.getters.getaddress;
+    },
+    balance: function() {
+      return this.$store.getters.getblance;
+    },
+    balanceLamb: function() {
+      return this.$store.getters.getblance;
+    },
+    isdegeTxt: function() {
+      if (this.$data.isdege) {
+        return this.$t('Dialog.stakingModel.title1');
+      } else {
+        return this.$t('Dialog.stakingModel.title2');
+      }
+    }
+  }
+
+
+
+};
+</script>
+
+<style lang="less" scoped>
+.modal-header {
+  .item {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+}
+
+.helpul{
+   list-style-type:none
+}
+</style>

@@ -726,6 +726,30 @@ export default function() {
   });
 
 
+  eipc.answerRenderer('marketTransferDelegateMarket', async query => {
+    var { marketName, amount } = query;
+
+    if (marketName == undefined) {
+      throw resultView(null, false, errorList.need_marketName);
+    }
+
+    if (amount == undefined) {
+      throw resultView(null, false, errorList.need_amount);
+    }
+
+    try {
+      var TxMessageload = await WM.TransferDelegateMarket(marketName, amount);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+  // TransferDelegateMarket
+
+
 
   eipc.answerRenderer('createSonAccount', async query => {
     var { mnemonic, password, name, index } = query;
