@@ -263,6 +263,19 @@
             </Row>
 
           </div>
+          <div v-if="txtype=='marketTransferWithDrawMarket'">
+            <h2> 提取市场质押收益   </h2>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+              <Col span="16" class-name="value">{{address}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">市场名称:</Col>
+              <Col span="16" class-name="value">{{transactiondata.marketName}} </Col>
+            </Row>
+
+
+          </div>
 
 
 

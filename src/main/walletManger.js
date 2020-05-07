@@ -566,6 +566,18 @@ walletManger.prototype.TransferDelegateMarket = async function (to, amount) {
   };
 };
 
+
+
+walletManger.prototype.TransferWithDrawMarket = async function (to, amount) {
+  return {
+    type: transaction.WithDrawMarket,
+    marketName:to
+  };
+};
+
+
+
+
 walletManger.prototype.TransferMinerWithDrawCount = async function (page,limit) {
   return {
     type: transaction.MinerWithDrawCount,

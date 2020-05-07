@@ -45,6 +45,7 @@
             </MenuGroup>
             <MenuGroup :title="$t('home.Withdraw')">
                 <MenuItem  name="openWithdraw">{{$t('home.Withdraw')}}</MenuItem>
+                <MenuItem  name="openWithdrawmarket"> 提取市场收益  </MenuItem>
                 <MenuItem v-if="$role('home.tx.Withdrawprofit')" name="openWithdrawprofit">{{$t('home.Withdrawprofit')}}</MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">{{$t('orderrevenue.WithdraworderCommission')}} </MenuItem>
@@ -83,6 +84,7 @@
     <DistributionModal ref="DistributionModal" />
     <MinerWithdrawalModal ref="MinerWithdrawalModalDialog"/>
     <MinerWithdrawaOrderlModal ref="MinerWithdrawaOrderlModalDialog"/>
+    <WithdrawalMarketModal ref="WithdrawalMarketModalDialog" />
 
   </div>
 </template>
@@ -96,6 +98,8 @@ import DistributionModal from '@/views/Dialog/distributionModal.vue';
 
 import MinerWithdrawalModal from '@/views/Dialog/MinerWithdrawalModal.vue';
 import MinerWithdrawaOrderlModal from '@/views/Dialog/MinerWithdrawaOrderlModal.vue';
+
+import WithdrawalMarketModal from '@/views/Dialog/withdrawalMarketModal.vue';
 
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
@@ -114,7 +118,8 @@ export default {
     WithdrawalModalDialog,
     DistributionModal,
     MinerWithdrawalModal,
-    MinerWithdrawaOrderlModal
+    MinerWithdrawaOrderlModal,
+    WithdrawalMarketModal
   },
   mounted() {
     this.getMinerRewards();
@@ -137,6 +142,7 @@ export default {
         case 'openWithdrawprofit':this.$refs.DistributionModal.open(); this.$data.activeItem = this.$route.name; break;
         case 'openMinerprofit':this.$refs.MinerWithdrawalModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         case 'openMinerOrder':this.$refs.MinerWithdrawaOrderlModalDialog.open(); this.$data.activeItem = this.$route.name; break;
+        case 'openWithdrawmarket': this.$refs.WithdrawalMarketModalDialog.open(); this.$data.activeItem = this.$route.name;
         default :this.$data.activeItem = name;
       }
 

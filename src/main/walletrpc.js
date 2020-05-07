@@ -747,7 +747,22 @@ export default function() {
   });
 
 
-  // TransferDelegateMarket
+  eipc.answerRenderer('marketTransferWithDrawMarket', async query => {
+    var { marketName } = query;
+
+    if (marketName == undefined) {
+      throw resultView(null, false, errorList.need_marketName);
+    }
+
+
+    try {
+      var TxMessageload = await WM.TransferWithDrawMarket(marketName);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
 
 
 

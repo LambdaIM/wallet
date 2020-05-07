@@ -405,6 +405,8 @@ export default {
       });
       if (res.state && res.data.data.error == undefined) {
         this.$data.delegationinfo = res.data.data;
+      } else {
+        this.$data.delegationinfo = null;
       }
     },
     Pledgeincome(data) {
