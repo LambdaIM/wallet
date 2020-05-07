@@ -42,16 +42,7 @@
         </Col>
     </Row>
       <br/>
-      <Row>
-        <Col span="24">
-              <Button @click="openDelegateMarket" type="primary">市场质押</Button>
-             市场质押说明：********，**************************
-             <div v-if="delegationinfo">
-             质押金额 {{delegationinfo.delegateAmount|Lambformat}} 质押收益{{Pledgeincome(delegationinfo)|Lambformat}}
-             </div>
 
-        </Col>
-      </Row>
      </div>
      <br/>
      <!-- OrderListcolumnsNotSort -->
@@ -253,6 +244,8 @@ export default {
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.getOrderList(1);
+      this.getmarketlist();
+      this.getmarketinfo('');
     });
   },
   components: {
@@ -270,7 +263,7 @@ export default {
           this.$data.marketList = res.data.data;
           this.$data.selectmarket = this.finddefaultmarket(this.$data.marketList);
           this.getOrderList(1);
-          this.getmarketdelegationinfo();
+          // this.getmarketdelegationinfo();
         }
       } catch (error) {
         this.$Message.error(this.$t('foot.linkerror'));

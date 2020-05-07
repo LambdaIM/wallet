@@ -159,6 +159,11 @@ var walletRouter = new Router({
         path: 'sellorderinfo/:orderid',
         name: 'sellorderinfo',
         component: () => import('@/views/market/sellorderinfo.vue')
+      },
+      {
+        path: 'marketpledge',
+        name: 'sellorderinfo',
+        component: () => import('@/views/market/marketpledge.vue')
       }
     ]
 

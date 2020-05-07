@@ -47,6 +47,7 @@ export default {
       marketList: [],
       selectmarket: null,
       delegationinfo: null
+
     };
   },
   components: {
@@ -58,6 +59,7 @@ export default {
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
       this.getmarketlist();
+      this.getmarketinfo();
     },
     prewithdrawalLAMB() {
       console.log('- -');

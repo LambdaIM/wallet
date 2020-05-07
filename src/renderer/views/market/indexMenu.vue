@@ -19,6 +19,12 @@
             <Icon type="ios-construct" />
             Lambda S3
         </MenuItem>
+        <MenuItem to="/market/marketpledge" name="marketpledge">
+            <Icon type="md-football" />
+            市场质押
+        </MenuItem>
+
+
     </Menu>
       </div>
       <router-view></router-view>

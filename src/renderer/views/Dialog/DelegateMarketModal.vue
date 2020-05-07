@@ -29,16 +29,15 @@
 
 
         <br/>
-        <p v-if="isdege==false" style="color:red">
 
-            <ul class="helpul">
-            <li>- {{$t('Dialog.stakingModel.tip',[this.days()])}}。</li>
-            <li>- {{$t('Dialog.stakingModel.tip2')}}。</li>
-            <li>- {{$t('Dialog.stakingModel.tip3')}}。</li>
-            <li>- {{$t('Dialog.stakingModel.tip4')}}。</li>
+        市场质押的最小金额{{market_delegate_min_cost|Lambformat}}
+        <br/>
+        市场中的每笔收入会按照市场质押比例来进行分配。<br/>
 
-          </ul>
-        </p>
+收益分配规则：<br/>
+
+市场创建人收取市场收益10%<br/>
+市场质押人按照质押比例分配剩余的90%（市场创建人也在分配集合中）<br/>
 
         </Form >
         <div slot="footer">
@@ -66,7 +65,8 @@ export default {
       LAMBvalue: '',
       isdege: true,
       gaseFee: 0,
-      dataParameters: {}
+      dataParameters: {},
+      market_delegate_min_cost: 0
     };
   },
   components: {
@@ -81,6 +81,8 @@ export default {
 
 
       this.$data.LAMBvalue = '';
+
+      this.getmarketinfo();
     },
     sendcancel() {
       this.sendModal = false;
@@ -118,17 +120,13 @@ export default {
         });
         return;
       }
+      if (this.bigNum(value).comparedTo(this.$data.market_delegate_min_cost) == -1) {
+        this.$Notice.warning({
+          title: `市场质押金额为小为${this.toBigNumTonum(this.$data.market_delegate_min_cost)}LAMB`
+        });
+        return;
+      }
 
-      // value = wUtils.numberToBig(value) ;
-      // 还需要新的校验地址方法
-      // if (Utils.isAddress(to) == false) {
-      //   // need to alert
-      //   this.$Notice.warning({
-      //     title:this.$t('home.action.Check_forwarding_address')
-      //   });
-
-      //   return;
-      // }
 
       if (isNaN(value)) {
         this.$Notice.warning({
@@ -183,6 +181,13 @@ export default {
         return '';
       }
       return (this.$data.dataParameters.unbonding_time / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(2);
+    },
+    async   getmarketinfo() {
+      console.log('getmarketinfo');
+      let res = await ipc.callMain('marketinfo', {});
+      if (res.state) {
+        this.$data.market_delegate_min_cost = res.data.data.market_delegate_min_cost;
+      }
     }
 
   },
