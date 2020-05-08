@@ -378,6 +378,9 @@ export default {
       if (isNaN(value)) {
         return false;
       }
+      if (value < 0) {
+        return false;
+      }
 
       if (value > 50 && this.txtype != 'MsgMinerWithDrawCount') {
         this.$data.gaseFee = 0.001;

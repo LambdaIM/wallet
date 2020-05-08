@@ -3,7 +3,7 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      :title="$t('Dialog.withdrawalModal.title')"
+      title="提取市场运营收益"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
@@ -21,7 +21,7 @@
                 </DropdownMenu>
             </Dropdown>
             <span v-if="delegationinfo">
-              质押收益{{Pledgeincome(delegationinfo)|Lambformat}}
+              收益{{Pledgeincome(delegationinfo)|Lambformat}}
             </span>
 
       </p>
@@ -35,7 +35,7 @@
   </div>
 </template>
 <script>
-import eventhub from '../../common/js/event.js';
+
 import ConfirmModal from './confirmModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
@@ -60,35 +60,16 @@ export default {
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
       this.getmarketlist();
-      this.getmarketinfo();
     },
     prewithdrawalLAMB() {
       console.log('- -');
-      this.LAMBvalue = this.DistributionReward;
-      let value = this.toBigNumStr(this.LAMBvalue);
 
-      // if (value <= 0 || value > this.$data.DistributionReward ) {
-      //   // need to alert
-      //   this.$Notice.warning({
-      //     title: this.$t('home.action.check_balance_amount_transfer')
-      //   });
-      //   return;
-      // }
-
-      if (isNaN(value)) {
-        this.$Notice.warning({
-          title: this.$t('home.action.Check_the_amount')
-        });
-        return;
-      }
       this.$data.withdrawalModal = false;
-      this.transfer(value, 'marketTransferWithDrawMarket');
+      this.transfer('', 'marketTransferWithDrawMarket');
     },
     async transfer(amount, txType) {
       let to = this.$data.selectmarket.name;
-      // let amount = this.LAMBvalue;
-      let gas = 1;
-      // amount = amount * 10000;
+
       this.$data.transactiondata = null;
       try {
         let res = await ipc.callMain(txType, {
@@ -140,8 +121,7 @@ export default {
     async getmarketdelegationinfo() {
       console.log('getmarketdelegationinfo');
       let res = await ipc.callMain('marketdelegationinfo', {
-        marketName: this.$data.selectmarket.name,
-        aaa: 'zzz'
+        marketName: this.$data.selectmarket.name
       });
       if (res.state && res.data.data.error == undefined) {
         this.$data.delegationinfo = res.data.data;

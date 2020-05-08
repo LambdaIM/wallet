@@ -15,7 +15,7 @@
         </p>
         <br />
         <p>
-          <Input v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
+          <Input readonly v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
             <span slot="prepend">{{$t('home.Modal1.To')}}</span>
           </Input>
         </p>
@@ -99,7 +99,17 @@ export default {
 
       }
 
+
+
       let value = this.toBigNumStr(this.LAMBvalue);
+
+      if (isNaN(value)) {
+        this.$Notice.warning({
+          title: this.$t('home.action.Check_the_amount')
+        });
+        return;
+      }
+
       if (to == from) {
         this.$Notice.warning({
           title: this.$t('home.action.not_transfer_LAMB_to_yourself')
@@ -122,23 +132,15 @@ export default {
       }
 
 
-      if (isNaN(value)) {
-        this.$Notice.warning({
-          title: this.$t('home.action.Check_the_amount')
-        });
-        return;
-      }
 
       this.LAMBvalue = parseFloat(this.LAMBvalue).toFixed(6);
       this.transfer(Number(value));
     },
     async transfer(amount) {
       let to = this.Tovalue;
-      // let amount = this.LAMBvalue;
-      let gas = 1;
-      // amount = amount * 10000;
+
       this.$data.transactiondata = null;
-      let isdege = this.$data.isdege;
+
       try {
         let res = await ipc.callMain('marketTransferDelegateMarket', {
           marketName: to,
@@ -158,24 +160,6 @@ export default {
         console.log(ex);
       }
     },
-    async stakingParameters() {
-      try {
-        let res = await ipc.callMain('stakingParameters', {});
-        if (res.state) {
-          console.log('--');
-          console.log(res);
-          this.$data.dataParameters = res.data;
-        }
-      } catch (error) {
-
-      }
-    },
-    days() {
-      if (this.$data.dataParameters.unbonding_time == undefined) {
-        return '';
-      }
-      return (this.$data.dataParameters.unbonding_time / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(2);
-    },
     async   getmarketinfo() {
       console.log('getmarketinfo');
       let res = await ipc.callMain('marketinfo', {});
@@ -194,13 +178,6 @@ export default {
     },
     balanceLamb: function() {
       return this.$store.getters.getblance;
-    },
-    isdegeTxt: function() {
-      if (this.$data.isdege) {
-        return this.$t('Dialog.stakingModel.title1');
-      } else {
-        return this.$t('Dialog.stakingModel.title2');
-      }
     }
   }
 
