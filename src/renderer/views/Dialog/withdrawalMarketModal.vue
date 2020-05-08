@@ -147,7 +147,7 @@ export default {
 
       return result;
     },
-    selectmarketClick(name) {
+    async selectmarketClick(name) {
       console.log(name);
       var _this = this;
       this.$data.marketList.forEach(item => {
@@ -155,10 +155,8 @@ export default {
           _this.$data.selectmarket = item;
         }
       });
-
-      this.getmarketdelegationinfo();
-
       this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
+      await this.getmarketdelegationinfo();
     }
 
   },
