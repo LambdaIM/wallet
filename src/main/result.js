@@ -20,6 +20,7 @@ export default function(result, state, errormsg, errorcode) {
   console.log('开始格式化处理错误信息', language);
   console.log('errormsg', errormsg);
   console.log('msg', msg);
+  var objlanglist = langmsg[language];
   if (msg) {
     try {
       console.log('开始格式化处理错误信息1');
@@ -40,7 +41,6 @@ export default function(result, state, errormsg, errorcode) {
 
           }
         } else {
-          var objlanglist = langmsg[language];
           // console.log('objlanglist', objlanglist);
           if (objlanglist != undefined) {
             try {
@@ -59,6 +59,23 @@ export default function(result, state, errormsg, errorcode) {
     } catch (ex) {
       console.log('开始格式化处理错误信息1 异常');
       msginfo = msg;
+      var keylist = msginfo.split('|');
+      if (keylist.length == 3) {
+        var key = keylist[0];
+        console.log('错误判断1', key);
+
+        // console.log('objlanglist', objlanglist);
+        if (objlanglist != undefined) {
+          try {
+            var msgtxt = objlanglist[key];
+            if (msgtxt != undefined) {
+              msginfo = msgtxt;
+            }
+          } catch (error) {
+
+          }
+        }
+      }
       log.error(msginfo);
     }
   }
