@@ -31,7 +31,7 @@
           </div>
           <br/>
           <div
-            v-if="delegationinfo"
+            v-if="delegationinfo!=null"
           >{{$t('Marketoperation.Mypledgeamount')}} {{delegationinfo.delegateAmount|Lambformat}}， {{$t('Marketoperation.Mypledgeincome')}} {{Pledgeincome(delegationinfo)|Lambformat}}</div>
         </Col>
 
@@ -133,7 +133,7 @@ export default {
 
       return result;
     },
-    selectmarketClick(name) {
+    async selectmarketClick(name) {
       console.log(name);
       var _this = this;
       this.$data.marketList.forEach(item => {
@@ -144,9 +144,8 @@ export default {
 
       //   this.getmarketinfo(name);
       //   this.getOrderList();
-      this.getmarketdelegationinfo();
-
       this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
+      await this.getmarketdelegationinfo();
     },
     openDelegateMarket() {
       this.$refs.DelegateMarket.open(this.$data.selectmarket.name);
