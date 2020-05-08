@@ -154,7 +154,7 @@
       "Balance":"Balance",
       "Validatorprofit": "Validator profit",
       "Latest_Transaction":"Latest  Transaction",
-      "Latest_Transaction_local": "Transaction log",
+      "Latest_Transaction_local": "Log",
       "Reward":"Reward",
       "Withdraw":"Withdraw",
       "Withdrawprofit":"Withdraw validator  profit",
@@ -167,6 +167,8 @@
       "moreonbrowser":"More historical transactions view blockchain browser",
       "miningguide":"Mining guide",
       "Viewlog":"Viewlog",
+      "Marketoperation": "Operation",
+      "Withdrawmarketrevenue":"Withdraw market revenue",
       "table":{
         "Amount":"Amount",
         "Source":"Source",
@@ -826,6 +828,19 @@
       "tip3":"Extraction operation time limit {0} hour extraction once",
       "tip4":"The revenue in the order is calculated every {0} hour. If the withdrawal is initiated before {0} hour, the amount withdrawn is 0"
 
-  }
+  },
+   "Marketoperation":{
+      "marketpledge":"market pledge",
+      "Mypledgeamount":"My pledge amount",
+      "Mypledgeincome":"My pledge income",
+      "pledgetip1":"Minimum amount of market pledge",
+      "Explain1":"Users can participate in the operation of the market created by users through pledge.",
+      "Explain2":"Market revenue is composed of Commission for registration, commission for completion and Commission for renewal.",
+      "Explain3":"Each income in the market will be distributed according to the market pledge proportion.",
+      "Explain4":"Income distribution rules",
+      "Explain5":"Market creator receives 10% of market revenue",
+      "Explain6":"The market pledgor allocates the remaining 90% according to the pledge proportion (the market creator is also in the distribution set)",
+      "tip":"Minimum amount of market pledge {0} lamb"
+   }
 
 }

@@ -27,25 +27,26 @@
       <Row>
           <Col class-name="title-wrapper">
           <div>
-            <Button :disabled="Permittedpledge" @click="openDelegateMarket" type="primary">市场质押</Button>
+            <Button :disabled="Permittedpledge" @click="openDelegateMarket" type="primary">{{$t('Marketoperation.marketpledge')}}</Button>
           </div>
           <br/>
           <div
             v-if="delegationinfo"
-          >我质押金额 {{delegationinfo.delegateAmount|Lambformat}}， 我质押收益{{Pledgeincome(delegationinfo)|Lambformat}}</div>
+          >{{$t('Marketoperation.Mypledgeamount')}} {{delegationinfo.delegateAmount|Lambformat}}， {{$t('Marketoperation.Mypledgeincome')}} {{Pledgeincome(delegationinfo)|Lambformat}}</div>
         </Col>
 
       </Row>
       <Row>
         <br/>
-        用户可以通过质押的方式参与用户创建的市场的运营。
+        {{$t('Marketoperation.Explain1')}}
              <br/>
-        市场中的每笔收入会按照市场质押比例来进行分配。<br/>
+        {{$t('Marketoperation.Explain2')}}<br/>
+        {{$t('Marketoperation.Explain3')}}<br/>
 
-收益分配规则：<br/>
+{{$t('Marketoperation.Explain4')}}：<br/>
 
-市场创建人收取市场收益10%<br/>
-市场质押人按照质押比例分配剩余的90%（市场创建人也在分配集合中）<br/>
+{{$t('Marketoperation.Explain5')}}<br/>
+{{$t('Marketoperation.Explain6')}}<br/>
       </Row>
     </div>
     <DelegateMarketModal ref="DelegateMarket" />

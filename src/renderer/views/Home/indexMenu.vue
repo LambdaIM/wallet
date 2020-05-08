@@ -45,7 +45,7 @@
             </MenuGroup>
             <MenuGroup :title="$t('home.Withdraw')">
                 <MenuItem  name="openWithdraw">{{$t('home.Withdraw')}}</MenuItem>
-                <MenuItem  name="openWithdrawmarket"> 提取市场收益  </MenuItem>
+                <MenuItem  name="openWithdrawmarket"> {{$t('home.Withdrawmarketrevenue')}}  </MenuItem>
                 <MenuItem v-if="$role('home.tx.Withdrawprofit')" name="openWithdrawprofit">{{$t('home.Withdrawprofit')}}</MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">{{$t('orderrevenue.WithdraworderCommission')}} </MenuItem>
@@ -72,11 +72,11 @@
         </MenuItem>
         <MenuItem v-if="$role('home.lambdas3')"  to="/home/lambdas3" name="lambdas3">
             <Icon type="ios-construct" />
-            Lambda S3
+            S3
         </MenuItem>
         <MenuItem   to="/home/Marketoperation" name="Marketoperation">
             <Icon type="md-football" />
-            市场运营
+            {{$t('home.Marketoperation')}}
         </MenuItem>
 
     </Menu>

@@ -150,7 +150,7 @@
       "Balance": "余额",
       "Validatorprofit": "节点收益",
       "Latest_Transaction": "最新交易记录",
-      "Latest_Transaction_local": "交易日志",
+      "Latest_Transaction_local": "日志",
       "Transfer": "交易",
       "Reward":"奖励",
       "Withdraw":"提取奖励",
@@ -163,6 +163,8 @@
       "moreonbrowser":"更多历史交易记录请查看区块链浏览器",
       "miningguide":"挖矿向导",
       "Viewlog":"查看日志",
+      "Marketoperation": "市场运营",
+      "Withdrawmarketrevenue":"提取市场收益",
       "table": {
           "Amount": "金额",
           "From":"发送",
@@ -824,5 +826,18 @@
        "tip3":"提取操作时间限制{0}小时提取一次",
        "tip4":"订单中的收益是{0}小时计算一次，如果未到{0}小时发起提取，提取到的金额为0"
 
+   },
+   "Marketoperation":{
+      "marketpledge":"市场质押",
+      "Mypledgeamount":"我的质押金额",
+      "Mypledgeincome":"我的质押收益",
+      "pledgetip1":"市场质押的最小金额",
+      "Explain1":"用户可以通过质押的方式参与用户创建的市场的运营。 ",
+      "Explain2":"市场收益是挂单手续费、成单手续、续期手续费组成。",
+      "Explain3":"市场中的每笔收入会按照市场质押比例来进行分配。",
+      "Explain4":"收益分配规则",
+      "Explain5":"市场创建人收取市场收益10%",
+      "Explain6":"市场质押人按照质押比例分配剩余的90%（市场创建人也在分配集合中）",
+      "tip":"市场质押的最小金额{0}Lamb"
    }
 }

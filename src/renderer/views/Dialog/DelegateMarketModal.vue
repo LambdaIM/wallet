@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        title="市场质押"
+        :title="$t('Marketoperation.marketpledge')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
@@ -30,7 +30,7 @@
 
         <br/>
 
-        市场质押的最小金额{{market_delegate_min_cost|Lambformat}}
+        {{$t('Marketoperation.pledgetip1')}} {{market_delegate_min_cost|Lambformat}}
 
 
         </Form >
@@ -126,7 +126,8 @@ export default {
       }
       if (this.bigNum(value).comparedTo(this.$data.market_delegate_min_cost) == -1) {
         this.$Notice.warning({
-          title: `市场质押金额为小为${this.toBigNumTonum(this.$data.market_delegate_min_cost)}LAMB`
+          title: 'error',
+          desc: this.$t('Marketoperation.tip', [this.toBigNumTonum(this.$data.market_delegate_min_cost)])
         });
         return;
       }
