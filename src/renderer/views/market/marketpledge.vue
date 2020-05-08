@@ -1,8 +1,8 @@
 <template>
   <div class="customer-container">
-    <div class="tableContainer">
+    <div class="tableContainer" style="font-size: 16px;">
       <Row v-if="selectmarket" class-name="card-item mt20">
-        <Col span="14">
+        <Col >
           {{$t('head.market')}}
           <Dropdown @on-click="selectmarketClick">
             <a href="javascript:void(0)">
@@ -25,16 +25,20 @@
 
       </Row>
       <Row>
-          <Col span="8" class-name="title-wrapper">
-          <Button @click="openDelegateMarket" type="primary">市场质押</Button>
-
+          <Col class-name="title-wrapper">
+          <div>
+            <Button :disabled="Permittedpledge" @click="openDelegateMarket" type="primary">市场质押</Button>
+          </div>
+          <br/>
           <div
             v-if="delegationinfo"
-          >质押金额 {{delegationinfo.delegateAmount|Lambformat}} 质押收益{{Pledgeincome(delegationinfo)|Lambformat}}</div>
+          >我质押金额 {{delegationinfo.delegateAmount|Lambformat}}， 我质押收益{{Pledgeincome(delegationinfo)|Lambformat}}</div>
         </Col>
 
       </Row>
       <Row>
+        <br/>
+        用户可以通过质押的方式参与用户创建的市场的运营。
              <br/>
         市场中的每笔收入会按照市场质押比例来进行分配。<br/>
 
@@ -49,10 +53,8 @@
   </div>
 </template>
 <script>
-import MyTable from '@/components/common/useful/Mytable.vue';
-import Mycard from '@/components/common/useful/Mycard.vue';
 import DelegateMarketModal from '@/views/Dialog/DelegateMarketModal.vue';
-
+import eventhub from '../../common/js/event.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 
@@ -63,7 +65,6 @@ export default {
   },
   data() {
     return {
-      delegationinfo: {},
       selectmarket: null,
       marketList: [],
       delegationinfo: null
@@ -71,6 +72,10 @@ export default {
   },
   mounted() {
     this.getmarketlist();
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.getmarketlist();
+    });
   },
   methods: {
     async getmarketlist() {
@@ -144,6 +149,15 @@ export default {
     },
     openDelegateMarket() {
       this.$refs.DelegateMarket.open(this.$data.selectmarket.name);
+    }
+  },
+  computed: {
+    Permittedpledge() {
+      if (this.$data.selectmarket == null || this.$data.selectmarket.name == 'lambdamarket') {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 };

@@ -263,7 +263,6 @@ export default {
           this.$data.marketList = res.data.data;
           this.$data.selectmarket = this.finddefaultmarket(this.$data.marketList);
           this.getOrderList(1);
-          // this.getmarketdelegationinfo();
         }
       } catch (error) {
         this.$Message.error(this.$t('foot.linkerror'));
@@ -389,36 +388,6 @@ export default {
     },
     openDelegateMarket() {
       this.$refs.DelegateMarket.open(this.$data.selectmarket.name);
-    },
-    async getmarketdelegationinfo() {
-      console.log('getmarketdelegationinfo');
-      let res = await ipc.callMain('marketdelegationinfo', {
-        marketName: this.$data.selectmarket.name,
-        aaa: 'zzz'
-      });
-      if (res.state && res.data.data.error == undefined) {
-        this.$data.delegationinfo = res.data.data;
-      } else {
-        this.$data.delegationinfo = null;
-      }
-    },
-    Pledgeincome(data) {
-      var list = []; var result = 0;
-      if (data.inCome.commissionInCome instanceof Array) {
-        list = list.concat(data.inCome.commissionInCome);
-      }
-
-      if (data.inCome.feeInCome instanceof Array) {
-        list = list.concat(data.inCome.feeInCome);
-      }
-
-      for (let index = 0; index < list.length; index++) {
-        const element = list[index];
-        var amount = Number(element.amount);
-        result += amount;
-      }
-
-      return result;
     }
   },
   computed: {

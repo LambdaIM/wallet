@@ -74,6 +74,10 @@
             <Icon type="ios-construct" />
             Lambda S3
         </MenuItem>
+        <MenuItem   to="/home/Marketoperation" name="Marketoperation">
+            <Icon type="md-football" />
+            市场运营
+        </MenuItem>
 
     </Menu>
       </div>
@@ -142,7 +146,7 @@ export default {
         case 'openWithdrawprofit':this.$refs.DistributionModal.open(); this.$data.activeItem = this.$route.name; break;
         case 'openMinerprofit':this.$refs.MinerWithdrawalModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         case 'openMinerOrder':this.$refs.MinerWithdrawaOrderlModalDialog.open(); this.$data.activeItem = this.$route.name; break;
-        case 'openWithdrawmarket': this.$refs.WithdrawalMarketModalDialog.open(); this.$data.activeItem = this.$route.name;
+        case 'openWithdrawmarket': this.$refs.WithdrawalMarketModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         default :this.$data.activeItem = name;
       }
 

@@ -20,11 +20,12 @@
 
                 </DropdownMenu>
             </Dropdown>
+            <span v-if="delegationinfo">
+              质押收益{{Pledgeincome(delegationinfo)|Lambformat}}
+            </span>
 
       </p>
-      <p v-if="delegationinfo">
-       质押收益{{Pledgeincome(delegationinfo)|Lambformat}}
-      </p>
+
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>

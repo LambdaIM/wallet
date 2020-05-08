@@ -53,6 +53,11 @@ var walletRouter = new Router({
         path: 'mysellorder',
         name: 'mysellorder',
         component: () => import('@/views/Home/marketsellorderlink.vue')
+      },
+      {
+        path: 'Marketoperation',
+        name: 'Marketoperation',
+        component: () => import('@/views/Home/Marketoperation.vue')
       }
 
     ],

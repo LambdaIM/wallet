@@ -21,7 +21,7 @@
         </MenuItem>
         <MenuItem to="/market/marketpledge" name="marketpledge">
             <Icon type="md-football" />
-            市场质押
+            市场运营
         </MenuItem>
 
 
