@@ -41,12 +41,12 @@
         {{$t('Marketoperation.Explain1')}}
              <br/>
         {{$t('Marketoperation.Explain2')}}<br/>
-        {{$t('Marketoperation.Explain3')}}<br/>
+        {{$t('Marketoperation.Explain3')}}<br/><br/>
 
 {{$t('Marketoperation.Explain4')}}：<br/>
 
 {{$t('Marketoperation.Explain5')}}<br/>
-{{$t('Marketoperation.Explain6')}}<br/>
+{{$t('Marketoperation.Explain6')}}<br/><br/><br/><br/><br/><br/><br/>
       </Row>
     </div>
     <DelegateMarketModal ref="DelegateMarket" />
