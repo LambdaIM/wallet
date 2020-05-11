@@ -115,7 +115,7 @@ export default {
       Validator: ['MsgCreateValidator', 'MsgEditValidator'],
       Miner: ['MsgMaintain', 'MsgUnMaintain', 'MsgCreateMiner', 'MsgEditMiner', 'MsgUnjailMiner'],
       Market: ['MsgCreateSellOrder', 'MsgCreateMarket', 'MsgEditMarket', 'MsgCancelSellOrder',
-        'MsgCreateBuyOrder', 'MsgWithDrawMarket', 'MsgMinerWithDraw', 'MsgOrderRenewal']
+        'MsgCreateBuyOrder', 'MsgWithDrawMarket', 'MsgMinerWithDraw', 'MsgOrderRenewal', 'MsgDelegateMarket']
     };
   },
   methods: {

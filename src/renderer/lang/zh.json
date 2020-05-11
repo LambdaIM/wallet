@@ -494,7 +494,8 @@
     "MsgMaintain": "发起维护",
     "MsgUnMaintain": "解除维护",
     "MsgUnjailMiner": "解除限制",
-    "MsgOrderRenewal":"订单续期"
+    "MsgOrderRenewal":"订单续期",
+    "MsgDelegateMarket":"市场质押"
 
    },
    "txTable":{

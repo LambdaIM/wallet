@@ -34,6 +34,16 @@
 
     </div>
 
+    <div v-if="txtype=='MsgDelegateMarket'">
+        <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address }}</AddressLink
+      >&nbsp;
+      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+      {{msg.value.amount|formatAmountdenom}}
+      {{$t('txTable.to')}}
+      {{msg.value.marketName}}
+
+    </div>
+
 
 
 </div>

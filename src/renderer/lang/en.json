@@ -495,7 +495,8 @@
     "MsgMaintain": "Maintain",
     "MsgUnMaintain": "UnMaintain",
     "MsgUnjailMiner": "UnjailMiner",
-    "MsgOrderRenewal":"OrderRenewal"
+    "MsgOrderRenewal":"OrderRenewal",
+    "MsgDelegateMarket":"DelegateMarket"
   },
   "txTable":{
     "action": "Activity",
