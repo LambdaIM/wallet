@@ -348,7 +348,7 @@ export default {
 
       this.getmarketinfo(name);
       this.getOrderList();
-      this.getmarketdelegationinfo();
+
 
       this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
     },
