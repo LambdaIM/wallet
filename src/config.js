@@ -20,7 +20,7 @@ module.exports.DAEMON_CONFIG  = {
     pledgeurl: "http://validator.lambdastorage.com/",
     explore:function(){
       var testurl = process.env.NODE_ENV == "production"?
-      'http://testbrowser.lambda.im/':"http://39.107.249.53:8080/";
+      'http://testexplorer.lambdastorage.com/':"http://39.107.249.53:8080/";
       if(window.netType==1){
         return  "http://explorer.lambdastorage.com/"
       }else{

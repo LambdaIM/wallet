@@ -840,7 +840,8 @@
       "Explain4":"Income distribution rules",
       "Explain5":"Market creator receives 10% of market revenue",
       "Explain6":"The market pledgor allocates the remaining 90% according to the pledge proportion (the market creator is also in the distribution set)",
-      "tip":"Minimum amount of market pledge {0} lamb"
+      "tip":"Minimum amount of market pledge {0} lamb",
+      "tipneedselect":"Lambdamarket is the default market, please select the market created by users."
    }
 
 }

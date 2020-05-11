@@ -69,6 +69,15 @@ export default {
     },
     async transfer(amount, txType) {
       let to = this.$data.selectmarket.name;
+      if (to == 'lambdamarket') {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Marketoperation.tipneedselect')
+        });
+
+        return;
+      }
+
 
       this.$data.transactiondata = null;
       try {
