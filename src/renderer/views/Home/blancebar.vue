@@ -4,7 +4,7 @@
    <div class="account-info-container">
       <Row class-name="account-info-wrapper" type="flex" justify="space-between">
         <Col span="4" class="account-item">
-          <div class="item-wrapper">
+          <div id="accountlambdaBlance" class="item-wrapper">
             <p class="title">{{$t('home.Balance')}}(LAMB)</p>
             <p class="value">{{balance|BlanceValue}} </p>
           </div>
