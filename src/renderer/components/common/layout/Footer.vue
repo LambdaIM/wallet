@@ -3,7 +3,7 @@
     <div v-if="getstore.address!==null"  class="footer-wrapper">
       <!-- <span class="item etc">Validator id: -->
 
-      <span    class="item etc">
+      <span id="Switchingnetwork"   class="item etc">
         <!-- <Poptip word-wrap trigger="hover" width="300" :content="getIPAndAddress">
 
           <router-link v-if="login"

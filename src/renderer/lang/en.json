@@ -842,6 +842,14 @@
       "Explain6":"The market pledgor allocates the remaining 90% according to the pledge proportion (the market creator is also in the distribution set)",
       "tip":"Minimum amount of market pledge {0} lamb",
       "tipneedselect":"Lambdamarket is the default market, please select the market created by users."
-   }
+   },
+   "Guidepage":{
+    "Switchingnetwork":"Switch network, main network, test network or custom network node",
+    "set":"Setting roles, gas fees, adjusting interface language, opening configuration files, etc",
+    "prevLabel": "prevLabel",
+    "nextLabel": "nextLabel",
+    "skipLabel": "skipLabel",
+    "doneLabel": "doneLabel"
+    }
 
 }

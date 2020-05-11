@@ -105,8 +105,14 @@ import MinerWithdrawaOrderlModal from '@/views/Dialog/MinerWithdrawaOrderlModal.
 
 import WithdrawalMarketModal from '@/views/Dialog/withdrawalMarketModal.vue';
 
+
+import introJs from 'intro.js';
+import homesteps from './homesteps.js';
+import Introtip from '../../common/js/Introtip.js';
+
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 
 export default {
   data() {
@@ -130,6 +136,36 @@ export default {
     this.$data.Interval = setInterval(async () => {
       this.getMinerRewards();
     }, 1000 * 15);
+    //= =
+    var role = this.$store.getters.role;
+    console.log(Introtip);
+    var hasreadtip = Introtip.gettip('home');
+    var _this = this;
+    if (role != null && hasreadtip != true) {
+      setTimeout(() => {
+        var Options = {
+          prevLabel: this.$t('Guidepage.prevLabel'),
+          nextLabel: this.$t('Guidepage.nextLabel'),
+          skipLabel: this.$t('Guidepage.skipLabel'),
+          doneLabel: this.$t('Guidepage.doneLabel'),
+          steps: []
+        };
+        homesteps.forEach(item => {
+          if (document.querySelector(item.element)) {
+            item.intro = _this.$t(`Guidepage.${item.element.replace('#', '')}`);
+            Options.steps.push(item);
+          }
+        });
+        introJs().setOptions(Options).start()
+          .oncomplete(function() {
+            Introtip.settip('home');
+          })
+          .onexit(function() {
+            Introtip.settip('home');
+          });
+      }, 1000);
+    }
+    //= =
   },
   beforeDestroy() {
     clearInterval(this.$data.Interval);
