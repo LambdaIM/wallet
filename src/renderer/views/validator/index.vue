@@ -25,7 +25,7 @@
 
         </FormItem> -->
         <FormItem @click="settestip" prop="ValidatorIP" :label="$t('Validator.ip')">
-            <Input type="text"  v-model="formInline.ValidatorIP" :placeholder="$t('Validator_node')">
+            <Input type="text"  v-model="formInline.ValidatorIP" :placeholder="$t('Validator.Validator_node')">
 
             </Input>
         </FormItem>
@@ -119,7 +119,7 @@ export default {
       },
       ruleInline: {
         ValidatorIP: [
-          { required: true, message: 'Please fill in the Validator IP.', trigger: 'blur' }
+          { required: true, message: this.$t('Validator.Validator_node'), trigger: 'blur' }
           // {  type: 'string', pattern: /(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})(\.(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})){3}/g , message: 'Must be IP'}
         ]
       },

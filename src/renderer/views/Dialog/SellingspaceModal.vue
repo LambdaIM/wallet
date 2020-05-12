@@ -206,7 +206,7 @@ export default {
 
       if (rate == 1 && unitPrice < this.$data.orderPrice) {
         unitPrice = this.$data.orderPrice;
-        this.$Message.info(this.$t('Dialog.sellorder.ratetip2'));
+        this.$Message.info(this.$t('Dialog.sellorder.ratetip2', [this.$data.orderPrice]));
       }
       if (rate < 0.5 || rate > 1) {
         this.$Message.info(this.$t('Dialog.sellorder.ratetip4'));
