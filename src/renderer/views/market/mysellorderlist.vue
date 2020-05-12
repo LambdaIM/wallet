@@ -112,9 +112,6 @@ export default {
           key: 'rate',
           slot: 'rate'
         }, {
-          title: this.$t('marketpage.myselltable.Storagedevice'),
-          key: 'machineName'
-        }, {
           title: this.$t('marketpage.myselltable.Marketaddress'),
           key: 'marketAddress'
         }, {

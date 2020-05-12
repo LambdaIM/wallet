@@ -509,7 +509,7 @@
     "Transactionhash":"事物哈希",
     "to":"到",
     "Withdraw":"从",
-    "sendtxloading":"交易已经发送，请稍后"
+    "sendtxloading":"交易已经发送，请稍侯"
    },
    "proposalsPage":{
        "Status":"状态",

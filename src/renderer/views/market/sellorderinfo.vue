@@ -89,10 +89,10 @@
           </Col>
         </Row>
         <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
+          <Col span="5" class-name="title-wrapper">
             <span class="title">{{ $t('marketpage.selltable.unitprice') }}:</span>
           </Col>
-          <Col span="17" class-name="content-wrapper">
+          <Col span="16" class-name="content-wrapper">
             {{sellorderinfo.amount[0].amount | Lambformat}}
           </Col>
         </Row>
