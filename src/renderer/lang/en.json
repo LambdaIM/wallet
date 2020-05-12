@@ -848,8 +848,16 @@
     "set":"Setting roles, gas fees, adjusting interface language, opening configuration files, etc",
     "prevLabel": "prev",
     "nextLabel": "next",
+<<<<<<< HEAD
     "skipLabel": "skip",
     "doneLabel": "done"
+=======
+    "skipLabel": "turn off",
+    "doneLabel": "done",
+    "Guidance":"Guidance",
+    "on":"on",
+    "off":"off"
+>>>>>>> f65573c... 引导提示
     }
 
 }
