@@ -1,5 +1,6 @@
 const settings = require('electron-settings');
-var select_Market = settings.get('Market.address');
+var select_Market = settings.get('market.address');
+var id;
 const state = {
   statusType: null,
   selectMarket: select_Market || null
@@ -12,7 +13,10 @@ const mutations = {
   setselectMarket: function(state, info) {
     console.log('mutations');
     state.selectMarket = info;
-    settings.set('Market.address', info);
+    clearTimeout(id);
+    id = setTimeout(() => {
+      settings.set('market.address', info);
+    }, 1000 * 5);
   }
 };
 const actions = {

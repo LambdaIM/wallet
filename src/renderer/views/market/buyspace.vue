@@ -349,7 +349,7 @@ export default {
       this.getmarketinfo(name);
       this.getOrderList();
 
-
+      console.log('this.$data.selectmarket.marketAddress', this.$data.selectmarket.marketAddress);
       this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
     },
     openautoBuyingspace() {

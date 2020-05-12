@@ -25,9 +25,9 @@
       "sync_block": "Sync Block....",
       "validator_connecting": "Validator connecting ...",
       "linkerror": "Connecting to Validation Node Exceptions, Check Network Links or Validation Nodes",
-      "mainnet":"Main network",
-      "testnet":"Test network",
-      "cusnet":"Custom network",
+      "mainnet":"Main net",
+      "testnet":"Test net",
+      "cusnet":"Custom net",
       "defaultmaster":"Default master",
       "Defaulttestnode":"Default test node",
       "Customnode":"Custom node",
@@ -846,10 +846,10 @@
    "Guidepage":{
     "Switchingnetwork":"Switch network, main network, test network or custom network node",
     "set":"Setting roles, gas fees, adjusting interface language, opening configuration files, etc",
-    "prevLabel": "prevLabel",
-    "nextLabel": "nextLabel",
-    "skipLabel": "skipLabel",
-    "doneLabel": "doneLabel"
+    "prevLabel": "prev",
+    "nextLabel": "next",
+    "skipLabel": "skip",
+    "doneLabel": "done"
     }
 
 }
