@@ -159,9 +159,12 @@ export default {
         introJs().setOptions(Options).start()
           .oncomplete(function() {
             Introtip.settip('home');
+            console.log(1);
           })
-          .onexit(function() {
+          .onexit(function(data) {
+            console.log(data);
             Introtip.settip('home');
+            console.log(2);
           });
       }, 1000);
     }
@@ -191,7 +194,7 @@ export default {
       // })
     },
     gettestcoin() {
-      var url = 'http://faucet.lambda.im/';
+      var url = 'http://faucet.lambdastorage.com/';
       shell.openExternal(url);
     },
     async getMinerRewards() {
