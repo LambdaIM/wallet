@@ -37,17 +37,19 @@
             class="item"
           >{{ $t("head.partner") }}</router-link>
         </div> -->
-        <div class="head-menu-item">
-          <router-link
-            to="/proposal"
-            class="item"
-          > {{$t("head.proposals")}} </router-link>
-        </div>
+
         <div  v-if="$role('menu.market')" class="head-menu-item">
           <router-link
             to="/market"
             class="item"
           >{{$t("head.market")}}</router-link>
+        </div>
+
+        <div class="head-menu-item">
+          <router-link
+            to="/proposal"
+            class="item"
+          > {{$t("head.proposals")}} </router-link>
         </div>
 
         <div  class="head-menu-item" v-if="$role('home.guide')">
@@ -60,7 +62,7 @@
 
 
 
-        <div class="head-menu-item overtext">
+        <div id="set" class="head-menu-item overtext">
           <router-link
             to="/settings"
             class="item"

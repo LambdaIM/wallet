@@ -140,14 +140,26 @@ export default function() {
   });
 
   eipc.answerRenderer('clearlocalmarketdata', async query => {
+    let { marketAddress } = query;
     try {
-      var result = await Nedbjs.cleardata();
+      var result = await Nedbjs.cleardata(marketAddress);
+      settings.set(`Market.synctime.${global.__lambNodeinfo.network}.${marketAddress}`, new Date().getTime());
 
       return resultView(result, true);
     } catch (ex) {
       throw resultView(null, false, ex);
     }
   });
+  eipc.answerRenderer('getmarketsyncTime', async query => {
+    let { marketAddress } = query;
+    try {
+      var result = settings.get(`Market.synctime.${global.__lambNodeinfo.network}.${marketAddress}`);
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
 
   eipc.answerRenderer('marketSellOrderslist', async query => {
     var { page, limit } = query;
@@ -240,6 +252,8 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+
+
 
   eipc.answerRenderer('editlambdastoragemanagerkey', async query => {
     var { accesskey, secretkey, port } = query;
@@ -374,6 +388,42 @@ export default function() {
       throw resultView(null, false, ex);
     }
   });
+
+  eipc.answerRenderer('sellorderinfo', async query => {
+    var { orderId } = query;
+    if (orderId == undefined) {
+      throw resultView(null, false, errorList.need_orderId);
+    }
+
+    try {
+      var M = new Manager();
+      var result = await M.sellOrderinfo(orderId);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('marketdelegationinfo', async query => {
+    var { marketName } = query;
+    console.log('marketdelegationinfo', query);
+    if (marketName == undefined) {
+      throw resultView(null, false, errorList.need_marketName);
+    }
+
+    try {
+      var M = new Manager();
+      var result = await M.marketdelegationinfo(marketName);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
+
   function getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey, orderid) {
     return `${path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile())} gateway run \
     --broker.dht_gateway_addr ${ip}:13000 \

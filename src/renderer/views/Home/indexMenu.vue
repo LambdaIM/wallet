@@ -45,6 +45,7 @@
             </MenuGroup>
             <MenuGroup :title="$t('home.Withdraw')">
                 <MenuItem  name="openWithdraw">{{$t('home.Withdraw')}}</MenuItem>
+                <MenuItem  name="openWithdrawmarket"> {{$t('home.Withdrawmarketrevenue')}}  </MenuItem>
                 <MenuItem v-if="$role('home.tx.Withdrawprofit')" name="openWithdrawprofit">{{$t('home.Withdrawprofit')}}</MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">{{$t('orderrevenue.WithdraworderCommission')}} </MenuItem>
@@ -71,7 +72,11 @@
         </MenuItem>
         <MenuItem v-if="$role('home.lambdas3')"  to="/home/lambdas3" name="lambdas3">
             <Icon type="ios-construct" />
-            Lambda S3
+            S3
+        </MenuItem>
+        <MenuItem   to="/home/Marketoperation" name="Marketoperation">
+            <Icon type="md-football" />
+            {{$t('home.Marketoperation')}}
         </MenuItem>
 
     </Menu>
@@ -83,6 +88,7 @@
     <DistributionModal ref="DistributionModal" />
     <MinerWithdrawalModal ref="MinerWithdrawalModalDialog"/>
     <MinerWithdrawaOrderlModal ref="MinerWithdrawaOrderlModalDialog"/>
+    <WithdrawalMarketModal ref="WithdrawalMarketModalDialog" />
 
   </div>
 </template>
@@ -97,8 +103,16 @@ import DistributionModal from '@/views/Dialog/distributionModal.vue';
 import MinerWithdrawalModal from '@/views/Dialog/MinerWithdrawalModal.vue';
 import MinerWithdrawaOrderlModal from '@/views/Dialog/MinerWithdrawaOrderlModal.vue';
 
+import WithdrawalMarketModal from '@/views/Dialog/withdrawalMarketModal.vue';
+
+
+import introJs from 'intro.js';
+import homesteps from './homesteps.js';
+import Introtip from '../../common/js/Introtip.js';
+
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 
 export default {
   data() {
@@ -114,13 +128,47 @@ export default {
     WithdrawalModalDialog,
     DistributionModal,
     MinerWithdrawalModal,
-    MinerWithdrawaOrderlModal
+    MinerWithdrawaOrderlModal,
+    WithdrawalMarketModal
   },
   mounted() {
     this.getMinerRewards();
     this.$data.Interval = setInterval(async () => {
       this.getMinerRewards();
     }, 1000 * 15);
+    //= =
+    var role = this.$store.getters.role;
+    console.log(Introtip);
+    var hasreadtip = Introtip.gettip('home');
+    var _this = this;
+    if (role != null && hasreadtip != true) {
+      setTimeout(() => {
+        var Options = {
+          prevLabel: this.$t('Guidepage.prevLabel'),
+          nextLabel: this.$t('Guidepage.nextLabel'),
+          skipLabel: this.$t('Guidepage.skipLabel'),
+          doneLabel: this.$t('Guidepage.doneLabel'),
+          steps: []
+        };
+        homesteps.forEach(item => {
+          if (document.querySelector(item.element)) {
+            item.intro = _this.$t(`Guidepage.${item.element.replace('#', '')}`);
+            Options.steps.push(item);
+          }
+        });
+        introJs().setOptions(Options).start()
+          .oncomplete(function() {
+            Introtip.settip('home');
+            console.log(1);
+          })
+          .onexit(function(data) {
+            console.log(data);
+            Introtip.settip('home');
+            console.log(2);
+          });
+      }, 1000);
+    }
+    //= =
   },
   beforeDestroy() {
     clearInterval(this.$data.Interval);
@@ -137,6 +185,7 @@ export default {
         case 'openWithdrawprofit':this.$refs.DistributionModal.open(); this.$data.activeItem = this.$route.name; break;
         case 'openMinerprofit':this.$refs.MinerWithdrawalModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         case 'openMinerOrder':this.$refs.MinerWithdrawaOrderlModalDialog.open(); this.$data.activeItem = this.$route.name; break;
+        case 'openWithdrawmarket': this.$refs.WithdrawalMarketModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         default :this.$data.activeItem = name;
       }
 
@@ -145,7 +194,7 @@ export default {
       // })
     },
     gettestcoin() {
-      var url = 'http://faucet.lambda.im/';
+      var url = 'http://faucet.lambdastorage.com/';
       shell.openExternal(url);
     },
     async getMinerRewards() {

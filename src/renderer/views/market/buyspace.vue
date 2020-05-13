@@ -2,12 +2,22 @@
 <template>
   <div class="customer-container">
       <div class="tableContainer">
-           <Row>
-        <Col span="22"><h3>{{$t('marketpage.autotitle')}}</h3></Col>
 
+     <Row>
+        <Col span="7"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
+        <Col span="17" style="text-align: right;">
+           <!-- <syncbar :marketName="selectmarket.name"/> -->
+           <Button :to="`/market/syncdata`">{{$t('syncorderpage.Searchsort')}}</Button>
+        </Col>
+      </Row>
+      <br/>
 
-    </Row>
-                  <div style="text-align: center;">
+     <div>
+
+    <Row>
+        <Col span="14">
+          <!-- {{$t('marketpage.last100data')}} -->
+          {{$t('head.market')}}
           <Dropdown @on-click="selectmarketClick">
         <a href="javascript:void(0)">
             {{selectmarket.name}}
@@ -19,40 +29,11 @@
 
         </DropdownMenu>
     </Dropdown>&nbsp;
-
-
-      {{$t('marketpage.space')}} <Input v-model="autoSpaceSize"  style="width: auto" />GB&nbsp;
-      {{$t('marketpage.duration')}}<Input v-model="autoSpaceDuration"  style="width: auto" />{{$t('marketpage.month')}}&nbsp;
-         <Button @click="openautoBuyingspace" type="primary">{{$t('marketpage.One-click-space')}}</Button>
-
-    </div>
-
-      <div style="text-align: center;"> {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
-          {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}} ，
-          {{$t('marketpage.unitprice')}}：{{marketinfo.order_normal_price|Lambformat}}，
-          {{$t('marketpage.Minimumtime')}}： {{marketinfo.order_min_buy_duration|formatMonth}}{{$t('marketpage.month')}}
-          {{$t('marketpage.Maximumtime')}}：{{marketinfo.order_max_buy_duration|formatMonth}}{{$t('marketpage.month')}}，
-          {{$t('marketpage.Minimumspace')}}：{{marketinfo.order_min_buy_size}}GB  </div>
-
-
-     <Divider />
-     <Row>
-        <Col span="7"><h3>{{$t('marketpage.Optionaltitle')}}  </h3></Col>
-        <Col span="17" style="text-align: right;">
-           <!-- <syncbar :marketName="selectmarket.name"/> -->
-           <Button :to="`/market/syncdata/${selectmarket.name}/${selectmarket.marketAddress}`">{{$t('syncorderpage.Searchsort')}}</Button>
-        </Col>
-      </Row>
-      <br/>
-     <div>
-
-    <Row>
-        <Col span="8">
-          <!-- {{$t('marketpage.last100data')}} -->
-          &nbsp;
+    {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
+    {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}}
         </Col>
 
-        <Col span="8">
+        <Col span="10">
           <RadioGroup  @on-change="statusTypeChange"  v-model="statusType" type="button" size="large">
               <Radio label="active">{{$t('marketpage.active')}}</Radio>
               <Radio label="unActive">{{$t('marketpage.unActive')}}</Radio>
@@ -60,6 +41,8 @@
 
         </Col>
     </Row>
+      <br/>
+
      </div>
      <br/>
      <!-- OrderListcolumnsNotSort -->
@@ -100,6 +83,7 @@
      </div>
      <autoBuyingspaceModal ref="autoBuyingspace" />
      <BuyingspaceModal ref="Buyingspace" />
+     <DelegateMarketModal ref="DelegateMarket" />
   </div>
 </template>
 <script>
@@ -109,6 +93,8 @@ import autoBuyingspaceModal from '@/views/Dialog/autoBuyingspaceModal.vue';
 import BuyingspaceModal from '@/views/Dialog/BuyingspaceModal.vue';
 import eventhub from '../../common/js/event.js';
 import syncbar from './syncbar.vue';
+
+import DelegateMarketModal from '@/views/Dialog/DelegateMarketModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 var packagejson = require('../../../../package.json');
@@ -123,8 +109,9 @@ export default {
       marketinfo: '',
       OrderList: [],
       OrderListcolumns: [{
-        title: this.$t('marketpage.selltable.Mineraddress'),
-        key: 'address'
+        // title: this.$t('marketpage.selltable.Mineraddress'),
+        title: this.$t('syncorderpage.orderID'),
+        key: 'orderId'
       },
       // {
       //   title: this.$t('marketpage.myselltable.Storagedevice'),
@@ -171,8 +158,9 @@ export default {
       }
       ],
       OrderListcolumnsNotSort: [{
-        title: this.$t('marketpage.selltable.Mineraddress'),
-        key: 'address'
+        // title: this.$t('marketpage.selltable.Mineraddress'),
+        title: this.$t('syncorderpage.orderID'),
+        key: 'orderId'
       },
       // {
       //   title: this.$t('marketpage.myselltable.Storagedevice'),
@@ -227,7 +215,8 @@ export default {
       allCount: 1,
       pageCount: {},
       loading: true,
-      statusType: 'active'
+      statusType: 'active',
+      delegationinfo: null
 
 
     };
@@ -235,6 +224,8 @@ export default {
   mounted() {
     this.getmarketlist();
     this.getmarketinfo('');
+
+
 
     // eventhub.$on('marketsellordersync', data => {
     //   console.log('marketsellordersync');
@@ -253,12 +244,15 @@ export default {
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.getOrderList(1);
+      this.getmarketlist();
+      this.getmarketinfo('');
     });
   },
   components: {
     autoBuyingspaceModal,
     BuyingspaceModal,
-    syncbar
+    syncbar,
+    DelegateMarketModal
   },
   methods: {
     async getmarketlist() {
@@ -267,12 +261,23 @@ export default {
         let res = await ipc.callMain('marketlist', {});
         if (res.state) {
           this.$data.marketList = res.data.data;
-          this.$data.selectmarket = this.$data.marketList[0];
+          this.$data.selectmarket = this.finddefaultmarket(this.$data.marketList);
           this.getOrderList(1);
         }
       } catch (error) {
         this.$Message.error(this.$t('foot.linkerror'));
       }
+    },
+    finddefaultmarket(list) {
+      var defaultaddress = this.$store.getters.getselectMarket;
+      var result = list[0];
+      list.forEach(item => {
+        if (item.marketAddress == defaultaddress) {
+          result = item;
+        }
+      });
+
+      return result;
     },
     async   getmarketinfo(name) {
       let res = await ipc.callMain('marketinfo', {
@@ -340,8 +345,12 @@ export default {
           _this.$data.selectmarket = item;
         }
       });
+
       this.getmarketinfo(name);
       this.getOrderList();
+
+      console.log('this.$data.selectmarket.marketAddress', this.$data.selectmarket.marketAddress);
+      this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
     },
     openautoBuyingspace() {
       let spaceSize = parseInt(this.$data.autoSpaceSize);
@@ -376,6 +385,9 @@ export default {
       this.$store.dispatch('setstatusType', this.$data.statusType);
       this.$data.islocalfilter['statusType'] = this.$store.getters.statusType == 'active' ? '0' : '1';
       this.getOrderList(1);
+    },
+    openDelegateMarket() {
+      this.$refs.DelegateMarket.open(this.$data.selectmarket.name);
     }
   },
   computed: {

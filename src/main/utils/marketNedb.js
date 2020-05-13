@@ -15,21 +15,46 @@ export default class {
 
     // global.lambNodeinfo.network
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(async function (resolve, reject) {
       var newList = [];
-      sellorderArry.forEach(async element => {
+      // sellorderArry.forEach(async element => {
+      //   element.sellSize = Number(element.sellSize);
+      //   element.price = Number(element.price);
+      //   element.unUseSize = Number(element.unUseSize);
+      //   element.network = global.__lambNodeinfo.network;
+      //   element.minBuySize = Number(element.minBuySize);
+      //   element.minDuration = Number(element.minDuration);
+
+
+      //   var result = await _this.Checkexist(element.orderId);
+      //   if (result) {
+      //     console.log('element',element)
+      //     newList.push(element);
+      //   } else {
+      //     var result2 = _this.updateTxState(element.orderId, element);
+      //   }
+      // });
+      for (let index = 0; index < sellorderArry.length; index++) {
+        const element = sellorderArry[index];
         element.sellSize = Number(element.sellSize);
         element.price = Number(element.price);
         element.unUseSize = Number(element.unUseSize);
         element.network = global.__lambNodeinfo.network;
+        element.minBuySize = Number(element.minBuySize);
+        element.minDuration = Number(element.minDuration);
+
 
         var result = await _this.Checkexist(element.orderId);
         if (result) {
+          console.log('element', element);
           newList.push(element);
         } else {
           var result2 = _this.updateTxState(element.orderId, element);
         }
-      });
+      }
+
+      console.log('newList', newList);
+
       db.insert(newList, function (err, newDoc) {
         // newDoc is the newly inserted document, including its _id
         // newDoc has no key called notToBeSaved since its value was undefined
@@ -106,12 +131,15 @@ export default class {
             }
           }
           if (flag && islocalfilter.storagenode != '' && islocalfilter.storagenode != undefined) {
-            if (this.address.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1) {
+            if (this.address.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1 ||
+            this.orderId.toLowerCase().indexOf(islocalfilter.storagenode.toLowerCase()) > -1) {
               flag = true;
             } else {
               flag = false;
             }
           }
+
+
 
           if (flag && islocalfilter.statusType) {
             if (this.status == islocalfilter.statusType) {
@@ -168,9 +196,9 @@ export default class {
         });
     });
   }
-  cleardata() {
+  cleardata(marketAddress) {
     return new Promise(function (resolve, reject) {
-      db.remove({ network: global.__lambNodeinfo.network },
+      db.remove({ network: global.__lambNodeinfo.network, marketAddress: marketAddress },
         { multi: true },
         function (err, numRemoved) {
           if (err == null) {

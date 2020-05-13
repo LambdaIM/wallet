@@ -1,7 +1,31 @@
 <template>
   <div class="customer-container">
     <div class="tableContainer">
+      <h3 style="   ">
+         {{$t('head.market')}}
+          <Dropdown @on-click="selectmarketClick">
+        <a href="javascript:void(0)">
+            {{selectmarket.name}}
+            <Icon type="ios-arrow-down"></Icon>
+        </a>
+        <DropdownMenu  v-if="marketList" slot="list">
+            <DropdownItem :name="item.name" :key="item.marketAddress" v-for="item in marketList" >{{item.name}}</DropdownItem>
+
+
+        </DropdownMenu>
+    </Dropdown>&nbsp;
+    {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
+    {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}}
+    {{$t('syncorderpage.orderSynchronizationTime')}}：{{syncTime|formatToTime}}
+      </h3>
+      <div v-if="syncTime==undefined">
+
+       <Alert type="warning">{{$t('syncorderpage.needSync')}}</Alert>
+      </div>
+      <br v-else />
       <syncbar :marketName="name" />
+
+
     <br/>
 
     <!-- OrderListcolumnsNotSort -->
@@ -18,11 +42,11 @@
     >
       <template slot-scope="{ row, index }" slot="action">
         <Button
-          v-if="row.status=='0'"
-          @click="openBuyingspace(row)"
+          :to="`/market/sellorderinfo/${row.orderId}`"
+
           type="primary"
           size="small"
-        >{{$t('marketpage.selltable.Purchasespace')}}</Button>
+        >{{$t('marketpage.ordertable.orderdetails')}}</Button>
       </template>
       <template slot-scope="{ row, index }" slot="price">{{row.price|Lambformat}}</template>
       <template slot-scope="{ row, index }" slot="minDuration">{{row.minDuration|formatMonth}}</template>
@@ -58,8 +82,8 @@ export default {
   },
   data() {
     return {
-      name: this.$route.params.marketname,
-      marketAddress: this.$route.params.marketAddress,
+      name: '',
+      marketAddress: '',
       loading: false,
       allCount: 1,
       pageCount: {},
@@ -68,23 +92,29 @@ export default {
       islocalfilter: {},
       OrderListcolumns: [
         {
-          title: this.$t('marketpage.selltable.Mineraddress'),
-          key: 'address'
+          // title: this.$t('marketpage.selltable.Mineraddress'),
+          title: this.$t('syncorderpage.orderID'),
+          key: 'orderId'
         },
         // {
         //   title: this.$t('marketpage.myselltable.Storagedevice'),
         //   key: 'machineName'
         // },
         {
+          title: this.$t('marketpage.selltable.Mineraddress'),
+          key: 'address'
+          // slot: 'rate'
+        },
+        {
           title: this.$t('marketpage.selltable.amountspace'),
           key: 'sellSize',
           sortable: 'custom'
         },
-        {
-          title: this.$t('marketpage.selltable.remainingspace'),
-          key: 'unUseSize',
-          sortable: 'custom'
-        },
+        // {
+        //   title: this.$t('marketpage.selltable.remainingspace'),
+        //   key: 'unUseSize',
+        //   sortable: 'custom'
+        // },
         {
           title: this.$t('marketpage.selltable.unitprice'),
           key: 'price',
@@ -93,37 +123,39 @@ export default {
         },
         {
           title: this.$t('marketpage.selltable.minimumspace'),
-          key: 'minBuySize'
+          key: 'minBuySize',
+          sortable: 'custom'
         },
         {
           title: this.$t('marketpage.selltable.minimumduration'),
           key: 'minDuration',
-          slot: 'minDuration'
+          slot: 'minDuration',
+          sortable: 'custom'
         },
         {
           title: this.$t('marketpage.selltable.operating'),
           key: 'action',
           slot: 'action'
-        },
-        {
-          title: this.$t('marketpage.selltable.Odds'),
-          key: 'rate',
-          slot: 'rate'
-        },
-        {
-          title: this.$t('marketpage.Status'),
-          key: 'status',
-          slot: 'status'
         }
-      ]
+
+        // {
+        //   title: this.$t('marketpage.Status'),
+        //   key: 'status',
+        //   slot: 'status'
+        // }
+      ],
+      marketList: [],
+      marketinfo: '',
+      selectmarket: {},
+      syncTime: ''
     };
   },
-  mounted() {
-    this.getOrderList(1);
+  async mounted() {
     eventhub.$on('marketsellordersync', data => {
       console.log('marketsellordersync');
       this.$data.islocal = data;
       this.getOrderList(1);
+      this.getmarketsyncTime();
     });
 
     eventhub.$on('marketconditionfilter', data => {
@@ -132,11 +164,17 @@ export default {
       this.$data.allCount = 1;
       this.$data.pageCount = {};
       this.getOrderList(1);
+      this.getmarketsyncTime();
     });
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.getOrderList(1);
     });
+    await this.getmarketlist();
+
+    await this.getmarketinfo(this.$data.selectmarket.marketname);
+    await this.getmarketsyncTime();
+    this.getOrderList(1);
   },
   methods: {
     OrderListSort(columninfo) {
@@ -155,6 +193,20 @@ export default {
       this.$data.pageCount = {};
 
       this.getOrderList(1);
+    },
+    async    getmarketsyncTime() {
+      console.log('getmarketsyncTime');
+      var selectItem = this.finddefaultmarket();
+      try {
+        let res = await ipc.callMain('getmarketsyncTime', {
+          marketAddress: selectItem.marketAddress
+        });
+        if (res.state) {
+          this.$data.syncTime = res.data;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     orderListPage(page) {
       console.log(page);
@@ -193,6 +245,61 @@ export default {
         name: this.$data.name,
         marketAddress: this.$data.marketAddress
       });
+    },
+    async getmarketlist() {
+      console.log('getmarketlist');
+      try {
+        let res = await ipc.callMain('marketlist', {});
+        if (res.state) {
+          this.$data.marketList = res.data.data;
+          this.$data.selectmarket = this.finddefaultmarket();
+          this.$data.name = this.$data.selectmarket.name;
+          this.$data.marketAddress = this.$data.selectmarket.marketAddress;
+        }
+      } catch (error) {
+        this.$Message.error(this.$t('foot.linkerror'));
+      }
+    },
+    finddefaultmarket() {
+      var list = this.$data.marketList;
+      var defaultaddress = this.$store.getters.getselectMarket;
+      var result = list[0];
+      list.forEach(item => {
+        if (item.marketAddress == defaultaddress) {
+          result = item;
+        }
+      });
+
+      return result;
+    },
+    async   getmarketinfo(name) {
+      let res = await ipc.callMain('marketinfo', {
+        name
+      });
+      if (res.state) {
+        this.$data.marketinfo = res.data.data;
+      }
+    },
+    selectmarketClick(name) {
+      console.log(name);
+      var _this = this;
+      this.$data.marketList.forEach(item => {
+        if (name == item.name) {
+          _this.$data.selectmarket = item;
+        }
+      });
+
+      // name: this.$route.params.marketname,
+      // marketAddress: this.$route.params.marketAddress,
+      this.$data.name = this.$data.selectmarket.name;
+      this.$data.marketAddress = this.$data.selectmarket.marketAddress;
+
+      this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
+      this.getmarketinfo(name);
+      this.$data.allCount = 1;
+      this.$data.pageCount = {};
+      this.getOrderList(1);
+      this.getmarketsyncTime();
     }
   }
 };

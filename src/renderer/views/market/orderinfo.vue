@@ -1,17 +1,17 @@
 <template>
   <div class="container">
     <Mycard :cardtitle="$t('orderinfo.orderdetails')" class="mt20">
-      <div v-if="orderinfo.MatchOrder != undefined"  class="s3Operation" slot="operation">
-        <Button :disabled="ispayorder(orderinfo.MatchOrder.buyAddress)==false" type="primary" @click="openS3">{{$t('orderinfo.orderBucket')}}</Button>
+      <div v-if="orderinfo != undefined"  class="s3Operation" slot="operation">
+        <Button :disabled="ispayorder(orderinfo.buyAddress)==false" type="primary" @click="openS3">{{$t('orderinfo.orderBucket')}}</Button>
       </div>
 
-      <div v-if="orderinfo.MatchOrder != undefined" class="transaction-content" slot="card-content">
+      <div v-if="orderinfo != undefined" class="transaction-content" slot="card-content">
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{ $t('orderinfo.Marketaddress') }}:</span>
           </Col>
           <Col span="17" class-name="content-wrapper">
-            {{ orderinfo.MatchOrder.marketAddress }}
+            {{ orderinfo.marketAddress }}
           </Col>
           <Col span="3" class-name="content-wrapper">
             <!-- <Button to="/market" icon="ios-arrow-back">{{ $t('Dialog.com.back') }}</Button> -->
@@ -23,7 +23,7 @@
             <span class="title">{{ $t('orderinfo.orderType') }}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{ typeFormat(orderinfo.MatchOrder.buyAddress) }}
+            {{ typeFormat(orderinfo.buyAddress) }}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -31,10 +31,10 @@
             <span class="title">{{ this.$t('marketpage.Status') }}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <span style="color:green" v-if="orderinfo.MatchOrder.status == '0'">
+            <span style="color:green" v-if="orderinfo.status == '0'">
               {{ $t('marketpage.Active') }}
             </span>
-            <span style="color:red" v-if="orderinfo.MatchOrder.status == '2'">
+            <span style="color:red" v-if="orderinfo.status == '2'">
               {{ $t('marketpage.Expired') }}
             </span>
           </Col>
@@ -44,7 +44,7 @@
             <span class="title">{{ $t('orderinfo.orderid') }}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <a @click="openMatchOrder(orderinfo.MatchOrder.orderId)">{{ orderinfo.MatchOrder.orderId }}</a>
+            <a @click="openMatchOrder(orderinfo.orderId)">{{ orderinfo.orderId }}</a>
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -52,7 +52,7 @@
             <span class="title">{{ $t('orderinfo.Mineraddress') }}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{ orderinfo.MatchOrder.askAddress }}
+            {{ orderinfo.askAddress }}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -60,19 +60,19 @@
             <span class="title">{{ $t('orderinfo.user') }}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{ orderinfo.MatchOrder.buyAddress }}
+            {{ orderinfo.buyAddress }}
           </Col>
         </Row>
         <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{ $t('orderinfo.space') }}:</span>
           </Col>
-          <Col span="8" class-name="content-wrapper">{{ orderinfo.MatchOrder.size }}GB</Col>
+          <Col span="8" class-name="content-wrapper">{{ orderinfo.size }}GB</Col>
           <Col span="6" class-name="title-wrapper">
             <span class="title">{{ $t('orderinfo.unitprice') }}:</span>
           </Col>
           <Col span="6" class-name="content-wrapper">
-            {{ orderinfo.MatchOrder.price | Lambformat }}
+            {{ orderinfo.price | Lambformat }}
           </Col>
         </Row>
 
@@ -81,7 +81,7 @@
             <span class="title">{{ $t('orderinfo.userPay') }}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{ amountFormat(orderinfo.MatchOrder.userPay) }}
+            {{ amountFormat(orderinfo.userPay) }}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -89,8 +89,8 @@
             <span class="title">{{ $t('orderinfo.minerPay') }}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            <span v-if="typeBuyType(orderinfo.MatchOrder.buyAddress)">
-              {{ amountFormat(orderinfo.MatchOrder.minerPay) }}
+            <span v-if="typeBuyType(orderinfo.buyAddress)">
+              {{ amountFormat(orderinfo.minerPay) }}
             </span>
             <span v-else>--</span>
           </Col>
@@ -100,7 +100,7 @@
             <span class="title">{{ $t('orderinfo.Startingtime') }}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{ orderinfo.MatchOrder.createTime | formatDate }}
+            {{ orderinfo.createTime | formatDate }}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -108,12 +108,12 @@
             <span class="title">{{ $t('orderinfo.EndTime') }}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">
-            {{ orderinfo.MatchOrder.endTime | formatDate }}
+            {{ orderinfo.endTime | formatDate }}
 
           </Col>
 
         </Row>
-        <Row v-if="ispayorder(orderinfo.MatchOrder.buyAddress)" class-name="card-item">
+        <Row v-if="ispayorder(orderinfo.buyAddress)" class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             &nbsp;
           </Col>
@@ -247,7 +247,7 @@ export default {
   computed: {
     timeend() {
       var createTime = moment(this.$data.blocktime);
-      var endTime = moment(this.$data.orderinfo.MatchOrder.endTime);
+      var endTime = moment(this.$data.orderinfo.endTime);
       var duration = moment.duration(endTime.diff(createTime));
       //  var duration = createTime.diff(endTime)
 

@@ -209,6 +209,24 @@
             ></Button>
             </Col>
           </Row>
+          <Row class-name="card-item">
+            <Col
+              span="4"
+              class-name="title-wrapper"
+            >
+            <span class="title">  {{$t('Guidepage.Guidance')}}  </span>
+            </Col>
+            <Col
+              span="12"
+              class-name="content-wrapper"
+            >
+            <i-Switch size="large" v-model="guide" @on-change="guidechange" >
+              <span slot="open">{{$t('Guidepage.on')}}</span>
+              <span slot="close">{{$t('Guidepage.off')}}</span>
+            </i-Switch>
+
+            </Col>
+          </Row>
 
         </div>
       </Mycard>
@@ -459,7 +477,7 @@ import _ from 'underscore';
 
 import roleModalDialog from '@/views/Dialog/roleModal.vue';
 import Gasprise from '@/views/Dialog/Gasprise.vue';
-
+import Introtip from '../../common/js/Introtip.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
@@ -477,11 +495,14 @@ export default {
       editvalue: '',
       lang: 'zh',
       langnow: this.$i18n.locale,
-      versionNumber: DAEMON_CONFIG.version
+      versionNumber: DAEMON_CONFIG.version,
+      guide: false
     };
   },
   mounted() {
     this.getAccountInfo();
+    var hasreadtip = Introtip.gettip('home');
+    this.$data.guide = !hasreadtip;
     // this.pledgeMiner();
     // this.getgasprise();
   },
@@ -568,6 +589,10 @@ export default {
     },
     opengasprise() {
       this.$refs.Gasprise.open();
+    },
+    guidechange() {
+      console.log(this.$data.guide);
+      Introtip.settip('home', !this.$data.guide);
     }
   },
   computed: {

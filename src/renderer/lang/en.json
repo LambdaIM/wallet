@@ -25,9 +25,9 @@
       "sync_block": "Sync Block....",
       "validator_connecting": "Validator connecting ...",
       "linkerror": "Connecting to Validation Node Exceptions, Check Network Links or Validation Nodes",
-      "mainnet":"Main network",
-      "testnet":"Test network",
-      "cusnet":"Custom network",
+      "mainnet":"Main net",
+      "testnet":"Test net",
+      "cusnet":"Custom net",
       "defaultmaster":"Default master",
       "Defaulttestnode":"Default test node",
       "Customnode":"Custom node",
@@ -154,7 +154,7 @@
       "Balance":"Balance",
       "Validatorprofit": "Validator profit",
       "Latest_Transaction":"Latest  Transaction",
-      "Latest_Transaction_local": "Transaction log",
+      "Latest_Transaction_local": "Log",
       "Reward":"Reward",
       "Withdraw":"Withdraw",
       "Withdrawprofit":"Withdraw validator  profit",
@@ -167,6 +167,8 @@
       "moreonbrowser":"More historical transactions view blockchain browser",
       "miningguide":"Mining guide",
       "Viewlog":"Viewlog",
+      "Marketoperation": "Operation",
+      "Withdrawmarketrevenue":"Withdraw market revenue",
       "table":{
         "Amount":"Amount",
         "Source":"Source",
@@ -358,7 +360,7 @@
         "Buyspace":"Buying space",
         "Marketname":"Market name",
         "Marketaddress":"Market address",
-        "unitprice":"Unit price",
+        "unitprice":"Price",
         "space":"Space",
         "duration":"Duration",
         "month":"Month",
@@ -373,7 +375,7 @@
       "Buyspace":"Buying space",
       "Marketname":"Market name",
       "Marketaddress":"Market address",
-      "unitprice":"Unit price(LAMB/GB/month)",
+      "unitprice":"Price(LAMB/GB/month)",
       "space":"Space",
       "duration":"Duration",
       "month":"Month",
@@ -399,7 +401,7 @@
       "Storagedevice":"Storage node",
        "selectStoragedevicetip":"Please select a storage node (the last 100 node)",
        "Storagedevicetip":"A storage node can only be sold once, it is recommended to sell all the space at once",
-       "unitprice1":"Unitprice",
+       "unitprice1":"Price",
        "unitprice2":"LAMB/GB/month",
        "Odds":"Odds",
        "Purchasequota":"Purchase limit",
@@ -495,7 +497,8 @@
     "MsgMaintain": "Maintain",
     "MsgUnMaintain": "UnMaintain",
     "MsgUnjailMiner": "UnjailMiner",
-    "MsgOrderRenewal":"OrderRenewal"
+    "MsgOrderRenewal":"OrderRenewal",
+    "MsgDelegateMarket":"DelegateMarket"
   },
   "txTable":{
     "action": "Activity",
@@ -567,7 +570,7 @@
     "One-click-space":"One click purchase",
     "Pending-order-fee":"Pending order fee",
     "Single-fee":"Single fee",
-    "unitprice":"Unit Price(LAMB/GB/month)",
+    "unitprice":"Price(LAMB/GB/month)",
     "Minimumtime":"Minimum purchase time",
     "Maximumtime":"Maximum purchase time",
     "Minimumspace":"Minimum purchase space",
@@ -593,7 +596,7 @@
         "Mineraddress":"Miner address",
         "amountspace":"Amount space(GB)",
         "remainingspace":"Remaining space(GB)",
-        "unitprice":"Unitprice(LAMB/GB/month)",
+        "unitprice":"Price(LAMB/GB/month)",
         "minimumspace":"Minimum space(GB)",
         "minimumduration":"Minimum duration(month)",
         "operating":"Operating",
@@ -603,7 +606,7 @@
     "myselltable":{
      "amountspace":"Amount space(GB)",
      "remainingspace":"Remaining space(GB)",
-     "unitprice":"Unit price(LAMB/GB/month)",
+     "unitprice":"Price(LAMB/GB/month)",
      "minimumspace":"Min  space(GB)",
      "minimumduration":"Min duration(month)",
      "Odds":"Odds",
@@ -614,7 +617,7 @@
      "orderType":"Type",
      "orderid":"Orderid",
      "amountspace":"Space(GB)",
-     "unitprice":"Unit price(LAMB/GB/month)",
+     "unitprice":"Price(LAMB/GB/month)",
      "Storagedevice":"Storage node",
      "Marketaddress":"Market address",
      "Startingtime":"Start time",
@@ -642,7 +645,10 @@
   "typedata1":"Synchronize 10000 pieces of data",
   "typedata2":"Synchronize 100000 pieces of data",
   "typedata3":"Synchronize 1 million pieces of data",
-  "no-data-text":"Click data synchronization to get the latest data"
+  "no-data-text":"Click data synchronization to get the latest data",
+  "orderSynchronizationTime":"Data synchronization time",
+  "needSync":"The order data has not been synchronized. Please click the data synchronization button to synchronize the order data",
+  "orderID":"Order id"
 
 },
 "orderinfo":{
@@ -650,7 +656,7 @@
  "orderType":"type",
  "orderid":"order id",
  "space":"space",
- "unitprice":"unit price(LAMB/GB/month)",
+ "unitprice":"price(LAMB/GB/month)",
  "Storagedevice":"storage node",
  "Marketaddress":"market address",
  "Startingtime":"starting time",
@@ -761,10 +767,10 @@
        "miner":"Miner",
        "validator":"Validator"
   },
-  "simpleuserbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward",
-  "orderuserbrief":"View assets, transfer, pledge mining, proposal voting, purchase space, use lambdas3, withdraw pledge reward",
-  "minerbrief":"View assets, transfer, pledge mining, proposal voting, market trading space, mining guide, withdraw pledge reward, withdraw deposit mining reward",
-  "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income"
+  "simpleuserbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward，Market pledge, withdraw market pledge income",
+  "orderuserbrief":"View assets, transfer, pledge mining, proposal voting, purchase space, use lambdas3, withdraw pledge reward，Market pledge, withdraw market pledge income",
+  "minerbrief":"View assets, transfer, pledge mining, proposal voting, market trading space, mining guide, withdraw pledge reward, withdraw deposit mining reward，Market pledge, withdraw market pledge income",
+  "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income，Market pledge, withdraw market pledge income"
 },
 "guidepage":{
     "step1":{
@@ -822,6 +828,31 @@
       "tip3":"Extraction operation time limit {0} hour extraction once",
       "tip4":"The revenue in the order is calculated every {0} hour. If the withdrawal is initiated before {0} hour, the amount withdrawn is 0"
 
-  }
+  },
+   "Marketoperation":{
+      "marketpledge":"market pledge",
+      "Mypledgeamount":"My pledge amount",
+      "Mypledgeincome":"My pledge income",
+      "pledgetip1":"Minimum amount of market pledge",
+      "Explain1":"Users can participate in the operation of the market created by users through pledge.",
+      "Explain2":"Market revenue is composed of Commission for registration, commission for completion and Commission for renewal.",
+      "Explain3":"Each income in the market will be distributed according to the market pledge proportion.",
+      "Explain4":"Income distribution rules",
+      "Explain5":"Market creator receives 10% of market revenue",
+      "Explain6":"The market pledgor allocates the remaining 90% according to the pledge proportion (the market creator is also in the distribution set)",
+      "tip":"Minimum amount of market pledge {0} lamb",
+      "tipneedselect":"Lambdamarket is the default market, please select the market created by users."
+   },
+   "Guidepage":{
+    "Switchingnetwork":"Switch network, main network, test network or custom network node",
+    "set":"Setting roles, gas fees, adjusting interface language, opening configuration files, etc",
+    "prevLabel": "prev",
+    "nextLabel": "next",
+    "skipLabel": "turn off",
+    "doneLabel": "done",
+    "Guidance":"Guidance",
+    "on":"on",
+    "off":"off"
+    }
 
 }

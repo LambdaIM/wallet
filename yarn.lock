@@ -679,10 +679,10 @@
     lodash.merge "^4.6.2"
     log-update "^1.0.2"
 
-"@jswebfans/rpcapijs@0.2.42":
-  version "0.2.42"
-  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.2.42.tgz#80cf1b5e7db55c9bcc42cd78dab96e1859771c3f"
-  integrity sha512-lBSwRWnoQnyOI+xLPu7ieJwC3h9jTV/wS+o9ns0W9+MgmnQ3FKJ8Jxu/+A2X2S5iKJKbDCauQvKU56x9JbiXsg==
+"@jswebfans/rpcapijs@0.2.44":
+  version "0.2.44"
+  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.2.44.tgz#9bcf5fdb8f7e92888862a5b9421777b7c97ad8e1"
+  integrity sha512-sW2IRcshZcdWboHzMPMyuRmLDNx242VSXENimmDZ0hzTwUusObwQKoNdqKB93dO+lOTZkGceRKvKE8Gnr19klg==
   dependencies:
     "@babel/runtime" "^7.5.4"
 
@@ -5731,6 +5731,11 @@ internal-ip@^3.0.1:
 interpret@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
+
+intro.js@^2.9.3:
+  version "2.9.3"
+  resolved "https://registry.npmjs.org/intro.js/-/intro.js-2.9.3.tgz#001d9a7bca66d8f4d2d0253c9b3345e9ae4320c3"
+  integrity sha512-hC+EXWnEuJeA3CveGMat3XHePd2iaXNFJIVfvJh2E9IzBMGLTlhWvPIVHAgKlOpO4lNayCxEqzr4N02VmHFr9Q==
 
 invariant@^2.2.2:
   version "2.2.4"

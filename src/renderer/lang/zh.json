@@ -150,7 +150,7 @@
       "Balance": "余额",
       "Validatorprofit": "节点收益",
       "Latest_Transaction": "最新交易记录",
-      "Latest_Transaction_local": "交易日志",
+      "Latest_Transaction_local": "日志",
       "Transfer": "交易",
       "Reward":"奖励",
       "Withdraw":"提取奖励",
@@ -163,6 +163,8 @@
       "moreonbrowser":"更多历史交易记录请查看区块链浏览器",
       "miningguide":"挖矿向导",
       "Viewlog":"查看日志",
+      "Marketoperation": "市场运营",
+      "Withdrawmarketrevenue":"提取市场收益",
       "table": {
           "Amount": "金额",
           "From":"发送",
@@ -405,8 +407,8 @@
        "Maximumtime":"最大购买时长",
        "times":"倍",
        "month":"月",
-       "ratetip1":"普通卖单：赔率=0.5，价格只能是5LAMB/G/month",
-       "ratetip2":"优质卖单：赔率=1，需要指定价格>=5LAMB/G/month",
+       "ratetip1":"普通卖单：赔率=0.5，价格只能是{0}LAMB/G/month",
+       "ratetip2":"优质卖单：赔率=1，需要指定价格>={0}LAMB/G/month",
        "ratetip3":"赔率=0.5为普通卖单,赔率=1为优质卖单",
        "ratetip4":"赔率不能=2",
        "action":{
@@ -494,7 +496,8 @@
     "MsgMaintain": "发起维护",
     "MsgUnMaintain": "解除维护",
     "MsgUnjailMiner": "解除限制",
-    "MsgOrderRenewal":"订单续期"
+    "MsgOrderRenewal":"订单续期",
+    "MsgDelegateMarket":"市场质押"
 
    },
    "txTable":{
@@ -506,7 +509,7 @@
     "Transactionhash":"事物哈希",
     "to":"到",
     "Withdraw":"从",
-    "sendtxloading":"交易已经发送，请稍后"
+    "sendtxloading":"交易已经发送，请稍侯"
    },
    "proposalsPage":{
        "Status":"状态",
@@ -640,7 +643,10 @@
        "typedata1":"同步1万条数据",
        "typedata2":"同步10万条数据",
        "typedata3":"同步100万条数据",
-       "no-data-text":"点击数据同步，获取最新数据"
+       "no-data-text":"点击数据同步，获取最新数据",
+       "orderSynchronizationTime":"数据同步时间",
+       "needSync":"尚未同步订单数据，请点击数据同步按钮，同步订单数据",
+       "orderID":"订单id"
 
    },
    "orderinfo":{
@@ -760,10 +766,10 @@
             "miner":"矿工",
             "validator":"验证节点"
        },
-       "simpleuserbrief":"查看资产，转账，质押挖矿，提案投票，提取质押奖励",
-       "orderuserbrief":"查看资产，转账，质押挖矿，提案投票，购买空间，使用lambdas3，提取质押奖励",
-       "minerbrief":"查看资产，转账，质押挖矿，提案投票，市场买卖空间，挖矿向导，提取质押奖励，提取存储挖矿奖励",
-       "validatorbrief":"查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益"
+       "simpleuserbrief":"查看资产，转账，质押挖矿，提案投票，提取质押奖励，市场质押、提取市场质押收益",
+       "orderuserbrief":"查看资产，转账，质押挖矿，提案投票，购买空间，使用lambdas3，提取质押奖励，市场质押、提取市场质押收益",
+       "minerbrief":"查看资产，转账，质押挖矿，提案投票，市场买卖空间，挖矿向导，提取质押奖励，提取存储挖矿奖励，市场质押、提取市场质押收益",
+       "validatorbrief":"查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益，市场质押、提取市场质押收益"
    },
    "guidepage":{
        "step1":{
@@ -820,5 +826,30 @@
        "tip3":"提取操作时间限制{0}小时提取一次",
        "tip4":"订单中的收益是{0}小时计算一次，如果未到{0}小时发起提取，提取到的金额为0"
 
+   },
+   "Marketoperation":{
+      "marketpledge":"市场质押",
+      "Mypledgeamount":"我的质押金额",
+      "Mypledgeincome":"我的质押收益",
+      "pledgetip1":"市场质押的最小金额",
+      "Explain1":"用户可以通过质押的方式参与用户创建的市场的运营。 ",
+      "Explain2":"市场收益是挂单手续费、成单手续费、续期手续费组成。",
+      "Explain3":"市场中的每笔收入会按照市场质押比例来进行分配。",
+      "Explain4":"收益分配规则",
+      "Explain5":"市场创建人收取市场收益10%",
+      "Explain6":"市场质押人按照质押比例分配剩余的90%（市场创建人也在分配集合中）",
+      "tip":"市场质押的最小金额{0}Lamb",
+      "tipneedselect":"lambdamarket为默认市场，请选择用户创建的市场。"
+   },
+   "Guidepage":{
+       "Switchingnetwork":"切换网络、主网、测试网或自定义网络节点",
+       "set":"设置角色、gas手续费、调整界面语言、打开配置文件等",
+       "prevLabel": "上一步",
+       "nextLabel": "下一步",
+       "skipLabel": "关闭",
+       "doneLabel": "完成",
+       "Guidance":"引导提示",
+       "on":"开",
+       "off":"关"
    }
 }

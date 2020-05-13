@@ -53,6 +53,11 @@ var walletRouter = new Router({
         path: 'mysellorder',
         name: 'mysellorder',
         component: () => import('@/views/Home/marketsellorderlink.vue')
+      },
+      {
+        path: 'Marketoperation',
+        name: 'Marketoperation',
+        component: () => import('@/views/Home/Marketoperation.vue')
       }
 
     ],
@@ -151,9 +156,19 @@ var walletRouter = new Router({
         component: () => import('@/views/market/lambdas3.vue')
       },
       {
-        path: 'syncdata/:marketname/:marketAddress',
+        path: 'syncdata',
         name: 'buyspace',
         component: () => import('@/views/market/syncsellorder.vue')
+      },
+      {
+        path: 'sellorderinfo/:orderid',
+        name: 'sellorderinfo',
+        component: () => import('@/views/market/sellorderinfo.vue')
+      },
+      {
+        path: 'marketpledge',
+        name: 'sellorderinfo',
+        component: () => import('@/views/market/marketpledge.vue')
       }
     ]
 

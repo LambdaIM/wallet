@@ -178,8 +178,8 @@ export default {
     open(orderid, orderinfo) {
       this.$data.orderid = orderid;
       this.sendModal = true;
-      this.$data.size = orderinfo.MatchOrder.size;
-      this.$data.price = orderinfo.MatchOrder.price;
+      this.$data.size = orderinfo.size;
+      this.$data.price = orderinfo.price;
     }
   },
   computed: {

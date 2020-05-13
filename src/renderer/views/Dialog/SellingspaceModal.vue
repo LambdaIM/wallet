@@ -31,15 +31,15 @@
         </Input> -->
         {{$t('Dialog.sellorder.Odds')}}：
          <RadioGroup @on-change="ratechangedebounce" v-model="rate">
-          <Radio value="0.5" label="0.5"> <span>{{$t('somemodel.ordinary')}}</span></Radio>
+          <!-- <Radio value="0.5" label="0.5"> <span>{{$t('somemodel.ordinary')}}</span></Radio> -->
           <Radio value="1" label="1"><span>{{$t('somemodel.highquality')}}</span></Radio>
         </RadioGroup>
 
       </p>
       <br/>
       <ul class="ultip">
-        <li>{{$t('Dialog.sellorder.ratetip1')}}</li>
-        <li>{{$t('Dialog.sellorder.ratetip2')}}</li>
+        <!-- <li>{{$t('Dialog.sellorder.ratetip1')}}</li> -->
+        <li>{{$t('Dialog.sellorder.ratetip2',[orderPrice])}}</li>
       </ul>
       <br/>
       <p>
@@ -156,13 +156,14 @@ export default {
       machineList: [],
       market: {},
       spaceSize: '',
-      rate: '0.5',
+      rate: '1',
       minSpace: '',
       minDuration: '',
       unitPrice: '5',
       maxDuration: '',
       timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30,
-      description: ''
+      description: '',
+      orderPrice: 0
     };
   },
   components: {
@@ -173,9 +174,10 @@ export default {
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
       this.$data.market = market;
-      this.$data.rate = '0.5';
+      this.$data.rate = '1';
 
       // this.getMinermachines();
+      this.getmarketinfo(market.name);
       this.fnrate = debounce(this.ratechange, 1000);
       this.fnpricerate = debounce(this.pricechange, 1000);
     },
@@ -197,14 +199,14 @@ export default {
       let minDuration = parseInt(this.$data.minDuration);
       let maxDuration = parseInt(this.$data.maxDuration);
       if (rate == 0.5) {
-        unitPrice = 5;
+        unitPrice = this.$data.orderPrice;
         // this.$Message.info(this.$t('Dialog.sellorder.ratetip1'));
       }
 
 
-      if (rate == 1 && unitPrice < 5) {
-        unitPrice = 5;
-        this.$Message.info(this.$t('Dialog.sellorder.ratetip2'));
+      if (rate == 1 && unitPrice < this.$data.orderPrice) {
+        unitPrice = this.$data.orderPrice;
+        this.$Message.info(this.$t('Dialog.sellorder.ratetip2', [this.$data.orderPrice]));
       }
       if (rate < 0.5 || rate > 1) {
         this.$Message.info(this.$t('Dialog.sellorder.ratetip4'));
@@ -428,6 +430,23 @@ export default {
         }
       });
       return result;
+    },
+    async   getmarketinfo(name) {
+      console.log('getmarketinfo');
+      let res = await ipc.callMain('marketlist', {
+        name
+      });
+      if (res.state) {
+        var list = res.data.data || [];
+        var _this = this;
+        list.forEach(item => {
+          if (item.name == name) {
+            _this.$data.unitPrice = this.toBigNumTonum(item.orderPrice);
+            _this.$data.orderPrice = parseInt(this.toBigNumTonum(item.orderPrice));
+          }
+        });
+        // this.$data.marketinfo = res.data.data;
+      }
     }
   },
   computed: {
