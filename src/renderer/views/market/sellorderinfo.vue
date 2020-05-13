@@ -93,7 +93,7 @@
             <span class="title">{{ $t('marketpage.selltable.unitprice') }}:</span>
           </Col>
           <Col span="16" class-name="content-wrapper">
-            {{sellorderinfo.amount[0].amount | Lambformat}}
+            {{sellorderinfo.price| Lambformat}}
           </Col>
         </Row>
         <Row class-name="card-item">
@@ -117,7 +117,14 @@
 
 
 </div>
+<div v-if="error" slot="card-content">
+
+      <Alert type="error">{{error}}</Alert>
+  <Button type="primary" to="/market/syncdata">{{ $t('Dialog.com.back') }}</Button>
+
+</div>
 </Mycard>
+
 </div>
 
 </template>
@@ -140,7 +147,8 @@ export default {
       marketname: '',
       marketAddress: '',
       orderId: this.$route.params.orderid,
-      sellorderinfo: null
+      sellorderinfo: null,
+      error: null
     };
   },
   async mounted() {
@@ -187,8 +195,10 @@ export default {
       let res = await ipc.callMain('sellorderinfo', {
         orderId: this.$data.orderId
       });
-      if (res.state) {
+      if (res.state && res.data.data.error == undefined) {
         this.$data.sellorderinfo = res.data.data;
+      } else {
+        this.$data.error = res.data.data.error;
       }
     }
   }
