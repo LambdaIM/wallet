@@ -608,7 +608,7 @@
         "minimumduration":"最小时长(月)",
         "Odds":"赔率",
         "Storagedevice":"存储节点",
-        "Marketaddress":"市场地址"
+        "Marketaddress":"市场"
        },
        "ordertable":{
         "orderType":"类型",

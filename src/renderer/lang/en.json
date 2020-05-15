@@ -611,7 +611,7 @@
      "minimumduration":"Min duration(month)",
      "Odds":"Odds",
      "Storagedevice":"Storage node",
-     "Marketaddress":"Market address"
+     "Marketaddress":"Market"
     },
     "ordertable":{
      "orderType":"Type",
