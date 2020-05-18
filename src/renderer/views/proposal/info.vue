@@ -190,7 +190,7 @@
             <span class="waptitle">{{$t('proposalsPage.Needdeposit')}}:</span>{{amount(DepositParameters.min_deposit)}}
           </Col>
           <Col span="12">
-            <span class="waptitle">{{$t('proposalsPage.Thelongestdepositperiod')}}:</span>{{DepositParameters.max_deposit_period/(1000*1000*1000*60*60*24)}}{{$t('staking.Explain.unit')}}
+            <span class="waptitle">{{$t('proposalsPage.Thelongestdepositperiod')}}:</span>{{(DepositParameters.max_deposit_period/(1000*1000*1000*60*60*24)).toFixed(3)}}{{$t('staking.Explain.unit')}}
           </Col>
         </Row>
         <Row class="rowitem">
@@ -369,7 +369,7 @@ export default {
       let res = await ipc.callMain('proposalDeposit', {
         id: this.$data.proposal_id
       });
-      if (res.state) {
+      if (res.state && res.data.data.error == undefined) {
         this.$data.myDeposit = res.data.data.amount;
       }
     },
@@ -397,7 +397,10 @@ export default {
       }
     },
     amount(listamount) {
-      if (listamount == null) {
+      console.log('amount');
+      console.log(listamount);
+
+      if (listamount == null || listamount == undefined || listamount.length == 0) {
         return '--';
       }
       var list = listamount.map(one => {

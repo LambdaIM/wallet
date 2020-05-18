@@ -24,6 +24,8 @@ const os = require('os');
 
 var suppose = require('@jswebfans/suppose');
 const { errorList } = require('./throwErrorCode.js');
+const hdkeyjs = require('@jswebfans/hdkeyjs');
+const bech32 = require('bech32');
 
 
 export default function() {
@@ -415,6 +417,25 @@ export default function() {
     try {
       var M = new Manager();
       var result = await M.marketdelegationinfo(marketName);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('getlambdaaddressbyminer', async query => {
+    var { address } = query;
+    console.log('getlambdaaddressbyminer', query);
+    if (address == undefined) {
+      throw resultView(null, false, errorList.need_address);
+    }
+
+    try {
+      var addressBytes = hdkeyjs.address.getBytes(address);
+      const PREFIX = 'lambda';
+      var result = bech32.encode(PREFIX, bech32.toWords(addressBytes));
+
 
       return resultView(result, true);
     } catch (ex) {

@@ -74,6 +74,7 @@
         "@jswebfans/hdkeyjs": "1.3.13",
         "@jswebfans/rpcapijs": "0.2.44",
         "@jswebfans/suppose": "^0.6.2",
+        "bech32": "^1.1.4",
         "bignumber.js": "^8.1.1",
         "bip39": "^3.0.2",
         "bluebird": "^3.7.1",

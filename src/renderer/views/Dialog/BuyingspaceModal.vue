@@ -12,7 +12,7 @@
         {{$t('Dialog.selectBuy.Marketname')}}：{{market.name}}
       </p><br/>
       <p>
-        {{$t('Dialog.selectBuy.Mineraddress')}}：{{orderinfo.address}}
+        {{$t('Dialog.selectBuy.Mineraddress')}}：<a @click="openminerpage(orderinfo.address)">{{orderinfo.address}}</a>
       </p>
       <br/>
       <p>
@@ -77,7 +77,10 @@
 <script>
 import eventhub from '../../common/js/event.js';
 import ConfirmModal from './confirmModal.vue';
+
+import { DAEMON_CONFIG } from '../../../config.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+const { shell } = require('electron');
 
 
 export default {
@@ -192,6 +195,17 @@ export default {
     sendcancel() {
       this.withdrawalModal = false;
       // this.confirmModal=true;
+    },
+    async openminerpage(address) {
+      let res = await ipc.callMain('getlambdaaddressbyminer', {
+        address: address
+      });
+      if (res.state) {
+        var lambdaaddress = res.data;
+        var explorer = DAEMON_CONFIG.explore();
+        let url = `${explorer}/#/address/${lambdaaddress}/activity/1/all`;
+        shell.openExternal(url);
+      }
     }
   },
   computed: {
