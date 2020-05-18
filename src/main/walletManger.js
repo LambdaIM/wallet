@@ -409,13 +409,34 @@ walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
 
 
 walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, name) {
-  var v3file = fs.readFileSync(filepath, 'utf8');
+  // 需要检查 
+  //1 是可以成功读取配置文件 例如从u盘中读取，加 try catch
+  //2 检查文件的是不是json
+  //3 文件是json的情况下
+  // 4 需要校验每一个字段
+  var v3file;
+  try {
+    v3file = fs.readFileSync(filepath, 'utf8'); 
+  } catch (error) {
+    //打开文件失败
+    throwErrorCode(errorList.file_open_error)
+  }
+   
+  console.log('ImportWalletBykeyStore',v3file)
   try {
     v3file = JSON.parse(v3file);  
   } catch (error) {
     throwErrorCode(errorList.file_format_error)
     
   }
+  if(typeof v3file.salt!= "string"||
+  typeof v3file.privateKey!="string"||
+  typeof v3file.address!="string"||
+  typeof v3file.publicKey!="string"
+  ){
+    throwErrorCode(errorList.file_format_error)
+  }
+
   
 
   v3file.name = name;

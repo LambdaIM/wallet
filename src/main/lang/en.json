@@ -65,5 +65,6 @@
 	"need_file": "need file",
 	"need_gasprice": "need gasprice",
 	"gaspricemust_be_numeric": "gasprice must be numeric",
-	"file_format_error":"File format error"
+	"file_format_error":"File format error, please check the file content",
+	"file_open_error":"fail to open file"
 }
