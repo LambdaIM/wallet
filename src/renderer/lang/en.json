@@ -386,7 +386,7 @@
       "Odds":"Odds",
       "amountspace":"Amount space",
       "remainingspace":"Remaining space",
-      "Mineraddress":"Minera ddress",
+      "Mineraddress":"Miner operation address",
       "OrderID":"Order ID",
       "action":{
         "needspacesize":"Please check the size of the space, the space can only fill in the integer",
@@ -593,7 +593,7 @@
     "unActive":"Sold out",
     
     "selltable":{
-        "Mineraddress":"Miner address",
+        "Mineraddress":"Miner operation address",
         "amountspace":"Amount space(GB)",
         "remainingspace":"Remaining space(GB)",
         "unitprice":"Price(LAMB/GB/month)",
@@ -640,7 +640,7 @@
 
 },
 "syncorderpage":{
-  "mineraddress":"Miner address",
+  "mineraddress":"Miner operation address",
   "Searchsort":"search",
   "typedata1":"Synchronize 10000 pieces of data",
   "typedata2":"Synchronize 100000 pieces of data",
@@ -664,7 +664,7 @@
  "userPay":"Order amount",
  "minerPay":"Undrawn order compensation",
  "orderdetails":"details",
- "Mineraddress":"miner address",
+ "Mineraddress":"Miner operation address",
  "user":"user",
  "operating":"operating",
  "lambdastorageConsole":"Lambda Storage Console login information",

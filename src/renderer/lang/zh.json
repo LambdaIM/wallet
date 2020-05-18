@@ -383,7 +383,7 @@
         "Odds":"赔率",
         "amountspace":"空间总量",
         "remainingspace":"剩余空间总量",
-        "Mineraddress":"矿工地址",
+        "Mineraddress":"矿工操作地址",
         "OrderID":"订单id",
         "action":{
             "needspacesize":"检查空间大小，空间只能填写整数",
@@ -590,7 +590,7 @@
        "unActive":"卖光了",
        
        "selltable":{
-           "Mineraddress":"矿工地址",
+           "Mineraddress":"矿工操作地址",
            "amountspace":"空间总量(GB)",
            "remainingspace":"剩余空间总量(GB)",
            "unitprice":"单价(LAMB/GB/month)",
@@ -638,7 +638,7 @@
 
    },
    "syncorderpage":{
-       "mineraddress":"矿工地址",
+       "mineraddress":"矿工操作地址",
        "Searchsort":"搜索",
        "typedata1":"同步1万条数据",
        "typedata2":"同步10万条数据",
@@ -660,7 +660,7 @@
     "userPay":"订单金额",
     "minerPay":"未提取的订单赔付金",
     "orderdetails":"订单详情",
-    "Mineraddress":"矿工地址",
+    "Mineraddress":"矿工操作地址",
     "user":"用户",
     "Startingtime":"开始时间",
     "EndTime":"结束时间",
