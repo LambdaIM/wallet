@@ -19,13 +19,22 @@ module.exports.DAEMON_CONFIG  = {
     BASE_PATH:BASE_PATH,
     pledgeurl: "http://validator.lambdastorage.com/",
     explore:function(){
-      var testurl = process.env.NODE_ENV == "production"?
-      'http://testexplorer.lambdastorage.com/':"http://39.107.249.53:8080/";
+      
       if(window.netType==1){
         return  "http://explorer.lambdastorage.com/"
-      }else{
-        return   testurl;
+      }else if(window.netType==2) {
+        return   'http://testexplorer.lambdastorage.com/';
+      }else if(window.netType==3){
+        var url = settings.get('custombrowserurl')
+        if(url==null || url == undefined){
+          return 'http://testexplorer.lambdastorage.com/';
+        }else{
+          return  url
+        }
+
       }
+
+      
 
 
 
@@ -33,5 +42,7 @@ module.exports.DAEMON_CONFIG  = {
     },
     version:packageJson.version,
     mainnetip:"39.107.247.86",
-    testnetip:"47.93.196.236"
+    testnetip:"47.93.196.236",
+    testexplore:"http://testexplorer.lambdastorage.com/",
+    mainexplore:'http://explorer.lambdastorage.com/'
 };

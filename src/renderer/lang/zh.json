@@ -861,5 +861,16 @@
        "Accountdeletedsuccessfully":"删除账户信息成功",
        "success":"成功"
 
+   },
+   "Custombrowser":{
+       "title":"自定义节点链接的浏览器",
+       "browserurl":"浏览器url",
+       "mianbrowser":"使用主网浏览器默认url",
+       "testbrowser":"使用测试网浏览器默认url",
+       "Setsuccessfully":"设置自定义节点的浏览器成功",
+       "success":"成功",
+       "Setthebrowseraddress":"设置定义节点的浏览器地址",
+       "title2":"自定义节点的浏览器",
+       "notseturl":"尚未设置浏览器url"
    }
 }
