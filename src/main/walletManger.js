@@ -1073,13 +1073,12 @@ walletManger.prototype.deleteaccount =async function (address,password) {
     hdkeyjs.keyStore.checkJson(accountv3file, password);
     fs.unlinkSync(accountfile)
     this.scann();
-
+    
+  }else{
+    // 账户不存在
+    throwErrorCode(errorList.not_find_Wallet) 
   }
-
   
-
-
-
   var result={}
 
   return result;

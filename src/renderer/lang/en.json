@@ -853,6 +853,16 @@
     "Guidance":"Guidance",
     "on":"on",
     "off":"off"
-    }
+    },
+   "deleaccount":{
+       "title":"Delete local account configuration file",
+       "address":"Account address",
+       "name":"Name",
+       "title2":"Confirm delete  local account configuration file",
+       "password":"Password",
+       "Accountdeletedsuccessfully":"Account configuration file deleted successfully",
+       "success":"Success"
+
+   }
 
 }

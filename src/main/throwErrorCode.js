@@ -70,5 +70,6 @@ export var errorList = {
   'need_gasprice': 'need_gasprice|rpc631|need gasprice',
   'gaspricemust_be_numeric': 'gaspricemust_be_numeric|rpc632|gaspricemust be numeric',
   'file_format_error': 'file_format_error|rpc71|File format error',
-  'file_open_error': 'file_open_error|rpc71|File format error'
+  'file_open_error': 'file_open_error|rpc71|File format error',
+  'not_find_Wallet': 'not_find_Wallet|31|not find DefaultWallet'
 };

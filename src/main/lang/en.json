@@ -66,5 +66,6 @@
 	"need_gasprice": "need gasprice",
 	"gaspricemust_be_numeric": "gasprice must be numeric",
 	"file_format_error":"File format error, please check the file content",
-	"file_open_error":"fail to open file"
+	"file_open_error":"fail to open file",
+	"not_find_Wallet":"No wallet found"
 }

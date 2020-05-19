@@ -851,5 +851,15 @@
        "Guidance":"引导提示",
        "on":"开",
        "off":"关"
+   },
+   "deleaccount":{
+       "title":"删除本地配置文件",
+       "address":"账户地址",
+       "name":"名称",
+       "title2":"确认删除删除本地配置文件",
+       "password":"密码",
+       "Accountdeletedsuccessfully":"删除账户信息成功",
+       "success":"成功"
+
    }
 }
