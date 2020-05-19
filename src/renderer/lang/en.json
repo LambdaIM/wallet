@@ -863,6 +863,17 @@
        "Accountdeletedsuccessfully":"Account configuration file deleted successfully",
        "success":"Success"
 
+   },
+   "Custombrowser":{
+       "title":"Customize browser for node links",
+       "browserurl":"Browser URL",
+       "mianbrowser":"Use default URL of main web browser",
+       "testbrowser":"Use test web browser default URL",
+       "Setsuccessfully":"Set browser of custom node succeeded",
+       "success":"success",
+       "Setthebrowseraddress":"Set the browser address of the definition node",
+       "title2":"Browser for custom node",
+       "notseturl":"Browser URL has not been set"
    }
 
 }

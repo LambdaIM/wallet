@@ -32,6 +32,9 @@
 
         <FormItem>
             <Button :loading="loadingbtn" type="primary" @click="handleSubmit('formInline')">{{$t('Validator.submit')}}</Button>
+            &nbsp;   &nbsp;   &nbsp;   &nbsp;
+
+            <Button @click="openCustombrowserModal" > {{$t('Custombrowser.Setthebrowseraddress')}} </Button>
 
 
         </FormItem>
@@ -91,6 +94,7 @@
         </div>
       </Mycard> -->
     </div>
+    <CustombrowserModalDialog ref="CustombrowserModal"/>
   </div>
 </template>
 
@@ -102,6 +106,7 @@ import Mycard from '@/components/common/useful/Mycard.vue';
 import _ from 'underscore';
 import eventhub from '../../common/js/event.js';
 import { DAEMON_CONFIG } from '../../../config.js';
+import CustombrowserModalDialog from '@/views/Dialog/CustombrowserModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
 
@@ -238,6 +243,9 @@ export default {
           // this.$Message.error('Fail!');
         }
       });
+    },
+    openCustombrowserModal() {
+      this.$refs.CustombrowserModal.open();
     }
   },
   computed: {
@@ -247,7 +255,8 @@ export default {
   components: {
     // Header,
     MyTable,
-    Mycard
+    Mycard,
+    CustombrowserModalDialog
   }
 };
 </script>
