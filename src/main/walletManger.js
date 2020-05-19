@@ -1048,6 +1048,45 @@ walletManger.prototype.SonFileList =async function () {
 };
 
 
+walletManger.prototype.deleteaccount =async function (address,password) {
+  console.log('deleteaccount');
+  var dir = DAEMON_CONFIG.WalletFile;
+  var list = fs.readdirSync(dir);
+  var accountfile,accountv3file;
+  list.forEach(file => {
+    if (file.indexOf('.keyinfo') > 0) {
+      file = path.join(dir, file);
+      var v3file = fs.readFileSync(file, 'utf8');
+      try {
+        v3file = JSON.parse(v3file);
+        if (v3file.address == address) {
+          accountv3file = v3file;
+          accountfile=file;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  });
+
+  if(accountfile!=undefined&&accountv3file!=undefined){
+    hdkeyjs.keyStore.checkJson(accountv3file, password);
+    fs.unlinkSync(accountfile)
+    this.scann();
+
+  }
+
+  
+
+
+
+  var result={}
+
+  return result;
+  
+};
+
+
 
 
 

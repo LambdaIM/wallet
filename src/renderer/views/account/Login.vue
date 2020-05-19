@@ -28,7 +28,12 @@
                 </div>
                 <div class="address">
                  {{item.address}}
+                  <span @click="opendeleteuser(item)" >
+                    <Icon type="md-close-circle" />
+
+                  </span>
                 </div>
+
 
                 </Option>
               </Select>
@@ -60,6 +65,7 @@
         </div>
       </div>
     </Mybg>
+    <DeleuserModal ref="DeleuserModal" />
   </div>
 </template>
 
@@ -69,8 +75,10 @@ import { DAEMON_CONFIG } from '../../../config.js';
 
 import Mybg from '@/components/common/useful/Mybg.vue';
 import eventHub from '@/common/js/event.js';
+import DeleuserModal from '@/views/Dialog/DeleuserModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
+
 
 export default {
   data() {
@@ -103,7 +111,8 @@ export default {
     };
   },
   components: {
-    Mybg
+    Mybg,
+    DeleuserModal
   },
   mounted() {
     // var open = settings.get("isopenfile");
@@ -112,6 +121,11 @@ export default {
     //   this.$router.push("/home");
     // }
     this.getwalletList();
+
+    eventHub.$on('deleteaccountSuccess', data => {
+      console.log('deleteaccountSuccess');
+      this.getwalletList();
+    });
   },
   methods: {
     selectName(value) {
@@ -188,6 +202,10 @@ export default {
           console.log('err');
           console.log(err);
         });
+    },
+    opendeleteuser(item) {
+      console.log('opendeleteuser');
+      this.$refs.DeleuserModal.open(item);
     }
   }
 };
