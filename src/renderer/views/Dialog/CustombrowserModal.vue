@@ -20,6 +20,10 @@
                 <Button @click="setCustomaddress('main')">{{$t('Custombrowser.mianbrowser')}}</Button>
                 <Button @click="setCustomaddress('teat')">{{$t('Custombrowser.testbrowser')}}</Button>
         </p>
+        <br/>
+        <p>
+          <Button @click="checkurlstate"  type="primary" >测试  </Button>
+        </p>
 
 
       </Form >
@@ -60,12 +64,12 @@ export default {
         url: [
           {
             required: true,
-            message: '请填写浏览器地址',
+            message: this.$t('Custombrowser.needurl'),
             trigger: 'blur'
           },
           {
             type: 'url',
-            message: 'url地址的格式错误',
+            message: this.$t('Custombrowser.Formaterror'),
             trigger: 'blur'
           }
         ]
@@ -117,6 +121,35 @@ export default {
         this.$data.formInline.url = DAEMON_CONFIG.mainexplore;
       } else {
         this.$data.formInline.url = DAEMON_CONFIG.testexplore;
+      }
+    },
+    async checkurlstate() {
+      try {
+        var url = this.$data.formInline.url;
+        if (url.endsWith('/') == false) {
+          url += '/';
+        }
+        let res = await ipc.callMain('testbrowserurl', {
+          baseurl: url
+        });
+        // console.log(res);
+        if (res.state && res.data.code == 200) {
+          this.$Notice.success({
+            title: 'success',
+            desc: '测试链接浏览器成功'
+          });
+        } else {
+          this.$Notice.warning({
+            title: 'error',
+            desc: '测试链接浏览器失败'
+          });
+        }
+      } catch (ex) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: ex.errormsg
+        });
+        console.log(ex);
       }
     }
 
