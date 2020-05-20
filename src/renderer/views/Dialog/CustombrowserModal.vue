@@ -22,7 +22,7 @@
         </p>
         <br/>
         <p>
-          <Button @click="checkurlstate"  type="primary" >测试  </Button>
+          <Button @click="checkurlstate"  type="primary" > {{$t('Custombrowser.test')}}  </Button>
         </p>
 
 
@@ -123,34 +123,42 @@ export default {
         this.$data.formInline.url = DAEMON_CONFIG.testexplore;
       }
     },
-    async checkurlstate() {
-      try {
-        var url = this.$data.formInline.url;
-        if (url.endsWith('/') == false) {
-          url += '/';
+    checkurlstate() {
+      this.$refs['formInline'].validate(async valid => {
+        if (valid) {
+          //= =
+          try {
+            var url = this.$data.formInline.url;
+
+
+            if (url.endsWith('/') == false) {
+              url += '/';
+            }
+            let res = await ipc.callMain('testbrowserurl', {
+              baseurl: url
+            });
+            // console.log(res);
+            if (res.state && res.data.code == 200) {
+              this.$Notice.success({
+                title: 'success',
+                desc: this.$t('Custombrowser.testsuccess')
+              });
+            } else {
+              this.$Notice.warning({
+                title: 'error',
+                desc: this.$t('Custombrowser.testerror')
+              });
+            }
+          } catch (ex) {
+            this.$Notice.warning({
+              title: 'error',
+              desc: ex.errormsg
+            });
+            console.log(ex);
+          }
+          //= =
         }
-        let res = await ipc.callMain('testbrowserurl', {
-          baseurl: url
-        });
-        // console.log(res);
-        if (res.state && res.data.code == 200) {
-          this.$Notice.success({
-            title: 'success',
-            desc: '测试链接浏览器成功'
-          });
-        } else {
-          this.$Notice.warning({
-            title: 'error',
-            desc: '测试链接浏览器失败'
-          });
-        }
-      } catch (ex) {
-        this.$Notice.warning({
-          title: 'error',
-          desc: ex.errormsg
-        });
-        console.log(ex);
-      }
+      });
     }
 
 
