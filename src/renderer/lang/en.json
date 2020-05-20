@@ -875,7 +875,10 @@
        "title2":"Browser for custom node",
        "notseturl":"Browser URL has not been set",
        "needurl":"Please fill in the browser address",
-       "Formaterror":"URL address format error"
+       "Formaterror":"URL address format error",
+       "testsuccess":"Test link browser successful",
+       "testerror":"Test link browser failed",
+       "test":"test"
    }
 
 }

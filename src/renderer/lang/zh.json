@@ -873,6 +873,9 @@
        "title2":"自定义节点的浏览器",
        "notseturl":"尚未设置浏览器url",
        "needurl":"请填写浏览器地址",
-       "Formaterror":"url地址的格式错误"
+       "Formaterror":"url地址的格式错误",
+       "testsuccess":"测试链接浏览器成功",
+       "testerror":"测试链接浏览器失败",
+       "test":"测试"
    }
 }
