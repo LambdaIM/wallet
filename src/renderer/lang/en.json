@@ -873,7 +873,9 @@
        "success":"success",
        "Setthebrowseraddress":"Set the browser address of the definition node",
        "title2":"Browser for custom node",
-       "notseturl":"Browser URL has not been set"
+       "notseturl":"Browser URL has not been set",
+       "needurl":"Please fill in the browser address",
+       "Formaterror":"URL address format error"
    }
 
 }

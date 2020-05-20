@@ -871,6 +871,8 @@
        "success":"成功",
        "Setthebrowseraddress":"设置定义节点的浏览器地址",
        "title2":"自定义节点的浏览器",
-       "notseturl":"尚未设置浏览器url"
+       "notseturl":"尚未设置浏览器url",
+       "needurl":"请填写浏览器地址",
+       "Formaterror":"url地址的格式错误"
    }
 }

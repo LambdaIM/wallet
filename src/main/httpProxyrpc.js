@@ -115,4 +115,20 @@ export default function() {
       return { data: error, state: false };
     }
   });
+
+  eipc.answerRenderer('testbrowserurl', async query => {
+    console.log('testbrowserurl');
+    try {
+      var { baseurl } = query;
+      var url = `${baseurl}api/block/state`;
+      console.log(url);
+      const result = await fetch(url, {});
+      var data = await result.json();
+      console.log(data);
+      return { data: data, state: true };
+    } catch (error) {
+      log.error(error);
+      return { data: error, state: false };
+    }
+  });
 }
