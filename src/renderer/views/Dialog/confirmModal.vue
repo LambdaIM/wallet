@@ -21,7 +21,7 @@
           <div v-if="txtype=='withdrawal'">
             <h2>{{$t('Dialog.withdrawalModal.title')}}</h2>
                 <Row class-name="item">
-                    <Col span="4" class-name="key ">{{$t('home.Modal1.From')}}:</Col>
+                    <Col span="4" class-name="key ">{{$t('txPopup.Operator')}}:</Col>
                     <Col span="20" class-name="value address">{{address}}</Col>
                 </Row>
                 <Row class-name="item" v-if="transactiondata.amount">
@@ -32,7 +32,7 @@
           <div v-if="txtype=='minerwithdrawal'">
             <h2>{{$t('somemodel.Extractstorageandmininrewards')}}</h2>
                 <Row class-name="item">
-                    <Col span="4" class-name="key ">{{$t('home.Modal1.From')}}:</Col>
+                    <Col span="4" class-name="key ">{{$t('txPopup.Operator')}}:</Col>
                     <Col span="20" class-name="value address">{{address}}</Col>
                 </Row>
                 <Row class-name="item" >
@@ -43,7 +43,7 @@
           <div v-if="txtype=='withdrawalDistribution'">
                 <h2>{{$t('home.Withdrawprofit')}}</h2>
                 <Row class-name="item">
-                    <Col span="4" class-name="key ">{{$t('home.Modal1.From')}}:</Col>
+                    <Col span="4" class-name="key ">{{$t('txPopup.Operator')}}:</Col>
                     <Col span="20" class-name="value address">{{address}}</Col>
                 </Row>
                 <Row class-name="item" >
@@ -55,11 +55,11 @@
               <h2 v-if="transactiondata.type=='MsgDelegate'">{{$t('Dialog.stakingModel.title1')}}</h2>
               <h2 v-if="transactiondata.type=='MsgUndelegate'">{{$t('Dialog.stakingModel.title2')}}</h2>
               <Row class-name="item">
-                <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+                <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
                 <Col span="20" class-name="value">{{address}}</Col>
               </Row>
               <Row class-name="item">
-                <Col span="4" class-name="key">{{$t('home.Modal1.To')}}:</Col>
+                <Col span="4" class-name="key">{{$t('txPopup.Validator')}}:</Col>
                 <Col span="20" class-name="value">{{transactiondata.validatorAddress}}</Col>
               </Row>
               <Row class-name="item">
@@ -71,7 +71,7 @@
           <div v-if="txtype=='redelegate'">
              <h2>{{$t('Dialog.redelegateModel.redelegate')}}</h2>
               <Row class-name="item">
-                <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+                <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
                 <Col span="20" class-name="value address">{{address}}</Col>
               </Row>
               <Row class-name="item">
@@ -91,7 +91,7 @@
           <div v-if="txtype=='AssetPledge'">
             <h2>{{$t('Dialog.com.AssetConversion')}}</h2>
               <Row class-name="item">
-                <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+                <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
                 <Col span="20" class-name="value address">{{address}}</Col>
               </Row>
                 <Row v-if="transactiondata.type=='MsgAssetPledge'" class-name="item">
@@ -199,7 +199,7 @@
           <div v-if="txtype=='CreateMiner'">
             <h2>{{$t('sellpageinfo.Initializeminer')}}</h2>
             <Row class-name="item">
-              <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+              <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
               <Col span="20" class-name="value">{{address}}</Col>
             </Row>
             <Row class-name="item">
@@ -233,7 +233,7 @@
           <div v-if="txtype=='MsgMinerWithDrawCount'">
             <h2>{{$t('orderrevenue.WithdraworderCommission')}}   </h2>
             <Row class-name="item">
-              <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+              <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
               <Col span="20" class-name="value">{{address}}</Col>
             </Row>
             <Row class-name="item">
@@ -248,29 +248,29 @@
           </div>
 
           <div v-if="txtype=='marketTransferDelegateMarket'">
-            <h2> 市场质押   </h2>
+            <h2>{{$t('txPopup.Marketpledge')}} </h2>
             <Row class-name="item">
               <Col span="5" class-name="key">{{$t('home.Modal1.From')}}:</Col>
               <Col span="16" class-name="value">{{address}}</Col>
             </Row>
             <Row class-name="item">
-              <Col span="5" class-name="key">市场名称:</Col>
+              <Col span="5" class-name="key">{{$t('txPopup.Marketname')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.marketName}} </Col>
             </Row>
             <Row class-name="item">
-              <Col span="5" class-name="key">金额:</Col>
+              <Col span="5" class-name="key">{{$t('txPopup.amount')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.amount|Lambformat}}</Col>
             </Row>
 
           </div>
           <div v-if="txtype=='marketTransferWithDrawMarket'">
-            <h2> 提取市场质押收益   </h2>
+            <h2> {{$t('txPopup.Withdrawalmarketpledgeincome')}}   </h2>
             <Row class-name="item">
-              <Col span="5" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+              <Col span="5" class-name="key">{{$t('txPopup.Operator')}}:</Col>
               <Col span="16" class-name="value">{{address}}</Col>
             </Row>
             <Row class-name="item">
-              <Col span="5" class-name="key">市场名称:</Col>
+              <Col span="5" class-name="key">{{$t('txPopup.Marketname')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.marketName}} </Col>
             </Row>
 

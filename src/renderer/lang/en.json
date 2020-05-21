@@ -879,6 +879,16 @@
        "testsuccess":"Test link browser successful",
        "testerror":"Test link browser failed",
        "test":"test"
+   },
+   "txPopup":{
+       "Operator":"Operator",
+       "Validator":"Validator",
+       "Marketname":"Market name",
+       "Marketpledge":"Market pledge",
+       "amount":"amount",
+       "Withdrawalmarketpledgeincome":"Withdrawal of market pledge income",
+       "profit":"profit"
+
    }
 
 }
