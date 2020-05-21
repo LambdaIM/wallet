@@ -877,5 +877,15 @@
        "testsuccess":"测试链接浏览器成功",
        "testerror":"测试链接浏览器失败",
        "test":"测试"
+   },
+   "txPopup":{
+       "Operator":"操作人",
+       "Validator":"验证节点",
+       "Marketname":"市场名称",
+       "Marketpledge":"市场质押",
+       "amount":"金额",
+       "Withdrawalmarketpledgeincome":"提取市场质押收益",
+       "profit":"收益"
+
    }
 }

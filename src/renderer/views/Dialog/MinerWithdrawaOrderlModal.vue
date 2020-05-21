@@ -9,7 +9,7 @@
     >
     <Form  @keydown.native.enter.prevent ="preSendLAMB" >
       <Input class="address" v-model="address" readonly>
-        <span slot="prepend">{{$t('home.Modal1.From')}}</span>
+        <span slot="prepend">{{$t('txPopup.Operator')}}</span>
       </Input>
       <br/>
       <Input class="address" v-model.number="page" >

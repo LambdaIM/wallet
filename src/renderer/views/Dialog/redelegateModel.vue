@@ -10,7 +10,7 @@
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
           <Input v-model="address" readonly>
-            <span slot="prepend">{{$t('home.Modal1.From')}}</span>
+            <span slot="prepend">{{$t('txPopup.Operator')}}</span>
           </Input>
         </p>
         <br />

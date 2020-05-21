@@ -3,7 +3,7 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="提取市场运营收益"
+      :title="$t('txPopup.Withdrawalmarketpledgeincome')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
@@ -21,7 +21,7 @@
                 </DropdownMenu>
             </Dropdown>
             <span v-if="delegationinfo">
-              收益{{Pledgeincome(delegationinfo)|Lambformat}}
+              {{$t('txPopup.profit')}}{{Pledgeincome(delegationinfo)|Lambformat}}
             </span>
 
       </p>
