@@ -67,5 +67,12 @@
 	"gaspricemust_be_numeric": "gasprice must be numeric",
 	"file_format_error":"File format error, please check the file content",
 	"file_open_error":"fail to open file",
-	"not_find_Wallet":"No wallet found"
+	"not_find_Wallet":"No wallet found",
+	"Application":"Wallet",
+	"About_Application":"About Wallet",
+	"New_Version":"New Version",
+	"Quit":"Quit",
+	"Application_set":"Wallet set",
+	"config_file":"Open accoount profile",
+	"log_file":"Open log"
 }

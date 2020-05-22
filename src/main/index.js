@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, net } from 'electron';
+import { app, BrowserWindow, Menu, net, shell } from 'electron';
 
 
 
@@ -9,6 +9,13 @@ import { join } from 'path';
 import { fork } from 'child_process';
 import packageJson from '../../package.json';
 import s3tool from './utils/s3tool';
+import langmsg from './lang/index.js';
+
+const os = require('os');
+const path = require('path');
+const settings = require('electron-settings');
+
+// var { DAEMON_CONFIG } = require('../configmain.js');
 
 
 /**
@@ -108,16 +115,20 @@ function createWindow() {
 
 function creatMenu() {
   // Create the Application's main menu
+  var language = settings.get('set.language') || 'en';
+  var objlanglist = langmsg[language] || {};
+
+
   var template = [{
-    label: 'Application',
+    label: objlanglist['Application'],
     submenu: [
-      { label: 'About Application', selector: 'orderFrontStandardAboutPanel:' },
-      { label: 'New Version Detection',
+      { label: objlanglist['About_Application'], selector: 'orderFrontStandardAboutPanel:' },
+      { label: objlanglist['New_Version'],
         click: function() {
           upgrade(false);
         } },
       { type: 'separator' },
-      { label: 'Quit', accelerator: 'Command+Q', click: function() { app.quit(); } }
+      { label: objlanglist['Quit'], accelerator: 'Command+Q', click: function() { app.quit(); } }
     ] }, {
     label: 'Edit',
     submenu: [
@@ -128,8 +139,22 @@ function creatMenu() {
       { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
       { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
       { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' }
-    ] }
-  ];
+    ] }, {
+    label: objlanglist['Application_set'],
+    submenu: [
+      { label: objlanglist['config_file'],
+        click: function() {
+          let BASE_PATH = path.join(os.homedir(), 'lambWallet');
+          shell.showItemInFolder(path.join(BASE_PATH, 'Wallet'));
+        } },
+      { label: objlanglist['log_file'],
+        click: function() {
+          let BASE_PATH = path.join(os.homedir(), 'lambWallet');
+          shell.showItemInFolder(path.join(BASE_PATH, 'Log'));
+        } }
+
+    ]
+  }];
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }

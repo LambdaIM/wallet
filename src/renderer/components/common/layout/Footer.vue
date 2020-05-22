@@ -35,7 +35,7 @@
 
       <span  class="item">{{ $t("foot.block_height") }}: {{getstore.height}}</span>
       <span  class="item" v-if="getstore.isSync==true" >{{ $t("foot.sync_block") }}</span>
-      <span class="item" v-else>{{ $t("foot.block_time") }}: {{getstore.time | formatRelativeDate}}</span>
+      <span class="item" v-else>{{ $t("foot.block_time") }}: {{showretime(getstore.time)}}</span>
 
     </div>
     <div v-else class="footer-wrapper">
@@ -63,6 +63,8 @@
 import eventhub from '../../../common/js/event.js';
 import { mapState } from 'vuex';
 import { DAEMON_CONFIG } from '../../../../config.js';
+
+import moment from 'moment';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
 
@@ -210,6 +212,16 @@ export default {
       //   console.log(result)
 
       // }
+    },
+    showretime(time) {
+      var langType;
+      if (this.$i18n.locale == 'zh') {
+        langType = 'zh-cn';
+      } else {
+        langType = 'en';
+      }
+
+      return moment(time).locale(langType).fromNow();
     }
   },
   computed: {
