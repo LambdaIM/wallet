@@ -1,6 +1,7 @@
 import LambdaApi from './lambdaApi';
 
 import fetch from './utils/fetch';
+const { app } = require('electron');
 
 var log = require('../log').log;
 const { ipcMain: eipc } = require('electron-better-ipc');
@@ -126,6 +127,19 @@ export default function() {
       var data = await result.json();
       console.log(data);
       return { data: data, state: true };
+    } catch (error) {
+      log.error(error);
+      return { data: error, state: false };
+    }
+  });
+
+
+  eipc.answerRenderer('restart', async query => {
+    console.log('restart');
+    try {
+      app.relaunch();
+      app.exit(0);
+      return { data: {}, state: true };
     } catch (error) {
       log.error(error);
       return { data: error, state: false };

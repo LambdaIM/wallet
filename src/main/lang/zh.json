@@ -74,5 +74,12 @@
 	"Quit":"退出",
 	"Application_set":"应用设置",
 	"config_file":"打开账户配置文件",
-	"log_file":"打开日志"
+	"log_file":"打开日志",
+	"Undo":"撤消",
+	"Redo":"重做",
+	"Cut":"剪切",
+	"Copy":"复制",
+	"Paste":"粘贴",
+	"SelectAll":"全选",
+	"Edit":"编辑"
 }

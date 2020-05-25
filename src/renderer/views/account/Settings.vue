@@ -604,7 +604,11 @@ export default {
       settings.set('set', {
         language: item
       });
-      window.location.reload();
+      // window.location.reload();
+      var _this = this;
+      setTimeout(() => {
+        _this.restartapp();
+      }, 200);
     },
     openroleModal() {
       this.$refs.roleModal.open();
@@ -623,6 +627,10 @@ export default {
     },
     openCustombrowserModal() {
       this.$refs.CustombrowserModal.open();
+    },
+    async restartapp() {
+      console.log('restartapp');
+      let res = await ipc.callMain('restart', {});
     }
   },
   computed: {

@@ -74,5 +74,12 @@
 	"Quit":"Quit",
 	"Application_set":"Wallet set",
 	"config_file":"Open accoount profile",
-	"log_file":"Open log"
+	"log_file":"Open log",
+	"Undo":"Undo",
+	"Redo":"Redo",
+	"Cut":"Cut",
+	"Copy":"Copy",
+	"Paste":"Paste",
+	"SelectAll":"Select All",
+	"Edit":"Edit"
 }

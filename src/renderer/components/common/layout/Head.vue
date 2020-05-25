@@ -366,7 +366,11 @@ export default {
       this.$i18n.locale = item;
       this.$data.langnow = item;
       settings.set('set', { language: item });
-      window.location.reload();
+      // window.location.reload();
+      var _this = this;
+      setTimeout(() => {
+        _this.restartapp();
+      }, 200);
     },
     getuserrole() {
       console.log('getuserrole');
@@ -379,6 +383,10 @@ export default {
     helplink() {
       // window.open('http://docs.lambda.im/Lambda%E9%92%B1%E5%8C%85%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/','','width=700')
       shell.openExternal('http://docs.lambda.im/Lambda-Wallet-Guide/');
+    },
+    async restartapp() {
+      console.log('restartapp');
+      let res = await ipc.callMain('restart', {});
     }
   },
   computed: {
