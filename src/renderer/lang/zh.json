@@ -670,7 +670,8 @@
     "Filelossarbitration":"文件丢失申请仲裁",
     "Username":"密钥",
     "Password":"私钥",
-    "Portnumber":"端口号"
+    "Portnumber":"端口号",
+    "Version":"版本号"
 
    },
    "testcoin":{

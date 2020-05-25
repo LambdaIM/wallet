@@ -26,6 +26,9 @@
           <Button @click="editS3user" icon="md-person" type="default">{{ $t('marketpage.edits3userinfo') }}</Button>
         </Col>
       </Row>
+      <div>
+       lambda S3 {{$t("orderinfo.Version")}}： {{S3Version}}
+      </div>
 
       <!-- <Row class-name="card-item">
         <Col span="24">
@@ -113,11 +116,13 @@ export default {
       editpassword: false,
       passwordModal: false,
       walletPassword: '',
-      loading: false
+      loading: false,
+      S3Version: ''
     };
   },
   async mounted() {
     await this.getmanagerkey();
+    this.getlambdaS3Version();
     // await this.getlambdastoragecommandline();
   },
   methods: {
@@ -214,6 +219,16 @@ export default {
           this.$Message.error(this.$t('seting.action.Modification_failed'));
         }
       });
+    },
+    async getlambdaS3Version() {
+      console.log('getlambdaS3Version');
+      let res = await ipc.callMain('lambdaS3Version', {});
+      if (res.state) {
+        this.$data.S3Version = res.data;
+        if (res.data[0] != undefined) {
+          this.$data.S3Version = res.data[0];
+        }
+      }
     }
   }
 };

@@ -672,9 +672,8 @@
  "Filelossarbitration":"File loss application arbitration",
  "Username":"access-key",
  "Password":"secret-key",
- "Portnumber":"Port number"
-
-
+ "Portnumber":"Port number",
+ "Version":"Version"
 },
 "testcoin":{
     "txtbtn":"click the button to collect test token",

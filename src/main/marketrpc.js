@@ -9,6 +9,7 @@ import Promise from 'bluebird';
 
 import marketNedb from './utils/marketNedb';
 
+
 var { DAEMON_CONFIG } = require('../configmain.js');
 const { ipcMain: eipc } = require('electron-better-ipc');
 const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
@@ -443,6 +444,17 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('lambdaS3Version', async query => {
+    console.log('lambdaS3Version', query);
+    try {
+      var result = await getS3Version();
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
 
 
   function getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey, orderid) {
@@ -497,6 +509,15 @@ export default function() {
           resolve(code);
         });
     });
+  }
+
+  async function getS3Version() {
+    var cmdlint = path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile()) + ' version';
+    console.log(cmdlint);
+
+    var result = await getAsync(cmdlint);
+
+    return result;
   }
 
 
