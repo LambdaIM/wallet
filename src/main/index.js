@@ -130,15 +130,15 @@ function creatMenu() {
       { type: 'separator' },
       { label: objlanglist['Quit'], accelerator: 'Command+Q', click: function() { app.quit(); } }
     ] }, {
-    label: 'Edit',
+    label: objlanglist['Edit'],
     submenu: [
-      { label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
-      { label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:' },
+      { label: objlanglist['Undo'], accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
+      { label: objlanglist['Redo'], accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:' },
       { type: 'separator' },
-      { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
-      { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
-      { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
-      { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' }
+      { label: objlanglist['Cut'], accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
+      { label: objlanglist['Copy'], accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
+      { label: objlanglist['Paste'], accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
+      { label: objlanglist['SelectAll'], accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' }
     ] }, {
     label: objlanglist['Application_set'],
     submenu: [
