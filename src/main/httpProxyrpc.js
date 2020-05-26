@@ -137,8 +137,8 @@ export default function() {
   eipc.answerRenderer('restart', async query => {
     console.log('restart');
     try {
-      app.relaunch();
-      app.exit(0);
+      // app.relaunch();
+      // app.exit(0);
       return { data: {}, state: true };
     } catch (error) {
       log.error(error);
