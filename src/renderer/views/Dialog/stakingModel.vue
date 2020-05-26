@@ -97,7 +97,7 @@ export default {
       try {
         var valuenum = parseFloat(this.LAMBvalue);
         if (isNaN(valuenum) == false) {
-          if (valuenum < 1) {
+          if (valuenum < 1 && this.$data.isdege) {
             this.$Notice.warning({
               title: this.$t('stakinginfo.Pledgeamountlessthan1')
             });

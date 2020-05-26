@@ -91,7 +91,7 @@ function createWindow() {
     height: 676,
     useContentSize: true,
     width: 984,
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
     webPreferences: {
       nodeIntegration: true
     }
@@ -122,7 +122,7 @@ function creatMenu() {
   var template = [{
     label: objlanglist['Application'],
     submenu: [
-      { label: objlanglist['About_Application'], selector: 'orderFrontStandardAboutPanel:' },
+      // { label: objlanglist['About_Application'], selector: 'orderFrontStandardAboutPanel:' },
       { label: objlanglist['New_Version'],
         click: function() {
           upgrade(false);
