@@ -132,13 +132,13 @@ function creatMenu() {
     ] }, {
     label: objlanglist['Edit'],
     submenu: [
-      { label: objlanglist['Undo'], accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
-      { label: objlanglist['Redo'], accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:' },
+      { label: objlanglist['Undo'], accelerator: 'CmdOrCtrl+Z', role: 'undo' },
+      { label: objlanglist['Redo'], accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo' },
       { type: 'separator' },
-      { label: objlanglist['Cut'], accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
-      { label: objlanglist['Copy'], accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
-      { label: objlanglist['Paste'], accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
-      { label: objlanglist['SelectAll'], accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' }
+      { label: objlanglist['Cut'], accelerator: 'CmdOrCtrl+X', role: 'cut' },
+      { label: objlanglist['Copy'], accelerator: 'CmdOrCtrl+C', role: 'copy' },
+      { label: objlanglist['Paste'], accelerator: 'CmdOrCtrl+V', role: 'paste' },
+      { label: objlanglist['SelectAll'], accelerator: 'CmdOrCtrl+A', role: 'selectAll' }
     ] }, {
     label: objlanglist['Application_set'],
     submenu: [
