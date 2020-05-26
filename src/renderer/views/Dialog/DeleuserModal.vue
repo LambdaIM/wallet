@@ -93,6 +93,7 @@ export default {
       this.$data.address = item.address;
       this.$data.name = item.name;
       this.sendModal = true;
+      this.password = '';
       console.log('open');
     },
     sendcancel() {
