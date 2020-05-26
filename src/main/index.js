@@ -131,6 +131,7 @@ function creatMenu() {
       { label: objlanglist['Quit'], accelerator: 'Command+Q', click: function() { app.quit(); } }
     ] }, {
     label: objlanglist['Edit'],
+    visible: false,
     submenu: [
       { label: objlanglist['Undo'], accelerator: 'CmdOrCtrl+Z', role: 'undo' },
       { label: objlanglist['Redo'], accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo' },
