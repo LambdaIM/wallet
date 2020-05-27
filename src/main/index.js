@@ -119,7 +119,7 @@ function creatMenu() {
   var objlanglist = langmsg[language] || {};
 
 
-  var template = [{
+  var templateMac = [{
     label: objlanglist['Application'],
     submenu: [
       // { label: objlanglist['About_Application'], selector: 'orderFrontStandardAboutPanel:' },
@@ -156,8 +156,43 @@ function creatMenu() {
 
     ]
   }];
+  var templateWin = [{
+    label: objlanglist['Application'],
+    submenu: [
+      // { label: objlanglist['About_Application'], selector: 'orderFrontStandardAboutPanel:' },
+      { label: objlanglist['New_Version'],
+        click: function() {
+          upgrade(false);
+        } },
+      { type: 'separator' },
+      { label: objlanglist['Undo'], accelerator: 'CmdOrCtrl+Z', role: 'undo', visible: false },
+      { label: objlanglist['Redo'], accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo', visible: false },
+      { label: objlanglist['Cut'], accelerator: 'CmdOrCtrl+X', role: 'cut', visible: false },
+      { label: objlanglist['Copy'], accelerator: 'CmdOrCtrl+C', role: 'copy', visible: false },
+      { label: objlanglist['Paste'], accelerator: 'CmdOrCtrl+V', role: 'paste', visible: false },
+      { label: objlanglist['SelectAll'], accelerator: 'CmdOrCtrl+A', role: 'selectAll', visible: false },
+      { label: objlanglist['Quit'], accelerator: 'Command+Q', click: function() { app.quit(); } }
+    ] }, {
+    label: objlanglist['Application_set'],
+    submenu: [
+      { label: objlanglist['config_file'],
+        click: function() {
+          let BASE_PATH = path.join(os.homedir(), 'lambWallet');
+          shell.showItemInFolder(path.join(BASE_PATH, 'Wallet'));
+        } },
+      { label: objlanglist['log_file'],
+        click: function() {
+          let BASE_PATH = path.join(os.homedir(), 'lambWallet');
+          shell.showItemInFolder(path.join(BASE_PATH, 'Log'));
+        } }
 
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    ]
+  }];
+  if (process.platform !== 'darwin') {
+    Menu.setApplicationMenu(Menu.buildFromTemplate(templateWin));
+  } else {
+    Menu.setApplicationMenu(Menu.buildFromTemplate(templateMac));
+  }
 }
 
 process.on('uncaughtException', err => {

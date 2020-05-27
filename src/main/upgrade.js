@@ -55,9 +55,10 @@ export default async function(isstartup) {
       type: 'info',
       message: `${title[language]}${data.version}`,
       detail: data.brief[language],
-      buttons: [Determine[language], Cancellation[language]]
+      buttons: [Cancellation[language], Determine[language]]
     });
-    if (flag == 0) {
+    console.log('dialog.showMessageBoxSync', flag);
+    if (flag == 1) {
       shell.openExternal(data.url);
     }
   } catch (error) {
