@@ -8,7 +8,7 @@
       "validator": "Pledge",
       "sign": "Sign",
       "market":"Market",
-      "help":"manual",
+      "help":"Manual",
       
       "action":{
         "You_just_copied":"You just copied:",
