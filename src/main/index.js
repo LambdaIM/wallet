@@ -131,7 +131,7 @@ function creatMenu() {
       { label: objlanglist['Quit'], accelerator: 'Command+Q', click: function() { app.quit(); } }
     ] }, {
     label: objlanglist['Edit'],
-    visible: false,
+    // visible: false,
     submenu: [
       { label: objlanglist['Undo'], accelerator: 'CmdOrCtrl+Z', role: 'undo' },
       { label: objlanglist['Redo'], accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo' },
@@ -188,6 +188,7 @@ function creatMenu() {
 
     ]
   }];
+
   if (process.platform !== 'darwin') {
     Menu.setApplicationMenu(Menu.buildFromTemplate(templateWin));
   } else {
