@@ -64,7 +64,7 @@
             <span class="title">{{ $t('marketpage.selltable.Mineraddress') }}:</span>
           </Col>
           <Col span="17" class-name="content-wrapper">
-            {{sellorderinfo.address}}
+          <a @click="openminerpage(sellorderinfo.address)">  {{sellorderinfo.address}} </a>
           </Col>
           <Col span="3" class-name="content-wrapper">
 
@@ -132,6 +132,8 @@
 <script>
 import Mycard from '@/components/common/useful/Mycard.vue';
 import BuyingspaceModal from '@/views/Dialog/BuyingspaceModal.vue';
+import { DAEMON_CONFIG } from '../../../config.js';
+const { shell } = require('electron');
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
@@ -199,6 +201,17 @@ export default {
         this.$data.sellorderinfo = res.data.data;
       } else {
         this.$data.error = res.data.data.error;
+      }
+    },
+    async openminerpage(address) {
+      let res = await ipc.callMain('getlambdaaddressbyminer', {
+        address: address
+      });
+      if (res.state) {
+        var lambdaaddress = res.data;
+        var explorer = DAEMON_CONFIG.explore();
+        let url = `${explorer}/#/address/${lambdaaddress}/activity/1/all`;
+        shell.openExternal(url);
       }
     }
   }

@@ -16,7 +16,7 @@
     </Dropdown>&nbsp;
     {{$t('marketpage.Pending-order-fee')}}：{{selectmarket.feeRate|Percentformat}}
     {{$t('marketpage.Single-fee')}}：{{selectmarket.commissionRate|Percentformat}}
-    {{$t('syncorderpage.orderSynchronizationTime')}}：{{syncTime|formatToTime}}
+    {{$t('syncorderpage.orderSynchronizationTime')}}：{{syncTime}}
       </h3>
       <div v-if="syncTime==undefined">
 
@@ -72,6 +72,7 @@
 import syncbar from './syncbar.vue';
 import eventhub from '../../common/js/event.js';
 import BuyingspaceModal from '@/views/Dialog/BuyingspaceModal.vue';
+import moment from 'moment';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 
@@ -202,7 +203,15 @@ export default {
           marketAddress: selectItem.marketAddress
         });
         if (res.state) {
-          this.$data.syncTime = res.data;
+          // this.$data.syncTime = res.data;
+          var langType;
+          if (this.$i18n.locale == 'zh') {
+            langType = 'zh-cn';
+          } else {
+            langType = 'en';
+          }
+
+          this.$data.syncTime = moment(res.data).locale(langType).fromNow();
         }
       } catch (error) {
         console.log(error);

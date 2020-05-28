@@ -194,7 +194,7 @@ export default {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: left;
         .word-item {
           margin-top: 20px;
           padding: 0 16px;

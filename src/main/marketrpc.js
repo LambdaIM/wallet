@@ -9,6 +9,7 @@ import Promise from 'bluebird';
 
 import marketNedb from './utils/marketNedb';
 
+
 var { DAEMON_CONFIG } = require('../configmain.js');
 const { ipcMain: eipc } = require('electron-better-ipc');
 const getAsync = Promise.promisify(cmd.get, { multiArgs: true, context: cmd });
@@ -24,6 +25,8 @@ const os = require('os');
 
 var suppose = require('@jswebfans/suppose');
 const { errorList } = require('./throwErrorCode.js');
+const hdkeyjs = require('@jswebfans/hdkeyjs');
+const bech32 = require('bech32');
 
 
 export default function() {
@@ -422,6 +425,36 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('getlambdaaddressbyminer', async query => {
+    var { address } = query;
+    console.log('getlambdaaddressbyminer', query);
+    if (address == undefined) {
+      throw resultView(null, false, errorList.need_address);
+    }
+
+    try {
+      var addressBytes = hdkeyjs.address.getBytes(address);
+      const PREFIX = 'lambda';
+      var result = bech32.encode(PREFIX, bech32.toWords(addressBytes));
+
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('lambdaS3Version', async query => {
+    console.log('lambdaS3Version', query);
+    try {
+      var result = await getS3Version();
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
 
 
   function getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey, orderid) {
@@ -476,6 +509,15 @@ export default function() {
           resolve(code);
         });
     });
+  }
+
+  async function getS3Version() {
+    var cmdlint = path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile()) + ' version';
+    console.log(cmdlint);
+
+    var result = await getAsync(cmdlint);
+
+    return result;
   }
 
 

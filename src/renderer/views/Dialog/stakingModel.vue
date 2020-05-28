@@ -10,13 +10,13 @@
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
           <Input v-model="address" readonly>
-            <span slot="prepend">{{$t('home.Modal1.From')}}</span>
+            <span slot="prepend">{{$t('txPopup.Operator')}}</span>
           </Input>
         </p>
         <br />
         <p>
           <Input v-model="Tovalue" :placeholder="$t('home.Modal1.LAMB_address')">
-            <span slot="prepend">{{$t('home.Modal1.To')}}</span>
+            <span slot="prepend">{{$t('txPopup.Validator')}}</span>
           </Input>
         </p>
         <br />
@@ -97,7 +97,7 @@ export default {
       try {
         var valuenum = parseFloat(this.LAMBvalue);
         if (isNaN(valuenum) == false) {
-          if (valuenum < 1) {
+          if (valuenum < 1 && this.$data.isdege) {
             this.$Notice.warning({
               title: this.$t('stakinginfo.Pledgeamountlessthan1')
             });

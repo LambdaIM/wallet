@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, net } from 'electron';
+import { app, BrowserWindow, Menu, net, shell } from 'electron';
 
 
 
@@ -9,6 +9,13 @@ import { join } from 'path';
 import { fork } from 'child_process';
 import packageJson from '../../package.json';
 import s3tool from './utils/s3tool';
+import langmsg from './lang/index.js';
+
+const os = require('os');
+const path = require('path');
+const settings = require('electron-settings');
+
+// var { DAEMON_CONFIG } = require('../configmain.js');
 
 
 /**
@@ -84,7 +91,7 @@ function createWindow() {
     height: 676,
     useContentSize: true,
     width: 984,
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
     webPreferences: {
       nodeIntegration: true
     }
@@ -108,30 +115,85 @@ function createWindow() {
 
 function creatMenu() {
   // Create the Application's main menu
-  var template = [{
-    label: 'Application',
+  var language = settings.get('set.language') || 'en';
+  var objlanglist = langmsg[language] || {};
+
+
+  var templateMac = [{
+    label: objlanglist['Application'],
     submenu: [
-      { label: 'About Application', selector: 'orderFrontStandardAboutPanel:' },
-      { label: 'New Version Detection',
+      // { label: objlanglist['About_Application'], selector: 'orderFrontStandardAboutPanel:' },
+      { label: objlanglist['New_Version'],
         click: function() {
           upgrade(false);
         } },
       { type: 'separator' },
-      { label: 'Quit', accelerator: 'Command+Q', click: function() { app.quit(); } }
+      { label: objlanglist['Quit'], accelerator: 'Command+Q', click: function() { app.quit(); } }
     ] }, {
-    label: 'Edit',
+    label: objlanglist['Edit'],
+    // visible: false,
     submenu: [
-      { label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
-      { label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:' },
+      { label: objlanglist['Undo'], accelerator: 'CmdOrCtrl+Z', role: 'undo' },
+      { label: objlanglist['Redo'], accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo' },
       { type: 'separator' },
-      { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
-      { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
-      { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
-      { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' }
-    ] }
-  ];
+      { label: objlanglist['Cut'], accelerator: 'CmdOrCtrl+X', role: 'cut' },
+      { label: objlanglist['Copy'], accelerator: 'CmdOrCtrl+C', role: 'copy' },
+      { label: objlanglist['Paste'], accelerator: 'CmdOrCtrl+V', role: 'paste' },
+      { label: objlanglist['SelectAll'], accelerator: 'CmdOrCtrl+A', role: 'selectAll' }
+    ] }, {
+    label: objlanglist['Application_set'],
+    submenu: [
+      { label: objlanglist['config_file'],
+        click: function() {
+          let BASE_PATH = path.join(os.homedir(), 'lambWallet');
+          shell.showItemInFolder(path.join(BASE_PATH, 'Wallet'));
+        } },
+      { label: objlanglist['log_file'],
+        click: function() {
+          let BASE_PATH = path.join(os.homedir(), 'lambWallet');
+          shell.showItemInFolder(path.join(BASE_PATH, 'Log'));
+        } }
 
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    ]
+  }];
+  var templateWin = [{
+    label: objlanglist['Application'],
+    submenu: [
+      // { label: objlanglist['About_Application'], selector: 'orderFrontStandardAboutPanel:' },
+      { label: objlanglist['New_Version'],
+        click: function() {
+          upgrade(false);
+        } },
+      { type: 'separator' },
+      { label: objlanglist['Undo'], accelerator: 'CmdOrCtrl+Z', role: 'undo', visible: false },
+      { label: objlanglist['Redo'], accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo', visible: false },
+      { label: objlanglist['Cut'], accelerator: 'CmdOrCtrl+X', role: 'cut', visible: false },
+      { label: objlanglist['Copy'], accelerator: 'CmdOrCtrl+C', role: 'copy', visible: false },
+      { label: objlanglist['Paste'], accelerator: 'CmdOrCtrl+V', role: 'paste', visible: false },
+      { label: objlanglist['SelectAll'], accelerator: 'CmdOrCtrl+A', role: 'selectAll', visible: false },
+      { label: objlanglist['Quit'], accelerator: 'Command+Q', click: function() { app.quit(); } }
+    ] }, {
+    label: objlanglist['Application_set'],
+    submenu: [
+      { label: objlanglist['config_file'],
+        click: function() {
+          let BASE_PATH = path.join(os.homedir(), 'lambWallet');
+          shell.showItemInFolder(path.join(BASE_PATH, 'Wallet'));
+        } },
+      { label: objlanglist['log_file'],
+        click: function() {
+          let BASE_PATH = path.join(os.homedir(), 'lambWallet');
+          shell.showItemInFolder(path.join(BASE_PATH, 'Log'));
+        } }
+
+    ]
+  }];
+
+  if (process.platform !== 'darwin') {
+    Menu.setApplicationMenu(Menu.buildFromTemplate(templateWin));
+  } else {
+    Menu.setApplicationMenu(Menu.buildFromTemplate(templateMac));
+  }
 }
 
 process.on('uncaughtException', err => {

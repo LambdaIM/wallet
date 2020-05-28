@@ -51,6 +51,12 @@
                         </span>
 
                         </template>
+
+                        <template slot-scope="{ row, index }" slot="marketAddress">
+                         {{getmarketName(row.marketAddress)}}
+                        </template>
+
+
                  </Table>
                  <br/>
                     <div style="text-align: center;">
@@ -113,7 +119,8 @@ export default {
           slot: 'rate'
         }, {
           title: this.$t('marketpage.myselltable.Marketaddress'),
-          key: 'marketAddress'
+          key: 'marketAddress',
+          slot: 'marketAddress'
         }, {
           title: this.$t('marketpage.Status'),
           key: 'status',
@@ -190,6 +197,16 @@ export default {
           _this.$data.selectmarket = item;
         }
       });
+    },
+    getmarketName(address) {
+      var name = '';
+      this.$data.marketList.forEach(item => {
+        if (address == item.marketAddress) {
+          name = item.name;
+        }
+      });
+
+      return name;
     }
 
 

@@ -8,7 +8,7 @@
       "validator": "Pledge",
       "sign": "Sign",
       "market":"Market",
-      "help":"manual",
+      "help":"Manual",
       
       "action":{
         "You_just_copied":"You just copied:",
@@ -386,7 +386,7 @@
       "Odds":"Odds",
       "amountspace":"Amount space",
       "remainingspace":"Remaining space",
-      "Mineraddress":"Minera ddress",
+      "Mineraddress":"Miner operation address",
       "OrderID":"Order ID",
       "action":{
         "needspacesize":"Please check the size of the space, the space can only fill in the integer",
@@ -593,7 +593,7 @@
     "unActive":"Sold out",
     
     "selltable":{
-        "Mineraddress":"Miner address",
+        "Mineraddress":"Miner operation address",
         "amountspace":"Amount space(GB)",
         "remainingspace":"Remaining space(GB)",
         "unitprice":"Price(LAMB/GB/month)",
@@ -611,7 +611,7 @@
      "minimumduration":"Min duration(month)",
      "Odds":"Odds",
      "Storagedevice":"Storage node",
-     "Marketaddress":"Market address"
+     "Marketaddress":"Market"
     },
     "ordertable":{
      "orderType":"Type",
@@ -640,7 +640,7 @@
 
 },
 "syncorderpage":{
-  "mineraddress":"Miner address",
+  "mineraddress":"Miner operation address",
   "Searchsort":"search",
   "typedata1":"Synchronize 10000 pieces of data",
   "typedata2":"Synchronize 100000 pieces of data",
@@ -664,7 +664,7 @@
  "userPay":"Order amount",
  "minerPay":"Undrawn order compensation",
  "orderdetails":"details",
- "Mineraddress":"miner address",
+ "Mineraddress":"Miner operation address",
  "user":"user",
  "operating":"operating",
  "lambdastorageConsole":"Lambda Storage Console login information",
@@ -672,9 +672,8 @@
  "Filelossarbitration":"File loss application arbitration",
  "Username":"access-key",
  "Password":"secret-key",
- "Portnumber":"Port number"
-
-
+ "Portnumber":"Port number",
+ "Version":"Version"
 },
 "testcoin":{
     "txtbtn":"click the button to collect test token",
@@ -830,7 +829,7 @@
 
   },
    "Marketoperation":{
-      "marketpledge":"market pledge",
+      "marketpledge":"Market pledge",
       "Mypledgeamount":"My pledge amount",
       "Mypledgeincome":"My pledge income",
       "pledgetip1":"Minimum amount of market pledge",
@@ -853,6 +852,42 @@
     "Guidance":"Guidance",
     "on":"on",
     "off":"off"
-    }
+    },
+   "deleaccount":{
+       "title":"Delete local account configuration file",
+       "address":"Account address",
+       "name":"Name",
+       "title2":"Confirm delete  local account configuration file",
+       "password":"Password",
+       "Accountdeletedsuccessfully":"Account configuration file deleted successfully",
+       "success":"Success"
+
+   },
+   "Custombrowser":{
+       "title":"Customize browser for node links",
+       "browserurl":"Browser URL",
+       "mianbrowser":"Use default URL of main web browser",
+       "testbrowser":"Use test web browser default URL",
+       "Setsuccessfully":"Set browser of custom node succeeded",
+       "success":"success",
+       "Setthebrowseraddress":"Set the browser address of the definition node",
+       "title2":"Browser for custom node",
+       "notseturl":"Browser URL has not been set",
+       "needurl":"Please fill in the browser address",
+       "Formaterror":"URL address format error",
+       "testsuccess":"Test link browser successful",
+       "testerror":"Test link browser failed",
+       "test":"test"
+   },
+   "txPopup":{
+       "Operator":"Operator",
+       "Validator":"Validator",
+       "Marketname":"Market name",
+       "Marketpledge":"Market pledge",
+       "amount":"amount",
+       "Withdrawalmarketpledgeincome":"Withdrawal of market pledge income",
+       "profit":"profit"
+
+   }
 
 }

@@ -65,5 +65,21 @@
 	"need_file": "需要参数 file",
 	"need_gasprice": "需要参数 gasprice",
 	"gaspricemust_be_numeric": "gas价格必须是数字",
-	"file_format_error":"文件格式错误"
+	"file_format_error":"文件格式错误,请检查文件内容",
+	"file_open_error":"打开文件失败",
+	"not_find_Wallet":"没有找到钱包",
+	"Application":"钱包",
+	"About_Application":"关于钱包",
+	"New_Version":"新版本",
+	"Quit":"退出",
+	"Application_set":"应用",
+	"config_file":"打开账户配置文件",
+	"log_file":"打开日志",
+	"Undo":"撤消",
+	"Redo":"重做",
+	"Cut":"剪切",
+	"Copy":"复制",
+	"Paste":"粘贴",
+	"SelectAll":"全选",
+	"Edit":"编辑"
 }

@@ -409,13 +409,34 @@ walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
 
 
 walletManger.prototype.ImportWalletBykeyStore = function (filepath, password, name) {
-  var v3file = fs.readFileSync(filepath, 'utf8');
+  // 需要检查 
+  //1 是可以成功读取配置文件 例如从u盘中读取，加 try catch
+  //2 检查文件的是不是json
+  //3 文件是json的情况下
+  // 4 需要校验每一个字段
+  var v3file;
+  try {
+    v3file = fs.readFileSync(filepath, 'utf8'); 
+  } catch (error) {
+    //打开文件失败
+    throwErrorCode(errorList.file_open_error)
+  }
+   
+  console.log('ImportWalletBykeyStore',v3file)
   try {
     v3file = JSON.parse(v3file);  
   } catch (error) {
     throwErrorCode(errorList.file_format_error)
     
   }
+  if(typeof v3file.salt!= "string"||
+  typeof v3file.privateKey!="string"||
+  typeof v3file.address!="string"||
+  typeof v3file.publicKey!="string"
+  ){
+    throwErrorCode(errorList.file_format_error)
+  }
+
   
 
   v3file.name = name;
@@ -1022,6 +1043,44 @@ walletManger.prototype.SonFileList =async function () {
     
   }
   
+  return result;
+  
+};
+
+
+walletManger.prototype.deleteaccount =async function (address,password) {
+  console.log('deleteaccount');
+  var dir = DAEMON_CONFIG.WalletFile;
+  var list = fs.readdirSync(dir);
+  var accountfile,accountv3file;
+  list.forEach(file => {
+    if (file.indexOf('.keyinfo') > 0) {
+      file = path.join(dir, file);
+      var v3file = fs.readFileSync(file, 'utf8');
+      try {
+        v3file = JSON.parse(v3file);
+        if (v3file.address == address) {
+          accountv3file = v3file;
+          accountfile=file;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  });
+
+  if(accountfile!=undefined&&accountv3file!=undefined){
+    hdkeyjs.keyStore.checkJson(accountv3file, password);
+    fs.unlinkSync(accountfile)
+    this.scann();
+    
+  }else{
+    // 账户不存在
+    throwErrorCode(errorList.not_find_Wallet) 
+  }
+  
+  var result={}
+
   return result;
   
 };

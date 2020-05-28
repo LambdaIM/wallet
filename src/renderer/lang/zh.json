@@ -20,7 +20,7 @@
   "foot": {
       "validator": "节点",
       "block_height": "块高",
-      "block_time": "Sync",
+      "block_time": "同步时间",
       "sync_block": "同步块…",
       "validator_connecting": "正在连接验证节点…",
       "linkerror": "连接到验证节点异常,请检查网络链接或验证节点",
@@ -383,7 +383,7 @@
         "Odds":"赔率",
         "amountspace":"空间总量",
         "remainingspace":"剩余空间总量",
-        "Mineraddress":"矿工地址",
+        "Mineraddress":"矿工操作地址",
         "OrderID":"订单id",
         "action":{
             "needspacesize":"检查空间大小，空间只能填写整数",
@@ -590,7 +590,7 @@
        "unActive":"卖光了",
        
        "selltable":{
-           "Mineraddress":"矿工地址",
+           "Mineraddress":"矿工操作地址",
            "amountspace":"空间总量(GB)",
            "remainingspace":"剩余空间总量(GB)",
            "unitprice":"单价(LAMB/GB/month)",
@@ -608,7 +608,7 @@
         "minimumduration":"最小时长(月)",
         "Odds":"赔率",
         "Storagedevice":"存储节点",
-        "Marketaddress":"市场地址"
+        "Marketaddress":"市场"
        },
        "ordertable":{
         "orderType":"类型",
@@ -638,7 +638,7 @@
 
    },
    "syncorderpage":{
-       "mineraddress":"矿工地址",
+       "mineraddress":"矿工操作地址",
        "Searchsort":"搜索",
        "typedata1":"同步1万条数据",
        "typedata2":"同步10万条数据",
@@ -660,7 +660,7 @@
     "userPay":"订单金额",
     "minerPay":"未提取的订单赔付金",
     "orderdetails":"订单详情",
-    "Mineraddress":"矿工地址",
+    "Mineraddress":"矿工操作地址",
     "user":"用户",
     "Startingtime":"开始时间",
     "EndTime":"结束时间",
@@ -670,7 +670,8 @@
     "Filelossarbitration":"文件丢失申请仲裁",
     "Username":"密钥",
     "Password":"私钥",
-    "Portnumber":"端口号"
+    "Portnumber":"端口号",
+    "Version":"版本号"
 
    },
    "testcoin":{
@@ -851,5 +852,41 @@
        "Guidance":"引导提示",
        "on":"开",
        "off":"关"
+   },
+   "deleaccount":{
+       "title":"删除本地配置文件",
+       "address":"账户地址",
+       "name":"名称",
+       "title2":"确认删除本地配置文件",
+       "password":"密码",
+       "Accountdeletedsuccessfully":"删除账户信息成功",
+       "success":"成功"
+
+   },
+   "Custombrowser":{
+       "title":"自定义节点链接的浏览器",
+       "browserurl":"浏览器url",
+       "mianbrowser":"使用主网浏览器默认url",
+       "testbrowser":"使用测试网浏览器默认url",
+       "Setsuccessfully":"设置自定义节点的浏览器成功",
+       "success":"成功",
+       "Setthebrowseraddress":"设置定义节点的浏览器地址",
+       "title2":"自定义节点的浏览器",
+       "notseturl":"尚未设置浏览器url",
+       "needurl":"请填写浏览器地址",
+       "Formaterror":"url地址的格式错误",
+       "testsuccess":"测试链接浏览器成功",
+       "testerror":"测试链接浏览器失败",
+       "test":"测试"
+   },
+   "txPopup":{
+       "Operator":"操作人",
+       "Validator":"验证节点",
+       "Marketname":"市场名称",
+       "Marketpledge":"市场质押",
+       "amount":"金额",
+       "Withdrawalmarketpledgeincome":"提取市场质押收益",
+       "profit":"收益"
+
    }
 }

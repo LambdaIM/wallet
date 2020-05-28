@@ -227,6 +227,26 @@
 
             </Col>
           </Row>
+          <Row class-name="card-item">
+            <Col
+              span="4"
+              class-name="title-wrapper"
+            >
+            <span class="title">{{$t('Custombrowser.title2')}} </span>
+            </Col>
+            <Col
+              span="12"
+              class-name="content-wrapper"
+            >
+            <span>{{custombrowserurl}}</span>
+            <Button
+              @click="openCustombrowserModal"
+              type="primary"
+              shape="circle"
+              icon="ios-create"
+            ></Button>
+            </Col>
+          </Row>
 
         </div>
       </Mycard>
@@ -467,6 +487,7 @@
     </div>
     <roleModalDialog ref="roleModal" />
     <Gasprise ref="Gasprise"/>
+    <CustombrowserModalDialog ref="CustombrowserModal"/>
   </div>
 </template>
 
@@ -479,8 +500,11 @@ import roleModalDialog from '@/views/Dialog/roleModal.vue';
 import Gasprise from '@/views/Dialog/Gasprise.vue';
 import Introtip from '../../common/js/Introtip.js';
 
+import CustombrowserModalDialog from '@/views/Dialog/CustombrowserModal.vue';
+
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
+
 
 export default {
   data() {
@@ -496,7 +520,9 @@ export default {
       lang: 'zh',
       langnow: this.$i18n.locale,
       versionNumber: DAEMON_CONFIG.version,
-      guide: false
+      guide: false,
+      custombrowserurl: ''
+
     };
   },
   mounted() {
@@ -505,6 +531,7 @@ export default {
     this.$data.guide = !hasreadtip;
     // this.pledgeMiner();
     // this.getgasprise();
+    this.$data.custombrowserurl = settings.get('custombrowserurl') || this.$t('Custombrowser.notseturl');
   },
   methods: {
     onCopy: function(e) {
@@ -578,6 +605,10 @@ export default {
         language: item
       });
       window.location.reload();
+      // var _this = this;
+      // setTimeout(() => {
+      //   _this.restartapp();
+      // }, 200);
     },
     openroleModal() {
       this.$refs.roleModal.open();
@@ -593,6 +624,13 @@ export default {
     guidechange() {
       console.log(this.$data.guide);
       Introtip.settip('home', !this.$data.guide);
+    },
+    openCustombrowserModal() {
+      this.$refs.CustombrowserModal.open();
+    },
+    async restartapp() {
+      console.log('restartapp');
+      let res = await ipc.callMain('restart', {});
     }
   },
   computed: {
@@ -631,7 +669,8 @@ export default {
   components: {
     Mycard,
     roleModalDialog,
-    Gasprise
+    Gasprise,
+    CustombrowserModalDialog
 
   }
 };

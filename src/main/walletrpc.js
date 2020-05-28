@@ -868,6 +868,27 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+  eipc.answerRenderer('deleteaccount', async query => {
+    try {
+      var { address, password } = query;
+      if (address == undefined) {
+        throw resultView(null, false, errorList.need_address);
+      }
+
+      if (password == undefined) {
+        throw resultView(null, false, errorList.need_password);
+      }
+
+      var TxMessageload = await WM.deleteaccount(address, password);
+
+      return resultView({
+        data: true
+      }, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
 }
 
 
