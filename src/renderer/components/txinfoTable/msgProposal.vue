@@ -2,34 +2,38 @@
 <div>
 
     <div v-if="txtype=='MsgSubmitProposal'">
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
-      {{msg.value.content.value.title}}
-      {{$t(`proposalsPage.Deposit`)}}
-      <span v-for="item in msg.value.initial_deposit"  class="value">{{item | formatAmountdenom }}</span>
+
+      <ul>
+        <li><span class="lable">操作人:</span> <AddressLink :addressLength="150" :to="msg.value.proposer">{{msg.value.proposer }}</AddressLink
+        <li><span class="lable">类别:</span> <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag> </li>
+        <li><span class="lable">提案名称:</span> {{msg.value.content.value.title}} </li>
+        <li><span class="lable">{{$t(`proposalsPage.Deposit`)}}:</span> <span v-for="item in msg.value.initial_deposit"  class="value">{{item | formatAmountdenom }}</span>  </li>
+
+      </ul>
+
+
     </div>
     <div v-if="txtype=='MsgDeposit'">
-        <AddressLink :addressLength="15" :to="msg.value.depositor">{{msg.value.depositor }}</AddressLink
-      >&nbsp;
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+      <ul>
+        <li><span class="lable">操作人:</span> <AddressLink :addressLength="150" :to="msg.value.depositor">{{msg.value.depositor }}</AddressLink
+      ></li>
+        <li><span class="lable">类别:</span><Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag> </li>
+        <li><span class="lable">金额:</span> <span v-for="item in msg.value.amount"  class="value">{{item | formatAmountdenom }}</span></li>
+        <li><span class="lable">提案:</span> <ProposalLink :id="msg.value.proposal_id" :name="title" /></li>
+      </ul>
 
 
-      <span v-for="item in msg.value.amount"  class="value">{{item | formatAmountdenom }}</span>
-      {{$t('txTable.to')}}
-      {{$t('head.proposals')}}:
-      <ProposalLink :id="msg.value.proposal_id" :name="title" />
     </div>
 
     <div v-if="txtype=='MsgVote'">
-        <AddressLink :addressLength="15" :to="msg.value.voter">{{msg.value.voter }}</AddressLink
-      >&nbsp;
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+      <ul>
+        <li><span class="lable">操作人:</span> <AddressLink :addressLength="150" :to="msg.value.voter">{{msg.value.voter }}</AddressLink
+      > </li>
+        <li><span class="lable">类别:</span><Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>  </li>
+        <li><span class="lable">提案:</span><ProposalLink :id="msg.value.proposal_id" :name="title" /></li>
+        <li><span class="lable">投票选项:</span>{{$t(`proposalsPage.${msg.value.option}`)}}  </li>
+      </ul>
 
-
-      {{$t(`proposalsPage.${msg.value.option}`)}}
-
-      {{$t('txTable.to')}}
-      {{$t('head.proposals')}}:
-      <ProposalLink :id="msg.value.proposal_id" :name="title" />
     </div>
 
 
@@ -90,4 +94,19 @@ export default {
     // font-weight: 600;
     color: #ff9800;
   }
+
+  ul{
+      list-style: none;
+      border-bottom: 1px solid #e4e0e0;
+      li{
+        margin-bottom: 5px;
+      }
+  }
+  .lable{
+    width: 100px;
+    display: inline-block;
+  }
+
+
+
 </style>
