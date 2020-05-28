@@ -128,7 +128,7 @@
 <script>
 import Mycard from '@/components/common/useful/Mycard.vue';
 import { DAEMON_CONFIG } from '../../config.js';
-import Activity from '@/components/txTable/Activity.vue';
+import Activity from '@/components/txinfoTable/Activity.vue';
 import txFormat from '@/common/js/txFormat.js';
 
 
