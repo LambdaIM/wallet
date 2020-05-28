@@ -1,17 +1,13 @@
 <template>
     <div>
 
-      <AddressLink :addressLength="15" :to="msg.value.from_address">{{msg.value.from_address }}</AddressLink
-      >&nbsp;
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
-     <span v-for="item in msg.value.amount"  class="value">{{item | formatAmountdenom }}</span>
-     {{$t('txTable.to')}}
-     <AddressLink :addressLength="15" :to="msg.value.to_address">{{ msg.value.to_address }}</AddressLink>
+
      <UL>
-       <li>ssss1</li>
-       <li>ssss2</li>
-       <li>ssss3</li>
-       <li>ssss4</li>
+       <li><span class="lable">类别:</span><Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag></li>
+       <li><span class="lable">发送人:</span><AddressLink :addressLength="150" :to="msg.value.from_address">{{msg.value.from_address }}</AddressLink
+      ></li>
+       <li><span class="lable">接受人:</span><AddressLink :addressLength="150" :to="msg.value.to_address">{{ msg.value.to_address }}</AddressLink></li>
+       <li><span class="lable">金额:</span><span v-for="item in msg.value.amount"  class="value">{{item | formatAmountdenom }}</span></li>
      </UL>
 
 
@@ -45,5 +41,13 @@ export default {
   }
   ul{
       list-style: none;
+      border-bottom: 1px solid #e4e0e0;
+      li{
+        margin-bottom: 5px;
+      }
+  }
+  .lable{
+    width: 100px;
+    display: inline-block;
   }
 </style>

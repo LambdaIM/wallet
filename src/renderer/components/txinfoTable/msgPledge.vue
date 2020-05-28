@@ -1,28 +1,42 @@
 <template>
     <div v-if="msgitem!=null">
-        <AddressLink :addressLength="15" :to="msg.value.delegator_address">{{msg.value.delegator_address }}</AddressLink
-      >&nbsp;
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
-      <span v-if="txtype=='MsgDelegate'">
-        <span  class="value">{{msg.value.amount | formatAmountdenom }}</span>
-        {{$t('txTable.to')}}
 
-        <AddressLink  :addressLength="15" :name='msgitem.validator_name' :to="msg.value.validator_address"></AddressLink>
+
+      <span v-if="txtype=='MsgDelegate'">
+        <ul>
+          <li><span class="lable">类别:</span><Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag></li>
+          <li><span class="lable">发送人:</span> <AddressLink :addressLength="150" :to="msg.value.delegator_address">{{msg.value.delegator_address }}</AddressLink> </li>
+          <li><span class="lable">验证节点:</span>  <AddressLink  :addressLength="150" :name='msgitem.validator_name' :to="msg.value.validator_address"></AddressLink>  </li>
+          <li><span class="lable">金额:</span><span  class="value">{{msg.value.amount | formatAmountdenom }}</span></li>
+
+        </ul>
+
 
       </span>
       <span v-if="txtype=='MsgBeginRedelegate'">
-        <span  class="value">{{msg.value.amount | formatAmountdenom }}</span>
-        {{$t('txTable.Withdraw')}}
-        <AddressLink :addressLength="15" :name="msgitem.src_validator_name" :to="msg.value.validator_src_address"></AddressLink>
-        {{$t('txTable.to')}}
-        <AddressLink :addressLength="15" :name="msgitem.dst_validator_name" :to="msg.value.validator_dst_address"></AddressLink>
-      </span>
-      <span v-if="txtype=='MsgUndelegate'">
-        <span  class="value">{{msg.value.amount | formatAmountdenom }}</span>
-        {{$t('txTable.Withdraw')}}
-        <AddressLink :addressLength="15" :name='msgitem.validator_name' :to="msg.value.validator_address"></AddressLink>
+        <ul>
+          <li><span class="lable">类别:</span><Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag></li>
+          <li><span class="lable">操作人:</span><AddressLink :addressLength="150" :to="msg.value.delegator_address">{{msg.value.delegator_address }}</AddressLink
+      > </li>
+          <li><span class="lable">旧节点:</span><AddressLink :addressLength="150" :name="msgitem.src_validator_name" :to="msg.value.validator_src_address"></AddressLink> </li>
+          <li><span class="lable">新节点:</span><AddressLink :addressLength="150" :name="msgitem.dst_validator_name" :to="msg.value.validator_dst_address"></AddressLink> </li>
+          <li><span class="lable">金额:</span><span  class="value">{{msg.value.amount | formatAmountdenom }}</span></li>
+        </ul>
 
       </span>
+      <span v-if="txtype=='MsgUndelegate'">
+        <ul>
+          <li><span class="lable">类别:</span><Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag></li>
+          <li><span class="lable">操作人:</span><AddressLink :addressLength="150" :to="msg.value.delegator_address">{{msg.value.delegator_address }}</AddressLink
+      > </li>
+          <li><span class="lable">验证节点:</span><AddressLink :addressLength="150" :name='msgitem.validator_name' :to="msg.value.validator_address"></AddressLink>  </li>
+          <li><span class="lable">金额:</span><span  class="value">{{msg.value.amount | formatAmountdenom }}</span> </li>
+
+        </ul>
+
+
+      </span>
+
 
     </div>
 </template>
@@ -53,16 +67,21 @@ export default {
   async mounted() {
     console.log('********************');
 
+    try {
+      if (this.msg.value.validator_address) {
+        this.msg.validator_name = await this.getname(this.msg.value.validator_address);
+      }
+      if (this.msg.value.validator_src_address) {
+        this.msg.src_validator_name = await this.getname(this.msg.value.validator_src_address);
+      }
+      if (this.msg.value.validator_dst_address) {
+        this.msg.dst_validator_name = await this.getname(this.msg.value.validator_dst_address);
+      }
+    } catch (error) {
 
-    if (this.msg.value.validator_address) {
-      this.msg.validator_name = await this.getname(this.msg.value.validator_address);
     }
-    if (this.msg.value.validator_src_address) {
-      this.msg.src_validator_name = await this.getname(this.msg.value.validator_src_address);
-    }
-    if (this.msg.value.validator_dst_address) {
-      this.msg.dst_validator_name = await this.getname(this.msg.value.validator_dst_address);
-    }
+
+
     this.$data.msgitem = this.msg;
   },
   methods: {
@@ -86,5 +105,17 @@ export default {
   .value {
     // font-weight: 600;
     color: #ff9800;
+  }
+
+  ul{
+      list-style: none;
+      border-bottom: 1px solid #e4e0e0;
+      li{
+        margin-bottom: 5px;
+      }
+  }
+  .lable{
+    width: 100px;
+    display: inline-block;
   }
 </style>
