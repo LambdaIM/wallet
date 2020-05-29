@@ -36,27 +36,36 @@
 
     </div>
         <div v-if="txtype=='MsgMinerWithDraw'">
-        <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address }}</AddressLink
-      >&nbsp;
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
-      {{getvalueformtags2()|uAmountDenom}}
+          <ul>
+            <li><span class="lable">操作人:</span> <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address }}</AddressLink
+      > </li>
+            <li><span class="lable">类别:</span><Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag> </li>
+            <li><span class="lable">金额:</span>{{getvalueformtags2()|uAmountDenom}} </li>
+          </ul>
+
 
     </div>
     <div v-if="txtype=='MsgOrderRenewal'">
-        <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address }}</AddressLink
-      >&nbsp;
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
-      {{msg.value.duration|formatMonth}}{{$t('Dialog.AutoBuy.month')}}
+      <ul>
+        <li><span class="lable">操作人:</span>  <AddressLink :addressLength="150" :to="msg.value.address">{{msg.value.address }}</AddressLink
+      > </li>
+        <li><span class="lable">类别:</span><Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag> </li>
+        <li><span class="lable">订单ID:</span>{{msg.value.orderId}}</li>
+        <li><span class="lable">时长:</span>{{msg.value.duration|formatMonth}}{{$t('Dialog.AutoBuy.month')}} </li>
+      </ul>
+
 
     </div>
 
     <div v-if="txtype=='MsgDelegateMarket'">
-        <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address }}</AddressLink
-      >&nbsp;
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
-      {{msg.value.amount|formatAmountdenom}}
-      {{$t('txTable.to')}}
-      {{msg.value.marketName}}
+      <ul>
+        <li><span class="lable">操作人:</span><AddressLink :addressLength="150" :to="msg.value.address">{{msg.value.address }}</AddressLink
+      >  </li>
+        <li><span class="lable">类别:</span> <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag> </li>
+        <li><span class="lable">市场名称:</span> {{msg.value.marketName}} </li>
+        <li><span class="lable">质押金额:</span> {{msg.value.amount|formatAmountdenom}} </li>
+      </ul>
+
 
     </div>
 

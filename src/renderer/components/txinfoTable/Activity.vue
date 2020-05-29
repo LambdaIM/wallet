@@ -104,8 +104,8 @@ export default {
     }
   },
   data() {
-    // 未适配 MsgWithdrawMinerRewards
-    // 未造数据 MsgMinerWithDraw
+    // 未适配 MsgWithdrawMinerRewards  解散市场
+    // 未造数据 MsgMinerWithDraw   资产相关的 创建资产等
 
     return {
       more: !(this.$props.activityData.length > 2),
