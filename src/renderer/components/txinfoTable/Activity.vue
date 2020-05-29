@@ -104,6 +104,9 @@ export default {
     }
   },
   data() {
+    // 未适配 MsgWithdrawMinerRewards
+    // 未造数据 MsgMinerWithDraw
+
     return {
       more: !(this.$props.activityData.length > 2),
       assert: ['MsgAssetPledge', 'MsgAssetDrop'],

@@ -1,8 +1,11 @@
 <template>
     <div>
-        <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address }}</AddressLink
-      >&nbsp;
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+      <ul>
+        <li><span class="lable">操作人:<AddressLink :addressLength="150" :to="msg.value.address">{{msg.value.address }}</AddressLink
+      ></span></li>
+        <li><span class="lable">类别:<Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag></span></li>
+      </ul>
+
     </div>
 </template>
 
@@ -30,5 +33,16 @@ export default {
   .value {
     // font-weight: 600;
     color: #ff9800;
+  }
+  ul{
+      list-style: none;
+      border-bottom: 1px solid #e4e0e0;
+      li{
+        margin-bottom: 5px;
+      }
+  }
+  .lable{
+    width: 100px;
+    display: inline-block;
   }
 </style>

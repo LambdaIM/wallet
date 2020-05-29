@@ -1,22 +1,38 @@
 <template>
 <div>
     <div v-if="txtype=='MsgCreateSellOrder'">
-        <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address }}</AddressLink
-      >&nbsp;
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
-      {{msg.value.sellSize}} GB {{$t('orderinfo.unitprice')}} {{msg.value.price|Lambformat}}
+       <ul>
+         <li><span class="lable">操作人: </span><AddressLink :addressLength="150" :to="msg.value.address">{{msg.value.address }}</AddressLink
+      ></li>
+         <li><span class="lable">类别:</span><Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag></li>
+         <li><span class="lable">空间大小: </span>{{msg.value.sellSize}} GB</li>
+         <li><span class="lable">单价:</span>{{msg.value.price|Lambformat}}</li>
+         <li><span class="lable">市场名称:</span>{{msg.value.marketName}}</li>
+         <li><span class="lable">赔率:</span>{{parseFloat(msg.value.rate)}}</li>
+         <li><span class="lable">最小购买空间:</span>{{msg.value.minBuySize}} GB</li>
+         <li><span class="lable">最小购买时间:</span>{{msg.value.minBuyDuration|formatMonth}}月 </li>
+         <li><span class="lable">最大购买时间:</span>{{msg.value.maxBuyDuration|formatMonth}}月 </li>
+       </ul>
+
     </div>
     <div v-if="txtype=='MsgCancelSellOrder'">
-        <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address }}</AddressLink
-      >&nbsp;
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
-      {{msg.value.orderId}}
+      <ul>
+        <li><span class="lable">操作人:</span>  <AddressLink :addressLength="150" :to="msg.value.address">{{msg.value.address }}</AddressLink
+      >    </li>
+        <li><span class="lable">类别:</span> <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>    </li>
+        <li><span class="lable">卖单id:</span> {{msg.value.orderId}}    </li>
+      </ul>
+
     </div>
     <div v-if="txtype=='MsgWithDrawMarket'">
-        <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address }}</AddressLink
-      >&nbsp;
-      <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
-      {{getvalueformtags()|uAmountDenom}}
+      <ul>
+        <li><span class="lable">操作人:</span><AddressLink :addressLength="150" :to="msg.value.address">{{msg.value.address }}</AddressLink
+      > </li>
+        <li><span class="lable">类别:</span><Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag> </li>
+        <li><span class="lable">金额:</span>{{getvalueformtags()|uAmountDenom}} </li>
+        <li><span class="lable">市场名称:</span>{{msg.value.marketName}} </li>
+      </ul>
+
 
     </div>
         <div v-if="txtype=='MsgMinerWithDraw'">
@@ -107,5 +123,16 @@ export default {
   .value {
     // font-weight: 600;
     color: #ff9800;
+  }
+    ul{
+      list-style: none;
+      border-bottom: 1px solid #e4e0e0;
+      li{
+        margin-bottom: 5px;
+      }
+  }
+  .lable{
+    width: 100px;
+    display: inline-block;
   }
 </style>
