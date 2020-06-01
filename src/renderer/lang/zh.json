@@ -685,6 +685,8 @@
        "Createstoragenode":"创建存储节点",
        "Createstoragenodetip":"存储节点初始化之后，创建存储节点",
        "Storagenodename":"存储节点名称",
+       "Cancelsalesorder":"取消卖单",
+       "Cancel":"取消",
        "action":{
            "needname":"存储节点名称不能为空",
            "needdhtid":"DhtId不能为空",

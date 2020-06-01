@@ -3,25 +3,25 @@
           <Modal
         loading
         v-model="sendModal"
-        title="取消卖单"
+        :title="$t('sellpageinfo.Cancelsalesorder')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
-      <Form  @keydown.native.enter.prevent ="preSendLAMB" >
+      <Form v-if="sellorderinfo!=null" @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
 
-            订单id：{{sellorderinfo.orderId}}
+            {{$t('syncorderpage.orderID')}}：{{sellorderinfo.orderId}}
 
         </p>
         <br />
         <p>
 
-            市场名称：{{marketName}}
+            {{$t('marketpage.myselltable.Marketaddress')}}：{{marketName}}
 
         </p>
         <br />
         <p>
-          状态：
+          {{$t('marketpage.Status')}}：
                         <span style="color:green" v-if="sellorderinfo.status=='0'">
                            {{$t('marketpage.Active')}}
                         </span>
@@ -33,15 +33,15 @@
 
         <br />
         <p>
-          价格：{{sellorderinfo.price|Lambformat}}
+          {{$t('marketpage.myselltable.unitprice')}}：{{sellorderinfo.price|Lambformat}}
         </p>
             <br />
         <p>
-            总空间：{{sellorderinfo.sellSize}}GB
+            {{$t('marketpage.myselltable.amountspace')}}：{{sellorderinfo.sellSize}}GB
         </p>
             <br />
         <p>
-          剩余空间：{{sellorderinfo.unUseSize}}GB
+          {{$t('marketpage.myselltable.remainingspace')}}：{{sellorderinfo.unUseSize}}GB
         </p>
 
 
@@ -96,33 +96,21 @@ export default {
       let to = this.Tovalue;
       let value = this.toBigNumStr(this.LAMBvalue);
 
-      if (isNaN(value)) {
-        this.$Notice.warning({
-          title: this.$t('home.action.Check_the_amount')
-        });
-        return;
-      }
-      this.transfer(value);
-    },
-    async transfer(amount) {
-      let ProposalID = this.Tovalue;
-      // let amount = this.LAMBvalue;
-      let gas = 1;
-      let option = this.$data.voteType;
-      // amount = amount * 10000;
+      var orderid = this.$data.sellorderinfo.orderId;
 
+      this.transfer(orderid);
+    },
+    async transfer(OrderId) {
       this.$data.transactiondata = null;
-      let isdege = this.$data.isdege;
+
       try {
-        let res = await ipc.callMain('vote', {
-          ProposalID,
-          option,
-          gas
+        let res = await ipc.callMain('CancelSellOrder', {
+          OrderId
         });
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('vote', res.data);
+          this.$refs.ConfirmModal.open('CancelSellOrder', res.data);
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {

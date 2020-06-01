@@ -18,7 +18,10 @@ const transactionTypes = {
   OrderRenewal: `MsgOrderRenewal`,
   MinerWithDrawCount: `MsgMinerWithDrawCount`,
   DelegateMarket: 'MsgDelegateMarket',
-  WithDrawMarket: 'MsgWithDrawMarket'
+  WithDrawMarket: 'MsgWithDrawMarket',
+  CancelSellOrder: 'MsgCancelSellOrder'
+
+
 };
 
 export default transactionTypes;

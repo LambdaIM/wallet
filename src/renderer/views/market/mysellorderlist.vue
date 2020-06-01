@@ -57,7 +57,7 @@
                         </template>
 
                         <template slot-scope="{ row, index }" slot="operation">
-                          <Button @click="cancelorder(row,getmarketName(row.marketAddress))"> 取消 </Button>
+                          <Button @click="cancelorder(row,getmarketName(row.marketAddress))"> {{$t('sellpageinfo.Cancel')}} </Button>
                         </template>
 
 
