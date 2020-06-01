@@ -686,6 +686,8 @@
   "Createstoragenode":"Create storagenode",
   "Createstoragenodetip":"After the storage node is initialized, create the storage node",
   "Storagenodename":"Storage node name",
+  "Cancelsalesorder":"Cancel sales order",
+  "Cancel":"Cancel",
   "action":{
       "needname":"Storage node name cannot be empty",
       "needdhtid":"Dhtid cannot be empty",

@@ -679,6 +679,7 @@ export default function() {
     }
   });
 
+
   eipc.answerRenderer('CreateBuyOrder', async query => {
     var { duration,
       size,
@@ -704,6 +705,26 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+
+
+  eipc.answerRenderer('CancelSellOrder', async query => {
+    var { OrderId } = query;
+
+    if (OrderId == undefined) {
+      throw resultView(null, false, errorList.OrderId);
+    }
+
+    try {
+      var TxMessageload = await WM.CancelSellOrder(OrderId);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
 
   eipc.answerRenderer('marketOrderRenewal', async query => {
     var { duration, orderId } = query;

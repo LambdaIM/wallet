@@ -779,6 +779,17 @@ walletManger.prototype.OrderRenewal = async function (orderId,duration,memo) {
 
 
 
+walletManger.prototype.CancelSellOrder = async function (orderId,memo) {
+  var result = {
+    type: transaction.CancelSellOrder,
+    orderId: orderId,
+    memo: memo || ''
+  };
+  return result;
+};
+
+
+
 
 walletManger.prototype.Simulate = async function (transactiondata) {
   var gasprice = settings.get('gasprice') ;

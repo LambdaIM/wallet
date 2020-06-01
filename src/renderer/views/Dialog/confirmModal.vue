@@ -277,6 +277,16 @@
 
           </div>
 
+          <div v-if="txtype=='CancelSellOrder'">
+            <h2> {{$t('sellpageinfo.Cancelsalesorder')}}  </h2>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('syncorderpage.orderID')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.orderId}}</Col>
+            </Row>
+
+
+          </div>
+
 
 
           <!-- MsgMinerWithDrawCount -->
