@@ -675,9 +675,10 @@
 
    },
    "testcoin":{
-       "txtbtn":"前往领取测试代币",
+       "txtbtn":"测试网水龙头",
        "txtbref":"Lambda存储测试大赛火热进行中",
-       "miningaward":"存储挖矿奖励"
+       "miningaward":"存储挖矿奖励",
+       "community":"社区"
    },
    "sellpageinfo":{
        "Initializeminer":"矿工初始化",
