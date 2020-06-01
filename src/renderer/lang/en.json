@@ -676,9 +676,10 @@
  "Version":"Version"
 },
 "testcoin":{
-    "txtbtn":"click the button to collect test token",
+    "txtbtn":"Test net faucet",
     "txtbref":"Lambda storage test competition is in progress",
-    "miningaward":"Rewards for storage and mining"
+    "miningaward":"Rewards for storage and mining",
+    "community":"Community"
 },
 "sellpageinfo":{
   "Initializeminer":"Initialize miner",
