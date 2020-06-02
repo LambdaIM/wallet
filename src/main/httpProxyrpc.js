@@ -11,7 +11,7 @@ var { DAEMON_CONFIG } = require('../configmain.js');
 const { throwErrorCode, errorList } = require('./throwErrorCode.js');
 // Override timeout default for the library
 // Now all requests using this instance will wait 2.5 seconds before timing out
-
+const settings = require('electron-settings');
 
 export default function() {
   eipc.answerRenderer('httpgetstatus', async query => {
@@ -140,6 +140,33 @@ export default function() {
       // app.relaunch();
       // app.exit(0);
       return { data: {}, state: true };
+    } catch (error) {
+      log.error(error);
+      return { data: error, state: false };
+    }
+  });
+
+  eipc.answerRenderer('seting_get', async query => {
+    console.log('seting_get');
+    var { key } = query;
+
+    try {
+      var result = settings.get(key);
+
+      return { data: result, state: true };
+    } catch (error) {
+      log.error(error);
+      return { data: error, state: false };
+    }
+  });
+  eipc.answerRenderer('seting_set', async query => {
+    console.log('seting_set');
+    var { key, value } = query;
+
+    try {
+      var result = settings.set(key, value);
+
+      return { data: result, state: true };
     } catch (error) {
       log.error(error);
       return { data: error, state: false };

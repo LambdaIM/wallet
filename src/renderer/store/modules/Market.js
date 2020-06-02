@@ -1,3 +1,4 @@
+import setseting from '@/common/js/seting.js';
 const settings = require('electron-settings');
 var select_Market = settings.get('market.address');
 var id;
@@ -14,9 +15,9 @@ const mutations = {
     console.log('mutations');
     state.selectMarket = info;
     clearTimeout(id);
-    id = setTimeout(() => {
-      settings.set('market.address', info);
-    }, 1000 * 5);
+    // id = setTimeout(() => {
+    setseting.set('market.address', info);
+    // }, 1000 * 5);
   }
 };
 const actions = {
