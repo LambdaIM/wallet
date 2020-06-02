@@ -40,6 +40,7 @@
 import eventhub from '../../common/js/event.js';
 import ConfirmModal from './confirmModal.vue';
 import { DAEMON_CONFIG } from '../../../config.js';
+import setseting from '@/common/js/seting.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
 
@@ -103,7 +104,7 @@ export default {
           if (url.endsWith('/') == false) {
             url += '/';
           }
-          settings.set('custombrowserurl', url);
+          setseting.set('custombrowserurl', url);
           this.$Notice.warning({
             title: this.$t('Custombrowser.success'),
             desc: this.$t('Custombrowser.Setsuccessfully')

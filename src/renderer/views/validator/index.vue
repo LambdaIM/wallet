@@ -107,6 +107,7 @@ import _ from 'underscore';
 import eventhub from '../../common/js/event.js';
 import { DAEMON_CONFIG } from '../../../config.js';
 import CustombrowserModalDialog from '@/views/Dialog/CustombrowserModal.vue';
+import setseting from '@/common/js/seting.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
 
@@ -196,7 +197,7 @@ export default {
         .then(async function(res) {
           _this.$data.loadingbtn = false;
           if (res.state && res.data) {
-            settings.set('validator', {
+            setseting.set('validator', {
               ipv1: ValidatorIP
             });
 

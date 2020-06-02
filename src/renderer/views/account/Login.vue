@@ -76,6 +76,8 @@ import { DAEMON_CONFIG } from '../../../config.js';
 import Mybg from '@/components/common/useful/Mybg.vue';
 import eventHub from '@/common/js/event.js';
 import DeleuserModal from '@/views/Dialog/DeleuserModal.vue';
+
+import setseting from '@/common/js/seting.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
 
@@ -159,7 +161,7 @@ export default {
           this.$Notice.success({
             title: this.$t('login.action.Login_success')
           });
-          let login = settings.set('isopenfilev1', true);
+          let login = setseting.set('isopenfilev1', true);
           console.log(login);
           this.$store.dispatch('setLogin', true);
 

@@ -1,5 +1,7 @@
 import roleconfig from '@/roleconfig.json';
+import setseting from '@/common/js/seting.js';
 const settings = require('electron-settings');
+
 console.log('加载role');
 var rolelist = settings.get('userrolelist') || {};
 var defaultwallet = settings.get('defaultwallet');
@@ -15,7 +17,7 @@ const mutations = {
     state.role = role;
     // state.roleconfig.role;
     var defaultwallet = settings.get('defaultwallet');
-    settings.set(`userrolelist.${defaultwallet}`, role);
+    setseting.set(`userrolelist.${defaultwallet}`, role);
   },
   readrole: function(state) {
     var defaultwallet = settings.get('defaultwallet');

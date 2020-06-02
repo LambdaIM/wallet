@@ -501,10 +501,10 @@ import Gasprise from '@/views/Dialog/Gasprise.vue';
 import Introtip from '../../common/js/Introtip.js';
 
 import CustombrowserModalDialog from '@/views/Dialog/CustombrowserModal.vue';
+import setseting from '@/common/js/seting.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
-
 
 export default {
   data() {
@@ -549,7 +549,7 @@ export default {
       }
 
 
-      settings.set('isopenfilev1', false);
+      setseting.set('isopenfilev1', false);
       document.title = window.title;
       this.$store.dispatch('setLogin', false);
       this.$router.push('/');
@@ -601,7 +601,7 @@ export default {
     selectlang(item) {
       this.$i18n.locale = item;
       this.$data.langnow = item;
-      settings.set('set', {
+      setseting.set('set', {
         language: item
       });
       window.location.reload();

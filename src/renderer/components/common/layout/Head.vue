@@ -234,9 +234,11 @@
 import eventhub from '../../../common/js/event.js';
 import { mapState } from 'vuex';
 import roleModalDialog from '@/views/Dialog/roleModal.vue';
+import setseting from '@/common/js/seting.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
 const { shell } = require('electron');
+
 
 export default {
   components: {
@@ -365,7 +367,7 @@ export default {
       console.log(item);
       this.$i18n.locale = item;
       this.$data.langnow = item;
-      settings.set('set', { language: item });
+      setseting.set('set', { language: item });
       window.location.reload();
       // var _this = this;
       // setTimeout(() => {

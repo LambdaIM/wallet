@@ -65,6 +65,7 @@ import { mapState } from 'vuex';
 import { DAEMON_CONFIG } from '../../../../config.js';
 
 import moment from 'moment';
+import setseting from '@/common/js/seting.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
 
@@ -107,7 +108,7 @@ export default {
       ipc.callMain('httpgetstatus', pra)
         .then(async function(res) {
           if (res.state && res.data) {
-            settings.set('validator', {
+            setseting.set('validator', {
               ipv1: ValidatorIP
             });
 
