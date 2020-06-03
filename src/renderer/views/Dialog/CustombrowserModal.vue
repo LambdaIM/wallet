@@ -110,7 +110,7 @@ export default {
           });
           setTimeout(() => {
             window.location.reload();
-          }, 800);
+          }, 500);
         }
       });
       /// ===

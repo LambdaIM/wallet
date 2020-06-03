@@ -604,11 +604,11 @@ export default {
       settings.set('set', {
         language: item
       });
-      window.location.reload();
+
       // var _this = this;
-      // setTimeout(() => {
-      //   _this.restartapp();
-      // }, 200);
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     },
     openroleModal() {
       this.$refs.roleModal.open();

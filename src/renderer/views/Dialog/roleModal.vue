@@ -56,7 +56,7 @@ export default {
       this.$store.dispatch('setrole', this.$data.activeitem);
       setTimeout(function() {
         window.location.reload();
-      }, 10);
+      }, 500);
     }
 
   }
