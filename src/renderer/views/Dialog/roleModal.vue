@@ -23,6 +23,10 @@
             <h3>{{$t('rolepage.roletype.validator')}}</h3>
             <p>{{$t('rolepage.validatorbrief')}}</p>
             </div>
+            <div @click="selectitem('marketmaker')" :class="{item:true, active:activeitem=='marketmaker'}">
+            <h3>做市商  </h3>
+            <p>创建授权挖矿市场、创建资产、关联市场和资产、授权挖矿  </p>
+            </div>
 
         </div>
     </Modal>
