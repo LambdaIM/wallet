@@ -2,6 +2,13 @@
 <template>
   <div class="customer-container">
       <div class="tableContainer">
+        <div>
+              <Button @click="openmarket" type="primary">创建市场</Button>
+              <Button @click="openassert" type="primary"> 创建资产 </Button>
+              <Button type="primary"> 关联市场和资产 </Button>
+              <Button type="primary"> 矿工授权 </Button>
+        </div>
+        <br/>
         <Table :columns="columnsToken" :data="coinList">
 
 
@@ -16,12 +23,24 @@
 
               <Button v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
             </template>
+            <template slot-scope="{ row, index }" slot="pledge">
+
+                  <Button size="small">质押</Button>
+                  <Button size="small">反质押</Button>
+                  <Button size="small">提取收益</Button>
+
+            </template>
+
+
+
           </Table>
 
         </TabPane>
       </div>
       <SendModelDialog ref="SendModelDialog" />
       <AssetlModalDialog ref="AssetlModalDialog" />
+      <CreatemarketModalDialog ref="CreatemarketModal"/>
+      <CreateAssetModalDialog ref="CreateAssetModal" />
 
 
   </div>
@@ -31,7 +50,12 @@ import SendModelDialog from '@/views/Dialog/sendModel.vue';
 import AssetlModalDialog from '@/views/Dialog/assetlModal.vue';
 import _ from 'underscore';
 import eventhub from '../../common/js/event.js';
+
+
+import CreatemarketModalDialog from '@/views/Dialog/CreatemarketModal.vue';
+import CreateAssetModalDialog from '@/views/Dialog/CreateAssetModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 
 export default {
   data() {
@@ -52,6 +76,26 @@ export default {
           title: this.$t('home.Token.operation'),
           key: 'action',
           slot: 'action'
+        },
+        {
+          title: '关联市场',
+          key: 'Related market'
+
+        },
+        {
+          title: '质押',
+          key: 'Pledgeamount'
+
+        },
+        {
+          title: '挖矿收益',
+          key: 'Pledgeamount'
+
+        },
+        {
+          title: '质押、反质押、提取收益',
+          key: 'pledge',
+          slot: 'pledge'
         }
       ],
       allassert: []
@@ -72,7 +116,9 @@ export default {
   },
   components: {
     SendModelDialog,
-    AssetlModalDialog
+    AssetlModalDialog,
+    CreatemarketModalDialog,
+    CreateAssetModalDialog
   },
   methods: {
     denomFormart(denom) {
@@ -94,6 +140,12 @@ export default {
       } catch (ex) {
         console.log(ex);
       }
+    },
+    openmarket() {
+      this.$refs.CreatemarketModal.open();
+    },
+    openassert() {
+      this.$refs.CreateAssetModal.open();
     }
 
 
