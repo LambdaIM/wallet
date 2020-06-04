@@ -22,5 +22,14 @@
     },
     "button":{
 
+    },
+    "conlist":{
+      "Createmarket":["marketmaker"],
+      "Createassets":["marketmaker"],
+      "authorization":["marketmaker"],
+      "pledge":["miner","marketmaker"],
+      "redeem":["miner","marketmaker"],
+      "Withdrawal":["miner","marketmaker"]
+
     }
 }

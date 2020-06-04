@@ -72,32 +72,25 @@ export default {
         });
         return;
       }
+      Amount = this.toBigNumFixed(Amount);
 
 
 
       this.transfer({
+        AssetName,
+        Amount
 
       });
     },
-    async transfer(name, assetsType, ratio) {
+    async transfer(praobj) {
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
       try {
-        let res = await ipc.callMain('vote', {
-          name, assetsType, ratio
-        });
-        // console.log(res);
+        let res = await ipc.callMain('vote', praobj);
+
         if (res.state) {
           this.sendcancel();
           this.$refs.ConfirmModal.open('vote', res.data);
-
-          // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
-          // if (gasres.state) {
-          //   this.$data.gaseFee = gasres.data;
-          //   this.$data.transactiondata = res.data;
-          //   this.sendcancel();
-          //   this.confirmModal = true;
-          // }
         }
       } catch (ex) {
         this.$Notice.warning({

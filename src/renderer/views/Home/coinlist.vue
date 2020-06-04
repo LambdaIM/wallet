@@ -3,8 +3,8 @@
   <div class="customer-container">
       <div class="tableContainer">
         <div>
-              <Button @click="openmarket" type="primary">创建市场</Button>
-              <Button @click="openassert" type="primary"> 创建资产 </Button>
+              <Button v-if="$role('conlist.Createmarket')" @click="openmarket" type="primary">创建市场</Button>
+              <Button v-if="$role('conlist.Createassets')" @click="openassert" type="primary"> 创建资产 </Button>
 
 
         </div>
@@ -23,15 +23,15 @@
 
               <Button class="smallbtn" v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
 
-              <Button class="smallbtn" @click="openAuthorizedmining(row)" size="small">授权</Button>
+              <Button v-if="$role('conlist.authorization')" class="smallbtn" @click="openAuthorizedmining(row)" size="small">授权</Button>
             </template>
             <template slot-scope="{ row, index }" slot="pledge">
 
-                  <Button class="smallbtn" @click="openAuthorizedpledge(row)" size="small">质押</Button>
+                  <Button v-if="$role('conlist.pledge')" class="smallbtn" @click="openAuthorizedpledge(row)" size="small">质押</Button>
 
-                  <Button class="smallbtn" @click="openAuthorizedredeem(row)" size="small">赎回</Button>
+                  <Button v-if="$role('conlist.redeem')" class="smallbtn" @click="openAuthorizedredeem(row)" size="small">赎回</Button>
 
-                  <Button class="smallbtn" size="small">提取收益</Button>
+                  <Button v-if="$role('conlist.Withdrawal')" class="smallbtn" size="small">提取收益</Button>
 
             </template>
 
