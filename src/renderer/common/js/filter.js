@@ -181,6 +181,10 @@ function formatHour(num) {
   return (num / (1000 * 1000 * 1000 * 60 * 60)).toFixed(2);
 }
 
+function denomformat(denom) {
+  return denom.slice(1).toUpperCase();
+}
+
 // 1000*1000*1000*60*60*24
 
 export default {
@@ -203,5 +207,6 @@ export default {
   TbbBlanceValue,
   BlanceValueint,
   Fixed6,
-  formatHour
+  formatHour,
+  denomformat
 };

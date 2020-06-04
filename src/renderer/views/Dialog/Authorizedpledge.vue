@@ -9,7 +9,7 @@
       >
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
-          <Input v-model="AssetName" readonly>
+          <Input :value="AssetName|denomformat" readonly>
             <span slot="prepend">资产名称</span>
           </Input>
         </p>
