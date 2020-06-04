@@ -19,16 +19,19 @@
               {{denomFormart(row.denom)}}
             </template>
             <template slot-scope="{ row, index }" slot="action">
-              <Button @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
+              <Button class="smallbtn" @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
-              <Button v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
-              <Button @click="openAuthorizedmining(row)" size="small">授权</Button>
+              <Button class="smallbtn" v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
+
+              <Button class="smallbtn" @click="openAuthorizedmining(row)" size="small">授权</Button>
             </template>
             <template slot-scope="{ row, index }" slot="pledge">
 
-                  <Button size="small">质押</Button>
-                  <Button size="small">反质押</Button>
-                  <Button size="small">提取收益</Button>
+                  <Button class="smallbtn" @click="openAuthorizedpledge(row)" size="small">质押</Button>
+
+                  <Button class="smallbtn" @click="openAuthorizedredeem(row)" size="small">赎回</Button>
+
+                  <Button class="smallbtn" size="small">提取收益</Button>
 
             </template>
 
@@ -44,6 +47,9 @@
       <CreateAssetModalDialog ref="CreateAssetModal" />
 
       <AuthorizedminingDialog ref="AuthorizedminingModal" />
+      <AuthorizedpledgeDialog ref="AuthorizedpledgeModal"  />
+
+      <AuthorizedredeemDialog ref="AuthorizedredeemModal"/>
 
 
   </div>
@@ -58,7 +64,12 @@ import eventhub from '../../common/js/event.js';
 import CreatemarketModalDialog from '@/views/Dialog/CreatemarketModal.vue';
 import CreateAssetModalDialog from '@/views/Dialog/CreateAssetModal.vue';
 import AuthorizedminingDialog from '@/views/Dialog/Authorizedmining.vue';
+
+
+import AuthorizedpledgeDialog from '@/views/Dialog/Authorizedpledge.vue';
+import AuthorizedredeemDialog from '@/views/Dialog/Authorizedredeem.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 
 
 export default {
@@ -97,7 +108,7 @@ export default {
 
         },
         {
-          title: '质押、反质押、提取收益',
+          title: '质押、赎回、提取收益',
           key: 'pledge',
           slot: 'pledge'
         }
@@ -123,7 +134,9 @@ export default {
     AssetlModalDialog,
     CreatemarketModalDialog,
     CreateAssetModalDialog,
-    AuthorizedminingDialog
+    AuthorizedminingDialog,
+    AuthorizedpledgeDialog,
+    AuthorizedredeemDialog
   },
   methods: {
     denomFormart(denom) {
@@ -154,6 +167,12 @@ export default {
     },
     openAuthorizedmining(data) {
       this.$refs.AuthorizedminingModal.open(data);
+    },
+    openAuthorizedpledge(data) {
+      this.$refs.AuthorizedpledgeModal.open(data);
+    },
+    openAuthorizedredeem(data) {
+      this.$refs.AuthorizedredeemModal.open(data);
     }
 
 
@@ -237,4 +256,10 @@ export default {
         font-size: 14px;
       }
 }
+
+.smallbtn{
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
 </style>
