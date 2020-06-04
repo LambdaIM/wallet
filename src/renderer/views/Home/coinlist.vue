@@ -5,7 +5,7 @@
         <div>
               <Button @click="openmarket" type="primary">创建市场</Button>
               <Button @click="openassert" type="primary"> 创建资产 </Button>
-              <Button type="primary"> 关联市场和资产 </Button>
+
               <Button type="primary"> 矿工授权 </Button>
         </div>
         <br/>

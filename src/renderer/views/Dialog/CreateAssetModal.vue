@@ -15,7 +15,7 @@
         </p>
         <br />
         <p>
-          <Input  v-model="assetsType" >
+          <Input  v-model="asset" >
             <span slot="prepend">初始发行量</span>
           </Input>
         </p>
@@ -30,13 +30,13 @@
         </p>
         <br />
         <p  v-if="MintType=='3'">
-          <Input  v-model="assetsType" >
+          <Input  v-model="inflation" >
             <span slot="prepend">每块高增发量</span>
           </Input>
         </p>
         <br />
         <p v-if="MintType=='3'">
-          <Input  v-model="assetsType" >
+          <Input  v-model="inflation_period" >
             <span slot="prepend">增发块高周期</span>
           </Input>
         </p>
@@ -61,10 +61,11 @@ export default {
     return {
       sendModal: false,
       confirmModal: false,
-      Tovalue: '',
-      LAMBvalue: '',
-      gaseFee: 0,
-      MintType: ''
+      name: '',
+      asset: '',
+      MintType: '1',
+      inflation: '',
+      inflation_period: ''
     };
   },
   components: {
@@ -80,33 +81,50 @@ export default {
     preSendLAMB() {
       console.log('-----');
       let name = this.name;
-      let assetsType = this.assetsType;
-      let ratio = parseInt(this.ratio);
+      let asset = parseInt(this.asset);
+      let MintType = this.MintType;
+      let inflation = parseInt(this.inflation);
+      let inflation_period = parseInt(this.inflation_period);
 
       if (name == '') {
-        this.$Notice.warning({
-          title: '市场名称不能为空'
-        });
-        return;
-      }
-
-      if (assetsType == '') {
         this.$Notice.warning({
           title: '资产名称不能为空'
         });
         return;
       }
-      assetsType = 'u' + assetsType;
 
 
-
-      if (isNaN(ratio)) {
+      if (isNaN(asset) || asset <= 0) {
         this.$Notice.warning({
-          title: '兑换比例需要是个整数'
+          title: '初始化发行量需要为数值'
         });
         return;
       }
-      this.transfer(name, assetsType, ratio);
+      if (MintType == '3') {
+        if (isNaN(inflation) || inflation <= 0) {
+          this.$Notice.warning({
+            title: '每块高增发量需要为数值'
+          });
+          return;
+        }
+
+        if (isNaN(inflation_period) || inflation_period <= 0) {
+          this.$Notice.warning({
+            title: '增发块高周期需要为数值'
+          });
+          return;
+        }
+      }
+
+
+
+      this.transfer({
+        name,
+        asset,
+        MintType,
+        inflation,
+        inflation_period
+      });
     },
     async transfer(name, assetsType, ratio) {
       this.$data.transactiondata = null;
