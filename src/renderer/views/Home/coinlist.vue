@@ -6,7 +6,7 @@
               <Button @click="openmarket" type="primary">创建市场</Button>
               <Button @click="openassert" type="primary"> 创建资产 </Button>
 
-              <Button type="primary"> 矿工授权 </Button>
+
         </div>
         <br/>
         <Table :columns="columnsToken" :data="coinList">
@@ -22,6 +22,7 @@
               <Button @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
               <Button v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
+              <Button @click="openAuthorizedmining(row)" size="small">授权</Button>
             </template>
             <template slot-scope="{ row, index }" slot="pledge">
 
@@ -42,6 +43,8 @@
       <CreatemarketModalDialog ref="CreatemarketModal"/>
       <CreateAssetModalDialog ref="CreateAssetModal" />
 
+      <AuthorizedminingDialog ref="AuthorizedminingModal" />
+
 
   </div>
 </template>
@@ -54,6 +57,7 @@ import eventhub from '../../common/js/event.js';
 
 import CreatemarketModalDialog from '@/views/Dialog/CreatemarketModal.vue';
 import CreateAssetModalDialog from '@/views/Dialog/CreateAssetModal.vue';
+import AuthorizedminingDialog from '@/views/Dialog/Authorizedmining.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 
@@ -118,7 +122,8 @@ export default {
     SendModelDialog,
     AssetlModalDialog,
     CreatemarketModalDialog,
-    CreateAssetModalDialog
+    CreateAssetModalDialog,
+    AuthorizedminingDialog
   },
   methods: {
     denomFormart(denom) {
@@ -146,6 +151,9 @@ export default {
     },
     openassert() {
       this.$refs.CreateAssetModal.open();
+    },
+    openAuthorizedmining(data) {
+      this.$refs.AuthorizedminingModal.open(data);
     }
 
 
