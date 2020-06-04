@@ -91,7 +91,8 @@ walletManger.prototype.getDefaultwalletBasicinfo = function () {
   }
   return {
     address: this.defaultwallet.address,
-    name: this.defaultwallet.name
+    name: this.defaultwallet.name,
+    publicKey: this.defaultwallet.publicKey
   };
 };
 
