@@ -52,14 +52,31 @@
               shape="circle"
               icon="ios-copy"
             ></Button>
-            <!-- <Button
-                v-clipboard:copy="walletInfo.address"
-                v-clipboard:success="onCopy"
-                v-clipboard:error="onError"
-                type="primary"
-                shape="circle"
-                icon="ios-copy"
-              ></Button> -->
+
+            </Col>
+          </Row>
+          <Row class-name="card-item">
+            <Col
+              span="4"
+              class-name="title-wrapper"
+            >
+            <span class="title">公钥</span>
+            </Col>
+            <Col
+              span="18"
+              class-name="content-wrapper"
+            >
+            <span>{{walletInfo.publicKey}}</span>
+
+            <Button
+              v-clipboard:copy="walletInfo.publicKey"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+              type="primary"
+              shape="circle"
+              icon="ios-copy"
+            ></Button>
+
             </Col>
           </Row>
           <Row class-name="card-item">
