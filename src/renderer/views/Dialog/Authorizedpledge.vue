@@ -79,18 +79,17 @@ export default {
       this.transfer({
         AssetName,
         Amount
-
       });
     },
     async transfer(praobj) {
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
       try {
-        let res = await ipc.callMain('vote', praobj);
+        let res = await ipc.callMain('DigitalAssetPledge', praobj);
 
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('vote', res.data);
+          this.$refs.ConfirmModal.open('DigitalAssetPledge', res.data);
         }
       } catch (ex) {
         this.$Notice.warning({
