@@ -81,5 +81,8 @@
 	"Copy":"复制",
 	"Paste":"粘贴",
 	"SelectAll":"全选",
-	"Edit":"编辑"
+	"Edit":"编辑",
+	"need_AssetName":"需要资产名称",
+	"need_Ratio":"需要兑换比例"
+
 }

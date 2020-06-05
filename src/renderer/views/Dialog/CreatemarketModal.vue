@@ -8,12 +8,7 @@
         @on-cancel="sendcancel"
       >
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
-        <p>
-          <Input v-model="name" >
-            <span slot="prepend">市场名称</span>
-          </Input>
-        </p>
-        <br />
+
         <p>
           <Input  v-model="assetsType" >
             <span slot="prepend">资产名称</span>
@@ -67,16 +62,11 @@ export default {
     },
     preSendLAMB() {
       console.log('-----');
-      let name = this.name;
+
       let assetsType = this.assetsType;
       let ratio = parseInt(this.ratio);
 
-      if (name == '') {
-        this.$Notice.warning({
-          title: '市场名称不能为空'
-        });
-        return;
-      }
+
 
       if (assetsType == '') {
         this.$Notice.warning({
@@ -94,19 +84,20 @@ export default {
         });
         return;
       }
-      this.transfer(name, assetsType, ratio);
+      this.transfer(assetsType, ratio);
     },
-    async transfer(name, assetsType, ratio) {
+    async transfer(assetsType, ratio) {
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
       try {
-        let res = await ipc.callMain('vote', {
-          name, assetsType, ratio
+        let res = await ipc.callMain('CreateDigitalAssetMarket', {
+          AssetName: assetsType,
+          Ratio: ratio
         });
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('vote', res.data);
+          this.$refs.ConfirmModal.open('CreateDigitalAssetMarket', res.data);
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {
@@ -119,7 +110,7 @@ export default {
       } catch (ex) {
         this.$Notice.warning({
           title: 'error',
-          desc: ex.errormsg
+          desc: ex.errormsg.errormsg
         });
         console.log(ex);
       }

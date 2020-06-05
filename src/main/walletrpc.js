@@ -910,6 +910,130 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+  eipc.answerRenderer('CreateDigitalAssetMarket', async query => {
+    try {
+      var { AssetName, Ratio } = query;
+      console.log(query);
+      if (AssetName == undefined) {
+        throw resultView(null, false, errorList.need_AssetName);
+      }
+
+      if (Ratio == undefined) {
+        throw resultView(null, false, errorList.need_Ratio);
+      }
+
+      var TxMessageload = await WM.CreateDigitalAssetMarket(AssetName, Ratio);
+
+      return resultView({
+        data: TxMessageload
+      }, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('DigitalAssetPledge', async query => {
+    try {
+      var { AssetName, Amount } = query;
+      if (AssetName == undefined) {
+        throw resultView(null, false, errorList.need_AssetName);
+      }
+
+      if (Amount == undefined) {
+        throw resultView(null, false, errorList.need_amount);
+      }
+
+      var TxMessageload = await WM.DigitalAssetPledge(AssetName, Amount);
+
+      return resultView({
+        data: TxMessageload
+      }, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('DigitalAssetRefund', async query => {
+    try {
+      var { AssetName } = query;
+      if (AssetName == undefined) {
+        throw resultView(null, false, errorList.need_AssetName);
+      }
+
+      var TxMessageload = await WM.DigitalAssetRefund(AssetName);
+
+      return resultView({
+        data: TxMessageload
+      }, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('AuthorizeMiningPubKey', async query => {
+    try {
+      var { PubKey } = query;
+      if (PubKey == undefined) {
+        throw resultView(null, false, errorList.need_PubKey);
+      }
+      var TxMessageload = await WM.AuthorizeMiningPubKey(PubKey);
+      return resultView({
+        data: TxMessageload
+      }, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+  eipc.answerRenderer('CreateAsset', async query => {
+    try {
+      var { asset_amount, asset_denom, name,
+        mint_type, inflation, inflation_period, inflation_period } = query;
+
+      if (asset_amount == undefined) {
+        throw resultView(null, false, errorList.need_asset_amount);
+      }
+
+      if (asset_denom == undefined) {
+        throw resultView(null, false, errorList.need_asset_denom);
+      }
+
+      if (name == undefined) {
+        throw resultView(null, false, errorList.need_name);
+      }
+
+      if (mint_type == undefined) {
+        throw resultView(null, false, errorList.need_mint_type);
+      }
+
+      if (inflation == undefined) {
+        throw resultView(null, false, errorList.need_inflation);
+      }
+
+      if (inflation_period == undefined) {
+        throw resultView(null, false, errorList.need_inflation_period);
+      }
+
+
+      var token_amount, token_denom;
+
+      token_denom = 'ulamb';
+      token_amount = 1e18;
+
+
+      var TxMessageload = await WM.CreateAsset(asset_amount, asset_denom,
+        token_amount, token_denom,
+        name, mint_type, inflation, inflation_period);
+
+      return resultView({
+        data: TxMessageload
+      }, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
 }
 
 
