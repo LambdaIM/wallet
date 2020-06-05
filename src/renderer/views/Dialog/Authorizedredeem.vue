@@ -64,17 +64,17 @@ export default {
         AssetName
       });
     },
-    async transfer(name, assetsType, ratio) {
+    async transfer(AssetName) {
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
       try {
-        let res = await ipc.callMain('vote', {
-          name, assetsType, ratio
+        let res = await ipc.callMain('DigitalAssetRefund', {
+          AssetName
         });
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('vote', res.data);
+          this.$refs.ConfirmModal.open('DigitalAssetRefund', res.data);
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {
