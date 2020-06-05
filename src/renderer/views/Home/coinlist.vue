@@ -9,7 +9,9 @@
 
         </div>
         <br/>
-        <Table :columns="columnsToken" :data="coinList">
+          <Tabs value="name1">
+            <TabPane label="资产" name="name1">
+                      <Table :columns="columnsToken" :data="coinList">
 
 
             <template slot-scope="{ row, index }" slot="amount">
@@ -23,23 +25,39 @@
 
               <Button class="smallbtn" v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
 
-              <Button v-if="$role('conlist.authorization')" class="smallbtn" @click="openAuthorizedmining(row)" size="small">授权</Button>
-            </template>
-            <template slot-scope="{ row, index }" slot="pledge">
-
-                  <Button v-if="$role('conlist.pledge')" class="smallbtn" @click="openAuthorizedpledge(row)" size="small">质押</Button>
-
-                  <Button v-if="$role('conlist.redeem')" class="smallbtn" @click="openAuthorizedredeem(row)" size="small">赎回</Button>
-
-                  <Button v-if="$role('conlist.Withdrawal')" class="smallbtn" size="small">提取收益</Button>
 
             </template>
 
 
 
           </Table>
+            </TabPane>
+            <TabPane label="授权市场" name="name2">
+                 <Table :columns="marketcolumns" :data="coinList">
+                    <template slot-scope="{ row, index }" slot="amount">
+              {{bigNumTypeFormat(row.amount,row.denom)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="denom">
+              {{denomFormart(row.denom)}}
+            </template>
+                         <template slot-scope="{ row, index }" slot="pledge">
 
-        </TabPane>
+                  <Button v-if="$role('conlist.pledge')" class="smallbtn" @click="openAuthorizedpledge(row)" size="small">质押</Button>
+
+                  <Button v-if="$role('conlist.redeem')" class="smallbtn" @click="openAuthorizedredeem(row)" size="small">赎回</Button>
+
+                  <Button v-if="$role('conlist.Withdrawal')" class="smallbtn" size="small">提取收益</Button>
+                  <Button v-if="$role('conlist.authorization')" class="smallbtn" @click="openAuthorizedmining(row)" size="small">授权</Button>
+
+            </template>
+
+                 </Table>
+            </TabPane>
+
+        </Tabs>
+
+
+
       </div>
       <SendModelDialog ref="SendModelDialog" />
       <AssetlModalDialog ref="AssetlModalDialog" />
@@ -93,19 +111,48 @@ export default {
           slot: 'action'
         },
         {
-          title: '关联市场',
-          key: 'Related market'
-
+          title: '初始化发行量',
+          key: 'action'
         },
         {
-          title: '质押',
-          key: 'Pledgeamount'
-
+          title: '增发类型',
+          key: 'action'
         },
         {
-          title: '挖矿收益',
-          key: 'Pledgeamount'
+          title: '每块高增发量',
+          key: 'action'
+        },
+        {
+          title: '增发块高周期',
+          key: 'action'
+        }
 
+
+
+      ],
+      allassert: [],
+      marketcolumns: [
+        {
+          title: '市场地址',
+          key: 'name'
+        },
+        {
+          title: '资产名称',
+          key: 'denom',
+          slot: 'denom'
+        },
+
+        {
+          title: '兑换比例',
+          key: 'address'
+        },
+        {
+          title: '质押金额',
+          key: 'address'
+        },
+        {
+          title: '收益金额',
+          key: 'address'
         },
         {
           title: '质押、赎回、提取收益',
@@ -113,7 +160,9 @@ export default {
           slot: 'pledge'
         }
       ],
-      allassert: []
+      marketdata: [
+        {}
+      ]
     };
   },
   beforeDestroy() {
@@ -154,6 +203,18 @@ export default {
         let res = await ipc.callMain('assetAll', {});
         if (res.state) {
           this.$data.allassert = res.data || [];
+          this.$data.marketdata = res.data || [];
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
+    async  getmarketAll() {
+      // assetAll
+      try {
+        let res = await ipc.callMain('marketAll', {});
+        if (res.state) {
+          this.$data.marketdata = res.data || [];
         }
       } catch (ex) {
         console.log(ex);
