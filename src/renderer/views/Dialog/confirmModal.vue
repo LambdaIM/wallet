@@ -319,8 +319,22 @@
             </Row>
 
             <Row class-name="item">
-              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="5" class-name="key">增发比例:</Col>
               <Col span="16" class-name="value">{{transactiondata.Ratio}}</Col>
+            </Row>
+
+          </div>
+
+          <div v-if="txtype=='DigitalAssetPledge'">
+            <h2> 质押 </h2>
+            {{transactiondata}}
+            <Row class-name="item">
+              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="16" class-name="value">{{transactiondata.Amount|Fixed6}}</Col>
             </Row>
 
           </div>
