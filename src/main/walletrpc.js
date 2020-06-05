@@ -924,9 +924,7 @@ export default function() {
     try {
       var TxMessageload = await WM.CreateDigitalAssetMarket(AssetName, Ratio);
 
-      return resultView({
-        data: TxMessageload
-      }, true);
+      return resultView(TxMessageload, true);
     } catch (error) {
       throw resultView(null, false, error);
     }
@@ -986,7 +984,7 @@ export default function() {
 
   eipc.answerRenderer('CreateAsset', async query => {
     var { asset_amount, asset_denom, name,
-      mint_type, inflation, inflation_period, } = query;
+      mint_type, inflation, inflation_period } = query;
 
     console.log(query);
 
