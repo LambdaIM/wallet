@@ -126,17 +126,22 @@ export default {
         inflation_period
       });
     },
-    async transfer(name, assetsType, ratio) {
+    async transfer(objpra) {
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
       try {
-        let res = await ipc.callMain('vote', {
-          name, assetsType, ratio
+        let res = await ipc.callMain('CreateAsset', {
+          asset_amount: objpra.asset,
+          asset_denom: objpra.name,
+          name: objpra.name,
+          mint_type: objpra.MintType,
+          inflation: objpra.inflation,
+          inflation_period: objpra.inflation_period
         });
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('vote', res.data);
+          this.$refs.ConfirmModal.open('CreateAsset', res.data);
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {

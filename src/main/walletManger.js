@@ -96,6 +96,8 @@ walletManger.prototype.getDefaultwalletBasicinfo = function () {
   };
 };
 
+
+
 walletManger.prototype.OpenDefaultwallet = function (password) {
   var info;
   log.info('OpenDefaultwallet');
@@ -788,6 +790,69 @@ walletManger.prototype.CancelSellOrder = async function (orderId,memo) {
   };
   return result;
 };
+
+
+walletManger.prototype.CreateDigitalAssetMarket = async function (AssetName,Ratio,memo) {
+  var result = {
+    type: transaction.CreateDigitalAssetMarket,
+    AssetName: AssetName,
+    Ratio:Ratio,
+    memo: memo || ''
+  };
+  return result;
+};
+
+
+walletManger.prototype.DigitalAssetPledge = async function (AssetName,Amount,memo) {
+  var result = {
+    type: transaction.DigitalAssetPledge,
+    AssetName: AssetName,
+    Amount:Amount,
+    memo: memo || ''
+  };
+  return result;
+};
+
+
+walletManger.prototype.DigitalAssetRefund = async function (AssetName,memo) {
+  var result = {
+    type: transaction.DigitalAssetPledge,
+    AssetName: AssetName,
+    memo: memo || ''
+  };
+  return result;
+};
+
+
+walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,memo) {
+  var result = {
+    type: transaction.AuthorizeMiningPubKey,
+    PubKey:  PubKey,
+    memo: memo || ''
+  };
+  return result;
+};
+
+
+walletManger.prototype.CreateAsset = async function ( asset_amount,asset_denom,
+  token_amount,token_denom,name,
+  mint_type,inflation,inflation_period,
+  memo) {
+  var result = {
+    type: transaction.CreateAsset,
+    asset_amount:asset_amount,
+    asset_denom:asset_denom,
+    token_amount:token_amount,
+    token_denom:token_denom,
+    name:name,
+    mint_type:mint_type,
+    inflation:inflation,
+    inflation_period:inflation_period,
+    memo: memo || ''
+  };
+  return result;
+};
+
 
 
 

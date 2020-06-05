@@ -81,5 +81,7 @@
 	"Copy":"Copy",
 	"Paste":"Paste",
 	"SelectAll":"Select All",
-	"Edit":"Edit"
+	"Edit":"Edit",
+	"need_AssetName":"need AssetName",
+	"need_Ratio":"need Ratio"
 }

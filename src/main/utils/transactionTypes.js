@@ -19,7 +19,13 @@ const transactionTypes = {
   MinerWithDrawCount: `MsgMinerWithDrawCount`,
   DelegateMarket: 'MsgDelegateMarket',
   WithDrawMarket: 'MsgWithDrawMarket',
-  CancelSellOrder: 'MsgCancelSellOrder'
+  CancelSellOrder: 'MsgCancelSellOrder',
+  CreateDigitalAssetMarket: 'MsgCreateDigitalAssetMarket',
+  DigitalAssetPledge: 'MsgDigitalAssetPledge',
+  DigitalAssetRefund: 'MsgDigitalAssetRefund',
+  AuthorizeMiningPubKey: 'MsgAuthorizeMiningPubKey',
+  CreateAsset: 'MsgCreateAsset'
+
 
 
 };
