@@ -75,21 +75,19 @@ export default {
 
 
 
-      this.transfer({
-
-      });
+      this.transfer(Pubkey);
     },
-    async transfer(name, assetsType, ratio) {
+    async transfer(PubKey) {
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
       try {
-        let res = await ipc.callMain('vote', {
-          name, assetsType, ratio
+        let res = await ipc.callMain('AuthorizeMiningPubKey', {
+          PubKey
         });
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('vote', res.data);
+          this.$refs.ConfirmModal.open('AuthorizeMiningPubKey', res.data);
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {

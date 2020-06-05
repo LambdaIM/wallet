@@ -20,6 +20,16 @@
             <span slot="prepend">兑换比例</span>
           </Input>
         </p>
+        <br />
+        <p>
+          兑换比例指的是这个资产市场多少币兑换1TB的存储空间,<br/>
+          例如3000lamb=1TBB<br/>
+
+
+        </p>
+        <p v-if="assetsType&&ratio">
+          {{ratio}}{{assetsType}} = 1TBB
+        </p>
 
       </Form >
         <div slot="footer">
