@@ -83,5 +83,10 @@
 	"SelectAll":"Select All",
 	"Edit":"Edit",
 	"need_AssetName":"need AssetName",
-	"need_Ratio":"need Ratio"
+	"need_Ratio":"need Ratio",
+	"need_asset_denom":"need asset_denom",
+	"need_asset_amount":"need asset_amount",
+	"need_mint_type":"need mint_type",
+	"need_inflation":"need inflation",
+	"need_inflation_period":"need inflation period"
 }

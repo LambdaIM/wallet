@@ -912,17 +912,16 @@ export default function() {
   });
 
   eipc.answerRenderer('CreateDigitalAssetMarket', async query => {
+    var { AssetName, Ratio } = query;
+    console.log(query);
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    if (Ratio == undefined) {
+      throw resultView(null, false, errorList.need_Ratio);
+    }
     try {
-      var { AssetName, Ratio } = query;
-      console.log(query);
-      if (AssetName == undefined) {
-        throw resultView(null, false, errorList.need_AssetName);
-      }
-
-      if (Ratio == undefined) {
-        throw resultView(null, false, errorList.need_Ratio);
-      }
-
       var TxMessageload = await WM.CreateDigitalAssetMarket(AssetName, Ratio);
 
       return resultView({
@@ -934,16 +933,15 @@ export default function() {
   });
 
   eipc.answerRenderer('DigitalAssetPledge', async query => {
+    var { AssetName, Amount } = query;
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    if (Amount == undefined) {
+      throw resultView(null, false, errorList.need_amount);
+    }
     try {
-      var { AssetName, Amount } = query;
-      if (AssetName == undefined) {
-        throw resultView(null, false, errorList.need_AssetName);
-      }
-
-      if (Amount == undefined) {
-        throw resultView(null, false, errorList.need_amount);
-      }
-
       var TxMessageload = await WM.DigitalAssetPledge(AssetName, Amount);
 
       return resultView({
@@ -955,12 +953,11 @@ export default function() {
   });
 
   eipc.answerRenderer('DigitalAssetRefund', async query => {
+    var { AssetName } = query;
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
     try {
-      var { AssetName } = query;
-      if (AssetName == undefined) {
-        throw resultView(null, false, errorList.need_AssetName);
-      }
-
       var TxMessageload = await WM.DigitalAssetRefund(AssetName);
 
       return resultView({
@@ -972,11 +969,11 @@ export default function() {
   });
 
   eipc.answerRenderer('AuthorizeMiningPubKey', async query => {
+    var { PubKey } = query;
+    if (PubKey == undefined) {
+      throw resultView(null, false, errorList.need_PubKey);
+    }
     try {
-      var { PubKey } = query;
-      if (PubKey == undefined) {
-        throw resultView(null, false, errorList.need_PubKey);
-      }
       var TxMessageload = await WM.AuthorizeMiningPubKey(PubKey);
       return resultView({
         data: TxMessageload
@@ -988,35 +985,36 @@ export default function() {
 
 
   eipc.answerRenderer('CreateAsset', async query => {
+    var { asset_amount, asset_denom, name,
+      mint_type, inflation, inflation_period, } = query;
+
+    console.log(query);
+
+    if (asset_amount == undefined) {
+      throw resultView(null, false, errorList.need_asset_amount);
+    }
+
+    if (asset_denom == undefined) {
+      throw resultView(null, false, errorList.need_asset_denom);
+    }
+
+    if (name == undefined) {
+      throw resultView(null, false, errorList.need_name);
+    }
+
+    if (mint_type == undefined) {
+      throw resultView(null, false, errorList.need_mint_type);
+    }
+
+
+    if (inflation == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_inflation);
+    }
+
+    if (inflation_period == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_inflation_period);
+    }
     try {
-      var { asset_amount, asset_denom, name,
-        mint_type, inflation, inflation_period, inflation_period } = query;
-
-      if (asset_amount == undefined) {
-        throw resultView(null, false, errorList.need_asset_amount);
-      }
-
-      if (asset_denom == undefined) {
-        throw resultView(null, false, errorList.need_asset_denom);
-      }
-
-      if (name == undefined) {
-        throw resultView(null, false, errorList.need_name);
-      }
-
-      if (mint_type == undefined) {
-        throw resultView(null, false, errorList.need_mint_type);
-      }
-
-      if (inflation == undefined) {
-        throw resultView(null, false, errorList.need_inflation);
-      }
-
-      if (inflation_period == undefined) {
-        throw resultView(null, false, errorList.need_inflation_period);
-      }
-
-
       var token_amount, token_denom;
 
       token_denom = 'ulamb';
@@ -1027,9 +1025,7 @@ export default function() {
         token_amount, token_denom,
         name, mint_type, inflation, inflation_period);
 
-      return resultView({
-        data: TxMessageload
-      }, true);
+      return resultView(TxMessageload, true);
     } catch (error) {
       throw resultView(null, false, error);
     }
