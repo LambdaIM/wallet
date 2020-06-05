@@ -310,6 +310,22 @@
 
           </div>
 
+          <div v-if="txtype=='CreateDigitalAssetMarket'">
+            <h2> 创建授权市场  </h2>
+
+            <Row class-name="item">
+              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName}}</Col>
+            </Row>
+
+            <Row class-name="item">
+              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="16" class-name="value">{{transactiondata.Ratio}}</Col>
+            </Row>
+
+          </div>
+
+
 
           <!-- CreateAsset -->
 
