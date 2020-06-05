@@ -73,5 +73,10 @@ export var errorList = {
   'file_open_error': 'file_open_error|rpc71|File format error',
   'not_find_Wallet': 'not_find_Wallet|31|not find DefaultWallet',
   'need_AssetName': 'need_AssetName|81|need_AssetName',
-  'need_Ratio': 'need_Ratio|82|need_Ratio'
+  'need_Ratio': 'need_Ratio|82|need_Ratio',
+  'need_asset_amount': 'need_asset_amount|91|need_asset_amount',
+  'need_asset_denom': 'need_asset_denom|91|need_asset_denom',
+  'need_mint_type': 'need_mint_type|91|need_mint_type',
+  'need_inflation': 'need_inflation|91|need_inflation',
+  'need_inflation_period': 'need_inflation|91|need_inflation_period'
 };

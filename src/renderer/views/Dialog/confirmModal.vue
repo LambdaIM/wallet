@@ -283,13 +283,35 @@
               <Col span="5" class-name="key">{{$t('syncorderpage.orderID')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.orderId}}</Col>
             </Row>
+          </div>
 
+          <div v-if="txtype=='CreateAsset'">
+            <h2> 创建资产  </h2>
+            <Row class-name="item">
+              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="16" class-name="value">{{transactiondata.asset_denom}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">初始发行量:</Col>
+              <Col span="16" class-name="value">{{transactiondata.asset_amount}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">增发类型:</Col>
+              <Col span="16" class-name="value">{{getTypeName(transactiondata.mint_type)}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">每块高增发量:</Col>
+              <Col span="16" class-name="value">{{transactiondata.inflation}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">增发块高周期:</Col>
+              <Col span="16" class-name="value">{{transactiondata.inflation_period}}</Col>
+            </Row>
 
           </div>
 
 
-
-          <!-- MsgMinerWithDrawCount -->
+          <!-- CreateAsset -->
 
 
 
@@ -399,6 +421,15 @@ export default {
           desc: this.$t('Dialog.com.muchcommission')
         });
         return false;
+      }
+    },
+    getTypeName(types) {
+      if (types == '1') {
+        return '不可增发';
+      } else if (types == '2') {
+        return '一次性增发';
+      } else if (types == '3') {
+        return '挖矿增发';
       }
     }
   },
