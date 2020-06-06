@@ -117,6 +117,7 @@ export default {
       }
 
 
+      name = 'u' + name;
 
       this.transfer({
         name,
