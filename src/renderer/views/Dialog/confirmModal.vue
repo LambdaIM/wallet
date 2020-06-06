@@ -287,9 +287,10 @@
 
           <div v-if="txtype=='CreateAsset'">
             <h2> 创建资产  </h2>
+
             <Row class-name="item">
               <Col span="5" class-name="key">资产名称:</Col>
-              <Col span="16" class-name="value">{{transactiondata.asset_denom}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.asset_denom|denomformat}}</Col>
             </Row>
             <Row class-name="item">
               <Col span="5" class-name="key">初始发行量:</Col>
@@ -315,7 +316,7 @@
 
             <Row class-name="item">
               <Col span="5" class-name="key">资产名称:</Col>
-              <Col span="16" class-name="value">{{transactiondata.AssetName}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|denomformat}}</Col>
             </Row>
 
             <Row class-name="item">
@@ -327,15 +328,27 @@
 
           <div v-if="txtype=='DigitalAssetPledge'">
             <h2> 质押 </h2>
-            {{transactiondata}}
+
             <Row class-name="item">
               <Col span="5" class-name="key">资产名称:</Col>
-              <Col span="16" class-name="value">{{transactiondata.AssetName}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|denomformat}}</Col>
             </Row>
             <Row class-name="item">
               <Col span="5" class-name="key">资产名称:</Col>
-              <Col span="16" class-name="value">{{transactiondata.Amount|Fixed6}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.Amount|BlanceValue}}</Col>
             </Row>
+
+          </div>
+
+
+          <div v-if="txtype=='DigitalAssetRefund'">
+            <h2> 赎回 </h2>
+
+            <Row class-name="item">
+              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|denomformat}}</Col>
+            </Row>
+
 
           </div>
 

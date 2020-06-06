@@ -60,9 +60,9 @@ export default {
     preSendLAMB() {
       console.log('-----');
       var AssetName = this.$data.AssetName;
-      this.transfer({
+      this.transfer(
         AssetName
-      });
+      );
     },
     async transfer(AssetName) {
       this.$data.transactiondata = null;
