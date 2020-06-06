@@ -177,6 +177,9 @@ export default {
     this.Interval = setInterval(() => {
       this.getAssertAll();
     }, 1000 * 15);
+    this.getmarketAll();
+    this.getincomelist();
+    this.pledgelist();
   },
   components: {
     SendModelDialog,
@@ -212,9 +215,31 @@ export default {
     async  getmarketAll() {
       // assetAll
       try {
-        let res = await ipc.callMain('marketAll', {});
+        let res = await ipc.callMain('Authorizedmarketlist', {});
         if (res.state) {
           this.$data.marketdata = res.data || [];
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
+    async  getincomelist() {
+      // assetAll
+      try {
+        let res = await ipc.callMain('Authorizedincomelist', {});
+        if (res.state) {
+          this.$data.incomelist = res.data || [];
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
+    async  pledgelist() {
+      // assetAll
+      try {
+        let res = await ipc.callMain('Authorizedpledgelist', {});
+        if (res.state) {
+          this.$data.pledgelist = res.data || [];
         }
       } catch (ex) {
         console.log(ex);

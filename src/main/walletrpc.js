@@ -1022,6 +1022,21 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+  eipc.answerRenderer('Assetparameters', async query => {
+    // var {  } = query;
+
+    try {
+      var TxMessageload = await WM.Assetparameters();
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+
+  // Assetparameters
 }
 
 
