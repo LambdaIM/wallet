@@ -17,6 +17,11 @@
         <p>
           赎回全部质押
         </p>
+        <br/>
+        <p>
+          反质押挖矿币需要等21天<br/>
+          反质押周期内无收益
+        </p>
 
       </Form >
         <div slot="footer">
@@ -42,7 +47,8 @@ export default {
       name: '',
       asset: '',
       AssetName: '',
-      Amount: ''
+      Amount: '',
+      parameter: {}
     };
   },
   components: {
@@ -90,6 +96,14 @@ export default {
           desc: ex.errormsg
         });
         console.log(ex);
+      }
+    },
+    async getparameter() {
+      let res = await ipc.callMain('Assetparameters', {
+
+      });
+      if (res.state) {
+        this.$data.parameter = res.data;
       }
     }
 

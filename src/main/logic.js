@@ -9,6 +9,8 @@ import proposalrpc from './proposalrpc';
 
 import marketrpc from './marketrpc';
 
+import Assetrpc from './Assetrpc';
+
 
 var fs = require('graceful-fs');
 var { DAEMON_CONFIG } = require('../configmain.js');
@@ -32,4 +34,6 @@ export default function() {
   proposalrpc();
 
   marketrpc();
+
+  Assetrpc();
 }

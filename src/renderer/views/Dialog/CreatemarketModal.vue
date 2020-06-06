@@ -27,6 +27,7 @@
 
 
         </p>
+        <br />
         <p v-if="assetsType&&ratio">
           {{ratio}}{{assetsType}} = 1TBB
         </p>
@@ -88,7 +89,7 @@ export default {
 
 
 
-      if (isNaN(ratio)) {
+      if (isNaN(ratio) || ratio <= 0) {
         this.$Notice.warning({
           title: '兑换比例需要是个整数'
         });
