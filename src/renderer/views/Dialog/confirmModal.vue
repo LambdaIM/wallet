@@ -352,6 +352,19 @@
 
           </div>
 
+          <div v-if="txtype=='AuthorizeMiningPubKey'">
+            <h2> 授权 </h2>
+            <Row class-name="item">
+              <Col span="3" class-name="key">公钥:</Col>
+              <Col span="21">
+              <Input readonly :rows="4" type="textarea" v-model="transactiondata.PubKey"    />
+
+              </Col>
+            </Row>
+
+
+          </div>
+
 
 
           <!-- CreateAsset -->
