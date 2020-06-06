@@ -969,9 +969,7 @@ export default function() {
     }
     try {
       var TxMessageload = await WM.AuthorizeMiningPubKey(PubKey);
-      return resultView({
-        data: TxMessageload
-      }, true);
+      return resultView(TxMessageload, true);
     } catch (error) {
       throw resultView(null, false, error);
     }
