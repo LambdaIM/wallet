@@ -24,6 +24,26 @@
               <Button class="smallbtn" @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
               <Button class="smallbtn" v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
+<!--
+              <Button class="smallbtn" type="primary" size="small">增发资产</Button>
+              <Button class="smallbtn" type="primary" size="small">锁定资产</Button>
+              <Button class="smallbtn" type="primary" size="small">解锁资产</Button>
+              <Button class="smallbtn" type="primary" size="small">销毁资产</Button>
+              <Button class="smallbtn" type="primary" size="small">毁灭资产</Button> -->
+
+               <Dropdown v-if="row.denom !='ulamb'&&row.denom !='utbb'  " class="smallbtn">
+                    <a  href="javascript:void(0)">
+                        资产操作
+                        <Icon type="ios-arrow-down"></Icon>
+                    </a>
+                    <DropdownMenu slot="list">
+                        <DropdownItem>增发资产</DropdownItem>
+                        <DropdownItem>锁定资产</DropdownItem>
+                        <DropdownItem>解锁资产</DropdownItem>
+                        <DropdownItem divided>销毁资产</DropdownItem>
+                        <DropdownItem divided>毁灭资产</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
 
 
             </template>
@@ -101,7 +121,7 @@ export default {
           slot: 'denom'
         },
         {
-          title: this.$t('home.Token.amount'),
+          title: '余额',
           key: 'amount',
           slot: 'amount'
         },
@@ -155,7 +175,7 @@ export default {
           key: 'address'
         },
         {
-          title: '质押、赎回、提取收益',
+          title: '操作',
           key: 'pledge',
           slot: 'pledge'
         }
@@ -344,8 +364,11 @@ export default {
 }
 
 .smallbtn{
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-right: 10px;
+  margin-top: 10px;
+  width: 100px;
+
 }
 
 </style>

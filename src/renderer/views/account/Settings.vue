@@ -551,11 +551,11 @@ export default {
     this.$data.custombrowserurl = settings.get('custombrowserurl') || this.$t('Custombrowser.notseturl');
   },
   methods: {
-    onCopy: function(e) {
-      this.$Message.info('You just copied: ' + e.text);
+    onCopy(e) {
+      this.$Message.info(this.$t('head.action.You_just_copied') + e.text);
     },
-    onError: function(e) {
-      this.$Message.info('Failed to copy texts');
+    onError(e) {
+      this.$Message.info(this.$t('head.action.Failed_to_copy_texts'));
     },
     async logout() {
       // lambdastorageclose
