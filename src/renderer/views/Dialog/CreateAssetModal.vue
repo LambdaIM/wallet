@@ -118,6 +118,13 @@ export default {
 
 
       name = 'u' + name;
+      var reg = new RegExp(/^[a-zA-Z0-9]{3,16}$/);
+      if (!reg.test(name)) {
+        this.$Notice.warning({
+          title: '资产符号长度2-15个字符'
+        });
+        return;
+      }
 
       this.transfer({
         name,
