@@ -33,7 +33,7 @@
 
                <Dropdown v-if="row.denom !='ulamb'&&row.denom !='utbb'  " class="smallbtn">
                     <a  href="javascript:void(0)">
-                        资产操作
+                        更多
                         <Icon type="ios-arrow-down"></Icon>
                     </a>
                     <DropdownMenu slot="list">
