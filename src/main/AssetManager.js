@@ -34,8 +34,9 @@ class AssetManager {
     //   throwErrorCode(errorList.need_address);
     // }
     console.log('AuthorizedMarketlist');
-    var result = await this.CosmosAPI().get.Assetparameters();
-
+    var result = await this.CosmosAPI().get.dammarketlist();
+    console.log(result);
+    console.log('AuthorizedMarketlist');
     return { data: result };
   }
   async Authorizedpledgelist(query) {
@@ -43,7 +44,7 @@ class AssetManager {
       throwErrorCode(errorList.need_address);
     }
     console.log('Authorizedpledgelist');
-    var result = await this.CosmosAPI().get.Assetparameters();
+    var result = await this.CosmosAPI().get.damminerinfo(this.defaultAddress);
 
     return { data: result };
   }
@@ -53,15 +54,6 @@ class AssetManager {
     }
     console.log('Authorizedincomelist');
     var result = await this.CosmosAPI().get.Assetparameters();
-
-    return { data: result };
-  }
-  async Authorizedmarketlist(query) {
-    if (this.defaultAddress == null) {
-      throwErrorCode(errorList.need_address);
-    }
-    console.log('Authorizedmarketlist');
-    var result = await this.CosmosAPI().get.Authorizedmarketlist();
 
     return { data: result };
   }

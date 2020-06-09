@@ -50,9 +50,10 @@ export default function() {
   eipc.answerRenderer('Authorizedmarketlist', async query => {
     try {
       var M = new AssetManager();
-      var result = await M.Authorizedmarketlist();
+      var result = await M.AuthorizedMarketlist();
       return { data: result, state: true };
     } catch (error) {
+      console.log(error);
       return { data: error, state: false };
     }
   });

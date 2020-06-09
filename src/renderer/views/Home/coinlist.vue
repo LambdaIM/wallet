@@ -57,13 +57,19 @@
           </Table>
             </TabPane>
             <TabPane label="授权市场" name="name2">
-                 <Table :columns="marketcolumns" :data="coinList">
-                    <template slot-scope="{ row, index }" slot="amount">
+                 <Table :columns="marketcolumns" :data="marketdata">
+                    <!-- <template slot-scope="{ row, index }" slot="amount">
               {{bigNumTypeFormat(row.amount,row.denom)}}
-            </template>
+            </template> -->
             <template slot-scope="{ row, index }" slot="denom">
-              {{denomFormart(row.denom)}}
+              {{denomFormart(row.assetName)}}
             </template>
+
+            <template slot-scope="{ row, index }" slot="pledgeAsset">
+              {{findpledge(row.assetName)}}
+            </template>
+
+
                          <template slot-scope="{ row, index }" slot="pledge">
 
                   <Button v-if="$role('conlist.pledge')" class="smallbtn" @click="openAuthorizedpledge(row)" size="small">质押</Button>
@@ -159,21 +165,22 @@ export default {
       marketcolumns: [
         {
           title: '市场地址',
-          key: 'name'
+          key: 'marketName'
         },
         {
           title: '资产名称',
-          key: 'denom',
+          key: 'assetName',
           slot: 'denom'
         },
 
         {
           title: '兑换比例',
-          key: 'address'
+          key: 'exchangeRatio'
         },
         {
           title: '质押金额',
-          key: 'address'
+          key: 'pledgeAsset',
+          slot: 'pledgeAsset'
         },
         {
           title: '收益金额',
@@ -186,8 +193,9 @@ export default {
         }
       ],
       marketdata: [
-        {}
-      ]
+
+      ],
+      pledgelist: {}
     };
   },
   beforeDestroy() {
@@ -204,7 +212,7 @@ export default {
     }, 1000 * 15);
     this.getmarketAll();
     this.getincomelist();
-    this.pledgelist();
+    this.getpledgelist();
   },
   components: {
     SendModelDialog,
@@ -231,7 +239,6 @@ export default {
         let res = await ipc.callMain('assetAll', {});
         if (res.state) {
           this.$data.allassert = res.data || [];
-          this.$data.marketdata = res.data || [];
         }
       } catch (ex) {
         console.log(ex);
@@ -242,7 +249,7 @@ export default {
       try {
         let res = await ipc.callMain('Authorizedmarketlist', {});
         if (res.state) {
-          this.$data.marketdata = res.data || [];
+          this.$data.marketdata = res.data.data || [];
         }
       } catch (ex) {
         console.log(ex);
@@ -259,12 +266,13 @@ export default {
         console.log(ex);
       }
     },
-    async  pledgelist() {
+    async  getpledgelist() {
       // assetAll
+      console.log('AuthorizedMarketlist');
       try {
         let res = await ipc.callMain('Authorizedpledgelist', {});
         if (res.state) {
-          this.$data.pledgelist = res.data || [];
+          this.$data.pledgelist = res.data.data || [];
         }
       } catch (ex) {
         console.log(ex);
@@ -294,6 +302,16 @@ export default {
       var explorer = DAEMON_CONFIG.explore();
       let url = `${explorer}#/assetMarket/${name}/authorize/1`;
       shell.openExternal(url);
+    },
+    findpledge(name) {
+      var result = '';
+      var _this = this;
+      this.$data.pledgelist.assetSet.forEach(item => {
+        if (item.assetName == name) {
+          result = _this.toBigNumTonum(item.pledgeAsset);
+        }
+      });
+      return result;
     }
 
 

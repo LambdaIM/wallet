@@ -29,18 +29,39 @@
         </RadioGroup>
         </p>
         <br />
-        <p  v-if="MintType=='3'">
-          <Input  v-model="inflation" >
-            <span slot="prepend">每块高增发量</span>
-          </Input>
-        </p>
-        <br />
-        <p v-if="MintType=='3'">
-          <Input  v-model="inflation_period" >
-            <span slot="prepend">增发块高周期</span>
-          </Input>
-          <br />
-        </p>
+        <div v-if="MintType=='3'">
+            <br />
+            <p >
+              <Input  v-model="total_supply" >
+                <span slot="prepend">发行总量</span>
+              </Input>
+            </p>
+            <br />
+            <p >
+              <Input  v-model="inflation" >
+                <span slot="prepend">每块高增发量</span>
+              </Input>
+            </p>
+            <br />
+            <p >
+              <Input  v-model="adjust_rate" >
+                <span slot="prepend">减产系数</span>
+              </Input>
+            </p>
+            <br />
+            <p >
+              <Input  v-model="max_adjust_count" >
+                <span slot="prepend">最大减产次数</span>
+              </Input>
+              <br />
+            </p>
+            <p >
+              <Input  v-model="genesis_height" >
+                <span slot="prepend">初次增发块高</span>
+              </Input>
+              <br />
+            </p>
+        </div>
 
         <p>
           创建资产需要100万LAMB
@@ -71,7 +92,11 @@ export default {
       MintType: '1',
       inflation: '',
       inflation_period: '',
-      parameter: null
+      parameter: null,
+      total_supply: '',
+      adjust_rate: '',
+      max_adjust_count: '',
+      genesis_height: ''
     };
   },
   components: {
@@ -92,7 +117,15 @@ export default {
       let asset = parseInt(this.asset);
       let MintType = this.MintType;
       let inflation = parseInt(this.inflation);
-      let inflation_period = parseInt(this.inflation_period);
+
+
+      let total_supply = parseInt(this.total_supply);
+
+      let adjust_rate = parseFloat(this.adjust_rate);
+
+      let max_adjust_count = parseInt(this.max_adjust_count);
+
+      let genesis_height = parseInt(this.genesis_height);
 
       if (name == '') {
         this.$Notice.warning({
@@ -116,9 +149,30 @@ export default {
           return;
         }
 
-        if (isNaN(inflation_period) || inflation_period <= 0) {
+        if (isNaN(total_supply) || total_supply <= 0) {
           this.$Notice.warning({
-            title: '增发块高周期需要为数值'
+            title: '发行总量需要为数值'
+          });
+          return;
+        }
+
+        if (isNaN(adjust_rate) || adjust_rate <= 0) {
+          this.$Notice.warning({
+            title: '减产系数需要为数值'
+          });
+          return;
+        }
+
+        if (isNaN(max_adjust_count) || max_adjust_count <= 0) {
+          this.$Notice.warning({
+            title: '最大减产次数需要为数值'
+          });
+          return;
+        }
+
+        if (isNaN(genesis_height) || genesis_height <= 0) {
+          this.$Notice.warning({
+            title: '初次增发块高需要为数值'
           });
           return;
         }
@@ -147,7 +201,10 @@ export default {
         asset,
         MintType,
         inflation,
-        inflation_period
+        total_supply,
+        adjust_rate,
+        max_adjust_count,
+        genesis_height
       });
     },
     async transfer(objpra) {
@@ -160,7 +217,9 @@ export default {
           name: objpra.name,
           mint_type: objpra.MintType,
           inflation: objpra.inflation,
-          inflation_period: objpra.inflation_period
+          total_supply: objpra.total_supply,
+          adjust_rate: objpra.adjust_rate,
+          max_adjust_count: objpra.max_adjust_count
         });
         // console.log(res);
         if (res.state) {

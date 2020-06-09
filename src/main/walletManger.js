@@ -837,6 +837,7 @@ walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,memo) {
 walletManger.prototype.CreateAsset = async function ( asset_amount,asset_denom,
   token_amount,token_denom,name,
   mint_type,inflation,inflation_period,
+  total_supply,adjust_rate,max_adjust_count,
   memo) {
   var result = {
     type: transaction.CreateAsset,
@@ -847,7 +848,9 @@ walletManger.prototype.CreateAsset = async function ( asset_amount,asset_denom,
     name:name,
     mint_type:mint_type,
     inflation:inflation,
-    inflation_period:inflation_period,
+    total_supply:total_supply,
+    adjust_rate:adjust_rate,
+    max_adjust_count:max_adjust_count,
     memo: memo || ''
   };
   return result;
