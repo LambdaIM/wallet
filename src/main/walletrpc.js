@@ -978,7 +978,7 @@ export default function() {
 
   eipc.answerRenderer('CreateAsset', async query => {
     var { asset_amount, asset_denom, name,
-      mint_type, inflation, inflation_period } = query;
+      mint_type, inflation, total_supply, adjust_rate, max_adjust_count } = query;
 
     console.log(query);
 
@@ -1003,9 +1003,20 @@ export default function() {
       throw resultView(null, false, errorList.need_inflation);
     }
 
-    if (inflation_period == undefined && mint_type == '3') {
-      throw resultView(null, false, errorList.need_inflation_period);
+    if (total_supply == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_total_supply);
     }
+
+    if (adjust_rate == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_adjust_rate);
+    }
+
+    if (max_adjust_count == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_max_adjust_count);
+    }
+
+
+
     try {
       var token_amount, token_denom;
 
@@ -1015,7 +1026,8 @@ export default function() {
 
       var TxMessageload = await WM.CreateAsset(asset_amount, asset_denom,
         token_amount, token_denom,
-        name, mint_type, inflation, inflation_period);
+        name, mint_type, inflation, total_supply,
+        adjust_rate, max_adjust_count);
 
       return resultView(TxMessageload, true);
     } catch (error) {
