@@ -28,7 +28,7 @@
         <p>
           兑换比例指的是这个资产市场多少币兑换1TB的存储空间,<br/>
           例如3000lamb=1TBB<br/>
-          创建市场需要100万LAMB
+          创建市场需要{{parameter.create_market_cost|BlanceValue}}LAMB
 
 
         </p>
@@ -138,11 +138,11 @@ export default {
       }
     },
     async getparameter() {
-      let res = await ipc.callMain('Assetparameters', {
+      let res = await ipc.callMain('Marketparameters', {
 
       });
       if (res.state) {
-        this.$data.parameter = res.data;
+        this.$data.parameter = res.data.data;
       }
     }
 
