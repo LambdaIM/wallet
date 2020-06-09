@@ -39,7 +39,12 @@
           <Input  v-model="inflation_period" >
             <span slot="prepend">增发块高周期</span>
           </Input>
+          <br />
         </p>
+
+        <p>
+          创建资产需要100万LAMB
+        <p/>
 
       </Form >
         <div slot="footer">
@@ -65,7 +70,8 @@ export default {
       asset: '',
       MintType: '1',
       inflation: '',
-      inflation_period: ''
+      inflation_period: '',
+      parameter: null
     };
   },
   components: {
@@ -74,6 +80,8 @@ export default {
   methods: {
     open() {
       this.sendModal = true;
+
+      this.getparameter();
     },
     sendcancel() {
       this.sendModal = false;
@@ -114,6 +122,14 @@ export default {
           });
           return;
         }
+      }
+
+      if (this.bigLess0OrGreater(1e5, this.balance)) {
+        // need to alert
+        this.$Notice.warning({
+          title: this.$t('home.action.check_balance_amount_transfer')
+        });
+        return;
       }
 
 
@@ -165,6 +181,14 @@ export default {
           desc: ex.errormsg
         });
         console.log(ex);
+      }
+    },
+    async getparameter() {
+      let res = await ipc.callMain('Assetparameters', {
+
+      });
+      if (res.state) {
+        this.$data.parameter = res.data;
       }
     }
 

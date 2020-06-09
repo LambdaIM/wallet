@@ -15,10 +15,14 @@
 
 
             <template slot-scope="{ row, index }" slot="amount">
-              {{bigNumTypeFormat(row.amount,row.denom)}}
+
+                {{bigNumTypeFormat(row.amount,row.denom)}}
+
             </template>
             <template slot-scope="{ row, index }" slot="denom">
+              <a @click="openLinkassert(row.denom)" >
               {{denomFormart(row.denom)}}
+              </a>
             </template>
             <template slot-scope="{ row, index }" slot="action">
               <Button class="smallbtn" @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
@@ -107,6 +111,7 @@ import AuthorizedminingDialog from '@/views/Dialog/Authorizedmining.vue';
 import AuthorizedpledgeDialog from '@/views/Dialog/Authorizedpledge.vue';
 import AuthorizedredeemDialog from '@/views/Dialog/Authorizedredeem.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+const { shell } = require('electron');
 
 
 
@@ -279,6 +284,16 @@ export default {
     },
     openAuthorizedredeem(data) {
       this.$refs.AuthorizedredeemModal.open(data);
+    },
+    openLinkassert(name) {
+      var explorer = DAEMON_CONFIG.explore();
+      let url = `${explorer}#/assetDetail/${name}`;
+      shell.openExternal(url);
+    },
+    openLinkmarket(name) {
+      var explorer = DAEMON_CONFIG.explore();
+      let url = `${explorer}#/assetMarket/${name}/authorize/1`;
+      shell.openExternal(url);
     }
 
 

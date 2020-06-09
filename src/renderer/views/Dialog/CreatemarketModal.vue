@@ -24,6 +24,7 @@
         <p>
           兑换比例指的是这个资产市场多少币兑换1TB的存储空间,<br/>
           例如3000lamb=1TBB<br/>
+          创建市场需要100万LAMB
 
 
         </p>
@@ -58,7 +59,8 @@ export default {
       voteType: 'Yes',
       name: '',
       assetsType: '',
-      ratio: ''
+      ratio: '',
+      parameter: null
     };
   },
   components: {
@@ -67,6 +69,7 @@ export default {
   methods: {
     open() {
       this.sendModal = true;
+      this.getparameter();
     },
     sendcancel() {
       this.sendModal = false;
@@ -92,6 +95,13 @@ export default {
       if (isNaN(ratio) || ratio <= 0) {
         this.$Notice.warning({
           title: '兑换比例需要是个整数'
+        });
+        return;
+      }
+      if (this.bigLess0OrGreater(1e5, this.balance)) {
+        // need to alert
+        this.$Notice.warning({
+          title: this.$t('home.action.check_balance_amount_transfer')
         });
         return;
       }
@@ -124,6 +134,14 @@ export default {
           desc: ex.errormsg.errormsg
         });
         console.log(ex);
+      }
+    },
+    async getparameter() {
+      let res = await ipc.callMain('Assetparameters', {
+
+      });
+      if (res.state) {
+        this.$data.parameter = res.data;
       }
     }
 

@@ -12,6 +12,7 @@
       "guide":["miner"],
       "Myorderlist":["order"],
       "lambdas3":["order"]
+      
     },
     "market":{
       "sellspace":["miner"]

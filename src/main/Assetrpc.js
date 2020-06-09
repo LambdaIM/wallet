@@ -16,8 +16,9 @@ const { throwErrorCode, errorList } = require('./throwErrorCode.js');
 export default function() {
   eipc.answerRenderer('Assetparameters', async query => {
     try {
-      var M = new Manager();
-      var result = await M.AssetManager();
+      var M = new AssetManager();
+
+      var result = await M.Assetparameters();
       return { data: result, state: true };
     } catch (error) {
       return { data: error, state: false };
@@ -27,7 +28,7 @@ export default function() {
 
   eipc.answerRenderer('Authorizedpledgelist', async query => {
     try {
-      var M = new Manager();
+      var M = new AssetManager();
       var result = await M.Authorizedpledgelist();
       return { data: result, state: true };
     } catch (error) {
@@ -38,7 +39,7 @@ export default function() {
 
   eipc.answerRenderer('Authorizedincomelist', async query => {
     try {
-      var M = new Manager();
+      var M = new AssetManager();
       var result = await M.Authorizedincomelist();
       return { data: result, state: true };
     } catch (error) {
@@ -48,7 +49,7 @@ export default function() {
 
   eipc.answerRenderer('Authorizedmarketlist', async query => {
     try {
-      var M = new Manager();
+      var M = new AssetManager();
       var result = await M.Authorizedmarketlist();
       return { data: result, state: true };
     } catch (error) {

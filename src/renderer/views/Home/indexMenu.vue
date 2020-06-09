@@ -31,10 +31,10 @@
             <Icon type="ios-paper" />
             {{$t('home.token')}}
         </MenuItem>
-        <MenuItem to="/home/localtxlist" name="localtxlist">
+        <!-- <MenuItem to="/home/localtxlist" name="localtxlist">
             <Icon type="ios-paper" />
             {{$t('home.Latest_Transaction_local')}}
-        </MenuItem>
+        </MenuItem> -->
         <Submenu    name="other">
             <template slot="title">
               <Icon type="md-swap"></Icon>
@@ -53,10 +53,10 @@
 
 
         </Submenu>
-        <MenuItem v-if="$role('home.subaccount')"   to="/home/subaccount" name="subaccount">
+        <!-- <MenuItem v-if="$role('home.subaccount')"   to="/home/subaccount" name="subaccount">
             <Icon type="md-list" />
             {{$t('home.subaccount')}}
-        </MenuItem>
+        </MenuItem> -->
         <!-- <MenuItem v-if="$role('home.guide')" to="/home/guide" name="guide">
             <Icon type="md-map" />
             {{$t('home.miningguide')}}
