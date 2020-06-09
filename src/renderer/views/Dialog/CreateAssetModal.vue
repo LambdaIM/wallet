@@ -64,7 +64,7 @@
         </div>
 
         <p>
-          创建资产需要100万LAMB
+          创建资产需要{{parameter.create_market_cost|BlanceValue}}LAMB
         <p/>
 
       </Form >
@@ -243,11 +243,12 @@ export default {
       }
     },
     async getparameter() {
+      console.log('getparameter');
       let res = await ipc.callMain('Assetparameters', {
 
       });
       if (res.state) {
-        this.$data.parameter = res.data;
+        this.$data.parameter = res.data.data;
       }
     }
 

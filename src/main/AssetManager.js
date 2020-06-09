@@ -21,14 +21,19 @@ class AssetManager {
     }
   }
   async Assetparameters(query) {
-    // if (this.defaultAddress == null) {
-    //   throwErrorCode(errorList.need_address);
-    // }
     console.log('Assetparameters');
-    var result = await this.CosmosAPI().get.Assetparameters();
+    var result = await this.CosmosAPI().get.damparams();
 
     return { data: result };
   }
+
+  async Marketparameters(query) {
+    console.log('Assetparameters');
+    var result = await this.CosmosAPI().get.damparams();
+
+    return { data: result };
+  }
+
   async AuthorizedMarketlist(query) {
     // if (this.defaultAddress == null) {
     //   throwErrorCode(errorList.need_address);

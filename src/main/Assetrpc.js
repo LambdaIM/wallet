@@ -25,6 +25,18 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('Marketparameters', async query => {
+    try {
+      var M = new AssetManager();
+
+      var result = await M.Marketparameters();
+      return { data: result, state: true };
+    } catch (error) {
+      return { data: error, state: false };
+    }
+  });
+
+
 
   eipc.answerRenderer('Authorizedpledgelist', async query => {
     try {

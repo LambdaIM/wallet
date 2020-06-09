@@ -195,7 +195,7 @@ export default {
       marketdata: [
 
       ],
-      pledgelist: {}
+      pledgelist: null
     };
   },
   beforeDestroy() {
@@ -306,6 +306,9 @@ export default {
     findpledge(name) {
       var result = '';
       var _this = this;
+      if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
+        return;
+      }
       this.$data.pledgelist.assetSet.forEach(item => {
         if (item.assetName == name) {
           result = _this.toBigNumTonum(item.pledgeAsset);
