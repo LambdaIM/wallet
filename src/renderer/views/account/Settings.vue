@@ -1,11 +1,20 @@
 <template>
   <div class="setting-container">
     <div class="setting-wrapper">
+      <div class="logout-container">
+        <div class="logout-wrapper">
+          <button
+            class="btn logout-button"
+            @click="logout"
+          >{{$t('seting.Logout')}}</button>
+        </div>
+      </div>
       <Mycard
         v-if="walletInfo"
         :cardtitle="$t('seting.Wallet_Info')"
         class="mb10"
       >
+
         <div
           class="storage-content"
           slot="card-content"
@@ -266,6 +275,7 @@
           </Row>
 
         </div>
+
       </Mycard>
 
       <!-- <Mycard  cardtitle="Storage Info" class="mb10">
@@ -336,6 +346,33 @@
           </Row> -->
         </div>
       </Mycard>
+
+      <Mycard
+        cardtitle="日志信息"
+        class="mb10"
+      >
+        <div
+          class="storage-content"
+          slot="card-content"
+        >
+          <Row class-name="card-item">
+            <Col
+              span="4"
+              class-name="title-wrapper"
+            >
+            &nbsp;
+            </Col>
+
+            <Col
+              span="4"
+              class-name="content-wrapper"
+            >
+              <Button to="/localtxlist">浏览日志</Button>
+            </Col>
+          </Row>
+        </div>
+      </Mycard>
+
       <Mycard
         v-if="getstore.length>0"
         :cardtitle="$t('seting.Validator_Node_info')"
@@ -385,6 +422,7 @@
 
         </div>
       </Mycard>
+
       <!-- <Mycard
         v-if="getstore.length==0"
         :cardtitle="$t('seting.Validator_Node_info')"
@@ -465,15 +503,9 @@
           </Row>
         </div>
       </Mycard>
+      <br/><br/><br/>
 
-      <div class="logout-container">
-        <div class="logout-wrapper">
-          <button
-            class="btn logout-button"
-            @click="logout"
-          >{{$t('seting.Logout')}}</button>
-        </div>
-      </div>
+
 
       <Modal
         v-model="modal2"

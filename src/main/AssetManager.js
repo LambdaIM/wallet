@@ -66,3 +66,6 @@ class AssetManager {
     return { data: result };
   }
 }
+
+
+export default AssetManager;
