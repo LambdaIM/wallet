@@ -28,14 +28,9 @@
               <Button class="smallbtn" @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
               <Button class="smallbtn" v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
-<!--
-              <Button class="smallbtn" type="primary" size="small">增发资产</Button>
-              <Button class="smallbtn" type="primary" size="small">锁定资产</Button>
-              <Button class="smallbtn" type="primary" size="small">解锁资产</Button>
-              <Button class="smallbtn" type="primary" size="small">销毁资产</Button>
-              <Button class="smallbtn" type="primary" size="small">毁灭资产</Button> -->
 
-               <Dropdown v-if="row.denom !='ulamb'&&row.denom !='utbb'  " class="smallbtn">
+
+               <Dropdown v-if="row.denom !='ulamb'&&row.denom !='utbb'  "   class="smallbtn2">
                     <a  href="javascript:void(0)">
                         更多
                         <Icon type="ios-arrow-down"></Icon>
@@ -69,6 +64,25 @@
               {{findpledge(row.assetName)}}
             </template>
 
+            <template slot-scope="{ row, index }" slot="miningSize">
+              {{findminingSize(row.assetName)}}
+            </template>
+
+
+            <template slot-scope="{ row, index }" slot="marketName">
+              <a @click="openLinkmarket(row.marketName)"> {{row.marketName}} </a>
+            </template>
+
+
+            <template slot-scope="{ row, index }" slot="marketName">
+              <a @click="openLinkmarket(row.marketName)"> {{row.marketName}} </a>
+            </template>
+
+            <template slot-scope="{ row, index }" slot="power">
+                    {{findminingPower(row.assetName)}}
+            </template>
+
+
 
                          <template slot-scope="{ row, index }" slot="pledge">
 
@@ -76,7 +90,7 @@
 
                   <Button v-if="$role('conlist.redeem')" class="smallbtn" @click="openAuthorizedredeem(row)" size="small">赎回</Button>
 
-                  <Button v-if="$role('conlist.Withdrawal')" class="smallbtn" size="small">提取收益</Button>
+                  <!-- <Button v-if="$role('conlist.Withdrawal')" class="smallbtn" size="small">提取收益</Button> -->
                   <Button v-if="$role('conlist.authorization')" class="smallbtn" @click="openAuthorizedmining(row)" size="small">授权</Button>
 
             </template>
@@ -116,6 +130,7 @@ import AuthorizedminingDialog from '@/views/Dialog/Authorizedmining.vue';
 
 import AuthorizedpledgeDialog from '@/views/Dialog/Authorizedpledge.vue';
 import AuthorizedredeemDialog from '@/views/Dialog/Authorizedredeem.vue';
+import { DAEMON_CONFIG } from '../../../config.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 
@@ -164,8 +179,9 @@ export default {
       allassert: [],
       marketcolumns: [
         {
-          title: '市场地址',
-          key: 'marketName'
+          title: '市场名称',
+          key: 'marketName',
+          slot: 'marketName'
         },
         {
           title: '资产名称',
@@ -183,7 +199,17 @@ export default {
           slot: 'pledgeAsset'
         },
         {
-          title: '收益金额',
+          title: '挖矿空间(GB)',
+          key: 'miningSize',
+          slot: 'miningSize'
+        },
+        {
+          title: '提交的算力',
+          key: 'power',
+          slot: 'power'
+        },
+        {
+          title: '挖矿收益',
           key: 'address'
         },
         {
@@ -195,7 +221,8 @@ export default {
       marketdata: [
 
       ],
-      pledgelist: null
+      pledgelist: null,
+      MinerRewards: null
     };
   },
   beforeDestroy() {
@@ -213,6 +240,7 @@ export default {
     this.getmarketAll();
     this.getincomelist();
     this.getpledgelist();
+    this.getMinerRewards();
   },
   components: {
     SendModelDialog,
@@ -315,6 +343,51 @@ export default {
         }
       });
       return result;
+    },
+    findminingSize(name) {
+      var result = '';
+      var _this = this;
+      if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
+        return;
+      }
+      this.$data.pledgelist.assetSet.forEach(item => {
+        if (item.assetName == name) {
+          result = parseFloat(item.miningSize).toFixed(3);
+        }
+      });
+      return result;
+    },
+    findminingPower(name) {
+      var result = '';
+      var _this = this;
+      if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
+        return;
+      }
+      this.$data.pledgelist.assetSet.forEach(item => {
+        if (item.assetName == name) {
+          result = parseFloat(item.power).toFixed(3);
+        }
+      });
+      return result;
+    },
+    async getMinerRewards() {
+      console.log('getMinerRewards');
+      try {
+        let res = await ipc.callMain('MinerRewards', {});
+        if (res.state) {
+          var list = res.data['miner_rewards'] || [];
+          var result = '';
+          // list.forEach(item => {
+          //   if (item.denom == 'ulamb') {
+          //     result = item.amount;
+          //   }
+          // });
+          this.$data.MinerRewards = list;
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+      console.log('getListDataEnd');
     }
 
 
@@ -403,7 +476,15 @@ export default {
   margin-bottom: 10px;
   margin-right: 10px;
   margin-top: 10px;
-  width: 100px;
+  width: 90%
+
+}
+
+.smallbtn2{
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+
 
 }
 

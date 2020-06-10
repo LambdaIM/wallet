@@ -92,7 +92,7 @@ export default {
       MintType: '1',
       inflation: '',
       inflation_period: '',
-      parameter: null,
+      parameter: {},
       total_supply: '',
       adjust_rate: '',
       max_adjust_count: '',

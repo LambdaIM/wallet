@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        title="授权矿工挖矿"
+        title="授权-矿工挖矿"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
@@ -56,7 +56,7 @@ export default {
   methods: {
     open(data) {
       console.log('data', data);
-      this.$data.AssetName = data.denom;
+      this.$data.AssetName = data.assetName;
       this.sendModal = true;
     },
     sendcancel() {

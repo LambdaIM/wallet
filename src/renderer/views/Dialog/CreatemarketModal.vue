@@ -26,7 +26,7 @@
         </p>
         <br />
         <p>
-          兑换比例指的是这个资产市场多少币兑换1TB的存储空间,<br/>
+          兑换比例指的是这个市场，多少币兑换1TB的存储空间,<br/>
           例如3000lamb=1TBB<br/>
           创建市场需要{{parameter.create_market_cost|BlanceValue}}LAMB
 
@@ -61,7 +61,7 @@ export default {
       name: '',
       assetsType: '',
       ratio: '',
-      parameter: null
+      parameter: {}
     };
   },
   components: {
@@ -99,7 +99,7 @@ export default {
         });
         return;
       }
-      if (this.bigLess0OrGreater(1e5, this.balance)) {
+      if (this.bigLess0OrGreater(this.$data.parameter.create_market_cost, this.balance)) {
         // need to alert
         this.$Notice.warning({
           title: this.$t('home.action.check_balance_amount_transfer')

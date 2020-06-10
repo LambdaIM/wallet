@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        title="赎回市场质押"
+        title="授权市场-赎回"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
@@ -57,7 +57,7 @@ export default {
   methods: {
     open(data) {
       console.log('data', data);
-      this.$data.AssetName = data.denom;
+      this.$data.AssetName = data.assetName;
       this.sendModal = true;
     },
     sendcancel() {
