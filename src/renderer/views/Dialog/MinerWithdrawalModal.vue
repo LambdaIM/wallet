@@ -12,6 +12,11 @@
           <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
           <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
         </Input>
+        <br/>
+      </p>
+
+      <p>
+        需要适配授权挖矿，提取收益会提取多个币种
       </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>

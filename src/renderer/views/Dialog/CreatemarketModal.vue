@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        title="创建市场"
+        title="创建授权市场"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
