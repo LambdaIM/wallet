@@ -3,7 +3,7 @@
   <div class="customer-container">
       <div class="tableContainer">
         <div>
-              <Button v-if="$role('conlist.Createmarket')" @click="openmarket" type="primary">创建市场</Button>
+              <Button v-if="$role('conlist.Createmarket')" @click="openmarket" type="primary">创建授权市场</Button>
               <Button v-if="$role('conlist.Createassets')" @click="openassert" type="primary"> 创建资产 </Button>
 
 
@@ -97,6 +97,15 @@
 
                  </Table>
             </TabPane>
+            <TabPane label="挖矿说明" name="name3">
+
+              <ul style="margin-left: 10px;">
+                <li>1、在挖矿向导中创建矿工</li>
+                <li>2、在资产中使用授权市场支持的资产在市场中质押</li>
+              </ul>
+
+            </TabPane>
+
 
         </Tabs>
 
