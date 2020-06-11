@@ -313,6 +313,10 @@
 
           <div v-if="txtype=='CreateDigitalAssetMarket'">
             <h2> 创建授权市场  </h2>
+            <Row class-name="item">
+              <Col span="5" class-name="key">市场名称:</Col>
+              <Col span="16" class-name="value">{{transactiondata.marketName}}</Col>
+            </Row>
 
             <Row class-name="item">
               <Col span="5" class-name="key">资产名称:</Col>
@@ -334,8 +338,8 @@
               <Col span="16" class-name="value">{{transactiondata.AssetName|denomformat}}</Col>
             </Row>
             <Row class-name="item">
-              <Col span="5" class-name="key">资产名称:</Col>
-              <Col span="16" class-name="value">{{transactiondata.Amount|BlanceValue}}</Col>
+              <Col span="5" class-name="key">空间大小:</Col>
+              <Col span="16" class-name="value">{{transactiondata.size}}GB</Col>
             </Row>
 
           </div>
@@ -355,9 +359,17 @@
           <div v-if="txtype=='AuthorizeMiningPubKey'">
             <h2> 授权 </h2>
             <Row class-name="item">
+              <Col span="3" class-name="key">资产名称:</Col>
+              <Col span="21">
+
+              {{transactiondata.AssetName|denomformat}}
+
+              </Col>
+            </Row>
+            <Row class-name="item">
               <Col span="3" class-name="key">公钥:</Col>
               <Col span="21">
-              <Input readonly :rows="4" type="textarea" v-model="transactiondata.PubKey"    />
+              <Input readonly :rows="4" type="textarea" v-model="transactiondata.PubKey.value"    />
 
               </Col>
             </Row>

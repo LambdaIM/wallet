@@ -16,8 +16,9 @@
         <br />
         <p>
 
-          <Input  v-model="Amount" >
-          <span slot="prepend">金额</span>
+          <Input  v-model="Size" >
+          <span slot="prepend">空间</span>
+            <span slot="append">GB</span>
           </Input>
         </p>
 
@@ -52,7 +53,7 @@ export default {
       name: '',
       asset: '',
       AssetName: '',
-      Amount: ''
+      Size: ''
     };
   },
   components: {
@@ -70,20 +71,21 @@ export default {
     preSendLAMB() {
       console.log('-----');
       var AssetName = this.$data.AssetName;
-      var Amount = parseInt(this.$data.Amount);
-      if (isNaN(Amount) || Amount <= 0) {
+      var Size = parseInt(this.$data.Size);
+      if (isNaN(Size) || Size <= 0) {
         this.$Notice.warning({
-          title: '质押金额，只能为整数'
+          title: '质押空间，只能为整数'
         });
         return;
       }
-      Amount = this.toBigNumFixed(Amount);
 
 
+
+      Size = String(Size);
 
       this.transfer({
         AssetName,
-        Amount
+        Size
       });
     },
     async transfer(praobj) {

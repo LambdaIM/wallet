@@ -498,7 +498,12 @@
     "MsgUnMaintain": "UnMaintain",
     "MsgUnjailMiner": "UnjailMiner",
     "MsgOrderRenewal":"OrderRenewal",
-    "MsgDelegateMarket":"DelegateMarket"
+    "MsgDelegateMarket":"DelegateMarket",
+    "MsgCreateDigitalAssetMarket": "CreateDigitalAssetMarket",
+    "MsgDismissDigitalAssetMarket": "DismissDigitalAssetMarket",
+    "MsgAuthorizeMiningPubKey": "AuthorizeMiningPubKey",
+    "MsgDigitalAssetPledge":"DigitalAssetPledge",
+    "MsgDigitalAssetRefund": "DigitalAssetRefund"
   },
   "txTable":{
     "action": "Activity",

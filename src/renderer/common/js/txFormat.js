@@ -60,6 +60,18 @@ function getToAddress(msg, item, vuethis) {
       }
     });
   }
+  if (msg.type === 'lambda/MsgCreateDigitalAssetMarket') {
+    toaddress = msg.value.marketName;
+  }
+
+  if (msg.type === 'lambda/MsgDigitalAssetPledge') {
+    toaddress = msg.value.AssetName;
+  }
+
+  if (msg.type === 'lambda/MsgAuthorizeMiningPubKey') {
+    toaddress = msg.value.PubKey.value;
+  }
+
   return toaddress;
 }
 

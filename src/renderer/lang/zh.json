@@ -497,7 +497,12 @@
     "MsgUnMaintain": "解除维护",
     "MsgUnjailMiner": "解除限制",
     "MsgOrderRenewal":"订单续期",
-    "MsgDelegateMarket":"市场质押"
+    "MsgDelegateMarket":"市场质押",
+    "MsgCreateDigitalAssetMarket": "创建资产交易市场",
+    "MsgDismissDigitalAssetMarket": "解散资产交易市场",
+    "MsgAuthorizeMiningPubKey": "授权",
+    "MsgDigitalAssetPledge":"质押资产",
+    "MsgDigitalAssetRefund":"赎回资产"
 
    },
    "txTable":{
