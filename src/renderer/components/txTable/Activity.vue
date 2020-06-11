@@ -18,9 +18,22 @@
         <span v-if="txItem.to">
         {{getToWord(txItem)}}
       </span>
+      </span>
+      <span v-if="isAssettx(txItem)">
+        <span v-if="txItem.action == 'MsgCreateDigitalAssetMarket'">
+          {{txItem.to}}
+        </span>
+        <span v-if="txItem.action == 'MsgDigitalAssetPledge'">
+         {{$t('txTable.to')}} 市场，使用资产 {{txItem.to}}
+        </span>
+        <span v-if="txItem.action == 'MsgAuthorizeMiningPubKey'">
+          {{txItem.to}}
+        </span>
+
 
       </span>
-      <AddressLink :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
+
+      <AddressLink v-if="isAssettx(txItem)==false" :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
 
 
 
@@ -102,10 +115,19 @@ export default {
       txItem.action !== 'MsgUnjailMiner' &&
       txItem.action !== 'MsgEditValidator' &&
       txItem.action !== 'MsgModifyWithdrawAddress' &&
-      txItem.action !== 'MsgOrderRenewal'
-
-
+      txItem.action !== 'MsgOrderRenewal' &&
+      txItem.action !== 'MsgCreateDigitalAssetMarket' &&
+      txItem.action !== 'MsgDigitalAssetPledge' &&
+      txItem.action !== 'MsgAuthorizeMiningPubKey'
       ;
+    },
+    isAssettx(txItem) {
+      var list = ['MsgCreateDigitalAssetMarket', 'MsgDigitalAssetPledge', 'MsgAuthorizeMiningPubKey'];
+      if (list.indexOf(txItem.action) > -1) {
+        return true;
+      } else {
+        return false;
+      }
     },
     showmore() {
       this.$data.more = true;

@@ -8,7 +8,12 @@
         @on-cancel="sendcancel"
       >
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
-
+        <p>
+          <Input  v-model="marketName" >
+            <span slot="prepend">市场名称</span>
+          </Input>
+        </p>
+        <br />
         <p>
           <Input  v-model="assetsType" >
             <span slot="prepend">资产名称</span>
@@ -61,7 +66,8 @@ export default {
       name: '',
       assetsType: '',
       ratio: '',
-      parameter: {}
+      parameter: {},
+      marketName: ''
     };
   },
   components: {
@@ -80,6 +86,8 @@ export default {
 
       let assetsType = this.assetsType;
       let ratio = parseInt(this.ratio);
+
+      let marketName = this.$data.marketName;
 
 
 
@@ -106,15 +114,16 @@ export default {
         });
         return;
       }
-      this.transfer(assetsType, ratio);
+      this.transfer(assetsType, ratio, marketName);
     },
-    async transfer(assetsType, ratio) {
+    async transfer(assetsType, ratio, marketName) {
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
       try {
         let res = await ipc.callMain('CreateDigitalAssetMarket', {
           AssetName: assetsType,
-          Ratio: ratio
+          Ratio: String(ratio),
+          marketName: marketName
         });
         // console.log(res);
         if (res.state) {
@@ -132,7 +141,7 @@ export default {
       } catch (ex) {
         this.$Notice.warning({
           title: 'error',
-          desc: ex.errormsg.errormsg
+          desc: ex.errormsg
         });
         console.log(ex);
       }

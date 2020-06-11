@@ -75,14 +75,15 @@ export default {
 
 
 
-      this.transfer(Pubkey);
+      this.transfer(Pubkey, AssetName);
     },
-    async transfer(PubKey) {
+    async transfer(PubKey, AssetName) {
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
       try {
         let res = await ipc.callMain('AuthorizeMiningPubKey', {
-          PubKey
+          PubKey,
+          AssetName
         });
         // console.log(res);
         if (res.state) {

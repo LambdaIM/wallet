@@ -92,6 +92,7 @@
 
                   <!-- <Button v-if="$role('conlist.Withdrawal')" class="smallbtn" size="small">提取收益</Button> -->
                   <Button v-if="$role('conlist.authorization')" class="smallbtn" @click="openAuthorizedmining(row)" size="small">授权</Button>
+                  <Button type="error" v-if="$role('conlist.authorization')" class="smallbtn"  size="small">解散市场</Button>
 
             </template>
 

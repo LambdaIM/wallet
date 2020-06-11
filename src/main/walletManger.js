@@ -792,22 +792,23 @@ walletManger.prototype.CancelSellOrder = async function (orderId,memo) {
 };
 
 
-walletManger.prototype.CreateDigitalAssetMarket = async function (AssetName,Ratio,memo) {
+walletManger.prototype.CreateDigitalAssetMarket = async function (AssetName,Ratio,marketName,memo) {
   var result = {
     type: transaction.CreateDigitalAssetMarket,
     AssetName: AssetName,
     Ratio:Ratio,
+    marketName:marketName,
     memo: memo || ''
   };
   return result;
 };
 
 
-walletManger.prototype.DigitalAssetPledge = async function (AssetName,Amount,memo) {
+walletManger.prototype.DigitalAssetPledge = async function (AssetName,Size,memo) {
   var result = {
     type: transaction.DigitalAssetPledge,
     AssetName: AssetName,
-    Amount:Amount,
+    Size:Size,
     memo: memo || ''
   };
   return result;
@@ -816,7 +817,7 @@ walletManger.prototype.DigitalAssetPledge = async function (AssetName,Amount,mem
 
 walletManger.prototype.DigitalAssetRefund = async function (AssetName,memo) {
   var result = {
-    type: transaction.DigitalAssetPledge,
+    type: transaction.DigitalAssetRefund,
     AssetName: AssetName,
     memo: memo || ''
   };
@@ -824,10 +825,18 @@ walletManger.prototype.DigitalAssetRefund = async function (AssetName,memo) {
 };
 
 
-walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,memo) {
+walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,AssetName,memo) {
+  var publicKey = hdkeyjs.publicKey.getBytes(PubKey);
+  console.log('publicKey')
+  console.log(publicKey)
+  console.log(publicKey.length)
   var result = {
     type: transaction.AuthorizeMiningPubKey,
-    PubKey:  PubKey,
+    PubKey: {
+     "type":"tendermint/PubKeyEd25519",
+      value:publicKey.toString(`base64`),
+    },
+    AssetName:AssetName,
     memo: memo || ''
   };
   return result;

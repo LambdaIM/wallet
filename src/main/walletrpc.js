@@ -912,7 +912,7 @@ export default function() {
   });
 
   eipc.answerRenderer('CreateDigitalAssetMarket', async query => {
-    var { AssetName, Ratio } = query;
+    var { AssetName, Ratio, marketName } = query;
     console.log(query);
     if (AssetName == undefined) {
       throw resultView(null, false, errorList.need_AssetName);
@@ -921,8 +921,14 @@ export default function() {
     if (Ratio == undefined) {
       throw resultView(null, false, errorList.need_Ratio);
     }
+
+    if (marketName == undefined) {
+      throw resultView(null, false, errorList.need_marketName);
+    }
+
+
     try {
-      var TxMessageload = await WM.CreateDigitalAssetMarket(AssetName, Ratio);
+      var TxMessageload = await WM.CreateDigitalAssetMarket(AssetName, Ratio, marketName);
 
       return resultView(TxMessageload, true);
     } catch (error) {
@@ -931,16 +937,16 @@ export default function() {
   });
 
   eipc.answerRenderer('DigitalAssetPledge', async query => {
-    var { AssetName, Amount } = query;
+    var { AssetName, Size } = query;
     if (AssetName == undefined) {
       throw resultView(null, false, errorList.need_AssetName);
     }
 
-    if (Amount == undefined) {
-      throw resultView(null, false, errorList.need_amount);
+    if (Size == undefined) {
+      throw resultView(null, false, errorList.need_Size);
     }
     try {
-      var TxMessageload = await WM.DigitalAssetPledge(AssetName, Amount);
+      var TxMessageload = await WM.DigitalAssetPledge(AssetName, Size);
 
       return resultView(TxMessageload, true);
     } catch (error) {
@@ -963,12 +969,16 @@ export default function() {
   });
 
   eipc.answerRenderer('AuthorizeMiningPubKey', async query => {
-    var { PubKey } = query;
+    var { PubKey, AssetName } = query;
     if (PubKey == undefined) {
       throw resultView(null, false, errorList.need_PubKey);
     }
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
     try {
-      var TxMessageload = await WM.AuthorizeMiningPubKey(PubKey);
+      var TxMessageload = await WM.AuthorizeMiningPubKey(PubKey, AssetName);
       return resultView(TxMessageload, true);
     } catch (error) {
       throw resultView(null, false, error);
