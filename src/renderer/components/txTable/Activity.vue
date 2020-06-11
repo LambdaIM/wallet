@@ -29,6 +29,10 @@
         <span v-if="txItem.action == 'MsgAuthorizeMiningPubKey'">
           {{txItem.to}}
         </span>
+        <span v-if="txItem.action == 'MsgDigitalAssetRefund'">
+          {{txItem.to}}
+        </span>
+
 
 
       </span>
@@ -118,11 +122,12 @@ export default {
       txItem.action !== 'MsgOrderRenewal' &&
       txItem.action !== 'MsgCreateDigitalAssetMarket' &&
       txItem.action !== 'MsgDigitalAssetPledge' &&
-      txItem.action !== 'MsgAuthorizeMiningPubKey'
+      txItem.action !== 'MsgAuthorizeMiningPubKey' &&
+      txItem.action !== 'MsgDigitalAssetRefund'
       ;
     },
     isAssettx(txItem) {
-      var list = ['MsgCreateDigitalAssetMarket', 'MsgDigitalAssetPledge', 'MsgAuthorizeMiningPubKey'];
+      var list = ['MsgCreateDigitalAssetMarket', 'MsgDigitalAssetPledge', 'MsgAuthorizeMiningPubKey', 'MsgDigitalAssetRefund'];
       if (list.indexOf(txItem.action) > -1) {
         return true;
       } else {
