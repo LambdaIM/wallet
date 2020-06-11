@@ -64,8 +64,8 @@ function getToAddress(msg, item, vuethis) {
     toaddress = msg.value.marketName;
   }
 
-  if (msg.type === 'lambda/MsgDigitalAssetPledge') {
-    toaddress = msg.value.AssetName;
+  if (msg.type === 'lambda/MsgDigitalAssetPledge' || msg.type === 'lambda/MsgDigitalAssetRefund') {
+    toaddress = msg.value.assetName;
   }
 
   if (msg.type === 'lambda/MsgAuthorizeMiningPubKey') {

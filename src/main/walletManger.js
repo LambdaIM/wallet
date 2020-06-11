@@ -833,7 +833,7 @@ walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,AssetName
   var result = {
     type: transaction.AuthorizeMiningPubKey,
     PubKey: {
-     "type":"tendermint/PubKeyEd25519",
+     "type":"tendermint/PubKeySecp256k1",
       value:publicKey.toString(`base64`),
     },
     AssetName:AssetName,
