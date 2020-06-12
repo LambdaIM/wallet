@@ -9,7 +9,7 @@
       >
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
-          <Input :value="AssetName|denomformat" readonly>
+          <Input :value="AssetName|assertdenomformat" readonly>
             <span slot="prepend">资产名称</span>
           </Input>
         </p>

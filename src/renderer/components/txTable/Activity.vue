@@ -32,6 +32,9 @@
         <span v-if="txItem.action == 'MsgDigitalAssetRefund'">
           {{txItem.to}}
         </span>
+        <span v-if="txItem.action == 'MsgDismissDigitalAssetMarket'">
+          {{txItem.to}}
+        </span>
 
 
 
@@ -123,11 +126,12 @@ export default {
       txItem.action !== 'MsgCreateDigitalAssetMarket' &&
       txItem.action !== 'MsgDigitalAssetPledge' &&
       txItem.action !== 'MsgAuthorizeMiningPubKey' &&
-      txItem.action !== 'MsgDigitalAssetRefund'
+      txItem.action !== 'MsgDigitalAssetRefund' &&
+      txItem.action !== 'MsgDismissDigitalAssetMarket'
       ;
     },
     isAssettx(txItem) {
-      var list = ['MsgCreateDigitalAssetMarket', 'MsgDigitalAssetPledge', 'MsgAuthorizeMiningPubKey', 'MsgDigitalAssetRefund'];
+      var list = ['MsgCreateDigitalAssetMarket', 'MsgDigitalAssetPledge', 'MsgAuthorizeMiningPubKey', 'MsgDigitalAssetRefund', 'MsgDismissDigitalAssetMarket'];
       if (list.indexOf(txItem.action) > -1) {
         return true;
       } else {
@@ -136,6 +140,9 @@ export default {
     },
     showmore() {
       this.$data.more = true;
+    },
+    denomFormat(denom) {
+      return denom.substr(1);
     }
   },
   computed: {

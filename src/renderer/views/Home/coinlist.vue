@@ -98,6 +98,15 @@
 
                  </Table>
             </TabPane>
+            <TabPane label="赎回记录" name="name4">
+                <Table :columns="redeemcolumns" :data="redeemdata">
+                  <template slot-scope="{ row, index }" slot="completionTime">
+                    {{row.completionTime|blockFormatDate}}
+                  </template>
+                </Table>
+
+            </TabPane>
+
             <TabPane label="挖矿说明" name="name3">
 
               <ul style="margin-left: 10px;">
@@ -237,7 +246,23 @@ export default {
 
       ],
       pledgelist: null,
-      MinerRewards: null
+      MinerRewards: null,
+      redeemcolumns: [
+        {
+          title: '资产名称',
+          key: 'assetName'
+        },
+        {
+          title: '赎回金额',
+          key: 'cost'
+        },
+        {
+          title: '完成时间',
+          key: 'completionTime',
+          slot: 'completionTime'
+        }
+      ],
+      redeemdata: []
     };
   },
   beforeDestroy() {
@@ -256,6 +281,7 @@ export default {
     this.getincomelist();
     this.getpledgelist();
     this.getMinerRewards();
+    this.getredeemlist();
   },
   components: {
     SendModelDialog,
@@ -269,7 +295,7 @@ export default {
   },
   methods: {
     denomFormart(denom) {
-      return denom.substr(1).toUpperCase();
+      return denom.substr(1);
     },
     openAssert(row) {
       this.$refs.AssetlModalDialog.open(row.amount, row.denom);
@@ -311,10 +337,21 @@ export default {
       }
     },
     async  getpledgelist() {
-      // assetAll
       console.log('AuthorizedMarketlist');
       try {
         let res = await ipc.callMain('Authorizedpledgelist', {});
+        if (res.state) {
+          this.$data.redeemdata = res.data.data || [];
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
+    async  getredeemlist() {
+      // assetAll
+      console.log('Authorizedredeemlist');
+      try {
+        let res = await ipc.callMain('Authorizedredeemlist', {});
         if (res.state) {
           this.$data.pledgelist = res.data.data || [];
         }
