@@ -92,7 +92,7 @@
 
                   <!-- <Button v-if="$role('conlist.Withdrawal')" class="smallbtn" size="small">提取收益</Button> -->
                   <Button v-if="$role('conlist.authorization')" class="smallbtn" @click="openAuthorizedmining(row)" size="small">授权</Button>
-                  <Button type="error" v-if="$role('conlist.authorization')" class="smallbtn"  size="small">解散市场</Button>
+                  <Button type="error" v-if="$role('conlist.authorization')" @click="openDissolutionmarket(row)" class="smallbtn"  size="small">解散市场</Button>
 
             </template>
 
@@ -123,6 +123,9 @@
 
       <AuthorizedredeemDialog ref="AuthorizedredeemModal"/>
 
+      <AuthorizedDissolutionmarketDialog ref="DissolutionmarketModal"/>
+
+
 
   </div>
 </template>
@@ -141,6 +144,8 @@ import AuthorizedminingDialog from '@/views/Dialog/Authorizedmining.vue';
 import AuthorizedpledgeDialog from '@/views/Dialog/Authorizedpledge.vue';
 import AuthorizedredeemDialog from '@/views/Dialog/Authorizedredeem.vue';
 import { DAEMON_CONFIG } from '../../../config.js';
+
+import AuthorizedDissolutionmarketDialog from '@/views/Dialog/AuthorizedDissolutionmarket.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 
@@ -259,7 +264,8 @@ export default {
     CreateAssetModalDialog,
     AuthorizedminingDialog,
     AuthorizedpledgeDialog,
-    AuthorizedredeemDialog
+    AuthorizedredeemDialog,
+    AuthorizedDissolutionmarketDialog
   },
   methods: {
     denomFormart(denom) {
@@ -330,6 +336,9 @@ export default {
     },
     openAuthorizedredeem(data) {
       this.$refs.AuthorizedredeemModal.open(data);
+    },
+    openDissolutionmarket(data) {
+      this.$refs.DissolutionmarketModal.open(data);
     },
     openLinkassert(name) {
       var explorer = DAEMON_CONFIG.explore();

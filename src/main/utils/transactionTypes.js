@@ -24,7 +24,8 @@ const transactionTypes = {
   DigitalAssetPledge: 'MsgDigitalAssetPledge',
   DigitalAssetRefund: 'MsgDigitalAssetRefund',
   AuthorizeMiningPubKey: 'MsgAuthorizeMiningPubKey',
-  CreateAsset: 'MsgCreateAsset'
+  CreateAsset: 'MsgCreateAsset',
+  DismissDigitalAssetMarket: 'MsgDismissDigitalAssetMarket'
 
 
 
