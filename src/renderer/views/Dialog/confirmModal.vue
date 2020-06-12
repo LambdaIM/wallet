@@ -356,6 +356,20 @@
 
           </div>
 
+
+          <div v-if="txtype=='DismissDigitalAssetMarket'">
+            <h2> 解散市场 </h2>
+
+            <Row class-name="item">
+              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|denomformat}}</Col>
+            </Row>
+
+
+          </div>
+
+
+
           <div v-if="txtype=='AuthorizeMiningPubKey'">
             <h2> 授权 </h2>
             <Row class-name="item">

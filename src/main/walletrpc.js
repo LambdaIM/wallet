@@ -968,6 +968,23 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('DismissDigitalAssetMarket', async query => {
+    var { AssetName } = query;
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    try {
+      var TxMessageload = await WM.DismissDigitalAssetMarket(AssetName);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+
   eipc.answerRenderer('AuthorizeMiningPubKey', async query => {
     var { PubKey, AssetName } = query;
     if (PubKey == undefined) {

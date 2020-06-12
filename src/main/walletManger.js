@@ -825,6 +825,19 @@ walletManger.prototype.DigitalAssetRefund = async function (AssetName,memo) {
 };
 
 
+walletManger.prototype.DismissDigitalAssetMarket = async function (AssetName,memo) {
+  var result = {
+    type: transaction.DismissDigitalAssetMarket,
+    AssetName: AssetName,
+    memo: memo || ''
+  };
+  return result;
+};
+
+
+
+
+
 walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,AssetName,memo) {
   var publicKey = hdkeyjs.publicKey.getBytes(PubKey);
   console.log('publicKey')
