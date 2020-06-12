@@ -185,6 +185,10 @@ function denomformat(denom) {
   return denom.slice(1).toUpperCase();
 }
 
+function assertdenomformat(denom) {
+  return denom.slice(1);
+}
+
 // 1000*1000*1000*60*60*24
 
 export default {
@@ -208,5 +212,6 @@ export default {
   BlanceValueint,
   Fixed6,
   formatHour,
-  denomformat
+  denomformat,
+  assertdenomformat
 };

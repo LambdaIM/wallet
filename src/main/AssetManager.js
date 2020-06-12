@@ -62,6 +62,15 @@ class AssetManager {
 
     return { data: result };
   }
+  async Authorizedredeemlist(query) {
+    if (this.defaultAddress == null) {
+      throwErrorCode(errorList.need_address);
+    }
+    console.log('Authorizedredeemlist');
+    var result = await this.CosmosAPI().get.refunding_records(this.defaultAddress);
+
+    return { data: result };
+  }
 }
 
 

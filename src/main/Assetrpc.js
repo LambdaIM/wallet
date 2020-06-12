@@ -69,4 +69,15 @@ export default function() {
       return { data: error, state: false };
     }
   });
+
+  eipc.answerRenderer('Authorizedredeemlist', async query => {
+    try {
+      var M = new AssetManager();
+      var result = await M.Authorizedredeemlist();
+      return { data: result, state: true };
+    } catch (error) {
+      console.log(error);
+      return { data: error, state: false };
+    }
+  });
 }

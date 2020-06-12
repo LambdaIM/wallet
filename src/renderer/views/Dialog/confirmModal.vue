@@ -290,7 +290,7 @@
 
             <Row class-name="item">
               <Col span="5" class-name="key">资产名称:</Col>
-              <Col span="16" class-name="value">{{transactiondata.asset_denom|denomformat}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.asset_denom|assertdenomformat}}</Col>
             </Row>
             <Row class-name="item">
               <Col span="5" class-name="key">初始发行量:</Col>
@@ -320,7 +320,7 @@
 
             <Row class-name="item">
               <Col span="5" class-name="key">资产名称:</Col>
-              <Col span="16" class-name="value">{{transactiondata.AssetName|denomformat}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
             </Row>
 
             <Row class-name="item">
@@ -335,11 +335,11 @@
 
             <Row class-name="item">
               <Col span="5" class-name="key">资产名称:</Col>
-              <Col span="16" class-name="value">{{transactiondata.AssetName|denomformat}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
             </Row>
             <Row class-name="item">
               <Col span="5" class-name="key">空间大小:</Col>
-              <Col span="16" class-name="value">{{transactiondata.size}}GB</Col>
+              <Col span="16" class-name="value">{{transactiondata.Size}}GB</Col>
             </Row>
 
           </div>
@@ -350,7 +350,7 @@
 
             <Row class-name="item">
               <Col span="5" class-name="key">资产名称:</Col>
-              <Col span="16" class-name="value">{{transactiondata.AssetName|denomformat}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
             </Row>
 
 
@@ -362,7 +362,7 @@
 
             <Row class-name="item">
               <Col span="5" class-name="key">资产名称:</Col>
-              <Col span="16" class-name="value">{{transactiondata.AssetName|denomformat}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
             </Row>
 
 
@@ -376,7 +376,7 @@
               <Col span="3" class-name="key">资产名称:</Col>
               <Col span="21">
 
-              {{transactiondata.AssetName|denomformat}}
+              {{transactiondata.AssetName|assertdenomformat}}
 
               </Col>
             </Row>
