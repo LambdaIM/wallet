@@ -122,6 +122,12 @@ function getamount(msg0, item, vueIns, index) {
       result = msg0.value.symbol;
     } else if (msg0.type == 'lambda/MsgDestroyAsset') {
       result = _this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom);
+    } else if (msg0.type == 'lambda/MsgDigitalAssetPledge') {
+      item.tags.forEach(item => {
+        if (item.key == 'cost' && item.value) {
+          result = item.value;
+        }
+      });
     } else {
       var indexNative = 0;
       item.tags.forEach(item => {

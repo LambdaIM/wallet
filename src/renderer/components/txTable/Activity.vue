@@ -24,16 +24,16 @@
           {{txItem.to}}
         </span>
         <span v-if="txItem.action == 'MsgDigitalAssetPledge'">
-         {{$t('txTable.to')}} 市场，使用资产 {{txItem.to}}
+         {{$t('txTable.to')}} 市场，使用资产{{txItem.amount}} {{txItem.to|assertdenomformat}}
         </span>
         <span v-if="txItem.action == 'MsgAuthorizeMiningPubKey'">
-          {{txItem.to}}
+          {{txItem.to|assertdenomformat}}
         </span>
         <span v-if="txItem.action == 'MsgDigitalAssetRefund'">
-          {{txItem.to}}
+          {{txItem.to|assertdenomformat}}
         </span>
         <span v-if="txItem.action == 'MsgDismissDigitalAssetMarket'">
-          {{txItem.to}}
+          {{txItem.to|assertdenomformat}}
         </span>
 
 

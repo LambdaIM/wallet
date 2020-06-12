@@ -98,7 +98,7 @@
 
                  </Table>
             </TabPane>
-            <TabPane label="赎回记录" name="name4">
+            <TabPane label="赎回中的资产" name="name4">
                 <Table :columns="redeemcolumns" :data="redeemdata">
                   <template slot-scope="{ row, index }" slot="completionTime">
                     {{row.completionTime|blockFormatDate}}

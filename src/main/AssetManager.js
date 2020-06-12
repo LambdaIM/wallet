@@ -67,7 +67,7 @@ class AssetManager {
       throwErrorCode(errorList.need_address);
     }
     console.log('Authorizedredeemlist');
-    var result = await this.CosmosAPI().get.refunding_records(this.defaultAddress);
+    var result = await this.CosmosAPI().get.damrefunding_records(this.defaultAddress);
 
     return { data: result };
   }
