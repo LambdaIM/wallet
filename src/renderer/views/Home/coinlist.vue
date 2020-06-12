@@ -74,8 +74,8 @@
             </template>
 
 
-            <template slot-scope="{ row, index }" slot="marketName">
-              <a @click="openLinkmarket(row.marketName)"> {{row.marketName}} </a>
+            <template slot-scope="{ row, index }" slot="pledgeAsset">
+              {{findminingpledgeAsset(row.assetName)}}
             </template>
 
             <template slot-scope="{ row, index }" slot="power">
@@ -341,7 +341,7 @@ export default {
       try {
         let res = await ipc.callMain('Authorizedpledgelist', {});
         if (res.state) {
-          this.$data.redeemdata = res.data.data || [];
+          this.$data.pledgelist = res.data.data || [];
         }
       } catch (ex) {
         console.log(ex);
@@ -353,7 +353,7 @@ export default {
       try {
         let res = await ipc.callMain('Authorizedredeemlist', {});
         if (res.state) {
-          this.$data.pledgelist = res.data.data || [];
+          this.$data.redeemdata = res.data.data || [];
         }
       } catch (ex) {
         console.log(ex);
@@ -408,7 +408,7 @@ export default {
       }
       this.$data.pledgelist.assetSet.forEach(item => {
         if (item.assetName == name) {
-          result = parseFloat(item.miningSize).toFixed(3);
+          result = parseFloat(item.miningSize).toFixed(0);
         }
       });
       return result;
@@ -422,6 +422,19 @@ export default {
       this.$data.pledgelist.assetSet.forEach(item => {
         if (item.assetName == name) {
           result = parseFloat(item.power).toFixed(3);
+        }
+      });
+      return result;
+    },
+    findminingpledgeAsset(name) {
+      var result = '';
+      var _this = this;
+      if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
+        return;
+      }
+      this.$data.pledgelist.assetSet.forEach(item => {
+        if (item.assetName == name) {
+          result = _this.toBigNumTonum(item.pledgeAsset, 3);
         }
       });
       return result;
