@@ -22,13 +22,17 @@ export default {
       return bigvalue.times(1e6).toFixed(0).toString();
     };
 
-    Vue.prototype.toBigNumTonum = function (value) {
+    Vue.prototype.toBigNumTonum = function (value, Fixednum) {
       if (value == '' || value == undefined || value == null) {
         value = 0;
       }
       var bigvalue = new BigNumber(value);
-      return bigvalue.div(1e6).toFixed(0).toString();
+      if (Fixednum == undefined) {
+        Fixednum = 0;
+      }
+      return bigvalue.div(1e6).toFixed(Fixednum).toString();
     };
+
 
     Vue.prototype.toBigNumFixed = function (value) {
       if (value == '' || value == undefined || value == null) {
@@ -127,12 +131,12 @@ export default {
 
       var roleobj = settings.get('userrolelist') || {};
       var role = roleobj[defaultwallet];
-      console.log('=============');
-      console.log(roledata);
-      console.log(name);
-      console.log(role);
+      // console.log('=============');
+      // console.log(roledata);
+      // console.log(name);
+      // console.log(role);
 
-      console.log('=============');
+      // console.log('=============');
       var result = false;
       if (roledata instanceof Array) {
         result = !(roledata.indexOf(role) < 0);
