@@ -15,22 +15,23 @@
 
 
             <template slot-scope="{ row, index }" slot="amount">
+              <!-- {{row}} -->
 
-                {{bigNumTypeFormat(row.amount,row.denom)}}
+                {{bigNumTypeFormat(row.asset.amount,row.asset.denom)}}
 
             </template>
             <template slot-scope="{ row, index }" slot="denom">
-              <a @click="openLinkassert(row.denom)" >
-              {{denomFormart(row.denom)}}
+              <a @click="openLinkassert(row.asset.denom)" >
+              {{denomFormart(row.asset.denom)}}
               </a>
             </template>
             <template slot-scope="{ row, index }" slot="action">
               <Button class="smallbtn" @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
-              <Button class="smallbtn" v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
+              <Button class="smallbtn" v-if="row.asset.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
 
 
-               <Dropdown v-if="row.denom !='ulamb'&&row.denom !='utbb'  "   class="smallbtn2">
+               <Dropdown v-if="row.asset.denom !='ulamb'&&row.asset.denom !='utbb'  "   class="smallbtn2">
                     <a  href="javascript:void(0)">
                         更多
                         <Icon type="ios-arrow-down"></Icon>
@@ -165,6 +166,10 @@ export default {
     return {
 
       columnsToken: [
+        {
+          title: '全称',
+          key: 'name'
+        },
         {
           title: this.$t('home.Token.name'),
           key: 'denom',
@@ -463,6 +468,9 @@ export default {
   },
   computed: {
     coinList: function() {
+      if (this.$data.allassert.length < 1) {
+        return [];
+      }
       var mycoinList = this.$store.getters.getcoinList;
       if (mycoinList.length == 0) {
         mycoinList = mycoinList.concat([
@@ -480,23 +488,44 @@ export default {
       var otherList = [];
       console.log(mycoinList);
 
-      if (this.$data.allassert == 0) {
-        return this.$store.getters.getcoinList;
-      } else {
-        this.$data.allassert.forEach(item => {
-          // mycoinList
-          var haveitem = _.find(mycoinList, {
-            denom: item.asset.denom
-          });
-          if (haveitem == undefined || haveitem.length == 0) {
-            otherList.push({
-              amount: '0',
-              denom: item.asset.denom
-            });
+      // if (this.$data.allassert == 0) {
+      //   return this.$store.getters.getcoinList;
+      // } else {
+      //   this.$data.allassert.forEach(item => {
+      //     // mycoinList
+      //     var haveitem = _.find(mycoinList, {
+      //       denom: item.asset.denom
+      //     });
+      //     if (haveitem == undefined || haveitem.length == 0) {
+      //       otherList.push({
+      //         amount: '0',
+      //         denom: item.asset.denom
+      //       });
+      //     }
+      //   });
+      // }
+
+      var _this = this;
+      mycoinList.forEach(item => {
+        var haveitem = _.find(_this.$data.allassert, function(assert) {
+          if (assert.asset.denom == item.denom) {
+            return true;
+          } else {
+            return false;
           }
         });
-      }
-      var listneedtosort = mycoinList.concat(otherList);
+
+        if (haveitem == undefined || haveitem.length == 0) {
+          otherList.push({
+            asset: item,
+            name: item.denom
+          });
+        }
+      });
+
+
+      var listneedtosort = _this.$data.allassert.concat(otherList);
+      // var listneedtosort = otherList;
 
       listneedtosort.forEach(item => {
         if (item.denom == 'ulamb') {
