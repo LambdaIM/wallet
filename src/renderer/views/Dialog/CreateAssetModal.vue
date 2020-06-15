@@ -219,7 +219,8 @@ export default {
           inflation: objpra.inflation,
           total_supply: objpra.total_supply,
           adjust_rate: objpra.adjust_rate,
-          max_adjust_count: objpra.max_adjust_count
+          max_adjust_count: objpra.max_adjust_count,
+          genesis_height: objpra.genesis_height
         });
         // console.log(res);
         if (res.state) {
