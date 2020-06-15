@@ -856,11 +856,14 @@ walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,AssetName
 };
 
 
-walletManger.prototype.CreateAsset = async function ( asset_amount,asset_denom,
+walletManger.prototype.CreateAsset = async function ( {
+  asset_amount,asset_denom,
   token_amount,token_denom,name,
-  mint_type,inflation,inflation_period,
-  total_supply,adjust_rate,max_adjust_count,
-  memo) {
+  mint_type,inflation,
+  total_supply,
+  adjust_rate,adjust_period,max_adjust_count,
+  genesis_height,
+  memo}) {
   var result = {
     type: transaction.CreateAsset,
     asset_amount:asset_amount,
@@ -873,6 +876,7 @@ walletManger.prototype.CreateAsset = async function ( asset_amount,asset_denom,
     total_supply:total_supply,
     adjust_rate:adjust_rate,
     max_adjust_count:max_adjust_count,
+    genesis_height:genesis_height,
     memo: memo || ''
   };
   return result;

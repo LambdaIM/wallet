@@ -17,21 +17,57 @@
             <template slot-scope="{ row, index }" slot="amount">
               <!-- {{row}} -->
 
-                {{bigNumTypeFormat(row.asset.amount,row.asset.denom)}}
+                {{bigNumTypeFormat(row.amount,row.asset.denom)}}
 
             </template>
+
             <template slot-scope="{ row, index }" slot="denom">
               <a @click="openLinkassert(row.asset.denom)" >
               {{denomFormart(row.asset.denom)}}
               </a>
             </template>
+
+            <template slot-scope="{ row, index }" slot="assetamount">
+              {{bigNumTypeFormat(row.asset.amount,row.asset.denom)}}
+            </template>
+
+
+            <template slot-scope="{ row, index }" slot="mint_type">
+              {{typeName(row.mint_type)}}
+            </template>
+
+            <template  slot-scope="{ row, index }" slot="total_supply">
+              <span v-if="row.total_supply">
+              {{bigNumTypeFormat(row.total_supply.amount,row.total_supply.denom)}}
+              </span>
+            </template>
+            <template  slot-scope="{ row, index }" slot="inflation">
+              <span v-if="row.inflation">
+              {{bigNumTypeFormat(row.inflation,row.asset.denom)}}
+              </span>
+            </template>
+
+
+
+            <template slot-scope="{ row, index }" slot="power">
+                    {{findminingPower(row.assetName)}}
+            </template>
+
+            <template slot-scope="{ row, index }" slot="adjust_rate">
+              <span v-if="row.adjust_rate">
+                    {{parseFloat(row.adjust_rate)}}
+              </span>
+            </template>
+
+
+
             <template slot-scope="{ row, index }" slot="action">
               <Button class="smallbtn" @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
-              <Button class="smallbtn" v-if="row.asset.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
+              <Button class="smallbtn" v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
 
 
-               <Dropdown v-if="row.asset.denom !='ulamb'&&row.asset.denom !='utbb'  "   class="smallbtn2">
+               <Dropdown v-if="row.denom !='ulamb'&&row.denom !='utbb'  "   class="smallbtn2">
                     <a  href="javascript:void(0)">
                         更多
                         <Icon type="ios-arrow-down"></Icon>
@@ -60,6 +96,8 @@
             <template slot-scope="{ row, index }" slot="denom">
               {{denomFormart(row.assetName)}}
             </template>
+
+
 
             <template slot-scope="{ row, index }" slot="pledgeAsset">
               {{findpledge(row.assetName)}}
@@ -187,19 +225,36 @@ export default {
         },
         {
           title: '初始化发行量',
-          key: 'action'
+          key: 'assetamount',
+          slot: 'assetamount'
         },
         {
           title: '增发类型',
-          key: 'action'
+          key: 'mint_type',
+          slot: 'mint_type'
+        },
+        {
+          title: '发行总量',
+          key: 'total_supply',
+          slot: 'total_supply'
         },
         {
           title: '每块高增发量',
-          key: 'action'
+          key: 'inflation',
+          slot: 'inflation'
         },
         {
-          title: '增发块高周期',
-          key: 'action'
+          title: '减产系数',
+          key: 'adjust_rate',
+          slot: 'adjust_rate'
+        },
+        {
+          title: '最大减产次数',
+          key: 'max_adjust_count'
+        },
+        {
+          title: '初次增发块高',
+          key: 'genesis_height'
         }
 
 
@@ -462,6 +517,15 @@ export default {
         console.log(ex);
       }
       console.log('getListDataEnd');
+    },
+    typeName(item) {
+      if (item == 1) {
+        return '不可增发';
+      } else if (item == 2) {
+        return '一次性增发';
+      } else {
+        return '挖矿增发';
+      }
     }
 
 
@@ -488,22 +552,7 @@ export default {
       var otherList = [];
       console.log(mycoinList);
 
-      // if (this.$data.allassert == 0) {
-      //   return this.$store.getters.getcoinList;
-      // } else {
-      //   this.$data.allassert.forEach(item => {
-      //     // mycoinList
-      //     var haveitem = _.find(mycoinList, {
-      //       denom: item.asset.denom
-      //     });
-      //     if (haveitem == undefined || haveitem.length == 0) {
-      //       otherList.push({
-      //         amount: '0',
-      //         denom: item.asset.denom
-      //       });
-      //     }
-      //   });
-      // }
+
 
       var _this = this;
       mycoinList.forEach(item => {
@@ -517,9 +566,14 @@ export default {
 
         if (haveitem == undefined || haveitem.length == 0) {
           otherList.push({
-            asset: item,
-            name: item.denom
+            amount: item.amount,
+            name: item.denom,
+            asset: {
+              denom: item.denom
+            }
           });
+        } else {
+          haveitem.amount = item.amount;
         }
       });
 
@@ -528,9 +582,9 @@ export default {
       // var listneedtosort = otherList;
 
       listneedtosort.forEach(item => {
-        if (item.denom == 'ulamb') {
+        if (item.asset.denom == 'ulamb') {
           item.sort = 1;
-        } else if (item.denom == 'utbb') {
+        } else if (item.asset.denom == 'utbb') {
           item.sort = 0;
         } else {
           item.sort = -1;
