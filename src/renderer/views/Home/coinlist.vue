@@ -11,7 +11,7 @@
         <br/>
           <Tabs value="name1">
             <TabPane label="资产" name="name1">
-                      <Table :columns="columnsToken" :data="coinList">
+                      <Table  v-if="coinList" :columns="columnsToken" :data="coinList">
 
 
             <template slot-scope="{ row, index }" slot="amount">
@@ -66,7 +66,7 @@
 
               <Button class="smallbtn" v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
 
-
+<!--
                <Dropdown v-if="row.denom !='ulamb'&&row.denom !='utbb'  "   class="smallbtn2">
                     <a  href="javascript:void(0)">
                         更多
@@ -79,7 +79,7 @@
                         <DropdownItem divided>销毁资产</DropdownItem>
                         <DropdownItem divided>毁灭资产</DropdownItem>
                     </DropdownMenu>
-                </Dropdown>
+                </Dropdown> -->
 
 
             </template>
@@ -142,6 +142,11 @@
                   <template slot-scope="{ row, index }" slot="completionTime">
                     {{row.completionTime|blockFormatDate}}
                   </template>
+                  <template slot-scope="{ row, index }" slot="cost">
+                    {{row.cost|BlanceValue}}
+                  </template>
+
+
                 </Table>
 
             </TabPane>
@@ -314,7 +319,8 @@ export default {
         },
         {
           title: '赎回金额',
-          key: 'cost'
+          key: 'cost',
+          slot: 'cost'
         },
         {
           title: '完成时间',
@@ -333,9 +339,19 @@ export default {
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.getAssertAll();
+      this.getmarketAll();
+      this.getincomelist();
+      this.getpledgelist();
+      this.getMinerRewards();
+      this.getredeemlist();
     });
     this.Interval = setInterval(() => {
       this.getAssertAll();
+      this.getmarketAll();
+      this.getincomelist();
+      this.getpledgelist();
+      this.getMinerRewards();
+      this.getredeemlist();
     }, 1000 * 15);
     this.getmarketAll();
     this.getincomelist();
@@ -523,7 +539,7 @@ export default {
         return '不可增发';
       } else if (item == 2) {
         return '一次性增发';
-      } else {
+      } else if (item == 3) {
         return '挖矿增发';
       }
     }

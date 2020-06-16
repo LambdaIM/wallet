@@ -55,6 +55,13 @@
               </Input>
               <br />
             </p>
+            <br />
+            <p >
+              <Input  v-model="adjust_period" >
+                <span slot="prepend">减产周期</span>
+              </Input>
+              <br />
+            </p>
             <p >
               <Input  v-model="genesis_height" >
                 <span slot="prepend">初次增发块高</span>
@@ -80,6 +87,8 @@
 <script>
 import eventhub from '../../common/js/event.js';
 import ConfirmModal from './confirmModal.vue';
+
+import BigNumber from 'bignumber.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 export default {
@@ -115,7 +124,7 @@ export default {
       console.log('-----');
       let name = this.name;
       let asset = parseInt(this.asset);
-      let MintType = this.MintType;
+      let MintType = parseInt(this.MintType);
       let inflation = parseInt(this.inflation);
 
 
@@ -126,6 +135,8 @@ export default {
       let max_adjust_count = parseInt(this.max_adjust_count);
 
       let genesis_height = parseInt(this.genesis_height);
+
+      let adjust_period = parseInt(this.adjust_period);
 
       if (name == '') {
         this.$Notice.warning({
@@ -156,9 +167,9 @@ export default {
           return;
         }
 
-        if (isNaN(adjust_rate) || adjust_rate <= 0) {
+        if (isNaN(adjust_rate) || adjust_rate >= 1) {
           this.$Notice.warning({
-            title: '减产系数需要为数值'
+            title: '减产系数需要为小数'
           });
           return;
         }
@@ -170,6 +181,13 @@ export default {
           return;
         }
 
+        if (isNaN(adjust_period) || adjust_period <= 0) {
+          this.$Notice.warning({
+            title: '减产周期需要为数值'
+          });
+          return;
+        }
+
         if (isNaN(genesis_height) || genesis_height <= 0) {
           this.$Notice.warning({
             title: '初次增发块高需要为数值'
@@ -177,6 +195,8 @@ export default {
           return;
         }
       }
+
+
 
       if (this.bigLess0OrGreater(1e5, this.balance)) {
         // need to alert
@@ -196,6 +216,12 @@ export default {
         return;
       }
 
+
+
+      var adjust_rate_Big = new BigNumber(adjust_rate || 0.1);
+      adjust_rate = adjust_rate_Big.toPrecision(18);
+
+
       this.transfer({
         name,
         asset,
@@ -204,7 +230,8 @@ export default {
         total_supply,
         adjust_rate,
         max_adjust_count,
-        genesis_height
+        genesis_height,
+        adjust_period
       });
     },
     async transfer(objpra) {
@@ -212,15 +239,16 @@ export default {
       let isdege = this.$data.isdege;
       try {
         let res = await ipc.callMain('CreateAsset', {
-          asset_amount: objpra.asset,
+          asset_amount: this.toBigNumStr(objpra.asset),
           asset_denom: objpra.name,
           name: objpra.name,
           mint_type: objpra.MintType,
-          inflation: objpra.inflation,
-          total_supply: objpra.total_supply,
-          adjust_rate: objpra.adjust_rate,
-          max_adjust_count: objpra.max_adjust_count,
-          genesis_height: objpra.genesis_height
+          inflation: this.toBigNumStr(objpra.inflation || 0),
+          total_supply: this.toBigNumStr(objpra.total_supply || 0),
+          adjust_rate: String(objpra.adjust_rate || ''),
+          max_adjust_count: String(objpra.max_adjust_count || 0),
+          genesis_height: String(objpra.genesis_height || 0),
+          adjust_period: String(objpra.adjust_period || 0)
         });
         // console.log(res);
         if (res.state) {

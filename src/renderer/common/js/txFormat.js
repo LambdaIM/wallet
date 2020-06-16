@@ -111,7 +111,8 @@ function getamount(msg0, item, vueIns, index) {
         msg0.value.token.denom) +
       '->' + _this.bigNumTypeFormat(msg0.value.asset.amount,
         msg0.value.asset.denom) + ',' +
-        (msg0.value.mintable ? vueIns.$t('Dialog.com.mintabletrue') : vueIns.$t('Dialog.com.mintablefalse'));
+        namefunc(msg0.value.mint_type, vueIns);
+      // (msg0.value.mintable ? vueIns.$t('Dialog.com.mintabletrue') : vueIns.$t('Dialog.com.mintablefalse'));
     } else if (msg0.type == 'lambda/MsgMintAsset') {
       result = _this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom);
     } else if (msg0.type == 'lambda/MsgLockAsset') {
@@ -173,3 +174,18 @@ function fee(item, vueIns) {
   }
   return vueIns.bigNumTypeFormat(fee.amount[0].amount, fee.amount[0].denom);
 }
+
+
+function namefunc(typeitem, vueIns) {
+  // vueIns.$t('Dialog.com.mintabletrue') : vueIns.$t('Dialog.com.mintablefalse'));
+  console.log(typeitem);
+  if (typeitem == 1) {
+    return '不可增发';
+  } else if (typeitem == 2) {
+    return '一次性增发';
+  } else {
+    return '挖矿增发';
+  }
+}
+
+
