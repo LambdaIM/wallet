@@ -147,6 +147,8 @@ export default {
       }
     },
     async getparameter() {
+      console.log('getparameter');
+
       let res = await ipc.callMain('Marketparameters', {
 
       });

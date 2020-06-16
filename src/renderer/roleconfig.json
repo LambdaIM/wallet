@@ -28,9 +28,9 @@
       "Createmarket":["marketmaker"],
       "Createassets":["marketmaker"],
       "authorization":["marketmaker"],
-      "pledge":["miner","marketmaker"],
-      "redeem":["miner","marketmaker"],
-      "Withdrawal":["miner","marketmaker"]
+      "pledge":["miner"],
+      "redeem":["miner"],
+      "Withdrawal":["miner"]
 
     }
 }

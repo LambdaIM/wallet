@@ -188,6 +188,9 @@ function denomformat(denom) {
 function assertdenomformat(denom) {
   return denom.slice(1);
 }
+function formatDay(num) {
+  return (num / (1000 * 1000 * 1000 * 60 * 60 * 24 * 30)).toFixed(2);
+}
 
 // 1000*1000*1000*60*60*24
 
@@ -213,5 +216,6 @@ export default {
   Fixed6,
   formatHour,
   denomformat,
-  assertdenomformat
+  assertdenomformat,
+  formatDay
 };

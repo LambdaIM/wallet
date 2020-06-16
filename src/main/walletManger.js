@@ -862,15 +862,10 @@ walletManger.prototype.CreateAsset = async function ( {
   mint_type,inflation,
   total_supply,
   adjust_rate,adjust_period,max_adjust_count,
-  genesis_height,
+  genesis_height,remarks,
   memo}) {
     
-    console.log('xxxxxxxxxx')
-    console.log('asset_amount',asset_amount)
-    console.log('asset_denom',asset_denom)
-    console.log('token_amount',token_amount)
-    console.log('token_denom',token_denom)
-    console.log('xxxxxxxxxx')
+   
 
   var result = {
     type: transaction.CreateAsset,
@@ -878,7 +873,7 @@ walletManger.prototype.CreateAsset = async function ( {
     asset_denom:asset_denom,
     token_amount:token_amount,
     token_denom:token_denom,
-    name:name,
+    name:remarks,
     mint_type:mint_type,
     inflation:inflation,
     total_supply:total_supply,

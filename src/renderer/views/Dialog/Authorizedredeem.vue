@@ -19,7 +19,7 @@
         </p>
         <br/>
         <p>
-          反质押挖矿币需要等21天<br/>
+          反质押挖矿币需要等{{parameter.refunding_duration|formatDay}}天<br/>
           反质押周期内无收益
         </p>
 
@@ -59,6 +59,7 @@ export default {
       console.log('data', data);
       this.$data.AssetName = data.assetName;
       this.sendModal = true;
+      this.getparameter();
     },
     sendcancel() {
       this.sendModal = false;
@@ -99,11 +100,11 @@ export default {
       }
     },
     async getparameter() {
-      let res = await ipc.callMain('Assetparameters', {
+      let res = await ipc.callMain('Marketparameters', {
 
       });
       if (res.state) {
-        this.$data.parameter = res.data;
+        this.$data.parameter = res.data.data;
       }
     }
 

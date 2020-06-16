@@ -64,7 +64,7 @@
             <template slot-scope="{ row, index }" slot="action">
               <Button class="smallbtn" @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
-              <Button class="smallbtn" v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
+              <Button class="smallbtn" v-if="row.asset.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
 
 <!--
                <Dropdown v-if="row.denom !='ulamb'&&row.denom !='utbb'  "   class="smallbtn2">
@@ -145,6 +145,11 @@
                   <template slot-scope="{ row, index }" slot="cost">
                     {{row.cost|BlanceValue}}
                   </template>
+
+                  <template slot-scope="{ row, index }" slot="assetName">
+                    {{denomFormart(row.assetName)}}
+                  </template>
+
 
 
                 </Table>
@@ -315,7 +320,8 @@ export default {
       redeemcolumns: [
         {
           title: '资产名称',
-          key: 'assetName'
+          key: 'assetName',
+          slot: 'assetName'
         },
         {
           title: '赎回金额',
@@ -377,7 +383,7 @@ export default {
       this.$refs.AssetlModalDialog.open(row.amount, row.denom);
     },
     cointransaction(row) {
-      this.$refs.SendModelDialog.open(row.amount, row.denom);
+      this.$refs.SendModelDialog.open(row.amount, row.asset.denom);
     },
     async  getAssertAll() {
       // assetAll
@@ -466,7 +472,7 @@ export default {
     findpledge(name) {
       var result = '';
       var _this = this;
-      if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
+      if (this.$data.pledgelist == null || this.$data.pledgelist.assetSet == null || this.$data.pledgelist.error != undefined) {
         return;
       }
       this.$data.pledgelist.assetSet.forEach(item => {
@@ -479,7 +485,7 @@ export default {
     findminingSize(name) {
       var result = '';
       var _this = this;
-      if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
+      if (this.$data.pledgelist == null || this.$data.pledgelist.assetSet == null || this.$data.pledgelist.error != undefined) {
         return;
       }
       this.$data.pledgelist.assetSet.forEach(item => {
@@ -492,7 +498,7 @@ export default {
     findminingPower(name) {
       var result = '';
       var _this = this;
-      if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
+      if (this.$data.pledgelist == null || this.$data.pledgelist.assetSet == null || this.$data.pledgelist.error != undefined) {
         return;
       }
       this.$data.pledgelist.assetSet.forEach(item => {
@@ -505,7 +511,7 @@ export default {
     findminingpledgeAsset(name) {
       var result = '';
       var _this = this;
-      if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
+      if (this.$data.pledgelist == null || this.$data.pledgelist.assetSet == null || this.$data.pledgelist.error != undefined) {
         return;
       }
       this.$data.pledgelist.assetSet.forEach(item => {
