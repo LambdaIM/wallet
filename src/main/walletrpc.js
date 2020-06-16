@@ -1005,7 +1005,7 @@ export default function() {
 
   eipc.answerRenderer('CreateAsset', async query => {
     var { asset_amount, asset_denom, name,
-      mint_type, inflation, total_supply, adjust_rate, max_adjust_count, genesis_height } = query;
+      mint_type, inflation, total_supply, adjust_rate, max_adjust_count, genesis_height, adjust_period } = query;
 
     console.log(query);
 
@@ -1046,13 +1046,17 @@ export default function() {
       throw resultView(null, false, errorList.need_max_genesis_height);
     }
 
+    if (adjust_period == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_adjust_period);
+    }
+
 
 
     try {
       var token_amount, token_denom;
 
       token_denom = 'ulamb';
-      token_amount = 1e18;
+      token_amount = 1e12;
 
 
       var TxMessageload = await WM.CreateAsset({
@@ -1066,7 +1070,9 @@ export default function() {
         total_supply,
         adjust_rate,
         max_adjust_count,
-        genesis_height });
+        genesis_height,
+        adjust_period
+      });
 
       return resultView(TxMessageload, true);
     } catch (error) {

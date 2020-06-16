@@ -301,12 +301,28 @@
               <Col span="16" class-name="value">{{getTypeName(transactiondata.mint_type)}}</Col>
             </Row>
             <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">总发行量:</Col>
+              <Col span="16" class-name="value">{{transactiondata.total_supply}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
               <Col span="5" class-name="key">每块高增发量:</Col>
               <Col span="16" class-name="value">{{transactiondata.inflation}}</Col>
             </Row>
             <Row v-if="transactiondata.mint_type=='3'" class-name="item">
-              <Col span="5" class-name="key">增发块高周期:</Col>
-              <Col span="16" class-name="value">{{transactiondata.inflation_period}}</Col>
+              <Col span="5" class-name="key">减产系数:</Col>
+              <Col span="16" class-name="value">{{transactiondata.adjust_rate}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">最大减产次数:</Col>
+              <Col span="16" class-name="value">{{transactiondata.max_adjust_count}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">减产周期:</Col>
+              <Col span="16" class-name="value">{{transactiondata.adjust_period}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">初次增发块高:</Col>
+              <Col span="16" class-name="value">{{transactiondata.genesis_height}}</Col>
             </Row>
 
           </div>
