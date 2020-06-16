@@ -22,7 +22,7 @@ class AssetManager {
   }
   async Assetparameters(query) {
     console.log('Assetparameters');
-    var result = await this.CosmosAPI().get.damparams();
+    var result = await this.CosmosAPI().get.assetParameters();
 
     return { data: result };
   }

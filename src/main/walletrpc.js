@@ -1005,7 +1005,8 @@ export default function() {
 
   eipc.answerRenderer('CreateAsset', async query => {
     var { asset_amount, asset_denom, name,
-      mint_type, inflation, total_supply, adjust_rate, max_adjust_count, genesis_height, adjust_period } = query;
+      mint_type, inflation, total_supply, adjust_rate,
+      max_adjust_count, genesis_height, adjust_period, remarks } = query;
 
     console.log(query);
 
@@ -1050,6 +1051,10 @@ export default function() {
       throw resultView(null, false, errorList.need_adjust_period);
     }
 
+    if (remarks == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_remarks);
+    }
+
 
 
     try {
@@ -1071,7 +1076,8 @@ export default function() {
         adjust_rate,
         max_adjust_count,
         genesis_height,
-        adjust_period
+        adjust_period,
+        remarks
       });
 
       return resultView(TxMessageload, true);

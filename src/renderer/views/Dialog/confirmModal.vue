@@ -293,8 +293,12 @@
               <Col span="16" class-name="value">{{transactiondata.asset_denom|assertdenomformat}}</Col>
             </Row>
             <Row class-name="item">
+              <Col span="5" class-name="key">全程备注:</Col>
+              <Col span="16" class-name="value">{{transactiondata.name}}</Col>
+            </Row>
+            <Row class-name="item">
               <Col span="5" class-name="key">初始发行量:</Col>
-              <Col span="16" class-name="value">{{transactiondata.asset_amount}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.asset_amount|BlanceValue}}</Col>
             </Row>
             <Row class-name="item">
               <Col span="5" class-name="key">增发类型:</Col>
@@ -302,11 +306,11 @@
             </Row>
             <Row v-if="transactiondata.mint_type=='3'" class-name="item">
               <Col span="5" class-name="key">总发行量:</Col>
-              <Col span="16" class-name="value">{{transactiondata.total_supply}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.total_supply|BlanceValue}}</Col>
             </Row>
             <Row v-if="transactiondata.mint_type=='3'" class-name="item">
               <Col span="5" class-name="key">每块高增发量:</Col>
-              <Col span="16" class-name="value">{{transactiondata.inflation}}</Col>
+              <Col span="16" class-name="value">{{transactiondata.inflation|BlanceValue}}</Col>
             </Row>
             <Row v-if="transactiondata.mint_type=='3'" class-name="item">
               <Col span="5" class-name="key">减产系数:</Col>

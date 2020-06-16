@@ -15,6 +15,12 @@
         </p>
         <br />
         <p>
+          <Input v-model="remarks" >
+            <span slot="prepend"> 资产全称（备注） </span>
+          </Input>
+        </p>
+        <br />
+        <p>
           <Input  v-model="asset" >
             <span slot="prepend">初始发行量</span>
           </Input>
@@ -71,7 +77,7 @@
         </div>
 
         <p>
-          创建资产需要{{parameter.create_market_cost|BlanceValue}}LAMB
+          创建资产需要{{parameter.pledge_cost|BlanceValue}}LAMB
         <p/>
 
       </Form >
@@ -105,7 +111,9 @@ export default {
       total_supply: '',
       adjust_rate: '',
       max_adjust_count: '',
-      genesis_height: ''
+      genesis_height: '',
+      remarks: '',
+      adjust_period: ''
     };
   },
   components: {
@@ -137,6 +145,7 @@ export default {
       let genesis_height = parseInt(this.genesis_height);
 
       let adjust_period = parseInt(this.adjust_period);
+      let remarks = this.$data.remarks || '';
 
       if (name == '') {
         this.$Notice.warning({
@@ -231,7 +240,8 @@ export default {
         adjust_rate,
         max_adjust_count,
         genesis_height,
-        adjust_period
+        adjust_period,
+        remarks
       });
     },
     async transfer(objpra) {
@@ -248,7 +258,8 @@ export default {
           adjust_rate: String(objpra.adjust_rate || ''),
           max_adjust_count: String(objpra.max_adjust_count || 0),
           genesis_height: String(objpra.genesis_height || 0),
-          adjust_period: String(objpra.adjust_period || 0)
+          adjust_period: String(objpra.adjust_period || 0),
+          remarks: objpra.remarks || objpra.name
         });
         // console.log(res);
         if (res.state) {
