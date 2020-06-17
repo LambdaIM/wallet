@@ -57,6 +57,9 @@
       "switch-lang":"Switch language",
       "gasprise":"Gas prise",
       "role":"Role",
+      "publickey":"Public key",
+      "loginfo":"log info",
+      "browselog":"browse log",
       "action":{
         "Modified_success":"Modified success",
         "Modification_failed":"Modification failed"
@@ -895,6 +898,21 @@
        "amount":"amount",
        "Withdrawalmarketpledgeincome":"Withdrawal of market pledge income",
        "profit":"profit"
+
+   },
+   "assetpage":{
+       "assets":"Assets",
+       "authorizedMarket":"Authorized market",
+       "assetsinredemption":"Assets in redemption",
+       "miningdescription":"Mining description",
+       "assetlist":{
+        "fullname":"Fullname",
+        "balance":"Balance",
+        "Initialcirculation":"Initial circulation",
+        "Issuingtype":"Issuing type",
+        "Totalissuance":"Total issuance",
+        "Issuanceperblock":"Issuance per block"
+      }
 
    }
 
