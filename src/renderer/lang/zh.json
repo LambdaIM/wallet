@@ -905,6 +905,11 @@
        "authorizedMarket":"授权市场",
        "assetsinredemption":"赎回中的资产",
        "miningdescription":"挖矿说明",
+       "Non-issueable":"不可增发",
+       "One-timeadditionalissuance":"一次性增发",
+       "Additionalmining":"挖矿增发",
+       "Createanauthorizedmarket":"创建授权市场",
+       "Createassets":"创建资产",
        "assetlist":{
            "fullname":"全称",
            "balance":"余额",
@@ -912,7 +917,75 @@
            "Issuingtype":"增发类型",
            "Totalissuance":"发行总量",
            "Issuanceperblock":"每块高增发量"
+       },
+       "marketlist":{
+           "Marketname":"市场名称",
+           "AssetName":"资产名称",
+           "Exchangeratio":"兑换比例",
+           "Pledgeddeposit":"质押金额",
+           "Miningspace":"挖矿空间(GB)",
+           "Hashsubmitted":"提交的算力",
+           "Miningrevenue":"挖矿收益",
+           "operating":"操作"
+       },
+       "Redemptionlist":{
+        "AssetName":"资产名称",
+        "Redemptionamount":"赎回金额",
+        "Completetime":"完成时间"
+       },
+       "Mininginstructions":{
+           "tip1":"1、在挖矿向导中创建矿工",
+           "tip2":"2、在资产中使用授权市场支持的资产在市场中质押"
+       },
+       "btn":{
+           "Pledge":"质押",
+           "redemption":"赎回",
+           "Authorize":"授权",
+           "Dissolvethemarket":"解散市场"
        }
 
+   },
+   "AuthorizedmarketPop":{
+       "Createanauthorizedmarket":"创建授权市场",
+       "Marketname":"市场名称",
+       "AssetName":"资产名称",
+       "Exchangeratio":"兑换比例",
+       "helptip1":"兑换比例指的是这个市场，多少币兑换1TB的存储空间",
+       "helptip2":"例如3000lamb=1TBB",
+       "helptip3":"创建市场需要",
+       "action":{
+            "need_marketName":"市场名称不能为空",
+            "need_assetsType":"资产名称不能为空",
+            "need_ratio":"兑换比例需要是个整数"
+        }
+
+   },
+   "CreateassetsPop":{
+       "Createassets":"创建资产",
+       "AssetName":"资产名称",
+       "Assetfullname":"资产全称(备注)",
+       "Initialcirculation":"初始发行量",
+       "Issuingtype":"增发类型",
+       "Non-issueable":"不可增发",
+       "One-timeissuance":"一次性增发",
+       "Additionalmining":"挖矿增发",
+       "Total supply":"发行总量",
+       "inflation":"每块高增发量",
+       "adjust_rate":"减产系数",
+       "max_adjust_count":"最大减产次数",
+       "adjust_period":"减产周期",
+       "genesis_height":"初次增发块高",
+       "tip1":"创建资产需要",
+       "action":{
+           "need_AssetName":"资产名称不能为空",
+           "need_inflation":"每块高增发量需要为数值",
+           "need_total_supply":"发行总量需要为数值",
+           "need_adjust_rate":"减产系数需要为小数",
+           "need_max_adjust_count":"最大减产次数需要为数值",
+           "need_adjust_period":"减产周期需要为数值",
+           "need_genesis_height":"初次增发块高需要为数值",
+           "AssetNamerule":"资产名称长度2-15个字符"
+       }
    }
+
 }

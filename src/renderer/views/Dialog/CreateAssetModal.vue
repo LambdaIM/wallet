@@ -3,81 +3,81 @@
           <Modal
         loading
         v-model="sendModal"
-        title="创建资产"
+        :title="$t('CreateassetsPop.Createassets')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
           <Input v-model="name" >
-            <span slot="prepend">资产名称</span>
+            <span slot="prepend"> {{$t('CreateassetsPop.AssetName')}} </span>
           </Input>
         </p>
         <br />
         <p>
           <Input v-model="remarks" >
-            <span slot="prepend"> 资产全称（备注） </span>
+            <span slot="prepend">  {{$t('CreateassetsPop.Assetfullname')}} </span>
           </Input>
         </p>
         <br />
         <p>
           <Input  v-model="asset" >
-            <span slot="prepend">初始发行量</span>
+            <span slot="prepend">{{$t('CreateassetsPop.Initialcirculation')}}</span>
           </Input>
         </p>
         <br />
         <p>
-          增发类型
+          {{$t('CreateassetsPop.Initialcirculation')}}
           <RadioGroup v-model="MintType">
-            <Radio label="1">不可增发</Radio>
-            <Radio label="2">一次性增发</Radio>
-            <Radio label="3">挖矿增发</Radio>
-        </RadioGroup>
+              <Radio label="1"> {{$t('CreateassetsPop.Non-issueable')}} </Radio>
+              <Radio label="2"> {{$t('CreateassetsPop.One-timeissuance')}}</Radio>
+              <Radio label="3">{{$t('CreateassetsPop.Additionalmining')}}</Radio>
+          </RadioGroup>
         </p>
         <br />
         <div v-if="MintType=='3'">
             <br />
             <p >
               <Input  v-model="total_supply" >
-                <span slot="prepend">发行总量</span>
+                <span slot="prepend">{{$t('CreateassetsPop.Totalsupply')}}</span>
               </Input>
             </p>
             <br />
             <p >
               <Input  v-model="inflation" >
-                <span slot="prepend">每块高增发量</span>
+                <span slot="prepend">{{$t('CreateassetsPop.inflation')}}</span>
               </Input>
             </p>
             <br />
             <p >
               <Input  v-model="adjust_rate" >
-                <span slot="prepend">减产系数</span>
+                <span slot="prepend">{{$t('CreateassetsPop.adjust_rate')}}</span>
               </Input>
             </p>
             <br />
             <p >
               <Input  v-model="max_adjust_count" >
-                <span slot="prepend">最大减产次数</span>
+                <span slot="prepend">{{$t('CreateassetsPop.max_adjust_count')}}</span>
               </Input>
               <br />
             </p>
             <br />
             <p >
               <Input  v-model="adjust_period" >
-                <span slot="prepend">减产周期</span>
+                <span slot="prepend">{{$t('CreateassetsPop.adjust_period')}}</span>
               </Input>
               <br />
             </p>
             <p >
               <Input  v-model="genesis_height" >
-                <span slot="prepend">初次增发块高</span>
+                <span slot="prepend">{{$t('CreateassetsPop.genesis_height')}}</span>
               </Input>
               <br />
             </p>
         </div>
 
         <p>
-          创建资产需要{{parameter.pledge_cost|BlanceValue}}LAMB
+          {{$t('CreateassetsPop.tip1')}}{{parameter.pledge_cost|BlanceValue}}LAMB
         <p/>
 
       </Form >
@@ -149,7 +149,7 @@ export default {
 
       if (name == '') {
         this.$Notice.warning({
-          title: '资产名称不能为空'
+          title: this.$t('CreateassetsPop.action.need_AssetName')
         });
         return;
       }
@@ -157,49 +157,49 @@ export default {
 
       if (isNaN(asset) || asset <= 0) {
         this.$Notice.warning({
-          title: '初始化发行量需要为数值'
+          title: this.$t('CreateassetsPop.action.need_asset')
         });
         return;
       }
       if (MintType == '3') {
         if (isNaN(inflation) || inflation <= 0) {
           this.$Notice.warning({
-            title: '每块高增发量需要为数值'
+            title: this.$t('CreateassetsPop.action.need_inflation')
           });
           return;
         }
 
         if (isNaN(total_supply) || total_supply <= 0) {
           this.$Notice.warning({
-            title: '发行总量需要为数值'
+            title: this.$t('CreateassetsPop.action.need_total_supply')
           });
           return;
         }
 
         if (isNaN(adjust_rate) || adjust_rate >= 1) {
           this.$Notice.warning({
-            title: '减产系数需要为小数'
+            title: this.$t('CreateassetsPop.action.need_adjust_rate')
           });
           return;
         }
 
         if (isNaN(max_adjust_count) || max_adjust_count <= 0) {
           this.$Notice.warning({
-            title: '最大减产次数需要为数值'
+            title: this.$t('CreateassetsPop.action.need_max_adjust_count')
           });
           return;
         }
 
         if (isNaN(adjust_period) || adjust_period <= 0) {
           this.$Notice.warning({
-            title: '减产周期需要为数值'
+            title: this.$t('CreateassetsPop.action.need_adjust_period')
           });
           return;
         }
 
         if (isNaN(genesis_height) || genesis_height <= 0) {
           this.$Notice.warning({
-            title: '初次增发块高需要为数值'
+            title: this.$t('CreateassetsPop.action.need_genesis_height')
           });
           return;
         }
@@ -220,7 +220,7 @@ export default {
       var reg = new RegExp(/^[a-zA-Z0-9]{3,16}$/);
       if (!reg.test(name)) {
         this.$Notice.warning({
-          title: '资产符号长度2-15个字符'
+          title: this.$t('CreateassetsPop.action.AssetNamerule')
         });
         return;
       }

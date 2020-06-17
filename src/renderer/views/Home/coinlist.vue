@@ -3,8 +3,8 @@
   <div class="customer-container">
       <div class="tableContainer">
         <div>
-              <Button v-if="$role('conlist.Createmarket')" @click="openmarket" type="primary">创建授权市场</Button>
-              <Button v-if="$role('conlist.Createassets')" @click="openassert" type="primary"> 创建资产 </Button>
+              <Button v-if="$role('conlist.Createmarket')" @click="openmarket" type="primary">{{$t('assetpage.Createanauthorizedmarket')}}</Button>
+              <Button v-if="$role('conlist.Createassets')" @click="openassert" type="primary">{{$t('assetpage.Createassets')}}</Button>
 
 
         </div>
@@ -125,13 +125,13 @@
 
                          <template slot-scope="{ row, index }" slot="pledge">
 
-                  <Button v-if="$role('conlist.pledge')" class="smallbtn" @click="openAuthorizedpledge(row)" size="small">质押</Button>
+                  <Button v-if="$role('conlist.pledge')" class="smallbtn" @click="openAuthorizedpledge(row)" size="small">{{$t('assetpage.btn.Pledge')}}</Button>
 
-                  <Button v-if="$role('conlist.redeem')" class="smallbtn" @click="openAuthorizedredeem(row)" size="small">赎回</Button>
+                  <Button v-if="$role('conlist.redeem')" class="smallbtn" @click="openAuthorizedredeem(row)" size="small">{{$t('assetpage.btn.redemption')}}</Button>
 
                   <!-- <Button v-if="$role('conlist.Withdrawal')" class="smallbtn" size="small">提取收益</Button> -->
-                  <Button v-if="$role('conlist.authorization')" class="smallbtn" @click="openAuthorizedmining(row)" size="small">授权</Button>
-                  <Button type="error" v-if="$role('conlist.authorization')" @click="openDissolutionmarket(row)" class="smallbtn"  size="small">解散市场</Button>
+                  <Button v-if="$role('conlist.authorization')" class="smallbtn" @click="openAuthorizedmining(row)" size="small">{{$t('assetpage.btn.Authorize')}}</Button>
+                  <Button type="error" v-if="$role('conlist.authorization')" @click="openDissolutionmarket(row)" class="smallbtn"  size="small">{{$t('assetpage.btn.Dissolvethemarket')}}</Button>
 
             </template>
 
@@ -159,8 +159,8 @@
             <TabPane :label="$t('assetpage.miningdescription')" name="name3">
 
               <ul style="margin-left: 10px;">
-                <li>1、在挖矿向导中创建矿工</li>
-                <li>2、在资产中使用授权市场支持的资产在市场中质押</li>
+                <li>{{$t('assetpage.Mininginstructions.tip1')}}</li>
+                <li>{{$t('assetpage.Mininginstructions.tip2')}}</li>
               </ul>
 
             </TabPane>
@@ -273,41 +273,41 @@ export default {
       allassert: [],
       marketcolumns: [
         {
-          title: '市场名称',
+          title: this.$t('assetpage.marketlist.Marketname'),
           key: 'marketName',
           slot: 'marketName'
         },
         {
-          title: '资产名称',
+          title: this.$t('assetpage.marketlist.AssetName'),
           key: 'assetName',
           slot: 'denom'
         },
 
         {
-          title: '兑换比例',
+          title: this.$t('assetpage.marketlist.Exchangeratio'),
           key: 'exchangeRatio'
         },
         {
-          title: '质押金额',
+          title: this.$t('assetpage.marketlist.Pledgeddeposit'),
           key: 'pledgeAsset',
           slot: 'pledgeAsset'
         },
         {
-          title: '挖矿空间(GB)',
+          title: this.$t('assetpage.marketlist.Miningspace'),
           key: 'miningSize',
           slot: 'miningSize'
         },
         {
-          title: '提交的算力',
+          title: this.$t('assetpage.marketlist.Hashsubmitted'),
           key: 'power',
           slot: 'power'
         },
         {
-          title: '挖矿收益',
+          title: this.$t('assetpage.marketlist.Hashsubmitted'),
           key: 'address'
         },
         {
-          title: '操作',
+          title: this.$t('assetpage.marketlist.operating'),
           key: 'pledge',
           slot: 'pledge'
         }
@@ -319,17 +319,17 @@ export default {
       MinerRewards: null,
       redeemcolumns: [
         {
-          title: '资产名称',
+          title: this.$t('assetpage.Redemptionlist.AssetName'),
           key: 'assetName',
           slot: 'assetName'
         },
         {
-          title: '赎回金额',
+          title: this.$t('assetpage.Redemptionlist.Redemptionamount'),
           key: 'cost',
           slot: 'cost'
         },
         {
-          title: '完成时间',
+          title: this.$t('assetpage.Redemptionlist.Completetime'),
           key: 'completionTime',
           slot: 'completionTime'
         }
@@ -542,11 +542,11 @@ export default {
     },
     typeName(item) {
       if (item == 1) {
-        return '不可增发';
+        return this.$t('assetpage.Non-issueable');
       } else if (item == 2) {
-        return '一次性增发';
+        return this.$t('assetpage.One-timeadditionalissuance');
       } else if (item == 3) {
-        return '挖矿增发';
+        return this.$t('assetpage.Additionalmining');
       }
     }
 
@@ -650,7 +650,7 @@ export default {
   margin-bottom: 10px;
   margin-right: 10px;
   margin-top: 10px;
-  width: 90%
+  width: 100%
 
 }
 
