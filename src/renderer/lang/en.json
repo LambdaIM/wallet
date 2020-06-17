@@ -905,15 +905,89 @@
        "authorizedMarket":"Authorized market",
        "assetsinredemption":"Assets in redemption",
        "miningdescription":"Mining description",
+       "Non-issueable":"Non-issueable",
+       "One-timeadditionalissuance":"One-time issuance",
+       "Additionalmining":"Additional mining",
+       "Createanauthorizedmarket":"Create an authorized market",
+       "Createassets":"Create assets",
        "assetlist":{
         "fullname":"Fullname",
         "balance":"Balance",
         "Initialcirculation":"Initial circulation",
         "Issuingtype":"Issuing type",
-        "Totalissuance":"Total issuance",
-        "Issuanceperblock":"Issuance per block"
-      }
+        "Totalissuance":"Total supply",
+        "Issuanceperblock":"inflation"
+        },
+        "marketlist":{
+          "Marketname":"Market name",
+          "AssetName":"Asset Name",
+          "Exchangeratio":"Exchange ratio",
+          "Pledgeddeposit":"Pledgedde posit",
+          "Miningspace":"Mining space(GB)",
+          "Hashsubmitted":"Hash submitted",
+          "Miningrevenue":"Mining revenue",
+          "operating":"Operating"
 
+        },
+        "Redemptionlist":{
+         "AssetName":"AssetName",
+         "Redemptionamount":"Redemption amount",
+         "Completetime":"Complete time"
+        },
+        "Mininginstructions":{
+            "tip1":"1. Create a miner in the mining wizard",
+            "tip2":"2. Use assets supported by authorized markets in assets to pledge in the market"
+        },
+        "btn":{
+            "Pledge":"Pledge",
+            "redemption":"Redemption",
+            "Authorize":"Authorize",
+            "Dissolvethemarket":"Dissolve"
+        }
+
+   },
+   "AuthorizedmarketPop":{
+       "Createanauthorizedmarket":"Create an authorized market",
+       "Marketname":"Market name",
+       "AssetName":"Asset Name",
+       "Exchangeratio":"Exchange ratio",
+       "helptip1":"The exchange ratio refers to this market, how much currency is exchanged for 1TB of storage space",
+       "helptip2":"For example 3000lamb=1TBB",
+       "helptip3":"Create market using",
+       "action":{
+           "need_marketName":"Market name cannot be empty",
+           "need_assetsType":"Asset name cannot be empty",
+           "need_ratio":"The exchange ratio needs to be an integer"
+       }
+
+   },
+   "CreateassetsPop":{
+       "Createassets":"Create assets",
+       "AssetName":"Asset Name",
+       "Assetfullname":"Asset full name(Remarks)",
+       "Initialcirculation":"Initial circulation",
+       "Issuingtype":"Issuing type",
+       "Non-issueable":"Non-issueable",
+       "One-timeissuance":"One-timeissuance",
+       "Additionalmining":"Additional mining",
+       "Totalsupply":"Total supply",
+       "inflation":"Inflation",
+       "adjust_rate":"Adjust rate",
+       "max_adjust_count":"Max adjust count",
+       "adjust_period":"Adjust period",
+       "genesis_height":"Genesis height",
+       "tip1":"Create asset using",
+       "action":{
+           "need_AssetName":"Asset name cannot be empty",
+           "need_asset":"Initial circulation needs to be numeric",
+           "need_inflation":"inflation needs to be a value",
+           "need_total_supply":"The total supply needs to be numeric",
+           "need_adjust_rate":"The adjust_rate needs to be a decimal, less than 1",
+           "need_max_adjust_count":"The max adjust count needs to be numeric",
+           "need_adjust_period":"The adjust period needs to be numeric",
+           "need_genesis_height":"The genesis height needs to be a value",
+           "AssetNamerule":"Asset name 2-15 characters long"
+       }
    }
 
 }

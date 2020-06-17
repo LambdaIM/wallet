@@ -3,26 +3,26 @@
           <Modal
         loading
         v-model="sendModal"
-        title="创建授权市场"
+        :title="$t('AuthorizedmarketPop.Createanauthorizedmarket')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
           <Input  v-model="marketName" >
-            <span slot="prepend">市场名称</span>
+            <span slot="prepend">{{$t('AuthorizedmarketPop.Marketname')}}</span>
           </Input>
         </p>
         <br />
         <p>
           <Input  v-model="assetsType" >
-            <span slot="prepend">资产名称</span>
+            <span slot="prepend">{{$t('AuthorizedmarketPop.AssetName')}}</span>
           </Input>
         </p>
         <br />
         <p>
           <Input  v-model="ratio" >
-            <span slot="prepend">兑换比例</span>
+            <span slot="prepend">{{$t('AuthorizedmarketPop.Exchangeratio')}}</span>
           </Input>
         </p>
         <br />
@@ -31,9 +31,9 @@
         </p>
         <br />
         <p>
-          兑换比例指的是这个市场，多少币兑换1TB的存储空间,<br/>
-          例如3000lamb=1TBB<br/>
-          创建市场需要{{parameter.create_market_cost|BlanceValue}}LAMB
+          {{$t('AuthorizedmarketPop.helptip1')}}<br/>
+          {{$t('AuthorizedmarketPop.helptip2')}}<br/>
+          {{$t('AuthorizedmarketPop.helptip3')}}{{parameter.create_market_cost|BlanceValue}}LAMB
 
 
         </p>
@@ -89,21 +89,24 @@ export default {
 
       let marketName = this.$data.marketName;
 
-
+      if (marketName == '') {
+        this.$Notice.warning({
+          title: this.$t('AuthorizedmarketPop.action.need_marketName')
+        });
+        return;
+      }
 
       if (assetsType == '') {
         this.$Notice.warning({
-          title: '资产名称不能为空'
+          title: this.$t('AuthorizedmarketPop.action.need_assetsType')
         });
         return;
       }
       assetsType = 'u' + assetsType;
 
-
-
       if (isNaN(ratio) || ratio <= 0) {
         this.$Notice.warning({
-          title: '兑换比例需要是个整数'
+          title: this.$t('AuthorizedmarketPop.action.need_ratio')
         });
         return;
       }
