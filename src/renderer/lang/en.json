@@ -988,6 +988,42 @@
            "need_genesis_height":"The genesis height needs to be a value",
            "AssetNamerule":"Asset name 2-15 characters long"
        }
-   }
+   },
+   "dminingpop":{
+       "Authorization-MinerMining":"Authorization-Miner Mining",
+       "AssetName":"Asset Name",
+       "Authorizedpublickey":"Authorized public key",
+       "action":{
+         "need_public_key":"Please fill in the public key"
+       }
+
+    },
+    "Dissolvethemarket":{
+        "Dissolutionmarket":"Dissolution of authorized market",
+        "AssetName":"Asset Name",
+        "tip":"Without miners' pledge, the market can be dissolved"
+      
+
+    },
+    "AuthorizeMarketpledge":{
+      "pledge":"Authorized Market-Pledge",
+      "AssetName":"Asset Name",
+      "space":"space",
+      "tip1":"Authorized mining steps",
+      "tip2":"The first step is to operate in the mining wizard and become a miner",
+      "tip3":"The second part is to use asset pledge",
+      "action":{
+          "need_size":"Pledge space, only integers"
+      }
+
+    },
+    "Redemptionpledge":{
+        "redemption":"Authorized Market-Redemption",
+        "AssetName":"Asset Name",
+        "tip1":"Redeem all pledges",
+        "tip2":"Days to redeem assets"
+        
+    }
+
 
 }

@@ -3,19 +3,19 @@
           <Modal
         loading
         v-model="sendModal"
-        title="授权-矿工挖矿"
+        :title="$t('Authorizedminingpop.Authorization-MinerMining')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
           <Input :value="AssetName|assertdenomformat" readonly>
-            <span slot="prepend">资产名称</span>
+            <span slot="prepend">{{$t('Authorizedminingpop.AssetName')}}</span>
           </Input>
         </p>
         <br />
         <p>
-            授权人公钥
+            {{$t('Authorizedminingpop.Authorizedpublickey')}}
           <Input type="textarea"  v-model="Pubkey" >
 
           </Input>
@@ -68,7 +68,7 @@ export default {
       var Pubkey = this.$data.Pubkey;
       if (Pubkey.length == 0) {
         this.$Notice.warning({
-          title: '请填写公钥'
+          title: this.$t('Authorizedminingpop.action.need_public_key')
         });
         return;
       }
