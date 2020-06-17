@@ -3,24 +3,24 @@
           <Modal
         loading
         v-model="sendModal"
-        title="授权市场-赎回"
+        :title="$t('Redemptionpledge.redemption')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
           <Input  :value="AssetName|assertdenomformat" readonly>
-            <span slot="prepend">资产名称</span>
+            <span slot="prepend">{{$t('Redemptionpledge.AssetName')}}</span>
           </Input>
         </p>
         <br />
         <p>
-          赎回全部质押
+          {{$t('Redemptionpledge.tip1')}}
         </p>
         <br/>
         <p>
-          反质押挖矿币需要等{{parameter.refunding_duration|formatDay}}天<br/>
-          反质押周期内无收益
+          {{$t('Redemptionpledge.tip1')}}:{{parameter.refunding_duration|formatDay}}<br/>
+
         </p>
 
       </Form >

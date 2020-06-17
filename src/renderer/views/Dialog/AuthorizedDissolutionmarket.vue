@@ -3,19 +3,19 @@
           <Modal
         loading
         v-model="sendModal"
-        title="解散授权市场"
+        :title="$t('Dissolvethemarket.Dissolutionmarket')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
           <Input  :value="AssetName|assertdenomformat" readonly>
-            <span slot="prepend">资产名称</span>
+            <span slot="prepend">{{$t('Dissolvethemarket.AssetName')}}</span>
           </Input>
         </p>
         <br />
         <p>
-          没有矿工质押，市场才可以解散
+          {{$t('Dissolvethemarket.tip')}}
         </p>
 
 

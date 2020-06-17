@@ -969,7 +969,7 @@
        "Non-issueable":"不可增发",
        "One-timeissuance":"一次性增发",
        "Additionalmining":"挖矿增发",
-       "Total supply":"发行总量",
+       "Totalsupply":"发行总量",
        "inflation":"每块高增发量",
        "adjust_rate":"减产系数",
        "max_adjust_count":"最大减产次数",
@@ -978,6 +978,7 @@
        "tip1":"创建资产需要",
        "action":{
            "need_AssetName":"资产名称不能为空",
+           "need_asset":"初始化发行量需要为数值",
            "need_inflation":"每块高增发量需要为数值",
            "need_total_supply":"发行总量需要为数值",
            "need_adjust_rate":"减产系数需要为小数",
@@ -986,6 +987,41 @@
            "need_genesis_height":"初次增发块高需要为数值",
            "AssetNamerule":"资产名称长度2-15个字符"
        }
-   }
+   },
+   "Authorizedminingpop":{
+       "Authorization-MinerMining":"授权-矿工挖矿",
+       "AssetName":"资产名称",
+       "Authorizedpublickey":"授权人公钥",
+       "action":{
+         "need_public_key":"请填写公钥"
+       }
+
+    },
+    "Dissolvethemarket":{
+        "Dissolutionmarket":"解散授权市场",
+        "AssetName":"资产名称",
+        "tip":"没有矿工质押，市场才可以解散"
+      
+
+    },
+    "AuthorizeMarketpledge":{
+      "pledge":"授权市场-质押",
+      "AssetName":"资产名称",
+      "space":"空间",
+      "tip1":"授权挖矿步骤",
+      "tip2":"第一步在挖矿向导中操作，成为矿工",
+      "tip3":"第二部为使用资产质押",
+      "action":{
+          "need_size":"质押空间，只能为整数"
+      }
+
+    },
+    "Redemptionpledge":{
+        "redemption":"授权市场-赎回",
+        "AssetName":"资产名称",
+        "tip1":"赎回全部质押",
+        "tip2":"赎回资产需要等的天数"
+        
+    }
 
 }

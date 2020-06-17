@@ -3,30 +3,30 @@
           <Modal
         loading
         v-model="sendModal"
-        title="授权市场-质押"
+        :title="$t('AuthorizeMarketpledge.pledge')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
       <Form  @keydown.native.enter.prevent ="preSendLAMB" >
         <p>
           <Input :value="AssetName|assertdenomformat" readonly>
-            <span slot="prepend">资产名称</span>
+            <span slot="prepend">{{$t('AuthorizeMarketpledge.AssetName')}}</span>
           </Input>
         </p>
         <br />
         <p>
 
           <Input  v-model="Size" >
-          <span slot="prepend">空间</span>
+          <span slot="prepend">{{$t('AuthorizeMarketpledge.space')}}</span>
             <span slot="append">GB</span>
           </Input>
         </p>
 
         <br />
         <p>
-          授权挖矿<br/>
-          第一步为使用TBB在验证节点质押，<br/>
-          第二部为使用资产质押
+          {{$t('AuthorizeMarketpledge.tip1')}}<br/>
+          {{$t('AuthorizeMarketpledge.tip2')}}<br/>
+          {{$t('AuthorizeMarketpledge.tip3')}}
         </p>
 
       </Form >
@@ -74,7 +74,7 @@ export default {
       var Size = parseInt(this.$data.Size);
       if (isNaN(Size) || Size <= 0) {
         this.$Notice.warning({
-          title: '质押空间，只能为整数'
+          title: this.$t('AuthorizeMarketpledge.action.need_size')
         });
         return;
       }
