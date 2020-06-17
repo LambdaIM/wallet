@@ -55,6 +55,9 @@
       "switch-lang":"切换语言",
       "gasprise":"gas价格",
       "role":"角色",
+      "publickey":"公钥",
+      "loginfo":"日志信息",
+      "browselog":"浏览日志",
       "action": {
           "Modified_success": "修改成功",
           "Modification_failed": "修改失败"
@@ -895,6 +898,21 @@
        "amount":"金额",
        "Withdrawalmarketpledgeincome":"提取市场质押收益",
        "profit":"收益"
+
+   },
+   "assetpage":{
+       "assets":"资产",
+       "authorizedMarket":"授权市场",
+       "assetsinredemption":"赎回中的资产",
+       "miningdescription":"挖矿说明",
+       "assetlist":{
+           "fullname":"全称",
+           "balance":"余额",
+           "Initialcirculation":"初始发行量",
+           "Issuingtype":"增发类型",
+           "Totalissuance":"发行总量",
+           "Issuanceperblock":"每块高增发量"
+       }
 
    }
 }

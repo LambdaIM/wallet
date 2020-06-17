@@ -10,7 +10,7 @@
         </div>
         <br/>
           <Tabs value="name1">
-            <TabPane label="资产" name="name1">
+            <TabPane :label="$t('assetpage.assets')" name="name1">
                       <Table  v-if="coinList" :columns="columnsToken" :data="coinList">
 
 
@@ -88,7 +88,7 @@
 
           </Table>
             </TabPane>
-            <TabPane label="授权市场" name="name2">
+            <TabPane :label="$t('assetpage.authorizedMarket')" name="name2">
                  <Table :columns="marketcolumns" :data="marketdata">
                     <!-- <template slot-scope="{ row, index }" slot="amount">
               {{bigNumTypeFormat(row.amount,row.denom)}}
@@ -137,7 +137,7 @@
 
                  </Table>
             </TabPane>
-            <TabPane label="赎回中的资产" name="name4">
+            <TabPane :label="$t('assetpage.assetsinredemption')" name="name4">
                 <Table :columns="redeemcolumns" :data="redeemdata">
                   <template slot-scope="{ row, index }" slot="completionTime">
                     {{row.completionTime|blockFormatDate}}
@@ -156,7 +156,7 @@
 
             </TabPane>
 
-            <TabPane label="挖矿说明" name="name3">
+            <TabPane :label="$t('assetpage.miningdescription')" name="name3">
 
               <ul style="margin-left: 10px;">
                 <li>1、在挖矿向导中创建矿工</li>
@@ -215,7 +215,7 @@ export default {
 
       columnsToken: [
         {
-          title: '全称',
+          title: this.$t('assetpage.assetlist.fullname'),
           key: 'name'
         },
         {
@@ -224,7 +224,7 @@ export default {
           slot: 'denom'
         },
         {
-          title: '余额',
+          title: this.$t('assetpage.assetlist.balance'),
           key: 'amount',
           slot: 'amount'
         },
@@ -234,38 +234,38 @@ export default {
           slot: 'action'
         },
         {
-          title: '初始化发行量',
+          title: this.$t('assetpage.assetlist.Initialcirculation'),
           key: 'assetamount',
           slot: 'assetamount'
         },
         {
-          title: '增发类型',
+          title: this.$t('assetpage.assetlist.Issuingtype'),
           key: 'mint_type',
           slot: 'mint_type'
         },
         {
-          title: '发行总量',
+          title: this.$t('assetpage.assetlist.Totalissuance'),
           key: 'total_supply',
           slot: 'total_supply'
         },
         {
-          title: '每块高增发量',
+          title: this.$t('assetpage.assetlist.Issuanceperblock'),
           key: 'inflation',
           slot: 'inflation'
-        },
-        {
-          title: '减产系数',
-          key: 'adjust_rate',
-          slot: 'adjust_rate'
-        },
-        {
-          title: '最大减产次数',
-          key: 'max_adjust_count'
-        },
-        {
-          title: '初次增发块高',
-          key: 'genesis_height'
         }
+        // {
+        //   title: '减产系数',
+        //   key: 'adjust_rate',
+        //   slot: 'adjust_rate'
+        // },
+        // {
+        //   title: '最大减产次数',
+        //   key: 'max_adjust_count'
+        // },
+        // {
+        //   title: '初次增发块高',
+        //   key: 'genesis_height'
+        // }
 
 
 

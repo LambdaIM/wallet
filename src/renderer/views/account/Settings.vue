@@ -69,7 +69,7 @@
               span="4"
               class-name="title-wrapper"
             >
-            <span class="title">公钥</span>
+            <span class="title">{{ $t("seting.publickey") }}</span>
             </Col>
             <Col
               span="18"
@@ -348,7 +348,7 @@
       </Mycard>
 
       <Mycard
-        cardtitle="日志信息"
+        :cardtitle="$t('seting.loginfo')"
         class="mb10"
       >
         <div
@@ -367,7 +367,7 @@
               span="4"
               class-name="content-wrapper"
             >
-              <Button to="/localtxlist">浏览日志</Button>
+              <Button to="/localtxlist">{{$t('seting.browselog')}}</Button>
             </Col>
           </Row>
         </div>
