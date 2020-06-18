@@ -775,12 +775,14 @@
        "simpleuser":"Wallet user",
        "orderuser":"Space users",
        "miner":"Miner",
-       "validator":"Validator"
+       "validator":"Validator",
+       "marketmaker":"Market maker"
   },
   "simpleuserbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward，Market pledge, withdraw market pledge income",
   "orderuserbrief":"View assets, transfer, pledge mining, proposal voting, purchase space, use lambdas3, withdraw pledge reward，Market pledge, withdraw market pledge income",
   "minerbrief":"View assets, transfer, pledge mining, proposal voting, market trading space, mining guide, withdraw pledge reward, withdraw deposit mining reward，Market pledge, withdraw market pledge income",
-  "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income，Market pledge, withdraw market pledge income"
+  "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income，Market pledge, withdraw market pledge income",
+  "marketmakerbrief":"Create authorized mining market, asset, authorized mining"
 },
 "guidepage":{
     "step1":{
@@ -989,7 +991,7 @@
            "AssetNamerule":"Asset name 2-15 characters long"
        }
    },
-   "dminingpop":{
+   "Authorizedminingpop":{
        "Authorization-MinerMining":"Authorization-Miner Mining",
        "AssetName":"Asset Name",
        "Authorizedpublickey":"Authorized public key",
@@ -1008,7 +1010,7 @@
     "AuthorizeMarketpledge":{
       "pledge":"Authorized Market-Pledge",
       "AssetName":"Asset Name",
-      "space":"space",
+      "space":"Space",
       "tip1":"Authorized mining steps",
       "tip2":"The first step is to operate in the mining wizard and become a miner",
       "tip3":"The second part is to use asset pledge",

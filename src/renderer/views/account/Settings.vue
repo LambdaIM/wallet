@@ -708,7 +708,7 @@ export default {
         case 'order': reslt = this.$t('rolepage.roletype.orderuser'); break;
         case 'miner': reslt = this.$t('rolepage.roletype.miner'); break;
         case 'validator': reslt = this.$t('rolepage.roletype.validator'); break;
-        case 'marketmaker': reslt = '做市商'; break;
+        case 'marketmaker': reslt = this.$t('rolepage.roletype.marketmaker'); break;
       }
       return reslt;
     },
