@@ -121,6 +121,10 @@
                     {{findminingPower(row.assetName)}}
             </template>
 
+            <template slot-scope="{ row, index }" slot="Miningrevenue">
+                    {{assertMinerReward(row.assetName)}}
+            </template>
+
 
 
                          <template slot-scope="{ row, index }" slot="pledge">
@@ -303,8 +307,9 @@ export default {
           slot: 'power'
         },
         {
-          title: this.$t('assetpage.marketlist.Hashsubmitted'),
-          key: 'address'
+          title: this.$t('assetpage.marketlist.Miningrevenue'),
+          key: 'Miningrevenue',
+          slot: 'Miningrevenue'
         },
         {
           title: this.$t('assetpage.marketlist.operating'),
@@ -548,6 +553,19 @@ export default {
       } else if (item == 3) {
         return this.$t('assetpage.Additionalmining');
       }
+    },
+    assertMinerReward(assertname) {
+      var result = '';
+      var _this = this;
+      if (this.$data.MinerRewards) {
+        this.$data.MinerRewards.forEach(item => {
+          if (item.denom == assertname) {
+            result = _this.bigNumTypeFormat(item.amount, assertname);
+          }
+        });
+      }
+
+      return result;
     }
 
 
