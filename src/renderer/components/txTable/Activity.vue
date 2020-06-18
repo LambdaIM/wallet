@@ -103,6 +103,8 @@ export default {
       }
     },
     isProposal(txItem) {
+      console.log('isProposal');
+
       return txItem.action !== 'MsgSubmitProposal' &&
       txItem.action !== 'MsgUnjail' &&
       txItem.action !== 'MsgCreateValidator' &&
@@ -127,7 +129,8 @@ export default {
       txItem.action !== 'MsgDigitalAssetPledge' &&
       txItem.action !== 'MsgAuthorizeMiningPubKey' &&
       txItem.action !== 'MsgDigitalAssetRefund' &&
-      txItem.action !== 'MsgDismissDigitalAssetMarket'
+      txItem.action !== 'MsgDismissDigitalAssetMarket' &&
+      txItem.action !== 'MsgWithdrawMinerRewards'
       ;
     },
     isAssettx(txItem) {
