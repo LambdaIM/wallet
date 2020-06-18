@@ -286,79 +286,79 @@
           </div>
 
           <div v-if="txtype=='CreateAsset'">
-            <h2> 创建资产  </h2>
+            <h2> {{$t('CreateassetsPop.Createassets')}}  </h2>
 
             <Row class-name="item">
-              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.AssetName')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.asset_denom|assertdenomformat}}</Col>
             </Row>
             <Row class-name="item">
-              <Col span="5" class-name="key">全程备注:</Col>
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.Assetfullname')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.name}}</Col>
             </Row>
             <Row class-name="item">
-              <Col span="5" class-name="key">初始发行量:</Col>
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.Initialcirculation')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.asset_amount|BlanceValue}}</Col>
             </Row>
             <Row class-name="item">
-              <Col span="5" class-name="key">增发类型:</Col>
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.Issuingtype')}}:</Col>
               <Col span="16" class-name="value">{{getTypeName(transactiondata.mint_type)}}</Col>
             </Row>
             <Row v-if="transactiondata.mint_type=='3'" class-name="item">
-              <Col span="5" class-name="key">总发行量:</Col>
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.Totalsupply')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.total_supply|BlanceValue}}</Col>
             </Row>
             <Row v-if="transactiondata.mint_type=='3'" class-name="item">
-              <Col span="5" class-name="key">每块高增发量:</Col>
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.inflation')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.inflation|BlanceValue}}</Col>
             </Row>
             <Row v-if="transactiondata.mint_type=='3'" class-name="item">
-              <Col span="5" class-name="key">减产系数:</Col>
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.adjust_rate')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.adjust_rate}}</Col>
             </Row>
             <Row v-if="transactiondata.mint_type=='3'" class-name="item">
-              <Col span="5" class-name="key">最大减产次数:</Col>
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.max_adjust_count')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.max_adjust_count}}</Col>
             </Row>
             <Row v-if="transactiondata.mint_type=='3'" class-name="item">
-              <Col span="5" class-name="key">减产周期:</Col>
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.adjust_period')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.adjust_period}}</Col>
             </Row>
             <Row v-if="transactiondata.mint_type=='3'" class-name="item">
-              <Col span="5" class-name="key">初次增发块高:</Col>
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.genesis_height')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.genesis_height}}</Col>
             </Row>
 
           </div>
 
           <div v-if="txtype=='CreateDigitalAssetMarket'">
-            <h2> 创建授权市场  </h2>
+            <h2> {{$t('AuthorizedmarketPop.Createanauthorizedmarket')}}  </h2>
             <Row class-name="item">
-              <Col span="5" class-name="key">市场名称:</Col>
+              <Col span="5" class-name="key">{{$t('AuthorizedmarketPop.Marketname')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.marketName}}</Col>
             </Row>
 
             <Row class-name="item">
-              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="5" class-name="key">{{$t('AuthorizedmarketPop.AssetName')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
             </Row>
 
             <Row class-name="item">
-              <Col span="5" class-name="key">增发比例:</Col>
+              <Col span="5" class-name="key">{{$t('AuthorizedmarketPop.Exchangeratio')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.Ratio}}</Col>
             </Row>
 
           </div>
 
           <div v-if="txtype=='DigitalAssetPledge'">
-            <h2> 质押 </h2>
+            <h2> {{$t('AuthorizeMarketpledge.pledge')}} </h2>
 
             <Row class-name="item">
-              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="5" class-name="key">{{$t('AuthorizeMarketpledge.AssetName')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
             </Row>
             <Row class-name="item">
-              <Col span="5" class-name="key">空间大小:</Col>
+              <Col span="5" class-name="key">{{$t('AuthorizeMarketpledge.space')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.Size}}GB</Col>
             </Row>
 
@@ -366,10 +366,10 @@
 
 
           <div v-if="txtype=='DigitalAssetRefund'">
-            <h2> 赎回 </h2>
+            <h2> {{$t('Redemptionpledge.redemption')}} </h2>
 
             <Row class-name="item">
-              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="5" class-name="key">{{$t('Redemptionpledge.AssetName')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
             </Row>
 
@@ -378,10 +378,10 @@
 
 
           <div v-if="txtype=='DismissDigitalAssetMarket'">
-            <h2> 解散市场 </h2>
+            <h2> {{$t('Dissolvethemarket.Dissolutionmarket')}} </h2>
 
             <Row class-name="item">
-              <Col span="5" class-name="key">资产名称:</Col>
+              <Col span="5" class-name="key">{{$t('Dissolvethemarket.AssetName')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
             </Row>
 
@@ -391,9 +391,9 @@
 
 
           <div v-if="txtype=='AuthorizeMiningPubKey'">
-            <h2> 授权 </h2>
+            <h2> {{$t('Authorizedminingpop.Authorization-MinerMining')}} </h2>
             <Row class-name="item">
-              <Col span="3" class-name="key">资产名称:</Col>
+              <Col span="3" class-name="key">{{$t('Authorizedminingpop.AssetName')}}:</Col>
               <Col span="21">
 
               {{transactiondata.AssetName|assertdenomformat}}
@@ -401,7 +401,7 @@
               </Col>
             </Row>
             <Row class-name="item">
-              <Col span="3" class-name="key">公钥:</Col>
+              <Col span="3" class-name="key">{{$t('Authorizedminingpop.Authorizedpublickey')}}:</Col>
               <Col span="21">
               <Input readonly :rows="4" type="textarea" v-model="transactiondata.PubKey.value"    />
 

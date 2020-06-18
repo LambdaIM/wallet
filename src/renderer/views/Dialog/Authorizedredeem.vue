@@ -19,7 +19,7 @@
         </p>
         <br/>
         <p>
-          {{$t('Redemptionpledge.tip1')}}:{{parameter.refunding_duration|formatDay}}<br/>
+          {{$t('Redemptionpledge.tip1')}}:{{parameter.refunding_duration|formatDay}}{{$t('staking.Explain.unit')}}<br/>
 
         </p>
 
