@@ -70,7 +70,7 @@ function getToAddress(msg, item, vuethis) {
   }
 
   if (msg.type === 'lambda/MsgAuthorizeMiningPubKey') {
-    toaddress = msg.value.PubKey.value;
+    toaddress = msg.value.pubKey.value;
   }
 
 
