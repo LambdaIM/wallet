@@ -527,11 +527,11 @@ export default {
     },
     getTypeName(types) {
       if (types == '1') {
-        return '不可增发';
+        return this.$t('CreateassetsPop.Non-issueable');
       } else if (types == '2') {
-        return '一次性增发';
+        return this.$t('CreateassetsPop.One-timeissuance');
       } else if (types == '3') {
-        return '挖矿增发';
+        return this.$t('CreateassetsPop.Additionalmining');
       }
     }
   },

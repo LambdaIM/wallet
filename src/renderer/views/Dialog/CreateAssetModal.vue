@@ -27,7 +27,7 @@
         </p>
         <br />
         <p>
-          {{$t('CreateassetsPop.Initialcirculation')}}
+          {{$t('CreateassetsPop.Issuingtype')}}
           <RadioGroup v-model="MintType">
               <Radio label="1"> {{$t('CreateassetsPop.Non-issueable')}} </Radio>
               <Radio label="2"> {{$t('CreateassetsPop.One-timeissuance')}}</Radio>
