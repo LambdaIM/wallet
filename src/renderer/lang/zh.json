@@ -58,6 +58,7 @@
       "publickey":"公钥",
       "loginfo":"日志信息",
       "browselog":"浏览日志",
+      "Datasignature":"数据签名",
       "action": {
           "Modified_success": "修改成功",
           "Modification_failed": "修改失败"
