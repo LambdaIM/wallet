@@ -1087,6 +1087,23 @@ export default function() {
   });
 
 
+  eipc.answerRenderer('Walletsign', async query => {
+    log.info('Wallettransfer');
+
+    var content = query.content;
+    var password = query.password;
+
+    try {
+      var TxMessageload = await WM.SignData(password, content);
+
+      log.info(TxMessageload);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
 
   // Assetparameters
 }

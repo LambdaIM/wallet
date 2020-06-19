@@ -60,6 +60,7 @@
       "publickey":"Public key",
       "loginfo":"log info",
       "browselog":"browse log",
+      "Datasignature":"Data signature",
       "action":{
         "Modified_success":"Modified success",
         "Modification_failed":"Modification failed"
