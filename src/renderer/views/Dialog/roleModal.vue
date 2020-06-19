@@ -23,6 +23,10 @@
             <h3>{{$t('rolepage.roletype.validator')}}</h3>
             <p>{{$t('rolepage.validatorbrief')}}</p>
             </div>
+            <div @click="selectitem('marketmaker')" :class="{item:true, active:activeitem=='marketmaker'}">
+            <h3> {{$t('rolepage.roletype.marketmaker')}}  </h3>
+            <p>{{$t('rolepage.marketmakerbrief')}}</p>
+            </div>
 
         </div>
     </Modal>
@@ -56,7 +60,7 @@ export default {
       this.$store.dispatch('setrole', this.$data.activeitem);
       setTimeout(function() {
         window.location.reload();
-      }, 10);
+      }, 500);
     }
 
   }

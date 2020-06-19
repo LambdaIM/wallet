@@ -15,9 +15,9 @@
         </span>
         </Col>
         <Col span="13" style="    text-align: right;">
-
-        <span style="    color: red;">  {{$t('testcoin.txtbref')}} </span>
-        <a @click="gettestcoin"><svg t="1575625791429" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1802" width="16" height="16"><path d="M693.8 233.8c19.2 42.2 23 113.6-16 148.2C612 132 448.8 80.8 448.8 80.8c19.2 129-70 270-156 375.4-3-51.4-6.2-87-33.2-136.2-6 93.4-77.4 169.6-96.8 263.2-26.2 126.8 19.6 219.6 193.6 317.6h25c-37.8-78.6 5.2-135.6 34.4-178 23.8-34.6 34.2-69 38.2-84.4-0.4 2.8 3.6-21.6 3-18.6 2.8-3 3.6 10.8 5 17.6 2 19.8 14.6 40.6 8.8 76 44.2-49.2 52.6-127.6 45.8-157.6 100 69.8 158.4 232.8 100.8 344.8h24.2c442.6-250 110.2-624.6 52.2-666.8z" fill="#FC5300" p-id="1803"></path></svg><svg t="1575625791429" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1802" width="16" height="16"><path d="M693.8 233.8c19.2 42.2 23 113.6-16 148.2C612 132 448.8 80.8 448.8 80.8c19.2 129-70 270-156 375.4-3-51.4-6.2-87-33.2-136.2-6 93.4-77.4 169.6-96.8 263.2-26.2 126.8 19.6 219.6 193.6 317.6h25c-37.8-78.6 5.2-135.6 34.4-178 23.8-34.6 34.2-69 38.2-84.4-0.4 2.8 3.6-21.6 3-18.6 2.8-3 3.6 10.8 5 17.6 2 19.8 14.6 40.6 8.8 76 44.2-49.2 52.6-127.6 45.8-157.6 100 69.8 158.4 232.8 100.8 344.8h24.2c442.6-250 110.2-624.6 52.2-666.8z" fill="#FC5300" p-id="1803"></path></svg>{{$t('testcoin.txtbtn')}}</a>
+          <a @click="gettestcoin">{{$t('testcoin.txtbtn')}}</a>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <a @click="getcommunitylink">{{$t('testcoin.community')}} </a>
 
         </Col>
     </Row>
@@ -31,10 +31,10 @@
             <Icon type="ios-paper" />
             {{$t('home.token')}}
         </MenuItem>
-        <MenuItem to="/home/localtxlist" name="localtxlist">
+        <!-- <MenuItem to="/home/localtxlist" name="localtxlist">
             <Icon type="ios-paper" />
             {{$t('home.Latest_Transaction_local')}}
-        </MenuItem>
+        </MenuItem> -->
         <Submenu    name="other">
             <template slot="title">
               <Icon type="md-swap"></Icon>
@@ -53,10 +53,10 @@
 
 
         </Submenu>
-        <MenuItem v-if="$role('home.subaccount')"   to="/home/subaccount" name="subaccount">
+        <!-- <MenuItem v-if="$role('home.subaccount')"   to="/home/subaccount" name="subaccount">
             <Icon type="md-list" />
             {{$t('home.subaccount')}}
-        </MenuItem>
+        </MenuItem> -->
         <!-- <MenuItem v-if="$role('home.guide')" to="/home/guide" name="guide">
             <Icon type="md-map" />
             {{$t('home.miningguide')}}
@@ -195,6 +195,10 @@ export default {
     },
     gettestcoin() {
       var url = 'http://faucet.lambdastorage.com/';
+      shell.openExternal(url);
+    },
+    getcommunitylink() {
+      var url = 'https://talk.lambdastorage.com/';
       shell.openExternal(url);
     },
     async getMinerRewards() {

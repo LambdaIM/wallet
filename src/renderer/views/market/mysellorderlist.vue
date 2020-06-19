@@ -56,6 +56,10 @@
                          {{getmarketName(row.marketAddress)}}
                         </template>
 
+                        <template slot-scope="{ row, index }" slot="operation">
+                          <Button @click="cancelorder(row,getmarketName(row.marketAddress))"> {{$t('sellpageinfo.Cancel')}} </Button>
+                        </template>
+
 
                  </Table>
                  <br/>
@@ -69,6 +73,7 @@
       </div>
       <SellingspaceModal ref="Sellingspace" />
       <CreateMinerModal ref="CreateMiner" />
+      <CancalorderModel ref="Cancalorder" />
 
 
   </div>
@@ -80,6 +85,8 @@ import SellingspaceModal from '@/views/Dialog/SellingspaceModal.vue';
 import eventhub from '../../common/js/event.js';
 import CreateMinerModal from '@/views/Dialog/CreateMinerModal.vue';
 
+import CancalorderModel from '@/views/Dialog/cancalorderModel.vue';
+
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
@@ -90,6 +97,11 @@ export default {
   data() {
     return {
       SellOrdercolumns: [
+        {
+          // title: this.$t('marketpage.selltable.Mineraddress'),
+          title: this.$t('syncorderpage.orderID'),
+          key: 'orderId'
+        },
         {
           title: this.$t('marketpage.myselltable.amountspace'),
           key: 'sellSize'
@@ -126,6 +138,11 @@ export default {
           key: 'status',
           slot: 'status'
 
+        }, {
+          title: '操作',
+          key: 'operation',
+          slot: 'operation'
+
         }
       ],
       SellOrderslist: [],
@@ -147,8 +164,8 @@ export default {
   },
   components: {
     SellingspaceModal,
-    CreateMinerModal
-
+    CreateMinerModal,
+    CancalorderModel
 
   },
   methods: {
@@ -207,6 +224,9 @@ export default {
       });
 
       return name;
+    },
+    cancelorder(data, marketName) {
+      this.$refs.Cancalorder.open(data, marketName);
     }
 
 

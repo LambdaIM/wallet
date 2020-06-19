@@ -65,6 +65,11 @@ var walletRouter = new Router({
             import('@/views/Home/indexMenu.vue')
   },
   {
+    path: '/localtxlist',
+    name: 'localtxlist',
+    component: () => import('@/views/Home/localtxlist.vue')
+  },
+  {
     path: '/register',
     name: 'Register',
     component: () =>
@@ -178,6 +183,12 @@ var walletRouter = new Router({
     name: 'orderinfo',
     component: () =>
             import('@/views/market/orderinfo.vue')
+  },
+  {
+    path: '/sign',
+    name: 'sign',
+    component: () =>
+            import('@/views/sign/index.vue')
   },
   {
     path: '/guide',

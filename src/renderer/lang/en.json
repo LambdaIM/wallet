@@ -50,13 +50,17 @@
       "Keystore_File_Backup": "Open wallet configuration folder",
       "Version": "Version",
       "Current_Version": "Current Version",
-      "Logout": "Logout",
+      "Logout": "Switch accounts",
       "switch_lang" : "Language",
       "edit_name":"Edit name",
       "Submit":"Submit",
       "switch-lang":"Switch language",
       "gasprise":"Gas prise",
       "role":"Role",
+      "publickey":"Public key",
+      "loginfo":"log info",
+      "browselog":"browse log",
+      "Datasignature":"Data signature",
       "action":{
         "Modified_success":"Modified success",
         "Modification_failed":"Modification failed"
@@ -498,7 +502,12 @@
     "MsgUnMaintain": "UnMaintain",
     "MsgUnjailMiner": "UnjailMiner",
     "MsgOrderRenewal":"OrderRenewal",
-    "MsgDelegateMarket":"DelegateMarket"
+    "MsgDelegateMarket":"DelegateMarket",
+    "MsgCreateDigitalAssetMarket": "CreateDigitalAssetMarket",
+    "MsgDismissDigitalAssetMarket": "DismissDigitalAssetMarket",
+    "MsgAuthorizeMiningPubKey": "AuthorizeMiningPubKey",
+    "MsgDigitalAssetPledge":"DigitalAssetPledge",
+    "MsgDigitalAssetRefund": "DigitalAssetRefund"
   },
   "txTable":{
     "action": "Activity",
@@ -676,9 +685,10 @@
  "Version":"Version"
 },
 "testcoin":{
-    "txtbtn":"click the button to collect test token",
+    "txtbtn":"Test net faucet",
     "txtbref":"Lambda storage test competition is in progress",
-    "miningaward":"Rewards for storage and mining"
+    "miningaward":"Rewards for storage and mining",
+    "community":"Community"
 },
 "sellpageinfo":{
   "Initializeminer":"Initialize miner",
@@ -686,6 +696,8 @@
   "Createstoragenode":"Create storagenode",
   "Createstoragenodetip":"After the storage node is initialized, create the storage node",
   "Storagenodename":"Storage node name",
+  "Cancelsalesorder":"Cancel sales order",
+  "Cancel":"Cancel",
   "action":{
       "needname":"Storage node name cannot be empty",
       "needdhtid":"Dhtid cannot be empty",
@@ -764,12 +776,14 @@
        "simpleuser":"Wallet user",
        "orderuser":"Space users",
        "miner":"Miner",
-       "validator":"Validator"
+       "validator":"Validator",
+       "marketmaker":"Market maker"
   },
   "simpleuserbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward，Market pledge, withdraw market pledge income",
   "orderuserbrief":"View assets, transfer, pledge mining, proposal voting, purchase space, use lambdas3, withdraw pledge reward，Market pledge, withdraw market pledge income",
   "minerbrief":"View assets, transfer, pledge mining, proposal voting, market trading space, mining guide, withdraw pledge reward, withdraw deposit mining reward，Market pledge, withdraw market pledge income",
-  "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income，Market pledge, withdraw market pledge income"
+  "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income，Market pledge, withdraw market pledge income",
+  "marketmakerbrief":"Create authorized mining market, asset, authorized mining"
 },
 "guidepage":{
     "step1":{
@@ -888,6 +902,131 @@
        "Withdrawalmarketpledgeincome":"Withdrawal of market pledge income",
        "profit":"profit"
 
-   }
+   },
+   "assetpage":{
+       "assets":"Assets",
+       "authorizedMarket":"Authorized market",
+       "assetsinredemption":"Assets in redemption",
+       "miningdescription":"Mining description",
+       "Non-issueable":"Non-issueable",
+       "One-timeadditionalissuance":"One-time issuance",
+       "Additionalmining":"Additional mining",
+       "Createanauthorizedmarket":"Create an authorized market",
+       "Createassets":"Create assets",
+       "assetlist":{
+        "fullname":"Fullname",
+        "balance":"Balance",
+        "Initialcirculation":"Initial circulation",
+        "Issuingtype":"Issuing type",
+        "Totalissuance":"Total supply",
+        "Issuanceperblock":"inflation"
+        },
+        "marketlist":{
+          "Marketname":"Market name",
+          "AssetName":"Asset Name",
+          "Exchangeratio":"Exchange ratio",
+          "Pledgeddeposit":"Pledgedde posit",
+          "Miningspace":"Mining space(GB)",
+          "Hashsubmitted":"Hash submitted",
+          "Miningrevenue":"Mining revenue",
+          "operating":"Operating"
+
+        },
+        "Redemptionlist":{
+         "AssetName":"AssetName",
+         "Redemptionamount":"Redemption amount",
+         "Completetime":"Complete time"
+        },
+        "Mininginstructions":{
+            "tip1":"1. Create a miner in the mining wizard",
+            "tip2":"2. Use assets supported by authorized markets in assets to pledge in the market"
+        },
+        "btn":{
+            "Pledge":"Pledge",
+            "redemption":"Redemption",
+            "Authorize":"Authorize",
+            "Dissolvethemarket":"Dissolve"
+        }
+
+   },
+   "AuthorizedmarketPop":{
+       "Createanauthorizedmarket":"Create an authorized market",
+       "Marketname":"Market name",
+       "AssetName":"Asset Name",
+       "Exchangeratio":"Exchange ratio",
+       "helptip1":"The exchange ratio refers to this market, how much currency is exchanged for 1TB of storage space",
+       "helptip2":"For example 3000lamb=1TBB",
+       "helptip3":"Create market using",
+       "action":{
+           "need_marketName":"Market name cannot be empty",
+           "need_assetsType":"Asset name cannot be empty",
+           "need_ratio":"The exchange ratio needs to be an integer"
+       }
+
+   },
+   "CreateassetsPop":{
+       "Createassets":"Create assets",
+       "AssetName":"Asset Name",
+       "Assetfullname":"Asset full name(Remarks)",
+       "Initialcirculation":"Initial circulation",
+       "Issuingtype":"Issuing type",
+       "Non-issueable":"Non-issueable",
+       "One-timeissuance":"One-timeissuance",
+       "Additionalmining":"Additional mining",
+       "Totalsupply":"Total supply",
+       "inflation":"Inflation",
+       "adjust_rate":"Adjust rate",
+       "max_adjust_count":"Max adjust count",
+       "adjust_period":"Adjust period",
+       "genesis_height":"Genesis height",
+       "tip1":"Create asset using",
+       "action":{
+           "need_AssetName":"Asset name cannot be empty",
+           "need_asset":"Initial circulation needs to be numeric",
+           "need_inflation":"inflation needs to be a value",
+           "need_total_supply":"The total supply needs to be numeric",
+           "need_adjust_rate":"The adjust_rate needs to be a decimal, less than 1",
+           "need_max_adjust_count":"The max adjust count needs to be numeric",
+           "need_adjust_period":"The adjust period needs to be numeric",
+           "need_genesis_height":"The genesis height needs to be a value",
+           "AssetNamerule":"Asset name 2-15 characters long"
+       }
+   },
+   "Authorizedminingpop":{
+       "Authorization-MinerMining":"Authorization-Miner Mining",
+       "AssetName":"Asset Name",
+       "Authorizedpublickey":"Authorized public key",
+       "action":{
+         "need_public_key":"Please fill in the public key"
+       }
+
+    },
+    "Dissolvethemarket":{
+        "Dissolutionmarket":"Dissolution of authorized market",
+        "AssetName":"Asset Name",
+        "tip":"Without miners' pledge, the market can be dissolved"
+      
+
+    },
+    "AuthorizeMarketpledge":{
+      "pledge":"Authorized Market-Pledge",
+      "AssetName":"Asset Name",
+      "space":"Space",
+      "tip1":"Authorized mining steps",
+      "tip2":"The first step is to operate in the mining wizard and become a miner",
+      "tip3":"The second part is to use asset pledge",
+      "action":{
+          "need_size":"Pledge space, only integers"
+      }
+
+    },
+    "Redemptionpledge":{
+        "redemption":"Authorized Market-Redemption",
+        "AssetName":"Asset Name",
+        "tip1":"Redeem all pledges",
+        "tip2":"Days to redeem assets"
+        
+    }
+
 
 }

@@ -81,5 +81,13 @@
 	"Copy":"复制",
 	"Paste":"粘贴",
 	"SelectAll":"全选",
-	"Edit":"编辑"
+	"Edit":"编辑",
+	"need_AssetName":"需要参数 资产名称",
+	"need_Ratio":"需要参数 兑换比例",
+	"need_asset_denom":"需要参数 资产名称",
+	"need_asset_amount":"需要参数 初始发行量",
+	"need_mint_type":"需要参数 增发类型",
+	"need_inflation":"需要参数 每块高增发量",
+	"need_inflation_period":"需要参数 增发块高周期"
+
 }

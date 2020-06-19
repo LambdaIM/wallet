@@ -12,6 +12,7 @@
       "guide":["miner"],
       "Myorderlist":["order"],
       "lambdas3":["order"]
+      
     },
     "market":{
       "sellspace":["miner"]
@@ -21,6 +22,15 @@
 
     },
     "button":{
+
+    },
+    "conlist":{
+      "Createmarket":["marketmaker"],
+      "Createassets":["marketmaker"],
+      "authorization":["marketmaker"],
+      "pledge":["miner"],
+      "redeem":["miner"],
+      "Withdrawal":["miner"]
 
     }
 }

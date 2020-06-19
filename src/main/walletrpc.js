@@ -679,6 +679,7 @@ export default function() {
     }
   });
 
+
   eipc.answerRenderer('CreateBuyOrder', async query => {
     var { duration,
       size,
@@ -704,6 +705,26 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+
+
+  eipc.answerRenderer('CancelSellOrder', async query => {
+    var { OrderId } = query;
+
+    if (OrderId == undefined) {
+      throw resultView(null, false, errorList.OrderId);
+    }
+
+    try {
+      var TxMessageload = await WM.CancelSellOrder(OrderId);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
 
   eipc.answerRenderer('marketOrderRenewal', async query => {
     var { duration, orderId } = query;
@@ -889,6 +910,202 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+
+  eipc.answerRenderer('CreateDigitalAssetMarket', async query => {
+    var { AssetName, Ratio, marketName } = query;
+    console.log(query);
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    if (Ratio == undefined) {
+      throw resultView(null, false, errorList.need_Ratio);
+    }
+
+    if (marketName == undefined) {
+      throw resultView(null, false, errorList.need_marketName);
+    }
+
+
+    try {
+      var TxMessageload = await WM.CreateDigitalAssetMarket(AssetName, Ratio, marketName);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('DigitalAssetPledge', async query => {
+    var { AssetName, Size } = query;
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    if (Size == undefined) {
+      throw resultView(null, false, errorList.need_Size);
+    }
+    try {
+      var TxMessageload = await WM.DigitalAssetPledge(AssetName, Size);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('DigitalAssetRefund', async query => {
+    var { AssetName } = query;
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+    try {
+      var TxMessageload = await WM.DigitalAssetRefund(AssetName);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('DismissDigitalAssetMarket', async query => {
+    var { AssetName } = query;
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    try {
+      var TxMessageload = await WM.DismissDigitalAssetMarket(AssetName);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+
+  eipc.answerRenderer('AuthorizeMiningPubKey', async query => {
+    var { PubKey, AssetName } = query;
+    if (PubKey == undefined) {
+      throw resultView(null, false, errorList.need_PubKey);
+    }
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    try {
+      var TxMessageload = await WM.AuthorizeMiningPubKey(PubKey, AssetName);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+  eipc.answerRenderer('CreateAsset', async query => {
+    var { asset_amount, asset_denom, name,
+      mint_type, inflation, total_supply, adjust_rate,
+      max_adjust_count, genesis_height, adjust_period, remarks } = query;
+
+    console.log(query);
+
+    if (asset_amount == undefined) {
+      throw resultView(null, false, errorList.need_asset_amount);
+    }
+
+    if (asset_denom == undefined) {
+      throw resultView(null, false, errorList.need_asset_denom);
+    }
+
+    if (name == undefined) {
+      throw resultView(null, false, errorList.need_name);
+    }
+
+    if (mint_type == undefined) {
+      throw resultView(null, false, errorList.need_mint_type);
+    }
+
+
+    if (inflation == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_inflation);
+    }
+
+    if (total_supply == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_total_supply);
+    }
+
+    if (adjust_rate == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_adjust_rate);
+    }
+
+    if (max_adjust_count == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_max_adjust_count);
+    }
+
+    if (genesis_height == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_max_genesis_height);
+    }
+
+    if (adjust_period == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_adjust_period);
+    }
+
+    if (remarks == undefined && mint_type == '3') {
+      throw resultView(null, false, errorList.need_remarks);
+    }
+
+
+
+    try {
+      var token_amount, token_denom;
+
+      token_denom = 'ulamb';
+      token_amount = 1e12;
+
+
+      var TxMessageload = await WM.CreateAsset({
+        asset_amount,
+        asset_denom,
+        token_amount,
+        token_denom,
+        name,
+        mint_type,
+        inflation,
+        total_supply,
+        adjust_rate,
+        max_adjust_count,
+        genesis_height,
+        adjust_period,
+        remarks
+      });
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+  eipc.answerRenderer('Walletsign', async query => {
+    log.info('Wallettransfer');
+
+    var content = query.content;
+    var password = query.password;
+
+    try {
+      var TxMessageload = await WM.SignData(password, content);
+
+      log.info(TxMessageload);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+
+  // Assetparameters
 }
 
 

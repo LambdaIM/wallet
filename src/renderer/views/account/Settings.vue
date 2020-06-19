@@ -1,11 +1,20 @@
 <template>
   <div class="setting-container">
     <div class="setting-wrapper">
+      <div class="logout-container">
+        <div class="logout-wrapper">
+          <button
+            class="btn logout-button"
+            @click="logout"
+          >{{$t('seting.Logout')}}</button>
+        </div>
+      </div>
       <Mycard
         v-if="walletInfo"
         :cardtitle="$t('seting.Wallet_Info')"
         class="mb10"
       >
+
         <div
           class="storage-content"
           slot="card-content"
@@ -52,14 +61,31 @@
               shape="circle"
               icon="ios-copy"
             ></Button>
-            <!-- <Button
-                v-clipboard:copy="walletInfo.address"
-                v-clipboard:success="onCopy"
-                v-clipboard:error="onError"
-                type="primary"
-                shape="circle"
-                icon="ios-copy"
-              ></Button> -->
+
+            </Col>
+          </Row>
+          <Row class-name="card-item">
+            <Col
+              span="4"
+              class-name="title-wrapper"
+            >
+            <span class="title">{{ $t("seting.publickey") }}</span>
+            </Col>
+            <Col
+              span="18"
+              class-name="content-wrapper"
+            >
+            <span>{{walletInfo.publicKey}}</span>
+
+            <Button
+              v-clipboard:copy="walletInfo.publicKey"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+              type="primary"
+              shape="circle"
+              icon="ios-copy"
+            ></Button>
+
             </Col>
           </Row>
           <Row class-name="card-item">
@@ -249,6 +275,7 @@
           </Row>
 
         </div>
+
       </Mycard>
 
       <!-- <Mycard  cardtitle="Storage Info" class="mb10">
@@ -303,10 +330,17 @@
             </Col>
 
             <Col
-              span="4"
+              span="8"
               class-name="content-wrapper"
             >
-            <a @click="openkeystore">{{$t("seting.Keystore_File_Backup")}}</a>
+
+            <Button @click="openkeystore">{{$t("seting.Keystore_File_Backup")}}</Button>
+            </Col>
+            <Col
+              span="8"
+              class-name="title-wrapper"
+            >
+               <Button to="/sign">{{$t("seting.Datasignature")}}</Button>
             </Col>
           </Row>
 
@@ -319,6 +353,33 @@
           </Row> -->
         </div>
       </Mycard>
+
+      <Mycard
+        :cardtitle="$t('seting.loginfo')"
+        class="mb10"
+      >
+        <div
+          class="storage-content"
+          slot="card-content"
+        >
+          <Row class-name="card-item">
+            <Col
+              span="4"
+              class-name="title-wrapper"
+            >
+            &nbsp;
+            </Col>
+
+            <Col
+              span="4"
+              class-name="content-wrapper"
+            >
+              <Button to="/localtxlist">{{$t('seting.browselog')}}</Button>
+            </Col>
+          </Row>
+        </div>
+      </Mycard>
+
       <Mycard
         v-if="getstore.length>0"
         :cardtitle="$t('seting.Validator_Node_info')"
@@ -368,6 +429,7 @@
 
         </div>
       </Mycard>
+
       <!-- <Mycard
         v-if="getstore.length==0"
         :cardtitle="$t('seting.Validator_Node_info')"
@@ -448,15 +510,9 @@
           </Row>
         </div>
       </Mycard>
+      <br/><br/><br/>
 
-      <div class="logout-container">
-        <div class="logout-wrapper">
-          <button
-            class="btn logout-button"
-            @click="logout"
-          >{{$t('seting.Logout')}}</button>
-        </div>
-      </div>
+
 
       <Modal
         v-model="modal2"
@@ -534,11 +590,11 @@ export default {
     this.$data.custombrowserurl = settings.get('custombrowserurl') || this.$t('Custombrowser.notseturl');
   },
   methods: {
-    onCopy: function(e) {
-      this.$Message.info('You just copied: ' + e.text);
+    onCopy(e) {
+      this.$Message.info(this.$t('head.action.You_just_copied') + e.text);
     },
-    onError: function(e) {
-      this.$Message.info('Failed to copy texts');
+    onError(e) {
+      this.$Message.info(this.$t('head.action.Failed_to_copy_texts'));
     },
     async logout() {
       // lambdastorageclose
@@ -604,11 +660,11 @@ export default {
       settings.set('set', {
         language: item
       });
-      window.location.reload();
+
       // var _this = this;
-      // setTimeout(() => {
-      //   _this.restartapp();
-      // }, 200);
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     },
     openroleModal() {
       this.$refs.roleModal.open();
@@ -659,6 +715,7 @@ export default {
         case 'order': reslt = this.$t('rolepage.roletype.orderuser'); break;
         case 'miner': reslt = this.$t('rolepage.roletype.miner'); break;
         case 'validator': reslt = this.$t('rolepage.roletype.validator'); break;
+        case 'marketmaker': reslt = this.$t('rolepage.roletype.marketmaker'); break;
       }
       return reslt;
     },

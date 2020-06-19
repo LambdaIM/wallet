@@ -8,10 +8,11 @@
       @on-cancel="sendcancel"
     >
       <p>
-        <Input readonly v-model="DistributionReward">
-          <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-          <span slot="append">{{$t('home.Modal1.LAMB')}}</span>
-        </Input>
+           <Tag v-for="item in MinerRewards">{{bigNumTypeFormat(item.amount,item.denom)}}</Tag>
+      </p>
+
+      <p v-if="MinerRewards.length==0">
+        {{$t('Dialog.com.Nodata')}}
       </p>
       <div slot="footer">
         <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
@@ -30,7 +31,8 @@ export default {
     return {
       withdrawalModal: false,
       confirmModal: false,
-      gaseFee: 0
+      gaseFee: 0,
+      MinerRewards: []
     };
   },
   components: {
@@ -41,6 +43,8 @@ export default {
       console.log('- -');
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
+
+      this.getMinerRewards();
     },
     prewithdrawalLAMB() {
       console.log('- -');
@@ -93,6 +97,20 @@ export default {
     sendcancel() {
       this.withdrawalModal = false;
       // this.confirmModal=true;
+    },
+    async getMinerRewards() {
+      console.log('getMinerRewards');
+      try {
+        let res = await ipc.callMain('MinerRewards', {});
+        if (res.state) {
+          var list = res.data['miner_rewards'] || [];
+          var result = '';
+          this.$data.MinerRewards = list;
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+      console.log('getListDataEnd');
     }
 
   },

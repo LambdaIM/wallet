@@ -277,9 +277,143 @@
 
           </div>
 
+          <div v-if="txtype=='CancelSellOrder'">
+            <h2> {{$t('sellpageinfo.Cancelsalesorder')}}  </h2>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('syncorderpage.orderID')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.orderId}}</Col>
+            </Row>
+          </div>
+
+          <div v-if="txtype=='CreateAsset'">
+            <h2> {{$t('CreateassetsPop.Createassets')}}  </h2>
+
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.AssetName')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.asset_denom|assertdenomformat}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.Assetfullname')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.name}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.Initialcirculation')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.asset_amount|BlanceValue}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.Issuingtype')}}:</Col>
+              <Col span="16" class-name="value">{{getTypeName(transactiondata.mint_type)}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.Totalsupply')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.total_supply|BlanceValue}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.inflation')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.inflation|BlanceValue}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.adjust_rate')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.adjust_rate}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.max_adjust_count')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.max_adjust_count}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.adjust_period')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.adjust_period}}</Col>
+            </Row>
+            <Row v-if="transactiondata.mint_type=='3'" class-name="item">
+              <Col span="5" class-name="key">{{$t('CreateassetsPop.genesis_height')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.genesis_height}}</Col>
+            </Row>
+
+          </div>
+
+          <div v-if="txtype=='CreateDigitalAssetMarket'">
+            <h2> {{$t('AuthorizedmarketPop.Createanauthorizedmarket')}}  </h2>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('AuthorizedmarketPop.Marketname')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.marketName}}</Col>
+            </Row>
+
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('AuthorizedmarketPop.AssetName')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
+            </Row>
+
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('AuthorizedmarketPop.Exchangeratio')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.Ratio}}</Col>
+            </Row>
+
+          </div>
+
+          <div v-if="txtype=='DigitalAssetPledge'">
+            <h2> {{$t('AuthorizeMarketpledge.pledge')}} </h2>
+
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('AuthorizeMarketpledge.AssetName')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('AuthorizeMarketpledge.space')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.Size}}GB</Col>
+            </Row>
+
+          </div>
 
 
-          <!-- MsgMinerWithDrawCount -->
+          <div v-if="txtype=='DigitalAssetRefund'">
+            <h2> {{$t('Redemptionpledge.redemption')}} </h2>
+
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('Redemptionpledge.AssetName')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
+            </Row>
+
+
+          </div>
+
+
+          <div v-if="txtype=='DismissDigitalAssetMarket'">
+            <h2> {{$t('Dissolvethemarket.Dissolutionmarket')}} </h2>
+
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('Dissolvethemarket.AssetName')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.AssetName|assertdenomformat}}</Col>
+            </Row>
+
+
+          </div>
+
+
+
+          <div v-if="txtype=='AuthorizeMiningPubKey'">
+            <h2> {{$t('Authorizedminingpop.Authorization-MinerMining')}} </h2>
+            <Row class-name="item">
+              <Col span="3" class-name="key">{{$t('Authorizedminingpop.AssetName')}}:</Col>
+              <Col span="21">
+
+              {{transactiondata.AssetName|assertdenomformat}}
+
+              </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="3" class-name="key">{{$t('Authorizedminingpop.Authorizedpublickey')}}:</Col>
+              <Col span="21">
+              <Input readonly :rows="4" type="textarea" v-model="transactiondata.PubKey.value"    />
+
+              </Col>
+            </Row>
+
+
+          </div>
+
+
+
+          <!-- CreateAsset -->
 
 
 
@@ -389,6 +523,15 @@ export default {
           desc: this.$t('Dialog.com.muchcommission')
         });
         return false;
+      }
+    },
+    getTypeName(types) {
+      if (types == '1') {
+        return this.$t('CreateassetsPop.Non-issueable');
+      } else if (types == '2') {
+        return this.$t('CreateassetsPop.One-timeissuance');
+      } else if (types == '3') {
+        return this.$t('CreateassetsPop.Additionalmining');
       }
     }
   },

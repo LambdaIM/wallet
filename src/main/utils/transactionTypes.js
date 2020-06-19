@@ -18,7 +18,17 @@ const transactionTypes = {
   OrderRenewal: `MsgOrderRenewal`,
   MinerWithDrawCount: `MsgMinerWithDrawCount`,
   DelegateMarket: 'MsgDelegateMarket',
-  WithDrawMarket: 'MsgWithDrawMarket'
+  WithDrawMarket: 'MsgWithDrawMarket',
+  CancelSellOrder: 'MsgCancelSellOrder',
+  CreateDigitalAssetMarket: 'MsgCreateDigitalAssetMarket',
+  DigitalAssetPledge: 'MsgDigitalAssetPledge',
+  DigitalAssetRefund: 'MsgDigitalAssetRefund',
+  AuthorizeMiningPubKey: 'MsgAuthorizeMiningPubKey',
+  CreateAsset: 'MsgCreateAsset',
+  DismissDigitalAssetMarket: 'MsgDismissDigitalAssetMarket'
+
+
+
 };
 
 export default transactionTypes;

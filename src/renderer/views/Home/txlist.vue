@@ -2,6 +2,7 @@
 <template>
   <div class="customer-container">
       <div class="tableContainer">
+
        <TxTable :txData="data" :loading="loading" />
       </div>
 

@@ -18,9 +18,29 @@
         <span v-if="txItem.to">
         {{getToWord(txItem)}}
       </span>
+      </span>
+      <span v-if="isAssettx(txItem)">
+        <span v-if="txItem.action == 'MsgCreateDigitalAssetMarket'">
+          {{txItem.to}}
+        </span>
+        <span v-if="txItem.action == 'MsgDigitalAssetPledge'">
+         {{$t('txTable.to')}} 市场，使用资产{{txItem.amount|BlanceValue}} {{txItem.to|assertdenomformat}}
+        </span>
+        <span v-if="txItem.action == 'MsgAuthorizeMiningPubKey'">
+          {{txItem.to|assertdenomformat}}
+        </span>
+        <span v-if="txItem.action == 'MsgDigitalAssetRefund'">
+          {{txItem.to|assertdenomformat}}
+        </span>
+        <span v-if="txItem.action == 'MsgDismissDigitalAssetMarket'">
+          {{txItem.to|assertdenomformat}}
+        </span>
+
+
 
       </span>
-      <AddressLink :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
+
+      <AddressLink v-if="isAssettx(txItem)==false" :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
 
 
 
@@ -83,6 +103,8 @@ export default {
       }
     },
     isProposal(txItem) {
+      console.log('isProposal');
+
       return txItem.action !== 'MsgSubmitProposal' &&
       txItem.action !== 'MsgUnjail' &&
       txItem.action !== 'MsgCreateValidator' &&
@@ -102,13 +124,28 @@ export default {
       txItem.action !== 'MsgUnjailMiner' &&
       txItem.action !== 'MsgEditValidator' &&
       txItem.action !== 'MsgModifyWithdrawAddress' &&
-      txItem.action !== 'MsgOrderRenewal'
-
-
+      txItem.action !== 'MsgOrderRenewal' &&
+      txItem.action !== 'MsgCreateDigitalAssetMarket' &&
+      txItem.action !== 'MsgDigitalAssetPledge' &&
+      txItem.action !== 'MsgAuthorizeMiningPubKey' &&
+      txItem.action !== 'MsgDigitalAssetRefund' &&
+      txItem.action !== 'MsgDismissDigitalAssetMarket' &&
+      txItem.action !== 'MsgWithdrawMinerRewards'
       ;
+    },
+    isAssettx(txItem) {
+      var list = ['MsgCreateDigitalAssetMarket', 'MsgDigitalAssetPledge', 'MsgAuthorizeMiningPubKey', 'MsgDigitalAssetRefund', 'MsgDismissDigitalAssetMarket'];
+      if (list.indexOf(txItem.action) > -1) {
+        return true;
+      } else {
+        return false;
+      }
     },
     showmore() {
       this.$data.more = true;
+    },
+    denomFormat(denom) {
+      return denom.substr(1);
     }
   },
   computed: {
