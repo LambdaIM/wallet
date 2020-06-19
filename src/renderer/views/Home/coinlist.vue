@@ -11,7 +11,7 @@
         <br/>
           <Tabs value="name1">
             <TabPane :label="$t('assetpage.assets')" name="name1">
-                      <Table  v-if="coinList" :columns="columnsToken" :data="coinList">
+                      <Table   :columns="columnsToken" :data="coinList">
 
 
             <template slot-scope="{ row, index }" slot="amount">
@@ -89,7 +89,7 @@
           </Table>
             </TabPane>
             <TabPane :label="$t('assetpage.authorizedMarket')" name="name2">
-                 <Table :columns="marketcolumns" :data="marketdata">
+                 <Table  :columns="marketcolumns" :data="marketdata">
                     <!-- <template slot-scope="{ row, index }" slot="amount">
               {{bigNumTypeFormat(row.amount,row.denom)}}
             </template> -->
@@ -142,7 +142,7 @@
                  </Table>
             </TabPane>
             <TabPane :label="$t('assetpage.assetsinredemption')" name="name4">
-                <Table :columns="redeemcolumns" :data="redeemdata">
+                <Table  :columns="redeemcolumns" :data="redeemdata">
                   <template slot-scope="{ row, index }" slot="completionTime">
                     {{row.completionTime|blockFormatDate}}
                   </template>
@@ -439,7 +439,7 @@ export default {
       console.log('Authorizedredeemlist');
       try {
         let res = await ipc.callMain('Authorizedredeemlist', {});
-        if (res.state) {
+        if (res.state && res.data.data.error == undefined) {
           this.$data.redeemdata = res.data.data || [];
         }
       } catch (ex) {
