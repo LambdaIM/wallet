@@ -330,10 +330,17 @@
             </Col>
 
             <Col
-              span="4"
+              span="8"
               class-name="content-wrapper"
             >
-            <a @click="openkeystore">{{$t("seting.Keystore_File_Backup")}}</a>
+
+            <Button @click="openkeystore">{{$t("seting.Keystore_File_Backup")}}</Button>
+            </Col>
+            <Col
+              span="8"
+              class-name="title-wrapper"
+            >
+               <Button to="/sign">{{$t("seting.Datasignature")}}</Button>
             </Col>
           </Row>
 

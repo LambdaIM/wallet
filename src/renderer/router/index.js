@@ -185,6 +185,12 @@ var walletRouter = new Router({
             import('@/views/market/orderinfo.vue')
   },
   {
+    path: '/sign',
+    name: 'sign',
+    component: () =>
+            import('@/views/sign/index.vue')
+  },
+  {
     path: '/guide',
     name: 'guide',
     component: () => import('@/views/Home/guide.vue'),
