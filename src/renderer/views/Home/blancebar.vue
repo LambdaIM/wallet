@@ -56,8 +56,8 @@ export default {
     await this.getvalidatorsList();
     await this.getdeleData();
 
-    await this.getpartnerListData();
-    await this.getmypartnerDeleData();
+    // await this.getpartnerListData();
+    // await this.getmypartnerDeleData();
 
     this.$data.Interval = setInterval(async () => {
       this.validatorDistribution();
@@ -65,8 +65,8 @@ export default {
       await this.getvalidatorsList();
       await this.getdeleData();
 
-      await this.getpartnerListData();
-      await this.getmypartnerDeleData();
+      // await this.getpartnerListData();
+      // await this.getmypartnerDeleData();
     }, 1000 * 15);
   },
   beforeDestroy() {
@@ -182,7 +182,7 @@ export default {
         // console.log(res);
         console.log(res);
         // console.log(poolres)
-        if (res.state) {
+        if (res.state && res.data.error == undefined) {
           this.$data.mypartnerdelegationsList = res.data || [];
           this.partnerListForMe();
         }
