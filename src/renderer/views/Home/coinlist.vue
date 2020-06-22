@@ -22,9 +22,12 @@
             </template>
 
             <template slot-scope="{ row, index }" slot="denom">
-              <a @click="openLinkassert(row.asset.denom)" >
-              {{denomFormart(row.asset.denom)}}
+              <a v-if="row.asset.denom!='ulamb'&&row.asset.denom!='utbb'"  @click="openLinkassert(row.asset.denom)" >
+                {{denomFormart(row.asset.denom)}}
               </a>
+              <span v-else>
+                {{denomFormart(row.asset.denom)}}
+              </span>
             </template>
 
             <template slot-scope="{ row, index }" slot="assetamount">
@@ -109,7 +112,7 @@
 
 
             <template slot-scope="{ row, index }" slot="marketName">
-              <a @click="openLinkmarket(row.marketName)"> {{row.marketName}} </a>
+              <a @click="openLinkmarket(row.assetName)"> {{row.marketName}} </a>
             </template>
 
 
@@ -388,7 +391,7 @@ export default {
       this.$refs.AssetlModalDialog.open(row.amount, row.denom);
     },
     cointransaction(row) {
-      this.$refs.SendModelDialog.open(row.amount, row.asset.denom);
+      this.$refs.SendModelDialog.open(row.amount || '0', row.asset.denom);
     },
     async  getAssertAll() {
       // assetAll
@@ -471,7 +474,7 @@ export default {
     },
     openLinkmarket(name) {
       var explorer = DAEMON_CONFIG.explore();
-      let url = `${explorer}#/assetMarket/${name}/authorize/1`;
+      let url = `${explorer}#/assetMarket/${name}`;
       shell.openExternal(url);
     },
     findpledge(name) {
@@ -626,6 +629,8 @@ export default {
           item.sort = 1;
         } else if (item.asset.denom == 'utbb') {
           item.sort = 0;
+        } else if (item.amount == undefined) {
+          item.sort = -2;
         } else {
           item.sort = -1;
         }
