@@ -82,7 +82,7 @@ export default {
       let isdege = this.$data.isdege;
       try {
         let res = await ipc.callMain('assertDeactivateMiner', {
-          Miner: address,
+          address: address,
           AssetName
         });
         // console.log(res);

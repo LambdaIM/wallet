@@ -1125,17 +1125,18 @@ export default function() {
   eipc.answerRenderer('assertDeactivateMiner', async query => {
     log.info('assertDeactivateMiner');
 
-    var { AssetName, Miner } = query;
+    var { AssetName, address } = query;
+    console.log(AssetName, address);
     if (AssetName == undefined) {
       throw resultView(null, false, errorList.need_AssetName);
     }
 
-    if (Miner == undefined) {
-      throw resultView(null, false, errorList.need_Miner);
+    if (address == undefined) {
+      throw resultView(null, false, errorList.need_address);
     }
 
     try {
-      var TxMessageload = await WM.DeactivateMiner(AssetName, Miner, '');
+      var TxMessageload = await WM.DeactivateMiner(AssetName, address, '');
 
       log.info(TxMessageload);
       return resultView(TxMessageload, true);
