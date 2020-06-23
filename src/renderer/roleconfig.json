@@ -30,7 +30,9 @@
       "authorization":["marketmaker"],
       "pledge":["miner"],
       "redeem":["miner"],
-      "Withdrawal":["miner"]
+      "Withdrawal":["miner"],
+      "DeactivateMiner":["validator"],
+      "ActivateMiner":["miner"]
 
     }
 }

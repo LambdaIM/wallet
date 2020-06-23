@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        title="剔除矿工"
+        :title="$t('DeactivateMinerpop.Deactivate')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
@@ -16,7 +16,7 @@
         <br />
         <p>
           <Input v-model="address" >
-            <span slot="prepend">矿工lambda地址</span>
+            <span slot="prepend">{{$t('DeactivateMinerpop.address')}}</span>
           </Input>
         </p>
 
@@ -68,7 +68,7 @@ export default {
       var address = this.$data.address;
       if (address.length != 45) {
         this.$Notice.warning({
-          title: this.$t('请输入矿工的lambda 地址')
+          title: this.$t('DeactivateMinerpop.need_address')
         });
         return;
       }

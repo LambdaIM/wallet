@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        title="矿工激活"
+        :title="$t('ActivateMinerpop.Activate')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >

@@ -140,8 +140,8 @@
                   <Button v-if="$role('conlist.authorization')" class="smallbtn" @click="openAuthorizedmining(row)" size="small">{{$t('assetpage.btn.Authorize')}}</Button>
                   <Button type="error" v-if="$role('conlist.authorization')" @click="openDissolutionmarket(row)" class="smallbtn"  size="small">{{$t('assetpage.btn.Dissolvethemarket')}}</Button>
 
-                  <Button class="smallbtn" @click="openMinerDeactivateDialog(row)"  size="small">剔除矿工</Button>
-                  <Button class="smallbtn" @click="openMinerActivateDialog(row)"  size="small">重新激活 </Button>
+                  <Button v-if="$role('conlist.DeactivateMiner')" class="smallbtn" @click="openMinerDeactivateDialog(row)"  size="small">{{$t('assetpage.DeactivateMiner')}}</Button>
+                  <Button v-if="$role('conlist.ActivateMiner')" class="smallbtn" @click="openMinerActivateDialog(row)"  size="small">{{$t('assetpage.ActivateMiner')}} </Button>
 
             </template>
 
