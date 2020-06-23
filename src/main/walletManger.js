@@ -836,6 +836,28 @@ walletManger.prototype.DismissDigitalAssetMarket = async function (AssetName,mem
 
 
 
+walletManger.prototype.DeactivateMiner = async function (AssetName,Miner,memo) {
+  var result = {
+    type: transaction.DeactivateMiner,
+    AssetName: AssetName,
+    Miner:Miner,
+    memo: memo || ''
+  };
+  return result;
+};
+
+
+walletManger.prototype.ActivateMiner = async function (AssetName,memo) {
+  var result = {
+    type: transaction.ActivateMiner,
+    AssetName: AssetName,
+    memo: memo || ''
+  };
+  return result;
+};
+
+
+
 
 
 walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,AssetName,memo) {

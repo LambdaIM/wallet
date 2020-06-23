@@ -1104,6 +1104,47 @@ export default function() {
   });
 
 
+  eipc.answerRenderer('assertActivateMiner', async query => {
+    log.info('assertActivateMiner');
+
+    var { AssetName } = query;
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    try {
+      var TxMessageload = await WM.ActivateMiner(AssetName, '');
+
+      log.info(TxMessageload);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('assertDeactivateMiner', async query => {
+    log.info('assertDeactivateMiner');
+
+    var { AssetName, Miner } = query;
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    if (Miner == undefined) {
+      throw resultView(null, false, errorList.need_Miner);
+    }
+
+    try {
+      var TxMessageload = await WM.DeactivateMiner(AssetName, Miner, '');
+
+      log.info(TxMessageload);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
 
   // Assetparameters
 }

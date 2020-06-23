@@ -258,8 +258,16 @@ export default {
         // console.log(res);
         console.log(res);
         // console.log(poolres)
+        var tempList = res.data;
+        var list = [];
         if (res.state) {
-          this.$data.mydelegationsList = res.data || [];
+          tempList.forEach(item => {
+            if (item.shares[0] != '0') {
+              list.push(item);
+            }
+          });
+
+          this.$data.mydelegationsList = list;
           this.validatorsListForMe();
         }
         // if(poolres.state){

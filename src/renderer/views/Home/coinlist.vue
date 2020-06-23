@@ -140,6 +140,9 @@
                   <Button v-if="$role('conlist.authorization')" class="smallbtn" @click="openAuthorizedmining(row)" size="small">{{$t('assetpage.btn.Authorize')}}</Button>
                   <Button type="error" v-if="$role('conlist.authorization')" @click="openDissolutionmarket(row)" class="smallbtn"  size="small">{{$t('assetpage.btn.Dissolvethemarket')}}</Button>
 
+                  <Button class="smallbtn" @click="openMinerDeactivateDialog(row)"  size="small">剔除矿工</Button>
+                  <Button class="smallbtn" @click="openMinerActivateDialog(row)"  size="small">重新激活 </Button>
+
             </template>
 
                  </Table>
@@ -190,6 +193,9 @@
 
       <AuthorizedDissolutionmarketDialog ref="DissolutionmarketModal"/>
 
+      <MinerActivateDialog ref="ActivateDialogModal" />
+      <MinerDeactivateDialog ref="DeactivateDialogModal" />
+
 
 
   </div>
@@ -211,10 +217,11 @@ import AuthorizedredeemDialog from '@/views/Dialog/Authorizedredeem.vue';
 import { DAEMON_CONFIG } from '../../../config.js';
 
 import AuthorizedDissolutionmarketDialog from '@/views/Dialog/AuthorizedDissolutionmarket.vue';
+
+import MinerActivateDialog from '@/views/Dialog/MinerActivate.vue';
+import MinerDeactivateDialog from '@/views/Dialog/MinerDeactivate.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
-
-
 
 export default {
   data() {
@@ -381,7 +388,9 @@ export default {
     AuthorizedminingDialog,
     AuthorizedpledgeDialog,
     AuthorizedredeemDialog,
-    AuthorizedDissolutionmarketDialog
+    AuthorizedDissolutionmarketDialog,
+    MinerActivateDialog,
+    MinerDeactivateDialog
   },
   methods: {
     denomFormart(denom) {
@@ -466,6 +475,12 @@ export default {
     },
     openDissolutionmarket(data) {
       this.$refs.DissolutionmarketModal.open(data);
+    },
+    openMinerDeactivateDialog(data) {
+      this.$refs.DeactivateDialogModal.open(data);
+    },
+    openMinerActivateDialog(data) {
+      this.$refs.ActivateDialogModal.open(data);
     },
     openLinkassert(name) {
       var explorer = DAEMON_CONFIG.explore();
