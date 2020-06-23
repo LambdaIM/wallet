@@ -6,7 +6,8 @@
                 <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
                 <span  class="value">{{msg.value.token | formatAmountdenom }}</span>->
                 <span  class="value">{{msg.value.asset | formatAmountdenom }}</span>
-                {{msg.value.mintable ? $t('Dialog.com.mintabletrue') : $t('Dialog.com.mintablefalse')}}
+
+                {{namefunc(msg.value.mint_type)}}
          </div>
          <div v-if="txtype=='MsgMintAsset'">
             <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address}}</AddressLink
@@ -50,6 +51,55 @@
                 <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
                 <span  class="value">{{msg.value.symbol}}</span>
 
+
+
+         </div>
+          <div v-if="txtype=='MsgCreateDigitalAssetMarket'">
+            <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address}}</AddressLink
+                >&nbsp;
+                <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+                <span  class="value"></span>
+                {{msg.value.marketName}}
+                使用资产
+                {{denomFormat(msg.value.assetName)}}
+
+
+
+         </div>
+         <div v-if="txtype=='MsgDismissDigitalAssetMarket'">
+            <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address}}</AddressLink
+                >&nbsp;
+                <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+                <span  class="value"></span>
+                使用资产为
+                {{denomFormat(msg.value.assetName)}}
+
+
+
+         </div>
+
+          <div v-if="txtype=='MsgAuthorizeMiningPubKey'">
+            <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address}}</AddressLink
+                >&nbsp;
+                <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+                <span  class="value">{{msg.value.pubKey.value}}</span>
+
+
+
+         </div>
+         <div v-if="txtype=='MsgDigitalAssetPledge'">
+            <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address}}</AddressLink
+                >&nbsp;
+                <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+                <span  class="value">{{msg.value.size}}GB</span>
+
+
+         </div>
+          <div v-if="txtype=='MsgDigitalAssetRefund'">
+            <AddressLink :addressLength="15" :to="msg.value.address">{{msg.value.address}}</AddressLink
+                >&nbsp;
+                <Tag color="primary">{{$t(`txType.${txtype}`)}}</Tag>
+                <span  class="value">{{denomFormat(msg.value.assetName)}}</span>
 
 
          </div>
@@ -100,6 +150,18 @@ export default {
         }
       });
       return result;
+    },
+    namefunc(typeitem) {
+      if (typeitem == 1) {
+        return '不可增发';
+      } else if (typeitem == 2) {
+        return '一次性增发';
+      } else {
+        return '挖矿增发';
+      }
+    },
+    denomFormat(denom) {
+      return denom.substr(1);
     }
 
   }
