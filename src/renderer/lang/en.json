@@ -507,7 +507,9 @@
     "MsgDismissDigitalAssetMarket": "DismissDigitalAssetMarket",
     "MsgAuthorizeMiningPubKey": "AuthorizeMiningPubKey",
     "MsgDigitalAssetPledge":"DigitalAssetPledge",
-    "MsgDigitalAssetRefund": "DigitalAssetRefund"
+    "MsgDigitalAssetRefund": "DigitalAssetRefund",
+    "MsgActivateMiner": "ActivateMiner",
+    "MsgDeactivateMiner": "DeactivateMiner"
   },
   "txTable":{
     "action": "Activity",

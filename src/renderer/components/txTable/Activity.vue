@@ -24,7 +24,7 @@
           {{txItem.to}}
         </span>
         <span v-if="txItem.action == 'MsgDigitalAssetPledge'">
-         {{$t('txTable.to')}} 市场，使用资产{{txItem.amount|BlanceValue}} {{txItem.to|assertdenomformat}}
+          {{txItem.amount|BlanceValue}}{{txItem.to|assertdenomformat}} {{$t('txTable.to')}} {{$t('assetpage.authorizedMarket')}}
         </span>
         <span v-if="txItem.action == 'MsgAuthorizeMiningPubKey'">
           {{txItem.to|assertdenomformat}}
@@ -33,6 +33,12 @@
           {{txItem.to|assertdenomformat}}
         </span>
         <span v-if="txItem.action == 'MsgDismissDigitalAssetMarket'">
+          {{txItem.to|assertdenomformat}}
+        </span>
+        <span v-if="txItem.action == 'MsgDeactivateMiner'">
+          {{txItem.to}}
+        </span>
+        <span v-if="txItem.action == 'MsgActivateMiner'">
           {{txItem.to|assertdenomformat}}
         </span>
 
@@ -130,11 +136,14 @@ export default {
       txItem.action !== 'MsgAuthorizeMiningPubKey' &&
       txItem.action !== 'MsgDigitalAssetRefund' &&
       txItem.action !== 'MsgDismissDigitalAssetMarket' &&
-      txItem.action !== 'MsgWithdrawMinerRewards'
+      txItem.action !== 'MsgWithdrawMinerRewards' &&
+      txItem.action !== 'MsgDeactivateMiner' &&
+      txItem.action !== 'MsgActivateMiner'
       ;
     },
     isAssettx(txItem) {
-      var list = ['MsgCreateDigitalAssetMarket', 'MsgDigitalAssetPledge', 'MsgAuthorizeMiningPubKey', 'MsgDigitalAssetRefund', 'MsgDismissDigitalAssetMarket'];
+      var list = ['MsgCreateDigitalAssetMarket', 'MsgDigitalAssetPledge', 'MsgAuthorizeMiningPubKey',
+        'MsgDigitalAssetRefund', 'MsgDismissDigitalAssetMarket', 'MsgDeactivateMiner', 'MsgActivateMiner'];
       if (list.indexOf(txItem.action) > -1) {
         return true;
       } else {

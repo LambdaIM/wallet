@@ -65,12 +65,20 @@ function getToAddress(msg, item, vuethis) {
   }
 
   if (msg.type === 'lambda/MsgDigitalAssetPledge' || msg.type === 'lambda/MsgDigitalAssetRefund' ||
-  msg.type === 'lambda/MsgDismissDigitalAssetMarket') {
+  msg.type === 'lambda/MsgDismissDigitalAssetMarket' || msg.type === 'lambda/MsgActivateMiner') {
     toaddress = msg.value.assetName;
   }
 
   if (msg.type === 'lambda/MsgAuthorizeMiningPubKey') {
     toaddress = msg.value.pubKey.value;
+  }
+
+  if (msg.type === 'lambda/MsgAuthorizeMiningPubKey') {
+    toaddress = msg.value.pubKey.value;
+  }
+
+  if (msg.type === 'lambda/MsgDeactivateMiner') {
+    toaddress = msg.value.miner;
   }
 
 
@@ -180,11 +188,11 @@ function namefunc(typeitem, vueIns) {
   // vueIns.$t('Dialog.com.mintabletrue') : vueIns.$t('Dialog.com.mintablefalse'));
   console.log(typeitem);
   if (typeitem == 1) {
-    return '不可增发';
+    return vueIns.$t('assetpage.Non-issueable');
   } else if (typeitem == 2) {
-    return '一次性增发';
+    return vueIns.$t('assetpage.One-timeadditionalissuance');
   } else {
-    return '挖矿增发';
+    return vueIns.$t('assetpage.Additionalmining');
   }
 }
 

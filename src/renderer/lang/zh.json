@@ -506,7 +506,9 @@
     "MsgDismissDigitalAssetMarket": "解散资产交易市场",
     "MsgAuthorizeMiningPubKey": "授权",
     "MsgDigitalAssetPledge":"质押资产",
-    "MsgDigitalAssetRefund":"赎回资产"
+    "MsgDigitalAssetRefund":"赎回资产",
+    "MsgActivateMiner": "解禁资产矿工",
+    "MsgDeactivateMiner": "移除资产矿工"
 
    },
    "txTable":{
