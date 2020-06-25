@@ -411,7 +411,7 @@
 
           </div>
           <div v-if="txtype=='assertDeactivateMiner'">
-            <h2> 剔除矿工 </h2>
+            <h2> {{$t('DeactivateMinerpop.Deactivate')}} </h2>
             <Row class-name="item">
               <Col span="3" class-name="key">{{$t('Authorizedminingpop.AssetName')}}:</Col>
               <Col span="21">
@@ -421,7 +421,7 @@
               </Col>
             </Row>
             <Row class-name="item">
-              <Col span="4" class-name="key">矿工lambda地址:</Col>
+              <Col span="4" class-name="key">{{$t('DeactivateMinerpop.address')}}:</Col>
               <Col span="20">
               <Input readonly   v-model="transactiondata.Miner"    />
 
@@ -430,7 +430,7 @@
           </div>
 
           <div v-if="txtype=='assertActivateMiner'">
-            <h2> 矿工激活 </h2>
+            <h2> {{$t('ActivateMinerpop.Activate')}} </h2>
             <Row class-name="item">
               <Col span="3" class-name="key">{{$t('Authorizedminingpop.AssetName')}}:</Col>
               <Col span="21">
