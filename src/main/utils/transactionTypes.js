@@ -25,9 +25,9 @@ const transactionTypes = {
   DigitalAssetRefund: 'MsgDigitalAssetRefund',
   AuthorizeMiningPubKey: 'MsgAuthorizeMiningPubKey',
   CreateAsset: 'MsgCreateAsset',
-  DismissDigitalAssetMarket: 'MsgDismissDigitalAssetMarket'
-
-
+  DismissDigitalAssetMarket: 'MsgDismissDigitalAssetMarket',
+  DeactivateMiner: 'MsgDeactivateMiner',
+  ActivateMiner: 'MsgActivateMiner'
 
 };
 

@@ -410,6 +410,37 @@
 
 
           </div>
+          <div v-if="txtype=='assertDeactivateMiner'">
+            <h2> {{$t('DeactivateMinerpop.Deactivate')}} </h2>
+            <Row class-name="item">
+              <Col span="3" class-name="key">{{$t('Authorizedminingpop.AssetName')}}:</Col>
+              <Col span="21">
+
+              {{transactiondata.AssetName|assertdenomformat}}
+
+              </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('DeactivateMinerpop.address')}}:</Col>
+              <Col span="20">
+              <Input readonly   v-model="transactiondata.Miner"    />
+
+              </Col>
+            </Row>
+          </div>
+
+          <div v-if="txtype=='assertActivateMiner'">
+            <h2> {{$t('ActivateMinerpop.Activate')}} </h2>
+            <Row class-name="item">
+              <Col span="3" class-name="key">{{$t('Authorizedminingpop.AssetName')}}:</Col>
+              <Col span="21">
+
+              {{transactiondata.AssetName|assertdenomformat}}
+
+              </Col>
+            </Row>
+
+          </div>
 
 
 

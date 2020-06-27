@@ -104,7 +104,7 @@ export default {
             url += '/';
           }
           settings.set('custombrowserurl', url);
-          this.$Notice.warning({
+          this.$Notice.success({
             title: this.$t('Custombrowser.success'),
             desc: this.$t('Custombrowser.Setsuccessfully')
           });

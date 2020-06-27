@@ -507,7 +507,9 @@
     "MsgDismissDigitalAssetMarket": "DismissDigitalAssetMarket",
     "MsgAuthorizeMiningPubKey": "AuthorizeMiningPubKey",
     "MsgDigitalAssetPledge":"DigitalAssetPledge",
-    "MsgDigitalAssetRefund": "DigitalAssetRefund"
+    "MsgDigitalAssetRefund": "DigitalAssetRefund",
+    "MsgActivateMiner": "ActivateMiner",
+    "MsgDeactivateMiner": "DeactivateMiner"
   },
   "txTable":{
     "action": "Activity",
@@ -913,6 +915,8 @@
        "Additionalmining":"Additional mining",
        "Createanauthorizedmarket":"Create an authorized market",
        "Createassets":"Create assets",
+       "DeactivateMiner":"Deactivate",
+       "ActivateMiner":"Activate",
        "assetlist":{
         "fullname":"Fullname",
         "balance":"Balance",
@@ -1026,6 +1030,14 @@
         "tip1":"Redeem all pledges",
         "tip2":"Days to redeem assets"
         
+    },
+    "ActivateMinerpop":{
+        "Activate":"Activate miner"
+    },
+    "DeactivateMinerpop":{
+        "Deactivate":"Remove miners",
+        "address":"address",
+        "need_address":"Please enter the address of the miner's lambda"
     }
 
 

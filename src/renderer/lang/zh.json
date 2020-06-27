@@ -506,7 +506,9 @@
     "MsgDismissDigitalAssetMarket": "解散资产交易市场",
     "MsgAuthorizeMiningPubKey": "授权",
     "MsgDigitalAssetPledge":"质押资产",
-    "MsgDigitalAssetRefund":"赎回资产"
+    "MsgDigitalAssetRefund":"赎回资产",
+    "MsgActivateMiner": "解禁资产矿工",
+    "MsgDeactivateMiner": "移除资产矿工"
 
    },
    "txTable":{
@@ -913,6 +915,8 @@
        "Additionalmining":"挖矿增发",
        "Createanauthorizedmarket":"创建授权市场",
        "Createassets":"创建资产",
+       "DeactivateMiner":"剔除矿工",
+       "ActivateMiner":"矿工激活",
        "assetlist":{
            "fullname":"全称",
            "balance":"余额",
@@ -1025,6 +1029,13 @@
         "tip1":"赎回全部质押",
         "tip2":"赎回资产需要等的天数"
         
+    },
+    "ActivateMinerpop":{
+        "Activate":"矿工激活"
+    },
+    "DeactivateMinerpop":{
+        "Deactivate":"剔除矿工",
+        "address":"lambda 地址"
     }
 
 }
