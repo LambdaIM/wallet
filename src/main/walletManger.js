@@ -860,20 +860,47 @@ walletManger.prototype.ActivateMiner = async function (AssetName,memo) {
 
 
 
-walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,AssetName,memo) {
-  var publicKey = hdkeyjs.publicKey.getBytes(PubKey);
-  console.log('publicKey')
-  console.log(publicKey)
-  console.log(publicKey.length)
-  var result = {
-    type: transaction.AuthorizeMiningPubKey,
-    PubKey: {
-     "type":"tendermint/PubKeySecp256k1",
-      value:publicKey.toString(`base64`),
-    },
-    AssetName:AssetName,
-    memo: memo || ''
-  };
+walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,AssetName,ispubkey,memo) {
+  
+  // console.log('publicKey')
+  // console.log(publicKey)
+  // console.log(publicKey.length)
+  var result,publicKey; 
+  if(PubKey.length== 77){
+    publicKey = hdkeyjs.publicKey.getBytes(PubKey);
+  }else{
+    publicKey=Buffer.from(PubKey,'base64');
+
+
+  }
+  console.log('publicKey 长度',publicKey.length)
+  if(publicKey.length==33){
+     result = {
+      type: transaction.AuthorizeMiningPubKey,
+      PubKey: {
+       "type":"tendermint/PubKeySecp256k1",
+        value:publicKey.toString(`base64`),
+      },
+      AssetName:AssetName,
+      memo: memo || ''
+    };
+
+  }else if(publicKey.length==32){
+    result = {
+      type: transaction.AuthorizeMiningPubKey,
+      PubKey: {
+       "type":"tendermint/PubKeyEd25519",
+       value:publicKey.toString(`base64`),
+      },
+      AssetName:AssetName,
+      memo: memo || ''
+    };
+
+  }else{
+    throw new Error('need PubKeySecp256k1 or PubKeyEd25519')
+  }
+  
+
   return result;
 };
 
