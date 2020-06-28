@@ -986,16 +986,22 @@ export default function() {
 
 
   eipc.answerRenderer('AuthorizeMiningPubKey', async query => {
-    var { PubKey, AssetName } = query;
+    var { PubKey, AssetName, pubkeyType } = query;
     if (PubKey == undefined) {
       throw resultView(null, false, errorList.need_PubKey);
     }
     if (AssetName == undefined) {
       throw resultView(null, false, errorList.need_AssetName);
     }
+    var ispubkey = true;
+    console.log('pubkeyType:', pubkeyType);
+    if (pubkeyType == 2) {
+      ispubkey = false;
+    }
+    console.log('ispubkey:', ispubkey);
 
     try {
-      var TxMessageload = await WM.AuthorizeMiningPubKey(PubKey, AssetName);
+      var TxMessageload = await WM.AuthorizeMiningPubKey(PubKey, AssetName, ispubkey);
       return resultView(TxMessageload, true);
     } catch (error) {
       throw resultView(null, false, error);

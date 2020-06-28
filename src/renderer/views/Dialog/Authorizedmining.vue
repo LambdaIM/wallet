@@ -20,6 +20,13 @@
 
           </Input>
         </p>
+        <br />
+        <!-- <p>
+            <RadioGroup v-model="pubkeyType">
+                <Radio label="1">{{$t('Authorizedminingpop.Authorizedpublickey')}}</Radio>
+                <Radio label="2">Ed25519的base64格式字符串</Radio>
+            </RadioGroup>
+        </p> -->
 
         <br />
 
@@ -47,7 +54,8 @@ export default {
       name: '',
       asset: '',
       AssetName: '',
-      Pubkey: ''
+      Pubkey: '',
+      pubkeyType: '1'
     };
   },
   components: {
@@ -80,10 +88,12 @@ export default {
     async transfer(PubKey, AssetName) {
       this.$data.transactiondata = null;
       let isdege = this.$data.isdege;
+      let pubkeyType = parseInt(this.$data.pubkeyType);
       try {
         let res = await ipc.callMain('AuthorizeMiningPubKey', {
           PubKey,
-          AssetName
+          AssetName,
+          pubkeyType: pubkeyType
         });
         // console.log(res);
         if (res.state) {
