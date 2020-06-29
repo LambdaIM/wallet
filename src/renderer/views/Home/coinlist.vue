@@ -143,11 +143,13 @@
                   <Button v-if="$role('conlist.DeactivateMiner')" class="smallbtn" @click="openMinerDeactivateDialog(row)"  size="small">{{$t('assetpage.DeactivateMiner')}}</Button>
                   <Button v-if="$role('conlist.ActivateMiner')" class="smallbtn" @click="openMinerActivateDialog(row)"  size="small">{{$t('assetpage.ActivateMiner')}} </Button>
 
+                  <Button  class="smallbtn" @click="openPurchaseauthorizedspace(row)"  size="small">购买空间 </Button>
+
             </template>
 
                  </Table>
             </TabPane>
-            <TabPane :label="$t('assetpage.assetsinredemption')" name="name4">
+            <TabPane v-if="$role('conlist.redeem')" :label="$t('assetpage.assetsinredemption')" name="name4">
                 <Table  :columns="redeemcolumns" :data="redeemdata">
                   <template slot-scope="{ row, index }" slot="completionTime">
                     {{row.completionTime|blockFormatDate}}
@@ -165,8 +167,14 @@
                 </Table>
 
             </TabPane>
+            <TabPane  label="成单列表" name="name4">
+               <Table :columns="matchordercolumns" :data="matchorderdata"></Table>
 
-            <TabPane :label="$t('assetpage.miningdescription')" name="name3">
+
+
+            </TabPane>
+
+            <TabPane  :label="$t('assetpage.miningdescription')" name="name3">
 
               <ul style="margin-left: 10px;">
                 <li>{{$t('assetpage.Mininginstructions.tip1')}}</li>
@@ -195,6 +203,7 @@
 
       <MinerActivateDialog ref="ActivateDialogModal" />
       <MinerDeactivateDialog ref="DeactivateDialogModal" />
+      <Purchaseauthorizedspace ref="PurchaseauthorizedspaceModal" />
 
 
 
@@ -220,8 +229,11 @@ import AuthorizedDissolutionmarketDialog from '@/views/Dialog/AuthorizedDissolut
 
 import MinerActivateDialog from '@/views/Dialog/MinerActivate.vue';
 import MinerDeactivateDialog from '@/views/Dialog/MinerDeactivate.vue';
+
+import Purchaseauthorizedspace from '@/views/Dialog/Purchaseauthorizedspace.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
+
 
 export default {
   data() {
@@ -349,7 +361,20 @@ export default {
           slot: 'completionTime'
         }
       ],
-      redeemdata: []
+      redeemdata: [],
+      matchordercolumns: [{
+        title: 'Name',
+        key: 'name'
+      },
+      {
+        title: 'Age',
+        key: 'age'
+      },
+      {
+        title: 'Address',
+        key: 'address'
+      }],
+      matchorderdata: []
     };
   },
   beforeDestroy() {
@@ -390,7 +415,8 @@ export default {
     AuthorizedredeemDialog,
     AuthorizedDissolutionmarketDialog,
     MinerActivateDialog,
-    MinerDeactivateDialog
+    MinerDeactivateDialog,
+    Purchaseauthorizedspace
   },
   methods: {
     denomFormart(denom) {
@@ -481,6 +507,9 @@ export default {
     },
     openMinerActivateDialog(data) {
       this.$refs.ActivateDialogModal.open(data);
+    },
+    openPurchaseauthorizedspace(data) {
+      this.$refs.PurchaseauthorizedspaceModal.open(data);
     },
     openLinkassert(name) {
       var explorer = DAEMON_CONFIG.explore();

@@ -130,7 +130,8 @@ export default {
     },
     preSendLAMB() {
       console.log('-----');
-      let name = this.name;
+      let name = this.name.toLocaleLowerCase();
+
       let asset = parseInt(this.asset);
       let MintType = parseInt(this.MintType);
       let inflation = parseInt(this.inflation);

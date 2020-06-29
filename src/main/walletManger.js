@@ -858,6 +858,20 @@ walletManger.prototype.ActivateMiner = async function (AssetName,memo) {
 
 
 
+walletManger.prototype.DamCreateBuyOrder = async function (Asset,Duration,Size,minerAddress,memo) {
+  var result = {
+    type: transaction.DamCreateBuyOrder,
+    Asset: Asset,
+    Size:Size,
+    Duration:Duration,
+    minerAddress:minerAddress,
+    memo: memo || ''
+  };
+  return result;
+};
+
+
+
 
 
 walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,AssetName,ispubkey,memo) {

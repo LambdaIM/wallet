@@ -1152,6 +1152,39 @@ export default function() {
   });
 
 
+  eipc.answerRenderer('assertDamCreateBuyOrder', async query => {
+    log.info('assertDeactivateMiner');
+
+    var { AssetName, address, Size, Duration } = query;
+    console.log(AssetName, address);
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    if (address == undefined) {
+      throw resultView(null, false, errorList.need_address);
+    }
+
+    if (Size == undefined) {
+      throw resultView(null, false, errorList.need_Size);
+    }
+
+    if (Duration == undefined) {
+      throw resultView(null, false, errorList.need_Duration);
+    }
+
+
+    try {
+      var TxMessageload = await WM.DamCreateBuyOrder(AssetName, Duration, Size, address, '');
+
+      log.info(TxMessageload);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
 
   // Assetparameters
 }

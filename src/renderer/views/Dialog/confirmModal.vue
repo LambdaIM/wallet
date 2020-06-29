@@ -441,10 +441,44 @@
             </Row>
 
           </div>
-
-
-
           <!-- CreateAsset -->
+          <div v-if="txtype=='assertDamCreateBuyOrder'">
+            <h2> 购买空间   </h2>
+            <Row class-name="item">
+              <Col span="3" class-name="key">{{$t('Authorizedminingpop.AssetName')}}:</Col>
+              <Col span="21">
+
+              {{transactiondata.asset|assertdenomformat}}
+
+              </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="3" class-name="key">矿工地址:</Col>
+              <Col span="21">
+
+              {{transactiondata.minerAddress}}
+
+              </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="3" class-name="key">空间大小:</Col>
+              <Col span="21">
+
+              {{transactiondata.size}}GB
+
+              </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="3" class-name="key">时长:</Col>
+              <Col span="21">
+
+              {{transactiondata.duration|formatMonth}}{{$t('Dialog.selectBuy.month')}}
+
+
+              </Col>
+            </Row>
+
+          </div>
 
 
 
