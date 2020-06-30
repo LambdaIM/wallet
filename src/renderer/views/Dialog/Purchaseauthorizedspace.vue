@@ -19,20 +19,20 @@
         </p>
         <br />
         <p>
-          <Input :value="address" >
+          <Input v-model="mineraddress" >
             <span slot="prepend">矿工地址 </span>
           </Input>
         </p>
         <br />
         <p>
-          <Input :value="size" >
+          <Input v-model="size" >
                <span slot="prepend">空间大小 </span>
                <span slot="append">GB</span>
           </Input>
         </p>
         <br />
         <p>
-          <Input :value="Duration" >
+          <Input v-model="Duration" >
             <span slot="prepend">时长 </span>
             <span slot="append">月</span>
           </Input>
@@ -67,7 +67,7 @@ export default {
       asset: '',
       AssetName: '',
       Pubkey: '',
-      address: '',
+      mineraddress: '',
       size: '',
       Duration: '',
       timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
@@ -88,9 +88,31 @@ export default {
     preSendLAMB() {
       console.log('-----');
       var AssetName = this.$data.AssetName;
-      var address = this.$data.address;
-      var size = this.$data.size;
-      var Duration = this.$data.Duration;
+      var address = this.$data.mineraddress;
+      var size = parseInt(this.$data.size);
+      var Duration = parseInt(this.$data.Duration);
+
+      if (address.length !== 45) {
+        this.$Notice.warning({
+          title: '请填写矿工地址、检查矿工地址格式'
+        });
+        return;
+      }
+
+      if (isNaN(size) || size <= 0) {
+        this.$Notice.warning({
+          title: '空间大小需要为整数，并且大于0'
+        });
+        return;
+      }
+
+
+      if (isNaN(Duration) || Duration <= 0) {
+        this.$Notice.warning({
+          title: '时长需要为整数，并且大于0'
+        });
+        return;
+      }
 
 
       this.transfer(AssetName, address, size, Duration);
