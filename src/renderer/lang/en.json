@@ -782,10 +782,10 @@
        "marketmaker":"Market maker"
   },
   "simpleuserbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward，Market pledge, withdraw market pledge income",
-  "orderuserbrief":"View assets, transfer, pledge mining, proposal voting, purchase space, use lambdas3, withdraw pledge reward，Market pledge, withdraw market pledge income",
-  "minerbrief":"View assets, transfer, pledge mining, proposal voting, market trading space, mining guide, withdraw pledge reward, withdraw deposit mining reward，Market pledge, withdraw market pledge income",
-  "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income，Market pledge, withdraw market pledge income",
-  "marketmakerbrief":"Create authorized mining market, asset, authorized mining"
+  "orderuserbrief":"View assets, transfer, pledge mining, proposal voting, purchase space, use lambdas3, withdraw pledge reward，Market pledge, withdraw market pledge income,purchase authorization market space",
+  "minerbrief":"View assets, transfer, pledge mining, proposal voting, market trading space, mining guide, withdraw pledge reward, withdraw deposit mining reward，Market pledge, withdraw market pledge income,authorized market pledge, authorized market redemption and authorized market activation",
+  "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income，Market pledge, withdraw market pledge income,remove miners from authorized Market",
+  "marketmakerbrief":"Create authorized mining market, asset, authorized mining,dissolution of authorized Market"
 },
 "guidepage":{
     "step1":{
