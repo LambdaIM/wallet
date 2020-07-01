@@ -1236,6 +1236,16 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('opensonaccount', async query => {
+    let { address, sonaddress } = query;
+    if (address == undefined) {
+      throw resultView(null, false, errorList.need_address);
+    }
+    var filepath = path.join(DAEMON_CONFIG.BASE_PATH, 'SonAccount', address, `${sonaddress}.txt`);
+    console.log('filepath', filepath);
+    shell.showItemInFolder(filepath);
+  });
+
 
 
   // Assetparameters

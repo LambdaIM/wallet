@@ -13,7 +13,7 @@
         <Table :columns="columns" :data="data">
           <template slot-scope="{ row, index }" slot="action">
                 <Button size="small"  @click="exportAccount(row)"  type="primary">{{$t('subaccount.export')}}</Button>
-                <Button size="small"  @click="cointransaction(row)"  type="primary">{{$t('subaccount.transaction')}}</Button>
+                <!-- <Button size="small"  @click="cointransaction(row)"  type="primary">{{$t('subaccount.transaction')}}</Button> -->
             </template>
             <template slot-scope="{ row, index }" slot="account">
                 {{row.lambdavalue|Lambformat  }}
@@ -131,8 +131,12 @@ export default {
       }
     },
     async exportAccount(row) {
-      console.log(this.$refs);
-      this.$refs.sonAccountExportModel.open(row);
+      let res = await ipc.callMain('opensonaccount', {
+        address: this.$store.getters.getaddress,
+        sonaddress: row.address
+      });
+      console.log(res);
+      // this.$refs.sonAccountExportModel.open(row);
     },
     cointransaction(row) {
       this.$refs.SendModelDialog.open(undefined, 'ulamb', row.address);

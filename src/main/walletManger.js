@@ -255,8 +255,21 @@ walletManger.prototype.generateSonAccount = function (mnemonic, password, name, 
     // throw new Error(`failed,${address} already exists`);
   }
 
-  var walletjson = hdkeyjs.keyStore.toJson(keys, password, name);
-  var filepath = path.join(DAEMON_CONFIG.SonAccountFile, this.defaultwallet.address, address + '.keyinfo');
+  // var walletjson = hdkeyjs.keyStore.toJson(keys, password, name);
+  var walletjson = {
+    'name': name,
+    'pub_key': {
+      'type': 'tendermint/PubKeySecp256k1',
+      'value': keys.publicKey.toString('base64')
+    },
+    'priv_key': {
+      'type': 'tendermint/PrivKeySecp256k1',
+      'value': keys.privateKey.toString('base64')
+    },
+    'masterAddress': addressF,
+    'address': address
+  };
+  var filepath = path.join(DAEMON_CONFIG.SonAccountFile, this.defaultwallet.address, address + '.txt');
   // fs.writeFileSync(filepath, JSON.stringify(walletjson));
   this.writeSyncJson(filepath, walletjson);
 
@@ -376,28 +389,24 @@ walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
     throwErrorCode(errorList.Import_failed_check_password)
     // throw new Error('Import failed,Please check the wallet file and password');
   }
-  console.log('file',file)
-  var keyinfo ={
-    "privateKey": Buffer.from(file.privateKey,'hex'),
-    "publicKey": Buffer.from(file.publicKey,'hex'),
-    "address": file.address
+  if(file.masterAddress!=this.defaultwallet.address){
+    throwErrorCode(errorList.main_account_not_current_account);
   }
-  var v3file = hdkeyjs.keyStore.toJson(keyinfo,password,name)
-  v3file.address=file.address;
-
   
 
-
-  var file = this.findSonFile(v3file.address);
+  
+  var file = this.findSonFile(file.address);
+  file.name=name;
+  
   if (file.fileName != null) {
-    throwErrorCode(errorList.Import_failed_address_exists,v3file.address)
+    throwErrorCode(errorList.Import_failed_address_exists,file.address)
     // throw new Error('Import failed,'+v3file.address+' already exists');
   }
 
 
-  var targetpath = path.join(DAEMON_CONFIG.SonAccountFile,this.defaultwallet.address, v3file.address + '.keyinfo');
+  var targetpath = path.join(DAEMON_CONFIG.SonAccountFile,this.defaultwallet.address, file.address + '.txt');
   // fs.writeFileSync(targetpath, JSON.stringify(v3file), 'utf8');
-  this.writeSyncJson(targetpath,v3file)
+  this.writeSyncJson(targetpath,file)
   
   return true;
 
@@ -1185,7 +1194,7 @@ walletManger.prototype.findSonFile = function (address) {
   var list = fs.readdirSync(dir);
   var fileName = null,data={};
   list.forEach(file => {
-    if (file.indexOf('.keyinfo') > 0) {
+    if (file.indexOf('.txt') > 0) {
       file = path.join(dir, file);
       var v3file = fs.readFileSync(file, 'utf8');
       try {
@@ -1213,7 +1222,7 @@ walletManger.prototype.SonFileList =async function () {
   var list = fs.readdirSync(dir);
   var result=[]
   list.forEach(file => {
-    if (file.indexOf('.keyinfo') > 0) {
+    if (file.indexOf('.txt') > 0) {
       file = path.join(dir, file);
       var v3file = fs.readFileSync(file, 'utf8');
       try {
