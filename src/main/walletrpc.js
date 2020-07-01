@@ -1184,6 +1184,58 @@ export default function() {
     }
   });
 
+  eipc.answerRenderer('assertDamOrderRenewal', async query => {
+    log.info('assertDamOrderRenewal');
+
+    var { orderId, duration } = query;
+    console.log(orderId, duration);
+
+    if (orderId == undefined) {
+      throw resultView(null, false, errorList.need_orderId);
+    }
+
+    if (duration == undefined) {
+      throw resultView(null, false, errorList.need_duration);
+    }
+
+    try {
+      var TxMessageload = await WM.DamOrderRenewal(orderId, duration, '');
+
+      log.info(TxMessageload);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('assertDamMinerWithDrawCount', async query => {
+    log.info('assertDamMinerWithDrawCount');
+
+    var { AssetName, page } = query;
+    console.log(orderId, duration);
+
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    if (page == undefined) {
+      throw resultView(null, false, errorList.need_page);
+    }
+
+    if (limit == undefined) {
+      throw resultView(null, false, errorList.need_limit);
+    }
+
+    try {
+      var TxMessageload = await WM.DamMinerWithDrawCount(AssetName, page, limit, '');
+
+      log.info(TxMessageload);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
 
 
   // Assetparameters

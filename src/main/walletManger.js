@@ -782,6 +782,7 @@ walletManger.prototype.OrderRenewal = async function (orderId,duration,memo) {
 
 
 
+
 walletManger.prototype.CancelSellOrder = async function (orderId,memo) {
   var result = {
     type: transaction.CancelSellOrder,
@@ -868,6 +869,27 @@ walletManger.prototype.DamCreateBuyOrder = async function (Asset,Duration,Size,m
     memo: memo || ''
   };
   return result;
+};
+
+
+walletManger.prototype.DamOrderRenewal = async function (orderId,duration,memo) {
+  var result = {
+    type: transaction.DamOrderRenewal,
+    orderId: orderId,
+    duration:duration,
+    memo: memo || ''
+  };
+  return result;
+};
+
+walletManger.prototype.DamMinerWithDrawCount = async function (asset,page,limit,memo) {
+  return {
+    type: transaction.DamMinerWithDrawCount,
+    page: page,
+    limit: limit,
+    asset:asset,
+    memo: memo || ''
+  };
 };
 
 
