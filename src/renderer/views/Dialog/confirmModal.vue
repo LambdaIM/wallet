@@ -480,6 +480,40 @@
 
           </div>
 
+          <div v-if="txtype=='DamOrderRenewal'">
+            <h2>授权市场订单续期</h2>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('renewal.Duration')}}:</Col>
+              <Col span="20" class-name="value">{{transactiondata.duration|formatMonth}}{{$t('Dialog.sellorder.month')}} </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('renewal.orderid')}}:</Col>
+              <Col span="20" class-name="value">{{transactiondata.orderId}}</Col>
+            </Row>
+
+          </div>
+
+          <div v-if="txtype=='assertDamMinerWithDrawCount'">
+            <h2>提取授权市场订单收益</h2>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('orderrevenue.Pagenumber')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.page}} </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('orderrevenue.Number')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.limit}}</Col>
+            </Row>
+
+          </div>
+
 
 
           <Row class-name="item">

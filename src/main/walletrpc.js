@@ -1211,8 +1211,8 @@ export default function() {
   eipc.answerRenderer('assertDamMinerWithDrawCount', async query => {
     log.info('assertDamMinerWithDrawCount');
 
-    var { AssetName, page } = query;
-    console.log(orderId, duration);
+    var { AssetName, page, limit } = query;
+
 
     if (AssetName == undefined) {
       throw resultView(null, false, errorList.need_AssetName);

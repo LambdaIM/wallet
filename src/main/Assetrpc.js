@@ -1,7 +1,7 @@
 import LambdaApi from './lambdaApi';
 
 import fetch from './utils/fetch';
-
+import resultView from './result.js';
 import AssetManager from './AssetManager.js';
 const { app } = require('electron');
 
@@ -74,6 +74,42 @@ export default function() {
     try {
       var M = new AssetManager();
       var result = await M.Authorizedredeemlist();
+      return { data: result, state: true };
+    } catch (error) {
+      console.log(error);
+      return { data: error, state: false };
+    }
+  });
+
+  eipc.answerRenderer('Authorizematchorderlist', async query => {
+    let { page, limit } = query;
+
+    if (page == undefined) {
+      throw resultView(null, false, errorList.need_page);
+    }
+
+    if (limit == undefined) {
+      throw resultView(null, false, errorList.need_limit);
+    }
+
+    try {
+      var M = new AssetManager();
+      var result = await M.matchorderlist(page, limit);
+      return { data: result, state: true };
+    } catch (error) {
+      console.log(error);
+      return { data: error, state: false };
+    }
+  });
+
+  eipc.answerRenderer('Authorizematchdamorderinfo', async query => {
+    let { orderId } = query;
+    if (orderId == undefined) {
+      throw resultView(null, false, errorList.need_orderId);
+    }
+    try {
+      var M = new AssetManager();
+      var result = await M.matchdamorderinfo(orderId);
       return { data: result, state: true };
     } catch (error) {
       console.log(error);

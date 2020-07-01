@@ -110,9 +110,9 @@ export default {
 
   },
   computed: {
-    address: function() {
-      return this.$store.getters.getaddress;
-    },
+    // address: function() {
+    //   return this.$store.getters.getaddress;
+    // },
     balance: function() {
       return this.$store.getters.getblance;
     },

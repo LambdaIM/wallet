@@ -167,8 +167,18 @@
                 </Table>
 
             </TabPane>
-            <TabPane  label="成单列表" name="name4">
-               <Table :columns="matchordercolumns" :data="matchorderdata"></Table>
+            <TabPane  label="成单列表" name="name5">
+               <Table :columns="matchordercolumns" :data="matchorderdata">
+
+                 <template slot-scope="{ row, index }" slot="operation">
+                    <Button @click="pageto(row)" type="primary" size="small"> 详情 </Button>
+                  </template>
+               </Table>
+               <br/>
+               <div style="text-align: center;">
+                     <Page   @on-change="orderListPage" :total="allCount" simple/>
+                    </div>
+                    <br/><br/><br/>
 
 
 
@@ -363,18 +373,38 @@ export default {
       ],
       redeemdata: [],
       matchordercolumns: [{
-        title: 'Name',
-        key: 'name'
+        title: '订单id',
+        key: 'orderId'
       },
       {
-        title: 'Age',
-        key: 'age'
+        title: '资产名称',
+        key: 'asset'
       },
       {
-        title: 'Address',
-        key: 'address'
+        title: '空间大小',
+        key: 'size'
+      },
+      {
+        title: '价格',
+        key: 'price'
+      },
+      {
+        title: '开始时间',
+        key: 'createTime'
+      },
+      {
+        title: '操作',
+        key: 'operation',
+        slot: 'operation'
       }],
-      matchorderdata: []
+      matchorderdata: [{
+        orderId: 'xxxx',
+        asset: '0000',
+        size: 'kkkkkk',
+        price: 'oooooo',
+        createTime: 'lllll'
+      }],
+      allCount: 0
     };
   },
   beforeDestroy() {
@@ -404,6 +434,8 @@ export default {
     this.getpledgelist();
     this.getMinerRewards();
     this.getredeemlist();
+
+    this.getmatchorderlist(1);
   },
   components: {
     SendModelDialog,
@@ -613,6 +645,34 @@ export default {
       }
 
       return result;
+    },
+    orderListPage(number) {
+      this.getmatchorderlist(number);
+    },
+    pageto(item) {
+      this.$router.push('/home/Matchingorders');
+    },
+    async getmatchorderlist(page) {
+      console.log('getmatchorderlist');
+      try {
+        let res = await ipc.callMain('Authorizematchorderlist', {
+          page,
+          limit: 10
+        });
+        if (res.state) {
+          var list = res.data || [];
+          var result = '';
+          // list.forEach(item => {
+          //   if (item.denom == 'ulamb') {
+          //     result = item.amount;
+          //   }
+          // });
+          this.$data.matchorderdata = list;
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+      console.log('getListDataEnd');
     }
 
 

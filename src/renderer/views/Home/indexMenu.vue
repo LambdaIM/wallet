@@ -49,6 +49,8 @@
                 <MenuItem v-if="$role('home.tx.Withdrawprofit')" name="openWithdrawprofit">{{$t('home.Withdrawprofit')}}</MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">{{$t('orderrevenue.WithdraworderCommission')}} </MenuItem>
+
+                <MenuItem v-if="$role('home.tx.Minerprofit')" name="openAuthorizedMarket"> 提取授权市场订单收益 </MenuItem>
             </MenuGroup>
 
 
@@ -89,6 +91,7 @@
     <MinerWithdrawalModal ref="MinerWithdrawalModalDialog"/>
     <MinerWithdrawaOrderlModal ref="MinerWithdrawaOrderlModalDialog"/>
     <WithdrawalMarketModal ref="WithdrawalMarketModalDialog" />
+    <withdrawalAuthorizedMarketModal ref="withdrawalAuthorizedMarketModalDialog" />
 
   </div>
 </template>
@@ -105,6 +108,7 @@ import MinerWithdrawaOrderlModal from '@/views/Dialog/MinerWithdrawaOrderlModal.
 
 import WithdrawalMarketModal from '@/views/Dialog/withdrawalMarketModal.vue';
 
+import withdrawalAuthorizedMarketModal from '@/views/Dialog/withdrawalAuthorizedMarketModal.vue';
 
 import introJs from 'intro.js';
 import homesteps from './homesteps.js';
@@ -129,7 +133,8 @@ export default {
     DistributionModal,
     MinerWithdrawalModal,
     MinerWithdrawaOrderlModal,
-    WithdrawalMarketModal
+    WithdrawalMarketModal,
+    withdrawalAuthorizedMarketModal
   },
   mounted() {
     this.getMinerRewards();
@@ -186,6 +191,8 @@ export default {
         case 'openMinerprofit':this.$refs.MinerWithdrawalModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         case 'openMinerOrder':this.$refs.MinerWithdrawaOrderlModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         case 'openWithdrawmarket': this.$refs.WithdrawalMarketModalDialog.open(); this.$data.activeItem = this.$route.name; break;
+
+        case 'openAuthorizedMarket': this.$refs.withdrawalAuthorizedMarketModalDialog.open(); this.$data.activeItem = this.$route.name; break;
         default :this.$data.activeItem = name;
       }
 
