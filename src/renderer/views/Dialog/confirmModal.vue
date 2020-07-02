@@ -448,7 +448,7 @@
               <Col span="3" class-name="key">{{$t('Authorizedminingpop.AssetName')}}:</Col>
               <Col span="21">
 
-              {{transactiondata.asset|assertdenomformat}}
+              {{transactiondata.Asset|assertdenomformat}}
 
               </Col>
             </Row>
@@ -464,7 +464,7 @@
               <Col span="3" class-name="key">空间大小:</Col>
               <Col span="21">
 
-              {{transactiondata.size}}GB
+              {{transactiondata.Size}}GB
 
               </Col>
             </Row>
@@ -472,7 +472,7 @@
               <Col span="3" class-name="key">时长:</Col>
               <Col span="21">
 
-              {{transactiondata.duration|formatMonth}}{{$t('Dialog.selectBuy.month')}}
+              {{transactiondata.Duration|formatMonth}}{{$t('Dialog.selectBuy.month')}}
 
 
               </Col>
@@ -492,7 +492,7 @@
             </Row>
             <Row class-name="item">
               <Col span="4" class-name="key">{{$t('renewal.orderid')}}:</Col>
-              <Col span="20" class-name="value">{{transactiondata.orderId}}</Col>
+              <Col span="20" class-name="value">{{transactiondata.orderID}}</Col>
             </Row>
 
           </div>
@@ -502,6 +502,10 @@
             <Row class-name="item">
               <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
               <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">资产名称:</Col>
+              <Col span="20" class-name="value">{{transactiondata.asset}}</Col>
             </Row>
             <Row class-name="item">
               <Col span="5" class-name="key">{{$t('orderrevenue.Pagenumber')}}:</Col>

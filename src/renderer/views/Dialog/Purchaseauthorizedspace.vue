@@ -20,7 +20,7 @@
         <br />
         <p>
           <Input v-model="mineraddress" >
-            <span slot="prepend">矿工地址 </span>
+            <span slot="prepend">矿工操作地址 </span>
           </Input>
         </p>
         <br />
@@ -92,7 +92,7 @@ export default {
       var size = parseInt(this.$data.size);
       var Duration = parseInt(this.$data.Duration);
 
-      if (address.length !== 45) {
+      if (address.length !== 54) {
         this.$Notice.warning({
           title: '请填写矿工地址、检查矿工地址格式'
         });
@@ -124,8 +124,9 @@ export default {
     },
     async transfer(AssetName, address, Size, Duration) {
       this.$data.transactiondata = null;
-      let isdege = this.$data.isdege;
+
       Duration = Duration * (this.$data.timeunit) + '';
+      Size = String(Size);
 
       try {
         let res = await ipc.callMain('assertDamCreateBuyOrder', {

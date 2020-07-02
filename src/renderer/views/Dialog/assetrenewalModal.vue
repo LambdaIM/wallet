@@ -37,7 +37,7 @@
             <span class="title">单价:</span>
           </Col>
           <Col span="4" class-name="content-wrapper">
-            {{ price | BlanceValue }}
+            {{ price | BlanceValue }}{{denom}}
           </Col>
         </Row>
       <Row class-name="card-item">
@@ -46,7 +46,7 @@
           </Col>
           <Col span="8" class-name="content-wrapper">{{balance|Lambformat}}</Col> -->
           <Col span="6" class-name="title-wrapper">
-            <span class="title">单价:</span>
+            <span class="title">金额:</span>
           </Col>
           <Col span="6" class-name="content-wrapper">
             {{ renewaLamount | BlanceValue }}
@@ -79,7 +79,7 @@ export default {
     return {
       sendModal: false,
       confirmModal: false,
-      denom: 'lamb',
+      denom: '',
       LAMBvalue: '',
       to: '',
       Tovalue: '',
@@ -124,13 +124,13 @@ export default {
         return;
       }
       /// ////
-      if (this.bigLess0OrGreater(this.renewaLamount, this.$store.getters.getblance)) {
-        // need to alert
-        this.$Notice.warning({
-          title: this.$t('home.action.check_balance_amount_transfer')
-        });
-        return;
-      }
+      // if (this.bigLess0OrGreater(this.renewaLamount, this.$store.getters.getblance)) {
+      //   // need to alert
+      //   this.$Notice.warning({
+      //     title: this.$t('home.action.check_balance_amount_transfer')
+      //   });
+      //   return;
+      // }
 
       /// ////
 
@@ -180,6 +180,7 @@ export default {
       this.sendModal = true;
       this.$data.size = orderinfo.size;
       this.$data.price = orderinfo.price;
+      this.$data.denom = orderinfo.asset;
     }
   },
   computed: {

@@ -60,7 +60,7 @@ var walletRouter = new Router({
         component: () => import('@/views/Home/Marketoperation.vue')
       },
       {
-        path: 'Matchingorders',
+        path: 'Matchingorders/:orderid',
         name: 'Matchingorders',
         component: () => import('@/views/Home/MatchOrderInfo.vue')
       }

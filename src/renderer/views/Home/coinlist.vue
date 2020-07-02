@@ -397,13 +397,7 @@ export default {
         key: 'operation',
         slot: 'operation'
       }],
-      matchorderdata: [{
-        orderId: 'xxxx',
-        asset: '0000',
-        size: 'kkkkkk',
-        price: 'oooooo',
-        createTime: 'lllll'
-      }],
+      matchorderdata: [],
       allCount: 0
     };
   },
@@ -650,7 +644,7 @@ export default {
       this.getmatchorderlist(number);
     },
     pageto(item) {
-      this.$router.push('/home/Matchingorders');
+      this.$router.push(`/home/Matchingorders/${item.orderId}`);
     },
     async getmatchorderlist(page) {
       console.log('getmatchorderlist');
@@ -660,13 +654,9 @@ export default {
           limit: 10
         });
         if (res.state) {
-          var list = res.data || [];
+          var list = res.data.data || [];
           var result = '';
-          // list.forEach(item => {
-          //   if (item.denom == 'ulamb') {
-          //     result = item.amount;
-          //   }
-          // });
+
           this.$data.matchorderdata = list;
         }
       } catch (ex) {

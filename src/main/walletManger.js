@@ -393,12 +393,12 @@ walletManger.prototype.ImportSonAccount = function (filepath,password,name) {
     throwErrorCode(errorList.main_account_not_current_account);
   }
   
-
-  
-  var file = this.findSonFile(file.address);
   file.name=name;
   
-  if (file.fileName != null) {
+  var fileold = this.findSonFile(file.address);
+  
+  
+  if (fileold.fileName != null) {
     throwErrorCode(errorList.Import_failed_address_exists,file.address)
     // throw new Error('Import failed,'+v3file.address+' already exists');
   }
@@ -882,9 +882,11 @@ walletManger.prototype.DamCreateBuyOrder = async function (Asset,Duration,Size,m
 
 
 walletManger.prototype.DamOrderRenewal = async function (orderId,duration,memo) {
+  console.log('DamOrderRenewal',orderId,duration)
+
   var result = {
     type: transaction.DamOrderRenewal,
-    orderId: orderId,
+    orderID: orderId,
     duration:duration,
     memo: memo || ''
   };
