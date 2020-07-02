@@ -937,7 +937,7 @@ export default function() {
   });
 
   eipc.answerRenderer('DigitalAssetPledge', async query => {
-    var { AssetName, Size } = query;
+    var { AssetName, Size, Price } = query;
     if (AssetName == undefined) {
       throw resultView(null, false, errorList.need_AssetName);
     }
@@ -945,8 +945,15 @@ export default function() {
     if (Size == undefined) {
       throw resultView(null, false, errorList.need_Size);
     }
+
+
+    if (Price == undefined) {
+      throw resultView(null, false, errorList.need_price);
+    }
+
+
     try {
-      var TxMessageload = await WM.DigitalAssetPledge(AssetName, Size);
+      var TxMessageload = await WM.DigitalAssetPledge(AssetName, Size, Price);
 
       return resultView(TxMessageload, true);
     } catch (error) {

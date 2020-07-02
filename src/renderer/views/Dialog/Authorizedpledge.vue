@@ -21,6 +21,14 @@
             <span slot="append">GB</span>
           </Input>
         </p>
+        <br />
+        <p>
+
+          <Input  v-model="Price" >
+          <span slot="prepend">价格</span>
+            <span slot="append">{{AssetName|assertdenomformat}}/GB/month</span>
+          </Input>
+        </p>
 
         <br />
         <p>
@@ -53,7 +61,8 @@ export default {
       name: '',
       asset: '',
       AssetName: '',
-      Size: ''
+      Size: '',
+      Price: ''
     };
   },
   components: {
@@ -72,25 +81,32 @@ export default {
       console.log('-----');
       var AssetName = this.$data.AssetName;
       var Size = parseInt(this.$data.Size);
+      var Price = parseFloat(this.$data.Price);
       if (isNaN(Size) || Size <= 0) {
         this.$Notice.warning({
           title: this.$t('AuthorizeMarketpledge.action.need_size')
         });
         return;
       }
-
-
-
       Size = String(Size);
+
+      if (isNaN(Price) || Price <= 0) {
+        this.$Notice.warning({
+          title: '请填写价格'
+        });
+        return;
+      }
+      Price = this.toBigNumStr(Price);
 
       this.transfer({
         AssetName,
-        Size
+        Size,
+        Price
       });
     },
     async transfer(praobj) {
       this.$data.transactiondata = null;
-      let isdege = this.$data.isdege;
+
       try {
         let res = await ipc.callMain('DigitalAssetPledge', praobj);
 

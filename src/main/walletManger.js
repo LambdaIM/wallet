@@ -814,11 +814,12 @@ walletManger.prototype.CreateDigitalAssetMarket = async function (AssetName,Rati
 };
 
 
-walletManger.prototype.DigitalAssetPledge = async function (AssetName,Size,memo) {
+walletManger.prototype.DigitalAssetPledge = async function (AssetName,Size,Price,memo) {
   var result = {
     type: transaction.DigitalAssetPledge,
     AssetName: AssetName,
     Size:Size,
+    Price:Price,
     memo: memo || ''
   };
   return result;
