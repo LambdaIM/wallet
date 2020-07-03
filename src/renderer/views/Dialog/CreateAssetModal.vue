@@ -50,7 +50,7 @@
             </p>
             <br />
             <p >
-              <Input  v-model="adjust_rate" >
+              <Input placeholder="例如 0.9"  v-model="adjust_rate" >
                 <span slot="prepend">{{$t('CreateassetsPop.adjust_rate')}}</span>
               </Input>
             </p>
@@ -84,7 +84,14 @@
       </Form >
       <div v-else>
         <!-- Previewlist -->
+        <h3>增发预览</h3>
+        <br/>
+        <div v-if="Previewlist.length>0">
          <Table height="300" :columns="Previewlistcolumns" :data="Previewlist"></Table>
+        </div>
+        <div v-else>
+          loading......
+        </div>
 
       </div>
 

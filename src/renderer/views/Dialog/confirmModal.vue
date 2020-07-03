@@ -509,7 +509,7 @@
             </Row>
             <Row class-name="item">
               <Col span="4" class-name="key">资产名称:</Col>
-              <Col span="20" class-name="value">{{transactiondata.asset}}</Col>
+              <Col span="20" class-name="value">{{transactiondata.asset|assertdenomformat}}</Col>
             </Row>
             <Row class-name="item">
               <Col span="5" class-name="key">{{$t('orderrevenue.Pagenumber')}}:</Col>
