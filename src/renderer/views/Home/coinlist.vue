@@ -143,7 +143,7 @@
                   <Button v-if="$role('conlist.DeactivateMiner')" class="smallbtn" @click="openMinerDeactivateDialog(row)"  size="small">{{$t('assetpage.DeactivateMiner')}}</Button>
                   <Button v-if="$role('conlist.ActivateMiner')" class="smallbtn" @click="openMinerActivateDialog(row)"  size="small">{{$t('assetpage.ActivateMiner')}} </Button>
 
-                  <Button  class="smallbtn" @click="openPurchaseauthorizedspace(row)"  size="small">购买空间 </Button>
+                  <Button  v-if="$role('conlist.Buyingspace')"  class="smallbtn" @click="openPurchaseauthorizedspace(row)"  size="small">购买空间 </Button>
 
             </template>
 
@@ -167,12 +167,33 @@
                 </Table>
 
             </TabPane>
-            <TabPane  label="成单列表" name="name5">
+            <TabPane  v-if="$role('conlist.Buyingspace')" label="成单列表" name="name5">
                <Table :columns="matchordercolumns" :data="matchorderdata">
 
                  <template slot-scope="{ row, index }" slot="operation">
                     <Button @click="pageto(row)" type="primary" size="small"> 详情 </Button>
                   </template>
+
+                  <template slot-scope="{ row, index }" slot="price">
+                    {{row.price |BlanceValue }}
+                  </template>
+
+                  <template slot-scope="{ row, index }" slot="category">
+                    {{orderType(row.buyAddress) }}
+                  </template>
+
+
+                  <template slot-scope="{ row, index }" slot="asset">
+                    {{denomFormart(row.asset) }}
+                  </template>
+
+
+                  <template slot-scope="{ row, index }" slot="createTime">
+                    {{row.createTime|blockFormatDate }}
+                  </template>
+
+
+
                </Table>
                <br/>
                <div style="text-align: center;">
@@ -378,7 +399,8 @@ export default {
       },
       {
         title: '资产名称',
-        key: 'asset'
+        key: 'asset',
+        slot: 'asset'
       },
       {
         title: '空间大小',
@@ -386,11 +408,18 @@ export default {
       },
       {
         title: '价格',
-        key: 'price'
+        key: 'price',
+        slot: 'price'
       },
       {
         title: '开始时间',
-        key: 'createTime'
+        key: 'createTime',
+        slot: 'createTime'
+      },
+      {
+        title: '类别',
+        key: 'category',
+        slot: 'category'
       },
       {
         title: '操作',
@@ -398,7 +427,8 @@ export default {
         slot: 'operation'
       }],
       matchorderdata: [],
-      allCount: 0
+      allCount: 1,
+      pageCount: {}
     };
   },
   beforeDestroy() {
@@ -658,11 +688,23 @@ export default {
           var result = '';
 
           this.$data.matchorderdata = list;
+          if (this.$data.pageCount[page] == undefined) {
+            this.$data.pageCount[page] = 1;
+            this.$data.allCount += list.length;
+          }
         }
       } catch (ex) {
         console.log(ex);
       }
       console.log('getListDataEnd');
+    },
+    orderType(buyaddress) {
+      var address = this.$store.getters.getaddress;
+      if (buyaddress == address) {
+        return '买单';
+      } else {
+        return '卖单';
+      }
     }
 
 

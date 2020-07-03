@@ -508,7 +508,12 @@
     "MsgDigitalAssetPledge":"质押资产",
     "MsgDigitalAssetRefund":"赎回资产",
     "MsgActivateMiner": "解禁资产矿工",
-    "MsgDeactivateMiner": "移除资产矿工"
+    "MsgDeactivateMiner": "移除资产矿工",
+    "MsgDamOrderRenewal":"资产订单续期",
+    "MsgDamMinerWithDraw": "提取资产矿工收益",
+    "MsgDamMinerWithDrawCount": "批量提取资产订单收益",
+    "MsgDamCreateBuyOrder": "购买资产空间",
+    "MsgTransferOwnership":"转让数据所有权"
 
    },
    "txTable":{

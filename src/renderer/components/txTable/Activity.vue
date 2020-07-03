@@ -41,6 +41,15 @@
         <span v-if="txItem.action == 'MsgActivateMiner'">
           {{txItem.to|assertdenomformat}}
         </span>
+        <span v-if="txItem.action == 'MsgDamCreateBuyOrder'">
+         矿工:{{txItem.to}}
+        </span>
+        <span v-if="txItem.action == 'MsgDamOrderRenewal'">
+         订单:{{txItem.to}}
+        </span>
+        <span v-if="txItem.action == 'MsgDamMinerWithDrawCount'">
+         资产:{{txItem.to|assertdenomformat}}
+        </span>
 
 
 
@@ -138,12 +147,16 @@ export default {
       txItem.action !== 'MsgDismissDigitalAssetMarket' &&
       txItem.action !== 'MsgWithdrawMinerRewards' &&
       txItem.action !== 'MsgDeactivateMiner' &&
-      txItem.action !== 'MsgActivateMiner'
+      txItem.action !== 'MsgActivateMiner' &&
+      txItem.action !== 'MsgDamCreateBuyOrder' &&
+      txItem.action !== 'MsgDamOrderRenewal' &&
+      txItem.action !== 'MsgDamMinerWithDrawCount'
       ;
     },
     isAssettx(txItem) {
       var list = ['MsgCreateDigitalAssetMarket', 'MsgDigitalAssetPledge', 'MsgAuthorizeMiningPubKey',
-        'MsgDigitalAssetRefund', 'MsgDismissDigitalAssetMarket', 'MsgDeactivateMiner', 'MsgActivateMiner'];
+        'MsgDigitalAssetRefund', 'MsgDismissDigitalAssetMarket', 'MsgDeactivateMiner', 'MsgActivateMiner',
+        'MsgDamCreateBuyOrder', 'MsgDamOrderRenewal', 'MsgDamMinerWithDrawCount'];
       if (list.indexOf(txItem.action) > -1) {
         return true;
       } else {

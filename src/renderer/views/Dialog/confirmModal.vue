@@ -363,7 +363,7 @@
             </Row>
             <Row class-name="item">
               <Col span="5" class-name="key">价格:</Col>
-              <Col span="16" class-name="value">{{transactiondata.Price|BlanceValue}}/GB/month</Col>
+              <Col span="16" class-name="value">{{transactiondata.Price|BlanceValue}}{{transactiondata.AssetName|assertdenomformat}}/GB/month</Col>
             </Row>
 
           </div>

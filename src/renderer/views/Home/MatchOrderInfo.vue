@@ -16,7 +16,7 @@
                     <span class="title">资产名称:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
-                    {{orderinfo.asset}}
+                    {{orderinfo.asset|assertdenomformat}}
                 </Col>
 
             </Row>
@@ -71,7 +71,7 @@
                     <span class="title">开始时间:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
-                    {{orderinfo.createTime}}
+                    {{orderinfo.createTime|blockFormatDate}}
                 </Col>
 
             </Row>
@@ -80,7 +80,7 @@
                     <span class="title">提取收益时间:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
-                    {{orderinfo.withDrawTime}}
+                    {{orderinfo.withDrawTime|blockFormatDate}}
                 </Col>
 
             </Row>
@@ -98,7 +98,7 @@
                     <span class="title">结束时间:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
-                    {{orderinfo.endTime}}
+                    {{orderinfo.endTime|blockFormatDate}}
                 </Col>
 
             </Row>
@@ -107,6 +107,10 @@
                     <span class="title">&nbsp;      &nbsp;      </span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
+                <div v-if="blocktime!=''">
+                  <Alert v-if="timeend>=0" :type='timeend>=30?"success":"warning"'>{{$t('renewal.expirationwarning',[timeend])}}</Alert>
+                  <Alert v-else type="error">{{$t('renewal.expirationwarning2')}}</Alert>
+                </div>
                      <Button v-if="orderRenewalstatus(orderinfo.buyAddress)" @click="openPopup"  type="primary">订单续期</Button>
                 </Col>
 
@@ -124,6 +128,7 @@ import { DAEMON_CONFIG } from '../../../config.js';
 import moment from 'moment';
 
 import assetrenewalModal from '@/views/Dialog/assetrenewalModal.vue';
+import eventhub from '../../common/js/event.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 var packagejson = require('../../../../package.json');
@@ -136,7 +141,8 @@ export default {
   },
   data() {
     return {
-      orderinfo: null
+      orderinfo: null,
+      blocktime: ''
     };
   },
   mounted() {
@@ -144,6 +150,13 @@ export default {
     var orderid = this.$route.params.orderid;
 
     this.getmatchorderinfo(orderid);
+    this.getblocktime();
+
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.getmatchorderinfo(orderid);
+      this.getblocktime();
+    });
   },
   methods: {
     openPopup() {
@@ -184,7 +197,28 @@ export default {
       } else {
         return false;
       }
+    },
+    async getblocktime() {
+      let res = await ipc.callMain('blocktime', {});
+      if (res.state) {
+        try {
+          this.$data.blocktime = res.data.blockLatest.block.header.time;
+        } catch (error) {
+
+        }
+      }
     }
+  },
+  computed: {
+    timeend() {
+      var createTime = moment(this.$data.blocktime);
+      var endTime = moment(this.$data.orderinfo.endTime);
+      var duration = moment.duration(endTime.diff(createTime));
+      //  var duration = createTime.diff(endTime)
+
+      return duration.asDays().toFixed(2);
+    }
+
   }
 };
 </script>

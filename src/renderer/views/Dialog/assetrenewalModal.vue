@@ -33,11 +33,11 @@
             <span class="title">{{ $t('orderinfo.space') }}:</span>
           </Col>
           <Col span="6" class-name="content-wrapper">{{ size }}GB</Col>
-          <Col span="8" class-name="title-wrapper">
+          <Col span="4" class-name="title-wrapper">
             <span class="title">单价:</span>
           </Col>
           <Col span="4" class-name="content-wrapper">
-            {{ price | BlanceValue }}{{denom}}
+            {{ price | BlanceValue }}{{denom|assertdenomformat}}/GB/month
           </Col>
         </Row>
       <Row class-name="card-item">
@@ -49,7 +49,7 @@
             <span class="title">金额:</span>
           </Col>
           <Col span="6" class-name="content-wrapper">
-            {{ renewaLamount | BlanceValue }}
+            {{ renewaLamount | BlanceValue }}{{denom|assertdenomformat}}
           </Col>
         </Row>
 

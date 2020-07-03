@@ -32,7 +32,8 @@
       "redeem":["miner"],
       "Withdrawal":["miner"],
       "DeactivateMiner":["validator"],
-      "ActivateMiner":["miner"]
+      "ActivateMiner":["miner"],
+      "Buyingspace":["order"]
 
     }
 }

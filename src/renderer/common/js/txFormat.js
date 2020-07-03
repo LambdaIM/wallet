@@ -65,7 +65,8 @@ function getToAddress(msg, item, vuethis) {
   }
 
   if (msg.type === 'lambda/MsgDigitalAssetPledge' || msg.type === 'lambda/MsgDigitalAssetRefund' ||
-  msg.type === 'lambda/MsgDismissDigitalAssetMarket' || msg.type === 'lambda/MsgActivateMiner') {
+  msg.type === 'lambda/MsgDismissDigitalAssetMarket' || msg.type === 'lambda/MsgActivateMiner'
+  ) {
     toaddress = msg.value.assetName;
   }
 
@@ -79,6 +80,16 @@ function getToAddress(msg, item, vuethis) {
 
   if (msg.type === 'lambda/MsgDeactivateMiner') {
     toaddress = msg.value.miner;
+  }
+  if (msg.type === 'lambda/MsgDamCreateBuyOrder') {
+    toaddress = msg.value.minerAddress;
+  }
+  if (msg.type === 'lambda/MsgDamOrderRenewal') {
+    toaddress = msg.value.orderID;
+  }
+
+  if (msg.type === 'lambda/MsgDamMinerWithDrawCount') {
+    toaddress = msg.value.asset;
   }
 
 

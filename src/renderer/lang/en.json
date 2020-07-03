@@ -509,7 +509,12 @@
     "MsgDigitalAssetPledge":"DigitalAssetPledge",
     "MsgDigitalAssetRefund": "DigitalAssetRefund",
     "MsgActivateMiner": "ActivateMiner",
-    "MsgDeactivateMiner": "DeactivateMiner"
+    "MsgDeactivateMiner": "DeactivateMiner",
+    "MsgDamOrderRenewal":"DamOrderRenewal",
+    "MsgDamMinerWithDraw": "DamMinerWithDraw",
+    "MsgDamMinerWithDrawCount": "DamMinerWithDrawCount",
+    "MsgDamCreateBuyOrder": "DamCreateBuyOrder",
+    "MsgTransferOwnership":"TransferOwnership"
   },
   "txTable":{
     "action": "Activity",

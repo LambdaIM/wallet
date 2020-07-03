@@ -3,7 +3,7 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      :title="$t('orderrevenue.WithdraworderCommission')"
+      title="提取授权市场订单收益"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
@@ -12,9 +12,13 @@
         <span slot="prepend">{{$t('txPopup.Operator')}}</span>
       </Input>
       <br/>
-      <Input class="address" v-model="asset" >
+      <Select placeholder="请选择资产" v-model="asset" >
+        <Option v-for="item in marketdata" :value="item.assetName" :key="item.assetName">{{ item.assetName | assertdenomformat }}</Option>
+      </Select>
+      <!-- <Input class="address" v-model="asset" >
         <span slot="prepend">资产名称</span>
-      </Input>
+      </Input> -->
+      <br/>
       <br/>
       <Input class="address" v-model.number="page" >
         <span slot="prepend">{{$t('orderrevenue.Pagenumber')}}</span>
@@ -58,7 +62,8 @@ export default {
       page: 1,
       orderduration: 0,
       minerduration: 0,
-      asset: ''
+      asset: '',
+      marketdata: []
     };
   },
   components: {
@@ -70,6 +75,7 @@ export default {
       this.$data.withdrawalModal = true;
       this.$data.confirmModal = false;
       this.marketinfo();
+      this.getmarketAll();
     },
     prewithdrawalLAMB() {
       let page = parseInt(this.$data.page);
@@ -87,7 +93,7 @@ export default {
         });
         return;
       }
-      asset = 'u' + asset.toLocaleLowerCase();
+      asset = asset.toLocaleLowerCase();
 
 
       this.$data.withdrawalModal = false;
@@ -135,6 +141,17 @@ export default {
     },
     formatHour(num) {
       return (num / (1000 * 1000 * 1000 * 60 * 60)).toFixed(2);
+    },
+    async  getmarketAll() {
+      // assetAll
+      try {
+        let res = await ipc.callMain('Authorizedmarketlist', {});
+        if (res.state) {
+          this.$data.marketdata = res.data.data || [];
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
     }
 
   },
