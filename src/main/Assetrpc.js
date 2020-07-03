@@ -116,4 +116,37 @@ export default function() {
       return { data: error, state: false };
     }
   });
+
+
+  eipc.answerRenderer('damAssetMintSimulate', async query => {
+    let { assetName,
+      assetiniti, total_supply, inflation,
+      adjust_rate, adjust_period, max_adjust_count,
+      genesis_height } = query;
+    if (assetName == undefined ||
+      assetiniti == undefined ||
+      total_supply == undefined ||
+      inflation == undefined ||
+      adjust_rate == undefined ||
+      max_adjust_count == undefined ||
+      genesis_height == undefined
+    ) {
+      throw resultView(null, false, errorList.need_orderId);
+    }
+    try {
+      var M = new AssetManager();
+      var result = await M.damAssetMintSimulate({ assetName,
+        assetiniti,
+        total_supply,
+        inflation,
+        adjust_rate,
+        adjust_period,
+        max_adjust_count,
+        genesis_height });
+      return { data: result, state: true };
+    } catch (error) {
+      console.log(error);
+      return { data: error, state: false };
+    }
+  });
 }

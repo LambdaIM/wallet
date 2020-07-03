@@ -7,7 +7,7 @@
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
-      <Form  @keydown.native.enter.prevent ="preSendLAMB" >
+      <Form v-if="CyclePreview==false"   @keydown.native.enter.prevent ="preSendLAMB(false)" >
         <p>
           <Input v-model="name" >
             <span slot="prepend"> {{$t('CreateassetsPop.AssetName')}} </span>
@@ -74,6 +74,7 @@
               </Input>
               <br />
             </p>
+
         </div>
 
         <p>
@@ -81,8 +82,20 @@
         <p/>
 
       </Form >
-        <div slot="footer">
-          <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
+      <div v-else>
+        <!-- Previewlist -->
+         <Table height="300" :columns="Previewlistcolumns" :data="Previewlist"></Table>
+
+      </div>
+
+        <div  slot="footer">
+          <div v-if="CyclePreview==false">
+          <Button v-if="MintType=='3'" type="primary" @click="preSendLAMB(true)" >增发周期预览 </Button>
+          <Button type="primary" @click="preSendLAMB(false)">{{$t('home.Modal1.Submit')}}</Button>
+          </div>
+          <div v-else>
+            <Button type="primary" @click="switchtoEdit" >继续编辑 </Button>
+          </div>
         </div>
       </Modal>
 
@@ -113,7 +126,23 @@ export default {
       max_adjust_count: '',
       genesis_height: '',
       remarks: '',
-      adjust_period: ''
+      adjust_period: '',
+      CyclePreview: false,
+      Previewlist: [],
+      Previewlistcolumns: [
+        {
+          title: '开始块高',
+          key: 'start_height'
+        },
+        {
+          title: '每块高增发量',
+          key: 'inflation'
+        },
+        {
+          title: '结束块高',
+          key: 'end_height'
+        }
+      ]
     };
   },
   components: {
@@ -128,7 +157,7 @@ export default {
     sendcancel() {
       this.sendModal = false;
     },
-    preSendLAMB() {
+    preSendLAMB(ispreview) {
       console.log('-----');
       let name = this.name.toLocaleLowerCase();
 
@@ -231,19 +260,33 @@ export default {
       var adjust_rate_Big = new BigNumber(adjust_rate || 0.1);
       adjust_rate = adjust_rate_Big.toPrecision(18);
 
-
-      this.transfer({
-        name,
-        asset,
-        MintType,
-        inflation,
-        total_supply,
-        adjust_rate,
-        max_adjust_count,
-        genesis_height,
-        adjust_period,
-        remarks
-      });
+      if (ispreview == false) {
+        this.transfer({
+          name,
+          asset,
+          MintType,
+          inflation,
+          total_supply,
+          adjust_rate,
+          max_adjust_count,
+          genesis_height,
+          adjust_period,
+          remarks
+        });
+      } else {
+        this.switchtoPreview({
+          name,
+          asset,
+          MintType,
+          inflation,
+          total_supply,
+          adjust_rate,
+          max_adjust_count,
+          genesis_height,
+          adjust_period,
+          remarks
+        });
+      }
     },
     async transfer(objpra) {
       this.$data.transactiondata = null;
@@ -291,6 +334,37 @@ export default {
       if (res.state) {
         this.$data.parameter = res.data.data;
       }
+    },
+    async switchtoPreview({
+      name,
+      asset,
+      MintType,
+      inflation,
+      total_supply,
+      adjust_rate,
+      max_adjust_count,
+      genesis_height,
+      adjust_period,
+      remarks
+    }) {
+      this.$data.CyclePreview = true;
+      let res = await ipc.callMain('damAssetMintSimulate', {
+        assetName: name,
+        assetiniti: asset,
+        total_supply: total_supply,
+        inflation: inflation,
+        adjust_rate: adjust_rate,
+        adjust_period: adjust_period,
+        max_adjust_count: max_adjust_count,
+        genesis_height: genesis_height
+
+      });
+      if (res.state) {
+        this.$data.Previewlist = res.data.data;
+      }
+    },
+    switchtoEdit() {
+      this.$data.CyclePreview = false;
     }
 
 
