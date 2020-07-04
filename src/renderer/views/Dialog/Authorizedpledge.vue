@@ -25,7 +25,7 @@
         <p>
 
           <Input  v-model="Price" >
-          <span slot="prepend">价格</span>
+          <span slot="prepend">{{$t('Dialog.sellorder.unitprice1')}}</span>
             <span slot="append">{{AssetName|assertdenomformat}}/GB/month</span>
           </Input>
         </p>
@@ -37,8 +37,7 @@
           {{$t('AuthorizeMarketpledge.tip3')}}
         </p>
         <p style="color:red">
-          需要注意的是在一个市场中初次质押时候填写的价格为实际有效的价格，之后再次补充质押，价格填1即可，<br/>
-          在浏览器中可以查询质押记录和初次质押的价格
+          {{$t('AuthorizeMarketpledge.tip4')}}
         </p>
 
       </Form >

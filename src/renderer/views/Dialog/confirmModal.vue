@@ -362,7 +362,7 @@
               <Col span="16" class-name="value">{{transactiondata.Size}}GB</Col>
             </Row>
             <Row class-name="item">
-              <Col span="5" class-name="key">价格:</Col>
+              <Col span="5" class-name="key">{{$t('Dialog.sellorder.unitprice1')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.Price|BlanceValue}}{{transactiondata.AssetName|assertdenomformat}}/GB/month</Col>
             </Row>
 
@@ -485,7 +485,7 @@
           </div>
 
           <div v-if="txtype=='DamOrderRenewal'">
-            <h2>授权市场订单续期</h2>
+            <h2>{{$t('Orderrenewal.title')}}</h2>
             <Row class-name="item">
               <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
               <Col span="20" class-name="value">{{address}}</Col>

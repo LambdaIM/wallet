@@ -3,7 +3,7 @@
   <Modal
     loading
     v-model="sendModal"
-    title="授权市场订单续期"
+    :title="$t('Orderrenewal.title')"
     :styles="{top: '200px'}"
     @on-cancel="sendcancel"
   >
@@ -34,7 +34,7 @@
           </Col>
           <Col span="6" class-name="content-wrapper">{{ size }}GB</Col>
           <Col span="4" class-name="title-wrapper">
-            <span class="title">单价:</span>
+            <span class="title">{{ $t('Orderrenewal.price') }}:</span>
           </Col>
           <Col span="4" class-name="content-wrapper">
             {{ price | BlanceValue }}{{denom|assertdenomformat}}/GB/month
@@ -46,7 +46,7 @@
           </Col>
           <Col span="8" class-name="content-wrapper">{{balance|Lambformat}}</Col> -->
           <Col span="6" class-name="title-wrapper">
-            <span class="title">金额:</span>
+            <span class="title">{{ $t('Orderrenewal.amount') }}:</span>
           </Col>
           <Col span="6" class-name="content-wrapper">
             {{ renewaLamount | BlanceValue }}{{denom|assertdenomformat}}
