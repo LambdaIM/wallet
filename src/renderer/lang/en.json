@@ -1043,7 +1043,52 @@
         "Deactivate":"Remove miners",
         "address":"address",
         "need_address":"Please enter the address of the miner's lambda"
-    }
+    },
+    "Assetincomepop":{
+      "title":"Withdrawal of authorized market revenue",
+      "AssetName":"AssetName",
+      "selectAssetName":"Please select asset",
+      "need_AssetName":"please select the asset name"
+  },
+  "Matchorders":{
+      "Matchorders":"Match orders",
+      "list":{
+          "Orderid":"Order id",
+          "AssetName":"Asset Name",
+          "Size":"Size",
+          "price":"price",
+          "Startingtime":"Start time",
+          "category":"category",
+          "operating":"operating",
+          "Details":"Details",
+          "buy":"buy",
+          "sell":"sell",
+          "BuyerAddress":"Buyer Address",
+          "Mineroperationaddress":"Miner operation address",
+          "Withdrawaltime":"Withdrawal time",
+          "Paymentamount":"Payment amount",
+          "EndTime":"End Time",
+          "Orderrenewal":"Order renewal"
+
+      }
+  },
+  "Purchasespace":{
+      "Purchaseauthorizedspace":"Purchase authorized space",
+      "operationaddressbrowser":"Find the miner's operation address in the browser",
+      "Mineroperationaddress":"Miner operation address",
+      "Size":"Size",
+      "duration":"duration",
+      "month":"month",
+      "buy":"buy",
+      "action":{
+          "need_miner_address":"Please fill in the miner operation address, check the miner operation address format",
+          "need_miner_duration":"The duration needs to be an integer and greater than 0",
+          "need_miner_size":"The size of the space needs to be an integer and greater than 0"
+
+      }
+      
+
+  }
 
 
 }

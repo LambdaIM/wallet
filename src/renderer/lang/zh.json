@@ -1041,6 +1041,51 @@
     "DeactivateMinerpop":{
         "Deactivate":"剔除矿工",
         "address":"lambda 地址"
+    },
+    "Assetincomepop":{
+        "title":"提取授权市场订单收益",
+        "AssetName":"资产名称",
+        "selectAssetName":"请选择资产",
+        "need_AssetName":"需要请选择资产名称"
+    },
+    "Matchorders":{
+        "Matchorders":"匹配订单",
+        "list":{
+            "Orderid":"订单id",
+            "AssetName":"资产名称",
+            "Size":"空间大小",
+            "price":"价格",
+            "Startingtime":"开始时间",
+            "category":"类别",
+            "operating":"操作",
+            "Details":"详情",
+            "buy":"买单",
+            "sell":"买单",
+            "BuyerAddress":"购买人地址",
+            "Mineroperationaddress":"矿工操作地址",
+            "Withdrawaltime":"提取收益时间",
+            "Paymentamount":"支付金额",
+            "EndTime":"结束时间",
+            "Orderrenewal":"订单续期"
+
+        }
+    },
+    "Purchasespace":{
+        "Purchaseauthorizedspace":"购买授权空间",
+        "operationaddressbrowser":"在浏览器中查找矿工操作地址",
+        "Mineroperationaddress":"矿工操作地址",
+        "Size":"空间",
+        "duration":"时长",
+        "month":"月",
+        "buy":"购买",
+        "action":{
+            "need_miner_address":"请填写矿工操作地址、检查矿工操作地址格式",
+            "need_miner_duration":"时长需要为整数，并且大于0",
+            "need_miner_size":"空间大小需要为整数，并且大于0"
+
+        }
+        
+
     }
 
 }

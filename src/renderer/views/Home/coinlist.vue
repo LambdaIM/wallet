@@ -143,7 +143,7 @@
                   <Button v-if="$role('conlist.DeactivateMiner')" class="smallbtn" @click="openMinerDeactivateDialog(row)"  size="small">{{$t('assetpage.DeactivateMiner')}}</Button>
                   <Button v-if="$role('conlist.ActivateMiner')" class="smallbtn" @click="openMinerActivateDialog(row)"  size="small">{{$t('assetpage.ActivateMiner')}} </Button>
 
-                  <Button  v-if="$role('conlist.Buyingspace')"  class="smallbtn" @click="openPurchaseauthorizedspace(row)"  size="small">购买空间 </Button>
+                  <Button  v-if="$role('conlist.Buyingspace')"  class="smallbtn" @click="openPurchaseauthorizedspace(row)"  size="small">{{$t('Purchasespace.buy')}} </Button>
 
             </template>
 
@@ -167,11 +167,11 @@
                 </Table>
 
             </TabPane>
-            <TabPane  v-if="$role('conlist.Buyingspace')" label="成单列表" name="name5">
+            <TabPane  v-if="$role('conlist.Buyingspace')" :label="$t('Matchorders.Matchorders')" name="name5">
                <Table :columns="matchordercolumns" :data="matchorderdata">
 
                  <template slot-scope="{ row, index }" slot="operation">
-                    <Button @click="pageto(row)" type="primary" size="small"> 详情 </Button>
+                    <Button @click="pageto(row)" type="primary" size="small"> {{$t('Matchorders.list.Details')}} </Button>
                   </template>
 
                   <template slot-scope="{ row, index }" slot="price">
@@ -394,35 +394,35 @@ export default {
       ],
       redeemdata: [],
       matchordercolumns: [{
-        title: '订单id',
+        title: this.$t('Matchorders.list.Orderid'),
         key: 'orderId'
       },
       {
-        title: '资产名称',
+        title: this.$t('Matchorders.list.AssetName'),
         key: 'asset',
         slot: 'asset'
       },
       {
-        title: '空间大小',
+        title: this.$t('Matchorders.list.Size'),
         key: 'size'
       },
       {
-        title: '价格',
+        title: this.$t('Matchorders.list.price'),
         key: 'price',
         slot: 'price'
       },
       {
-        title: '开始时间',
+        title: this.$t('Matchorders.list.Startingtime'),
         key: 'createTime',
         slot: 'createTime'
       },
       {
-        title: '类别',
+        title: this.$t('Matchorders.list.category'),
         key: 'category',
         slot: 'category'
       },
       {
-        title: '操作',
+        title: this.$t('Matchorders.list.operating'),
         key: 'operation',
         slot: 'operation'
       }],
@@ -703,9 +703,9 @@ export default {
     orderType(buyaddress) {
       var address = this.$store.getters.getaddress;
       if (buyaddress == address) {
-        return '买单';
+        return this.$t('Matchorders.list.buy');
       } else {
-        return '卖单';
+        return this.$t('Matchorders.list.sell');
       }
     }
 

@@ -3,7 +3,7 @@
     <Modal
       loading
       v-model="withdrawalModal"
-      title="提取授权市场订单收益"
+      :title="$t('Assetincomepop.title')"
       :styles="{top: '200px'}"
       @on-cancel="sendcancel"
     >
@@ -12,7 +12,7 @@
         <span slot="prepend">{{$t('txPopup.Operator')}}</span>
       </Input>
       <br/>
-      <Select placeholder="请选择资产" v-model="asset" >
+      <Select :placeholder="$t('Assetincomepop.AssetName')" v-model="asset" >
         <Option v-for="item in marketdata" :value="item.assetName" :key="item.assetName">{{ item.assetName | assertdenomformat }}</Option>
       </Select>
       <!-- <Input class="address" v-model="asset" >
@@ -89,7 +89,7 @@ export default {
       let asset = this.$data.asset;
       if (asset == '') {
         this.$Notice.warning({
-          title: '需要填写资产名称'
+          title: this.$t('Assetincomepop.need_AssetName')
         });
         return;
       }

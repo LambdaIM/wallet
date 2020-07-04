@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        title="购买授权空间"
+        :title="$t('Purchasespace.Purchaseauthorizedspace')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
@@ -15,26 +15,26 @@
         </p>
         <br />
         <p>
-          <a @click="openLinkmarket(AssetName)" >在浏览器中查找矿工地址</a>
+          <a @click="openLinkmarket(AssetName)" >{{$t('Purchasespace.operationaddressbrowser')}}</a>
         </p>
         <br />
         <p>
           <Input v-model="mineraddress" >
-            <span slot="prepend">矿工操作地址 </span>
+            <span slot="prepend">{{$t('Purchasespace.Mineroperationaddress')}}</span>
           </Input>
         </p>
         <br />
         <p>
           <Input v-model="size" >
-               <span slot="prepend">空间大小 </span>
+               <span slot="prepend">{{$t('Purchasespace.Size')}} </span>
                <span slot="append">GB</span>
           </Input>
         </p>
         <br />
         <p>
           <Input v-model="Duration" >
-            <span slot="prepend">时长 </span>
-            <span slot="append">月</span>
+            <span slot="prepend">{{$t('Purchasespace.duration')}} </span>
+            <span slot="append">{{$t('Purchasespace.month')}}</span>
           </Input>
         </p>
 
@@ -94,14 +94,14 @@ export default {
 
       if (address.length !== 54) {
         this.$Notice.warning({
-          title: '请填写矿工地址、检查矿工地址格式'
+          title: this.$t('Purchasespace.action.need_miner_address')
         });
         return;
       }
 
       if (isNaN(size) || size <= 0) {
         this.$Notice.warning({
-          title: '空间大小需要为整数，并且大于0'
+          title: this.$t('Purchasespace.action.need_miner_size')
         });
         return;
       }
@@ -109,7 +109,7 @@ export default {
 
       if (isNaN(Duration) || Duration <= 0) {
         this.$Notice.warning({
-          title: '时长需要为整数，并且大于0'
+          title: this.$t('Purchasespace.action.need_miner_duration')
         });
         return;
       }

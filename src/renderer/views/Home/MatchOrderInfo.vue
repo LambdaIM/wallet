@@ -4,7 +4,7 @@
         <div class="transaction-content" slot="card-content" v-if="orderinfo">
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
-                    <span class="title">订单id:</span>
+                    <span class="title">{{$t('Matchorders.list.Orderid')}}:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
                     {{orderinfo.orderId}}
@@ -13,7 +13,7 @@
             </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
-                    <span class="title">资产名称:</span>
+                    <span class="title">{{$t('Matchorders.list.AssetName')}}:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
                     {{orderinfo.asset|assertdenomformat}}
@@ -22,7 +22,7 @@
             </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
-                    <span class="title">购买人地址:</span>
+                    <span class="title">{{$t('Matchorders.list.BuyerAddress')}}:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
                     {{orderinfo.buyAddress}}
@@ -31,7 +31,7 @@
             </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
-                    <span class="title">矿工地址:</span>
+                    <span class="title">{{$t('Matchorders.list.Mineroperationaddress')}}:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
                     {{orderinfo.askAddress}}
@@ -40,7 +40,7 @@
             </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
-                    <span class="title">订单类别:</span>
+                    <span class="title">{{$t('Matchorders.list.category')}}:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
                     {{orderType(orderinfo.buyAddress)}}
@@ -50,7 +50,7 @@
             </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
-                    <span class="title">空间大小:</span>
+                    <span class="title">{{$t('Matchorders.list.Size')}}:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
                     {{orderinfo.size}}GB
@@ -59,7 +59,7 @@
             </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
-                    <span class="title">价格:</span>
+                    <span class="title">{{$t('Matchorders.list.price')}}:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
                     {{orderinfo.price|BlanceValue}}
@@ -68,7 +68,7 @@
             </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
-                    <span class="title">开始时间:</span>
+                    <span class="title">{{$t('Matchorders.list.Startingtime')}}:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
                     {{orderinfo.createTime|blockFormatDate}}
@@ -77,7 +77,7 @@
             </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
-                    <span class="title">提取收益时间:</span>
+                    <span class="title">{{$t('Matchorders.list.Withdrawaltime')}}:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
                     {{orderinfo.withDrawTime|blockFormatDate}}
@@ -86,7 +86,7 @@
             </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
-                    <span class="title">支付金额:</span>
+                    <span class="title">{{$t('Matchorders.list.Paymentamount')}}:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
                     {{bigNumTypeFormat(orderinfo.userPay.amount,orderinfo.userPay.denom)}}
@@ -95,7 +95,7 @@
             </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
-                    <span class="title">结束时间:</span>
+                    <span class="title">{{$t('Matchorders.list.EndTime')}}:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
                     {{orderinfo.endTime|blockFormatDate}}
@@ -111,7 +111,7 @@
                   <Alert v-if="timeend>=0" :type='timeend>=30?"success":"warning"'>{{$t('renewal.expirationwarning',[timeend])}}</Alert>
                   <Alert v-else type="error">{{$t('renewal.expirationwarning2')}}</Alert>
                 </div>
-                     <Button v-if="orderRenewalstatus(orderinfo.buyAddress)" @click="openPopup"  type="primary">订单续期</Button>
+                     <Button v-if="orderRenewalstatus(orderinfo.buyAddress)" @click="openPopup"  type="primary">{{$t('Matchorders.list.Orderrenewal')}}</Button>
                 </Col>
 
             </Row>

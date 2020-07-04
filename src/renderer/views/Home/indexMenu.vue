@@ -50,7 +50,7 @@
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">{{$t('orderrevenue.WithdraworderCommission')}} </MenuItem>
 
-                <MenuItem v-if="$role('home.tx.Minerprofit')" name="openAuthorizedMarket"> 提取授权市场订单收益 </MenuItem>
+                <MenuItem v-if="$role('home.tx.Minerprofit')" name="openAuthorizedMarket"> {{$t('Assetincomepop.title')}} </MenuItem>
             </MenuGroup>
 
 
