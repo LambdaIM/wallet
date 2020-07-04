@@ -444,6 +444,7 @@ export default {
       this.getpledgelist();
       this.getMinerRewards();
       this.getredeemlist();
+      this.getmatchorderlist(1);
     });
     this.Interval = setInterval(() => {
       this.getAssertAll();
@@ -452,6 +453,7 @@ export default {
       this.getpledgelist();
       this.getMinerRewards();
       this.getredeemlist();
+      this.getmatchorderlist(1);
     }, 1000 * 15);
     this.getmarketAll();
     this.getincomelist();

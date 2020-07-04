@@ -53,7 +53,7 @@
                     <span class="title">空间大小:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
-                    {{orderinfo.size}}
+                    {{orderinfo.size}}GB
                 </Col>
 
             </Row>
@@ -62,7 +62,7 @@
                     <span class="title">价格:</span>
                 </Col>
                 <Col span="17" class-name="content-wrapper">
-                    {{orderinfo.price}}
+                    {{orderinfo.price|BlanceValue}}
                 </Col>
 
             </Row>
