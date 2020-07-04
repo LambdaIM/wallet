@@ -130,7 +130,7 @@ export default {
       // this.confirmModal=true;
     },
     async marketinfo() {
-      let res = await ipc.callMain('marketinfo', {
+      let res = await ipc.callMain('Marketparameters', {
 
       });
       if (res.state) {
