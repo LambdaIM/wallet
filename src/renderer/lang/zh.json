@@ -988,6 +988,11 @@
        "adjust_period":"减产周期",
        "genesis_height":"初次增发块高",
        "tip1":"创建资产需要",
+       "adjust_rate_tip":"例如0.9",
+       "preview":"增发周期预览",
+       "start_height":"开始块高",
+       "end_height":"结束块高",
+       "continue_editing":"继续编辑",
        "action":{
            "need_AssetName":"资产名称不能为空",
            "need_asset":"初始化发行量需要为数值",
@@ -1092,6 +1097,11 @@
         "title":"授权市场订单续期",
         "price":"价格",
         "amount":"金额"
+    },
+    "txother":{
+        "miner":"矿工",
+        "order":"订单",
+        "assets":"资产"
     }
 
 }

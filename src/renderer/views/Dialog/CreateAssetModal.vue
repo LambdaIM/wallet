@@ -50,7 +50,7 @@
             </p>
             <br />
             <p >
-              <Input placeholder="例如 0.9"  v-model="adjust_rate" >
+              <Input :placeholder="$t('CreateassetsPop.adjust_rate_tip')"  v-model="adjust_rate" >
                 <span slot="prepend">{{$t('CreateassetsPop.adjust_rate')}}</span>
               </Input>
             </p>
@@ -84,7 +84,7 @@
       </Form >
       <div v-else>
         <!-- Previewlist -->
-        <h3>增发预览</h3>
+        <h3>{{$t('CreateassetsPop.preview')}}</h3>
         <br/>
         <div v-if="Previewlist.length>0">
          <Table height="300" :columns="Previewlistcolumns" :data="Previewlist"></Table>
@@ -97,11 +97,11 @@
 
         <div  slot="footer">
           <div v-if="CyclePreview==false">
-          <Button v-if="MintType=='3'" type="primary" @click="preSendLAMB(true)" >增发周期预览 </Button>
+          <Button v-if="MintType=='3'" type="primary" @click="preSendLAMB(true)" >{{$t('CreateassetsPop.preview')}} </Button>
           <Button type="primary" @click="preSendLAMB(false)">{{$t('home.Modal1.Submit')}}</Button>
           </div>
           <div v-else>
-            <Button type="primary" @click="switchtoEdit" >继续编辑 </Button>
+            <Button type="primary" @click="switchtoEdit" >{{$t('CreateassetsPop.continue_editing')}} </Button>
           </div>
         </div>
       </Modal>
@@ -138,15 +138,15 @@ export default {
       Previewlist: [],
       Previewlistcolumns: [
         {
-          title: '开始块高',
+          title: this.$t('CreateassetsPop.start_height'),
           key: 'start_height'
         },
         {
-          title: '每块高增发量',
+          title: this.$t('CreateassetsPop.inflation'),
           key: 'inflation'
         },
         {
-          title: '结束块高',
+          title: this.$t('CreateassetsPop.end_height'),
           key: 'end_height'
         }
       ]

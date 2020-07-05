@@ -42,13 +42,13 @@
           {{txItem.to|assertdenomformat}}
         </span>
         <span v-if="txItem.action == 'MsgDamCreateBuyOrder'">
-         矿工:{{txItem.to}}
+         {{$t('txother.miner')}}:{{txItem.to}}
         </span>
         <span v-if="txItem.action == 'MsgDamOrderRenewal'">
-         订单:{{txItem.to}}
+         {{$t('txother.order')}}:{{txItem.to}}
         </span>
         <span v-if="txItem.action == 'MsgDamMinerWithDrawCount'">
-         资产:{{txItem.to|assertdenomformat}}
+         {{$t('txother.assets')}}:{{txItem.to|assertdenomformat}}
         </span>
 
 

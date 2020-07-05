@@ -989,6 +989,11 @@
        "adjust_period":"Adjust period",
        "genesis_height":"Genesis height",
        "tip1":"Create asset using",
+       "adjust_rate_tip":"For example, 0.9",
+       "preview":"Issuance cycle Preview",
+       "start_height":"start height",
+       "end_height":"end height",
+       "continue_editing":"continue editing",
        "action":{
            "need_AssetName":"Asset name cannot be empty",
            "need_asset":"Initial circulation needs to be numeric",
@@ -1094,6 +1099,11 @@
       "title":"renewal of authorized market orders",
       "price":"price",
       "amount":"amount"
+  },
+  "txother":{
+      "miner":"miner",
+      "order":"order",
+      "assets":"assets"
   }
 
 

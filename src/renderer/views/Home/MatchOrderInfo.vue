@@ -185,9 +185,9 @@ export default {
     orderType(buyaddress) {
       var address = this.$store.getters.getaddress;
       if (buyaddress == address) {
-        return '买单';
+        return this.$t('Matchorders.list.buy');
       } else {
-        return '卖单';
+        return this.$t('Matchorders.list.sell');
       }
     },
     orderRenewalstatus(buyaddress) {
