@@ -71,6 +71,40 @@ class AssetManager {
 
     return { data: result };
   }
+  async matchorderlist(page, limit) {
+    if (this.defaultAddress == null) {
+      throwErrorCode(errorList.need_address);
+    }
+    console.log('matchorderlist');
+    var result = await this.CosmosAPI().get.dammatchorders(this.defaultAddress, page, limit);
+
+    return { data: result };
+  }
+  async matchdamorderinfo(orderId) {
+    if (this.defaultAddress == null) {
+      throwErrorCode(errorList.need_address);
+    }
+    console.log('matchorderlist');
+    var result = await this.CosmosAPI().get.damorderinfo(orderId);
+
+    return { data: result };
+  }
+  async damAssetMintSimulate({ assetName,
+    assetiniti, total_supply, inflation,
+    adjust_rate, adjust_period, max_adjust_count,
+    genesis_height }) {
+    console.log('damAssetMintSimulate');
+    var result = await this.CosmosAPI().get.damassetmintsimulate({ assetName,
+      assetiniti,
+      total_supply,
+      inflation,
+      adjust_rate,
+      adjust_period,
+      max_adjust_count,
+      genesis_height });
+
+    return { data: result };
+  }
 }
 
 

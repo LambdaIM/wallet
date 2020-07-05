@@ -21,12 +21,23 @@
             <span slot="append">GB</span>
           </Input>
         </p>
+        <br />
+        <p>
+
+          <Input  v-model="Price" >
+          <span slot="prepend">{{$t('Dialog.sellorder.unitprice1')}}</span>
+            <span slot="append">{{AssetName|assertdenomformat}}/GB/month</span>
+          </Input>
+        </p>
 
         <br />
         <p>
           {{$t('AuthorizeMarketpledge.tip1')}}<br/>
           {{$t('AuthorizeMarketpledge.tip2')}}<br/>
           {{$t('AuthorizeMarketpledge.tip3')}}
+        </p>
+        <p style="color:red">
+          {{$t('AuthorizeMarketpledge.tip4')}}
         </p>
 
       </Form >
@@ -53,7 +64,8 @@ export default {
       name: '',
       asset: '',
       AssetName: '',
-      Size: ''
+      Size: '',
+      Price: ''
     };
   },
   components: {
@@ -72,25 +84,32 @@ export default {
       console.log('-----');
       var AssetName = this.$data.AssetName;
       var Size = parseInt(this.$data.Size);
+      var Price = parseFloat(this.$data.Price);
       if (isNaN(Size) || Size <= 0) {
         this.$Notice.warning({
           title: this.$t('AuthorizeMarketpledge.action.need_size')
         });
         return;
       }
-
-
-
       Size = String(Size);
+
+      if (isNaN(Price) || Price <= 0) {
+        this.$Notice.warning({
+          title: this.$t('AuthorizeMarketpledge.action.need_price')
+        });
+        return;
+      }
+      Price = this.toBigNumStr(Price);
 
       this.transfer({
         AssetName,
-        Size
+        Size,
+        Price
       });
     },
     async transfer(praobj) {
       this.$data.transactiondata = null;
-      let isdege = this.$data.isdege;
+
       try {
         let res = await ipc.callMain('DigitalAssetPledge', praobj);
 

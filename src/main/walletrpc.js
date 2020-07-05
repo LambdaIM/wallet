@@ -937,7 +937,7 @@ export default function() {
   });
 
   eipc.answerRenderer('DigitalAssetPledge', async query => {
-    var { AssetName, Size } = query;
+    var { AssetName, Size, Price } = query;
     if (AssetName == undefined) {
       throw resultView(null, false, errorList.need_AssetName);
     }
@@ -945,8 +945,15 @@ export default function() {
     if (Size == undefined) {
       throw resultView(null, false, errorList.need_Size);
     }
+
+
+    if (Price == undefined) {
+      throw resultView(null, false, errorList.need_price);
+    }
+
+
     try {
-      var TxMessageload = await WM.DigitalAssetPledge(AssetName, Size);
+      var TxMessageload = await WM.DigitalAssetPledge(AssetName, Size, Price);
 
       return resultView(TxMessageload, true);
     } catch (error) {
@@ -1149,6 +1156,101 @@ export default function() {
     } catch (error) {
       throw resultView(null, false, error);
     }
+  });
+
+
+  eipc.answerRenderer('assertDamCreateBuyOrder', async query => {
+    log.info('assertDeactivateMiner');
+
+    var { AssetName, address, Size, Duration } = query;
+    console.log(AssetName, address);
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    if (address == undefined) {
+      throw resultView(null, false, errorList.need_address);
+    }
+
+    if (Size == undefined) {
+      throw resultView(null, false, errorList.need_Size);
+    }
+
+    if (Duration == undefined) {
+      throw resultView(null, false, errorList.need_Duration);
+    }
+
+
+    try {
+      var TxMessageload = await WM.DamCreateBuyOrder(AssetName, Duration, Size, address, '');
+
+      log.info(TxMessageload);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('assertDamOrderRenewal', async query => {
+    log.info('assertDamOrderRenewal');
+
+    var { orderId, duration } = query;
+    console.log(orderId, duration);
+
+    if (orderId == undefined) {
+      throw resultView(null, false, errorList.need_orderId);
+    }
+
+    if (duration == undefined) {
+      throw resultView(null, false, errorList.need_duration);
+    }
+
+    try {
+      var TxMessageload = await WM.DamOrderRenewal(orderId, duration, '');
+
+      log.info(TxMessageload);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('assertDamMinerWithDrawCount', async query => {
+    log.info('assertDamMinerWithDrawCount');
+
+    var { AssetName, page, limit } = query;
+
+
+    if (AssetName == undefined) {
+      throw resultView(null, false, errorList.need_AssetName);
+    }
+
+    if (page == undefined) {
+      throw resultView(null, false, errorList.need_page);
+    }
+
+    if (limit == undefined) {
+      throw resultView(null, false, errorList.need_limit);
+    }
+
+    try {
+      var TxMessageload = await WM.DamMinerWithDrawCount(AssetName, page, limit, '');
+
+      log.info(TxMessageload);
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('opensonaccount', async query => {
+    let { address, sonaddress } = query;
+    if (address == undefined) {
+      throw resultView(null, false, errorList.need_address);
+    }
+    var filepath = path.join(DAEMON_CONFIG.BASE_PATH, 'SonAccount', address, `${sonaddress}.txt`);
+    console.log('filepath', filepath);
+    shell.showItemInFolder(filepath);
   });
 
 

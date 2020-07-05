@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        :title="$t('DeactivateMinerpop.Deactivate')"
+        :title="$t('Purchasespace.Purchaseauthorizedspace')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
@@ -15,11 +15,28 @@
         </p>
         <br />
         <p>
-          <Input v-model="address" >
-            <span slot="prepend">{{$t('DeactivateMinerpop.address')}}</span>
+          <a @click="openLinkmarket(AssetName)" >{{$t('Purchasespace.operationaddressbrowser')}}</a>
+        </p>
+        <br />
+        <p>
+          <Input v-model="mineraddress" >
+            <span slot="prepend">{{$t('Purchasespace.Mineroperationaddress')}}</span>
           </Input>
         </p>
-
+        <br />
+        <p>
+          <Input v-model="size" >
+               <span slot="prepend">{{$t('Purchasespace.Size')}} </span>
+               <span slot="append">GB</span>
+          </Input>
+        </p>
+        <br />
+        <p>
+          <Input v-model="Duration" >
+            <span slot="prepend">{{$t('Purchasespace.duration')}} </span>
+            <span slot="append">{{$t('Purchasespace.month')}}</span>
+          </Input>
+        </p>
 
         <br />
 
@@ -37,7 +54,9 @@
 <script>
 import eventhub from '../../common/js/event.js';
 import ConfirmModal from './confirmModal.vue';
+import { DAEMON_CONFIG } from '../../../config.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+const { shell } = require('electron');
 
 export default {
   data() {
@@ -47,7 +66,11 @@ export default {
       name: '',
       asset: '',
       AssetName: '',
-      address: ''
+      Pubkey: '',
+      mineraddress: '',
+      size: '',
+      Duration: '',
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
     };
   },
   components: {
@@ -65,30 +88,55 @@ export default {
     preSendLAMB() {
       console.log('-----');
       var AssetName = this.$data.AssetName;
-      var address = this.$data.address;
-      if (address.length != 45) {
+      var address = this.$data.mineraddress;
+      var size = parseInt(this.$data.size);
+      var Duration = parseInt(this.$data.Duration);
+
+      if (address.length !== 54) {
         this.$Notice.warning({
-          title: this.$t('DeactivateMinerpop.need_address')
+          title: this.$t('Purchasespace.action.need_miner_address')
+        });
+        return;
+      }
+
+      if (isNaN(size) || size <= 0) {
+        this.$Notice.warning({
+          title: this.$t('Purchasespace.action.need_miner_size')
         });
         return;
       }
 
 
+      if (isNaN(Duration) || Duration <= 0) {
+        this.$Notice.warning({
+          title: this.$t('Purchasespace.action.need_miner_duration')
+        });
+        return;
+      }
 
-      this.transfer(address, AssetName);
+
+      this.transfer(AssetName, address, size, Duration);
     },
-    async transfer(address, AssetName) {
+    openLinkmarket(name) {
+      var explorer = DAEMON_CONFIG.explore();
+      let url = `${explorer}#/assetMarket/${name}`;
+      shell.openExternal(url);
+    },
+    async transfer(AssetName, address, Size, Duration) {
       this.$data.transactiondata = null;
-      let isdege = this.$data.isdege;
+
+      Duration = Duration * (this.$data.timeunit) + '';
+      Size = String(Size);
+
       try {
-        let res = await ipc.callMain('assertDeactivateMiner', {
-          address: address,
-          AssetName
+        let res = await ipc.callMain('assertDamCreateBuyOrder', {
+          AssetName, address, Size, Duration
         });
         // console.log(res);
+
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('assertDeactivateMiner', res.data);
+          this.$refs.ConfirmModal.open('assertDamCreateBuyOrder', res.data);
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {
@@ -110,9 +158,9 @@ export default {
 
   },
   computed: {
-    // address: function() {
-    //   return this.$store.getters.getaddress;
-    // },
+    address: function() {
+      return this.$store.getters.getaddress;
+    },
     balance: function() {
       return this.$store.getters.getblance;
     },

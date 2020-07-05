@@ -361,6 +361,10 @@
               <Col span="5" class-name="key">{{$t('AuthorizeMarketpledge.space')}}:</Col>
               <Col span="16" class-name="value">{{transactiondata.Size}}GB</Col>
             </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('Dialog.sellorder.unitprice1')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.Price|BlanceValue}}{{transactiondata.AssetName|assertdenomformat}}/GB/month</Col>
+            </Row>
 
           </div>
 
@@ -441,10 +445,82 @@
             </Row>
 
           </div>
-
-
-
           <!-- CreateAsset -->
+          <div v-if="txtype=='assertDamCreateBuyOrder'">
+            <h2> {{$t('Purchasespace.Purchaseauthorizedspace')}}   </h2>
+            <Row class-name="item">
+              <Col span="3" class-name="key">{{$t('Authorizedminingpop.AssetName')}}:</Col>
+              <Col span="21">
+
+              {{transactiondata.Asset|assertdenomformat}}
+
+              </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="3" class-name="key">{{$t('Purchasespace.Mineroperationaddress')}}:</Col>
+              <Col span="21">
+
+              {{transactiondata.minerAddress}}
+
+              </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="3" class-name="key">{{$t('Purchasespace.Size')}}:</Col>
+              <Col span="21">
+
+              {{transactiondata.Size}}GB
+
+              </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="3" class-name="key">{{$t('Purchasespace.Size')}}:</Col>
+              <Col span="21">
+
+              {{transactiondata.Duration|formatMonth}}{{$t('Dialog.selectBuy.month')}}
+
+
+              </Col>
+            </Row>
+
+          </div>
+
+          <div v-if="txtype=='DamOrderRenewal'">
+            <h2>{{$t('Orderrenewal.title')}}</h2>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('home.Modal1.From')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('renewal.Duration')}}:</Col>
+              <Col span="20" class-name="value">{{transactiondata.duration|formatMonth}}{{$t('Dialog.sellorder.month')}} </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('renewal.orderid')}}:</Col>
+              <Col span="20" class-name="value">{{transactiondata.orderID}}</Col>
+            </Row>
+
+          </div>
+
+          <div v-if="txtype=='assertDamMinerWithDrawCount'">
+            <h2>{{$t('Assetincomepop.title')}}</h2>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('Authorizedminingpop.AssetName')}}:</Col>
+              <Col span="20" class-name="value">{{transactiondata.asset|assertdenomformat}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('orderrevenue.Pagenumber')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.page}} </Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="5" class-name="key">{{$t('orderrevenue.Number')}}:</Col>
+              <Col span="16" class-name="value">{{transactiondata.limit}}</Col>
+            </Row>
+
+          </div>
 
 
 

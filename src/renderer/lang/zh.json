@@ -508,7 +508,12 @@
     "MsgDigitalAssetPledge":"质押资产",
     "MsgDigitalAssetRefund":"赎回资产",
     "MsgActivateMiner": "解禁资产矿工",
-    "MsgDeactivateMiner": "移除资产矿工"
+    "MsgDeactivateMiner": "移除资产矿工",
+    "MsgDamOrderRenewal":"资产订单续期",
+    "MsgDamMinerWithDraw": "提取资产矿工收益",
+    "MsgDamMinerWithDrawCount": "批量提取资产订单收益",
+    "MsgDamCreateBuyOrder": "购买资产空间",
+    "MsgTransferOwnership":"转让数据所有权"
 
    },
    "txTable":{
@@ -783,10 +788,10 @@
             "marketmaker":"做市商"
        },
        "simpleuserbrief":"查看资产，转账，质押挖矿，提案投票，提取质押奖励，市场质押、提取市场质押收益",
-       "orderuserbrief":"查看资产，转账，质押挖矿，提案投票，购买空间，使用lambdas3，提取质押奖励，市场质押、提取市场质押收益",
-       "minerbrief":"查看资产，转账，质押挖矿，提案投票，市场买卖空间，挖矿向导，提取质押奖励，提取存储挖矿奖励，市场质押、提取市场质押收益",
-       "validatorbrief":"查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益，市场质押、提取市场质押收益",
-       "marketmakerbrief":"创建授权挖矿市场、创建资产、授权挖矿"
+       "orderuserbrief":"查看资产，转账，质押挖矿，提案投票，购买空间，使用lambdas3，提取质押奖励，市场质押、提取市场质押收益，购买授权市场空间",
+       "minerbrief":"查看资产，转账，质押挖矿，提案投票，市场买卖空间，挖矿向导，提取质押奖励，提取存储挖矿奖励，市场质押、提取市场质押收益，授权市场质押，授权市场赎回，授权市场激活",
+       "validatorbrief":"查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益，市场质押、提取市场质押收益，剔除授权市场的矿工",
+       "marketmakerbrief":"创建授权挖矿市场、创建资产、授权挖矿、解散授权市场"
    },
    "guidepage":{
        "step1":{
@@ -983,6 +988,11 @@
        "adjust_period":"减产周期",
        "genesis_height":"初次增发块高",
        "tip1":"创建资产需要",
+       "adjust_rate_tip":"例如0.9",
+       "preview":"增发周期预览",
+       "start_height":"开始块高",
+       "end_height":"结束块高",
+       "continue_editing":"继续编辑",
        "action":{
            "need_AssetName":"资产名称不能为空",
            "need_asset":"初始化发行量需要为数值",
@@ -1018,8 +1028,10 @@
       "tip1":"授权挖矿步骤",
       "tip2":"第一步在挖矿向导中操作，成为矿工",
       "tip3":"第二部为使用资产质押",
+      "tip4":"需要注意的是在一个市场中初次质押时候填写的价格为实际有效的价格，之后再次补充质押，价格填1即可",
       "action":{
-          "need_size":"质押空间，只能为整数"
+          "need_size":"质押空间，只能为整数",
+          "need_price":"请填写价格"
       }
 
     },
@@ -1036,6 +1048,61 @@
     "DeactivateMinerpop":{
         "Deactivate":"剔除矿工",
         "address":"lambda 地址"
+    },
+    "Assetincomepop":{
+        "title":"提取授权市场订单收益",
+        "AssetName":"资产名称",
+        "selectAssetName":"请选择资产",
+        "need_AssetName":"需要请选择资产名称"
+    },
+    "Matchorders":{
+        "Matchorders":"匹配订单",
+        "list":{
+            "Orderid":"订单id",
+            "AssetName":"资产名称",
+            "Size":"空间大小",
+            "price":"价格",
+            "Startingtime":"开始时间",
+            "category":"类别",
+            "operating":"操作",
+            "Details":"详情",
+            "buy":"买单",
+            "sell":"买单",
+            "BuyerAddress":"购买人地址",
+            "Mineroperationaddress":"矿工操作地址",
+            "Withdrawaltime":"提取收益时间",
+            "Paymentamount":"支付金额",
+            "EndTime":"结束时间",
+            "Orderrenewal":"订单续期"
+
+        }
+    },
+    "Purchasespace":{
+        "Purchaseauthorizedspace":"购买授权空间",
+        "operationaddressbrowser":"在浏览器中查找矿工操作地址",
+        "Mineroperationaddress":"矿工操作地址",
+        "Size":"空间",
+        "duration":"时长",
+        "month":"月",
+        "buy":"购买",
+        "action":{
+            "need_miner_address":"请填写矿工操作地址、检查矿工操作地址格式",
+            "need_miner_duration":"时长需要为整数，并且大于0",
+            "need_miner_size":"空间大小需要为整数，并且大于0"
+
+        }
+        
+
+    },
+    "Orderrenewal":{
+        "title":"授权市场订单续期",
+        "price":"价格",
+        "amount":"金额"
+    },
+    "txother":{
+        "miner":"矿工",
+        "order":"订单",
+        "assets":"资产"
     }
 
 }

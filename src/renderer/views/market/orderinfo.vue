@@ -154,11 +154,11 @@ import { DAEMON_CONFIG } from '../../../config.js';
 import moment from 'moment';
 
 import renewalModal from '@/views/Dialog/renewalModal.vue';
+import eventhub from '../../common/js/event.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 var packagejson = require('../../../../package.json');
 const { shell } = require('electron');
-
 
 export default {
   data() {
@@ -184,6 +184,11 @@ export default {
     this.getblocktime();
     this.getorderinfo(this.orderid);
     console.log('order info');
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.getblocktime();
+      this.getorderinfo(this.orderid);
+    });
   },
   methods: {
     openMatchOrder: function(orderId) {

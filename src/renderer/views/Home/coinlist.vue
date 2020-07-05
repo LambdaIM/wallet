@@ -143,11 +143,13 @@
                   <Button v-if="$role('conlist.DeactivateMiner')" class="smallbtn" @click="openMinerDeactivateDialog(row)"  size="small">{{$t('assetpage.DeactivateMiner')}}</Button>
                   <Button v-if="$role('conlist.ActivateMiner')" class="smallbtn" @click="openMinerActivateDialog(row)"  size="small">{{$t('assetpage.ActivateMiner')}} </Button>
 
+                  <Button  v-if="$role('conlist.Buyingspace')"  class="smallbtn" @click="openPurchaseauthorizedspace(row)"  size="small">{{$t('Purchasespace.buy')}} </Button>
+
             </template>
 
                  </Table>
             </TabPane>
-            <TabPane :label="$t('assetpage.assetsinredemption')" name="name4">
+            <TabPane v-if="$role('conlist.redeem')" :label="$t('assetpage.assetsinredemption')" name="name4">
                 <Table  :columns="redeemcolumns" :data="redeemdata">
                   <template slot-scope="{ row, index }" slot="completionTime">
                     {{row.completionTime|blockFormatDate}}
@@ -165,8 +167,45 @@
                 </Table>
 
             </TabPane>
+            <TabPane  v-if="$role('conlist.Buyingspace')" :label="$t('Matchorders.Matchorders')" name="name5">
+               <Table :columns="matchordercolumns" :data="matchorderdata">
 
-            <TabPane :label="$t('assetpage.miningdescription')" name="name3">
+                 <template slot-scope="{ row, index }" slot="operation">
+                    <Button @click="pageto(row)" type="primary" size="small"> {{$t('Matchorders.list.Details')}} </Button>
+                  </template>
+
+                  <template slot-scope="{ row, index }" slot="price">
+                    {{row.price |BlanceValue }}
+                  </template>
+
+                  <template slot-scope="{ row, index }" slot="category">
+                    {{orderType(row.buyAddress) }}
+                  </template>
+
+
+                  <template slot-scope="{ row, index }" slot="asset">
+                    {{denomFormart(row.asset) }}
+                  </template>
+
+
+                  <template slot-scope="{ row, index }" slot="createTime">
+                    {{row.createTime|blockFormatDate }}
+                  </template>
+
+
+
+               </Table>
+               <br/>
+               <div style="text-align: center;">
+                     <Page   @on-change="orderListPage" :total="allCount" simple/>
+                    </div>
+                    <br/><br/><br/>
+
+
+
+            </TabPane>
+
+            <TabPane  :label="$t('assetpage.miningdescription')" name="name3">
 
               <ul style="margin-left: 10px;">
                 <li>{{$t('assetpage.Mininginstructions.tip1')}}</li>
@@ -195,6 +234,7 @@
 
       <MinerActivateDialog ref="ActivateDialogModal" />
       <MinerDeactivateDialog ref="DeactivateDialogModal" />
+      <Purchaseauthorizedspace ref="PurchaseauthorizedspaceModal" />
 
 
 
@@ -220,8 +260,11 @@ import AuthorizedDissolutionmarketDialog from '@/views/Dialog/AuthorizedDissolut
 
 import MinerActivateDialog from '@/views/Dialog/MinerActivate.vue';
 import MinerDeactivateDialog from '@/views/Dialog/MinerDeactivate.vue';
+
+import Purchaseauthorizedspace from '@/views/Dialog/Purchaseauthorizedspace.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
+
 
 export default {
   data() {
@@ -349,7 +392,43 @@ export default {
           slot: 'completionTime'
         }
       ],
-      redeemdata: []
+      redeemdata: [],
+      matchordercolumns: [{
+        title: this.$t('Matchorders.list.Orderid'),
+        key: 'orderId'
+      },
+      {
+        title: this.$t('Matchorders.list.AssetName'),
+        key: 'asset',
+        slot: 'asset'
+      },
+      {
+        title: this.$t('Matchorders.list.Size'),
+        key: 'size'
+      },
+      {
+        title: this.$t('Matchorders.list.price'),
+        key: 'price',
+        slot: 'price'
+      },
+      {
+        title: this.$t('Matchorders.list.Startingtime'),
+        key: 'createTime',
+        slot: 'createTime'
+      },
+      {
+        title: this.$t('Matchorders.list.category'),
+        key: 'category',
+        slot: 'category'
+      },
+      {
+        title: this.$t('Matchorders.list.operating'),
+        key: 'operation',
+        slot: 'operation'
+      }],
+      matchorderdata: [],
+      allCount: 1,
+      pageCount: {}
     };
   },
   beforeDestroy() {
@@ -365,6 +444,7 @@ export default {
       this.getpledgelist();
       this.getMinerRewards();
       this.getredeemlist();
+      this.getmatchorderlist(1);
     });
     this.Interval = setInterval(() => {
       this.getAssertAll();
@@ -373,12 +453,15 @@ export default {
       this.getpledgelist();
       this.getMinerRewards();
       this.getredeemlist();
+      this.getmatchorderlist(1);
     }, 1000 * 15);
     this.getmarketAll();
     this.getincomelist();
     this.getpledgelist();
     this.getMinerRewards();
     this.getredeemlist();
+
+    this.getmatchorderlist(1);
   },
   components: {
     SendModelDialog,
@@ -390,7 +473,8 @@ export default {
     AuthorizedredeemDialog,
     AuthorizedDissolutionmarketDialog,
     MinerActivateDialog,
-    MinerDeactivateDialog
+    MinerDeactivateDialog,
+    Purchaseauthorizedspace
   },
   methods: {
     denomFormart(denom) {
@@ -481,6 +565,9 @@ export default {
     },
     openMinerActivateDialog(data) {
       this.$refs.ActivateDialogModal.open(data);
+    },
+    openPurchaseauthorizedspace(data) {
+      this.$refs.PurchaseauthorizedspaceModal.open(data);
     },
     openLinkassert(name) {
       var explorer = DAEMON_CONFIG.explore();
@@ -584,6 +671,42 @@ export default {
       }
 
       return result;
+    },
+    orderListPage(number) {
+      this.getmatchorderlist(number);
+    },
+    pageto(item) {
+      this.$router.push(`/home/Matchingorders/${item.orderId}`);
+    },
+    async getmatchorderlist(page) {
+      console.log('getmatchorderlist');
+      try {
+        let res = await ipc.callMain('Authorizematchorderlist', {
+          page,
+          limit: 10
+        });
+        if (res.state) {
+          var list = res.data.data || [];
+          var result = '';
+
+          this.$data.matchorderdata = list;
+          if (this.$data.pageCount[page] == undefined) {
+            this.$data.pageCount[page] = 1;
+            this.$data.allCount += list.length;
+          }
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+      console.log('getListDataEnd');
+    },
+    orderType(buyaddress) {
+      var address = this.$store.getters.getaddress;
+      if (buyaddress == address) {
+        return this.$t('Matchorders.list.buy');
+      } else {
+        return this.$t('Matchorders.list.sell');
+      }
     }
 
 

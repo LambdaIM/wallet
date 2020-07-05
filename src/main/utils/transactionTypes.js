@@ -27,7 +27,10 @@ const transactionTypes = {
   CreateAsset: 'MsgCreateAsset',
   DismissDigitalAssetMarket: 'MsgDismissDigitalAssetMarket',
   DeactivateMiner: 'MsgDeactivateMiner',
-  ActivateMiner: 'MsgActivateMiner'
+  ActivateMiner: 'MsgActivateMiner',
+  DamCreateBuyOrder: 'MsgDamCreateBuyOrder',
+  DamOrderRenewal: 'MsgDamOrderRenewal',
+  DamMinerWithDrawCount: 'MsgDamMinerWithDrawCount'
 
 };
 

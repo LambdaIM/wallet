@@ -7,7 +7,7 @@
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
-      <Form  @keydown.native.enter.prevent ="preSendLAMB" >
+      <Form v-if="CyclePreview==false"   @keydown.native.enter.prevent ="preSendLAMB(false)" >
         <p>
           <Input v-model="name" >
             <span slot="prepend"> {{$t('CreateassetsPop.AssetName')}} </span>
@@ -50,7 +50,7 @@
             </p>
             <br />
             <p >
-              <Input  v-model="adjust_rate" >
+              <Input :placeholder="$t('CreateassetsPop.adjust_rate_tip')"  v-model="adjust_rate" >
                 <span slot="prepend">{{$t('CreateassetsPop.adjust_rate')}}</span>
               </Input>
             </p>
@@ -74,6 +74,7 @@
               </Input>
               <br />
             </p>
+
         </div>
 
         <p>
@@ -81,8 +82,27 @@
         <p/>
 
       </Form >
-        <div slot="footer">
-          <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
+      <div v-else>
+        <!-- Previewlist -->
+        <h3>{{$t('CreateassetsPop.preview')}}</h3>
+        <br/>
+        <div v-if="Previewlist.length>0">
+         <Table height="300" :columns="Previewlistcolumns" :data="Previewlist"></Table>
+        </div>
+        <div v-else>
+          loading......
+        </div>
+
+      </div>
+
+        <div  slot="footer">
+          <div v-if="CyclePreview==false">
+          <Button v-if="MintType=='3'" type="primary" @click="preSendLAMB(true)" >{{$t('CreateassetsPop.preview')}} </Button>
+          <Button type="primary" @click="preSendLAMB(false)">{{$t('home.Modal1.Submit')}}</Button>
+          </div>
+          <div v-else>
+            <Button type="primary" @click="switchtoEdit" >{{$t('CreateassetsPop.continue_editing')}} </Button>
+          </div>
         </div>
       </Modal>
 
@@ -113,7 +133,23 @@ export default {
       max_adjust_count: '',
       genesis_height: '',
       remarks: '',
-      adjust_period: ''
+      adjust_period: '',
+      CyclePreview: false,
+      Previewlist: [],
+      Previewlistcolumns: [
+        {
+          title: this.$t('CreateassetsPop.start_height'),
+          key: 'start_height'
+        },
+        {
+          title: this.$t('CreateassetsPop.inflation'),
+          key: 'inflation'
+        },
+        {
+          title: this.$t('CreateassetsPop.end_height'),
+          key: 'end_height'
+        }
+      ]
     };
   },
   components: {
@@ -128,9 +164,10 @@ export default {
     sendcancel() {
       this.sendModal = false;
     },
-    preSendLAMB() {
+    preSendLAMB(ispreview) {
       console.log('-----');
-      let name = this.name;
+      let name = this.name.toLocaleLowerCase();
+
       let asset = parseInt(this.asset);
       let MintType = parseInt(this.MintType);
       let inflation = parseInt(this.inflation);
@@ -230,19 +267,33 @@ export default {
       var adjust_rate_Big = new BigNumber(adjust_rate || 0.1);
       adjust_rate = adjust_rate_Big.toPrecision(18);
 
-
-      this.transfer({
-        name,
-        asset,
-        MintType,
-        inflation,
-        total_supply,
-        adjust_rate,
-        max_adjust_count,
-        genesis_height,
-        adjust_period,
-        remarks
-      });
+      if (ispreview == false) {
+        this.transfer({
+          name,
+          asset,
+          MintType,
+          inflation,
+          total_supply,
+          adjust_rate,
+          max_adjust_count,
+          genesis_height,
+          adjust_period,
+          remarks
+        });
+      } else {
+        this.switchtoPreview({
+          name,
+          asset,
+          MintType,
+          inflation,
+          total_supply,
+          adjust_rate,
+          max_adjust_count,
+          genesis_height,
+          adjust_period,
+          remarks
+        });
+      }
     },
     async transfer(objpra) {
       this.$data.transactiondata = null;
@@ -290,6 +341,37 @@ export default {
       if (res.state) {
         this.$data.parameter = res.data.data;
       }
+    },
+    async switchtoPreview({
+      name,
+      asset,
+      MintType,
+      inflation,
+      total_supply,
+      adjust_rate,
+      max_adjust_count,
+      genesis_height,
+      adjust_period,
+      remarks
+    }) {
+      this.$data.CyclePreview = true;
+      let res = await ipc.callMain('damAssetMintSimulate', {
+        assetName: name,
+        assetiniti: asset,
+        total_supply: total_supply,
+        inflation: inflation,
+        adjust_rate: adjust_rate,
+        adjust_period: adjust_period,
+        max_adjust_count: max_adjust_count,
+        genesis_height: genesis_height
+
+      });
+      if (res.state) {
+        this.$data.Previewlist = res.data.data;
+      }
+    },
+    switchtoEdit() {
+      this.$data.CyclePreview = false;
     }
 
 
