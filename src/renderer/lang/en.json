@@ -1031,7 +1031,8 @@
       "tip3":"The second part is to use asset pledge",
       "tip4":"It should be noted that the price filled in the initial pledge in a market is the actual effective price, and then the pledge is added again, and the price can be filled in by 1",
       "action":{
-          "need_size":"Pledge space, only integers"
+          "need_size":"Pledge space, only integers",
+          "need_price":"Please fill in the price"
       }
 
     },

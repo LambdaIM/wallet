@@ -95,7 +95,7 @@ export default {
 
       if (isNaN(Price) || Price <= 0) {
         this.$Notice.warning({
-          title: '请填写价格'
+          title: this.$t('AuthorizeMarketpledge.action.need_price')
         });
         return;
       }
