@@ -33,7 +33,7 @@
       "Withdrawal":["miner"],
       "DeactivateMiner":["validator"],
       "ActivateMiner":["miner"],
-      "Buyingspace":["order"]
+      "Buyingspace":["order","miner"]
 
     }
 }
