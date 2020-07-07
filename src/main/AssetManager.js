@@ -40,7 +40,7 @@ class AssetManager {
     // }
     console.log('AuthorizedMarketlist');
     var result = await this.CosmosAPI().get.dammarketlist();
-    console.log(result);
+    // console.log(result);
     console.log('AuthorizedMarketlist');
     return { data: result };
   }

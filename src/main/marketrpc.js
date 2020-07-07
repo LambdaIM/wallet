@@ -318,7 +318,7 @@ export default function() {
     log.info('runlambdastorage');
 
     var password = query.password;
-    var mackill = `ps -ef | grep '${DAEMON_CONFIG.LambdaSfile().replace('lamb', '[l]amb')} gateway' | awk '{print $2'} | xargs kill`;
+    var mackill = `ps -ef | grep '${DAEMON_CONFIG.LambdaSfile().replace('lamb', '[l]amb')} s3gw' | awk '{print $2'} | xargs kill`;
     var winkill = `taskkill /F /IM ${DAEMON_CONFIG.LambdaSfile()}`;
     var nowos = os.platform();
     var orderId = query.orderid;
@@ -458,7 +458,7 @@ export default function() {
 
 
   function getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey, orderid) {
-    return `${path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile())} gateway run \
+    return `${path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile())} s3gw run \
     --broker.dht_gateway_addr ${ip}:13000 \
     --broker.validator_addr  ${ip}:13659 \
     --broker.extra_key_file  ${keypath} \
@@ -474,7 +474,7 @@ export default function() {
     return new Promise(function (resolve, reject) {
       suppose(path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile()),
         [
-          `gateway`,
+          `s3gw`,
           'run',
           `--broker.dht_gateway_addr`,
           `${ip}:13000`,
