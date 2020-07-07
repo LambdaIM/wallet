@@ -1,6 +1,9 @@
 <template>
 <div class="container">
     <Mycard :cardtitle="$t('orderinfo.orderdetails')" class="mt20">
+      <div v-if="orderinfo != undefined"  class="s3Operation" slot="operation">
+        <Button :disabled="orderRenewalstatus(orderinfo.buyAddress)==false" type="primary" @click="openS3">{{$t('orderinfo.orderBucket')}}</Button>
+      </div>
         <div class="transaction-content" slot="card-content" v-if="orderinfo">
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
@@ -118,6 +121,7 @@
         </div>
     </Mycard>
     <br/><br/><br/><br/><br/><br/>
+    <s3 ref="s3Modal" :orderid="orderid"></s3>
     <assetrenewalModal  ref="assetrenewalModalPopup" />
 </div>
 
@@ -137,17 +141,20 @@ const { shell } = require('electron');
 export default {
   components: {
     Mycard,
-    assetrenewalModal
+    assetrenewalModal,
+    s3: () => import('../../components/s3/S3.vue')
   },
   data() {
     return {
       orderinfo: null,
-      blocktime: ''
+      blocktime: '',
+      orderid: ''
     };
   },
   mounted() {
     console.log(this.$route.params);
     var orderid = this.$route.params.orderid;
+    this.$data.orderid = orderid;
 
     this.getmatchorderinfo(orderid);
     this.getblocktime();
@@ -207,6 +214,9 @@ export default {
 
         }
       }
+    },
+    openS3() {
+      this.$refs.s3Modal.openDialog();
     }
   },
   computed: {
