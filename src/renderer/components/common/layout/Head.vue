@@ -40,7 +40,7 @@
 
         <div  v-if="$role('menu.market')" class="head-menu-item">
           <router-link
-            to="/market"
+            to="/markethome"
             class="item"
           >{{$t("head.market")}}</router-link>
         </div>
