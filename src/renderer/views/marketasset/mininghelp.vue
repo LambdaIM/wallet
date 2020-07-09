@@ -3,7 +3,10 @@
     <div class="customer-container">
 
       <div class="tableContainer">
-        <h1> 挖矿说明  </h1>
+        <ul style="margin-left: 10px;">
+                <li>{{$t('assetpage.Mininginstructions.tip1')}}</li>
+                <li>{{$t('assetpage.Mininginstructions.tip2')}}</li>
+              </ul>
         </div>
     </div>
 </div>

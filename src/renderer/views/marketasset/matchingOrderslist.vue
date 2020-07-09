@@ -95,6 +95,9 @@ export default {
     this.getmatchorderlist(1);
   },
   methods: {
+    denomFormart(denom) {
+      return denom.substr(1);
+    },
     async getmatchorderlist(page) {
       console.log('getmatchorderlist');
       try {
@@ -129,7 +132,8 @@ export default {
       this.getmatchorderlist(number);
     },
     pageto(item) {
-      this.$router.push(`/home/Matchingorders/${item.orderId}`);
+      console.log('**************');
+      this.$router.push(`/marketindexmenu/orderdetails/${item.orderId}`);
     }
 
 

@@ -215,9 +215,9 @@ var walletRouter = new Router({
         name: 'mininghelp',
         component: () => import('@/views/marketasset/mininghelp.vue')
       }, {
-        path: 'orderdetails',
+        path: 'orderdetails/:orderid',
         name: 'orderdetails',
-        component: () => import('@/views/marketasset/orderdetails.vue')
+        component: () => import('@/views/marketasset/MatchOrderInfo.vue')
       }, {
         path: 'listofminers',
         name: 'listofminers',

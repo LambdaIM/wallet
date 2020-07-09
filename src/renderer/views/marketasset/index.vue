@@ -9,7 +9,7 @@
         </Row>
         <br>
         <Row>
-          <RadioGroup v-model="button4"  size="large">
+          <RadioGroup v-model="roleselect"  size="large">
 
                  <Poptip trigger="hover" title="Title" content="content">
                     <Radio label="钱包用户"></Radio>
@@ -117,6 +117,11 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      roleselect: ''
+    };
+  }
 
 };
 </script>
