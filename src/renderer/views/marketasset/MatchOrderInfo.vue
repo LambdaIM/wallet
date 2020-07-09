@@ -171,6 +171,9 @@ export default {
       this.getblocktime();
     });
   },
+  beforeDestroy() {
+    clearInterval(this.$data.Interval);
+  },
   methods: {
     openPopup() {
       var orderid = this.$route.params.orderid;

@@ -149,4 +149,20 @@ export default function() {
       return { data: error, state: false };
     }
   });
+
+
+  eipc.answerRenderer('AuthorizefileRceiver', async query => {
+    let { page } = query;
+    if (page == undefined) {
+      throw resultView(null, false, errorList.need_page);
+    }
+    try {
+      var M = new AssetManager();
+      var result = await M.fileRceiver(page, 10);
+      return { data: result, state: true };
+    } catch (error) {
+      console.log(error);
+      return { data: error, state: false };
+    }
+  });
 }

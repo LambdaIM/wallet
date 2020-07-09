@@ -3,30 +3,30 @@
         <div class="tableContainer">
 
         <h3>资产-数据存储市场</h3>
-    <Menu mode="horizontal"  active-name="1">
-        <MenuItem to="/marketindexmenu/" name="1">
+    <Menu mode="horizontal"  :active-name="activeItem">
+        <MenuItem to="/marketindexmenu/" name="assetlist">
             <Icon type="ios-paper" />
             资产列表
         </MenuItem>
-        <MenuItem to="/marketindexmenu/marketlist" name="2">
+        <MenuItem to="/marketindexmenu/marketlist" name="marketlist">
             <Icon type="ios-people" />
             授权市场列表
         </MenuItem>
 
-        <MenuItem to="/marketindexmenu/redeemlist" name="4">
+        <MenuItem to="/marketindexmenu/redeemlist" name="redeemlist">
             <Icon type="ios-construct" />
             赎回中的资产
         </MenuItem>
-        <MenuItem to="/marketindexmenu/matchingOrderslist" name="5">
+        <MenuItem to="/marketindexmenu/matchingOrderslist" name="matchingOrderslist">
             <Icon type="ios-construct" />
             匹配订单
         </MenuItem>
-        <MenuItem to="/marketindexmenu/filelist" name="6">
+        <MenuItem to="/marketindexmenu/filelist" name="filelist">
             <Icon type="ios-construct" />
-            接受/发送的文件
+            接受的文件
         </MenuItem>
 
-        <MenuItem to="/marketindexmenu/mininghelp" name="7">
+        <MenuItem to="/marketindexmenu/mininghelp" name="mininghelp">
             <Icon type="ios-construct" />
             挖矿说明
         </MenuItem>
@@ -38,6 +38,14 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      activeItem: this.$route.name
+    };
+  },
+  mounted() {
+
+  }
 
 };
 </script>

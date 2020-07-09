@@ -185,6 +185,9 @@ export default {
       this.getAssertAll();
     }, 1000 * 15);
   },
+  beforeDestroy() {
+    clearInterval(this.$data.Interval);
+  },
   methods: {
     denomFormart(denom) {
       return denom.substr(1);
@@ -308,7 +311,7 @@ export default {
     margin-top: 40px;
   }
   .tableContainer {
-    width: 94%;
+    // width: 94%;
     margin: 0 auto;
     margin-top: 40px;
   }

@@ -169,6 +169,9 @@ export default {
       this.getpledgelist();
     }, 1000 * 15);
   },
+  beforeDestroy() {
+    clearInterval(this.$data.Interval);
+  },
   components: {
     AuthorizedpledgeDialog,
     CreatemarketModalDialog,
@@ -302,7 +305,7 @@ export default {
     margin-top: 40px;
   }
   .tableContainer {
-    width: 94%;
+    // width: 94%;
     margin: 0 auto;
     margin-top: 40px;
   }
