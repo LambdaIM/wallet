@@ -150,13 +150,15 @@ export default {
       txItem.action !== 'MsgActivateMiner' &&
       txItem.action !== 'MsgDamCreateBuyOrder' &&
       txItem.action !== 'MsgDamOrderRenewal' &&
-      txItem.action !== 'MsgDamMinerWithDrawCount'
+      txItem.action !== 'MsgDamMinerWithDrawCount' &&
+      txItem.action !== 'MsgDamMinerWithDraw'
+
       ;
     },
     isAssettx(txItem) {
       var list = ['MsgCreateDigitalAssetMarket', 'MsgDigitalAssetPledge', 'MsgAuthorizeMiningPubKey',
         'MsgDigitalAssetRefund', 'MsgDismissDigitalAssetMarket', 'MsgDeactivateMiner', 'MsgActivateMiner',
-        'MsgDamCreateBuyOrder', 'MsgDamOrderRenewal', 'MsgDamMinerWithDrawCount'];
+        'MsgDamCreateBuyOrder', 'MsgDamOrderRenewal', 'MsgDamMinerWithDrawCount', 'MsgDamMinerWithDraw'];
       if (list.indexOf(txItem.action) > -1) {
         return true;
       } else {
