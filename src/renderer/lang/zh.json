@@ -1067,7 +1067,7 @@
             "operating":"操作",
             "Details":"详情",
             "buy":"买单",
-            "sell":"买单",
+            "sell":"卖单",
             "BuyerAddress":"购买人地址",
             "Mineroperationaddress":"矿工操作地址",
             "Withdrawaltime":"提取收益时间",
