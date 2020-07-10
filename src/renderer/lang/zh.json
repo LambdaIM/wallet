@@ -44,7 +44,7 @@
       "address": "地址",
       "voting_power": "voting power",
       "Switch_Validator": "切换验证节点",
-      "Privat_Key_Info": "私钥信息",
+      "Privat_Key_Info": "查看钱包配置信息和常用功能",
       "Keystore_File_Backup": "打开钱包配置文件夹",
       "Version": "版本",
       "Current_Version": "现行版本",
