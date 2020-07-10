@@ -312,35 +312,23 @@
           slot="card-content"
         >
           <Row class-name="card-item">
-            <!-- <Col span="4" class-name="title-wrapper">
-              <span class="title">Private Key</span>
-            </Col>
-            <Col span="6" class-name="content-wrapper">
-              <span>{{hidden}}</span>
-            </Col>
-
-            <Col span="4" class-name="content-wrapper">
-              <a>Private Key Visible</a>
-            </Col> -->
-            <Col
-              span="4"
-              class-name="title-wrapper"
-            >
-            &nbsp;
-            </Col>
-
             <Col
               span="8"
               class-name="content-wrapper"
             >
-
-            <Button @click="openkeystore">{{$t("seting.Keystore_File_Backup")}}</Button>
+                <Button @click="openkeystore">{{$t("seting.Keystore_File_Backup")}}</Button>
             </Col>
             <Col
               span="8"
               class-name="title-wrapper"
             >
                <Button to="/sign">{{$t("seting.Datasignature")}}</Button>
+            </Col>
+            <Col
+              span="8"
+              class-name="title-wrapper"
+            >
+                <Button to="/localtxlist">{{$t('seting.browselog')}}</Button>
             </Col>
           </Row>
 
@@ -351,32 +339,6 @@
               >Wallet Password can’t be recovered, you can only create a new Wallet using Private Key once forgotten</p>
             </Col>
           </Row> -->
-        </div>
-      </Mycard>
-
-      <Mycard
-        :cardtitle="$t('seting.loginfo')"
-        class="mb10"
-      >
-        <div
-          class="storage-content"
-          slot="card-content"
-        >
-          <Row class-name="card-item">
-            <Col
-              span="4"
-              class-name="title-wrapper"
-            >
-            &nbsp;
-            </Col>
-
-            <Col
-              span="4"
-              class-name="content-wrapper"
-            >
-              <Button to="/localtxlist">{{$t('seting.browselog')}}</Button>
-            </Col>
-          </Row>
         </div>
       </Mycard>
 
