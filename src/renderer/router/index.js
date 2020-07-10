@@ -20,14 +20,14 @@ var walletRouter = new Router({
     name: 'Home',
     children: [
       {
-        path: '',
+        path: 'txlist',
         name: 'txlist',
         component: () => import('@/views/Home/txlist.vue')
       },
       {
-        path: 'coinlist',
+        path: '',
         name: 'coinlist',
-        component: () => import('@/views/Home/coinlist.vue')
+        component: () => import('@/views/Home/assetslist.vue')
       },
       {
         path: 'localtxlist',
@@ -58,11 +58,6 @@ var walletRouter = new Router({
         path: 'Marketoperation',
         name: 'Marketoperation',
         component: () => import('@/views/Home/Marketoperation.vue')
-      },
-      {
-        path: 'Matchingorders/:orderid',
-        name: 'Matchingorders',
-        component: () => import('@/views/Home/MatchOrderInfo.vue')
       }
 
     ],

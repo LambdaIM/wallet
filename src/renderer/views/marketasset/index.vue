@@ -9,22 +9,23 @@
         </Row>
         <br>
         <Row>
+          {{roleselect}}
           <RadioGroup v-model="roleselect"  size="large">
 
                  <Poptip trigger="hover" title="Title" content="content">
-                    <Radio label="钱包用户"></Radio>
+                    <Radio label="simple">{{$t('rolepage.roletype.simpleuser')}}</Radio>
                  </Poptip>
                  <Poptip trigger="hover" title="Title" content="content">
-                    <Radio label="空间用户"></Radio>
+                    <Radio label="order">{{$t('rolepage.roletype.orderuser')}}</Radio>
                  </Poptip>
                  <Poptip trigger="hover" title="Title" content="content">
-                    <Radio label="矿工"></Radio>
+                    <Radio label="miner">{{$t('rolepage.roletype.miner')}}</Radio>
                  </Poptip>
                  <Poptip trigger="hover" title="Title" content="content">
-                    <Radio label="验证节点"></Radio>
+                    <Radio label="validator">{{$t('rolepage.roletype.validator')}}</Radio>
                  </Poptip>
                  <Poptip trigger="hover" title="Title" content="content">
-                    <Radio label="做市商"></Radio>
+                    <Radio label="marketmaker">{{$t('rolepage.roletype.marketmaker')}}</Radio>
                  </Poptip>
 
             </RadioGroup>
@@ -119,8 +120,22 @@
 export default {
   data() {
     return {
-      roleselect: ''
+      roleselect: this.$store.getters.role || 'simple'
     };
+  },
+  methods: {
+    getrole() {
+      var role = this.$store.getters.role;
+      var reslt = '';
+      switch (role) {
+        case 'simple': reslt = this.$t('rolepage.roletype.simpleuser'); break;
+        case 'order': reslt = this.$t('rolepage.roletype.orderuser'); break;
+        case 'miner': reslt = this.$t('rolepage.roletype.miner'); break;
+        case 'validator': reslt = this.$t('rolepage.roletype.validator'); break;
+        case 'marketmaker': reslt = this.$t('rolepage.roletype.marketmaker'); break;
+      }
+      return reslt;
+    }
   }
 
 };

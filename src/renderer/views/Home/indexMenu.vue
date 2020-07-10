@@ -23,14 +23,15 @@
     </Row>
     </div>
     <Menu :key="time" ref="menu" @on-select="transferClick" mode="horizontal"  v-bind:active-name="activeItem">
-        <MenuItem to="/home" name="txlist">
-            <Icon type="ios-paper" />
-            {{$t('home.Latest_Transaction')}}
-        </MenuItem>
-        <MenuItem to="/home/coinlist" name="coinlist">
+        <MenuItem to="/home/" name="coinlist">
             <Icon type="ios-paper" />
             {{$t('home.token')}}
         </MenuItem>
+        <MenuItem to="/home/txlist" name="txlist">
+            <Icon type="ios-paper" />
+            {{$t('home.Latest_Transaction')}}
+        </MenuItem>
+
         <!-- <MenuItem to="/home/localtxlist" name="localtxlist">
             <Icon type="ios-paper" />
             {{$t('home.Latest_Transaction_local')}}
