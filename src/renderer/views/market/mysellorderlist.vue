@@ -108,7 +108,7 @@ export default {
         },
         {
           title: this.$t('marketpage.myselltable.remainingspace'),
-          key: 'unUseSize'
+          key: 'unusedSize'
         },
         {
           title: this.$t('marketpage.myselltable.unitprice'),
