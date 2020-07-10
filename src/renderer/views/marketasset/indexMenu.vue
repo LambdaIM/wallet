@@ -5,30 +5,31 @@
         <h3>资产-数据存储市场</h3>
     <Menu mode="horizontal"  :active-name="activeItem">
         <MenuItem to="/marketindexmenu/" name="assetlist">
-            <Icon type="ios-paper" />
-            资产列表
+            {{$t('assetpage.assets')}}
         </MenuItem>
         <MenuItem to="/marketindexmenu/marketlist" name="marketlist">
-            <Icon type="ios-people" />
-            授权市场列表
+
+            {{$t('assetpage.authorizedMarket')}}
         </MenuItem>
 
-        <MenuItem to="/marketindexmenu/redeemlist" name="redeemlist">
-            <Icon type="ios-construct" />
-            赎回中的资产
+        <MenuItem v-if="$role('conlist.redeem')" to="/marketindexmenu/redeemlist" name="redeemlist">
+           {{$t('assetpage.assetsinredemption')}}
         </MenuItem>
-        <MenuItem to="/marketindexmenu/matchingOrderslist" name="matchingOrderslist">
-            <Icon type="ios-construct" />
-            匹配订单
+        <MenuItem  v-if="$role('conlist.Buyingspace')" to="/marketindexmenu/matchingOrderslist" name="matchingOrderslist">
+            {{$t('Matchorders.Matchorders')}}
         </MenuItem>
         <MenuItem to="/marketindexmenu/filelist" name="filelist">
-            <Icon type="ios-construct" />
+
             接受的文件
         </MenuItem>
 
         <MenuItem to="/marketindexmenu/mininghelp" name="mininghelp">
-            <Icon type="ios-construct" />
-            挖矿说明
+
+            {{$t('assetpage.miningdescription')}}
+        </MenuItem>
+        <MenuItem to="/marketindexmenu/lambdas3" name="lambdas3">
+
+             S3
         </MenuItem>
 
     </Menu>

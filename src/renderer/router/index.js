@@ -221,6 +221,11 @@ var walletRouter = new Router({
         path: 'filelist',
         name: 'filelist',
         component: () => import('@/views/marketasset/filelist.vue')
+      },
+      {
+        path: 'lambdas3',
+        name: 'lambdas3',
+        component: () => import('@/views/market/lambdas3.vue')
       }
 
     ]
