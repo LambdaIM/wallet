@@ -507,7 +507,7 @@
     "MsgAuthorizeMiningPubKey": "授权",
     "MsgDigitalAssetPledge":"质押资产",
     "MsgDigitalAssetRefund":"赎回资产",
-    "MsgActivateMiner": "解禁资产矿工",
+    "MsgActivateMiner": "激活资产矿工",
     "MsgDeactivateMiner": "移除资产矿工",
     "MsgDamOrderRenewal":"资产订单续期",
     "MsgDamMinerWithDraw": "提取单个资产订单收益",
@@ -788,10 +788,10 @@
             "marketmaker":"做市商"
        },
        "simpleuserbrief":"查看资产，转账，质押挖矿，提案投票，提取质押奖励，市场质押、提取市场质押收益",
-       "orderuserbrief":"查看资产，转账，质押挖矿，提案投票，购买空间，使用lambdas3，提取质押奖励，市场质押、提取市场质押收益，购买授权市场空间",
-       "minerbrief":"查看资产，转账，质押挖矿，提案投票，市场买卖空间，挖矿向导，提取质押奖励，提取存储挖矿奖励，市场质押、提取市场质押收益，授权市场质押，授权市场赎回，授权市场激活",
-       "validatorbrief":"查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益，市场质押、提取市场质押收益，移除授权市场的矿工",
-       "marketmakerbrief":"创建授权挖矿市场、创建资产、授权挖矿、解散授权市场"
+       "orderuserbrief":"查看资产，转账，质押挖矿，提案投票，购买空间，使用lambdas3，提取质押奖励，市场质押、提取市场质押收益，购买资产市场空间",
+       "minerbrief":"查看资产，转账，质押挖矿，提案投票，市场买卖空间，挖矿向导，提取质押奖励，提取存储挖矿奖励，市场质押、提取市场质押收益，资产市场质押，资产市场赎回，资产市场激活",
+       "validatorbrief":"查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益，市场质押、提取市场质押收益，移除资产市场的矿工",
+       "marketmakerbrief":"创建授权挖矿市场、创建资产、授权挖矿、解散资产市场"
    },
    "guidepage":{
        "step1":{
@@ -912,13 +912,13 @@
    },
    "assetpage":{
        "assets":"资产",
-       "authorizedMarket":"授权市场",
+       "authorizedMarket":"资产市场",
        "assetsinredemption":"赎回中的资产",
        "miningdescription":"挖矿说明",
        "Non-issueable":"不可增发",
        "One-timeadditionalissuance":"一次性增发",
        "Additionalmining":"挖矿增发",
-       "Createanauthorizedmarket":"创建授权市场",
+       "Createanauthorizedmarket":"创建资产市场",
        "Createassets":"创建资产",
        "DeactivateMiner":"移除矿工",
        "ActivateMiner":"矿工激活",
@@ -947,7 +947,7 @@
        },
        "Mininginstructions":{
            "tip1":"1、在挖矿向导中创建矿工",
-           "tip2":"2、在资产中使用授权市场支持的资产在市场中质押"
+           "tip2":"2、在资产中使用资产市场支持的资产在市场中质押"
        },
        "btn":{
            "Pledge":"质押",
@@ -958,7 +958,7 @@
 
    },
    "AuthorizedmarketPop":{
-       "Createanauthorizedmarket":"创建授权市场",
+       "Createanauthorizedmarket":"创建资产市场",
        "Marketname":"市场名称",
        "AssetName":"资产名称",
        "Exchangeratio":"兑换比例",
@@ -1015,14 +1015,14 @@
 
     },
     "Dissolvethemarket":{
-        "Dissolutionmarket":"解散授权市场",
+        "Dissolutionmarket":"解散资产市场",
         "AssetName":"资产名称",
         "tip":"没有矿工质押，市场才可以解散"
       
 
     },
     "AuthorizeMarketpledge":{
-      "pledge":"授权市场-质押",
+      "pledge":"资产市场-质押",
       "AssetName":"资产名称",
       "space":"空间",
       "tip1":"授权挖矿步骤",
@@ -1036,7 +1036,7 @@
 
     },
     "Redemptionpledge":{
-        "redemption":"授权市场-赎回",
+        "redemption":"资产市场-赎回",
         "AssetName":"资产名称",
         "tip1":"赎回全部质押",
         "tip2":"赎回资产需要等的天数"
@@ -1050,7 +1050,7 @@
         "address":"lambda 地址"
     },
     "Assetincomepop":{
-        "title":"提取授权市场订单收益",
+        "title":"提取资产市场订单收益",
         "AssetName":"资产名称",
         "selectAssetName":"请选择资产",
         "need_AssetName":"需要请选择资产名称"
@@ -1095,7 +1095,7 @@
 
     },
     "Orderrenewal":{
-        "title":"授权市场订单续期",
+        "title":"资产市场订单续期",
         "price":"价格",
         "amount":"金额"
     },
