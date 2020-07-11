@@ -1,6 +1,6 @@
 {
     "menu":{
-      "market":["order","miner","marketmaker","validator"]
+      "market":["order","miner","marketmaker","validator","simple"]
 
     },
     "home":{

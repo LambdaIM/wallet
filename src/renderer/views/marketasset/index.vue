@@ -9,22 +9,22 @@
         </Row>
         <br>
         <Row>
-          {{roleselect}}
+
           <RadioGroup v-model="roleselect"  size="large">
 
-                 <Poptip trigger="hover" title="Title" content="content">
+                 <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.simpleuser')" :content="$t('rolepage.simpleuserbrief')">
                     <Radio label="simple">{{$t('rolepage.roletype.simpleuser')}}</Radio>
                  </Poptip>
-                 <Poptip trigger="hover" title="Title" content="content">
+                 <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.orderuser')" :content="$t('rolepage.orderuserbrief')">
                     <Radio label="order">{{$t('rolepage.roletype.orderuser')}}</Radio>
                  </Poptip>
-                 <Poptip trigger="hover" title="Title" content="content">
+                 <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.miner')" :content="$t('rolepage.minerbrief')">
                     <Radio label="miner">{{$t('rolepage.roletype.miner')}}</Radio>
                  </Poptip>
-                 <Poptip trigger="hover" title="Title" content="content">
+                 <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.validator')" :content="$t('rolepage.validatorbrief')">
                     <Radio label="validator">{{$t('rolepage.roletype.validator')}}</Radio>
                  </Poptip>
-                 <Poptip trigger="hover" title="Title" content="content">
+                 <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.marketmaker')" :content="$t('rolepage.marketmakerbrief')">
                     <Radio label="marketmaker">{{$t('rolepage.roletype.marketmaker')}}</Radio>
                  </Poptip>
 

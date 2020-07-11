@@ -8,6 +8,11 @@
                   <Button @click="openS3(row)">通过s3查看</Button>
                 </template>
               </Table>
+              <br/>
+               <div style="text-align: center;">
+                     <Page   @on-change="orderListPage" :total="allCount" simple/>
+                    </div>
+                    <br/><br/>
         </div>
         <s3 ref="s3Modal" :orderid="orderid"></s3>
     </div>
@@ -31,14 +36,14 @@ export default {
       list: [],
       columns: [
         {
-          title: 'orderID',
+          title: '订单ID',
           key: 'orderID'
         }, {
-          title: 'File',
+          title: '文件',
           key: 'File'
         },
         {
-          title: 'sender',
+          title: '发送人',
           key: 'sender'
         },
         {
@@ -47,19 +52,21 @@ export default {
           slot: 'operation'
         }
       ],
-      orderid: ''
+      orderid: '',
+      allCount: 1,
+      pageCount: {}
     };
   },
   mounted() {
-    this.getlist();
+    this.getlist(1);
   },
   methods: {
-    async  getlist() {
+    async  getlist(page) {
       // assetAll
       console.log('getlist');
       try {
         let res = await ipc.callMain('AuthorizefileRceiver', {
-          page: 1
+          page: page
         });
         if (res.state && res.data.data.error == undefined) {
           // .tx.value.msg[0].value
@@ -69,6 +76,10 @@ export default {
             result.push(element.tx.value.msg[0].value);
           });
           this.$data.list = result;
+          if (this.$data.pageCount[page] == undefined) {
+            this.$data.pageCount[page] = 1;
+            this.$data.allCount += result.length;
+          }
         }
       } catch (ex) {
         console.log(ex);
@@ -78,6 +89,9 @@ export default {
       this.$data.orderid = row.orderID;
 
       this.$refs.s3Modal.openDialog();
+    },
+    orderListPage(number) {
+      this.getlist(number);
     }
   }
 };

@@ -383,7 +383,7 @@ export default {
       var role = this.$store.getters.role;
       if (role == null) {
         // this.$data.showrole=true;
-        this.$refs.roleModal.open();
+        // this.$refs.roleModal.open();
       }
     },
     helplink() {
@@ -404,11 +404,11 @@ export default {
       var role = this.$store.getters.role;
       var reslt = '';
       switch (role) {
-        case 'simple': reslt = this.$t('rolepage.roletype.simpleuser'); break;
         case 'order': reslt = this.$t('rolepage.roletype.orderuser'); break;
         case 'miner': reslt = this.$t('rolepage.roletype.miner'); break;
         case 'validator': reslt = this.$t('rolepage.roletype.validator'); break;
         case 'marketmaker': reslt = this.$t('rolepage.roletype.marketmaker'); break;
+        default : reslt = this.$t('rolepage.roletype.simpleuser');
       }
       return reslt;
     },
