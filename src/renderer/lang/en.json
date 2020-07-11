@@ -788,9 +788,9 @@
   },
   "simpleuserbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward，Market pledge, withdraw market pledge income",
   "orderuserbrief":"View assets, transfer, pledge mining, proposal voting, purchase space, use lambdas3, withdraw pledge reward，Market pledge, withdraw market pledge income,purchase authorization market space",
-  "minerbrief":"View assets, transfer, pledge mining, proposal voting, market trading space, mining guide, withdraw pledge reward, withdraw deposit mining reward，Market pledge, withdraw market pledge income,authorized market pledge, authorized market redemption and authorized market activation",
-  "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income，Market pledge, withdraw market pledge income,remove miners from authorized Market",
-  "marketmakerbrief":"Create authorized mining market, asset, authorized mining,dissolution of authorized Market"
+  "minerbrief":"View assets, transfer, pledge mining, proposal voting, market trading space, mining guide, withdraw pledge reward, withdraw deposit mining reward，Market pledge, withdraw market pledge income,Asset market pledge, Asset market redemption and Asset market activation",
+  "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income，Market pledge, withdraw market pledge income,remove miners from Asset market",
+  "marketmakerbrief":"Create authorized mining market, asset, authorized mining,dissolution of Asset market"
 },
 "guidepage":{
     "step1":{
@@ -912,13 +912,13 @@
    },
    "assetpage":{
        "assets":"Assets",
-       "authorizedMarket":"Authorized market",
+       "authorizedMarket":"Asset market",
        "assetsinredemption":"Assets in redemption",
        "miningdescription":"Mining description",
        "Non-issueable":"Non-issueable",
        "One-timeadditionalissuance":"One-time issuance",
        "Additionalmining":"Additional mining",
-       "Createanauthorizedmarket":"Create an authorized market",
+       "Createanauthorizedmarket":"Create an Asset market",
        "Createassets":"Create assets",
        "DeactivateMiner":"Deactivate",
        "ActivateMiner":"Activate",
@@ -948,7 +948,7 @@
         },
         "Mininginstructions":{
             "tip1":"1. Create a miner in the mining wizard",
-            "tip2":"2. Use assets supported by authorized markets in assets to pledge in the market"
+            "tip2":"2. Use assets supported by Asset markets in assets to pledge in the market"
         },
         "btn":{
             "Pledge":"Pledge",
@@ -959,7 +959,7 @@
 
    },
    "AuthorizedmarketPop":{
-       "Createanauthorizedmarket":"Create an authorized market",
+       "Createanauthorizedmarket":"Create an Asset market",
        "Marketname":"Market name",
        "AssetName":"Asset Name",
        "Exchangeratio":"Exchange ratio",
@@ -1016,14 +1016,14 @@
 
     },
     "Dissolvethemarket":{
-        "Dissolutionmarket":"Dissolution of authorized market",
+        "Dissolutionmarket":"Dissolution of Asset market",
         "AssetName":"Asset Name",
         "tip":"Without miners' pledge, the market can be dissolved"
       
 
     },
     "AuthorizeMarketpledge":{
-      "pledge":"Authorized Market-Pledge",
+      "pledge":"Asset market-Pledge",
       "AssetName":"Asset Name",
       "space":"Space",
       "tip1":"Authorized mining steps",
@@ -1037,7 +1037,7 @@
 
     },
     "Redemptionpledge":{
-        "redemption":"Authorized Market-Redemption",
+        "redemption":"Asset market-Redemption",
         "AssetName":"Asset Name",
         "tip1":"Redeem all pledges",
         "tip2":"Days to redeem assets"
@@ -1052,7 +1052,7 @@
         "need_address":"Please enter the address of the miner's lambda"
     },
     "Assetincomepop":{
-      "title":"Withdrawal of authorized market revenue",
+      "title":"Withdrawal of Asset market revenue",
       "AssetName":"AssetName",
       "selectAssetName":"Please select asset",
       "need_AssetName":"please select the asset name"
@@ -1097,7 +1097,7 @@
 
   },
   "Orderrenewal":{
-      "title":"renewal of authorized market orders",
+      "title":"renewal of Asset market orders",
       "price":"price",
       "amount":"amount"
   },
