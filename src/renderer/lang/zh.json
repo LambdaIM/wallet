@@ -790,7 +790,7 @@
        "simpleuserbrief":"查看资产，转账，质押挖矿，提案投票，提取质押奖励，市场质押、提取市场质押收益",
        "orderuserbrief":"查看资产，转账，质押挖矿，提案投票，购买空间，使用lambdas3，提取质押奖励，市场质押、提取市场质押收益，购买授权市场空间",
        "minerbrief":"查看资产，转账，质押挖矿，提案投票，市场买卖空间，挖矿向导，提取质押奖励，提取存储挖矿奖励，市场质押、提取市场质押收益，授权市场质押，授权市场赎回，授权市场激活",
-       "validatorbrief":"查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益，市场质押、提取市场质押收益，剔除授权市场的矿工",
+       "validatorbrief":"查看资产，转账，质押挖矿，提案投票 ，提取质押奖励，提取节点收益，市场质押、提取市场质押收益，移除授权市场的矿工",
        "marketmakerbrief":"创建授权挖矿市场、创建资产、授权挖矿、解散授权市场"
    },
    "guidepage":{
@@ -920,7 +920,7 @@
        "Additionalmining":"挖矿增发",
        "Createanauthorizedmarket":"创建授权市场",
        "Createassets":"创建资产",
-       "DeactivateMiner":"剔除矿工",
+       "DeactivateMiner":"移除矿工",
        "ActivateMiner":"矿工激活",
        "assetlist":{
            "fullname":"全称",
@@ -1046,7 +1046,7 @@
         "Activate":"矿工激活"
     },
     "DeactivateMinerpop":{
-        "Deactivate":"剔除矿工",
+        "Deactivate":"移除矿工",
         "address":"lambda 地址"
     },
     "Assetincomepop":{
