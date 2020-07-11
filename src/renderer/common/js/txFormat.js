@@ -71,11 +71,7 @@ function getToAddress(msg, item, vuethis) {
   }
 
   if (msg.type === 'lambda/MsgAuthorizeMiningPubKey') {
-    toaddress = msg.value.pubKey.value;
-  }
-
-  if (msg.type === 'lambda/MsgAuthorizeMiningPubKey') {
-    toaddress = msg.value.pubKey.value;
+    toaddress = msg.value.assetName;
   }
 
   if (msg.type === 'lambda/MsgDeactivateMiner') {
