@@ -5,7 +5,7 @@
         <div class="tableContainer">
               <Table :columns="columns" :data="list">
                 <template slot-scope="{ row, index }" slot="operation">
-                  <Button @click="openS3(row)">通过s3查看</Button>
+                  <Button @click="openS3(row)">{{$t('assetsotherpage.OpenviaS3')}}</Button>
                 </template>
               </Table>
               <br/>
@@ -36,18 +36,18 @@ export default {
       list: [],
       columns: [
         {
-          title: '订单ID',
+          title: this.$t('assetsotherpage.filelist.orderid'),
           key: 'orderID'
         }, {
-          title: '文件',
+          title: this.$t('assetsotherpage.filelist.file'),
           key: 'File'
         },
         {
-          title: '发送人',
+          title: this.$t('assetsotherpage.filelist.send'),
           key: 'sender'
         },
         {
-          title: '操作',
+          title: this.$t('assetsotherpage.filelist.operation'),
           key: 'operation',
           slot: 'operation'
         }

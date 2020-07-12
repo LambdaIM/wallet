@@ -1103,6 +1103,23 @@
         "miner":"矿工",
         "order":"订单",
         "assets":"资产"
+    },
+    "assetsotherpage":{
+        "lambdaTitle":"lambda-数据存储市场",
+        "assetTitle":"资产-数据存储市场",
+        "documentsaccepted":"接受的文件",
+        "filelist":{
+            "orderid":"订单ID",
+            "file":"文件",
+            "send":"发送人",
+            "operation":"操作",
+            "OpenviaS3":"通过s3打开"
+        },
+        "menulist":{
+            "Lambdamarketorder":"Lambda市场订单",
+            "Assetmarketorder":"资产市场订单",
+            "documentsaccepted":"接受的文件"
+        }
     }
 
 }

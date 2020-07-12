@@ -74,10 +74,14 @@
             <template slot="title">
                 {{$t('marketpage.orderlist')}}
             </template>
-            <MenuGroup title="使用">
-                <MenuItem to="/home/myorderlist" name="myorderlist1">存储市场订单</MenuItem>
-                <MenuItem to="/home/assetsorderlist" name="myorderlist2">资产订单</MenuItem>
-                <MenuItem to="/home/acceptOrder" name="myorderlist3">接受的文件</MenuItem>
+            <MenuGroup :title="$t('assetsotherpage.lambdaTitle')">
+                <MenuItem to="/home/myorderlist" name="myorderlist1">{{$t('assetsotherpage.menulist.Lambdamarketorder')}}</MenuItem>
+
+            </MenuGroup>
+            <MenuGroup :title="$t('assetsotherpage.assetTitle')">
+
+                <MenuItem to="/home/assetsorderlist" name="myorderlist2">{{$t('assetsotherpage.menulist.Assetmarketorder')}}</MenuItem>
+                <MenuItem to="/home/acceptOrder" name="myorderlist3">{{$t('assetsotherpage.menulist.documentsaccepted')}}</MenuItem>
             </MenuGroup>
 
         </Submenu>

@@ -2,7 +2,7 @@
     <div class="customer-container">
         <div class="tableContainer">
 
-        <h3>资产-数据存储市场</h3>
+        <h3>{{$t('assetsotherpage.assetTitle')}}</h3>
     <Menu mode="horizontal"  :active-name="activeItem">
         <MenuItem to="/marketindexmenu/" name="assetlist">
             {{$t('assetpage.assets')}}
@@ -20,7 +20,7 @@
         </MenuItem>
         <MenuItem to="/marketindexmenu/filelist" name="filelist">
 
-            接受的文件
+            {{$t('assetsotherpage.documentsaccepted')}}
         </MenuItem>
 
         <MenuItem to="/marketindexmenu/mininghelp" name="mininghelp">

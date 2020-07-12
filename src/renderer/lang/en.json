@@ -1105,6 +1105,23 @@
       "miner":"miner",
       "order":"order",
       "assets":"assets"
+  },
+  "assetsotherpage":{
+      "lambdaTitle":"lambda-Data storage market",
+      "assetTitle":"Asset-Data storage market",
+      "documentsaccepted":"Documents accepted",
+      "filelist":{
+          "orderid":"orderid",
+          "file":"file",
+          "send":"send",
+          "operation":"operation",
+          "OpenviaS3":"Open via S3"
+      },
+      "menulist":{
+          "Lambdamarketorder":"Lambda market order",
+          "Assetmarketorder":"Asset market order",
+          "documentsaccepted":"Documents accepted"
+      }
   }
 
 
