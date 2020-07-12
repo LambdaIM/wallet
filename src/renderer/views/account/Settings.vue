@@ -215,7 +215,7 @@
             ></Button>
             </Col>
           </Row>
-          <Row class-name="card-item">
+          <!-- <Row class-name="card-item">
             <Col
               span="4"
               class-name="title-wrapper"
@@ -234,7 +234,7 @@
               icon="ios-create"
             ></Button>
             </Col>
-          </Row>
+          </Row> -->
           <Row class-name="card-item">
             <Col
               span="4"

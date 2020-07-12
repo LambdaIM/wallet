@@ -69,10 +69,21 @@
             {{$t('marketpage.sellspace')}}
         </MenuItem>
 
-        <MenuItem v-if="$role('home.Myorderlist')"  to="/home/myorderlist" name="myorderlist">
-            <Icon type="ios-paper" />
-            {{$t('marketpage.orderlist')}}
-        </MenuItem>
+
+          <Submenu v-if="$role('home.Myorderlist')"  name="myorderlist">
+            <template slot="title">
+                {{$t('marketpage.orderlist')}}
+            </template>
+            <MenuGroup title="使用">
+                <MenuItem to="/home/myorderlist" name="myorderlist1">存储市场订单</MenuItem>
+                <MenuItem to="/home/assetsorderlist" name="myorderlist2">资产订单</MenuItem>
+                <MenuItem to="/home/acceptOrder" name="myorderlist3">接受的文件</MenuItem>
+            </MenuGroup>
+
+        </Submenu>
+
+
+
         <MenuItem v-if="$role('home.lambdas3')"  to="/home/lambdas3" name="lambdas3">
             <Icon type="ios-construct" />
             S3

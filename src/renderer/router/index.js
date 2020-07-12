@@ -58,6 +58,14 @@ var walletRouter = new Router({
         path: 'Marketoperation',
         name: 'Marketoperation',
         component: () => import('@/views/Home/Marketoperation.vue')
+      }, {
+        path: 'assetsorderlist',
+        name: 'matchingOrderslist',
+        component: () => import('@/views/marketasset/matchingOrderslist.vue')
+      }, {
+        path: 'acceptOrder',
+        name: 'filelist',
+        component: () => import('@/views/marketasset/filelist.vue')
       }
 
     ],

@@ -10,7 +10,7 @@
         <br>
         <Row>
 
-          <RadioGroup v-model="roleselect"  size="large">
+          <RadioGroup @on-change="setrole"  v-model="roleselect"  size="large">
 
                  <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.simpleuser')" :content="$t('rolepage.simpleuserbrief')">
                     <Radio label="simple">{{$t('rolepage.roletype.simpleuser')}}</Radio>
@@ -88,19 +88,22 @@
         </Row>
         <br/>
         <Row>
-          <Col span="12">
-           <Tag type="border">10lamb</Tag>
-           <Tag type="border">10nnd</Tag>
+          <Col span="24">
+           <p>
+           <Tag v-for="item in MinerRewards">{{bigNumTypeFormat(item.amount,item.denom)}}</Tag>
+      </p>
+
+      <p v-if="MinerRewards.length==0">
+        {{$t('Dialog.com.Nodata')}}
+      </p>
 
              </Col>
-            <Col span="12">
 
-            </Col>
         </Row>
         <br/>
         <Row>
           <Col span="12">
-           <Button>提取挖矿奖励</Button>
+           <Button @click="Drawreward">提取挖矿奖励</Button>
 
              </Col>
             <Col span="12">
@@ -114,13 +117,24 @@
         <br/>
 
     </div>
+    <MinerWithdrawalModal ref="MinerWithdrawalModalDialog"/>
 </div>
 </template>
 <script>
+import MinerWithdrawalModal from '@/views/Dialog/MinerWithdrawalModal.vue';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 export default {
+  components: {
+    MinerWithdrawalModal
+  },
+  mounted() {
+    this.getMinerRewards();
+  },
   data() {
     return {
-      roleselect: this.$store.getters.role || 'simple'
+      roleselect: this.$store.getters.role || 'simple',
+      MinerRewards: []
     };
   },
   methods: {
@@ -135,8 +149,29 @@ export default {
         case 'marketmaker': reslt = this.$t('rolepage.roletype.marketmaker'); break;
       }
       return reslt;
+    },
+    Drawreward() {
+      this.$refs.MinerWithdrawalModalDialog.open();
+    },
+    async getMinerRewards() {
+      console.log('getMinerRewards');
+      try {
+        let res = await ipc.callMain('MinerRewards', {});
+        if (res.state) {
+          var list = res.data['miner_rewards'] || [];
+          var result = '';
+          this.$data.MinerRewards = list;
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
+    },
+    setrole() {
+      // var rolelist=['simple','order','miner','validator'];
+      this.$store.dispatch('setrole', this.$data.roleselect);
     }
   }
+
 
 };
 </script>
