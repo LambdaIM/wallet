@@ -41,7 +41,7 @@
         </p>
             <br />
         <p>
-          {{$t('marketpage.myselltable.remainingspace')}}：{{sellorderinfo.unUseSize}}GB
+          {{$t('marketpage.myselltable.remainingspace')}}：{{sellorderinfo.unusedSize}}GB
         </p>
 
 

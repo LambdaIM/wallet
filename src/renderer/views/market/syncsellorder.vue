@@ -113,7 +113,7 @@ export default {
         },
         // {
         //   title: this.$t('marketpage.selltable.remainingspace'),
-        //   key: 'unUseSize',
+        //   key: 'unusedSize',
         //   sortable: 'custom'
         // },
         {
