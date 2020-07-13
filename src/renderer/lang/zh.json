@@ -1120,6 +1120,12 @@
             "Assetmarketorder":"资产市场订单",
             "documentsaccepted":"接受的文件"
         }
+    },
+    "Marketnavigation":{
+        "Therolemarket":"浏览市场的角色",
+        "Choosemarket":"选择市场",
+        "Miningreward":"挖矿奖励",
+        "Extractionminingreward":"提取挖矿奖励"
     }
 
 }

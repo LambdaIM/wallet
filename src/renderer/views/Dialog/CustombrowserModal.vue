@@ -109,7 +109,7 @@ export default {
             desc: this.$t('Custombrowser.Setsuccessfully')
           });
           setTimeout(() => {
-            window.location.reload();
+            // window.location.reload();
           }, 500);
         }
       });

@@ -1122,6 +1122,12 @@
           "Assetmarketorder":"Asset market order",
           "documentsaccepted":"Documents accepted"
       }
+  },
+  "Marketnavigation":{
+      "Therolemarket":"The role of browsing the market",
+      "Choosemarket":"Choose the market",
+      "Miningreward":"Mining reward",
+      "Extractionminingreward":"Extraction mining reward"
   }
 
 

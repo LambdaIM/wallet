@@ -625,7 +625,7 @@ export default {
 
       // var _this = this;
       setTimeout(() => {
-        window.location.reload();
+        // window.location.reload();
       }, 500);
     },
     openroleModal() {

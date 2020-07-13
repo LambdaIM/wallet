@@ -4,7 +4,7 @@
 
       <div class="tableContainer">
         <Row>
-            <Col span="12"><h3>浏览市场的角色</h3></Col>
+            <Col span="12"><h3>{{$t('Marketnavigation.Therolemarket')}}</h3></Col>
             <Col span="12"></Col>
         </Row>
         <br>
@@ -32,7 +32,7 @@
         </Row>
         <br>
         <Row>
-          <Col span="12"><h3>选择市场</h3>
+          <Col span="12"><h3>{{$t('Marketnavigation.Choosemarket')}}</h3>
 
              </Col>
             <Col span="12">
@@ -53,7 +53,7 @@
               </ul>
             </div>
             <div style="margin: 5px;">
-              <Button to="/market" long>进入lambda 存储市场</Button>
+              <Button  type="primary" to="/market" long>进入lambda 存储市场</Button>
 
 
             </div>
@@ -71,7 +71,7 @@
               </ul>
             </div>
             <div style="margin: 5px;">
-              <Button to="/marketindexmenu" long>进入资产存储市场 </Button>
+              <Button  type="primary" to="/marketindexmenu" long>进入资产存储市场 </Button>
 
 
             </div>
@@ -79,7 +79,7 @@
         </Row>
         <br>
         <Row>
-          <Col span="12"><h3>挖矿奖励</h3>
+          <Col span="12"><h3>{{$t('Marketnavigation.Miningreward')}}</h3>
 
              </Col>
             <Col span="12">
@@ -103,7 +103,7 @@
         <br/>
         <Row>
           <Col span="12">
-           <Button @click="Drawreward">提取挖矿奖励</Button>
+           <Button @click="Drawreward">{{$t('somemodel.Extractstorageandmininrewards')}}</Button>
 
              </Col>
             <Col span="12">
