@@ -1008,7 +1008,7 @@
    "Authorizedminingpop":{
        "Authorization-MinerMining":"授权-矿工挖矿",
        "AssetName":"资产名称",
-       "Authorizedpublickey":"授权人公钥",
+       "Authorizedpublickey":"授权人公钥或导出的子账户配置文件内容",
        "action":{
          "need_public_key":"请填写公钥"
        }

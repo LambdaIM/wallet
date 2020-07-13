@@ -1009,7 +1009,7 @@
    "Authorizedminingpop":{
        "Authorization-MinerMining":"Authorization-Miner Mining",
        "AssetName":"Asset Name",
-       "Authorizedpublickey":"Authorized public key",
+       "Authorizedpublickey":"Authorized person's public key or exported sub account profile content",
        "action":{
          "need_public_key":"Please fill in the public key"
        }

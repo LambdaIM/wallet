@@ -85,7 +85,7 @@
             <span class="title">{{ $t('marketpage.selltable.remainingspace') }}:</span>
           </Col>
           <Col span="17" class-name="content-wrapper">
-            {{sellorderinfo.unUseSize}}
+            {{sellorderinfo.unusedSize}}
           </Col>
         </Row>
         <Row class-name="card-item">

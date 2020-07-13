@@ -16,7 +16,7 @@
         <br />
         <p>
             {{$t('Authorizedminingpop.Authorizedpublickey')}}
-          <Input type="textarea"  v-model="Pubkey" >
+          <Input :rows="4" type="textarea"  v-model="Pubkey" >
 
           </Input>
         </p>
@@ -74,11 +74,19 @@ export default {
       console.log('-----');
       var AssetName = this.$data.AssetName;
       var Pubkey = this.$data.Pubkey;
+      var jsonObj = {};
+
       if (Pubkey.length == 0) {
         this.$Notice.warning({
           title: this.$t('Authorizedminingpop.action.need_public_key')
         });
         return;
+      }
+      try {
+        jsonObj = JSON.parse(Pubkey);
+        Pubkey = jsonObj.pub_key.value;
+      } catch (error) {
+
       }
 
 

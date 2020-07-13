@@ -40,7 +40,7 @@
       </p>
       <br/>
       <p>
-        {{$t('Dialog.selectBuy.remainingspace')}}：{{orderinfo.unUseSize}}GB
+        {{$t('Dialog.selectBuy.remainingspace')}}：{{orderinfo.unusedSize}}GB
       </p>
       <br/>
       <p>
