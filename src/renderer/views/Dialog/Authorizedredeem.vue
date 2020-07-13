@@ -15,11 +15,13 @@
         </p>
         <br />
         <p>
-          {{$t('Redemptionpledge.tip1')}}
+          {{$t('Redemptionpledge.tip1',[formatDay(parameter.refunding_duration)])}}
         </p>
         <br/>
         <p>
-          {{$t('Redemptionpledge.tip1')}}:{{parameter.refunding_duration|formatDay}}{{$t('staking.Explain.unit')}}<br/>
+          {{$t('Redemptionpledge.tip2',[formatDay(parameter.jailed_duration)])}}<br/>
+
+
 
         </p>
 
@@ -106,6 +108,9 @@ export default {
       if (res.state) {
         this.$data.parameter = res.data.data;
       }
+    },
+    formatDay(num) {
+      return (num / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(2);
     }
 
 

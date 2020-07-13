@@ -1039,8 +1039,8 @@
     "Redemptionpledge":{
         "redemption":"Authorized Market-Redemption",
         "AssetName":"Asset Name",
-        "tip1":"Redeem all pledges",
-        "tip2":"Days to redeem assets"
+        "tip1":"After redeeming all pledge {0}days, all pledged assets will be returned to the original account",
+        "tip2":"Within {0} days, it is not allowed to join the asset market"
         
     },
     "ActivateMinerpop":{

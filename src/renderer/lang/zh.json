@@ -1038,8 +1038,8 @@
     "Redemptionpledge":{
         "redemption":"授权市场-赎回",
         "AssetName":"资产名称",
-        "tip1":"赎回全部质押",
-        "tip2":"赎回资产需要等的天数"
+        "tip1":"赎回全部质押{0}天后，质押资产全部返还到原账户",
+        "tip2":"{0}天内，不可再加入该资产市场"
         
     },
     "ActivateMinerpop":{
