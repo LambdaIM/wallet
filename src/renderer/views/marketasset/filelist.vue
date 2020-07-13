@@ -3,6 +3,9 @@
     <div class="customer-container">
 
         <div class="tableContainer">
+             <div>
+                <Alert type="warning">接受到的文件，如果再转让给别人，将无法打开</Alert>
+             </div>
               <Table :columns="columns" :data="list">
                 <template slot-scope="{ row, index }" slot="operation">
                   <Button @click="openS3(row)">{{$t('assetsotherpage.OpenviaS3')}}</Button>

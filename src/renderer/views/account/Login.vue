@@ -14,7 +14,7 @@
           </p>-->
           <Form @submit.native.prevent ref="formInline" :model="formInline" :rules="ruleInline" class="form-container">
             <FormItem prop="name">
-              <Select :placeholder="selectplaceholder" v-model="value" @on-change="selectName" clearable size="large">
+              <Select :placeholder="$t('login.select_Wallet')" v-model="value" @on-change="selectName" clearable size="large">
 
                 <Option
                   v-for="(item,index) in walletList"

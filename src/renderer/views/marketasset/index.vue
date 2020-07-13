@@ -44,16 +44,16 @@
             <Col span="12">
             <div style="margin: 5px;">
               <ul>
-                <li>使用lamb购买空间</li>
-                <li>挖矿奖励为lamb</li>
-                <li>可以创建并运营市场</li>
-                <li>可以质押到市场，获取收益</li>
-                <li>可以使用s3上传和下载文件</li>
+                <li>{{$t('Marketnavigation.lambdamarket.Note1')}}</li>
+                <li>{{$t('Marketnavigation.lambdamarket.Note2')}}</li>
+                <li>{{$t('Marketnavigation.lambdamarket.Note3')}}</li>
+                <li>{{$t('Marketnavigation.lambdamarket.Note4')}}</li>
+                <li>{{$t('Marketnavigation.lambdamarket.Note5')}}</li>
 
               </ul>
             </div>
             <div style="margin: 5px;">
-              <Button  type="primary" to="/market" long>进入lambda 存储市场</Button>
+              <Button  type="primary" to="/market" long>{{$t('Marketnavigation.Enteringlambda')}}</Button>
 
 
             </div>
@@ -62,16 +62,16 @@
             <div style="margin: 5px;">
 
             <ul>
-                <li>使用资产购买空间</li>
-                <li>挖矿奖励为市场使用的资产</li>
-                <li>可以创建资产和市场</li>
-                <li>可以使用s3上传和下载文件</li>
-                <li>支持文件交易</li>
+                <li>{{$t('Marketnavigation.Assetmarket.Note1')}}</li>
+                <li>{{$t('Marketnavigation.Assetmarket.Note2')}}</li>
+                <li>{{$t('Marketnavigation.Assetmarket.Note3')}}</li>
+                <li>{{$t('Marketnavigation.Assetmarket.Note4')}}</li>
+                <li>{{$t('Marketnavigation.Assetmarket.Note5')}}</li>
 
               </ul>
             </div>
             <div style="margin: 5px;">
-              <Button  type="primary" to="/marketindexmenu" long>进入资产存储市场 </Button>
+              <Button  type="primary" to="/marketindexmenu" long>{{$t('Marketnavigation.Enteringasset')}} </Button>
 
 
             </div>

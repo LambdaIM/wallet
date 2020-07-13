@@ -372,11 +372,12 @@ export default {
       this.$i18n.locale = item;
       this.$data.langnow = item;
       settings.set('set', { language: item });
-      window.location.reload();
-      // var _this = this;
-      // setTimeout(() => {
-      //   _this.restartapp();
-      // }, 200);
+      // window.location.reload();
+      var _this = this;
+      setTimeout(() => {
+        // window.location.reload();
+
+      }, 500);
     },
     getuserrole() {
       console.log('getuserrole');
