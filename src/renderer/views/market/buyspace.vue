@@ -222,7 +222,6 @@ export default {
     };
   },
   mounted() {
-    console.log('******************!!!!');
     this.getmarketlist();
     this.getmarketinfo('');
 
