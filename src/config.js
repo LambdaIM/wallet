@@ -42,7 +42,7 @@ module.exports.DAEMON_CONFIG  = {
     },
     version:packageJson.version,
     mainnetip:"39.107.247.86",
-    testnetip:"47.93.196.236",
+    testnetip:"bj1.testnet.lambdastorage.com",
     testexplore:"http://testexplorer.lambdastorage.com/",
     mainexplore:'http://explorer.lambdastorage.com/'
 };
