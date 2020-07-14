@@ -459,7 +459,7 @@ export default function() {
 
   function getS3commandline(ip, keypath, gatewayaddress, accesskey, secretKey, orderid) {
     return `${path.join(DAEMON_CONFIG.BASE_PATH, DAEMON_CONFIG.LambdaSfile())} s3gw run \
-    --broker.dht_gateway_addr ${ip}:13000 \
+    --broker.dht_gateway_addr ${ip}:12000 \
     --broker.validator_addr  ${ip}:13659 \
     --broker.extra_key_file  ${keypath} \
     --gateway.address  ${gatewayaddress} \
@@ -477,7 +477,7 @@ export default function() {
           `s3gw`,
           'run',
           `--broker.dht_gateway_addr`,
-          `${ip}:13000`,
+          `${ip}:12000`,
           `--broker.validator_addr`,
           `${ip}:13659`,
           `--broker.extra_key_file`,
