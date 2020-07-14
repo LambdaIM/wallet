@@ -258,7 +258,7 @@ export default {
         // console.log(res);
         console.log(res);
         // console.log(poolres)
-        var tempList = res.data;
+        var tempList = res.data || [];
         var list = [];
         if (res.state) {
           tempList.forEach(item => {
