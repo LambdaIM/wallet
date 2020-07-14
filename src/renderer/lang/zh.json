@@ -1103,6 +1103,46 @@
         "miner":"矿工",
         "order":"订单",
         "assets":"资产"
+    },
+    "assetsotherpage":{
+        "lambdaTitle":"lambda-数据存储市场",
+        "assetTitle":"资产-数据存储市场",
+        "documentsaccepted":"接受的文件",
+        "filelist":{
+            "orderid":"订单ID",
+            "file":"文件",
+            "send":"发送人",
+            "operation":"操作",
+            "OpenviaS3":"通过s3打开"
+        },
+        "menulist":{
+            "Lambdamarketorder":"Lambda市场订单",
+            "Assetmarketorder":"资产市场订单",
+            "documentsaccepted":"接受的文件"
+        },
+        "Unableopendescription":"接受到的文件，如果再转让给别人，将无法打开"
+    },
+    "Marketnavigation":{
+        "Therolemarket":"浏览市场的角色",
+        "Choosemarket":"选择市场",
+        "Miningreward":"挖矿奖励",
+        "Extractionminingreward":"提取挖矿奖励",
+        "lambdamarket":{
+            "Note1":"使用lamb购买空间",
+            "Note2":"挖矿奖励为lamb",
+            "Note3":"可以创建并运营市场",
+            "Note4":"可以质押到市场，获取收益",
+            "Note5":"可以使用s3上传和下载文件"
+        },
+        "Assetmarket":{
+            "Note1":"使用资产购买空间",
+            "Note2":"挖矿奖励为市场使用的资产",
+            "Note3":"可以创建资产和市场",
+            "Note4":"可以使用s3上传和下载文件",
+            "Note5":"支持文件交易"
+        },
+        "Enteringlambda":"进入lambda存储市场",
+        "Enteringasset":"进入资产存储市场"
     }
 
 }

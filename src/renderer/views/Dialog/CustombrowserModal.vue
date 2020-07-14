@@ -108,8 +108,9 @@ export default {
             title: this.$t('Custombrowser.success'),
             desc: this.$t('Custombrowser.Setsuccessfully')
           });
+          eventhub.$emit('refreshconfiguration');
           setTimeout(() => {
-            window.location.reload();
+            // window.location.reload();
           }, 500);
         }
       });

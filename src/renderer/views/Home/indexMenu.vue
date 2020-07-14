@@ -23,14 +23,15 @@
     </Row>
     </div>
     <Menu :key="time" ref="menu" @on-select="transferClick" mode="horizontal"  v-bind:active-name="activeItem">
-        <MenuItem to="/home" name="txlist">
-            <Icon type="ios-paper" />
-            {{$t('home.Latest_Transaction')}}
-        </MenuItem>
-        <MenuItem to="/home/coinlist" name="coinlist">
+        <MenuItem to="/home/" name="coinlist">
             <Icon type="ios-paper" />
             {{$t('home.token')}}
         </MenuItem>
+        <MenuItem to="/home/txlist" name="txlist">
+            <Icon type="ios-paper" />
+            {{$t('home.Latest_Transaction')}}
+        </MenuItem>
+
         <!-- <MenuItem to="/home/localtxlist" name="localtxlist">
             <Icon type="ios-paper" />
             {{$t('home.Latest_Transaction_local')}}
@@ -68,10 +69,25 @@
             {{$t('marketpage.sellspace')}}
         </MenuItem>
 
-        <MenuItem v-if="$role('home.Myorderlist')"  to="/home/myorderlist" name="myorderlist">
-            <Icon type="ios-paper" />
-            {{$t('marketpage.orderlist')}}
-        </MenuItem>
+
+          <Submenu v-if="$role('home.Myorderlist')"  name="myorderlist">
+            <template slot="title">
+                {{$t('marketpage.orderlist')}}
+            </template>
+            <MenuGroup :title="$t('assetsotherpage.lambdaTitle')">
+                <MenuItem to="/home/myorderlist" name="myorderlist1">{{$t('assetsotherpage.menulist.Lambdamarketorder')}}</MenuItem>
+
+            </MenuGroup>
+            <MenuGroup :title="$t('assetsotherpage.assetTitle')">
+
+                <MenuItem to="/home/assetsorderlist" name="myorderlist2">{{$t('assetsotherpage.menulist.Assetmarketorder')}}</MenuItem>
+                <MenuItem to="/home/acceptOrder" name="myorderlist3">{{$t('assetsotherpage.menulist.documentsaccepted')}}</MenuItem>
+            </MenuGroup>
+
+        </Submenu>
+
+
+
         <MenuItem v-if="$role('home.lambdas3')"  to="/home/lambdas3" name="lambdas3">
             <Icon type="ios-construct" />
             S3

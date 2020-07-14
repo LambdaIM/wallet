@@ -1105,6 +1105,46 @@
       "miner":"miner",
       "order":"order",
       "assets":"assets"
+  },
+  "assetsotherpage":{
+      "lambdaTitle":"lambda-Data storage market",
+      "assetTitle":"Asset-Data storage market",
+      "documentsaccepted":"Documents accepted",
+      "filelist":{
+          "orderid":"Orderid",
+          "file":"File",
+          "send":"Send",
+          "operation":"Operation",
+          "OpenviaS3":"Open via S3"
+      },
+      "menulist":{
+          "Lambdamarketorder":"Lambda market order",
+          "Assetmarketorder":"Asset market order",
+          "documentsaccepted":"Documents accepted"
+      },
+      "Unableopendescription":"If the received documents are transferred to others, they will not be opened"
+  },
+  "Marketnavigation":{
+      "Therolemarket":"The role of browsing the market",
+      "Choosemarket":"Choose the market",
+      "Miningreward":"Mining reward",
+      "Extractionminingreward":"Extraction mining reward",
+      "lambdamarket":{
+        "Note1":"Use lamb to buy space",
+        "Note2":"The award for mining is lamb",
+        "Note3":"Can create and operate markets",
+        "Note4":"It can be pledged to the market to obtain income",
+        "Note5":"You can use S3 to upload and download files"
+    },
+    "Assetmarket":{
+        "Note1":"Use asset purchase space",
+        "Note2":"Mining rewards assets for market use",
+        "Note3":"Assets and markets can be created",
+        "Note4":"You can use S3 to upload and download files",
+        "Note5":"Supporting file transactions"
+    },
+    "Enteringlambda":"Entering lambda storage market",
+    "Enteringasset":"Enter the asset storage market"
   }
 
 

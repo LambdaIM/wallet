@@ -20,14 +20,14 @@ var walletRouter = new Router({
     name: 'Home',
     children: [
       {
-        path: '',
+        path: 'txlist',
         name: 'txlist',
         component: () => import('@/views/Home/txlist.vue')
       },
       {
-        path: 'coinlist',
+        path: '',
         name: 'coinlist',
-        component: () => import('@/views/Home/coinlist.vue')
+        component: () => import('@/views/Home/assetslist.vue')
       },
       {
         path: 'localtxlist',
@@ -58,11 +58,14 @@ var walletRouter = new Router({
         path: 'Marketoperation',
         name: 'Marketoperation',
         component: () => import('@/views/Home/Marketoperation.vue')
-      },
-      {
-        path: 'Matchingorders/:orderid',
-        name: 'Matchingorders',
-        component: () => import('@/views/Home/MatchOrderInfo.vue')
+      }, {
+        path: 'assetsorderlist',
+        name: 'matchingOrderslist',
+        component: () => import('@/views/marketasset/matchingOrderslist.vue')
+      }, {
+        path: 'acceptOrder',
+        name: 'filelist',
+        component: () => import('@/views/marketasset/filelist.vue')
       }
 
     ],
@@ -180,9 +183,60 @@ var walletRouter = new Router({
         name: 'sellorderinfo',
         component: () => import('@/views/market/marketpledge.vue')
       }
+
     ]
 
 
+  }, {
+    path: '/markethome',
+    name: 'markethome',
+    component: () => import('@/views/marketasset/index.vue')
+  }, {
+    path: '/marketindexmenu',
+    name: 'marketindexmenu',
+    component: () => import('@/views/marketasset/indexMenu.vue'),
+    children: [
+      {
+        path: '',
+        name: 'assetlist',
+        component: () => import('@/views/marketasset/assetlist.vue')
+      }, {
+        path: 'marketlist',
+        name: 'marketlist',
+        component: () => import('@/views/marketasset/marketlist.vue')
+      },
+      {
+        path: 'redeemlist',
+        name: 'redeemlist',
+        component: () => import('@/views/marketasset/redeemlist.vue')
+      }, {
+        path: 'matchingOrderslist',
+        name: 'matchingOrderslist',
+        component: () => import('@/views/marketasset/matchingOrderslist.vue')
+      }, {
+        path: 'mininghelp',
+        name: 'mininghelp',
+        component: () => import('@/views/marketasset/mininghelp.vue')
+      }, {
+        path: 'orderdetails/:orderid',
+        name: 'orderdetails',
+        component: () => import('@/views/marketasset/MatchOrderInfo.vue')
+      }, {
+        path: 'listofminers',
+        name: 'listofminers',
+        component: () => import('@/views/marketasset/listofminers.vue')
+      }, {
+        path: 'filelist',
+        name: 'filelist',
+        component: () => import('@/views/marketasset/filelist.vue')
+      },
+      {
+        path: 'lambdas3',
+        name: 'lambdas3',
+        component: () => import('@/views/market/lambdas3.vue')
+      }
+
+    ]
   }, {
     path: '/orderinfo/:id',
     name: 'orderinfo',

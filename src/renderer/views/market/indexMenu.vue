@@ -1,7 +1,9 @@
 
 <template>
   <div class="customer-container">
+
       <div class="tableContainer">
+        <h3>{{$t('assetsotherpage.lambdaTitle')}}</h3>
            <Menu mode="horizontal"  :active-name="activeItem">
         <MenuItem to="/market" name="myorderlist">
             <Icon type="ios-paper" />

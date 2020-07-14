@@ -130,7 +130,7 @@ export default {
 
 
       var roleobj = settings.get('userrolelist') || {};
-      var role = roleobj[defaultwallet];
+      var role = roleobj[defaultwallet] || 'simple';
       // console.log('=============');
       // console.log(roledata);
       // console.log(name);

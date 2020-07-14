@@ -215,7 +215,7 @@
             ></Button>
             </Col>
           </Row>
-          <Row class-name="card-item">
+          <!-- <Row class-name="card-item">
             <Col
               span="4"
               class-name="title-wrapper"
@@ -234,7 +234,7 @@
               icon="ios-create"
             ></Button>
             </Col>
-          </Row>
+          </Row> -->
           <Row class-name="card-item">
             <Col
               span="4"
@@ -519,6 +519,7 @@ import Gasprise from '@/views/Dialog/Gasprise.vue';
 import Introtip from '../../common/js/Introtip.js';
 
 import CustombrowserModalDialog from '@/views/Dialog/CustombrowserModal.vue';
+import eventhub from '../../common/js/event.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
@@ -550,6 +551,10 @@ export default {
     // this.pledgeMiner();
     // this.getgasprise();
     this.$data.custombrowserurl = settings.get('custombrowserurl') || this.$t('Custombrowser.notseturl');
+    eventhub.$on('refreshconfiguration', data => {
+      console.log('refreshconfiguration');
+      this.$data.custombrowserurl = settings.get('custombrowserurl') || this.$t('Custombrowser.notseturl');
+    });
   },
   methods: {
     onCopy(e) {
@@ -625,7 +630,7 @@ export default {
 
       // var _this = this;
       setTimeout(() => {
-        window.location.reload();
+        // window.location.reload();
       }, 500);
     },
     openroleModal() {

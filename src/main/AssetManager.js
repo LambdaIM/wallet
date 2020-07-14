@@ -105,6 +105,16 @@ class AssetManager {
 
     return { data: result };
   }
+
+  async fileRceiver(page, limit) {
+    if (this.defaultAddress == null) {
+      throwErrorCode(errorList.need_address);
+    }
+    console.log('fileRceiver');
+    var result = await this.CosmosAPI().get.damfileReceiver(this.defaultAddress, page, limit);
+
+    return { data: result };
+  }
 }
 
 
