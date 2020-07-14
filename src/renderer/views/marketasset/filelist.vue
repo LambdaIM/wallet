@@ -4,7 +4,7 @@
 
         <div class="tableContainer">
              <div>
-                <Alert type="warning">接受到的文件，如果再转让给别人，将无法打开</Alert>
+                <Alert type="warning">{{$t('assetsotherpage.Unableopendescription')}}</Alert>
              </div>
               <Table :columns="columns" :data="list">
                 <template slot-scope="{ row, index }" slot="operation">

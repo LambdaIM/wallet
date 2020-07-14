@@ -1111,10 +1111,10 @@
       "assetTitle":"Asset-Data storage market",
       "documentsaccepted":"Documents accepted",
       "filelist":{
-          "orderid":"orderid",
-          "file":"file",
-          "send":"send",
-          "operation":"operation",
+          "orderid":"Orderid",
+          "file":"File",
+          "send":"Send",
+          "operation":"Operation",
           "OpenviaS3":"Open via S3"
       },
       "menulist":{
