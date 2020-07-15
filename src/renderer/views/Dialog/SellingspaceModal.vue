@@ -81,6 +81,11 @@
 
 
       </p>
+      <br/>
+      <p>
+        {{$t('Sellingothers.Compensation')}}：{{Compensation}} LAMB  &nbsp;&nbsp; {{$t('Sellingothers.ServiceCharge')}}：{{Handlingfee}} LAMB  &nbsp;&nbsp; {{$t('Sellingothers.Transactionfee')}}：0.01 LAMB  ({{$t('Sellingothers.estimate')}})   <br/>
+        {{$t('Sellingothers.Paymentamount')}}：{{Compensation+Handlingfee+0.01}} LAMB
+      </p>
       </Form >
 
       <div slot="footer">
@@ -130,6 +135,7 @@
           <Input readonly v-model="description"   type="textarea" :placeholder="$t('somemodel.describe')"  />
         </Row>
       </div>
+
       <!-- <p>
           <Input v-model="walletPassword" type="password"></Input>
       </p>-->
@@ -447,6 +453,9 @@ export default {
         });
         // this.$data.marketinfo = res.data.data;
       }
+    },
+    fee1(num) {
+      return this.bigNum(num).toNumber();
     }
   },
   computed: {
@@ -458,7 +467,14 @@ export default {
     },
     balance: function() {
       return this.$store.getters.getblance;
+    },
+    Compensation: function() {
+      return this.$data.spaceSize * this.$data.unitPrice * this.$data.rate;
+    },
+    Handlingfee: function() {
+      return this.$data.spaceSize * this.$data.unitPrice * this.$data.rate * this.fee1(this.$data.market.feeRate);
     }
+
   }
 };
 </script>

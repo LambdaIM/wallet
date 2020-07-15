@@ -1143,6 +1143,21 @@
         },
         "Enteringlambda":"进入lambda存储市场",
         "Enteringasset":"进入资产存储市场"
+    },
+    "Marketothers":{
+        "Commissionfee":"委托单手续费",
+        "Orderamount":"订单金额",
+        "Transactionfee":"交易手续费",
+        "estimate":"估算"
+
+    },
+    "Sellingothers":{
+        "Compensation":"赔付金",
+        "ServiceCharge":"挂单手续费",
+        "Transactionfee":"交易手续费",
+        "estimate":"估算",
+        "Paymentamount":"支付金额"
+
     }
 
 }

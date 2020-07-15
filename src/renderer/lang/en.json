@@ -1145,6 +1145,21 @@
     },
     "Enteringlambda":"Entering lambda storage market",
     "Enteringasset":"Enter the asset storage market"
+  },
+  "Marketothers":{
+      "Commissionfee":"Commission fee",
+      "Orderamount":"Order amount",
+      "Transactionfee":"Transaction fee",
+      "estimate":"Estimate"
+
+  },
+  "Sellingothers":{
+      "Compensation":"Compensation",
+      "ServiceCharge":"Bill handling fee",
+      "Transactionfee":"Transaction fee",
+      "estimate":"estimate",
+      "Paymentamount":"Payment amount"
+
   }
 
 

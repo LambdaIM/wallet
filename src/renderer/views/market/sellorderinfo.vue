@@ -161,10 +161,7 @@ export default {
   },
   methods: {
     openBuyingspace(row) {
-      this.$refs.Buyingspace.open(row, {
-        name: this.$data.marketname,
-        marketAddress: this.$data.marketAddress
-      });
+      this.$refs.Buyingspace.open(row, this.$data.selectmarket);
     },
     async getmarketlist() {
       console.log('getmarketlist');

@@ -40,6 +40,12 @@
             {{ price | Lambformat }}
           </Col>
         </Row>
+      <br/>
+      <p>
+        {{$t('Marketothers.Commissionfee')}}:{{renewaLamountFee | Lambformat}} &nbsp;&nbsp;  {{$t('Marketothers.Orderamount')}}：{{ renewaLamount | Lambformat }} &nbsp;&nbsp;
+            {{$t('Marketothers.Transactionfee')}}：0.01 LAMB（{{$t('Marketothers.estimate')}}）
+      </p>
+      <br/>
       <Row class-name="card-item">
           <!-- <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('home.Balance')}}:</span>
@@ -49,7 +55,7 @@
             <span class="title">{{$t('Dialog.AutoBuy.Paymentamount')}}:</span>
           </Col>
           <Col span="6" class-name="content-wrapper">
-            {{ renewaLamount | Lambformat }}
+            {{ allcost+10000| Lambformat }}
           </Col>
         </Row>
 
@@ -175,11 +181,15 @@ export default {
       this.sendModal = false;
       // this.confirmModal=true;
     },
-    open(orderid, orderinfo) {
+    open(orderid, orderinfo, market) {
       this.$data.orderid = orderid;
       this.sendModal = true;
       this.$data.size = orderinfo.size;
       this.$data.price = orderinfo.price;
+      this.$data.market = market;
+    },
+    fee1(num) {
+      return this.bigNum(num).toNumber();
     }
   },
   computed: {
@@ -197,6 +207,18 @@ export default {
     },
     renewaLamount: function() {
       return this.$data.size * this.$data.price * this.$data.Duration;
+    },
+    renewaLamountFee: function() {
+      if (this.$data.market == undefined) {
+        return;
+      }
+      return this.$data.size * this.$data.price * this.$data.Duration * this.fee1(this.$data.market.commissionRate);
+    },
+    allcost: function() {
+      if (this.$data.market == undefined) {
+        return;
+      }
+      return this.$data.size * this.$data.price * this.$data.Duration * (this.fee1(this.$data.market.commissionRate) + 1);
     }
   }
 };

@@ -169,7 +169,8 @@ export default {
       walletPassword: '',
       managerkey: {},
       runstorage: packagejson.runstorage,
-      blocktime: ''
+      blocktime: '',
+      selectmarket: null
     };
   },
   components: {
@@ -183,6 +184,7 @@ export default {
     this.orderid = this.$route.params.id;
     this.getblocktime();
     this.getorderinfo(this.orderid);
+
     console.log('order info');
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
@@ -202,6 +204,7 @@ export default {
       });
       if (res.state) {
         this.$data.orderinfo = res.data.data;
+        this.getmarketlist();
       }
     },
     async getblocktime() {
@@ -246,7 +249,24 @@ export default {
       this.$refs.s3Modal.openDialog();
     },
     renewalModal() {
-      this.$refs.renewalModal.open(this.orderid, this.$data.orderinfo);
+      this.$refs.renewalModal.open(this.orderid, this.$data.orderinfo, this.$data.selectmarket);
+    },
+    async getmarketlist() {
+      console.log('getmarketlist');
+      try {
+        let res = await ipc.callMain('marketlist', {});
+        if (res.state) {
+          var list = res.data.data || [];
+          list.forEach(item => {
+            console.log(item);
+            if (item.marketAddress == this.$data.orderinfo.marketAddress) {
+              this.$data.selectmarket = item;
+            }
+          });
+        }
+      } catch (error) {
+        this.$Message.error(this.$t('foot.linkerror'));
+      }
     }
   },
   computed: {
