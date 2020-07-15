@@ -51,7 +51,7 @@
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">{{$t('orderrevenue.WithdraworderCommission')}} </MenuItem>
 
-                <MenuItem v-if="$role('home.tx.Minerprofit')" name="openAuthorizedMarket"> {{$t('Assetincomepop.title')}} </MenuItem>
+                <!-- <MenuItem v-if="$role('home.tx.Minerprofit')" name="openAuthorizedMarket"> {{$t('Assetincomepop.title')}} </MenuItem> -->
             </MenuGroup>
 
 
@@ -78,11 +78,11 @@
                 <MenuItem to="/home/myorderlist" name="myorderlist1">{{$t('assetsotherpage.menulist.Lambdamarketorder')}}</MenuItem>
 
             </MenuGroup>
-            <MenuGroup :title="$t('assetsotherpage.assetTitle')">
+            <!-- <MenuGroup :title="$t('assetsotherpage.assetTitle')">
 
                 <MenuItem to="/home/assetsorderlist" name="myorderlist2">{{$t('assetsotherpage.menulist.Assetmarketorder')}}</MenuItem>
                 <MenuItem to="/home/acceptOrder" name="myorderlist3">{{$t('assetsotherpage.menulist.documentsaccepted')}}</MenuItem>
-            </MenuGroup>
+            </MenuGroup> -->
 
         </Submenu>
 

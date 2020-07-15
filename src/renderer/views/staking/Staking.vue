@@ -239,6 +239,9 @@ export default {
         console.log(poolres);
         if (res.state) {
           this.$data.validatorsList = res.data;
+          if (this.$data.validatorsList instanceof Array) {
+            this.$data.validatorsList.sort(function(a, b) { return b.status - a.status; });
+          }
         }
         if (poolres.state) {
           this.$data.pool = poolres.data;
