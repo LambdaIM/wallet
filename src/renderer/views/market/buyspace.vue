@@ -262,8 +262,12 @@ export default {
         if (res.state) {
           this.$data.marketList = res.data.data;
           this.$data.selectmarket = this.finddefaultmarket(this.$data.marketList);
-          this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
+
           this.getOrderList(1);
+
+          if (this.$store.getters.getselectMarket != this.$data.selectmarket.marketAddress) {
+            this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
+          }
         }
       } catch (error) {
         this.$Message.error(this.$t('foot.linkerror'));
