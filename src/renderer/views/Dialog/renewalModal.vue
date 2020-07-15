@@ -98,7 +98,8 @@ export default {
       Duration: '',
       timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30,
       size: 0,
-      price: 0
+      price: 0,
+      market: {}
     };
   },
   components: {
@@ -209,9 +210,6 @@ export default {
       return this.$data.size * this.$data.price * this.$data.Duration;
     },
     renewaLamountFee: function() {
-      if (this.$data.market == undefined) {
-        return;
-      }
       return this.$data.size * this.$data.price * this.$data.Duration * this.fee1(this.$data.market.commissionRate);
     },
     allcost: function() {
