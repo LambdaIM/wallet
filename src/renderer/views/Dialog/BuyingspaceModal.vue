@@ -60,8 +60,8 @@
       <p>
         {{$t('Marketothers.Commissionfee')}}:{{(fee1(market.commissionRate) * Paymentamount )|Lambformat}} &nbsp;  &nbsp;
         {{$t('Marketothers.Orderamount')}}：{{Paymentamount|Lambformat}} &nbsp;  &nbsp;
-        {{$t('Marketothers.Transactionfee')}}：0.01 LAMB（{{$t('Marketothers.estimate')}}）<br/>
-        {{$t('Dialog.selectBuy.Paymentamount')}}：{{(totalcost+10000)|Lambformat}}
+        <!-- {{$t('Marketothers.Transactionfee')}}：0.01 LAMB（{{$t('Marketothers.estimate')}}）<br/> -->
+        {{$t('Dialog.selectBuy.Paymentamount')}}：{{(totalcost)|Lambformat}}
 
       </p>
               <br />

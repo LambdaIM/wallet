@@ -43,7 +43,7 @@
       <br/>
       <p>
         {{$t('Marketothers.Commissionfee')}}:{{renewaLamountFee | Lambformat}} &nbsp;&nbsp;  {{$t('Marketothers.Orderamount')}}：{{ renewaLamount | Lambformat }} &nbsp;&nbsp;
-            {{$t('Marketothers.Transactionfee')}}：0.01 LAMB（{{$t('Marketothers.estimate')}}）
+
       </p>
       <br/>
       <Row class-name="card-item">
@@ -55,7 +55,7 @@
             <span class="title">{{$t('Dialog.AutoBuy.Paymentamount')}}:</span>
           </Col>
           <Col span="6" class-name="content-wrapper">
-            {{ allcost+10000| Lambformat }}
+            {{ allcost| Lambformat }}
           </Col>
         </Row>
 
