@@ -58,7 +58,11 @@
       </p>
       <br/>
       <p>
-        {{$t('Dialog.selectBuy.Paymentamount')}}：{{Paymentamount|Lambformat}}
+        {{$t('Marketothers.Commissionfee')}}:{{(fee1(market.commissionRate) * Paymentamount )|Lambformat}} &nbsp;  &nbsp;
+        {{$t('Marketothers.Orderamount')}}：{{Paymentamount|Lambformat}} &nbsp;  &nbsp;
+        <!-- {{$t('Marketothers.Transactionfee')}}：0.01 LAMB（{{$t('Marketothers.estimate')}}）<br/> -->
+        {{$t('Dialog.selectBuy.Paymentamount')}}：{{(totalcost)|Lambformat}}
+
       </p>
               <br />
         <p>
@@ -94,6 +98,7 @@ export default {
       spaceSize: '',
       spaceDuration: '',
       timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
+
     };
   },
   components: {
@@ -152,7 +157,7 @@ export default {
         return;
       }
 
-      if (this.bigLess0OrGreater(this.Paymentamount, this.balance)) {
+      if (this.bigLess0OrGreater(this.totalcost, this.balance)) {
         // need to alert
         this.$Notice.warning({
           title: this.$t('home.action.check_balance_amount_transfer')
@@ -206,6 +211,9 @@ export default {
         let url = `${explorer}/#/address/${lambdaaddress}/activity/1/all`;
         shell.openExternal(url);
       }
+    },
+    fee1(num) {
+      return this.bigNum(num).toNumber();
     }
   },
   computed: {
@@ -220,6 +228,12 @@ export default {
     },
     Paymentamount: function() {
       return this.$data.spaceSize * this.$data.spaceDuration * this.$data.orderinfo.price;
+    },
+    totalcost: function() {
+      return (
+        this.$data.spaceSize * this.$data.spaceDuration * this.$data.orderinfo.price *
+      (1 + this.fee1(this.$data.market.commissionRate))
+      );
     }
   }
 };
