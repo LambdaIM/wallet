@@ -456,6 +456,14 @@ export default {
     },
     fee1(num) {
       return this.bigNum(num).toNumber();
+    },
+    checkint(data) {
+      if (data % 1 != 0) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Sellingothers.needint')
+        });
+      }
     }
   },
   computed: {
@@ -476,6 +484,27 @@ export default {
     },
     allcost: function() {
       return (this.Compensation * (this.fee1(this.$data.market.feeRate) + 1)).toFixed(6);
+    }
+
+  },
+  watch: {
+    spaceSize: function(data) {
+      this.checkint(data);
+    },
+    unitPrice: function(data) {
+      this.checkint(data);
+    },
+    unitPrice: function(data) {
+      this.checkint(data);
+    },
+    minSpace: function(data) {
+      this.checkint(data);
+    },
+    minDuration: function(data) {
+      this.checkint(data);
+    },
+    maxDuration: function(data) {
+      this.checkint(data);
     }
 
   }

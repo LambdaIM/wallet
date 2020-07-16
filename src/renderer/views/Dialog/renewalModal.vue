@@ -221,6 +221,16 @@ export default {
     renewaLCost: function() {
       return (this.renewaLamount).toFixed(6);
     }
+  },
+  watch: {
+    Duration: function(data) {
+      if (data % 1 != 0) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Sellingothers.needint')
+        });
+      }
+    }
   }
 };
 </script>

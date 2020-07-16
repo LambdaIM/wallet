@@ -1156,7 +1156,8 @@
         "ServiceCharge":"挂单手续费",
         "Transactionfee":"交易手续费",
         "estimate":"估算",
-        "Paymentamount":"支付金额"
+        "Paymentamount":"支付金额",
+        "needint":"需要输入整数"
 
     }
 

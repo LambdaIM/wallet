@@ -239,6 +239,24 @@ export default {
       return (this.Paymentamount * (1 + this.fee1(this.$data.market.commissionRate))).toFixed(6)
       ;
     }
+  },
+  watch: {
+    spaceSize: function(data) {
+      if (data % 1 != 0) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Sellingothers.needint')
+        });
+      }
+    },
+    spaceDuration: function(data) {
+      if (data % 1 != 0) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Sellingothers.needint')
+        });
+      }
+    }
   }
 };
 </script>
