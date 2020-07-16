@@ -58,8 +58,8 @@
       </p>
       <br/>
       <p>
-        {{$t('Marketothers.Commissionfee')}}:{{(fee1(market.commissionRate) * Paymentamount )|Lambformat}} &nbsp;  &nbsp;
-        {{$t('Marketothers.Orderamount')}}：{{Paymentamount|Lambformat}} &nbsp;  &nbsp;
+        {{$t('Marketothers.Commissionfee')}}:{{feecost|Lambformat}} &nbsp;  &nbsp;
+        {{$t('Marketothers.Orderamount')}}：{{Paymentcost|Lambformat}} &nbsp;  &nbsp;
         <!-- {{$t('Marketothers.Transactionfee')}}：0.01 LAMB（{{$t('Marketothers.estimate')}}）<br/> -->
         {{$t('Dialog.selectBuy.Paymentamount')}}：{{(totalcost)|Lambformat}}
 
@@ -229,11 +229,33 @@ export default {
     Paymentamount: function() {
       return this.$data.spaceSize * this.$data.spaceDuration * this.$data.orderinfo.price;
     },
+    Paymentcost: function() {
+      return (this.Paymentamount).toFixed(6);
+    },
+    feecost: function() {
+      return (this.Paymentamount * (this.fee1(this.$data.market.commissionRate))).toFixed(6);
+    },
     totalcost: function() {
-      return (
-        this.$data.spaceSize * this.$data.spaceDuration * this.$data.orderinfo.price *
-      (1 + this.fee1(this.$data.market.commissionRate))
-      );
+      return (this.Paymentamount * (1 + this.fee1(this.$data.market.commissionRate))).toFixed(6)
+      ;
+    }
+  },
+  watch: {
+    spaceSize: function(data) {
+      if (data % 1 != 0) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Sellingothers.needint')
+        });
+      }
+    },
+    spaceDuration: function(data) {
+      if (data % 1 != 0) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Sellingothers.needint')
+        });
+      }
     }
   }
 };

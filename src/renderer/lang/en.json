@@ -1158,7 +1158,8 @@
       "ServiceCharge":"Bill handling fee",
       "Transactionfee":"Transaction fee",
       "estimate":"estimate",
-      "Paymentamount":"Payment amount"
+      "Paymentamount":"Payment amount",
+      "needint":"An integer is required"
 
   }
 
