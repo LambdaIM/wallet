@@ -42,7 +42,7 @@
         </Row>
       <br/>
       <p>
-        {{$t('Marketothers.Commissionfee')}}:{{renewaLamountFee | Lambformat}} &nbsp;&nbsp;  {{$t('Marketothers.Orderamount')}}：{{ renewaLamount | Lambformat }} &nbsp;&nbsp;
+        {{$t('Marketothers.Commissionfee')}}:{{renewaLamountFee | Lambformat}} &nbsp;&nbsp;  {{$t('Marketothers.Orderamount')}}：{{ renewaLCost | Lambformat }} &nbsp;&nbsp;
 
       </p>
       <br/>
@@ -210,13 +210,16 @@ export default {
       return this.$data.size * this.$data.price * this.$data.Duration;
     },
     renewaLamountFee: function() {
-      return this.$data.size * this.$data.price * this.$data.Duration * this.fee1(this.$data.market.commissionRate);
+      return (this.renewaLamount * this.fee1(this.$data.market.commissionRate)).toFixed(6);
     },
     allcost: function() {
       if (this.$data.market == undefined) {
         return;
       }
-      return this.$data.size * this.$data.price * this.$data.Duration * (this.fee1(this.$data.market.commissionRate) + 1);
+      return (this.renewaLamount * (this.fee1(this.$data.market.commissionRate) + 1)).toFixed(6);
+    },
+    renewaLCost: function() {
+      return (this.renewaLamount).toFixed(6);
     }
   }
 };

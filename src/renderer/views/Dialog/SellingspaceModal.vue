@@ -84,7 +84,7 @@
       <br/>
       <p>
         {{$t('Sellingothers.Compensation')}}：{{Compensation}} LAMB  &nbsp;&nbsp; {{$t('Sellingothers.ServiceCharge')}}：{{Handlingfee}} LAMB  &nbsp;&nbsp;   <br/>
-        {{$t('Sellingothers.Paymentamount')}}：{{Compensation+Handlingfee}} LAMB
+        {{$t('Sellingothers.Paymentamount')}}：{{allcost}} LAMB
       </p>
       </Form >
 
@@ -469,10 +469,13 @@ export default {
       return this.$store.getters.getblance;
     },
     Compensation: function() {
-      return this.$data.spaceSize * this.$data.unitPrice * this.$data.rate;
+      return (this.$data.spaceSize * this.$data.unitPrice * this.$data.rate).toFixed(6);
     },
     Handlingfee: function() {
-      return this.$data.spaceSize * this.$data.unitPrice * this.$data.rate * this.fee1(this.$data.market.feeRate);
+      return (this.Compensation * this.fee1(this.$data.market.feeRate)).toFixed(6);
+    },
+    allcost: function() {
+      return (this.Compensation * (this.fee1(this.$data.market.feeRate) + 1)).toFixed(6);
     }
 
   }
