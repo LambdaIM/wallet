@@ -32,7 +32,7 @@
       </Modal>
 
 
-      <ConfirmModal ref="ConfirmModal" />
+      <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 
@@ -111,6 +111,11 @@ export default {
     },
     formatDay(num) {
       return (num / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(2);
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
 

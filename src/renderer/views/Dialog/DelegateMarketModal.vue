@@ -40,7 +40,7 @@
       </Modal>
 
 
-      <ConfirmModal ref="ConfirmModal" />
+      <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 <script>
@@ -167,6 +167,11 @@ export default {
       if (res.state) {
         this.$data.market_delegate_min_cost = res.data.data.market_delegate_min_cost;
       }
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
   },

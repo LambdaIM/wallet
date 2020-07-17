@@ -41,7 +41,7 @@
 
       </Form >
         <div slot="footer">
-          <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
+          <Button :goback="goback" type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
         </div>
       </Modal>
 
@@ -158,6 +158,11 @@ export default {
       if (res.state) {
         this.$data.parameter = res.data.data;
       }
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
 

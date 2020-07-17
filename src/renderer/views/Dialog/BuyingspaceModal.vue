@@ -75,7 +75,7 @@
       </div>
     </Modal>
 
-    <ConfirmModal ref="ConfirmModal" />
+    <ConfirmModal  :goback="goback" ref="ConfirmModal" />
   </div>
 </template>
 <script>
@@ -214,6 +214,11 @@ export default {
     },
     fee1(num) {
       return this.bigNum(num).toNumber();
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
   },
   computed: {

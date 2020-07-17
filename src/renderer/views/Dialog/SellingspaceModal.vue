@@ -143,7 +143,7 @@
         <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
       </div>
     </Modal>
-    <ConfirmModal ref="ConfirmModal" />
+    <ConfirmModal :goback="goback" ref="ConfirmModal" />
   </div>
 </template>
 <script>
@@ -464,6 +464,11 @@ export default {
           desc: this.$t('Sellingothers.needint')
         });
       }
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
   },
   computed: {

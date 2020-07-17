@@ -33,7 +33,7 @@
       </p>
     </Form>
       <div slot="footer">
-        <Button type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
+        <Button :goback="goback" type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>
     </Modal>
     <ConfirmModal ref="ConfirmModal" />
@@ -120,6 +120,11 @@ export default {
     },
     formatHour(num) {
       return (num / (1000 * 1000 * 1000 * 60 * 60)).toFixed(2);
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
   },

@@ -47,12 +47,12 @@
 
       </Form >
         <div slot="footer">
-          <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
+          <Button :goback="goback" type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
         </div>
       </Modal>
 
 
-      <ConfirmModal ref="ConfirmModal" />
+      <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 <script>
@@ -127,6 +127,11 @@ export default {
         });
         console.log(ex);
       }
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
 
