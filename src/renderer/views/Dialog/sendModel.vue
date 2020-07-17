@@ -36,7 +36,7 @@
     </div>
 
   </Modal>
-  <ConfirmModal ref="ConfirmModal" />
+  <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 <script>
@@ -154,6 +154,11 @@ export default {
       this.editmemo = false;
       this.$data.LAMBvalue = '';
       this.$data.Tovalue = Tovalue || '';
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
   },
   computed: {

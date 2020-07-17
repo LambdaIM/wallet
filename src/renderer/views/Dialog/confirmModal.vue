@@ -539,6 +539,7 @@
 
         </div>
         <div slot="footer">
+          <Button v-if="goback" type="primary" @click="back" > {{$t('Dialog.com.back')}} </Button> &nbsp;  &nbsp;
           <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
         </div>
 
@@ -552,6 +553,10 @@ const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
   components: {
     Gasinput
+  },
+  props: {
+    goback: Function
+
   },
   data() {
     return {
@@ -640,6 +645,14 @@ export default {
       } else if (types == '3') {
         return this.$t('CreateassetsPop.Additionalmining');
       }
+    },
+    back() {
+      if (this.$props.goback) {
+        this.$props.goback();
+      }
+    },
+    clase() {
+      this.confirmModal = false;
     }
   },
   computed: {
