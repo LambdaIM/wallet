@@ -467,7 +467,7 @@ export default {
     },
     goback() {
       console.log('goback');
-      this.sendModal = true;
+      this.$data.withdrawalModal = true;
       this.$refs.ConfirmModal.clase();
     }
   },

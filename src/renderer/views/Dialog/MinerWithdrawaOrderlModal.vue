@@ -36,7 +36,7 @@
         <Button :goback="goback" type="primary" @click="prewithdrawalLAMB">{{$t('home.Modal1.Submit')}}</Button>
       </div>
     </Modal>
-    <ConfirmModal ref="ConfirmModal" />
+    <ConfirmModal :goback="goback" ref="ConfirmModal" />
   </div>
 </template>
 <script>
@@ -123,7 +123,7 @@ export default {
     },
     goback() {
       console.log('goback');
-      this.sendModal = true;
+      this.$data.withdrawalModal = true;
       this.$refs.ConfirmModal.clase();
     }
 

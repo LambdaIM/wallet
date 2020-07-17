@@ -191,7 +191,7 @@ export default {
     },
     goback() {
       console.log('goback');
-      this.sendModal = true;
+      this.$data.AssetlModal = true;
       this.$refs.ConfirmModal.clase();
     }
   },
