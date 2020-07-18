@@ -244,7 +244,7 @@ export default {
 
 
 
-      if (this.bigLess0OrGreater(1e5, this.balance)) {
+      if (this.bigLess0OrGreater(this.parameter.pledge_cost, this.balance)) {
         // need to alert
         this.$Notice.warning({
           title: this.$t('home.action.check_balance_amount_transfer')

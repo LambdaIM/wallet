@@ -168,7 +168,11 @@ export default {
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('OrderRenewal', res.data);
+          this.$refs.ConfirmModal.open('OrderRenewal', res.data, {
+            orderFee: this.renewaLamountFee,
+            paymentAmount: this.renewaLCost,
+            totalAmount: this.allcost
+          });
         }
       } catch (ex) {
         this.$Notice.warning({

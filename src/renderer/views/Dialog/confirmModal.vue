@@ -522,6 +522,55 @@
 
           </div>
 
+        <!-- Other transaction information -->
+        <div  v-if="otherData!=null">
+          <hr style="    margin-top: 14px;"/>
+          <div v-if="txtype=='CreateBuyOrder'">
+            <Row class-name="item">
+                <Col span="6" class-name="key">{{$t('Marketothers.Commissionfee')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.orderFee| Lambformat}}</Col>
+                <Col span="6" class-name="key">{{$t('Marketothers.Orderamount')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.paymentAmount| Lambformat}}</Col>
+              </Row>
+              <Row class-name="item">
+                <Col span="6" class-name="key">{{$t('Dialog.AutoBuy.Paymentamount')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.totalAmount| Lambformat}}</Col>
+
+            </Row>
+
+          </div>
+          <div v-if="txtype=='CreateSellOrder'">
+            <Row class-name="item">
+                <Col span="6" class-name="key">{{$t('Sellingothers.ServiceCharge')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.orderFee}}</Col>
+                <Col span="6" class-name="key">{{$t('Sellingothers.Compensation')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.paymentAmount}}</Col>
+              </Row>
+              <Row class-name="item">
+                <Col span="6" class-name="key">{{$t('Sellingothers.Paymentamount')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.totalAmount}}</Col>
+
+            </Row>
+
+          </div>
+          <div v-if="txtype=='OrderRenewal'">
+            <Row class-name="item">
+                <Col span="6" class-name="key">{{$t('Marketothers.Commissionfee')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.orderFee|Lambformat}}</Col>
+                <Col span="6" class-name="key">{{$t('Marketothers.Orderamount')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.paymentAmount| Lambformat}}</Col>
+              </Row>
+              <Row class-name="item">
+                <Col span="6" class-name="key">{{$t('Dialog.AutoBuy.Paymentamount')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.totalAmount| Lambformat}}</Col>
+
+            </Row>
+
+          </div>
+        </div>
+
+        <!-- Other transaction information -->
+
 
 
           <Row class-name="item">
@@ -564,14 +613,15 @@ export default {
       editmemo: false,
       transactiondata: {},
       txtype: '',
-      gaseFee: ''
+      gaseFee: '',
+      otherData: null
     };
   },
   mounted() {
 
   },
   methods: {
-    open(txtype, transactiondata) {
+    open(txtype, transactiondata, otherData) {
       console.log('打开对话框');
       this.$data.txtype = txtype;
       this.$data.transactiondata = transactiondata;
@@ -583,6 +633,9 @@ export default {
       setTimeout(() => {
         _this.$refs.gasinput_.focus();
       });
+      if (otherData) {
+        this.$data.otherData = otherData;
+      }
     },
     confirm() {
       if (this.gaseFeechange() == false) {

@@ -187,7 +187,11 @@ export default {
         if (res.state) {
           console.log(res.data);
           this.sendcancel();
-          this.$refs.ConfirmModal.open('CreateBuyOrder', res.data);
+          this.$refs.ConfirmModal.open('CreateBuyOrder', res.data, {
+            orderFee: this.feecost,
+            paymentAmount: this.Paymentcost,
+            totalAmount: this.totalcost
+          });
         }
       } catch (ex) {
         this.$Notice.warning({

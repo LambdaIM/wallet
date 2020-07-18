@@ -42,7 +42,7 @@
         </Row>
         <br/>
         <Row>
-            <Col span="24">
+            <Col span="12">
             <div style="margin: 5px;">
               <ul>
                 <li>{{$t('Marketnavigation.lambdamarket.Note1')}}</li>
@@ -59,7 +59,7 @@
 
             </div>
              </Col>
-            <!-- <Col span="12">
+            <Col span="12">
             <div style="margin: 5px;">
 
             <ul>
@@ -76,7 +76,7 @@
 
 
             </div>
-            </Col> -->
+            </Col>
         </Row>
         <br>
         <Row>
