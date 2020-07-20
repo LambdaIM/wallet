@@ -38,12 +38,16 @@
         <Spin fix></Spin>
       </div>
       <div style="    text-align: center;">
-        {{$t('home.moreonbrowser')}}
+        <a @click="Openbrowser" >{{$t('home.moreonbrowser')}}</a>
       </div>
   </div>
 </template>
 
 <script>
+import { DAEMON_CONFIG } from '../../../config.js';
+const { shell } = require('electron');
+
+
 export default {
   components: {
     Activity: () => import('./Activity.vue'),
@@ -59,7 +63,16 @@ export default {
         }
       });
       return result;
+    },
+    Openbrowser() {
+      var explorer = DAEMON_CONFIG.explore();
+      var address = this.$store.getters.getaddress;
+      let url = `${explorer}#/address/${address}/activity/1/all`;
+      console.log(url);
+      shell.openExternal(url);
     }
+
+
 
   },
   props: {
