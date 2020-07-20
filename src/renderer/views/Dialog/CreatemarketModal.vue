@@ -84,10 +84,10 @@ export default {
     preSendLAMB() {
       console.log('-----');
 
-      let assetsType = this.assetsType;
+      let assetsType = this.assetsType.replace(/\s*/g, '');
       let ratio = parseInt(this.ratio);
 
-      let marketName = this.$data.marketName;
+      let marketName = this.$data.marketName.replace(/\s*/g, '');
 
       if (marketName == '') {
         this.$Notice.warning({
@@ -110,13 +110,13 @@ export default {
         });
         return;
       }
-      if (this.bigLess0OrGreater(this.$data.parameter.create_market_cost, this.balance)) {
-        // need to alert
-        this.$Notice.warning({
-          title: this.$t('home.action.check_balance_amount_transfer')
-        });
-        return;
-      }
+      // if (this.bigLess0OrGreater(this.$data.parameter.create_market_cost, this.balance)) {
+      //   // need to alert
+      //   this.$Notice.warning({
+      //     title: this.$t('home.action.check_balance_amount_transfer')
+      //   });
+      //   return;
+      // }
       this.transfer(assetsType, ratio, marketName);
     },
     async transfer(assetsType, ratio, marketName) {
@@ -131,7 +131,9 @@ export default {
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('CreateDigitalAssetMarket', res.data);
+          this.$refs.ConfirmModal.open('CreateDigitalAssetMarket', res.data, {
+            totalAmount: this.parameter.create_market_cost
+          });
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {
@@ -179,6 +181,14 @@ export default {
     },
     isdegeTxt: function() {
       return this.$t('proposalsPage.Vote');
+    }
+  },
+  watch: {
+    assetsType: function(data) {
+      this.$data.assetsType = data.replace(/\s*/g, '');
+    },
+    marketName: function(data) {
+      this.$data.marketName = data.replace(/\s*/g, '');
     }
   }
 

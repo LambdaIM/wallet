@@ -115,6 +115,8 @@ import eventhub from '../../common/js/event.js';
 import ConfirmModal from './confirmModal.vue';
 
 import BigNumber from 'bignumber.js';
+
+import _ from 'underscore';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 export default {
@@ -166,7 +168,7 @@ export default {
     },
     preSendLAMB(ispreview) {
       console.log('-----');
-      let name = this.name.toLocaleLowerCase();
+      let name = this.name.toLocaleLowerCase().replace(/\s*/g, '');
 
       let asset = parseInt(this.asset);
       let MintType = parseInt(this.MintType);
@@ -315,7 +317,9 @@ export default {
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('CreateAsset', res.data);
+          this.$refs.ConfirmModal.open('CreateAsset', res.data, {
+            totalAmount: this.parameter.pledge_cost
+          });
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {

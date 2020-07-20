@@ -567,6 +567,35 @@
             </Row>
 
           </div>
+          <div v-if="txtype=='CreateAsset'">
+
+              <Row class-name="item">
+                <Col span="6" class-name="key">{{$t('Dialog.AutoBuy.Paymentamount')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.totalAmount| Lambformat}}</Col>
+
+            </Row>
+
+          </div>
+          <div v-if="txtype=='CreateDigitalAssetMarket'">
+
+              <Row class-name="item">
+                <Col span="6" class-name="key">{{$t('Dialog.AutoBuy.Paymentamount')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.totalAmount| Lambformat}}</Col>
+
+            </Row>
+
+          </div>
+
+          <div v-if="txtype=='DigitalAssetPledge'">
+
+              <Row class-name="item">
+                <Col span="6" class-name="key">质押资产:</Col>
+                <Col span="6" class-name="value">{{otherData.totalAmount}} {{transactiondata.AssetName|assertdenomformat}}</Col>
+
+            </Row>
+
+          </div>
+
         </div>
 
         <!-- Other transaction information -->
