@@ -834,8 +834,9 @@
        "month":"月",
        "orderid":"订单id",
        "needDuration":"请填写时长",
-       "expirationwarning":"{0}天后订单过期，请及时续期，过期后无法续期",
-       "expirationwarning2":"订单已经过期,过期的订单无法续期",
+       "expirationwarning":"{0}天后订单过期，请及时续期，过期后无法续期，无法打开",
+       "expirationwarning2":"订单已经过期,过期的订单无法续期，无法打开",
+       "expirationwarning4":"订单已经过期,过期的订单，无发打开",
        "maxDuration":"续费时长需要小于60个月"
 
    },

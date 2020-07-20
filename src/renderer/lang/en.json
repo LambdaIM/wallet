@@ -834,8 +834,9 @@
       "month":"month",
       "orderid":"Order ID",
       "needDuration":"Please fill in the time",
-      "expirationwarning":"The order expires in {0} days, please renew in time,Cannot renew after expiration",
-      "expirationwarning2":"The order has expired. The expired order cannot be renewed",
+      "expirationwarning":"The order expires in {0} days, please renew in time,You cannot renew or open it after expiration",
+      "expirationwarning2":"The order has expired. The expired order cannot be renewed and cannot be opened",
+      "expirationwarning4":"The order has expired. The expired order cannot be opened",
       "maxDuration":"Renewal time is less than 60 months"
 
   },
