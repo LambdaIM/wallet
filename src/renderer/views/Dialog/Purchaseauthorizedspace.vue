@@ -24,6 +24,17 @@
           </Input>
         </p>
         <br />
+        <div v-if="mineraddress&&price">
+          <p>
+            矿工地址：{{mineraddress}}
+          </p>
+          <br />
+          <p>
+            价格：{{price|BlanceValue}} {{AssetName|assertdenomformat}}
+          </p>
+
+          <br />
+        </div>
         <p>
           <Input v-model="size" >
                <span slot="prepend">{{$t('Purchasespace.Size')}} </span>
@@ -37,8 +48,11 @@
             <span slot="append">{{$t('Purchasespace.month')}}</span>
           </Input>
         </p>
-
         <br />
+        <p>
+          支付金额：{{payamount|BlanceValue}}  {{AssetName|assertdenomformat}}
+        </p>
+
 
       </Form >
         <div slot="footer">
@@ -70,7 +84,9 @@ export default {
       priceinfo: '',
       size: '',
       Duration: '',
-      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30,
+      mineraddress: '',
+      price: ''
     };
   },
   components: {
@@ -91,15 +107,15 @@ export default {
 
       var size = parseInt(this.$data.size);
       var Duration = parseInt(this.$data.Duration);
-      var address, price;
+
 
 
       // var address = this.$data.priceinfo;
       try {
         var priceinfo = JSON.parse(this.$data.priceinfo);
         // { "address": "lambdamineroper1g74gwkeq2py5zypv4l223p2s82gqlc28rsp826","price": 1000000 }
-        address = priceinfo.address;
-        price = priceinfo.price;
+        this.$data.mineraddress = priceinfo.address;
+        this.$data.price = priceinfo.price;
       } catch (error) {
         this.$Notice.warning({
           title: '价格信格式错误'
@@ -191,6 +207,33 @@ export default {
     },
     isdegeTxt: function() {
       return this.$t('proposalsPage.Vote');
+    },
+    payamount: function() {
+      var size = parseInt(this.$data.size);
+      var Duration = parseInt(this.$data.Duration);
+      var price = this.$data.price;
+
+      var result = price * size * Duration;
+      if (isNaN(result)) {
+        return 0;
+      } else {
+        return result;
+      }
+    }
+  },
+  watch: {
+    priceinfo: function(data) {
+      if (data == '') {
+        return;
+      }
+      try {
+        var priceinfo = JSON.parse(data);
+        // { "address": "lambdamineroper1g74gwkeq2py5zypv4l223p2s82gqlc28rsp826","price": 1000000 }
+        this.$data.mineraddress = priceinfo.address;
+        this.$data.price = priceinfo.price;
+      } catch (error) {
+
+      }
     }
   }
 
