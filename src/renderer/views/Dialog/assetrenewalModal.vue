@@ -161,7 +161,10 @@ export default {
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('DamOrderRenewal', res.data);
+          this.$refs.ConfirmModal.open('DamOrderRenewal', res.data, {
+            totalAmount: this.renewaLamount,
+            denom: this.$data.denom
+          });
         }
       } catch (ex) {
         this.$Notice.warning({
