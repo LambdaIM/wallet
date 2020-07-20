@@ -2,7 +2,7 @@
   <div class="container">
     <Mycard :cardtitle="$t('orderinfo.orderdetails')" class="mt20">
       <div v-if="orderinfo != undefined"  class="s3Operation" slot="operation">
-        <Button :disabled="ispayorder(orderinfo.buyAddress)==false" type="primary" @click="openS3">{{$t('orderinfo.orderBucket')}}</Button>
+        <Button v-if="timeend>=0" :disabled="ispayorder(orderinfo.buyAddress)==false" type="primary" @click="openS3">{{$t('orderinfo.orderBucket')}}</Button>
       </div>
 
       <div v-if="orderinfo != undefined" class="transaction-content" slot="card-content">
