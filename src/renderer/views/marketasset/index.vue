@@ -24,9 +24,9 @@
                  <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.validator')" :content="$t('rolepage.validatorbrief')">
                     <Radio label="validator">{{$t('rolepage.roletype.validator')}}</Radio>
                  </Poptip>
-                 <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.marketmaker')" :content="$t('rolepage.marketmakerbrief')">
+                 <!-- <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.marketmaker')" :content="$t('rolepage.marketmakerbrief')">
                     <Radio label="marketmaker">{{$t('rolepage.roletype.marketmaker')}}</Radio>
-                 </Poptip>
+                 </Poptip> -->
 
             </RadioGroup>
         </Row>
