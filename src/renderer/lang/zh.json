@@ -1048,7 +1048,8 @@
     },
     "DeactivateMinerpop":{
         "Deactivate":"移除矿工",
-        "address":"lambda 地址"
+        "address":"lambda 地址",
+        "need_address":"需要矿工的lambda 地址"
     },
     "Assetincomepop":{
         "title":"提取资产市场订单收益",
