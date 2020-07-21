@@ -116,6 +116,9 @@ export default {
         // { "address": "lambdamineroper1g74gwkeq2py5zypv4l223p2s82gqlc28rsp826","price": 1000000 }
         this.$data.mineraddress = priceinfo.address;
         this.$data.price = priceinfo.price;
+        if (priceinfo.address == undefined || priceinfo.price == undefined) {
+          throw new Error('');
+        }
       } catch (error) {
         this.$Notice.warning({
           title: '价格信格式错误'
@@ -125,7 +128,7 @@ export default {
 
 
 
-      if (address.length !== 54) {
+      if (this.$data.mineraddress.length !== 54) {
         this.$Notice.warning({
           title: this.$t('Purchasespace.action.need_miner_address')
         });
@@ -148,7 +151,7 @@ export default {
       }
 
 
-      this.transfer(AssetName, address, size, Duration);
+      this.transfer(AssetName, this.$data.mineraddress, size, Duration);
     },
     openLinkmarket(name) {
       var explorer = DAEMON_CONFIG.explore();
@@ -169,7 +172,10 @@ export default {
 
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('assertDamCreateBuyOrder', res.data);
+          this.$refs.ConfirmModal.open('assertDamCreateBuyOrder', res.data, {
+            totalAmount: this.payamount,
+            denom: this.$data.AssetName
+          });
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {

@@ -604,6 +604,15 @@
             </Row>
 
           </div>
+          <div v-if="txtype=='assertDamCreateBuyOrder'">
+
+              <Row class-name="item">
+                <Col span="6" class-name="key">{{$t('Dialog.AutoBuy.Paymentamount')}}:</Col>
+                <Col span="6" class-name="value">{{otherData.totalAmount|BlanceValue}} {{otherData.denom|assertdenomformat}}</Col>
+
+            </Row>
+
+          </div>
 
         </div>
 
