@@ -20,17 +20,17 @@
         <br />
         <p>
           <Input v-model="priceinfo" >
-            <span slot="prepend">矿工价格信息</span>
+            <span slot="prepend">{{$t('Purchasespace.Priceofminers')}}</span>
           </Input>
         </p>
         <br />
         <div v-if="mineraddress&&price">
           <p>
-            矿工地址：{{mineraddress}}
+            {{$t('Purchasespace.Mineroperationaddress')}}：{{mineraddress}}
           </p>
           <br />
           <p>
-            价格：{{price|BlanceValue}} {{AssetName|assertdenomformat}}
+            {{$t('Purchasespace.Price')}}：{{price|BlanceValue}} {{AssetName|assertdenomformat}}
           </p>
 
           <br />
@@ -50,7 +50,7 @@
         </p>
         <br />
         <p>
-          支付金额：{{payamount|BlanceValue}}  {{AssetName|assertdenomformat}}
+          {{$t('Purchasespace.Paymentamount')}}：{{payamount|BlanceValue}}  {{AssetName|assertdenomformat}}
         </p>
 
 
@@ -121,7 +121,7 @@ export default {
         }
       } catch (error) {
         this.$Notice.warning({
-          title: '价格信格式错误'
+          title: this.$t('Purchasespace.Priceformaterror')
         });
         return;
       }

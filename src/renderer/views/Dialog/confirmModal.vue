@@ -589,7 +589,7 @@
           <div v-if="txtype=='DigitalAssetPledge'">
 
               <Row class-name="item">
-                <Col span="6" class-name="key">质押资产:</Col>
+                <Col span="6" class-name="key">{{$t('Marketothers.pledgeassets')}}:</Col>
                 <Col span="6" class-name="value">{{otherData.totalAmount}} {{transactiondata.AssetName|assertdenomformat}}</Col>
 
             </Row>

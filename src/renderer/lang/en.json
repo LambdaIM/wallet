@@ -1083,12 +1083,15 @@
   },
   "Purchasespace":{
       "Purchaseauthorizedspace":"Purchase authorized space",
-      "operationaddressbrowser":"Find the miner's operation address in the browser",
+      "operationaddressbrowser":"Search for miner price information in browser",
       "Mineroperationaddress":"Miner operation address",
       "Size":"Size",
       "duration":"duration",
       "month":"month",
       "buy":"buy",
+      "Priceofminers":"Price information of miners",
+      "Paymentamount":"Payment amount",
+      "Priceformaterror":"Price information format error",
       "action":{
           "need_miner_address":"Please fill in the miner operation address, check the miner operation address format",
           "need_miner_duration":"The duration needs to be an integer and greater than 0",
@@ -1152,7 +1155,8 @@
       "Commissionfee":"Commission fee",
       "Orderamount":"Order amount",
       "Transactionfee":"Transaction fee",
-      "estimate":"Estimate"
+      "estimate":"Estimate",
+      "pledgeassets":"Pledge amount"
 
   },
   "Sellingothers":{

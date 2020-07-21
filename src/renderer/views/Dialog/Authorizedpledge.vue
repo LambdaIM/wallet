@@ -31,7 +31,7 @@
         </p>
 
         <br />
-        <p v-if="isNaN(Compensation)==false">质押资产：{{Compensation}} {{AssetName|assertdenomformat}} </p>
+        <p v-if="isNaN(Compensation)==false">{{$t('Marketothers.pledgeassets')}}：{{Compensation}} {{AssetName|assertdenomformat}} </p>
         <p>
           {{$t('AuthorizeMarketpledge.tip1')}}<br/>
           {{$t('AuthorizeMarketpledge.tip2')}}<br/>

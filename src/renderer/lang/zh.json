@@ -1082,12 +1082,16 @@
     },
     "Purchasespace":{
         "Purchaseauthorizedspace":"购买授权空间",
-        "operationaddressbrowser":"在浏览器中查找矿工操作地址",
+        "operationaddressbrowser":"在浏览器中查找矿工价格信息",
         "Mineroperationaddress":"矿工操作地址",
         "Size":"空间",
         "duration":"时长",
         "month":"月",
         "buy":"购买",
+        "Priceofminers":"矿工价格信息",
+        "Price":"价格",
+        "Paymentamount":"支付金额",
+        "Priceformaterror":"价格信息格式错误",
         "action":{
             "need_miner_address":"请填写矿工操作地址、检查矿工操作地址格式",
             "need_miner_duration":"时长需要为整数，并且大于0",
@@ -1151,7 +1155,8 @@
         "Commissionfee":"委托单手续费",
         "Orderamount":"订单金额",
         "Transactionfee":"交易手续费",
-        "estimate":"估算"
+        "estimate":"估算",
+        "pledgeassets":"质押金额"
 
     },
     "Sellingothers":{
