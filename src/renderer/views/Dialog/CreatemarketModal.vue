@@ -110,13 +110,13 @@ export default {
         });
         return;
       }
-      // if (this.bigLess0OrGreater(this.$data.parameter.create_market_cost, this.balance)) {
-      //   // need to alert
-      //   this.$Notice.warning({
-      //     title: this.$t('home.action.check_balance_amount_transfer')
-      //   });
-      //   return;
-      // }
+      if (this.bigLess0OrGreater(this.$data.parameter.create_market_cost, this.balance)) {
+        // need to alert
+        this.$Notice.warning({
+          title: this.$t('home.action.check_balance_amount_transfer')
+        });
+        return;
+      }
       this.transfer(assetsType, ratio, marketName);
     },
     async transfer(assetsType, ratio, marketName) {
