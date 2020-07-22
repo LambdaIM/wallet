@@ -1,48 +1,41 @@
 <template>
-<div>
+    <div>
+        <Row>
+            <Col span="18">
+                <div class="searchtxt" style="    display: inline-block;">
+                    <Input
+                        :placeholder="`${$t('syncorderpage.mineraddress')}、${$t('syncorderpage.orderID')}`"
+                        @on-keyup="conditionChange"
+                        v-model="condition.storagenode"
+                        size="small"
+                        style="width: 280px"
+                    />
+                    <!-- {{$t('syncorderpage.orderID')}} <Input @on-keyup="conditionChange"  v-model="condition.orderid" size="small"  style="width: 280px" /> -->
+                </div>
+            </Col>
+            <Col span="4">
+                <Dropdown @on-click="datasync">
+                    <!-- @click="datasync" -->
+                    <Button :loading="loading">
+                        {{ $t('marketpage.datasync') }}
+                        <Icon type="ios-arrow-down"></Icon>
+                    </Button>
 
-     <Row>
-        <Col span="18">
-        <div class="searchtxt" style="    display: inline-block;"  >
-
-
-
-  <Input :placeholder="`${$t('syncorderpage.mineraddress')}、${$t('syncorderpage.orderID')}`" @on-keyup="conditionChange"  v-model="condition.storagenode" size="small"  style="width: 280px" />
- <!-- {{$t('syncorderpage.orderID')}} <Input @on-keyup="conditionChange"  v-model="condition.orderid" size="small"  style="width: 280px" /> -->
-  </div>
-
-
-        </Col>
-        <Col span="4">
-
-        <Dropdown @on-click="datasync">
-        <!-- @click="datasync" -->
-        <Button :loading="loading"   >
-          {{$t('marketpage.datasync')}}
-          <Icon type="ios-arrow-down"></Icon>
-          </Button>
-
-        <DropdownMenu slot="list">
-            <DropdownItem name="some">{{$t('syncorderpage.typedata1')}}</DropdownItem>
-            <DropdownItem name="more">{{$t('syncorderpage.typedata2')}}</DropdownItem>
-            <!-- <DropdownItem name="all" divided>{{$t('syncorderpage.typedata3')}}</DropdownItem> -->
-
-        </DropdownMenu>
-    </Dropdown>
-
-        </Col>
-        <Col span="2">
-        <Button  to="/market/buyspace"  type="primary">{{stateTxt}}</Button>
-
-        </Col>
-
-    </Row>
-    <br/>
-      <Progress  v-if="loading==true" :percent="percentage"  />
-<br/>
-
-
-</div>
+                    <DropdownMenu slot="list">
+                        <DropdownItem name="some">{{ $t('syncorderpage.typedata1') }}</DropdownItem>
+                        <DropdownItem name="more">{{ $t('syncorderpage.typedata2') }}</DropdownItem>
+                        <!-- <DropdownItem name="all" divided>{{$t('syncorderpage.typedata3')}}</DropdownItem> -->
+                    </DropdownMenu>
+                </Dropdown>
+            </Col>
+            <Col span="2">
+                <Button to="/market/buyspace" type="primary">{{ stateTxt }}</Button>
+            </Col>
+        </Row>
+        <br />
+        <Progress v-if="loading == true" :percent="percentage" />
+        <br />
+    </div>
 </template>
 
 <script>
@@ -51,119 +44,120 @@ import eventHub from '@/common/js/event.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 export default {
-  data() {
-    return {
-      searchkey: '',
-      switchstate: true,
-      page: 1,
-      loading: false,
-      condition: {
-        priceStart: '',
-        priceEnd: '',
-        rateStart: '',
-        rateEnd: '',
-        storagenode: '',
-        statusType: '0',
-        orderid: ''
-      },
-      percentage: 0
-    };
-  },
-  props: {
-    marketName: {
-      type: String
-    }
-  },
-  mounted() {
-
-  },
-  methods: {
-    conditionChange() {
-      if (this.$data.condition.priceStart != '' && this.$data.condition.priceEnd != '' &&
-      this.$data.condition.priceEnd < this.$data.condition.priceStart) {
-        this.$Message.info(this.$t('marketpage.Localsorting4'));
-        return;
-      }
-
-      if (this.$data.condition.rateStart != '' && this.$data.condition.rateEnd != '' &&
-      this.$data.condition.rateEnd < this.$data.condition.rateStart) {
-        this.$Message.info(this.$t('marketpage.Localsorting4'));
-        return;
-      }
-      this.$data.condition['statusType'] = '0';
-      // this.$data.condition['statusType'] = this.$store.getters.statusType == 'active' ? '0' : '1';
-
-      eventHub.$emit('marketconditionfilter', this.$data.condition);
+    data() {
+        return {
+            searchkey: '',
+            switchstate: true,
+            page: 1,
+            loading: false,
+            condition: {
+                priceStart: '',
+                priceEnd: '',
+                rateStart: '',
+                rateEnd: '',
+                storagenode: '',
+                statusType: '0',
+                orderid: '',
+            },
+            percentage: 0,
+        };
     },
-    switchfn() {
-      console.log('=====');
-
-      this.$data.switchstate = !this.$data.switchstate;
-      eventHub.$emit('marketsellordersync', this.$data.switchstate);
-      // if (this.$data.switchstate) {
-      //   this.$data.loading = true;
-      //   this.fetchData();
-      // }
+    props: {
+        marketName: {
+            type: String,
+        },
     },
-    datasync(nameType) {
-      // eventHub.$emit('marketsellordersync', this.$data.switchstate);
-      // if (this.$data.switchstate) {
-      // this.$Spin.show();
-      console.log(nameType);
-      var stoppagenum = 1000;
-      if (nameType == 'some') {
-        stoppagenum = 1000;
-      } else if (nameType == 'more') {
-        stoppagenum = 10000;
-      } else {
-        stoppagenum = 100000;
-      }
+    mounted() {},
+    methods: {
+        conditionChange() {
+            if (
+                this.$data.condition.priceStart != '' &&
+                this.$data.condition.priceEnd != '' &&
+                this.$data.condition.priceEnd < this.$data.condition.priceStart
+            ) {
+                this.$Message.info(this.$t('marketpage.Localsorting4'));
+                return;
+            }
 
-      this.$data.loading = true;
-      this.$data.page = 1;
-      this.cleardata();
-      this.fetchData(stoppagenum);
+            if (
+                this.$data.condition.rateStart != '' &&
+                this.$data.condition.rateEnd != '' &&
+                this.$data.condition.rateEnd < this.$data.condition.rateStart
+            ) {
+                this.$Message.info(this.$t('marketpage.Localsorting4'));
+                return;
+            }
+            this.$data.condition['statusType'] = '0';
+            // this.$data.condition['statusType'] = this.$store.getters.statusType == 'active' ? '0' : '1';
 
-      // }
+            eventHub.$emit('marketconditionfilter', this.$data.condition);
+        },
+        switchfn() {
+            console.log('=====');
+
+            this.$data.switchstate = !this.$data.switchstate;
+            eventHub.$emit('marketsellordersync', this.$data.switchstate);
+            // if (this.$data.switchstate) {
+            //   this.$data.loading = true;
+            //   this.fetchData();
+            // }
+        },
+        datasync(nameType) {
+            // eventHub.$emit('marketsellordersync', this.$data.switchstate);
+            // if (this.$data.switchstate) {
+            // this.$Spin.show();
+            console.log(nameType);
+            var stoppagenum = 1000;
+            if (nameType == 'some') {
+                stoppagenum = 1000;
+            } else if (nameType == 'more') {
+                stoppagenum = 10000;
+            } else {
+                stoppagenum = 100000;
+            }
+
+            this.$data.loading = true;
+            this.$data.page = 1;
+            this.cleardata();
+            this.fetchData(stoppagenum);
+
+            // }
+        },
+        async cleardata() {
+            var marketAddress = this.$store.getters.getselectMarket;
+            let res = await ipc.callMain('clearlocalmarketdata', {
+                marketAddress: marketAddress,
+            });
+        },
+        async fetchData(stoppagenum) {
+            console.log('-----');
+            let res = await ipc.callMain('marketOrderListsync', {
+                marketName: this.$props.marketName,
+                orderType: 'premium', // premium all
+                page: this.$data.page,
+                limit: 10,
+                statusType: 'active',
+            });
+
+            if (res.data == 10 && stoppagenum >= this.$data.page) {
+                this.$data.page += 1;
+                this.$data.percentage = parseFloat(((this.$data.page / stoppagenum) * 100).toFixed(2));
+                this.fetchData(stoppagenum);
+            } else {
+                this.$data.loading = false;
+                // this.$Spin.hide();
+                eventHub.$emit('marketconditionfilter', this.$data.condition);
+            }
+        },
     },
-    async cleardata() {
-      var marketAddress = this.$store.getters.getselectMarket;
-      let res = await ipc.callMain('clearlocalmarketdata', {
-        marketAddress: marketAddress
-      });
+    computed: {
+        stateTxt() {
+            if (this.$data.switchstate) {
+                return this.$t('marketpage.Localsorting2');
+            } else {
+                return this.$t('marketpage.Localsorting1');
+            }
+        },
     },
-    async fetchData(stoppagenum) {
-      console.log('-----');
-      let res = await ipc.callMain('marketOrderListsync', {
-        marketName: this.$props.marketName,
-        orderType: 'premium', // premium all
-        page: this.$data.page,
-        limit: 10,
-        statusType: 'active'
-      });
-
-
-      if (res.data == 10 && stoppagenum >= this.$data.page) {
-        this.$data.page += 1;
-        this.$data.percentage = parseFloat((this.$data.page / stoppagenum * 100).toFixed(2));
-        this.fetchData(stoppagenum);
-      } else {
-        this.$data.loading = false;
-        // this.$Spin.hide();
-        eventHub.$emit('marketconditionfilter', this.$data.condition);
-      }
-    }
-  },
-  computed: {
-    stateTxt() {
-      if (this.$data.switchstate) {
-        return this.$t('marketpage.Localsorting2');
-      } else {
-        return this.$t('marketpage.Localsorting1');
-      }
-    }
-  }
-
 };
-
 </script>

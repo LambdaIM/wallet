@@ -1,132 +1,118 @@
 <template>
-<div class="container" style="margin-top: 10px;">
-<Mycard :cardtitle="$t('orderinfo.orderdetails')" >
-  <div v-if="sellorderinfo"  class="s3Operation" slot="operation">
-        <Button
-                type="primary"
-                size="small"
-                @click="openBuyingspace(sellorderinfo)"
-              >{{$t('marketpage.selltable.Purchasespace')}}</Button>
-      </div>
-<div v-if="sellorderinfo" class="card-content" slot="card-content">
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('syncorderpage.orderID') }}:</span>
-          </Col>
-          <Col span="17" class-name="content-wrapper">
-            {{sellorderinfo.orderId}}
-          </Col>
-          <Col span="3" class-name="content-wrapper">
-
-            <Button type="primary" to="/market/syncdata">{{ $t('Dialog.com.back') }}</Button>
-
-          </Col>
-        </Row>
-
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('Dialog.AutoBuy.Marketaddress')}}:</span>
-          </Col>
-          <Col span="17" class-name="content-wrapper">
-            {{marketAddress}}
-          </Col>
-
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('Dialog.AutoBuy.Marketname')}}:</span>
-          </Col>
-          <Col span="17" class-name="content-wrapper">
-            {{marketname}}
-          </Col>
-
-        </Row>
-
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('marketpage.Status') }}:</span>
-          </Col>
-          <Col span="17" class-name="content-wrapper">
-            <span style="color:green" v-if="sellorderinfo.status=='0'">{{$t('marketpage.Active')}}</span>
-            <span style="color:red" v-if="sellorderinfo.status=='1'">{{$t('marketpage.Finish')}}</span>
-          </Col>
-        </Row>
+    <div class="container" style="margin-top: 10px;">
+        <Mycard :cardtitle="$t('orderinfo.orderdetails')">
+            <div v-if="sellorderinfo" class="s3Operation" slot="operation">
+                <Button type="primary" size="small" @click="openBuyingspace(sellorderinfo)">
+                    {{ $t('marketpage.selltable.Purchasespace') }}
+                </Button>
+            </div>
+            <div v-if="sellorderinfo" class="card-content" slot="card-content">
                 <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('marketpage.selltable.Odds') }}:</span>
-          </Col>
-          <Col span="17" class-name="content-wrapper">
-            {{parseFloat(sellorderinfo.rate)}}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('marketpage.selltable.Mineraddress') }}:</span>
-          </Col>
-          <Col span="17" class-name="content-wrapper">
-          <a @click="openminerpage(sellorderinfo.address)">  {{sellorderinfo.address}} </a>
-          </Col>
-          <Col span="3" class-name="content-wrapper">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('syncorderpage.orderID') }}:</span>
+                    </Col>
+                    <Col span="17" class-name="content-wrapper">
+                        {{ sellorderinfo.orderId }}
+                    </Col>
+                    <Col span="3" class-name="content-wrapper">
+                        <Button type="primary" to="/market/syncdata">{{ $t('Dialog.com.back') }}</Button>
+                    </Col>
+                </Row>
 
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('Dialog.AutoBuy.Marketaddress') }}:</span>
+                    </Col>
+                    <Col span="17" class-name="content-wrapper">
+                        {{ marketAddress }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('Dialog.AutoBuy.Marketname') }}:</span>
+                    </Col>
+                    <Col span="17" class-name="content-wrapper">
+                        {{ marketname }}
+                    </Col>
+                </Row>
 
-          </Col>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('marketpage.Status') }}:</span>
+                    </Col>
+                    <Col span="17" class-name="content-wrapper">
+                        <span style="color:green" v-if="sellorderinfo.status == '0'">
+                            {{ $t('marketpage.Active') }}
+                        </span>
+                        <span style="color:red" v-if="sellorderinfo.status == '1'">{{ $t('marketpage.Finish') }}</span>
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('marketpage.selltable.Odds') }}:</span>
+                    </Col>
+                    <Col span="17" class-name="content-wrapper">
+                        {{ parseFloat(sellorderinfo.rate) }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('marketpage.selltable.Mineraddress') }}:</span>
+                    </Col>
+                    <Col span="17" class-name="content-wrapper">
+                        <a @click="openminerpage(sellorderinfo.address)">{{ sellorderinfo.address }}</a>
+                    </Col>
+                    <Col span="3" class-name="content-wrapper"></Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('marketpage.selltable.amountspace') }}:</span>
+                    </Col>
+                    <Col span="17" class-name="content-wrapper">
+                        {{ sellorderinfo.sellSize }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('marketpage.selltable.remainingspace') }}:</span>
+                    </Col>
+                    <Col span="17" class-name="content-wrapper">
+                        {{ sellorderinfo.unusedSize }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="5" class-name="title-wrapper">
+                        <span class="title">{{ $t('marketpage.selltable.unitprice') }}:</span>
+                    </Col>
+                    <Col span="16" class-name="content-wrapper">
+                        {{ sellorderinfo.price | Lambformat }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('marketpage.selltable.minimumspace') }}:</span>
+                    </Col>
+                    <Col span="17" class-name="content-wrapper">
+                        {{ sellorderinfo.minBuySize }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('marketpage.selltable.minimumduration') }}:</span>
+                    </Col>
+                    <Col span="17" class-name="content-wrapper">
+                        {{ sellorderinfo.minDuration | formatMonth }}
+                    </Col>
+                </Row>
 
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('marketpage.selltable.amountspace') }}:</span>
-          </Col>
-          <Col span="17" class-name="content-wrapper">
-            {{sellorderinfo.sellSize}}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('marketpage.selltable.remainingspace') }}:</span>
-          </Col>
-          <Col span="17" class-name="content-wrapper">
-            {{sellorderinfo.unusedSize}}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="5" class-name="title-wrapper">
-            <span class="title">{{ $t('marketpage.selltable.unitprice') }}:</span>
-          </Col>
-          <Col span="16" class-name="content-wrapper">
-            {{sellorderinfo.price| Lambformat}}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('marketpage.selltable.minimumspace') }}:</span>
-          </Col>
-          <Col span="17" class-name="content-wrapper">
-            {{sellorderinfo.minBuySize}}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('marketpage.selltable.minimumduration') }}:</span>
-          </Col>
-          <Col span="17" class-name="content-wrapper">
-            {{sellorderinfo.minDuration|formatMonth}}
-          </Col>
-        </Row>
-
-        <BuyingspaceModal ref="Buyingspace" />
-
-
-</div>
-<div v-if="error" slot="card-content">
-
-      <Alert type="error">{{error}}</Alert>
-  <Button type="primary" to="/market/syncdata">{{ $t('Dialog.com.back') }}</Button>
-
-</div>
-</Mycard>
-
-</div>
-
+                <BuyingspaceModal ref="Buyingspace" />
+            </div>
+            <div v-if="error" slot="card-content">
+                <Alert type="error">{{ error }}</Alert>
+                <Button type="primary" to="/market/syncdata">{{ $t('Dialog.com.back') }}</Button>
+            </div>
+        </Mycard>
+    </div>
 </template>
 
 <script>
@@ -137,101 +123,98 @@ const { shell } = require('electron');
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
-
 export default {
-  components: {
-    BuyingspaceModal,
-    Mycard
-  },
-  data() {
-    return {
-      marketList: [],
-      marketname: '',
-      marketAddress: '',
-      orderId: this.$route.params.orderid,
-      sellorderinfo: null,
-      error: null
-    };
-  },
-  async mounted() {
-    console.log();
+    components: {
+        BuyingspaceModal,
+        Mycard,
+    },
+    data() {
+        return {
+            marketList: [],
+            marketname: '',
+            marketAddress: '',
+            orderId: this.$route.params.orderid,
+            sellorderinfo: null,
+            error: null,
+        };
+    },
+    async mounted() {
+        console.log();
 
-    await this.getmarketlist();
-    this.getsellorderinfo();
-  },
-  methods: {
-    openBuyingspace(row) {
-      this.$refs.Buyingspace.open(row, this.$data.selectmarket);
+        await this.getmarketlist();
+        this.getsellorderinfo();
     },
-    async getmarketlist() {
-      console.log('getmarketlist');
-      try {
-        let res = await ipc.callMain('marketlist', {});
-        if (res.state) {
-          this.$data.marketList = res.data.data;
-          this.$data.selectmarket = this.finddefaultmarket();
-          this.$data.marketname = this.$data.selectmarket.name;
-          this.$data.marketAddress = this.$data.selectmarket.marketAddress;
-        }
-      } catch (error) {
-        this.$Message.error(this.$t('foot.linkerror'));
-      }
-    },
-    finddefaultmarket() {
-      var list = this.$data.marketList;
-      var defaultaddress = this.$store.getters.getselectMarket;
-      var result = list[0];
-      list.forEach(item => {
-        if (item.marketAddress == defaultaddress) {
-          result = item;
-        }
-      });
+    methods: {
+        openBuyingspace(row) {
+            this.$refs.Buyingspace.open(row, this.$data.selectmarket);
+        },
+        async getmarketlist() {
+            console.log('getmarketlist');
+            try {
+                let res = await ipc.callMain('marketlist', {});
+                if (res.state) {
+                    this.$data.marketList = res.data.data;
+                    this.$data.selectmarket = this.finddefaultmarket();
+                    this.$data.marketname = this.$data.selectmarket.name;
+                    this.$data.marketAddress = this.$data.selectmarket.marketAddress;
+                }
+            } catch (error) {
+                this.$Message.error(this.$t('foot.linkerror'));
+            }
+        },
+        finddefaultmarket() {
+            var list = this.$data.marketList;
+            var defaultaddress = this.$store.getters.getselectMarket;
+            var result = list[0];
+            list.forEach(item => {
+                if (item.marketAddress == defaultaddress) {
+                    result = item;
+                }
+            });
 
-      return result;
+            return result;
+        },
+        async getsellorderinfo() {
+            console.log('getsellorderinfo');
+            let res = await ipc.callMain('sellorderinfo', {
+                orderId: this.$data.orderId,
+            });
+            if (res.state && res.data.data.error == undefined) {
+                this.$data.sellorderinfo = res.data.data;
+            } else {
+                this.$data.error = res.data.data.error;
+            }
+        },
+        async openminerpage(address) {
+            let res = await ipc.callMain('getlambdaaddressbyminer', {
+                address: address,
+            });
+            if (res.state) {
+                var lambdaaddress = res.data;
+                var explorer = DAEMON_CONFIG.explore();
+                let url = `${explorer}/#/address/${lambdaaddress}/activity/1/all`;
+                shell.openExternal(url);
+            }
+        },
     },
-    async  getsellorderinfo() {
-      console.log('getsellorderinfo');
-      let res = await ipc.callMain('sellorderinfo', {
-        orderId: this.$data.orderId
-      });
-      if (res.state && res.data.data.error == undefined) {
-        this.$data.sellorderinfo = res.data.data;
-      } else {
-        this.$data.error = res.data.data.error;
-      }
-    },
-    async openminerpage(address) {
-      let res = await ipc.callMain('getlambdaaddressbyminer', {
-        address: address
-      });
-      if (res.state) {
-        var lambdaaddress = res.data;
-        var explorer = DAEMON_CONFIG.explore();
-        let url = `${explorer}/#/address/${lambdaaddress}/activity/1/all`;
-        shell.openExternal(url);
-      }
-    }
-  }
-
 };
 </script>
 
-
 <style lang="less" scoped>
 .container {
-  position: relative;
+    position: relative;
 
-  .card-content {
-    .card-item {
-      margin-bottom: 20px;
-      .title {
-        font-size: 14px;
-        font-weight: 600;
-      }
-      .item-value {
-        font-size: 14px;
-      }
+    .card-content {
+        .card-item {
+            margin-bottom: 20px;
+            .title {
+                font-size: 14px;
+                font-weight: 600;
+            }
+            .item-value {
+                font-size: 14px;
+            }
+        }
     }
-  }
 }
 </style>

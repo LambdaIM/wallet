@@ -7,9 +7,8 @@
 import marketpledge from '../market/marketpledge.vue';
 
 export default {
-  components: {
-    marketpledge
-  }
-
+    components: {
+        marketpledge,
+    },
 };
 </script>
