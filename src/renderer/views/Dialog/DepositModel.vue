@@ -48,7 +48,7 @@
       </Modal>
 
 
-      <ConfirmModal ref="ConfirmModal" />
+      <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 <script>
@@ -137,6 +137,11 @@ export default {
         });
         console.log(ex);
       }
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
 

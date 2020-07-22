@@ -143,7 +143,7 @@
         <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
       </div>
     </Modal>
-    <ConfirmModal ref="ConfirmModal" />
+    <ConfirmModal :goback="goback" ref="ConfirmModal" />
   </div>
 </template>
 <script>
@@ -391,7 +391,11 @@ export default {
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('CreateSellOrder', res.data);
+          this.$refs.ConfirmModal.open('CreateSellOrder', res.data, {
+            orderFee: this.Handlingfee,
+            paymentAmount: this.Compensation,
+            totalAmount: this.allcost
+          });
         }
       } catch (ex) {
         this.$Notice.warning({
@@ -464,6 +468,11 @@ export default {
           desc: this.$t('Sellingothers.needint')
         });
       }
+    },
+    goback() {
+      console.log('goback');
+      this.$data.withdrawalModal = true;
+      this.$refs.ConfirmModal.clase();
     }
   },
   computed: {

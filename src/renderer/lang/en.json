@@ -61,6 +61,7 @@
       "loginfo":"log info",
       "browselog":"browse log",
       "Datasignature":"Data signature",
+      "Viewinbrowser":"View in blockchain browser",
       "action":{
         "Modified_success":"Modified success",
         "Modification_failed":"Modification failed"
@@ -837,7 +838,8 @@
       "expirationwarning":"The order expires in {0} days, please renew in time,You cannot renew or open it after expiration",
       "expirationwarning2":"The order has expired. The expired order cannot be renewed and cannot be opened",
       "expirationwarning4":"The order has expired. The expired order cannot be opened",
-      "maxDuration":"Renewal time is less than 60 months"
+      "maxDuration":"Renewal time is less than 60 months",
+      "expirationwarning3":"The order has expired. The expired order cannot be opened"
 
   },
   "orderrevenue":{
@@ -1082,12 +1084,15 @@
   },
   "Purchasespace":{
       "Purchaseauthorizedspace":"Purchase authorized space",
-      "operationaddressbrowser":"Find the miner's operation address in the browser",
+      "operationaddressbrowser":"Search for miner price information in browser",
       "Mineroperationaddress":"Miner operation address",
       "Size":"Size",
       "duration":"duration",
       "month":"month",
-      "buy":"buy",
+      "buy":"Buy",
+      "Priceofminers":"Price information of miners",
+      "Paymentamount":"Payment amount",
+      "Priceformaterror":"Price information format error",
       "action":{
           "need_miner_address":"Please fill in the miner operation address, check the miner operation address format",
           "need_miner_duration":"The duration needs to be an integer and greater than 0",
@@ -1151,7 +1156,8 @@
       "Commissionfee":"Commission fee",
       "Orderamount":"Order amount",
       "Transactionfee":"Transaction fee",
-      "estimate":"Estimate"
+      "estimate":"Estimate",
+      "pledgeassets":"Pledge amount"
 
   },
   "Sellingothers":{

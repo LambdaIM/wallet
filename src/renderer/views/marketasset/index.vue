@@ -24,9 +24,9 @@
                  <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.validator')" :content="$t('rolepage.validatorbrief')">
                     <Radio label="validator">{{$t('rolepage.roletype.validator')}}</Radio>
                  </Poptip>
-                 <!-- <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.marketmaker')" :content="$t('rolepage.marketmakerbrief')">
+                 <Poptip word-wrap width="400" trigger="hover" :title="$t('rolepage.roletype.marketmaker')" :content="$t('rolepage.marketmakerbrief')">
                     <Radio label="marketmaker">{{$t('rolepage.roletype.marketmaker')}}</Radio>
-                 </Poptip> -->
+                 </Poptip>
 
             </RadioGroup>
         </Row>
@@ -42,7 +42,7 @@
         </Row>
         <br/>
         <Row>
-            <Col span="24">
+            <Col span="12">
             <div style="margin: 5px;">
               <ul>
                 <li>{{$t('Marketnavigation.lambdamarket.Note1')}}</li>
@@ -59,7 +59,7 @@
 
             </div>
              </Col>
-            <!-- <Col span="12">
+            <Col span="12">
             <div style="margin: 5px;">
 
             <ul>
@@ -76,7 +76,7 @@
 
 
             </div>
-            </Col> -->
+            </Col>
         </Row>
         <br>
         <Row>

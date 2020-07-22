@@ -8,7 +8,10 @@
     <Mycard :cardtitle="$t('orderinfo.orderdetails')" class="mt20">
 
       <div v-if="orderinfo != undefined"  class="s3Operation" slot="operation">
-        <Button :disabled="orderRenewalstatus(orderinfo.buyAddress)==false" type="primary" @click="openS3">{{$t('orderinfo.orderBucket')}}</Button>
+        <Button v-if="timeend>=0"  :disabled="orderRenewalstatus(orderinfo.buyAddress)==false" type="primary" @click="openS3">{{$t('orderinfo.orderBucket')}}</Button>
+         <div v-else>
+          {{$t('renewal.expirationwarning3')}}
+        </div>
       </div>
         <div class="transaction-content" slot="card-content" v-if="orderinfo">
             <Row class-name="card-item">

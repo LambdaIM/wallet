@@ -31,7 +31,7 @@
       </div>
     </Modal>
 
-    <ConfirmModal ref="ConfirmModal" />
+    <ConfirmModal :goback="goback" ref="ConfirmModal" />
   </div>
 </template>
 <script>
@@ -166,6 +166,11 @@ export default {
       });
       this.$store.dispatch('setselectMarket', this.$data.selectmarket.marketAddress);
       await this.getmarketdelegationinfo();
+    },
+    goback() {
+      console.log('goback');
+      this.$data.withdrawalModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
   },

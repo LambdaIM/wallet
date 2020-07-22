@@ -41,12 +41,12 @@
 
       </Form >
         <div slot="footer">
-          <Button type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
+          <Button :goback="goback" type="primary" @click="preSendLAMB">{{$t('home.Modal1.Submit')}}</Button>
         </div>
       </Modal>
 
 
-      <ConfirmModal ref="ConfirmModal" />
+      <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 <script>
@@ -84,10 +84,10 @@ export default {
     preSendLAMB() {
       console.log('-----');
 
-      let assetsType = this.assetsType;
+      let assetsType = this.assetsType.replace(/\s*/g, '');
       let ratio = parseInt(this.ratio);
 
-      let marketName = this.$data.marketName;
+      let marketName = this.$data.marketName.replace(/\s*/g, '');
 
       if (marketName == '') {
         this.$Notice.warning({
@@ -131,7 +131,9 @@ export default {
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('CreateDigitalAssetMarket', res.data);
+          this.$refs.ConfirmModal.open('CreateDigitalAssetMarket', res.data, {
+            totalAmount: this.parameter.create_market_cost
+          });
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {
@@ -158,6 +160,11 @@ export default {
       if (res.state) {
         this.$data.parameter = res.data.data;
       }
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
 
@@ -174,6 +181,14 @@ export default {
     },
     isdegeTxt: function() {
       return this.$t('proposalsPage.Vote');
+    }
+  },
+  watch: {
+    assetsType: function(data) {
+      this.$data.assetsType = data.replace(/\s*/g, '');
+    },
+    marketName: function(data) {
+      this.$data.marketName = data.replace(/\s*/g, '');
     }
   }
 

@@ -19,11 +19,22 @@
         </p>
         <br />
         <p>
-          <Input v-model="mineraddress" >
-            <span slot="prepend">{{$t('Purchasespace.Mineroperationaddress')}}</span>
+          <Input v-model="priceinfo" >
+            <span slot="prepend">{{$t('Purchasespace.Priceofminers')}}</span>
           </Input>
         </p>
         <br />
+        <div v-if="mineraddress&&price">
+          <p>
+            {{$t('Purchasespace.Mineroperationaddress')}}：{{mineraddress}}
+          </p>
+          <br />
+          <p>
+            {{$t('Purchasespace.Price')}}：{{price|BlanceValue}} {{AssetName|assertdenomformat}}
+          </p>
+
+          <br />
+        </div>
         <p>
           <Input v-model="size" >
                <span slot="prepend">{{$t('Purchasespace.Size')}} </span>
@@ -37,8 +48,11 @@
             <span slot="append">{{$t('Purchasespace.month')}}</span>
           </Input>
         </p>
-
         <br />
+        <p>
+          {{$t('Purchasespace.Paymentamount')}}：{{payamount|BlanceValue}}  {{AssetName|assertdenomformat}}
+        </p>
+
 
       </Form >
         <div slot="footer">
@@ -47,7 +61,7 @@
       </Modal>
 
 
-      <ConfirmModal ref="ConfirmModal" />
+      <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 
@@ -67,10 +81,12 @@ export default {
       asset: '',
       AssetName: '',
       Pubkey: '',
-      mineraddress: '',
+      priceinfo: '',
       size: '',
       Duration: '',
-      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
+      timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30,
+      mineraddress: '',
+      price: ''
     };
   },
   components: {
@@ -88,11 +104,31 @@ export default {
     preSendLAMB() {
       console.log('-----');
       var AssetName = this.$data.AssetName;
-      var address = this.$data.mineraddress;
+
       var size = parseInt(this.$data.size);
       var Duration = parseInt(this.$data.Duration);
 
-      if (address.length !== 54) {
+
+
+      // var address = this.$data.priceinfo;
+      try {
+        var priceinfo = JSON.parse(this.$data.priceinfo);
+        // { "address": "lambdamineroper1g74gwkeq2py5zypv4l223p2s82gqlc28rsp826","price": 1000000 }
+        this.$data.mineraddress = priceinfo.address;
+        this.$data.price = priceinfo.price;
+        if (priceinfo.address == undefined || priceinfo.price == undefined) {
+          throw new Error('');
+        }
+      } catch (error) {
+        this.$Notice.warning({
+          title: this.$t('Purchasespace.Priceformaterror')
+        });
+        return;
+      }
+
+
+
+      if (this.$data.mineraddress.length !== 54) {
         this.$Notice.warning({
           title: this.$t('Purchasespace.action.need_miner_address')
         });
@@ -115,7 +151,7 @@ export default {
       }
 
 
-      this.transfer(AssetName, address, size, Duration);
+      this.transfer(AssetName, this.$data.mineraddress, size, Duration);
     },
     openLinkmarket(name) {
       var explorer = DAEMON_CONFIG.explore();
@@ -136,7 +172,10 @@ export default {
 
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('assertDamCreateBuyOrder', res.data);
+          this.$refs.ConfirmModal.open('assertDamCreateBuyOrder', res.data, {
+            totalAmount: this.payamount,
+            denom: this.$data.AssetName
+          });
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {
@@ -153,6 +192,11 @@ export default {
         });
         console.log(ex);
       }
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
 
@@ -169,6 +213,33 @@ export default {
     },
     isdegeTxt: function() {
       return this.$t('proposalsPage.Vote');
+    },
+    payamount: function() {
+      var size = parseInt(this.$data.size);
+      var Duration = parseInt(this.$data.Duration);
+      var price = this.$data.price;
+
+      var result = price * size * Duration;
+      if (isNaN(result)) {
+        return 0;
+      } else {
+        return result;
+      }
+    }
+  },
+  watch: {
+    priceinfo: function(data) {
+      if (data == '') {
+        return;
+      }
+      try {
+        var priceinfo = JSON.parse(data);
+        // { "address": "lambdamineroper1g74gwkeq2py5zypv4l223p2s82gqlc28rsp826","price": 1000000 }
+        this.$data.mineraddress = priceinfo.address;
+        this.$data.price = priceinfo.price;
+      } catch (error) {
+
+      }
     }
   }
 

@@ -75,7 +75,7 @@
       </div>
     </Modal>
 
-    <ConfirmModal ref="ConfirmModal" />
+    <ConfirmModal  :goback="goback" ref="ConfirmModal" />
   </div>
 </template>
 <script>
@@ -187,7 +187,11 @@ export default {
         if (res.state) {
           console.log(res.data);
           this.sendcancel();
-          this.$refs.ConfirmModal.open('CreateBuyOrder', res.data);
+          this.$refs.ConfirmModal.open('CreateBuyOrder', res.data, {
+            orderFee: this.feecost,
+            paymentAmount: this.Paymentcost,
+            totalAmount: this.totalcost
+          });
         }
       } catch (ex) {
         this.$Notice.warning({
@@ -214,6 +218,11 @@ export default {
     },
     fee1(num) {
       return this.bigNum(num).toNumber();
+    },
+    goback() {
+      console.log('goback');
+      this.$data.withdrawalModal = true;
+      this.$refs.ConfirmModal.clase();
     }
   },
   computed: {
