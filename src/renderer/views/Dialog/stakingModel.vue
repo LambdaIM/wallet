@@ -50,7 +50,7 @@
       </Modal>
 
 
-      <ConfirmModal ref="ConfirmModal" />
+      <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 <script>
@@ -197,6 +197,11 @@ export default {
         return '';
       }
       return (this.$data.dataParameters.unbonding_time / (1000 * 1000 * 1000 * 60 * 60 * 24)).toFixed(2);
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
   },

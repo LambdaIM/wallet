@@ -107,7 +107,7 @@
       </Modal>
 
 
-      <ConfirmModal ref="ConfirmModal" />
+      <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 <script>
@@ -115,6 +115,8 @@ import eventhub from '../../common/js/event.js';
 import ConfirmModal from './confirmModal.vue';
 
 import BigNumber from 'bignumber.js';
+
+import _ from 'underscore';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 export default {
@@ -166,7 +168,7 @@ export default {
     },
     preSendLAMB(ispreview) {
       console.log('-----');
-      let name = this.name.toLocaleLowerCase();
+      let name = this.name.toLocaleLowerCase().replace(/\s*/g, '');
 
       let asset = parseInt(this.asset);
       let MintType = parseInt(this.MintType);
@@ -244,7 +246,7 @@ export default {
 
 
 
-      if (this.bigLess0OrGreater(1e5, this.balance)) {
+      if (this.bigLess0OrGreater(this.parameter.pledge_cost, this.balance)) {
         // need to alert
         this.$Notice.warning({
           title: this.$t('home.action.check_balance_amount_transfer')
@@ -315,7 +317,9 @@ export default {
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('CreateAsset', res.data);
+          this.$refs.ConfirmModal.open('CreateAsset', res.data, {
+            totalAmount: this.parameter.pledge_cost
+          });
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {
@@ -372,6 +376,11 @@ export default {
     },
     switchtoEdit() {
       this.$data.CyclePreview = false;
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
 

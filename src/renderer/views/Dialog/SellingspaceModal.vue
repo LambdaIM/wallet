@@ -81,6 +81,11 @@
 
 
       </p>
+      <br/>
+      <p>
+        {{$t('Sellingothers.Compensation')}}：{{Compensation}} LAMB  &nbsp;&nbsp; {{$t('Sellingothers.ServiceCharge')}}：{{Handlingfee}} LAMB  &nbsp;&nbsp;   <br/>
+        {{$t('Sellingothers.Paymentamount')}}：{{allcost}} LAMB
+      </p>
       </Form >
 
       <div slot="footer">
@@ -130,6 +135,7 @@
           <Input readonly v-model="description"   type="textarea" :placeholder="$t('somemodel.describe')"  />
         </Row>
       </div>
+
       <!-- <p>
           <Input v-model="walletPassword" type="password"></Input>
       </p>-->
@@ -137,7 +143,7 @@
         <Button type="primary" @click="confirm">{{$t('home.Modal1.Confirm')}}</Button>
       </div>
     </Modal>
-    <ConfirmModal ref="ConfirmModal" />
+    <ConfirmModal :goback="goback" ref="ConfirmModal" />
   </div>
 </template>
 <script>
@@ -385,7 +391,11 @@ export default {
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('CreateSellOrder', res.data);
+          this.$refs.ConfirmModal.open('CreateSellOrder', res.data, {
+            orderFee: this.Handlingfee,
+            paymentAmount: this.Compensation,
+            totalAmount: this.allcost
+          });
         }
       } catch (ex) {
         this.$Notice.warning({
@@ -447,6 +457,22 @@ export default {
         });
         // this.$data.marketinfo = res.data.data;
       }
+    },
+    fee1(num) {
+      return this.bigNum(num).toNumber();
+    },
+    checkint(data) {
+      if (data % 1 != 0) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Sellingothers.needint')
+        });
+      }
+    },
+    goback() {
+      console.log('goback');
+      this.$data.withdrawalModal = true;
+      this.$refs.ConfirmModal.clase();
     }
   },
   computed: {
@@ -458,7 +484,38 @@ export default {
     },
     balance: function() {
       return this.$store.getters.getblance;
+    },
+    Compensation: function() {
+      return (this.$data.spaceSize * this.$data.unitPrice * this.$data.rate).toFixed(6);
+    },
+    Handlingfee: function() {
+      return (this.Compensation * this.fee1(this.$data.market.feeRate)).toFixed(6);
+    },
+    allcost: function() {
+      return (this.Compensation * (this.fee1(this.$data.market.feeRate) + 1)).toFixed(6);
     }
+
+  },
+  watch: {
+    spaceSize: function(data) {
+      this.checkint(data);
+    },
+    unitPrice: function(data) {
+      this.checkint(data);
+    },
+    unitPrice: function(data) {
+      this.checkint(data);
+    },
+    minSpace: function(data) {
+      this.checkint(data);
+    },
+    minDuration: function(data) {
+      this.checkint(data);
+    },
+    maxDuration: function(data) {
+      this.checkint(data);
+    }
+
   }
 };
 </script>

@@ -40,6 +40,12 @@
             {{ price | Lambformat }}
           </Col>
         </Row>
+      <br/>
+      <p>
+        {{$t('Marketothers.Commissionfee')}}:{{renewaLamountFee | Lambformat}} &nbsp;&nbsp;  {{$t('Marketothers.Orderamount')}}：{{ renewaLCost | Lambformat }} &nbsp;&nbsp;
+
+      </p>
+      <br/>
       <Row class-name="card-item">
           <!-- <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('home.Balance')}}:</span>
@@ -49,7 +55,7 @@
             <span class="title">{{$t('Dialog.AutoBuy.Paymentamount')}}:</span>
           </Col>
           <Col span="6" class-name="content-wrapper">
-            {{ renewaLamount | Lambformat }}
+            {{ allcost| Lambformat }}
           </Col>
         </Row>
 
@@ -59,7 +65,7 @@
     </div>
 
   </Modal>
-  <ConfirmModal ref="ConfirmModal" />
+  <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 <script>
@@ -92,7 +98,8 @@ export default {
       Duration: '',
       timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30,
       size: 0,
-      price: 0
+      price: 0,
+      market: {}
     };
   },
   components: {
@@ -161,7 +168,11 @@ export default {
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('OrderRenewal', res.data);
+          this.$refs.ConfirmModal.open('OrderRenewal', res.data, {
+            orderFee: this.renewaLamountFee,
+            paymentAmount: this.renewaLCost,
+            totalAmount: this.allcost
+          });
         }
       } catch (ex) {
         this.$Notice.warning({
@@ -175,11 +186,20 @@ export default {
       this.sendModal = false;
       // this.confirmModal=true;
     },
-    open(orderid, orderinfo) {
+    open(orderid, orderinfo, market) {
       this.$data.orderid = orderid;
       this.sendModal = true;
       this.$data.size = orderinfo.size;
       this.$data.price = orderinfo.price;
+      this.$data.market = market;
+    },
+    fee1(num) {
+      return this.bigNum(num).toNumber();
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
   },
   computed: {
@@ -197,6 +217,28 @@ export default {
     },
     renewaLamount: function() {
       return this.$data.size * this.$data.price * this.$data.Duration;
+    },
+    renewaLamountFee: function() {
+      return (this.renewaLamount * this.fee1(this.$data.market.commissionRate)).toFixed(6);
+    },
+    allcost: function() {
+      if (this.$data.market == undefined) {
+        return;
+      }
+      return (this.renewaLamount * (this.fee1(this.$data.market.commissionRate) + 1)).toFixed(6);
+    },
+    renewaLCost: function() {
+      return (this.renewaLamount).toFixed(6);
+    }
+  },
+  watch: {
+    Duration: function(data) {
+      if (data % 1 != 0) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Sellingothers.needint')
+        });
+      }
     }
   }
 };

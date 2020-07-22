@@ -59,6 +59,7 @@
       "loginfo":"日志信息",
       "browselog":"浏览日志",
       "Datasignature":"数据签名",
+      "Viewinbrowser":"在区块链浏览器中查看",
       "action": {
           "Modified_success": "修改成功",
           "Modification_failed": "修改失败"
@@ -582,7 +583,7 @@
        "month":"月",
        "One-click-space":"一键购买空间",
        "Pending-order-fee":"挂单手续费",
-       "Single-fee":"成单手续费",
+       "Single-fee":"委托单手续费",
        "unitprice":"单价(LAMB/GB/month)",
        "Minimumtime":"最短购买时长",
        "Maximumtime":"最长购买时长",
@@ -834,9 +835,11 @@
        "month":"月",
        "orderid":"订单id",
        "needDuration":"请填写时长",
-       "expirationwarning":"{0}天后订单过期，请及时续期，过期后无法续期",
-       "expirationwarning2":"订单已经过期,过期的订单无法需求",
-       "maxDuration":"续费时长需要小于60个月"
+       "expirationwarning":"{0}天后订单过期，请及时续期，过期后无法续期，无法打开",
+       "expirationwarning2":"订单已经过期,过期的订单无法续期，无法打开",
+       "expirationwarning4":"订单已经过期,过期的订单，无发打开",
+       "maxDuration":"续费时长需要小于60个月",
+       "expirationwarning3":"订单已经过期,过期的订单无法打开"
 
    },
    "orderrevenue":{
@@ -855,7 +858,7 @@
       "Mypledgeincome":"我的质押收益",
       "pledgetip1":"市场质押的最小金额",
       "Explain1":"用户可以通过质押的方式参与用户创建的市场的运营。 ",
-      "Explain2":"市场收益是挂单手续费、成单手续费、续期手续费组成。",
+      "Explain2":"市场收益是挂单手续费、委托单手续费、续期手续费组成。",
       "Explain3":"市场中的每笔收入会按照市场质押比例来进行分配。",
       "Explain4":"收益分配规则",
       "Explain5":"市场创建人收取市场收益10%",
@@ -1047,7 +1050,8 @@
     },
     "DeactivateMinerpop":{
         "Deactivate":"移除矿工",
-        "address":"lambda 地址"
+        "address":"lambda 地址",
+        "need_address":"需要矿工的lambda 地址"
     },
     "Assetincomepop":{
         "title":"提取资产市场订单收益",
@@ -1079,12 +1083,16 @@
     },
     "Purchasespace":{
         "Purchaseauthorizedspace":"购买授权空间",
-        "operationaddressbrowser":"在浏览器中查找矿工操作地址",
+        "operationaddressbrowser":"在浏览器中查找矿工价格信息",
         "Mineroperationaddress":"矿工操作地址",
         "Size":"空间",
         "duration":"时长",
         "month":"月",
         "buy":"购买",
+        "Priceofminers":"矿工价格信息",
+        "Price":"价格",
+        "Paymentamount":"支付金额",
+        "Priceformaterror":"价格信息格式错误",
         "action":{
             "need_miner_address":"请填写矿工操作地址、检查矿工操作地址格式",
             "need_miner_duration":"时长需要为整数，并且大于0",
@@ -1143,6 +1151,23 @@
         },
         "Enteringlambda":"进入lambda存储市场",
         "Enteringasset":"进入资产存储市场"
+    },
+    "Marketothers":{
+        "Commissionfee":"委托单手续费",
+        "Orderamount":"订单金额",
+        "Transactionfee":"交易手续费",
+        "estimate":"估算",
+        "pledgeassets":"质押金额"
+
+    },
+    "Sellingothers":{
+        "Compensation":"赔付金",
+        "ServiceCharge":"挂单手续费",
+        "Transactionfee":"交易手续费",
+        "estimate":"估算",
+        "Paymentamount":"支付金额",
+        "needint":"需要输入整数"
+
     }
 
 }

@@ -30,6 +30,7 @@
 
             </RadioGroup>
         </Row>
+      <div v-if="openmarket">
         <br>
         <Row>
           <Col span="12"><h3>{{$t('Marketnavigation.Choosemarket')}}</h3>
@@ -53,7 +54,7 @@
               </ul>
             </div>
             <div style="margin: 5px;">
-              <Button  type="primary" to="/market" long>{{$t('Marketnavigation.Enteringlambda')}}</Button>
+              <Button   type="primary" to="/market" long>{{$t('Marketnavigation.Enteringlambda')}}</Button>
 
 
             </div>
@@ -110,7 +111,7 @@
 
             </Col>
         </Row>
-
+    </div>
         </div>
         <br/>
         <br/>
@@ -169,6 +170,15 @@ export default {
     setrole() {
       // var rolelist=['simple','order','miner','validator'];
       this.$store.dispatch('setrole', this.$data.roleselect);
+    }
+  },
+  computed: {
+    openmarket: function() {
+      if (this.$store.getters.role == 'simple') {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 

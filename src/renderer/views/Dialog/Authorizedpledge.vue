@@ -31,6 +31,7 @@
         </p>
 
         <br />
+        <p v-if="isNaN(Compensation)==false">{{$t('Marketothers.pledgeassets')}}：{{Compensation}} {{AssetName|assertdenomformat}} </p>
         <p>
           {{$t('AuthorizeMarketpledge.tip1')}}<br/>
           {{$t('AuthorizeMarketpledge.tip2')}}<br/>
@@ -47,7 +48,7 @@
       </Modal>
 
 
-      <ConfirmModal ref="ConfirmModal" />
+      <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 
@@ -65,7 +66,8 @@ export default {
       asset: '',
       AssetName: '',
       Size: '',
-      Price: ''
+      Price: '',
+      market: {}
     };
   },
   components: {
@@ -76,6 +78,7 @@ export default {
       console.log('data', data);
       this.$data.AssetName = data.assetName;
       this.sendModal = true;
+      this.$data.market = data;
     },
     sendcancel() {
       this.sendModal = false;
@@ -115,7 +118,9 @@ export default {
 
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('DigitalAssetPledge', res.data);
+          this.$refs.ConfirmModal.open('DigitalAssetPledge', res.data, {
+            totalAmount: this.Compensation
+          });
         }
       } catch (ex) {
         this.$Notice.warning({
@@ -124,6 +129,11 @@ export default {
         });
         console.log(ex);
       }
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
 
 
@@ -140,6 +150,13 @@ export default {
     },
     isdegeTxt: function() {
       return this.$t('proposalsPage.Vote');
+    },
+    Compensation: function() {
+      var Size = parseInt(this.$data.Size);
+      var Price = parseFloat(this.$data.Price);
+      var exchangeRatio = parseInt(this.$data.market.exchangeRatio);
+
+      return (Size * Price * exchangeRatio / 1000).toFixed(3);
     }
   }
 

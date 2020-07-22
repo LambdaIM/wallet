@@ -58,7 +58,11 @@
       </p>
       <br/>
       <p>
-        {{$t('Dialog.selectBuy.Paymentamount')}}：{{Paymentamount|Lambformat}}
+        {{$t('Marketothers.Commissionfee')}}:{{feecost|Lambformat}} &nbsp;  &nbsp;
+        {{$t('Marketothers.Orderamount')}}：{{Paymentcost|Lambformat}} &nbsp;  &nbsp;
+        <!-- {{$t('Marketothers.Transactionfee')}}：0.01 LAMB（{{$t('Marketothers.estimate')}}）<br/> -->
+        {{$t('Dialog.selectBuy.Paymentamount')}}：{{(totalcost)|Lambformat}}
+
       </p>
               <br />
         <p>
@@ -71,7 +75,7 @@
       </div>
     </Modal>
 
-    <ConfirmModal ref="ConfirmModal" />
+    <ConfirmModal  :goback="goback" ref="ConfirmModal" />
   </div>
 </template>
 <script>
@@ -94,6 +98,7 @@ export default {
       spaceSize: '',
       spaceDuration: '',
       timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30
+
     };
   },
   components: {
@@ -152,7 +157,7 @@ export default {
         return;
       }
 
-      if (this.bigLess0OrGreater(this.Paymentamount, this.balance)) {
+      if (this.bigLess0OrGreater(this.totalcost, this.balance)) {
         // need to alert
         this.$Notice.warning({
           title: this.$t('home.action.check_balance_amount_transfer')
@@ -182,7 +187,11 @@ export default {
         if (res.state) {
           console.log(res.data);
           this.sendcancel();
-          this.$refs.ConfirmModal.open('CreateBuyOrder', res.data);
+          this.$refs.ConfirmModal.open('CreateBuyOrder', res.data, {
+            orderFee: this.feecost,
+            paymentAmount: this.Paymentcost,
+            totalAmount: this.totalcost
+          });
         }
       } catch (ex) {
         this.$Notice.warning({
@@ -206,6 +215,14 @@ export default {
         let url = `${explorer}/#/address/${lambdaaddress}/activity/1/all`;
         shell.openExternal(url);
       }
+    },
+    fee1(num) {
+      return this.bigNum(num).toNumber();
+    },
+    goback() {
+      console.log('goback');
+      this.$data.withdrawalModal = true;
+      this.$refs.ConfirmModal.clase();
     }
   },
   computed: {
@@ -220,6 +237,34 @@ export default {
     },
     Paymentamount: function() {
       return this.$data.spaceSize * this.$data.spaceDuration * this.$data.orderinfo.price;
+    },
+    Paymentcost: function() {
+      return (this.Paymentamount).toFixed(6);
+    },
+    feecost: function() {
+      return (this.Paymentamount * (this.fee1(this.$data.market.commissionRate))).toFixed(6);
+    },
+    totalcost: function() {
+      return (this.Paymentamount * (1 + this.fee1(this.$data.market.commissionRate))).toFixed(6)
+      ;
+    }
+  },
+  watch: {
+    spaceSize: function(data) {
+      if (data % 1 != 0) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Sellingothers.needint')
+        });
+      }
+    },
+    spaceDuration: function(data) {
+      if (data % 1 != 0) {
+        this.$Notice.warning({
+          title: 'error',
+          desc: this.$t('Sellingothers.needint')
+        });
+      }
     }
   }
 };

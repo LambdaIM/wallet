@@ -61,6 +61,7 @@
       "loginfo":"log info",
       "browselog":"browse log",
       "Datasignature":"Data signature",
+      "Viewinbrowser":"View in blockchain browser",
       "action":{
         "Modified_success":"Modified success",
         "Modification_failed":"Modification failed"
@@ -585,7 +586,7 @@
     "month":"Month",
     "One-click-space":"One click purchase",
     "Pending-order-fee":"Pending order fee",
-    "Single-fee":"Single fee",
+    "Single-fee":"Commission fee",
     "unitprice":"Price(LAMB/GB/month)",
     "Minimumtime":"Minimum purchase time",
     "Maximumtime":"Maximum purchase time",
@@ -834,9 +835,11 @@
       "month":"month",
       "orderid":"Order ID",
       "needDuration":"Please fill in the time",
-      "expirationwarning":"The order expires in {0} days, please renew in time,Cannot renew after expiration",
-      "expirationwarning2":"The order has expired. The expired order cannot be demanded",
-      "maxDuration":"Renewal time is less than 60 months"
+      "expirationwarning":"The order expires in {0} days, please renew in time,You cannot renew or open it after expiration",
+      "expirationwarning2":"The order has expired. The expired order cannot be renewed and cannot be opened",
+      "expirationwarning4":"The order has expired. The expired order cannot be opened",
+      "maxDuration":"Renewal time is less than 60 months",
+      "expirationwarning3":"The order has expired. The expired order cannot be opened"
 
   },
   "orderrevenue":{
@@ -855,7 +858,7 @@
       "Mypledgeincome":"My pledge income",
       "pledgetip1":"Minimum amount of market pledge",
       "Explain1":"Users can participate in the operation of the market created by users through pledge.",
-      "Explain2":"Market revenue is composed of Commission for registration, commission for completion and Commission for renewal.",
+      "Explain2":"Market revenue is composed of Commission for registration, Commission fee and Commission for renewal.",
       "Explain3":"Each income in the market will be distributed according to the market pledge proportion.",
       "Explain4":"Income distribution rules",
       "Explain5":"Market creator receives 10% of market revenue",
@@ -1081,12 +1084,15 @@
   },
   "Purchasespace":{
       "Purchaseauthorizedspace":"Purchase authorized space",
-      "operationaddressbrowser":"Find the miner's operation address in the browser",
+      "operationaddressbrowser":"Search for miner price information in browser",
       "Mineroperationaddress":"Miner operation address",
       "Size":"Size",
       "duration":"duration",
       "month":"month",
-      "buy":"buy",
+      "buy":"Buy",
+      "Priceofminers":"Price information of miners",
+      "Paymentamount":"Payment amount",
+      "Priceformaterror":"Price information format error",
       "action":{
           "need_miner_address":"Please fill in the miner operation address, check the miner operation address format",
           "need_miner_duration":"The duration needs to be an integer and greater than 0",
@@ -1145,6 +1151,23 @@
     },
     "Enteringlambda":"Entering lambda storage market",
     "Enteringasset":"Enter the asset storage market"
+  },
+  "Marketothers":{
+      "Commissionfee":"Commission fee",
+      "Orderamount":"Order amount",
+      "Transactionfee":"Transaction fee",
+      "estimate":"Estimate",
+      "pledgeassets":"Pledge amount"
+
+  },
+  "Sellingothers":{
+      "Compensation":"Compensation",
+      "ServiceCharge":"Bill handling fee",
+      "Transactionfee":"Transaction fee",
+      "estimate":"estimate",
+      "Paymentamount":"Payment amount",
+      "needint":"An integer is required"
+
   }
 
 

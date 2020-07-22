@@ -48,7 +48,7 @@
             <span class="title">{{$t("seting.Account_Address")}}</span>
             </Col>
             <Col
-              span="12"
+              span="20"
               class-name="content-wrapper"
             >
             <span>{{walletInfo.address}}</span>
@@ -61,6 +61,10 @@
               shape="circle"
               icon="ios-copy"
             ></Button>
+            &nbsp; &nbsp; &nbsp; &nbsp;
+                <Button @click="openinbrowser" type="primary" ghost>
+                  {{$t("seting.Viewinbrowser")}}
+                </Button>
 
             </Col>
           </Row>
@@ -523,7 +527,7 @@ import eventhub from '../../common/js/event.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
-
+const { shell } = require('electron');
 
 export default {
   data() {
@@ -654,6 +658,13 @@ export default {
     async restartapp() {
       console.log('restartapp');
       let res = await ipc.callMain('restart', {});
+    },
+    openinbrowser() {
+      var explorer = DAEMON_CONFIG.explore();
+      var address = this.$store.getters.getaddress;
+      let url = `${explorer}#/address/${address}/activity/1/all`;
+      console.log(url);
+      shell.openExternal(url);
     }
   },
   computed: {

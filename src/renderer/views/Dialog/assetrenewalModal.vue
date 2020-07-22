@@ -59,7 +59,7 @@
     </div>
 
   </Modal>
-  <ConfirmModal ref="ConfirmModal" />
+  <ConfirmModal :goback="goback" ref="ConfirmModal" />
 </div>
 </template>
 <script>
@@ -161,7 +161,10 @@ export default {
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('DamOrderRenewal', res.data);
+          this.$refs.ConfirmModal.open('DamOrderRenewal', res.data, {
+            totalAmount: this.renewaLamount,
+            denom: this.$data.denom
+          });
         }
       } catch (ex) {
         this.$Notice.warning({
@@ -181,6 +184,11 @@ export default {
       this.$data.size = orderinfo.size;
       this.$data.price = orderinfo.price;
       this.$data.denom = orderinfo.asset;
+    },
+    goback() {
+      console.log('goback');
+      this.sendModal = true;
+      this.$refs.ConfirmModal.clase();
     }
   },
   computed: {
