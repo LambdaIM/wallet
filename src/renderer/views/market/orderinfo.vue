@@ -1,135 +1,141 @@
 <template>
-  <div class="container">
-    <Mycard :cardtitle="$t('orderinfo.orderdetails')" class="mt20">
-      <div v-if="orderinfo != undefined"  class="s3Operation" slot="operation">
-        <Button v-if="timeend>=0" :disabled="ispayorder(orderinfo.buyAddress)==false" type="primary" @click="openS3">{{$t('orderinfo.orderBucket')}}</Button>
-        <div v-else>
-          {{$t('renewal.expirationwarning4')}}
-        </div>
-      </div>
-
-      <div v-if="orderinfo != undefined" class="transaction-content" slot="card-content">
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('orderinfo.Marketaddress') }}:</span>
-          </Col>
-          <Col span="17" class-name="content-wrapper">
-            {{ orderinfo.marketAddress }}
-          </Col>
-          <Col span="3" class-name="content-wrapper">
-            <!-- <Button to="/market" icon="ios-arrow-back">{{ $t('Dialog.com.back') }}</Button> -->
-            <router-link to="/market">{{ $t('Dialog.com.back') }}</router-link>
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('orderinfo.orderType') }}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{ typeFormat(orderinfo.buyAddress) }}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ this.$t('marketpage.Status') }}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            <span style="color:green" v-if="orderinfo.status == '0'">
-              {{ $t('marketpage.Active') }}
-            </span>
-            <span style="color:red" v-if="orderinfo.status == '2'">
-              {{ $t('marketpage.Expired') }}
-            </span>
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('orderinfo.orderid') }}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            <a @click="openMatchOrder(orderinfo.orderId)">{{ orderinfo.orderId }}</a>
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('orderinfo.Mineraddress') }}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{ orderinfo.askAddress }}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('orderinfo.user') }}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{ orderinfo.buyAddress }}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('orderinfo.space') }}:</span>
-          </Col>
-          <Col span="8" class-name="content-wrapper">{{ orderinfo.size }}GB</Col>
-          <Col span="6" class-name="title-wrapper">
-            <span class="title">{{ $t('orderinfo.unitprice') }}:</span>
-          </Col>
-          <Col span="6" class-name="content-wrapper">
-            {{ orderinfo.price | Lambformat }}
-          </Col>
-        </Row>
-
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('orderinfo.userPay') }}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{ amountFormat(orderinfo.userPay) }}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('orderinfo.minerPay') }}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            <span v-if="typeBuyType(orderinfo.buyAddress)">
-              {{ amountFormat(orderinfo.minerPay) }}
-            </span>
-            <span v-else>--</span>
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('orderinfo.Startingtime') }}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{ orderinfo.createTime | formatDate }}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{ $t('orderinfo.EndTime') }}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{ orderinfo.endTime | formatDate }}
-
-          </Col>
-
-        </Row>
-        <Row v-if="ispayorder(orderinfo.buyAddress)" class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            &nbsp;
-          </Col>
-          <Col  span="20" class-name="content-wrapper">
-            <div v-if="blocktime!=''">
-              <Alert v-if="timeend>=0" :type='timeend>=30?"success":"warning"'>{{$t('renewal.expirationwarning',[timeend])}}</Alert>
-              <Alert v-else type="error">{{$t('renewal.expirationwarning2')}}</Alert>
+    <div class="container">
+        <Mycard :cardtitle="$t('orderinfo.orderdetails')" class="mt20">
+            <div v-if="orderinfo != undefined" class="s3Operation" slot="operation">
+                <Button
+                    v-if="timeend >= 0"
+                    :disabled="ispayorder(orderinfo.buyAddress) == false"
+                    type="primary"
+                    @click="openS3"
+                >
+                    {{ $t('orderinfo.orderBucket') }}
+                </Button>
+                <div v-else>
+                    {{ $t('renewal.expirationwarning4') }}
+                </div>
             </div>
-            <Button @click="renewalModal" type="info">{{$t('renewal.Orderrenewal')}}</Button>
-          </Col>
 
-        </Row>
-        <!-- <Row class-name="card-item">
+            <div v-if="orderinfo != undefined" class="transaction-content" slot="card-content">
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('orderinfo.Marketaddress') }}:</span>
+                    </Col>
+                    <Col span="17" class-name="content-wrapper">
+                        {{ orderinfo.marketAddress }}
+                    </Col>
+                    <Col span="3" class-name="content-wrapper">
+                        <!-- <Button to="/market" icon="ios-arrow-back">{{ $t('Dialog.com.back') }}</Button> -->
+                        <router-link to="/market">{{ $t('Dialog.com.back') }}</router-link>
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('orderinfo.orderType') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ typeFormat(orderinfo.buyAddress) }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ this.$t('marketpage.Status') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <span style="color:green" v-if="orderinfo.status == '0'">
+                            {{ $t('marketpage.Active') }}
+                        </span>
+                        <span style="color:red" v-if="orderinfo.status == '2'">
+                            {{ $t('marketpage.Expired') }}
+                        </span>
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('orderinfo.orderid') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <a @click="openMatchOrder(orderinfo.orderId)">{{ orderinfo.orderId }}</a>
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('orderinfo.Mineraddress') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ orderinfo.askAddress }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('orderinfo.user') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ orderinfo.buyAddress }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('orderinfo.space') }}:</span>
+                    </Col>
+                    <Col span="8" class-name="content-wrapper">{{ orderinfo.size }}GB</Col>
+                    <Col span="6" class-name="title-wrapper">
+                        <span class="title">{{ $t('orderinfo.unitprice') }}:</span>
+                    </Col>
+                    <Col span="6" class-name="content-wrapper">
+                        {{ orderinfo.price | Lambformat }}
+                    </Col>
+                </Row>
+
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('orderinfo.userPay') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ amountFormat(orderinfo.userPay) }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('orderinfo.minerPay') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <span v-if="typeBuyType(orderinfo.buyAddress)">
+                            {{ amountFormat(orderinfo.minerPay) }}
+                        </span>
+                        <span v-else>--</span>
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('orderinfo.Startingtime') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ orderinfo.createTime | formatDate }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('orderinfo.EndTime') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ orderinfo.endTime | formatDate }}
+                    </Col>
+                </Row>
+                <Row v-if="ispayorder(orderinfo.buyAddress)" class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        &nbsp;
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <div v-if="blocktime != ''">
+                            <Alert v-if="timeend >= 0" :type="timeend >= 30 ? 'success' : 'warning'">
+                                {{ $t('renewal.expirationwarning', [timeend]) }}
+                            </Alert>
+                            <Alert v-else type="error">{{ $t('renewal.expirationwarning2') }}</Alert>
+                        </div>
+                        <Button @click="renewalModal" type="info">{{ $t('renewal.Orderrenewal') }}</Button>
+                    </Col>
+                </Row>
+                <!-- <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{ $t('orderinfo.Storagedevice') }}:</span>
           </Col>
@@ -138,16 +144,15 @@
           </Col>
         </Row> -->
 
-        <br />
-        <br />
-      </div>
-    </Mycard>
+                <br />
+                <br />
+            </div>
+        </Mycard>
 
-    <s3 ref="s3Modal" :orderid="orderid"></s3>
-    <renewalModal ref="renewalModal" :orderid="orderid"/>
-  </div>
+        <s3 ref="s3Modal" :orderid="orderid"></s3>
+        <renewalModal ref="renewalModal" :orderid="orderid" />
+    </div>
 </template>
-
 
 <script>
 import Mycard from '@/components/common/useful/Mycard.vue';
@@ -164,143 +169,139 @@ var packagejson = require('../../../../package.json');
 const { shell } = require('electron');
 
 export default {
-  data() {
-    return {
-      orderinfo: {},
-      orderid: '',
-      passwordModal: false,
-      walletPassword: '',
-      managerkey: {},
-      runstorage: packagejson.runstorage,
-      blocktime: '',
-      selectmarket: null
-    };
-  },
-  components: {
-    Mycard,
-    Activity,
-    s3: () => import('../../components/s3/S3.vue'),
-    renewalModal
-  },
-
-  mounted() {
-    this.orderid = this.$route.params.id;
-    this.getblocktime();
-    this.getorderinfo(this.orderid);
-
-    console.log('order info');
-    eventhub.$on('TransactionSuccess', data => {
-      console.log('TransactionSuccess');
-      this.getblocktime();
-      this.getorderinfo(this.orderid);
-    });
-  },
-  methods: {
-    openMatchOrder: function(orderId) {
-      var explorer = DAEMON_CONFIG.explore();
-      let url = `${explorer}#/orderDetail/match/${orderId}`;
-      shell.openExternal(url);
+    data() {
+        return {
+            orderinfo: {},
+            orderid: '',
+            passwordModal: false,
+            walletPassword: '',
+            managerkey: {},
+            runstorage: packagejson.runstorage,
+            blocktime: '',
+            selectmarket: null,
+        };
     },
-    async getorderinfo(orderId) {
-      let res = await ipc.callMain('marketgetOrderinfo', {
-        orderId
-      });
-      if (res.state) {
-        this.$data.orderinfo = res.data.data;
-        this.getmarketlist();
-      }
-    },
-    async getblocktime() {
-      let res = await ipc.callMain('blocktime', {});
-      if (res.state) {
-        try {
-          this.$data.blocktime = res.data.blockLatest.block.header.time;
-        } catch (error) {
-
-        }
-      }
+    components: {
+        Mycard,
+        Activity,
+        s3: () => import('../../components/s3/S3.vue'),
+        renewalModal,
     },
 
-    typeFormat(addeess) {
-      if (this.$store.getters.getaddress === addeess) {
-        return this.$t('marketpage.payorder');
-      } else {
-        return this.$t('marketpage.sellorder');
-      }
+    mounted() {
+        this.orderid = this.$route.params.id;
+        this.getblocktime();
+        this.getorderinfo(this.orderid);
+
+        console.log('order info');
+        eventhub.$on('TransactionSuccess', data => {
+            console.log('TransactionSuccess');
+            this.getblocktime();
+            this.getorderinfo(this.orderid);
+        });
     },
-    ispayorder(addeess) {
-      if (this.$store.getters.getaddress === addeess) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    amountFormat(item) {
-      if (item == undefined) {
-        return;
-      }
-      return this.bigNumTypeFormat(item.amount, item.denom);
-    },
-    typeBuyType(addeess) {
-      if (this.$store.getters.getaddress === addeess) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-    openS3() {
-      this.$refs.s3Modal.openDialog();
-    },
-    renewalModal() {
-      this.$refs.renewalModal.open(this.orderid, this.$data.orderinfo, this.$data.selectmarket);
-    },
-    async getmarketlist() {
-      console.log('getmarketlist');
-      try {
-        let res = await ipc.callMain('marketlist', {});
-        if (res.state) {
-          var list = res.data.data || [];
-          list.forEach(item => {
-            console.log(item);
-            if (item.marketAddress == this.$data.orderinfo.marketAddress) {
-              this.$data.selectmarket = item;
+    methods: {
+        openMatchOrder: function(orderId) {
+            var explorer = DAEMON_CONFIG.explore();
+            let url = `${explorer}#/orderDetail/match/${orderId}`;
+            shell.openExternal(url);
+        },
+        async getorderinfo(orderId) {
+            let res = await ipc.callMain('marketgetOrderinfo', {
+                orderId,
+            });
+            if (res.state) {
+                this.$data.orderinfo = res.data.data;
+                this.getmarketlist();
             }
-          });
-        }
-      } catch (error) {
-        this.$Message.error(this.$t('foot.linkerror'));
-      }
-    }
-  },
-  computed: {
-    timeend() {
-      var createTime = moment(this.$data.blocktime);
-      var endTime = moment(this.$data.orderinfo.endTime);
-      var duration = moment.duration(endTime.diff(createTime));
-      //  var duration = createTime.diff(endTime)
+        },
+        async getblocktime() {
+            let res = await ipc.callMain('blocktime', {});
+            if (res.state) {
+                try {
+                    this.$data.blocktime = res.data.blockLatest.block.header.time;
+                } catch (error) {}
+            }
+        },
 
-      return duration.asDays().toFixed(2);
-    }
+        typeFormat(addeess) {
+            if (this.$store.getters.getaddress === addeess) {
+                return this.$t('marketpage.payorder');
+            } else {
+                return this.$t('marketpage.sellorder');
+            }
+        },
+        ispayorder(addeess) {
+            if (this.$store.getters.getaddress === addeess) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        amountFormat(item) {
+            if (item == undefined) {
+                return;
+            }
+            return this.bigNumTypeFormat(item.amount, item.denom);
+        },
+        typeBuyType(addeess) {
+            if (this.$store.getters.getaddress === addeess) {
+                return false;
+            } else {
+                return true;
+            }
+        },
+        openS3() {
+            this.$refs.s3Modal.openDialog();
+        },
+        renewalModal() {
+            this.$refs.renewalModal.open(this.orderid, this.$data.orderinfo, this.$data.selectmarket);
+        },
+        async getmarketlist() {
+            console.log('getmarketlist');
+            try {
+                let res = await ipc.callMain('marketlist', {});
+                if (res.state) {
+                    var list = res.data.data || [];
+                    list.forEach(item => {
+                        console.log(item);
+                        if (item.marketAddress == this.$data.orderinfo.marketAddress) {
+                            this.$data.selectmarket = item;
+                        }
+                    });
+                }
+            } catch (error) {
+                this.$Message.error(this.$t('foot.linkerror'));
+            }
+        },
+    },
+    computed: {
+        timeend() {
+            var createTime = moment(this.$data.blocktime);
+            var endTime = moment(this.$data.orderinfo.endTime);
+            var duration = moment.duration(endTime.diff(createTime));
+            //  var duration = createTime.diff(endTime)
 
-  }
+            return duration.asDays().toFixed(2);
+        },
+    },
 };
 </script>
 
-
 <style lang="less" scoped>
 .container {
-  position: relative;
-  .transaction-content {
-    .card-item {
-      margin-bottom: 20px;
-      .title {
-        font-size: 14px;
-        font-weight: 600;
-      }
-      .item-value {
-        font-size: 14px;
-      }
+    position: relative;
+    .transaction-content {
+        .card-item {
+            margin-bottom: 20px;
+            .title {
+                font-size: 14px;
+                font-weight: 600;
+            }
+            .item-value {
+                font-size: 14px;
+            }
+        }
     }
-  }
 }
 </style>

@@ -1,74 +1,68 @@
 <template>
-<div>
-     <Modal
-        v-model="showmodel"
-        :title="$t('gaspage.title')"
-        @on-ok="submitdata"
-        >
-        <Form  @keydown.native.enter.prevent ="submitdata" >
-          <Input v-model="gasprise" :placeholder="$t('gaspage.placeholder')"  >
-          <span slot="append">uLAMB</span>
-          </Input>
-        </Form >
-         <div>
-          <br/>
-          {{$t('gaspage.gashelper',[Validatorgasprise])}}
-        </div>
-    </Modal>
-</div>
+    <div>
+        <Modal v-model="showmodel" :title="$t('gaspage.title')" @on-ok="submitdata">
+            <Form @keydown.native.enter.prevent="submitdata">
+                <Input v-model="gasprise" :placeholder="$t('gaspage.placeholder')">
+                    <span slot="append">uLAMB</span>
+                </Input>
+            </Form>
+            <div>
+                <br />
+                {{ $t('gaspage.gashelper', [Validatorgasprise]) }}
+            </div>
+        </Modal>
+    </div>
 </template>
 <script>
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 export default {
-  data() {
-    return {
-      showmodel: false,
-      gasprise: '',
-      Validatorgasprise: ''
-    };
-  },
-  mounted() {
-
-  },
-  methods: {
-    open() {
-      this.$data.showmodel = true;
-      this.$data.gasprise = this.$store.getters.gasprise;
-      this.getValidatorgasprise();
+    data() {
+        return {
+            showmodel: false,
+            gasprise: '',
+            Validatorgasprise: '',
+        };
     },
-    async getgasprise() {
-      var _this = this;
-      var res = await ipc.callMain('getgasprice', {});
-      _this.$data.gasprise = res.data.gasprice;
+    mounted() {},
+    methods: {
+        open() {
+            this.$data.showmodel = true;
+            this.$data.gasprise = this.$store.getters.gasprise;
+            this.getValidatorgasprise();
+        },
+        async getgasprise() {
+            var _this = this;
+            var res = await ipc.callMain('getgasprice', {});
+            _this.$data.gasprise = res.data.gasprice;
+        },
+        async getValidatorgasprise() {
+            var _this = this;
+            var res = await ipc.callMain('httpgasprise', {});
+            _this.$data.Validatorgasprise = res.data.gasprice;
+            _this.$data.Validatorgasprise = _this.$data.Validatorgasprise.replace('ulamb', '');
+            _this.$data.Validatorgasprise = this.bigNum(_this.$data.Validatorgasprise).toString();
+        },
+        async submitdata() {
+            var gasprise = this.$data.gasprise;
+            gasprise = parseFloat(gasprise);
+            if (isNaN(gasprise)) {
+                this.$Message.error(this.$t('gaspage.action.gasneednum'));
+                return;
+            }
+            if (gasprise < 0) {
+                this.$Message.error(this.$t('gaspage.action.gas0'));
+                return;
+            }
+            var res = await ipc.callMain('setgasprice', {
+                gasprice: gasprise,
+            });
+            if (res.state) {
+                this.$data.showmodel = false;
+                console.log('gas 价格更新成功');
+                this.$store.dispatch('setgasprise', gasprise);
+            }
+        },
     },
-    async getValidatorgasprise() {
-      var _this = this;
-      var res = await ipc.callMain('httpgasprise', {});
-      _this.$data.Validatorgasprise = res.data.gasprice;
-      _this.$data.Validatorgasprise = _this.$data.Validatorgasprise.replace('ulamb', '');
-      _this.$data.Validatorgasprise = this.bigNum(_this.$data.Validatorgasprise).toString();
-    },
-    async  submitdata() {
-      var gasprise = this.$data.gasprise;
-      gasprise = parseFloat(gasprise);
-      if (isNaN(gasprise)) {
-        this.$Message.error(this.$t('gaspage.action.gasneednum'));
-        return;
-      }
-      if (gasprise < 0) {
-        this.$Message.error(this.$t('gaspage.action.gas0'));
-        return;
-      }
-      var res = await ipc.callMain('setgasprice', {
-        gasprice: gasprise
-      });
-      if (res.state) {
-        this.$data.showmodel = false;
-        console.log('gas 价格更新成功');
-        this.$store.dispatch('setgasprise', gasprise);
-      }
-    }
-  }
 };
 </script>

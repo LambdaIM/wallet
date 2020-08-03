@@ -1,12 +1,10 @@
 export default [
-  {
-    element: '#Switchingnetwork',
-    intro: ``
-  },
-  {
-    element: '#set',
-    intro: ``
-  }
-
-
+    {
+        element: '#Switchingnetwork',
+        intro: ``,
+    },
+    {
+        element: '#set',
+        intro: ``,
+    },
 ];

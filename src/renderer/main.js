@@ -1,6 +1,5 @@
 import Vue from 'vue';
 
-
 import App from './App';
 import router from './router';
 import store from './store';
@@ -27,11 +26,10 @@ const { remote } = require('electron');
 
 var packagejson = require('../../package.json');
 
-
 document.title = packagejson.description + '  v' + packagejson.version;
 window.title = document.title;
 Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key]);
+    Vue.filter(key, filters[key]);
 });
 
 Vue.use(VueClipboard);
@@ -40,41 +38,36 @@ Vue.use(GlobalFn);
 Role(Vue);
 Vue.config.productionTip = false;
 
-
 var language = settings.get('set.language') || 'en';
 // var language = 'en';
 // console.log(language);
 Vue.use(VueI18n);
 const i18n = new VueI18n({
-  locale: language, // set locale
-  messages: messages // set locale messages
+    locale: language, // set locale
+    messages: messages, // set locale messages
 });
 
-
-
 if (language == 'en') {
-  Vue.use(iView, { locale: locale_en });
+    Vue.use(iView, { locale: locale_en });
 } else {
-  Vue.use(iView, { locale: locale_zh });
+    Vue.use(iView, { locale: locale_zh });
 }
 
 console.log('new app');
 /* eslint-disable no-new */
 var app = new Vue({
-  components: { App },
-  router,
-  store,
-  template: '<App/>',
-  i18n
+    components: { App },
+    router,
+    store,
+    template: '<App/>',
+    i18n,
 }).$mount('#app');
-
 
 // CommandOrControl+Shift+K
 remote.globalShortcut.register('F12', () => {
-  remote.BrowserWindow.getFocusedWindow().webContents.openDevTools();
+    remote.BrowserWindow.getFocusedWindow().webContents.openDevTools();
 });
 
 window.addEventListener('beforeunload', () => {
-  remote.globalShortcut.unregisterAll();
+    remote.globalShortcut.unregisterAll();
 });
-

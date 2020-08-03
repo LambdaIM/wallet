@@ -5,9 +5,10 @@ module.exports = {
     },
     'extends': [
       // "plugin:vue/recommended",
-      "prettier",
+      
       "plugin:vue/essential",
       "@vue/standard",
+      "plugin:prettier/recommended"
       // 'eslint:recommended'
     ],
     'globals': {
@@ -21,7 +22,8 @@ module.exports = {
       
     },
     'plugins': [
-      'vue'
+      'vue',
+      "prettier"
     ],
     'rules': {
           // 0:off 1:on 2:error

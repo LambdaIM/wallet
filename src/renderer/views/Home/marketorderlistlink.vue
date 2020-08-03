@@ -5,8 +5,8 @@
 import myorderlist from '@/views/market/myorderlist.vue';
 
 export default {
-  components: {
-    myorderlist
-  }
+    components: {
+        myorderlist,
+    },
 };
 </script>

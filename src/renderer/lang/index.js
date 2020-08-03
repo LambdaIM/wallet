@@ -1,7 +1,7 @@
-import zh from './zh.json'
-import en from './en.json'
+import zh from './zh.json';
+import en from './en.json';
 
-export default{
+export default {
     en,
-    zh
-}
+    zh,
+};

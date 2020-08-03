@@ -1,130 +1,131 @@
 <template>
-  <div class="customer-container">
-    <Spin size="large" fix v-if="validator==null"></Spin>
-    <Mycard  :cardtitle="$t('stakinginfo.title')" class="mt20" v-if="validator!=null">
-      <div class="transaction-content" slot="card-content">
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('stakinginfo.Nickname')}}:</span>
-          </Col>
-          <Col span="14" class-name="content-wrapper">
-            {{validator.description.moniker}}
-          </Col>
-          <Col span="6" class-name="title-wrapper">
-            <Button @click="openSend" type="primary">{{$t('stakinginfo.pledge')}}</Button>
+    <div class="customer-container">
+        <Spin size="large" fix v-if="validator == null"></Spin>
+        <Mycard :cardtitle="$t('stakinginfo.title')" class="mt20" v-if="validator != null">
+            <div class="transaction-content" slot="card-content">
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('stakinginfo.Nickname') }}:</span>
+                    </Col>
+                    <Col span="14" class-name="content-wrapper">
+                        {{ validator.description.moniker }}
+                    </Col>
+                    <Col span="6" class-name="title-wrapper">
+                        <Button @click="openSend" type="primary">{{ $t('stakinginfo.pledge') }}</Button>
+                    </Col>
+                </Row>
+                <Row v-if="shares != null" class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('stakinginfo.Mypledge') }}:</span>
+                    </Col>
+                    <Col span="14" class-name="content-wrapper">
+                        {{ myMypledge() }}
+                    </Col>
+                    <Col span="3" class-name="title-wrapper">
+                        <Button @click="openTransferred" type="info" ghost>
+                            {{ $t('Dialog.redelegateModel.redelegate') }}
+                        </Button>
+                    </Col>
+                    <Col span="3" class-name="title-wrapper">
+                        <Button @click="openUndelegate" v-if="shares != null" type="warning" ghost>
+                            {{ $t('stakinginfo.Cancelpledge') }}
+                        </Button>
+                    </Col>
+                </Row>
 
-          </Col>
-        </Row>
-        <Row v-if="shares!=null" class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('stakinginfo.Mypledge')}}:</span>
-          </Col>
-          <Col span="14" class-name="content-wrapper">
-            {{myMypledge()}}
-          </Col>
-          <Col span="3" class-name="title-wrapper">
-            <Button @click="openTransferred"  type="info" ghost>{{$t('Dialog.redelegateModel.redelegate')}} </Button>
+                <Row v-if="reward != null" class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('stakinginfo.Myreward') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ reward }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('stakinginfo.PledgeAddress') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <a @click="checkAddress(validator.operator_address)" class="value">
+                            {{ validator.operator_address }}
+                        </a>
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('stakinginfo.details') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ validator.description.details || '--' }}
+                    </Col>
+                </Row>
 
-          </Col>
-          <Col span="3" class-name="title-wrapper">
-            <Button @click="openUndelegate" v-if="shares!=null" type="warning" ghost>{{$t('stakinginfo.Cancelpledge')}}</Button>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('stakinginfo.commission') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ validator.commission.rate | Percentformat }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('stakinginfo.maxcommission') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ validator.commission.max_rate | Percentformat }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('stakinginfo.max_change_rate') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ validator.commission.max_change_rate | Percentformat }}
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('stakinginfo.VotingPower') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        {{ (validator.tokens / pool.bonded_tokens) | Percentformat }}
+                    </Col>
+                </Row>
+                <Tabs>
+                    <TabPane :label="$t('Dialog.redelegateModel.redelegatelist')">
+                        <Table size="large" :columns="redelegationcolumns" :data="redelegationlistdata">
+                            <template slot-scope="{ row, index }" slot="amount">
+                                {{ row.entries[0].initial_balance | TbbBlanceValue }}
+                            </template>
+                            <template slot-scope="{ row, index }" slot="time">
+                                {{ row.entries[0].completion_time | blockFormatDate }}
+                            </template>
+                        </Table>
+                    </TabPane>
+                    <TabPane :label="$t('staking.Unpledge')">
+                        <Table size="large" :columns="uncolumns" :data="undelegationlistdata">
+                            <template slot-scope="{ row, index }" slot="completion_time">
+                                {{ row.completion_time | formatDate }}
+                            </template>
+                            <template slot-scope="{ row, index }" slot="initial_balance">
+                                {{ row.initial_balance | Stoformat }}
+                            </template>
+                        </Table>
+                    </TabPane>
+                </Tabs>
+            </div>
+        </Mycard>
 
-          </Col>
-        </Row>
-
-
-        <Row v-if="reward!=null" class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('stakinginfo.Myreward')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{reward}}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('stakinginfo.PledgeAddress')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-
-            <a  @click="checkAddress(validator.operator_address)" class="value">{{validator.operator_address}}</a>
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('stakinginfo.details')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{validator.description.details||'--'}}
-          </Col>
-        </Row>
-
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('stakinginfo.commission')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{validator.commission.rate|Percentformat}}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('stakinginfo.maxcommission')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{validator.commission.max_rate|Percentformat}}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('stakinginfo.max_change_rate')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{validator.commission.max_change_rate|Percentformat}}
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('stakinginfo.VotingPower')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            {{validator.tokens/pool.bonded_tokens|Percentformat}}
-          </Col>
-        </Row>
-           <Tabs>
-              <TabPane :label="$t('Dialog.redelegateModel.redelegatelist')">
-                <Table size="large"  :columns="redelegationcolumns" :data="redelegationlistdata">
-                  <template slot-scope="{ row, index }" slot="amount">
-                    {{row.entries[0].initial_balance|TbbBlanceValue}}
-                  </template>
-                  <template slot-scope="{ row, index }" slot="time">
-                    {{row.entries[0].completion_time|blockFormatDate}}
-                  </template>
-              </Table>
-              </TabPane>
-              <TabPane :label="$t('staking.Unpledge')" >
-                <Table size="large" :columns="uncolumns" :data="undelegationlistdata" >
-                  <template slot-scope="{ row, index }" slot="completion_time">
-                    {{row.completion_time|formatDate}}
-                  </template>
-                  <template slot-scope="{ row, index }" slot="initial_balance">
-                    {{row.initial_balance|Stoformat}}
-                  </template>
-
-
-                </Table>
-              </TabPane>
-
-          </Tabs>
-
-
-      </div>
-    </Mycard>
-
-    <StakingModelDialog ref="StakingModelDialog" />
-    <RedelegateModelDialog ref="RedelegateModelDialog" />
-    <br><br><br><br><br><br>
-  </div>
+        <StakingModelDialog ref="StakingModelDialog" />
+        <RedelegateModelDialog ref="RedelegateModelDialog" />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
 </template>
 
 <script>
@@ -137,265 +138,270 @@ import { DAEMON_CONFIG } from '../../../config.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const { shell } = require('electron');
 export default {
-  data() {
-    return {
-      validator: null,
-      pool: null,
-      sendModal: false,
-      Tovalue: '',
-      confirmModal: false,
-      LAMBvalue: '',
-      mydelegationsList: [],
-      shares: null,
-      isdege: true,
-      reward: null,
-      redelegationlistdata: [],
-      redelegationcolumns: [
-        {
-          title: this.$t('stakinginfo.Originalnode'),
-          key: 'validator_src_address'
-        },
-        {
-          title: this.$t('stakinginfo.Newnode'),
-          key: 'validator_dst_address'
-        },
-        {
-          title: this.$t('stakinginfo.Amount'),
-          key: 'amount',
-          slot: 'amount'
-        },
-        {
-          title: this.$t('stakinginfo.Completiontime'),
-          key: 'time',
-          slot: 'time'
-        }
-      ],
-      undelegationlistdata: [],
-      uncolumns: [{
-        title: this.$t('staking.UnpledgeTable.PledgeAddress'),
-        key: 'validator_address'
-      },
-      {
-        title: this.$t('staking.UnpledgeTable.UntyingAddress'),
-        key: 'delegator_address'
-      },
-      {
-        title: this.$t('staking.UnpledgeTable.Amount'),
-        key: 'initial_balance',
-        slot: 'initial_balance'
-
-      }, {
-        title: this.$t('staking.UnpledgeTable.Completiontime'),
-        key: 'completion_time',
-        slot: 'completion_time'
-
-      }]
-
-    };
-  },
-  async mounted() {
-    console.log('-------------');
-    let operator_address = this.$route.params.operator_address;
-    this.$data.Tovalue = this.$route.params.operator_address;
-    var r1 = await this.getinfo(operator_address);
-    var r2 = await this.getmyListData(operator_address);
-    this.getMyreword(operator_address);
-    eventhub.$on('TransactionSuccess', async data => {
-      console.log('TransactionSuccess');
-      var r1 = await this.getinfo(operator_address);
-      var r2 = await this.getmyListData(operator_address);
-      this.getMyreword(operator_address);
-      this.getredelegationlist();
-      this.getundelegationlist();
-    });
-    //= =============
-    this.getredelegationlist();
-    this.getundelegationlist();
-  },
-  methods: {
-    myMypledge() {
-      // console.log('myMypledge',this.$data.shares,this.$data.validator.delegator_shares,this.$data.validator.tokens)
-      return this.CalculationMypledge(this.$data.shares, this.$data.validator.delegator_shares, this.$data.validator.tokens);
+    data() {
+        return {
+            validator: null,
+            pool: null,
+            sendModal: false,
+            Tovalue: '',
+            confirmModal: false,
+            LAMBvalue: '',
+            mydelegationsList: [],
+            shares: null,
+            isdege: true,
+            reward: null,
+            redelegationlistdata: [],
+            redelegationcolumns: [
+                {
+                    title: this.$t('stakinginfo.Originalnode'),
+                    key: 'validator_src_address',
+                },
+                {
+                    title: this.$t('stakinginfo.Newnode'),
+                    key: 'validator_dst_address',
+                },
+                {
+                    title: this.$t('stakinginfo.Amount'),
+                    key: 'amount',
+                    slot: 'amount',
+                },
+                {
+                    title: this.$t('stakinginfo.Completiontime'),
+                    key: 'time',
+                    slot: 'time',
+                },
+            ],
+            undelegationlistdata: [],
+            uncolumns: [
+                {
+                    title: this.$t('staking.UnpledgeTable.PledgeAddress'),
+                    key: 'validator_address',
+                },
+                {
+                    title: this.$t('staking.UnpledgeTable.UntyingAddress'),
+                    key: 'delegator_address',
+                },
+                {
+                    title: this.$t('staking.UnpledgeTable.Amount'),
+                    key: 'initial_balance',
+                    slot: 'initial_balance',
+                },
+                {
+                    title: this.$t('staking.UnpledgeTable.Completiontime'),
+                    key: 'completion_time',
+                    slot: 'completion_time',
+                },
+            ],
+        };
     },
-    checkAddress(value) {
-      // console.log(value);
-      var explorer = DAEMON_CONFIG.explore();
-      let url;
-      if (value.indexOf('lambdavaloper') == 0) {
-        url = `${explorer}/#/validatorDetail/${value}`;
-      } else {
-        url = `${explorer}/#/address/${value}`;
-      }
-
-      shell.openExternal(url);
-    },
-    openSend() {
-      // this.sendModal = true;
-      // this.$data.isdege = true;
-      this.$refs.StakingModelDialog.open(this.$data.Tovalue, true, 1);
-    },
-    openTransferred() {
-      this.$refs.RedelegateModelDialog.open(this.$data.Tovalue, true, 1);
-    },
-    sendcancel() {
-      this.sendModal = false;
-    },
-    openUndelegate() {
-      // this.sendModal = true;
-      // this.$data.isdege = false;
-      this.$refs.StakingModelDialog.open(this.$data.Tovalue, false, 1);
-    },
-    async getinfo(operator_address) {
-      try {
-        let res = await ipc.callMain('validator', {
-          operator_address: operator_address
+    async mounted() {
+        console.log('-------------');
+        let operator_address = this.$route.params.operator_address;
+        this.$data.Tovalue = this.$route.params.operator_address;
+        var r1 = await this.getinfo(operator_address);
+        var r2 = await this.getmyListData(operator_address);
+        this.getMyreword(operator_address);
+        eventhub.$on('TransactionSuccess', async data => {
+            console.log('TransactionSuccess');
+            var r1 = await this.getinfo(operator_address);
+            var r2 = await this.getmyListData(operator_address);
+            this.getMyreword(operator_address);
+            this.getredelegationlist();
+            this.getundelegationlist();
         });
-        let poolres = await ipc.callMain('pool', {});
+        //= =============
+        this.getredelegationlist();
+        this.getundelegationlist();
+    },
+    methods: {
+        myMypledge() {
+            // console.log('myMypledge',this.$data.shares,this.$data.validator.delegator_shares,this.$data.validator.tokens)
+            return this.CalculationMypledge(
+                this.$data.shares,
+                this.$data.validator.delegator_shares,
+                this.$data.validator.tokens
+            );
+        },
+        checkAddress(value) {
+            // console.log(value);
+            var explorer = DAEMON_CONFIG.explore();
+            let url;
+            if (value.indexOf('lambdavaloper') == 0) {
+                url = `${explorer}/#/validatorDetail/${value}`;
+            } else {
+                url = `${explorer}/#/address/${value}`;
+            }
 
-        console.log(res);
+            shell.openExternal(url);
+        },
+        openSend() {
+            // this.sendModal = true;
+            // this.$data.isdege = true;
+            this.$refs.StakingModelDialog.open(this.$data.Tovalue, true, 1);
+        },
+        openTransferred() {
+            this.$refs.RedelegateModelDialog.open(this.$data.Tovalue, true, 1);
+        },
+        sendcancel() {
+            this.sendModal = false;
+        },
+        openUndelegate() {
+            // this.sendModal = true;
+            // this.$data.isdege = false;
+            this.$refs.StakingModelDialog.open(this.$data.Tovalue, false, 1);
+        },
+        async getinfo(operator_address) {
+            try {
+                let res = await ipc.callMain('validator', {
+                    operator_address: operator_address,
+                });
+                let poolres = await ipc.callMain('pool', {});
 
-        if (res.state) {
-          this.$data.validator = res.data;
-        }
-        if (poolres.state) {
-          this.$data.pool = poolres.data;
-        }
-      } catch (ex) {
-        console.log(ex);
-      }
-    },
-    async getmyListData(operator_address) {
-      console.log('getListData');
-      try {
-        let res = await ipc.callMain('mydelegations', {
-          operator_address: this.address
-        });
+                console.log(res);
 
-        if (res.state) {
-          this.$data.mydelegationsList = res.data || [];
-          this.getME(operator_address);
-        }
-      } catch (ex) {
-        console.log(ex);
-      }
-      console.log('getListDataEnd');
-    },
-    getME(operator_address) {
-      if (this.$data.mydelegationsList instanceof Array == false) {
-        return;
-      }
-      this.$data.shares = null;
-      this.$data.mydelegationsList.forEach(myitem => {
-        if (operator_address == myitem.validator_address) {
-          this.$data.shares = myitem.shares;
-        }
-      });
-    },
-    async getMyreword(operator_address) {
-      try {
-        let res = await ipc.callMain('delegatorRewardsFromValidator', {
-          operator_address: this.address,
-          validatorAddr: operator_address
-        });
-        if (res.state && res.data && res.data.error == undefined) {
-          console.log(res.data);
-          this.$data.reward = this.coinListFormart(res.data);
-          // item.reward='---11111';
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    coinListFormart(list) {
-      var result = [];
-      list.forEach(item => {
-        result.push(this.bigNumTypeFormat(item.amount, item.denom));
-      });
-      return result.join(',');
-    },
-    async getredelegationlist() {
-      console.log('getredelegationlist');
-      let res = await ipc.callMain('redelegationlist', {});
-      let datalist = []; let result = [];
-      if (res.state && res.data) {
-        datalist = res.data || [];
-      }
-      console.log(datalist);
-      var _this = this;
-      datalist.forEach(item => {
-        if (item.validator_dst_address == _this.$data.Tovalue) {
-          result.push(item);
-        }
-      });
-      this.$data.redelegationlistdata = result;
-    },
-    async getundelegationlist() {
-      let res = await ipc.callMain('myUndelegations', {});
-      let datalist = []; let result = [];
-      if (res.state && res.data) {
-        datalist = res.data || [];
-      }
-      console.log(datalist);
-      var _this = this;
-      datalist.forEach(item => {
-        if (item.validator_address == _this.$data.Tovalue) {
-          item.entries.forEach(entrie => {
-            var data = Object.assign({}, entrie, {
-              validator_address: item.validator_address,
-              delegator_address: item.delegator_address
+                if (res.state) {
+                    this.$data.validator = res.data;
+                }
+                if (poolres.state) {
+                    this.$data.pool = poolres.data;
+                }
+            } catch (ex) {
+                console.log(ex);
+            }
+        },
+        async getmyListData(operator_address) {
+            console.log('getListData');
+            try {
+                let res = await ipc.callMain('mydelegations', {
+                    operator_address: this.address,
+                });
+
+                if (res.state) {
+                    this.$data.mydelegationsList = res.data || [];
+                    this.getME(operator_address);
+                }
+            } catch (ex) {
+                console.log(ex);
+            }
+            console.log('getListDataEnd');
+        },
+        getME(operator_address) {
+            if (this.$data.mydelegationsList instanceof Array == false) {
+                return;
+            }
+            this.$data.shares = null;
+            this.$data.mydelegationsList.forEach(myitem => {
+                if (operator_address == myitem.validator_address) {
+                    this.$data.shares = myitem.shares;
+                }
             });
-            result.push(data);
-          });
-        }
-      });
-      this.$data.undelegationlistdata = result;
-    }
-
-  },
-  components: {
-    MyTable,
-    Mycard,
-    StakingModelDialog,
-    RedelegateModelDialog
-  },
-  computed: {
-    address: function() {
-      return this.$store.getters.getaddress;
+        },
+        async getMyreword(operator_address) {
+            try {
+                let res = await ipc.callMain('delegatorRewardsFromValidator', {
+                    operator_address: this.address,
+                    validatorAddr: operator_address,
+                });
+                if (res.state && res.data && res.data.error == undefined) {
+                    console.log(res.data);
+                    this.$data.reward = this.coinListFormart(res.data);
+                    // item.reward='---11111';
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        coinListFormart(list) {
+            var result = [];
+            list.forEach(item => {
+                result.push(this.bigNumTypeFormat(item.amount, item.denom));
+            });
+            return result.join(',');
+        },
+        async getredelegationlist() {
+            console.log('getredelegationlist');
+            let res = await ipc.callMain('redelegationlist', {});
+            let datalist = [];
+            let result = [];
+            if (res.state && res.data) {
+                datalist = res.data || [];
+            }
+            console.log(datalist);
+            var _this = this;
+            datalist.forEach(item => {
+                if (item.validator_dst_address == _this.$data.Tovalue) {
+                    result.push(item);
+                }
+            });
+            this.$data.redelegationlistdata = result;
+        },
+        async getundelegationlist() {
+            let res = await ipc.callMain('myUndelegations', {});
+            let datalist = [];
+            let result = [];
+            if (res.state && res.data) {
+                datalist = res.data || [];
+            }
+            console.log(datalist);
+            var _this = this;
+            datalist.forEach(item => {
+                if (item.validator_address == _this.$data.Tovalue) {
+                    item.entries.forEach(entrie => {
+                        var data = Object.assign({}, entrie, {
+                            validator_address: item.validator_address,
+                            delegator_address: item.delegator_address,
+                        });
+                        result.push(data);
+                    });
+                }
+            });
+            this.$data.undelegationlistdata = result;
+        },
     },
-    balance: function() {
-      return this.$store.getters.getbalance;
+    components: {
+        MyTable,
+        Mycard,
+        StakingModelDialog,
+        RedelegateModelDialog,
     },
-    isdegeTxt: function() {
-      if (this.$data.isdege) {
-        return '质押';
-      } else {
-        return '取消质押';
-      }
-    }
-  }
+    computed: {
+        address: function() {
+            return this.$store.getters.getaddress;
+        },
+        balance: function() {
+            return this.$store.getters.getbalance;
+        },
+        isdegeTxt: function() {
+            if (this.$data.isdege) {
+                return '质押';
+            } else {
+                return '取消质押';
+            }
+        },
+    },
 };
 </script>
 
 <style lang="less" scoped>
 .customer-container {
-  position: relative;
-  .transaction-content {
-    .card-item {
-      margin-bottom: 20px;
-      .title {
-        font-size: 14px;
-        font-weight: 600;
-      }
-      .item-value {
-        font-size: 14px;
-      }
+    position: relative;
+    .transaction-content {
+        .card-item {
+            margin-bottom: 20px;
+            .title {
+                font-size: 14px;
+                font-weight: 600;
+            }
+            .item-value {
+                font-size: 14px;
+            }
+        }
     }
-  }
 }
 .modal-header {
-  .item {
-    margin-top: 20px;
-    font-size: 14px;
-  }
+    .item {
+        margin-top: 20px;
+        font-size: 14px;
+    }
 }
 </style>

@@ -12,16 +12,16 @@ import role from './modules/Role';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: {
-    register,
-    account,
-    validator,
-    market,
-    role
-  },
-  plugins: [
-    // createPersistedState(),
-    // createSharedMutations()  https://github.com/SimulatedGREG/electron-vue/issues/733
-  ],
-  strict: process.env.NODE_ENV !== 'production'
+    modules: {
+        register,
+        account,
+        validator,
+        market,
+        role,
+    },
+    plugins: [
+        // createPersistedState(),
+        // createSharedMutations()  https://github.com/SimulatedGREG/electron-vue/issues/733
+    ],
+    strict: process.env.NODE_ENV !== 'production',
 });

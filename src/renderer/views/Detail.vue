@@ -1,53 +1,51 @@
 <template>
-  <div class="container">
-    <Spin size="large" fix v-if="loading == true"></Spin>
-    <Mycard :cardtitle="$t('transactiondetails.Transaction')" class="mt20">
-      <div v-if="data!=null" class="transaction-content" slot="card-content">
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('transactiondetails.TxHash')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            <a @click="checkHash(data.txhash,txType)" class="item-value">{{data.txhash}}</a>
-          </Col>
-        </Row>
-        <!-- <Row class-name="card-item">
+    <div class="container">
+        <Spin size="large" fix v-if="loading == true"></Spin>
+        <Mycard :cardtitle="$t('transactiondetails.Transaction')" class="mt20">
+            <div v-if="data != null" class="transaction-content" slot="card-content">
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('transactiondetails.TxHash') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <a @click="checkHash(data.txhash, txType)" class="item-value">{{ data.txhash }}</a>
+                    </Col>
+                </Row>
+                <!-- <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('transactiondetails.Type')}}:</span>
           </Col>
           <Col span="20" class-name="content-wrapper">{{$t(`txType.${getType(data)}`)}}</Col>
         </Row> -->
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('home.table.Status')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('home.table.Status') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <Tag v-if="txerrororsuccess(data) === true" color="success">{{ $t('Dialog.com.Success') }}</Tag>
+                        <Tag v-if="txerrororsuccess(data) === false" color="error">{{ $t('Dialog.com.Failed') }}</Tag>
+                    </Col>
+                </Row>
 
-            <Tag v-if="txerrororsuccess(data)===true" color="success">{{$t('Dialog.com.Success')}} </Tag>
-            <Tag v-if="txerrororsuccess(data)===false" color="error">{{$t('Dialog.com.Failed')}}</Tag>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('transactiondetails.Block_Height') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <a @click="checkHeight(data.height)" class="item-value">{{ data.height }}</a>
+                    </Col>
+                </Row>
 
-          </Col>
-        </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('transactiondetails.Time') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <span class="item-value">{{ data.timestamp | formatDate }}</span>
+                    </Col>
+                </Row>
 
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('transactiondetails.Block_Height')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            <a @click="checkHeight(data.height)" class="item-value">{{data.height}}</a>
-          </Col>
-        </Row>
-
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('transactiondetails.Time')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            <span class="item-value">{{data.timestamp | formatDate}}</span>
-          </Col>
-        </Row>
-
-        <!-- <Row class-name="card-item">
+                <!-- <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span class="title">{{$t('transactiondetails.From')}}:</span>
           </Col>
@@ -56,7 +54,7 @@
           </Col>
         </Row> -->
 
-        <!-- <Row class-name="card-item">
+                <!-- <Row class-name="card-item">
           <Col span="4" class-name="title-wrapper">
             <span v-if="data.tags[0].value!='withdraw_delegator_reward'" class="title">{{$t('transactiondetails.To')}}:</span>
             <span v-else class="title">{{$t('transactiondetails.Extract')}}:</span>
@@ -82,46 +80,48 @@
           </Col>
         </Row> -->
 
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('transactiondetails.Fee') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <span class="item-value">{{ fee }}</span>
+                    </Col>
+                </Row>
 
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('transactiondetails.GaseUsed') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <span class="item-value">
+                            {{ ((data.gas_used / data.gas_wanted) * 100).toFixed(2) }}% ({{ data.gas_used }}/{{
+                                data.gas_wanted
+                            }}
+                            )
+                        </span>
+                    </Col>
+                </Row>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('transactiondetails.action') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <Activity :activityData="activityData" />
+                    </Col>
+                </Row>
 
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('transactiondetails.Fee')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            <span class="item-value">{{fee}}</span>
-          </Col>
-        </Row>
-
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('transactiondetails.GaseUsed')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            <span class="item-value"> {{(data.gas_used/data.gas_wanted*100).toFixed(2)}}%  ({{data.gas_used}}/{{data.gas_wanted}}   )</span>
-          </Col>
-        </Row>
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('transactiondetails.action')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-              <Activity :activityData="activityData"/>
-
-          </Col>
-        </Row>
-
-        <Row class-name="card-item">
-          <Col span="4" class-name="title-wrapper">
-            <span class="title">{{$t('transactiondetails.Momo')}}:</span>
-          </Col>
-          <Col span="20" class-name="content-wrapper">
-            <Input readonly type="textarea" :rows="4" v-model="memo"  />
-          </Col>
-        </Row>
-      </div>
-    </Mycard>
-  </div>
+                <Row class-name="card-item">
+                    <Col span="4" class-name="title-wrapper">
+                        <span class="title">{{ $t('transactiondetails.Momo') }}:</span>
+                    </Col>
+                    <Col span="20" class-name="content-wrapper">
+                        <Input readonly type="textarea" :rows="4" v-model="memo" />
+                    </Col>
+                </Row>
+            </div>
+        </Mycard>
+    </div>
 </template>
 
 <script>
@@ -130,204 +130,198 @@ import { DAEMON_CONFIG } from '../../config.js';
 import Activity from '@/components/txTable/Activity.vue';
 import txFormat from '@/common/js/txFormat.js';
 
-
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
-
 export default {
-  data() {
-    return {
-      data: null,
-      id: '',
-      txType: '',
-      loading: false,
-      activityData: []
-    };
-  },
-  components: {
-    Mycard,
-    Activity
-  },
-  created() {
-    // let address = this.$store.getters.getaddress.toLowerCase();
-    this.transactionInfo();
-    // console.log(address);
-    // this.getpaylist(address);
-  },
-  // mounted() {
+    data() {
+        return {
+            data: null,
+            id: '',
+            txType: '',
+            loading: false,
+            activityData: [],
+        };
+    },
+    components: {
+        Mycard,
+        Activity,
+    },
+    created() {
+        // let address = this.$store.getters.getaddress.toLowerCase();
+        this.transactionInfo();
+        // console.log(address);
+        // this.getpaylist(address);
+    },
+    // mounted() {
 
-  // },
-  methods: {
-    checkHash(value, txType) {
-      // console.log(value);
-      var explorer = DAEMON_CONFIG.explore();
-      let url = `${explorer}#/txDetail/${value}`;
-      shell.openExternal(url);
-    },
-    checkAddress(value) {
-      // console.log(value);
-      var explorer = DAEMON_CONFIG.explore();
-      let url;
-      if (value.indexOf('lambdavaloper') == 0) {
-        url = `${explorer}/#/validatorDetail/${value}`;
-      } else {
-        url = `${explorer}/#/address/${value}`;
-      }
-
-      shell.openExternal(url);
-    },
-    checkHeight(value) {
-      // console.log(value);
-      var explorer = DAEMON_CONFIG.explore();
-      let url = `${explorer}/#/blockDetail/${value}`;
-      shell.openExternal(url);
-    },
-    async transactionInfo() {
-      this.loading = true;
-      let hash = this.$route.params.id;
-      let txType = this.$route.params.txType;
-      this.$data.txType = txType;
-      try {
-        var res = await ipc.callMain('transactionInfo', {
-          hash,
-          txType
-        });
-        console.log(res.data);
-
-        this.$data.data = res.data;
-        this.$data.activityData = txFormat(res.data, this).txs;
-        this.loading = false;
-      } catch (ex) {
-        this.loading = false;
-        console.log(ex);
-      }
-    },
-    getType(data) {
-      var list = data.tx.value.msg[0].type.split('/');
-      return list[1] || list[0];
-    },
-    txerrororsuccess(item) {
-      if (item.code != undefined) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  },
-  computed: {
-    sender() {
-      var item = this.$data.data;
-
-      var result = '--';
-      var msg0 = item.tx.value.msg[0];
-      if (msg0.value.from_address != undefined) {
-        result = msg0.value.from_address;
-      } else if (msg0.value.address != undefined) {
-        result = msg0.value.address;
-      } else {
-        item.tags.forEach(item => {
-          if (item.key == 'delegator') {
-            result = item.value;
-          }
-        });
-      }
-
-      return result;
-    },
-    to() {
-      var msg = this.$data.data.tx.value.msg;
-      return msg[0].value.to_address;
-    },
-    amount() {
-      var msg0 = this.$data.data.tx.value.msg[0];
-
-      var result;
-      if (msg0.value != undefined) {
-        if (msg0.value.amount != undefined) {
-          if (msg0.value.amount instanceof Array) {
-            result = this.bigNumTypeFormat(msg0.value.amount[0].amount, msg0.value.amount[0].denom);
-          } else {
-            result = this.bigNumTypeFormat(msg0.value.amount.amount, msg0.value.amount.denom);
-          }
-        } else if (msg0.type == 'lambda/MsgAssetDrop') {
-          result =
-              this.bigNumTypeFormat(msg0.value.asset.amount,
-                msg0.value.asset.denom) +
-              '->' +
-              this.bigNumTypeFormat(msg0.value.token.amount,
-                msg0.value.token.denom);
-        } else if (msg0.type == 'lambda/MsgAssetPledge') {
-          result =
-              this.bigNumTypeFormat(msg0.value.token.amount,
-                msg0.value.token.denom) +
-              '->' +
-              this.bigNumTypeFormat(msg0.value.asset.amount,
-                msg0.value.asset.denom);
-        } else {
-          this.$data.data.tags.forEach(item => {
-            if (item.key == 'rewards') {
-              result = this.bigNumAdd(item.value.replace('ulamb', ''), result);
+    // },
+    methods: {
+        checkHash(value, txType) {
+            // console.log(value);
+            var explorer = DAEMON_CONFIG.explore();
+            let url = `${explorer}#/txDetail/${value}`;
+            shell.openExternal(url);
+        },
+        checkAddress(value) {
+            // console.log(value);
+            var explorer = DAEMON_CONFIG.explore();
+            let url;
+            if (value.indexOf('lambdavaloper') == 0) {
+                url = `${explorer}/#/validatorDetail/${value}`;
+            } else {
+                url = `${explorer}/#/address/${value}`;
             }
-          });
-          result = this.bigNumTypeFormat(result, 'ulamb');
-        }
-      }
-      return result;
-    },
-    getToAddress() {
-      var item = this.$data.data;
-      var value = item.tx.value.msg[0].value;
-      var toaddress = '';
-      if (item.tags[0].value == 'withdraw_delegator_reward') {
-        toaddress = [];
-        item.tags.forEach(item => {
-          if (item.key == 'source-validator') {
-            toaddress.push(item.value);
-          }
-        });
-      } else {
-        toaddress = value.to_address || value.validator_address;
-        if (toaddress == undefined) {
-          item.tags.forEach(item => {
-            if (item.key == 'source-validator') {
-              toaddress = item.value;
-            }
-          });
-        }
-      }
 
-      return toaddress;
+            shell.openExternal(url);
+        },
+        checkHeight(value) {
+            // console.log(value);
+            var explorer = DAEMON_CONFIG.explore();
+            let url = `${explorer}/#/blockDetail/${value}`;
+            shell.openExternal(url);
+        },
+        async transactionInfo() {
+            this.loading = true;
+            let hash = this.$route.params.id;
+            let txType = this.$route.params.txType;
+            this.$data.txType = txType;
+            try {
+                var res = await ipc.callMain('transactionInfo', {
+                    hash,
+                    txType,
+                });
+                console.log(res.data);
+
+                this.$data.data = res.data;
+                this.$data.activityData = txFormat(res.data, this).txs;
+                this.loading = false;
+            } catch (ex) {
+                this.loading = false;
+                console.log(ex);
+            }
+        },
+        getType(data) {
+            var list = data.tx.value.msg[0].type.split('/');
+            return list[1] || list[0];
+        },
+        txerrororsuccess(item) {
+            if (item.code != undefined) {
+                return false;
+            } else {
+                return true;
+            }
+        },
     },
-    memo() {
-      var memo = this.$data.data.tx.value.memo;
-      return memo;
+    computed: {
+        sender() {
+            var item = this.$data.data;
+
+            var result = '--';
+            var msg0 = item.tx.value.msg[0];
+            if (msg0.value.from_address != undefined) {
+                result = msg0.value.from_address;
+            } else if (msg0.value.address != undefined) {
+                result = msg0.value.address;
+            } else {
+                item.tags.forEach(item => {
+                    if (item.key == 'delegator') {
+                        result = item.value;
+                    }
+                });
+            }
+
+            return result;
+        },
+        to() {
+            var msg = this.$data.data.tx.value.msg;
+            return msg[0].value.to_address;
+        },
+        amount() {
+            var msg0 = this.$data.data.tx.value.msg[0];
+
+            var result;
+            if (msg0.value != undefined) {
+                if (msg0.value.amount != undefined) {
+                    if (msg0.value.amount instanceof Array) {
+                        result = this.bigNumTypeFormat(msg0.value.amount[0].amount, msg0.value.amount[0].denom);
+                    } else {
+                        result = this.bigNumTypeFormat(msg0.value.amount.amount, msg0.value.amount.denom);
+                    }
+                } else if (msg0.type == 'lambda/MsgAssetDrop') {
+                    result =
+                        this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom) +
+                        '->' +
+                        this.bigNumTypeFormat(msg0.value.token.amount, msg0.value.token.denom);
+                } else if (msg0.type == 'lambda/MsgAssetPledge') {
+                    result =
+                        this.bigNumTypeFormat(msg0.value.token.amount, msg0.value.token.denom) +
+                        '->' +
+                        this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom);
+                } else {
+                    this.$data.data.tags.forEach(item => {
+                        if (item.key == 'rewards') {
+                            result = this.bigNumAdd(item.value.replace('ulamb', ''), result);
+                        }
+                    });
+                    result = this.bigNumTypeFormat(result, 'ulamb');
+                }
+            }
+            return result;
+        },
+        getToAddress() {
+            var item = this.$data.data;
+            var value = item.tx.value.msg[0].value;
+            var toaddress = '';
+            if (item.tags[0].value == 'withdraw_delegator_reward') {
+                toaddress = [];
+                item.tags.forEach(item => {
+                    if (item.key == 'source-validator') {
+                        toaddress.push(item.value);
+                    }
+                });
+            } else {
+                toaddress = value.to_address || value.validator_address;
+                if (toaddress == undefined) {
+                    item.tags.forEach(item => {
+                        if (item.key == 'source-validator') {
+                            toaddress = item.value;
+                        }
+                    });
+                }
+            }
+
+            return toaddress;
+        },
+        memo() {
+            var memo = this.$data.data.tx.value.memo;
+            return memo;
+        },
+        fee() {
+            var fee = this.$data.data.tx.value.fee;
+            if (fee.amount == null) {
+                return '--';
+            }
+            return this.bigNumTypeFormat(fee.amount[0].amount, fee.amount[0].denom);
+        },
     },
-    fee() {
-      var fee = this.$data.data.tx.value.fee;
-      if (fee.amount == null) {
-        return '--';
-      }
-      return this.bigNumTypeFormat(fee.amount[0].amount, fee.amount[0].denom);
-    }
-  }
 };
 </script>
 
 <style lang="less" scoped>
 .container {
-  position: relative;
-  .transaction-content {
-    .card-item {
-      margin-bottom: 20px;
-      .title {
-        font-size: 14px;
-        font-weight: 600;
-      }
-      .item-value {
-        font-size: 14px;
-      }
+    position: relative;
+    .transaction-content {
+        .card-item {
+            margin-bottom: 20px;
+            .title {
+                font-size: 14px;
+                font-weight: 600;
+            }
+            .item-value {
+                font-size: 14px;
+            }
+        }
     }
-  }
 }
 </style>

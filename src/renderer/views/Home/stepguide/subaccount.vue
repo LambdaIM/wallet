@@ -1,12 +1,11 @@
 <template>
-<subaccount/>
+    <subaccount />
 </template>
 <script>
 import subaccount from '../subaccount.vue';
 export default {
-  components: {
-    subaccount
-  }
-
+    components: {
+        subaccount,
+    },
 };
 </script>
