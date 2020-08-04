@@ -228,7 +228,7 @@ export default {
             // assetAll
             try {
                 let res = await ipc.callMain('Authorizedmarketlist', {});
-                if (res.state) {
+                if (res.state && res.data.error == undefined) {
                     this.$data.marketdata = res.data.data || [];
                 }
             } catch (ex) {
