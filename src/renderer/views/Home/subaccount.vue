@@ -16,7 +16,9 @@
                     <Button size="small" @click="exportAccount(row)" type="primary">
                         {{ $t('subaccount.export') }}
                     </Button>
-                    <!-- <Button size="small"  @click="cointransaction(row)"  type="primary">{{$t('subaccount.transaction')}}</Button> -->
+                    <Button size="small" @click="cointransaction(row)" type="primary">
+                        {{ $t('subaccount.transaction') }}
+                    </Button>
                 </template>
                 <template slot-scope="{ row, index }" slot="account">
                     {{ row.lambdavalue | Lambformat }}
