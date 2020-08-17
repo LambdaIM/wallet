@@ -66,7 +66,7 @@
                             @click="openAuthorizedmining(row)"
                             size="small"
                         >
-                            {{ $t('assetpage.btn.Authorize') }}
+                            授权管理
                         </Button>
                         <Button
                             type="error"
@@ -103,6 +103,15 @@
                         >
                             {{ $t('Purchasespace.buy') }}
                         </Button>
+
+                        <Button
+                            v-if="$role('conlist.Buyingspace')"
+                            class="smallbtn"
+                            @click="openPurchaseauthorizedspace(row)"
+                            size="small"
+                        >
+                            质押管理
+                        </Button>
                     </template>
                 </Table>
                 <AuthorizedpledgeDialog ref="AuthorizedpledgeModal" />
@@ -115,6 +124,7 @@
                 <MinerActivateDialog ref="ActivateDialogModal" />
                 <Purchaseauthorizedspace ref="PurchaseauthorizedspaceModal" />
                 <MinerDeactivateDialog ref="DeactivateDialogModal" />
+                <AssetUserPledge ref="AssetUserPledgeModal" />
             </div>
             <br />
             <br />
@@ -140,6 +150,8 @@ import MinerActivateDialog from '@/views/Dialog/MinerActivate.vue';
 import MinerDeactivateDialog from '@/views/Dialog/MinerDeactivate.vue';
 
 import Purchaseauthorizedspace from '@/views/Dialog/Purchaseauthorizedspace.vue';
+
+import AssetUserPledge from '@/views/Dialog/assetUserPledge.vue';
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
@@ -222,6 +234,7 @@ export default {
         MinerActivateDialog,
         MinerDeactivateDialog,
         Purchaseauthorizedspace,
+        AssetUserPledge,
     },
     methods: {
         async getmarketAll() {
@@ -258,6 +271,9 @@ export default {
         },
         openPurchaseauthorizedspace(data) {
             this.$refs.PurchaseauthorizedspaceModal.open(data);
+        },
+        openPurchaseauthorizedspace(data) {
+            this.$refs.AssetUserPledgeModal.open(data);
         },
         async getincomelist() {
             // assetAll

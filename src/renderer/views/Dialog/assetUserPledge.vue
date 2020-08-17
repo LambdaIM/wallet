@@ -3,7 +3,7 @@
         <Modal
             loading
             v-model="sendModal"
-            :title="$t('Authorizedminingpop.Authorization-MinerMining')"
+            title="质押管理-质押、取消质押"
             :styles="{ top: '200px' }"
             @on-cancel="sendcancel"
         >
@@ -15,19 +15,28 @@
                 </p>
                 <br />
                 <p>
-                    <Input v-model="user">
-                        <span slot="prepend">用户lambda地址</span>
+                    <a @click="openLinkmarket(AssetName)">{{ $t('Purchasespace.operationaddressbrowser') }}</a>
+                </p>
+                <br />
+                <p>
+                    <Input v-model="mineraddress">
+                        <span slot="prepend">矿工操作地址</span>
+                    </Input>
+                </p>
+                <br />
+
+                <p>
+                    <Input v-model="amount">
+                        <span slot="prepend">金额</span>
                     </Input>
                 </p>
                 <br />
                 <p>
-                    <RadioGroup v-model="isAllowed">
-                        <Radio label="1">添加授权</Radio>
-                        <Radio label="2">取消授权</Radio>
+                    <RadioGroup v-model="delegateType">
+                        <Radio label="delegate">质押</Radio>
+                        <Radio label="undelegate">取消质押</Radio>
                     </RadioGroup>
                 </p>
-
-                <br />
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="preSendLAMB">{{ $t('home.Modal1.Submit') }}</Button>
@@ -41,7 +50,9 @@
 <script>
 import eventhub from '../../common/js/event.js';
 import ConfirmModal from './confirmModal.vue';
+import { DAEMON_CONFIG } from '../../../config.js';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+const { shell } = require('electron');
 
 export default {
     data() {
@@ -52,9 +63,14 @@ export default {
             asset: '',
             AssetName: '',
             Pubkey: '',
-            pubkeyType: '1',
-            user: '',
-            isAllowed: '',
+            priceinfo: '',
+            size: '',
+            Duration: '',
+            timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30,
+            mineraddress: '',
+            price: '',
+            delegateType: 'delegate',
+            amount: '',
         };
     },
     components: {
@@ -72,38 +88,57 @@ export default {
         preSendLAMB() {
             console.log('-----');
             var AssetName = this.$data.AssetName;
-            var user = this.$data.user;
-            var isAllowed = this.$data.isAllowed;
-            var jsonObj = {};
 
-            if (user.length != 45) {
+            var amount = parseInt(this.$data.amount);
+            var delegateType = this.$data.delegateType;
+            if (this.$data.mineraddress.length !== 54) {
                 this.$Notice.warning({
-                    title: '请填写lambda地址',
-                });
-                return;
-            }
-            if (isAllowed == '') {
-                this.$Notice.warning({
-                    title: '请填选择添加授权或取消授权',
+                    title: this.$t('Purchasespace.action.need_miner_address'),
                 });
                 return;
             }
 
-            this.transfer(user, AssetName, isAllowed);
+            if (isNaN(amount) || amount <= 0) {
+                this.$Notice.warning({
+                    title: '请输入金额',
+                });
+                return;
+            }
+
+            if (delegateType == '') {
+                this.$Notice.warning({
+                    title: '请选择质押、或取消质押',
+                });
+                return;
+            }
+
+            this.transfer(AssetName, this.$data.mineraddress, amount, delegateType);
         },
-        async transfer(user, AssetName, isAllowed) {
+        openLinkmarket(name) {
+            var explorer = DAEMON_CONFIG.explore();
+            let url = `${explorer}#/assetMarket/${name}`;
+            shell.openExternal(url);
+        },
+        async transfer(AssetName, address, amount, delegateType) {
             this.$data.transactiondata = null;
 
+            // Size = String(Size);
+
             try {
-                let res = await ipc.callMain('AuthorizeMiningPubKey', {
-                    user,
+                let res = await ipc.callMain('assertUserdelegate', {
                     AssetName,
-                    isAllowed,
+                    address,
+                    amount: String(amount),
+                    delegateType,
                 });
                 // console.log(res);
+
                 if (res.state) {
                     this.sendcancel();
-                    this.$refs.ConfirmModal.open('AuthorizeMiningPubKey', res.data);
+                    this.$refs.ConfirmModal.open('assertUserdelegate', res.data, {
+                        totalAmount: this.payamount,
+                        denom: this.$data.AssetName,
+                    });
 
                     // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
                     // if (gasres.state) {
@@ -139,6 +174,31 @@ export default {
         },
         isdegeTxt: function() {
             return this.$t('proposalsPage.Vote');
+        },
+        payamount: function() {
+            var size = parseInt(this.$data.size);
+            var Duration = parseInt(this.$data.Duration);
+            var price = this.$data.price;
+
+            var result = price * size * Duration;
+            if (isNaN(result)) {
+                return 0;
+            } else {
+                return result;
+            }
+        },
+    },
+    watch: {
+        priceinfo: function(data) {
+            if (data == '') {
+                return;
+            }
+            try {
+                var priceinfo = JSON.parse(data);
+                // { "address": "lambdamineroper1g74gwkeq2py5zypv4l223p2s82gqlc28rsp826","price": 1000000 }
+                this.$data.mineraddress = priceinfo.address;
+                this.$data.price = priceinfo.price;
+            } catch (error) {}
         },
     },
 };

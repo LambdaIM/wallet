@@ -401,7 +401,7 @@
                 </div>
 
                 <div v-if="txtype == 'AuthorizeMiningPubKey'">
-                    <h2>{{ $t('Authorizedminingpop.Authorization-MinerMining') }}</h2>
+                    <h2>授权管理</h2>
                     <Row class-name="item">
                         <Col span="3" class-name="key">{{ $t('Authorizedminingpop.AssetName') }}:</Col>
                         <Col span="21">
@@ -409,9 +409,15 @@
                         </Col>
                     </Row>
                     <Row class-name="item">
-                        <Col span="3" class-name="key">{{ $t('Authorizedminingpop.Authorizedpublickey') }}:</Col>
+                        <Col span="3" class-name="key">地址:</Col>
                         <Col span="21">
-                            <Input readonly :rows="4" type="textarea" v-model="transactiondata.PubKey.value" />
+                            {{ transactiondata.user }}
+                        </Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="3" class-name="key">类别:</Col>
+                        <Col span="21">
+                            {{ transactiondata.isAllowed ? '添加授权' : '取消授权' }}
                         </Col>
                     </Row>
                 </div>

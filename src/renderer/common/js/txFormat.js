@@ -13,8 +13,8 @@ export default function(tx, vueIns) {
                     msg_type: msg.type,
                     action: msg.type.split('/')[1],
                     amount: getamount(msg, tx, vueIns, index),
-                    valid: tx.logs[index] ? tx.logs[index].success : false,
-                    log: tx.logs[index] ? tx.logs[index].log : '--',
+                    valid: txlogvalid(tx, index),
+                    log: txlog(tx, index),
                 };
             } catch (error) {
                 console.log(msg, index, tx);
@@ -22,6 +22,21 @@ export default function(tx, vueIns) {
             }
         }),
     };
+}
+function txlog(tx, index) {
+    if (tx.logs) {
+        return tx.logs[index] ? tx.logs[index].log : '--';
+    } else {
+        return '--';
+    }
+}
+
+function txlogvalid(tx, index) {
+    if (tx.logs) {
+        return tx.logs[index] ? tx.logs[index].success : false;
+    } else {
+        return false;
+    }
 }
 
 function getSendAddress(msg, item) {

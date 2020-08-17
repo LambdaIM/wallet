@@ -1,6 +1,3 @@
-
-
-
 import transaction from './utils/transactionTypes';
 import ActionManager from './utils/ActionManager.js';
 
@@ -13,7 +10,6 @@ var fs = require('graceful-fs');
 var log = require('../log').log;
 var { DAEMON_CONFIG } = require('../configmain.js');
 
-
 const settings = require('electron-settings');
 const path = require('path');
 const hdkeyjs = require('@jswebfans/hdkeyjs');
@@ -23,282 +19,266 @@ const bip39 = require('bip39');
 
 const { throwErrorCode, errorList } = require('./throwErrorCode.js');
 
+var walletManger = function(dir) {
+    // 遍历文件夹
+    //
+    this.walletList = [];
+    this.defaultwallet = null;
+    // 默认的钱包 应该存储在 配置文件里面
 
-var walletManger = function (dir) {
-  // 遍历文件夹
-  //
-  this.walletList = [];
-  this.defaultwallet = null;
-  // 默认的钱包 应该存储在 配置文件里面
+    this.lastpayobj = null;
+    this.lastpayArry = null;
 
-  this.lastpayobj = null;
-  this.lastpayArry = null;
+    this.CosmosAPI = LambdaApi();
+    this.actionManager = new ActionManager();
 
-  this.CosmosAPI = LambdaApi();
-  this.actionManager = new ActionManager();
+    this.scann();
+    this.setDefaultWallet();
 
-  this.scann();
-  this.setDefaultWallet();
+    this.filepath_create = null;
+    this.walletjson__create = null;
 
-  this.filepath_create = null;
-  this.walletjson__create = null;
-
-  this.gasEstimate = null;
-  this.Nedbjs = new Nedb();
+    this.gasEstimate = null;
+    this.Nedbjs = new Nedb();
 };
-walletManger.prototype.readconfig = function () {
-  // console.log('defaultwallet', settings.get('defaultwallet'));
+walletManger.prototype.readconfig = function() {
+    // console.log('defaultwallet', settings.get('defaultwallet'));
 
-  if (settings.has('defaultwallet') != undefined) {
-    return settings.get('defaultwallet');
-  }
+    if (settings.has('defaultwallet') != undefined) {
+        return settings.get('defaultwallet');
+    }
 };
 walletManger.prototype.writeSyncJson = function(path, data) {
-  console.log('writeSyncJson');
+    console.log('writeSyncJson');
 
-
-  return fs.writeFileSync(path, JSON.stringify(data, null, 2), { mode: '0600', encoding: 'utf8' });
+    return fs.writeFileSync(path, JSON.stringify(data, null, 2), { mode: '0600', encoding: 'utf8' });
 };
 
-walletManger.prototype.setconfig = function (address) {
-  settings.set('defaultwallet', address);
+walletManger.prototype.setconfig = function(address) {
+    settings.set('defaultwallet', address);
 };
 
-walletManger.prototype.scann = function () {
-  this.walletList = [];
-  var dir = DAEMON_CONFIG.WalletFile;
-  var list = fs.readdirSync(dir);
-  list.forEach(file => {
-    if (file.indexOf('.keyinfo') > 0) {
-      file = path.join(dir, file);
-      var v3file = fs.readFileSync(file, 'utf8');
-      try {
-        v3file = JSON.parse(v3file);
-        if (v3file.address != undefined) {
-          this.walletList.push(v3file);
+walletManger.prototype.scann = function() {
+    this.walletList = [];
+    var dir = DAEMON_CONFIG.WalletFile;
+    var list = fs.readdirSync(dir);
+    list.forEach(file => {
+        if (file.indexOf('.keyinfo') > 0) {
+            file = path.join(dir, file);
+            var v3file = fs.readFileSync(file, 'utf8');
+            try {
+                v3file = JSON.parse(v3file);
+                if (v3file.address != undefined) {
+                    this.walletList.push(v3file);
+                }
+            } catch (err) {
+                console.log(err);
+            }
         }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  });
-};
-
-walletManger.prototype.getDefaultwalletBasicinfo = function () {
-  if (this.defaultwallet == null) {
-    throwErrorCode(errorList.not_find_DefaultWallet);
-    // throw new Error('not find DefaultWallet');
-  }
-  return {
-    address: this.defaultwallet.address,
-    name: this.defaultwallet.name,
-    publicKey: this.defaultwallet.publicKey
-  };
-};
-
-
-
-walletManger.prototype.OpenDefaultwallet = function (password) {
-  var info;
-  log.info('OpenDefaultwallet');
-  log.info(this.defaultwallet.address);
-  if (this.defaultwallet == null) {
-    throwErrorCode(errorList.not_find_DefaultWallet);
-  }
-
-  var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
-
-  info = {
-    publicKey: this.defaultwallet.publicKey,
-    address: this.defaultwallet.address,
-    name: this.defaultwallet.name,
-    privatekey: privatekey
-  };
-
-  return info;
-};
-
-walletManger.prototype.setDefaultWallet = function (address) {
-  log.info('setDefaultWallet');
-  var addressdefault = this.readconfig();
-  // addressdefault=addressdefault.toUpperCase();
-  log.info('setDefaultWallet', addressdefault, address);
-  var target;
-
-
-  if (address != undefined) {
-    this.setconfig(address);
-    target = address;
-  } else if (addressdefault != undefined) {
-    this.setconfig(addressdefault);
-    target = addressdefault;
-  } else {
-    if (this.walletList.length == 0) {
-      this.defaultwallet = null;
-      return;
-    }
-    target = this.walletList[0].address;
-    this.setconfig(target);
-  }
-
-
-  var objwallet;
-
-  this.walletList.forEach(function (obj) {
-    if (target == obj.address) {
-      objwallet = obj;
-    }
-  });
-  if (objwallet == undefined) {
-    this.defaultwallet = null;
-  } else {
-    this.defaultwallet = objwallet;
-  }
-};
-
-walletManger.prototype.getWalletList = function () {
-  this.scann();
-  var result = [];
-
-  this.walletList.forEach(function (item) {
-    result.push({
-      name: item.name,
-      address: item.address
     });
-  });
-
-  return result;
 };
 
-
-
-walletManger.prototype.creatWallet = function (password, name) {
-  this.filepath_create = null;
-  this.walletjson__create = null;
-
-  var mnemonic = hdkeyjs.crypto.generateRandomMnemonic(256);
-  var result = this.generateWallet(mnemonic, password, name, true);
-  return result;
-};
-walletManger.prototype.creatWalletComplete = function (password, name) {
-  if (this.filepath_create == null || this.walletjson__create == null) {
-    throwErrorCode(errorList.can_not_find_mnemonic);
-    // throw new Error('can not find  mnemonic');
-  }
-  // fs.writeFileSync(this.filepath_create, JSON.stringify(this.walletjson__create));
-  this.writeSyncJson(this.filepath_create, this.walletjson__create);
-  this.scann();
-  return true;
+walletManger.prototype.getDefaultwalletBasicinfo = function() {
+    if (this.defaultwallet == null) {
+        throwErrorCode(errorList.not_find_DefaultWallet);
+        // throw new Error('not find DefaultWallet');
+    }
+    return {
+        address: this.defaultwallet.address,
+        name: this.defaultwallet.name,
+        publicKey: this.defaultwallet.publicKey,
+    };
 };
 
+walletManger.prototype.OpenDefaultwallet = function(password) {
+    var info;
+    log.info('OpenDefaultwallet');
+    log.info(this.defaultwallet.address);
+    if (this.defaultwallet == null) {
+        throwErrorCode(errorList.not_find_DefaultWallet);
+    }
 
-walletManger.prototype.generateWallet = function (mnemonic, password, name, iscreat) {
-  const keys = hdkeyjs.crypto.getKeysFromMnemonic(mnemonic);
-  // var seed = tenderKeys.generateSeed(mnemonic);
-  // var keyPair = tenderKeys.generateKeyPair(seed);
+    var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
 
-  // var address = tenderKeys.getAddressFromPubKey(keyPair.publicKey.toString('hex'));
-  const address = hdkeyjs.address.getAddress(keys.publicKey);
-  var file = this.findFile(address);
-  if (file != null) {
-    throwErrorCode(errorList.Import_failed_address_already_exists, address);
-    // throw new Error(`Import failed,${address} already exists`);
-  }
+    info = {
+        publicKey: this.defaultwallet.publicKey,
+        address: this.defaultwallet.address,
+        name: this.defaultwallet.name,
+        privatekey: privatekey,
+    };
 
+    return info;
+};
 
-  var walletjson = hdkeyjs.keyStore.toJson(keys, password, name);
+walletManger.prototype.setDefaultWallet = function(address) {
+    log.info('setDefaultWallet');
+    var addressdefault = this.readconfig();
+    // addressdefault=addressdefault.toUpperCase();
+    log.info('setDefaultWallet', addressdefault, address);
+    var target;
 
+    if (address != undefined) {
+        this.setconfig(address);
+        target = address;
+    } else if (addressdefault != undefined) {
+        this.setconfig(addressdefault);
+        target = addressdefault;
+    } else {
+        if (this.walletList.length == 0) {
+            this.defaultwallet = null;
+            return;
+        }
+        target = this.walletList[0].address;
+        this.setconfig(target);
+    }
 
+    var objwallet;
 
-  var filepath = path.join(DAEMON_CONFIG.WalletFile, address + '.keyinfo');
+    this.walletList.forEach(function(obj) {
+        if (target == obj.address) {
+            objwallet = obj;
+        }
+    });
+    if (objwallet == undefined) {
+        this.defaultwallet = null;
+    } else {
+        this.defaultwallet = objwallet;
+    }
+};
 
+walletManger.prototype.getWalletList = function() {
+    this.scann();
+    var result = [];
 
-  if (iscreat) {
-    this.filepath_create = filepath;
-    this.walletjson__create = walletjson;
-  } else {
+    this.walletList.forEach(function(item) {
+        result.push({
+            name: item.name,
+            address: item.address,
+        });
+    });
+
+    return result;
+};
+
+walletManger.prototype.creatWallet = function(password, name) {
+    this.filepath_create = null;
+    this.walletjson__create = null;
+
+    var mnemonic = hdkeyjs.crypto.generateRandomMnemonic(256);
+    var result = this.generateWallet(mnemonic, password, name, true);
+    return result;
+};
+walletManger.prototype.creatWalletComplete = function(password, name) {
+    if (this.filepath_create == null || this.walletjson__create == null) {
+        throwErrorCode(errorList.can_not_find_mnemonic);
+        // throw new Error('can not find  mnemonic');
+    }
+    // fs.writeFileSync(this.filepath_create, JSON.stringify(this.walletjson__create));
+    this.writeSyncJson(this.filepath_create, this.walletjson__create);
+    this.scann();
+    return true;
+};
+
+walletManger.prototype.generateWallet = function(mnemonic, password, name, iscreat) {
+    const keys = hdkeyjs.crypto.getKeysFromMnemonic(mnemonic);
+    // var seed = tenderKeys.generateSeed(mnemonic);
+    // var keyPair = tenderKeys.generateKeyPair(seed);
+
+    // var address = tenderKeys.getAddressFromPubKey(keyPair.publicKey.toString('hex'));
+    const address = hdkeyjs.address.getAddress(keys.publicKey);
+    var file = this.findFile(address);
+    if (file != null) {
+        throwErrorCode(errorList.Import_failed_address_already_exists, address);
+        // throw new Error(`Import failed,${address} already exists`);
+    }
+
+    var walletjson = hdkeyjs.keyStore.toJson(keys, password, name);
+
+    var filepath = path.join(DAEMON_CONFIG.WalletFile, address + '.keyinfo');
+
+    if (iscreat) {
+        this.filepath_create = filepath;
+        this.walletjson__create = walletjson;
+    } else {
+        // fs.writeFileSync(filepath, JSON.stringify(walletjson));
+        this.writeSyncJson(filepath, walletjson);
+        this.scann();
+    }
+
+    return {
+        mnemonic: mnemonic,
+        address: address,
+        name: name,
+    };
+};
+
+walletManger.prototype.generateSonAccount = function(mnemonic, password, name, index) {
+    // 校验密码
+    var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
+    //
+    // 子账户
+    console.log('-----1');
+    const keys = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, index);
+    console.log('-----2');
+    const address = hdkeyjs.address.getAddress(keys.publicKey);
+    // 父账户
+    const keysF = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, 0);
+    const addressF = hdkeyjs.address.getAddress(keysF.publicKey);
+    if (this.defaultwallet.address != addressF) {
+        throwErrorCode(errorList.main_account_not_current_account);
+        // throw new Error(`The main account corresponding to mnemonic times is inconsistent with the current account `);
+    }
+
+    var file = this.findSonFile(address);
+    if (file.fileName != null) {
+        throwErrorCode(errorList.failed_already_exists, address);
+        // throw new Error(`failed,${address} already exists`);
+    }
+
+    // var walletjson = hdkeyjs.keyStore.toJson(keys, password, name);
+    var walletjson = {
+        name: name,
+        pub_key: {
+            type: 'tendermint/PubKeySecp256k1',
+            value: keys.publicKey.toString('base64'),
+        },
+        priv_key: {
+            type: 'tendermint/PrivKeySecp256k1',
+            value: keys.privateKey.toString('base64'),
+        },
+        masterAddress: addressF,
+        address: address,
+    };
+    var filepath = path.join(DAEMON_CONFIG.SonAccountFile, this.defaultwallet.address, address + '.txt');
     // fs.writeFileSync(filepath, JSON.stringify(walletjson));
     this.writeSyncJson(filepath, walletjson);
+
     this.scann();
-  }
 
-
-  return {
-    mnemonic: mnemonic,
-    address: address,
-    name: name
-  };
+    return {
+        address: address,
+        name: name,
+    };
 };
 
-walletManger.prototype.generateSonAccount = function (mnemonic, password, name, index) {
-  // 校验密码
-  var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
-  //
-  // 子账户
-  console.log('-----1');
-  const keys = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, index);
-  console.log('-----2');
-  const address = hdkeyjs.address.getAddress(keys.publicKey);
-  // 父账户
-  const keysF = hdkeyjs.crypto.getKeysFromMnemonicbyindex(mnemonic, 0);
-  const addressF = hdkeyjs.address.getAddress(keysF.publicKey);
-  if (this.defaultwallet.address != addressF) {
-    throwErrorCode(errorList.main_account_not_current_account);
-    // throw new Error(`The main account corresponding to mnemonic times is inconsistent with the current account `);
-  }
+walletManger.prototype.deleteWallet = function(address) {
+    var dir = DAEMON_CONFIG.WalletFile;
+    var list = fs.readdirSync(dir);
 
-
-
-  var file = this.findSonFile(address);
-  if (file.fileName != null) {
-    throwErrorCode(errorList.failed_already_exists, address);
-    // throw new Error(`failed,${address} already exists`);
-  }
-
-  // var walletjson = hdkeyjs.keyStore.toJson(keys, password, name);
-  var walletjson = {
-    'name': name,
-    'pub_key': {
-      'type': 'tendermint/PubKeySecp256k1',
-      'value': keys.publicKey.toString('base64')
-    },
-    'priv_key': {
-      'type': 'tendermint/PrivKeySecp256k1',
-      'value': keys.privateKey.toString('base64')
-    },
-    'masterAddress': addressF,
-    'address': address
-  };
-  var filepath = path.join(DAEMON_CONFIG.SonAccountFile, this.defaultwallet.address, address + '.txt');
-  // fs.writeFileSync(filepath, JSON.stringify(walletjson));
-  this.writeSyncJson(filepath, walletjson);
-
-  this.scann();
-
-  return {
-    address: address,
-    name: name
-  };
+    list.forEach(file => {
+        var filepath = path.join(dir, file);
+        try {
+            if (file.indexOf(address) > 0) {
+                fs.unlinkSync(filepath);
+                this.scann();
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    });
 };
 
-walletManger.prototype.deleteWallet = function (address) {
-  var dir = DAEMON_CONFIG.WalletFile;
-  var list = fs.readdirSync(dir);
-
-  list.forEach(file => {
-    var filepath = path.join(dir, file);
-    try {
-      if (file.indexOf(address) > 0) {
-        fs.unlinkSync(filepath);
-        this.scann();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  });
-};
-
-walletManger.prototype.ImportWalletByMnemonic = function (mnemonic, password, name) {
+walletManger.prototype.ImportWalletByMnemonic = function(mnemonic, password, name) {
   /* eslint-disable */
   var mnemonicList = mnemonic.match(/[a-z]+[\-\']?[a-z]*/ig);
 
@@ -881,6 +861,25 @@ walletManger.prototype.DamCreateBuyOrder = async function (Asset,Duration,Size,m
   return result;
 };
 
+walletManger.prototype.DamUserDelegate = async function (AssetName, minerAddress, amount, delegateType,memo) {
+  var typeName = ''
+
+  if(delegateType == 'delegate'){
+    typeName = transaction.DigitalAssetDelegate;
+  }else{
+    typeName = transaction.DigitalAssetUndelegate;
+  }
+
+  var result = {
+    type: typeName,  //DigitalAssetUndelegate
+    assetName: AssetName,
+    amount:amount,
+    miner:minerAddress,
+    memo: memo || ''
+  };
+  return result;
+};
+
 
 walletManger.prototype.DamOrderRenewal = async function (orderId,duration,memo) {
   console.log('DamOrderRenewal',orderId,duration)
@@ -908,45 +907,19 @@ walletManger.prototype.DamMinerWithDrawCount = async function (asset,page,limit,
 
 
 
-walletManger.prototype.AuthorizeMiningPubKey = async function ( PubKey,AssetName,ispubkey,memo) {
+walletManger.prototype.AuthorizeMiningPubKey = async function ( user, AssetName, isAllowed,memo) {
   
   // console.log('publicKey')
   // console.log(publicKey)
   // console.log(publicKey.length)
   var result,publicKey; 
-  if(PubKey.length== 77){
-    publicKey = hdkeyjs.publicKey.getBytes(PubKey);
-  }else{
-    publicKey=Buffer.from(PubKey,'base64');
-
-
-  }
-  console.log('publicKey 长度',publicKey.length)
-  if(publicKey.length==33){
-     result = {
-      type: transaction.AuthorizeMiningPubKey,
-      PubKey: {
-       "type":"tendermint/PubKeySecp256k1",
-        value:publicKey.toString(`base64`),
-      },
-      AssetName:AssetName,
-      memo: memo || ''
-    };
-
-  }else if(publicKey.length==32){
-    result = {
-      type: transaction.AuthorizeMiningPubKey,
-      PubKey: {
-       "type":"tendermint/PubKeyEd25519",
-       value:publicKey.toString(`base64`),
-      },
-      AssetName:AssetName,
-      memo: memo || ''
-    };
-
-  }else{
-    throw new Error('need PubKeySecp256k1 or PubKeyEd25519')
-  }
+  result = {
+    type: transaction.AuthorizeUser,
+    AssetName:AssetName,
+    memo: memo || '',
+    user:user,
+    isAllowed:isAllowed=='1'?true:false
+  };
   
 
   return result;
