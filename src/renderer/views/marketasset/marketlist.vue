@@ -16,10 +16,6 @@
                         {{ denomFormart(row.assetName) }}
                     </template>
 
-                    <template slot-scope="{ row, index }" slot="pledgeAsset">
-                        {{ findpledge(row.assetName) }}
-                    </template>
-
                     <template slot-scope="{ row, index }" slot="miningSize">
                         {{ findminingSize(row.assetName) }}
                     </template>
@@ -79,23 +75,6 @@
                         </Button>
 
                         <Button
-                            v-if="$role('conlist.DeactivateMiner')"
-                            class="smallbtn"
-                            @click="openMinerDeactivateDialog(row)"
-                            size="small"
-                        >
-                            {{ $t('assetpage.DeactivateMiner') }}
-                        </Button>
-                        <Button
-                            v-if="$role('conlist.ActivateMiner')"
-                            class="smallbtn"
-                            @click="openMinerActivateDialog(row)"
-                            size="small"
-                        >
-                            {{ $t('assetpage.ActivateMiner') }}
-                        </Button>
-
-                        <Button
                             v-if="$role('conlist.Buyingspace')"
                             class="smallbtn"
                             @click="openPurchaseauthorizedspace(row)"
@@ -107,7 +86,7 @@
                         <Button
                             v-if="$role('conlist.Buyingspace')"
                             class="smallbtn"
-                            @click="openPurchaseauthorizedspace(row)"
+                            @click="openUserPledge(row)"
                             size="small"
                         >
                             质押管理
@@ -190,11 +169,6 @@ export default {
                     slot: 'power',
                 },
                 {
-                    title: this.$t('assetpage.marketlist.Miningrevenue'),
-                    key: 'Miningrevenue',
-                    slot: 'Miningrevenue',
-                },
-                {
                     title: this.$t('assetpage.marketlist.operating'),
                     key: 'pledge',
                     slot: 'pledge',
@@ -204,26 +178,30 @@ export default {
             MinerRewards: null,
             incomelist: [],
             pledgelist: [],
+            pledgerecords: [],
         };
     },
     mounted() {
         this.getmarketAll();
         this.getincomelist();
         this.getpledgelist();
+        this.getpledgerecords();
         eventhub.$on('TransactionSuccess', data => {
             console.log('TransactionSuccess');
             this.getmarketAll();
             this.getincomelist();
             this.getpledgelist();
+            this.getpledgerecords();
         });
         this.Interval = setInterval(() => {
             this.getmarketAll();
             this.getincomelist();
             this.getpledgelist();
+            this.getpledgerecords();
         }, 1000 * 15);
     },
     beforeDestroy() {
-        clearInterval(this.$data.Interval);
+        clearInterval(this.Interval);
     },
     components: {
         AuthorizedpledgeDialog,
@@ -272,7 +250,7 @@ export default {
         openPurchaseauthorizedspace(data) {
             this.$refs.PurchaseauthorizedspaceModal.open(data);
         },
-        openPurchaseauthorizedspace(data) {
+        openUserPledge(data) {
             this.$refs.AssetUserPledgeModal.open(data);
         },
         async getincomelist() {
@@ -297,17 +275,25 @@ export default {
                 console.log(ex);
             }
         },
+        async getpledgerecords() {
+            console.log('AuthorizedMarketlist');
+            try {
+                let res = await ipc.callMain('Authorizedpledgerecords', {});
+                if (res.state && res.data && res.data.data && res.data.data.error == undefined) {
+                    this.$data.pledgerecords = res.data.data || [];
+                }
+            } catch (ex) {
+                console.log(ex);
+            }
+        },
+
         findminingPower(name) {
             var result = '';
             var _this = this;
-            if (
-                this.$data.pledgelist == null ||
-                this.$data.pledgelist.assetSet == null ||
-                this.$data.pledgelist.error != undefined
-            ) {
+            if (this.$data.pledgerecords == null || this.$data.pledgelist.error != undefined) {
                 return;
             }
-            this.$data.pledgelist.assetSet.forEach(item => {
+            this.$data.pledgerecords.forEach(item => {
                 if (item.assetName == name) {
                     result = parseFloat(item.power).toFixed(3);
                 }
@@ -315,18 +301,14 @@ export default {
             return result;
         },
         findminingpledgeAsset(name) {
-            var result = '';
+            var result = 0;
             var _this = this;
-            if (
-                this.$data.pledgelist == null ||
-                this.$data.pledgelist.assetSet == null ||
-                this.$data.pledgelist.error != undefined
-            ) {
+            if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
                 return;
             }
-            this.$data.pledgelist.assetSet.forEach(item => {
-                if (item.assetName == name) {
-                    result = _this.toBigNumTonum(item.pledgeAsset, 3);
+            this.$data.pledgelist.forEach(item => {
+                if (item.Asset == name) {
+                    result += _this.bigNumTBB(item.Amount);
                 }
             });
             return result;
@@ -337,14 +319,10 @@ export default {
         findminingSize(name) {
             var result = '';
             var _this = this;
-            if (
-                this.$data.pledgelist == null ||
-                this.$data.pledgelist.assetSet == null ||
-                this.$data.pledgelist.error != undefined
-            ) {
+            if (this.$data.pledgerecords == null || this.$data.pledgerecords.error != undefined) {
                 return;
             }
-            this.$data.pledgelist.assetSet.forEach(item => {
+            this.$data.pledgerecords.forEach(item => {
                 if (item.assetName == name) {
                     result = parseFloat(item.miningSize).toFixed(0);
                 }

@@ -5,6 +5,7 @@ var { DAEMON_CONFIG } = require('../configmain.js');
 var log = require('../log').log;
 
 const { throwErrorCode, errorList } = require('./throwErrorCode.js');
+const hdkeyjs = require('@jswebfans/hdkeyjs');
 
 class AssetManager {
     constructor() {
@@ -47,7 +48,18 @@ class AssetManager {
             throwErrorCode(errorList.need_address);
         }
         console.log('Authorizedpledgelist');
-        var result = await this.CosmosAPI().get.damrefunding_delegations(this.defaultAddress);
+        var result = await this.CosmosAPI().get.dam_delegations(this.defaultAddress);
+
+        return { data: result };
+    }
+
+    async Authorizedpledgerecords(query) {
+        if (this.defaultAddress == null) {
+            throwErrorCode(errorList.need_address);
+        }
+        console.log('Authorizedpledgelist');
+        var MinerAddress = hdkeyjs.address.MinerAddress(this.defaultAddress);
+        var result = await this.CosmosAPI().get.dam_pledgerecords(MinerAddress);
 
         return { data: result };
     }

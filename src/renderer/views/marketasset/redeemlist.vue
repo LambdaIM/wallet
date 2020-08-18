@@ -66,7 +66,7 @@ export default {
             console.log('Authorizedredeemlist');
             try {
                 let res = await ipc.callMain('Authorizedredeemlist', {});
-                if (res.state && res.data && res.data.data.error == undefined) {
+                if (res.state && res.data && res.data.data && res.data.data.error == undefined) {
                     var list = res.data.data || [];
                     var result = [];
                     list.forEach(item => {
