@@ -514,7 +514,10 @@
     "MsgDamMinerWithDraw": "提取单个资产订单收益",
     "MsgDamMinerWithDrawCount": "批量提取资产订单收益",
     "MsgDamCreateBuyOrder": "购买资产空间",
-    "MsgTransferOwnership":"转让数据所有权"
+    "MsgTransferOwnership":"转让数据所有权",
+    "MsgAuthorizeUser":"授权操作",
+    "MsgDigitalAssetDelegate":"资产质押",
+    "MsgDigitalAssetUndelegate":"取消资产质押"
 
    },
    "txTable":{

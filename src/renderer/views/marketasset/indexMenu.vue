@@ -9,6 +9,9 @@
                 <MenuItem to="/marketindexmenu/marketlist" name="marketlist">
                     {{ $t('assetpage.authorizedMarket') }}
                 </MenuItem>
+                <MenuItem v-if="$role('conlist.pledgelist')" to="/marketindexmenu/pledgelist" name="pledgelist">
+                    质押列表
+                </MenuItem>
 
                 <MenuItem v-if="$role('conlist.redeem')" to="/marketindexmenu/redeemlist" name="redeemlist">
                     {{ $t('assetpage.assetsinredemption') }}

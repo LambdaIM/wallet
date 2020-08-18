@@ -15,7 +15,7 @@
                 </p>
                 <br />
                 <p>
-                    <a @click="openLinkmarket(AssetName)">{{ $t('Purchasespace.operationaddressbrowser') }}</a>
+                    <a @click="openLinkmarket(AssetName)">在浏览器中查找矿工操作地址</a>
                 </p>
                 <br />
                 <p>
@@ -34,7 +34,7 @@
                 <p>
                     <RadioGroup v-model="delegateType">
                         <Radio label="delegate">质押</Radio>
-                        <Radio label="undelegate">取消质押</Radio>
+                        <Radio label="undelegate">赎回</Radio>
                     </RadioGroup>
                 </p>
             </Form>
@@ -128,7 +128,7 @@ export default {
                 let res = await ipc.callMain('assertUserdelegate', {
                     AssetName,
                     address,
-                    amount: String(amount),
+                    amount: this.toBigNumStr(amount),
                     delegateType,
                 });
                 // console.log(res);

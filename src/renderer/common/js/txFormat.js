@@ -103,10 +103,15 @@ function getToAddress(msg, item, vuethis) {
         toaddress = msg.value.asset;
     }
 
+    if (msg.type === 'lambda/MsgAuthorizeUser') {
+        toaddress = msg.value.user;
+    }
+
     return toaddress;
 }
 
 function getamount(msg0, item, vueIns, index) {
+    console.log('getamount');
     var result;
     var _this = vueIns;
     if (msg0.value != undefined) {
@@ -116,8 +121,13 @@ function getamount(msg0, item, vueIns, index) {
                     return _this.bigNumTypeFormat(one.amount, one.denom);
                 });
                 result = list.join(',');
+            } else if (msg0.value.amount instanceof Object) {
+                result = _this.bigNumTypeFormat(
+                    msg0.value.amount.amount,
+                    msg0.value.amount.denom || msg0.value.assetName
+                );
             } else {
-                result = _this.bigNumTypeFormat(msg0.value.amount.amount, msg0.value.amount.denom);
+                result = _this.bigNumTypeFormat(msg0.value.amount, msg0.value.assetName);
             }
         } else if (msg0.type == 'lambda/MsgAssetDrop') {
             result =

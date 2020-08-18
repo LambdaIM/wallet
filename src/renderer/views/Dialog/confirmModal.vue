@@ -511,6 +511,29 @@
                     </Row>
                 </div>
 
+                <div v-if="txtype == 'assertUserdelegate'">
+                    <h2>质押管理</h2>
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">{{ $t('txPopup.Operator') }}:</Col>
+                        <Col span="20" class-name="value">{{ address }}</Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">{{ $t('Authorizedminingpop.AssetName') }}:</Col>
+                        <Col span="20" class-name="value">{{ transactiondata.assetName | assertdenomformat }}</Col>
+                    </Row>
+
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">金额:</Col>
+                        <Col span="20" class-name="value">{{ transactiondata.amount | BlanceValue }}</Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">类别:</Col>
+                        <Col span="20" class-name="value">
+                            {{ transactiondata.type == 'MsgDigitalAssetDelegate' ? '质押' : '取消质押' }}
+                        </Col>
+                    </Row>
+                </div>
+
                 <!-- Other transaction information -->
                 <div v-if="otherData != null">
                     <hr style="    margin-top: 14px;" />

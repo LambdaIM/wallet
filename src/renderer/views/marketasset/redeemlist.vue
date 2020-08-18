@@ -11,7 +11,7 @@
                     </template>
 
                     <template slot-scope="{ row, index }" slot="assetName">
-                        {{ denomFormart(row.assetName) }}
+                        {{ denomFormart(row.asset) }}
                     </template>
                 </Table>
             </div>
@@ -46,6 +46,10 @@ export default {
                     key: 'completionTime',
                     slot: 'completionTime',
                 },
+                {
+                    title: '矿工操作地址',
+                    key: 'miner',
+                },
             ],
             redeemdata: [],
         };
@@ -54,13 +58,29 @@ export default {
         this.getredeemlist();
     },
     methods: {
+        denomFormart(denom) {
+            return denom.substr(1);
+        },
         async getredeemlist() {
             // assetAll
             console.log('Authorizedredeemlist');
             try {
                 let res = await ipc.callMain('Authorizedredeemlist', {});
-                if (res.state && res.data.data.error == undefined) {
-                    this.$data.redeemdata = res.data.data || [];
+                if (res.state && res.data && res.data.data.error == undefined) {
+                    var list = res.data.data || [];
+                    var result = [];
+                    list.forEach(item => {
+                        item.records.forEach(record => {
+                            result.push({
+                                delegator: item.delegator,
+                                miner: item.miner,
+                                asset: item.asset,
+                                completionTime: record.completionTime,
+                                cost: record.cost,
+                            });
+                        });
+                    });
+                    this.$data.redeemdata = result;
                 }
             } catch (ex) {
                 console.log(ex);

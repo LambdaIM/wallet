@@ -229,6 +229,11 @@ var walletRouter = new Router({
                     name: 'lambdas3',
                     component: () => import('@/views/market/lambdas3.vue'),
                 },
+                {
+                    path: 'pledgelist',
+                    name: 'pledgelist',
+                    component: () => import('@/views/marketasset/pledgelist.vue'),
+                },
             ],
         },
         {

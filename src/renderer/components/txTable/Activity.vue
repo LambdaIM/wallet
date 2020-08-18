@@ -46,6 +46,9 @@
                 <span v-if="txItem.action == 'MsgDamMinerWithDrawCount'">
                     {{ $t('txother.assets') }}:{{ txItem.to | assertdenomformat }}
                 </span>
+                <span v-if="txItem.action == 'MsgAuthorizeUser'">
+                    {{ txItem.to }}
+                </span>
             </span>
 
             <AddressLink v-if="isAssettx(txItem) == false" :addressLength="addressLength" :to="txItem.to">
@@ -148,7 +151,8 @@ export default {
                 txItem.action !== 'MsgDamCreateBuyOrder' &&
                 txItem.action !== 'MsgDamOrderRenewal' &&
                 txItem.action !== 'MsgDamMinerWithDrawCount' &&
-                txItem.action !== 'MsgDamMinerWithDraw'
+                txItem.action !== 'MsgDamMinerWithDraw' &&
+                txItem.action !== 'MsgAuthorizeUser'
             );
         },
         isAssettx(txItem) {
@@ -164,6 +168,7 @@ export default {
                 'MsgDamOrderRenewal',
                 'MsgDamMinerWithDrawCount',
                 'MsgDamMinerWithDraw',
+                'MsgAuthorizeUser',
             ];
             if (list.indexOf(txItem.action) > -1) {
                 return true;
