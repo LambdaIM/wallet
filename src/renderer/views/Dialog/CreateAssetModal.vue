@@ -50,6 +50,17 @@
                     </p>
                     <br />
                     <p>
+                        <Input :placeholder="$t('assetnewtxt.MiningRatiodemo')" v-model="MiningRatio">
+                            <span slot="prepend">{{$t('assetnewtxt.MiningRatio')}}</span>
+                        </Input>
+                        <br />
+                        <p>
+                            {{$t('assetnewtxt.MiningRatiohelp')}}
+                        </p>
+                        
+                    </p>
+                    <br />
+                    <p>
                         <Input :placeholder="$t('CreateassetsPop.adjust_rate_tip')" v-model="adjust_rate">
                             <span slot="prepend">{{ $t('CreateassetsPop.adjust_rate') }}</span>
                         </Input>
@@ -59,7 +70,7 @@
                         <Input v-model="max_adjust_count">
                             <span slot="prepend">{{ $t('CreateassetsPop.max_adjust_count') }}</span>
                         </Input>
-                        <br />
+                        
                     </p>
                     <br />
                     <p>
@@ -74,16 +85,7 @@
                         </Input>
                         <br />
                     </p>
-                    <p>
-                        <Input v-model="MiningRatio">
-                            <span slot="prepend">矿工挖矿奖励占比</span>
-                        </Input>
-                        <br />
-                        <p>
-                            例如值0.5矿工存储挖矿奖励为占比50%，质押挖矿的奖励占比为50%
-                        </p>
-                        <br />
-                    </p>
+                    
                 </div>
 
                 <p>{{ $t('CreateassetsPop.tip1') }}{{ parameter.pledge_cost | BlanceValue }}LAMB</p>
@@ -193,7 +195,7 @@ export default {
 
             let adjust_period = parseInt(this.adjust_period);
             let remarks = this.$data.remarks || '';
-            let MiningRatio = this.$data.MiningRatio;
+            let MiningRatio = parseFloat(this.$data.MiningRatio);
 
             if (name == '') {
                 this.$Notice.warning({
@@ -253,7 +255,7 @@ export default {
 
                 if (isNaN(MiningRatio) || MiningRatio >= 1) {
                     this.$Notice.warning({
-                        title: '矿工挖矿占比需要是小数',
+                        title: this.$t('assetnewtxt.need_MiningRatio'),
                     });
                     return;
                 }
