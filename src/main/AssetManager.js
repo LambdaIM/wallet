@@ -100,6 +100,16 @@ class AssetManager {
 
         return { data: result };
     }
+    async damauthorized_users(asset, page, limit) {
+        if (this.defaultAddress == null) {
+            throwErrorCode(errorList.need_address);
+        }
+        console.log('matchorderlist');
+        var result = await this.CosmosAPI().get.damauthorized_users(asset, page, limit);
+
+        return { data: result };
+    }
+
     async damAssetMintSimulate({
         assetName,
         assetiniti,

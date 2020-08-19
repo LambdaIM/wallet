@@ -21,7 +21,11 @@
                     </template>
 
                     <template slot-scope="{ row, index }" slot="marketName">
-                        <a @click="openLinkmarket(row.assetName)">{{ row.marketName }}</a>
+                        <!-- <Button  :to="`/marketindexmenu/marketinfo/${row.marketName}`">{{ row.marketName }}</Button> -->
+                        <a :href="`#/marketindexmenu/marketinfo/${row.marketName}/${row.assetName}`">
+                            {{ row.marketName }}
+                        </a>
+                        <!-- <a @click="openLinkmarket(row.assetName)">{{ row.marketName }}</a> -->
                     </template>
 
                     <template slot-scope="{ row, index }" slot="pledgeAsset">
