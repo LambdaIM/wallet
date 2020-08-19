@@ -84,7 +84,7 @@
                         </Button>
 
                         <Button
-                            v-if="$role('conlist.Buyingspace')"
+                            v-if="$role('conlist.userpledgebtn')"
                             class="smallbtn"
                             @click="openUserPledge(row)"
                             size="small"

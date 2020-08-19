@@ -994,6 +994,7 @@ export default function() {
             genesis_height,
             adjust_period,
             remarks,
+            MiningRatio,
         } = query;
 
         console.log(query);
@@ -1042,6 +1043,10 @@ export default function() {
             throw resultView(null, false, errorList.need_remarks);
         }
 
+        if (MiningRatio == undefined && mint_type == '3') {
+            throw resultView(null, false, 'need MiningRatio');
+        }
+
         try {
             var token_amount, token_denom;
 
@@ -1062,6 +1067,7 @@ export default function() {
                 genesis_height,
                 adjust_period,
                 remarks,
+                MiningRatio,
             });
 
             return resultView(TxMessageload, true);

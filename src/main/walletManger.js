@@ -933,7 +933,7 @@ walletManger.prototype.CreateAsset = async function ( {
   total_supply,
   adjust_rate,adjust_period,max_adjust_count,
   genesis_height,remarks,
-  memo}) {
+  memo,MiningRatio}) {
     
    
 
@@ -951,7 +951,9 @@ walletManger.prototype.CreateAsset = async function ( {
     max_adjust_count:max_adjust_count,
     genesis_height:genesis_height,
     adjust_period:adjust_period,
-    memo: memo || ''
+    memo: memo || '',
+    mining_ratio:MiningRatio
+
   };
   return result;
 };

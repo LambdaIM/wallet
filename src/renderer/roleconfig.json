@@ -29,12 +29,14 @@
       "Createassets":["marketmaker"],
       "authorization":["marketmaker"],
       "pledge":["miner"],
-      "redeem":["order","miner"],
+      "redeem":["miner"],
       "Withdrawal":["miner"],
       "DeactivateMiner":["validator"],
       "ActivateMiner":["miner"],
       "Buyingspace":["order","miner"],
-      "pledgelist":["order","miner"]
+      "pledgelist":["order","miner"],
+      "redeemlist":["order","miner"],
+      "userpledgebtn":["order"]
 
     }
 }

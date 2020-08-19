@@ -74,6 +74,16 @@
                         </Input>
                         <br />
                     </p>
+                    <p>
+                        <Input v-model="MiningRatio">
+                            <span slot="prepend">矿工挖矿奖励占比</span>
+                        </Input>
+                        <br />
+                        <p>
+                            例如值0.5矿工存储挖矿奖励为占比50%，质押挖矿的奖励占比为50%
+                        </p>
+                        <br />
+                    </p>
                 </div>
 
                 <p>{{ $t('CreateassetsPop.tip1') }}{{ parameter.pledge_cost | BlanceValue }}LAMB</p>
@@ -150,6 +160,7 @@ export default {
                     key: 'end_height',
                 },
             ],
+            MiningRatio:''
         };
     },
     components: {
@@ -182,6 +193,7 @@ export default {
 
             let adjust_period = parseInt(this.adjust_period);
             let remarks = this.$data.remarks || '';
+            let MiningRatio = this.$data.MiningRatio;
 
             if (name == '') {
                 this.$Notice.warning({
@@ -238,6 +250,15 @@ export default {
                     });
                     return;
                 }
+
+                if (isNaN(MiningRatio) || MiningRatio >= 1) {
+                    this.$Notice.warning({
+                        title: '矿工挖矿占比需要是小数',
+                    });
+                    return;
+                }
+
+                
             }
 
             if (this.bigLess0OrGreater(this.parameter.pledge_cost, this.balance)) {
@@ -260,6 +281,9 @@ export default {
             var adjust_rate_Big = new BigNumber(adjust_rate || 0.1);
             adjust_rate = adjust_rate_Big.toPrecision(18);
 
+            var MiningRatio_Big = new BigNumber(MiningRatio || 0.1);
+            MiningRatio = MiningRatio_Big.toPrecision(18);
+
             if (ispreview == false) {
                 this.transfer({
                     name,
@@ -272,6 +296,7 @@ export default {
                     genesis_height,
                     adjust_period,
                     remarks,
+                    MiningRatio
                 });
             } else {
                 this.switchtoPreview({
@@ -304,6 +329,7 @@ export default {
                     genesis_height: String(objpra.genesis_height || 0),
                     adjust_period: String(objpra.adjust_period || 0),
                     remarks: objpra.remarks || objpra.name,
+                    MiningRatio:objpra.MiningRatio
                 });
                 // console.log(res);
                 if (res.state) {
