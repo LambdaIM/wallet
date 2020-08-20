@@ -1,4 +1,5 @@
 import roleconfig from '@/roleconfig.json';
+import trim from 'trim';
 
 const BigNumber = require('bignumber.js');
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_DOWN });
@@ -144,6 +145,9 @@ export default {
                 result = !(roledata.indexOf(role) < 0);
             }
             return result;
+        };
+        Vue.prototype.trim = function(value) {
+            return trim(value);
         };
     },
 };

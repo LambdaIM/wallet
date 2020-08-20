@@ -172,7 +172,8 @@ export default {
             // http://39.107.96.241:13657/
             // http://39.105.77.119:13657/
 
-            var ValidatorIP = this.$data.formInline.ValidatorIP;
+            var ValidatorIP = this.trim(this.$data.formInline.ValidatorIP);
+
             var nodeBaseUrl = `http://${ValidatorIP}:13659/`;
 
             var pra = {

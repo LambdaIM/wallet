@@ -95,6 +95,7 @@
         "node-cmd": "^3.0.0",
         "node-run-cmd": "^1.0.1",
         "object-assign": "^4.1.1",
+        "trim": "^0.0.1",
         "underscore": "^1.9.1",
         "uuid": "^3.3.2",
         "vue": "^2.5.16",

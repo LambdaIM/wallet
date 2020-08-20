@@ -179,7 +179,7 @@ export default {
         },
         preSendLAMB(ispreview) {
             console.log('-----');
-            let name = this.name.toLocaleLowerCase().replace(/\s*/g, '');
+            let name = this.trim(this.name.toLocaleLowerCase()).replace(/\s*/g, '');
 
             let asset = parseInt(this.asset);
             let MintType = parseInt(this.MintType);
@@ -194,7 +194,7 @@ export default {
             let genesis_height = parseInt(this.genesis_height);
 
             let adjust_period = parseInt(this.adjust_period);
-            let remarks = this.$data.remarks || '';
+            let remarks = this.trim(this.$data.remarks || '');
             let MiningRatio = parseFloat(this.$data.MiningRatio);
 
             if (name == '') {
