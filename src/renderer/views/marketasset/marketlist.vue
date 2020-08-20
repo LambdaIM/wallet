@@ -66,7 +66,7 @@
                             @click="openAuthorizedmining(row)"
                             size="small"
                         >
-                            授权管理
+                            {{ $t('assetnewtxt.authorization') }}
                         </Button>
                         <Button
                             type="error"
@@ -93,7 +93,7 @@
                             @click="openUserPledge(row)"
                             size="small"
                         >
-                            质押管理
+                            {{ $t('Pledgepopup.pledge') }}
                         </Button>
                     </template>
                 </Table>

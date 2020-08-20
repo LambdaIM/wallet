@@ -10,7 +10,7 @@
                     {{ $t('assetpage.authorizedMarket') }}
                 </MenuItem>
                 <MenuItem v-if="$role('conlist.pledgelist')" to="/marketindexmenu/pledgelist" name="pledgelist">
-                    质押列表
+                    {{ $t('assetnewtxt.Pledgelist') }}
                 </MenuItem>
 
                 <MenuItem v-if="$role('conlist.redeemlist')" to="/marketindexmenu/redeemlist" name="redeemlist">

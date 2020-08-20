@@ -36,15 +36,15 @@ export default {
             list: [],
             columns: [
                 {
-                    title: '矿工操作地址',
+                    title: this.$t('assetnewtxt.Pledgelist'),
                     key: 'MinerAddress',
                 },
                 {
-                    title: '市场',
+                    title: this.$t('assetnewtxt.Marketassets'),
                     key: 'Asset',
                 },
                 {
-                    title: '金额',
+                    title: this.$t('assetnewtxt.amount'),
                     key: 'Amount',
                     slot: 'Amount',
                 },

@@ -16,14 +16,14 @@
                 <br />
                 <p>
                     <Input v-model="user">
-                        <span slot="prepend">用户lambda地址</span>
+                        <span slot="prepend">{{ $t('assetnewtxt.lambdaaddress') }}</span>
                     </Input>
                 </p>
                 <br />
                 <p>
                     <RadioGroup v-model="isAllowed">
-                        <Radio label="1">添加授权</Radio>
-                        <Radio label="2">取消授权</Radio>
+                        <Radio label="1">{{ $t('assetnewtxt.Addauthorization') }}</Radio>
+                        <Radio label="2">{{ $t('assetnewtxt.Cancelauthorization') }}</Radio>
                     </RadioGroup>
                 </p>
 
@@ -78,13 +78,13 @@ export default {
 
             if (user.length != 45) {
                 this.$Notice.warning({
-                    title: '请填写lambda地址',
+                    title: this.$t('assetnewtxt.need_lambdaaddress'),
                 });
                 return;
             }
             if (isAllowed == '') {
                 this.$Notice.warning({
-                    title: '请填选择添加授权或取消授权',
+                    title: this.$t('assetnewtxt.need_category'),
                 });
                 return;
             }

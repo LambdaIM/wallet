@@ -3,7 +3,7 @@
         <Modal
             loading
             v-model="sendModal"
-            title="质押管理-质押、取消质押"
+            :title="$t('Pledgepopup.title')"
             :styles="{ top: '200px' }"
             @on-cancel="sendcancel"
         >
@@ -15,26 +15,26 @@
                 </p>
                 <br />
                 <p>
-                    <a @click="openLinkmarket(AssetName)">在浏览器中查找矿工操作地址</a>
+                    <a @click="openLinkmarket(AssetName)">{{ $t('Pledgepopup.tip') }}</a>
                 </p>
                 <br />
                 <p>
                     <Input v-model="mineraddress">
-                        <span slot="prepend">矿工操作地址</span>
+                        <span slot="prepend">{{ $t('Pledgepopup.Mineroperatingaddress') }}</span>
                     </Input>
                 </p>
                 <br />
 
                 <p>
                     <Input v-model="amount">
-                        <span slot="prepend">金额</span>
+                        <span slot="prepend">{{ $t('Pledgepopup.amount') }}</span>
                     </Input>
                 </p>
                 <br />
                 <p>
                     <RadioGroup v-model="delegateType">
-                        <Radio label="delegate">质押</Radio>
-                        <Radio label="undelegate">赎回</Radio>
+                        <Radio label="delegate">{{ $t('Pledgepopup.pledge') }}</Radio>
+                        <Radio label="undelegate">{{ $t('Pledgepopup.redeem') }}</Radio>
                     </RadioGroup>
                 </p>
             </Form>

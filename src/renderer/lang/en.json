@@ -916,8 +916,8 @@
    "assetpage":{
        "assets":"Assets",
        "authorizedMarket":"Asset market",
-       "assetsinredemption":"Assets in redemption",
-       "miningdescription":"Mining description",
+       "assetsinredemption":"Redemption List",
+       "miningdescription":"Description",
        "Non-issueable":"Non-issueable",
        "One-timeadditionalissuance":"One-time issuance",
        "Additionalmining":"Additional mining",
@@ -1115,7 +1115,7 @@
   "assetsotherpage":{
       "lambdaTitle":"lambda-Data storage market",
       "assetTitle":"Asset-Data storage market",
-      "documentsaccepted":"Documents accepted",
+      "documentsaccepted":"Documents",
       "filelist":{
           "orderid":"Orderid",
           "file":"File",

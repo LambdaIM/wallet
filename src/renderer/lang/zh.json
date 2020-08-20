@@ -919,7 +919,7 @@
    "assetpage":{
        "assets":"资产",
        "authorizedMarket":"资产市场",
-       "assetsinredemption":"赎回中的资产",
+       "assetsinredemption":"赎回列表",
        "miningdescription":"挖矿说明",
        "Non-issueable":"不可增发",
        "One-timeadditionalissuance":"一次性增发",
@@ -1176,8 +1176,27 @@
         "MiningRatio":"矿工奖励占比",
         "MiningRatiodemo":"例如0.5",
         "MiningRatiohelp":"例如值0.4，矿工存储挖矿奖励为占比为40%，用户质押挖矿的奖励占比为60%",
-        "need_MiningRatio":"矿工挖矿占比需要是小数"
-
+        "need_MiningRatio":"矿工挖矿占比需要是小数",
+        "lambdaaddress":"用户lambda地址",
+        "Addauthorization":"添加授权",
+        "Cancelauthorization":"取消授权",
+        "category":"类别",
+        "authorization":"授权",
+        "need_lambdaaddress":"请填写用户lambda地址",
+        "need_category":"请填选择添加授权或取消授权",
+        "Pledgelist":"质押列表",
+        "Mineroperatingaddress":"矿工操作地址",
+        "Marketassets":"市场资产",
+        "amount":"金额"
+    },
+    "Pledgepopup":{
+        "title":"质押管理-质押、取消质押",
+        "tip":"在浏览器中查找矿工操作地址",
+        "Mineroperatingaddress":"矿工操作地址",
+        "amount":"金额",
+        "category":"类别",
+        "pledge":"质押",
+        "redeem":"赎回"
     }
 
 }
