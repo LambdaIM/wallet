@@ -6,6 +6,9 @@
                     <template slot-scope="{ row, index }" slot="Amount">
                         {{ bigNumTypeFormat(row.Amount, row.Asset) }}
                     </template>
+                    <template slot-scope="{ row, index }" slot="operation">
+                        <Button @click="Redemptionoperation(row)" type="primary">赎回</Button>
+                    </template>
                 </Table>
                 <br />
                 <div style="text-align: center;">
@@ -15,6 +18,8 @@
                 <br />
             </div>
             <s3 ref="s3Modal" :orderid="orderid"></s3>
+            <AssetUserPledge ref="AssetUserPledgeModal" />
+            <AuthorizedredeemDialog ref="AuthorizedredeemModal" />
         </div>
     </div>
 </template>
@@ -24,12 +29,19 @@ import _ from 'underscore';
 import eventhub from '../../common/js/event.js';
 import { DAEMON_CONFIG } from '../../../config.js';
 
+import AuthorizedredeemDialog from '@/views/Dialog/Authorizedredeem.vue';
+
+import AssetUserPledge from '@/views/Dialog/assetUserPledge.vue';
+
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+const hdkeyjs = require('@jswebfans/hdkeyjs');
 
 export default {
     components: {
         s3: () => import('../../components/s3/S3.vue'),
+        AuthorizedredeemDialog,
+        AssetUserPledge,
     },
     data() {
         return {
@@ -48,6 +60,11 @@ export default {
                     key: 'Amount',
                     slot: 'Amount',
                 },
+                {
+                    title: '操作',
+                    key: 'operation',
+                    slot: 'operation',
+                },
             ],
             orderid: '',
             allCount: 1,
@@ -56,6 +73,10 @@ export default {
     },
     mounted() {
         this.getlist(1);
+        eventhub.$on('TransactionSuccess', data => {
+            console.log('TransactionSuccess');
+            this.getlist(1);
+        });
     },
     methods: {
         async getlist(page) {
@@ -86,6 +107,20 @@ export default {
         },
         orderListPage(number) {
             this.getlist(number);
+        },
+        Redemptionoperation(row) {
+            var mineraddress = hdkeyjs.address.MinerAddress(this.$store.getters.getaddress);
+
+            console.log(mineraddress);
+            console.log(row.MinerAddress);
+            if (mineraddress == row.MinerAddress) {
+                // 质押到市场
+                // this.$refs.AuthorizedpledgeModal.open({assetName:row.Asset});
+                this.$refs.AuthorizedredeemModal.open({ assetName: row.Asset });
+            } else {
+                // 质押到矿工
+                this.$refs.AssetUserPledgeModal.open({ assetName: row.Asset, MinerAddress: row.MinerAddress });
+            }
         },
     },
 };

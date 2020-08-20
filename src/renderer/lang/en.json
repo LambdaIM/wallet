@@ -1193,7 +1193,8 @@
       "amount":"amount of money",
       "category":"category",
       "pledge":"pledge",
-      "redeem":"redeem"
+      "redeem":"redeem",
+      "need_amount":"Please enter the amount"
   },
   "Marketdetails":{
       "Marketlist":"Market list",

@@ -1,20 +1,15 @@
 <template>
     <div>
-        <Modal
-            loading
-            v-model="sendModal"
-            :title="$t('Pledgepopup.title')"
-            :styles="{ top: '200px' }"
-            @on-cancel="sendcancel"
-        >
+        <Modal loading v-model="sendModal" :title="tite" :styles="{ top: '200px' }" @on-cancel="sendcancel">
             <Form @keydown.native.enter.prevent="preSendLAMB">
                 <p>
                     <Input :value="AssetName | assertdenomformat" readonly>
                         <span slot="prepend">{{ $t('Authorizedminingpop.AssetName') }}</span>
                     </Input>
                 </p>
-                <br />
-                <p>
+
+                <p v-if="delegateType == 'delegate'">
+                    <br />
                     <a @click="openLinkmarket(AssetName)">{{ $t('Pledgepopup.tip') }}</a>
                 </p>
                 <br />
@@ -31,12 +26,13 @@
                     </Input>
                 </p>
                 <br />
-                <p>
-                    <RadioGroup v-model="delegateType">
-                        <Radio label="delegate">{{ $t('Pledgepopup.pledge') }}</Radio>
-                        <Radio label="undelegate">{{ $t('Pledgepopup.redeem') }}</Radio>
-                    </RadioGroup>
-                </p>
+
+                <Row class-name="item">
+                    <Col span="4" class-name="key">{{ $t('Pledgepopup.category') }}:</Col>
+                    <Col span="20" class-name="value">
+                        {{ delegateType == 'delegate' ? this.$t('Pledgepopup.pledge') : this.$t('Pledgepopup.redeem') }}
+                    </Col>
+                </Row>
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="preSendLAMB">{{ $t('home.Modal1.Submit') }}</Button>
@@ -80,6 +76,10 @@ export default {
         open(data) {
             console.log('data', data);
             this.$data.AssetName = data.assetName;
+            if (data.MinerAddress) {
+                this.$data.mineraddress = data.MinerAddress;
+                this.$data.delegateType = 'undelegate';
+            }
             this.sendModal = true;
         },
         sendcancel() {
@@ -100,14 +100,7 @@ export default {
 
             if (isNaN(amount) || amount <= 0) {
                 this.$Notice.warning({
-                    title: '请输入金额',
-                });
-                return;
-            }
-
-            if (delegateType == '') {
-                this.$Notice.warning({
-                    title: '请选择质押、或取消质押',
+                    title: this.$t('Pledgepopup.need_amount'),
                 });
                 return;
             }
@@ -186,6 +179,11 @@ export default {
             } else {
                 return result;
             }
+        },
+        tite() {
+            return this.$data.delegateType == 'delegate'
+                ? this.$t('Pledgepopup.pledge')
+                : this.$t('Pledgepopup.redeem');
         },
     },
     watch: {

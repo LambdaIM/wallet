@@ -1196,7 +1196,8 @@
         "amount":"金额",
         "category":"类别",
         "pledge":"质押",
-        "redeem":"赎回"
+        "redeem":"赎回",
+        "need_amount":"请输入金额"
     },
     "Marketdetails":{
         "Marketlist":"市场列表",
