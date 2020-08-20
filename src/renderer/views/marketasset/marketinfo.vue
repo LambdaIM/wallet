@@ -3,9 +3,11 @@
         <div class="customer-container">
             <div class="tableContainer">
                 <Breadcrumb>
-                    <BreadcrumbItem to="/marketindexmenu/marketlist">市场列表</BreadcrumbItem>
+                    <BreadcrumbItem to="/marketindexmenu/marketlist">
+                        {{ $t('Marketdetails.Marketlist') }}
+                    </BreadcrumbItem>
                     <BreadcrumbItem>{{ marketname }}</BreadcrumbItem>
-                    <BreadcrumbItem>授权用户列表</BreadcrumbItem>
+                    <BreadcrumbItem>{{ $t('Marketdetails.Listusers') }}</BreadcrumbItem>
                 </Breadcrumb>
                 <div>
                     <br />
@@ -40,7 +42,7 @@ export default {
             list: [],
             columns: [
                 {
-                    title: '账户',
+                    title: this.$t('Marketdetails.lambdaaddr'),
                     key: 'address',
                 },
             ],

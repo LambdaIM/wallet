@@ -1168,6 +1168,37 @@
       "Paymentamount":"Payment amount",
       "needint":"An integer is required"
 
+  },
+  "assetnewtxt":{
+      "MiningRatio":"Miners reward ratio",
+      "MiningRatiodemo":"For example, 0.5",
+      "MiningRatiohelp":"For example, if the value is 0.4, 40% of the mining rewards are stored by miners, and 60% of the mining rewards are pledged by users",
+      "need_MiningRatio":"The proportion of miners mining needs to be decimal",
+      "lambdaaddress":"User lambda address",
+      "Addauthorization":"Add authorization",
+      "Cancelauthorization":"Cancel authorization",
+      "category":"category",
+      "authorization":"to grant authorization",
+      "need_lambdaaddress":"Please fill in the address of lambda",
+      "need_category":"Please fill in to select Add authorization or cancel authorization",
+      "Pledgelist":"Pledge list",
+      "Mineroperatingaddress":"Miner's operating address",
+      "Marketassets":"Market assets",
+      "amount":"amount"
+  },
+  "Pledgepopup":{
+      "title":"Pledge management - pledge and cancellation of pledge",
+      "tip":"Search miner's operation address in browser",
+      "Mineroperatingaddress":"Miner's operating address",
+      "amount":"amount of money",
+      "category":"category",
+      "pledge":"pledge",
+      "redeem":"redeem"
+  },
+  "Marketdetails":{
+      "Marketlist":"Market list",
+      "Listusers":"List of authorized users",
+      "lambdaaddr":"User lambda address"
   }
 
 

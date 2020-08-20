@@ -1197,6 +1197,11 @@
         "category":"类别",
         "pledge":"质押",
         "redeem":"赎回"
+    },
+    "Marketdetails":{
+        "Marketlist":"市场列表",
+        "Listusers":"授权用户列表",
+        "lambdaaddr":"用户lambda地址"
     }
 
 }
