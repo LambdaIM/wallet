@@ -1173,7 +1173,7 @@
       "MiningRatio":"Miners reward ratio",
       "MiningRatiodemo":"For example, 0.5",
       "MiningRatiohelp":"For example, if the value is 0.4, 40% of the mining rewards are stored by miners, and 60% of the mining rewards are pledged by users",
-      "need_MiningRatio":"The proportion of miners mining needs to be decimal",
+      "need_MiningRatio":"The mining proportion of miners is greater than 0 and less than or equal to 1",
       "lambdaaddress":"User lambda address",
       "Addauthorization":"Add authorization",
       "Cancelauthorization":"Cancel authorization",

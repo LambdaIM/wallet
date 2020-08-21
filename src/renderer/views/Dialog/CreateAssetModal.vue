@@ -225,7 +225,7 @@ export default {
                     return;
                 }
 
-                if (isNaN(adjust_rate) || adjust_rate >= 1) {
+                if (isNaN(adjust_rate) || adjust_rate >= 1||adjust_rate <= 0) {
                     this.$Notice.warning({
                         title: this.$t('CreateassetsPop.action.need_adjust_rate'),
                     });
@@ -253,7 +253,7 @@ export default {
                     return;
                 }
 
-                if (isNaN(MiningRatio) || MiningRatio >= 1) {
+                if (isNaN(MiningRatio) || MiningRatio > 1||MiningRatio<=0) {
                     this.$Notice.warning({
                         title: this.$t('assetnewtxt.need_MiningRatio'),
                     });
@@ -281,10 +281,10 @@ export default {
             }
 
             var adjust_rate_Big = new BigNumber(adjust_rate || 0.1);
-            adjust_rate = adjust_rate_Big.toPrecision(18);
+            adjust_rate = adjust_rate_Big.toFixed(18);
 
             var MiningRatio_Big = new BigNumber(MiningRatio || 0.1);
-            MiningRatio = MiningRatio_Big.toPrecision(18);
+            MiningRatio = MiningRatio_Big.toFixed(18);
 
             if (ispreview == false) {
                 this.transfer({
