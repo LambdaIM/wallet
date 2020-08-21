@@ -50,14 +50,14 @@
                             {{ $t('assetpage.btn.Pledge') }}
                         </Button>
 
-                        <Button
+                        <!-- <Button
                             v-if="$role('conlist.redeem')"
                             class="smallbtn"
                             @click="openAuthorizedredeem(row)"
                             size="small"
                         >
                             {{ $t('assetpage.btn.redemption') }}
-                        </Button>
+                        </Button> -->
 
                         <!-- <Button v-if="$role('conlist.Withdrawal')" class="smallbtn" size="small">提取收益</Button> -->
                         <Button

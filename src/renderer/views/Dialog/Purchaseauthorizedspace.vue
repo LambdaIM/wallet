@@ -51,6 +51,8 @@
                     {{ $t('Purchasespace.Paymentamount') }}：{{ payamount | BlanceValue }}
                     {{ AssetName | assertdenomformat }}
                 </p>
+                <br />
+                <p>{{ $t('assetnewtxt.buyspacetip') }}</p>
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="preSendLAMB">{{ $t('home.Modal1.Submit') }}</Button>

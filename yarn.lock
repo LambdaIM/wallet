@@ -679,10 +679,10 @@
     lodash.merge "^4.6.2"
     log-update "^1.0.2"
 
-"@jswebfans/rpcapijs@0.2.48":
-  version "0.2.48"
-  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.2.48.tgz#e6292202e165318d10bf21c278dccb9b15c1eb08"
-  integrity sha512-Xz9z5GMmRTEfXuGnI0IP0XlTOPU57aMwbVmmS9YxaSXbDRMkyWJY7y4HH2ttj/8e82qxx3aDeo8uMMlOZo459Q==
+"@jswebfans/rpcapijs@0.2.49":
+  version "0.2.49"
+  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.2.49.tgz#e4dd5e9ed70ef3e209d3e0aa0717de58d09cef07"
+  integrity sha512-aIIYjS2pY8kO4Bp4a1iggDUPbKqsKaLc0qkbuwdysJzF10cKAX+4Z3eIwJNinpUlz6jlVfmL5CGd/nHXIf7DpQ==
   dependencies:
     "@babel/runtime" "^7.5.4"
 

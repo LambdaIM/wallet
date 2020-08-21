@@ -1184,7 +1184,8 @@
       "Pledgelist":"Pledge list",
       "Mineroperatingaddress":"Miner's operating address",
       "Marketassets":"Market assets",
-      "amount":"amount"
+      "amount":"amount",
+      "buyspacetip":"You need to be authorized by the market before you can buy space for miners in the market"
   },
   "Pledgepopup":{
       "title":"Pledge management - pledge and cancellation of pledge",
