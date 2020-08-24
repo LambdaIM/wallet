@@ -1131,7 +1131,8 @@
             "Assetmarketorder":"资产市场订单",
             "documentsaccepted":"接受的文件"
         },
-        "Unableopendescription":"接受到的文件，如果再转让给别人，将无法打开"
+        "Unableopendescription":"接受到的文件，如果再转让给别人，将无法打开",
+        "OpenviaS3":"通过s3打开"
     },
     "Marketnavigation":{
         "Therolemarket":"浏览市场的角色",
