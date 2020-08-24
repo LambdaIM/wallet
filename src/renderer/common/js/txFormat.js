@@ -13,8 +13,8 @@ export default function(tx, vueIns) {
                     msg_type: msg.type,
                     action: msg.type.split('/')[1],
                     amount: getamount(msg, tx, vueIns, index),
-                    valid: tx.logs[index] ? tx.logs[index].success : false,
-                    log: tx.logs[index] ? tx.logs[index].log : '--',
+                    valid: txlogvalid(tx, index),
+                    log: txlog(tx, index),
                 };
             } catch (error) {
                 console.log(msg, index, tx);
@@ -22,6 +22,21 @@ export default function(tx, vueIns) {
             }
         }),
     };
+}
+function txlog(tx, index) {
+    if (tx.logs) {
+        return tx.logs[index] ? tx.logs[index].log : '--';
+    } else {
+        return '--';
+    }
+}
+
+function txlogvalid(tx, index) {
+    if (tx.logs) {
+        return tx.logs[index] ? tx.logs[index].success : false;
+    } else {
+        return false;
+    }
 }
 
 function getSendAddress(msg, item) {
@@ -88,10 +103,15 @@ function getToAddress(msg, item, vuethis) {
         toaddress = msg.value.asset;
     }
 
+    if (msg.type === 'lambda/MsgAuthorizeUser') {
+        toaddress = msg.value.user;
+    }
+
     return toaddress;
 }
 
 function getamount(msg0, item, vueIns, index) {
+    console.log('getamount');
     var result;
     var _this = vueIns;
     if (msg0.value != undefined) {
@@ -101,8 +121,13 @@ function getamount(msg0, item, vueIns, index) {
                     return _this.bigNumTypeFormat(one.amount, one.denom);
                 });
                 result = list.join(',');
+            } else if (msg0.value.amount instanceof Object) {
+                result = _this.bigNumTypeFormat(
+                    msg0.value.amount.amount,
+                    msg0.value.amount.denom || msg0.value.assetName
+                );
             } else {
-                result = _this.bigNumTypeFormat(msg0.value.amount.amount, msg0.value.amount.denom);
+                result = _this.bigNumTypeFormat(msg0.value.amount, msg0.value.assetName);
             }
         } else if (msg0.type == 'lambda/MsgAssetDrop') {
             result =

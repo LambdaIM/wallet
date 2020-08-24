@@ -514,7 +514,10 @@
     "MsgDamMinerWithDraw": "提取单个资产订单收益",
     "MsgDamMinerWithDrawCount": "批量提取资产订单收益",
     "MsgDamCreateBuyOrder": "购买资产空间",
-    "MsgTransferOwnership":"转让数据所有权"
+    "MsgTransferOwnership":"转让数据所有权",
+    "MsgAuthorizeUser":"授权操作",
+    "MsgDigitalAssetDelegate":"质押资产矿工",
+    "MsgDigitalAssetUndelegate":"反质押资产矿工"
 
    },
    "txTable":{
@@ -916,7 +919,7 @@
    "assetpage":{
        "assets":"资产",
        "authorizedMarket":"资产市场",
-       "assetsinredemption":"赎回中的资产",
+       "assetsinredemption":"赎回列表",
        "miningdescription":"挖矿说明",
        "Non-issueable":"不可增发",
        "One-timeadditionalissuance":"一次性增发",
@@ -1001,7 +1004,7 @@
            "need_asset":"初始化发行量需要为数值",
            "need_inflation":"每块高增发量需要为数值",
            "need_total_supply":"发行总量需要为数值",
-           "need_adjust_rate":"减产系数需要为小数",
+           "need_adjust_rate":"减产系数大于0小于1",
            "need_max_adjust_count":"最大减产次数需要为数值",
            "need_adjust_period":"减产周期需要为数值",
            "need_genesis_height":"初次增发块高需要为数值",
@@ -1168,6 +1171,39 @@
         "Paymentamount":"支付金额",
         "needint":"需要输入整数"
 
+    },
+    "assetnewtxt":{
+        "MiningRatio":"矿工奖励占比",
+        "MiningRatiodemo":"例如0.5",
+        "MiningRatiohelp":"例如值0.4，矿工存储挖矿奖励为占比为40%，用户质押挖矿的奖励占比为60%",
+        "need_MiningRatio":"矿工挖矿占比大于0小于等于1",
+        "lambdaaddress":"用户lambda地址",
+        "Addauthorization":"添加授权",
+        "Cancelauthorization":"取消授权",
+        "category":"类别",
+        "authorization":"授权",
+        "need_lambdaaddress":"请填写用户lambda地址",
+        "need_category":"请填选择添加授权或取消授权",
+        "Pledgelist":"质押列表",
+        "Mineroperatingaddress":"矿工操作地址",
+        "Marketassets":"市场资产",
+        "amount":"金额",
+        "buyspacetip":"需要先获得市场的授权，然后才能购买市场下矿工的空间"
+    },
+    "Pledgepopup":{
+        "title":"质押管理-质押、取消质押",
+        "tip":"在浏览器中查找矿工操作地址",
+        "Mineroperatingaddress":"矿工操作地址",
+        "amount":"金额",
+        "category":"类别",
+        "pledge":"质押",
+        "redeem":"赎回",
+        "need_amount":"请输入金额"
+    },
+    "Marketdetails":{
+        "Marketlist":"市场列表",
+        "Listusers":"授权用户列表",
+        "lambdaaddr":"用户lambda地址"
     }
 
 }

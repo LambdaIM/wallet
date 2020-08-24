@@ -33,7 +33,10 @@
       "Withdrawal":["miner"],
       "DeactivateMiner":["validator"],
       "ActivateMiner":["miner"],
-      "Buyingspace":["order","miner"]
+      "Buyingspace":["order","miner"],
+      "pledgelist":["order","miner"],
+      "redeemlist":["order","miner"],
+      "userpledgebtn":["order"]
 
     }
 }

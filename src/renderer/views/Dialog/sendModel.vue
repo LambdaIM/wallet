@@ -77,7 +77,7 @@ export default {
         preSendLAMB() {
             console.log('preSendLAMB');
             let from = this.address;
-            let to = this.Tovalue;
+            let to = this.trim(this.Tovalue);
 
             let value = this.toBigNumStr(this.LAMBvalue);
             if (to == from) {
@@ -114,7 +114,7 @@ export default {
             this.transfer(value);
         },
         async transfer(amount) {
-            let to = this.Tovalue;
+            let to = this.trim(this.Tovalue);
             // let amount = this.LAMBvalue;
             let gas = 1;
             // amount = amount * 10000;

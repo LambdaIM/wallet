@@ -50,6 +50,17 @@
                     </p>
                     <br />
                     <p>
+                        <Input :placeholder="$t('assetnewtxt.MiningRatiodemo')" v-model="MiningRatio">
+                            <span slot="prepend">{{$t('assetnewtxt.MiningRatio')}}</span>
+                        </Input>
+                        <br />
+                        <p>
+                            {{$t('assetnewtxt.MiningRatiohelp')}}
+                        </p>
+                        
+                    </p>
+                    <br />
+                    <p>
                         <Input :placeholder="$t('CreateassetsPop.adjust_rate_tip')" v-model="adjust_rate">
                             <span slot="prepend">{{ $t('CreateassetsPop.adjust_rate') }}</span>
                         </Input>
@@ -59,7 +70,7 @@
                         <Input v-model="max_adjust_count">
                             <span slot="prepend">{{ $t('CreateassetsPop.max_adjust_count') }}</span>
                         </Input>
-                        <br />
+                        
                     </p>
                     <br />
                     <p>
@@ -74,6 +85,7 @@
                         </Input>
                         <br />
                     </p>
+                    
                 </div>
 
                 <p>{{ $t('CreateassetsPop.tip1') }}{{ parameter.pledge_cost | BlanceValue }}LAMB</p>
@@ -150,6 +162,7 @@ export default {
                     key: 'end_height',
                 },
             ],
+            MiningRatio:''
         };
     },
     components: {
@@ -166,7 +179,7 @@ export default {
         },
         preSendLAMB(ispreview) {
             console.log('-----');
-            let name = this.name.toLocaleLowerCase().replace(/\s*/g, '');
+            let name = this.trim(this.name.toLocaleLowerCase()).replace(/\s*/g, '');
 
             let asset = parseInt(this.asset);
             let MintType = parseInt(this.MintType);
@@ -181,7 +194,8 @@ export default {
             let genesis_height = parseInt(this.genesis_height);
 
             let adjust_period = parseInt(this.adjust_period);
-            let remarks = this.$data.remarks || '';
+            let remarks = this.trim(this.$data.remarks || '');
+            let MiningRatio = parseFloat(this.$data.MiningRatio);
 
             if (name == '') {
                 this.$Notice.warning({
@@ -211,7 +225,7 @@ export default {
                     return;
                 }
 
-                if (isNaN(adjust_rate) || adjust_rate >= 1) {
+                if (isNaN(adjust_rate) || adjust_rate >= 1||adjust_rate <= 0) {
                     this.$Notice.warning({
                         title: this.$t('CreateassetsPop.action.need_adjust_rate'),
                     });
@@ -238,6 +252,15 @@ export default {
                     });
                     return;
                 }
+
+                if (isNaN(MiningRatio) || MiningRatio > 1||MiningRatio<=0) {
+                    this.$Notice.warning({
+                        title: this.$t('assetnewtxt.need_MiningRatio'),
+                    });
+                    return;
+                }
+
+                
             }
 
             if (this.bigLess0OrGreater(this.parameter.pledge_cost, this.balance)) {
@@ -258,7 +281,10 @@ export default {
             }
 
             var adjust_rate_Big = new BigNumber(adjust_rate || 0.1);
-            adjust_rate = adjust_rate_Big.toPrecision(18);
+            adjust_rate = adjust_rate_Big.toFixed(18);
+
+            var MiningRatio_Big = new BigNumber(MiningRatio || 0.1);
+            MiningRatio = MiningRatio_Big.toFixed(18);
 
             if (ispreview == false) {
                 this.transfer({
@@ -272,6 +298,7 @@ export default {
                     genesis_height,
                     adjust_period,
                     remarks,
+                    MiningRatio
                 });
             } else {
                 this.switchtoPreview({
@@ -304,6 +331,7 @@ export default {
                     genesis_height: String(objpra.genesis_height || 0),
                     adjust_period: String(objpra.adjust_period || 0),
                     remarks: objpra.remarks || objpra.name,
+                    MiningRatio:objpra.MiningRatio
                 });
                 // console.log(res);
                 if (res.state) {

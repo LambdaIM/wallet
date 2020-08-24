@@ -1,58 +1,38 @@
 <template>
     <div>
-        <Modal
-            loading
-            v-model="sendModal"
-            :title="$t('Purchasespace.Purchaseauthorizedspace')"
-            :styles="{ top: '200px' }"
-            @on-cancel="sendcancel"
-        >
+        <Modal loading v-model="sendModal" :title="tite" :styles="{ top: '200px' }" @on-cancel="sendcancel">
             <Form @keydown.native.enter.prevent="preSendLAMB">
                 <p>
                     <Input :value="AssetName | assertdenomformat" readonly>
                         <span slot="prepend">{{ $t('Authorizedminingpop.AssetName') }}</span>
                     </Input>
                 </p>
-                <br />
-                <p>
-                    <a @click="openLinkmarket(AssetName)">{{ $t('Purchasespace.operationaddressbrowser') }}</a>
-                </p>
-                <br />
-                <p>
-                    <Input v-model="priceinfo">
-                        <span slot="prepend">{{ $t('Purchasespace.Priceofminers') }}</span>
-                    </Input>
-                </p>
-                <br />
-                <div v-if="mineraddress && price">
-                    <p>{{ $t('Purchasespace.Mineroperationaddress') }}：{{ mineraddress }}</p>
-                    <br />
-                    <p>
-                        {{ $t('Purchasespace.Price') }}：{{ price | BlanceValue }} {{ AssetName | assertdenomformat }}
-                    </p>
 
+                <p v-if="delegateType == 'delegate'">
                     <br />
-                </div>
+                    <a @click="openLinkmarket(AssetName)">{{ $t('Pledgepopup.tip') }}</a>
+                </p>
+                <br />
                 <p>
-                    <Input v-model="size">
-                        <span slot="prepend">{{ $t('Purchasespace.Size') }}</span>
-                        <span slot="append">GB</span>
+                    <Input v-model="mineraddress">
+                        <span slot="prepend">{{ $t('Pledgepopup.Mineroperatingaddress') }}</span>
                     </Input>
                 </p>
                 <br />
+
                 <p>
-                    <Input v-model="Duration">
-                        <span slot="prepend">{{ $t('Purchasespace.duration') }}</span>
-                        <span slot="append">{{ $t('Purchasespace.month') }}</span>
+                    <Input v-model="amount">
+                        <span slot="prepend">{{ $t('Pledgepopup.amount') }}</span>
                     </Input>
                 </p>
                 <br />
-                <p>
-                    {{ $t('Purchasespace.Paymentamount') }}：{{ payamount | BlanceValue }}
-                    {{ AssetName | assertdenomformat }}
-                </p>
-                <br />
-                <p>{{ $t('assetnewtxt.buyspacetip') }}</p>
+
+                <Row class-name="item">
+                    <Col span="4" class-name="key">{{ $t('Pledgepopup.category') }}:</Col>
+                    <Col span="20" class-name="value">
+                        {{ delegateType == 'delegate' ? this.$t('Pledgepopup.pledge') : this.$t('Pledgepopup.redeem') }}
+                    </Col>
+                </Row>
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="preSendLAMB">{{ $t('home.Modal1.Submit') }}</Button>
@@ -85,6 +65,8 @@ export default {
             timeunit: 1000 * 1000 * 1000 * 60 * 60 * 24 * 30,
             mineraddress: '',
             price: '',
+            delegateType: 'delegate',
+            amount: '',
         };
     },
     components: {
@@ -94,6 +76,10 @@ export default {
         open(data) {
             console.log('data', data);
             this.$data.AssetName = data.assetName;
+            if (data.MinerAddress) {
+                this.$data.mineraddress = data.MinerAddress;
+                this.$data.delegateType = 'undelegate';
+            }
             this.sendModal = true;
         },
         sendcancel() {
@@ -103,25 +89,8 @@ export default {
             console.log('-----');
             var AssetName = this.$data.AssetName;
 
-            var size = parseInt(this.$data.size);
-            var Duration = parseInt(this.$data.Duration);
-
-            // var address = this.$data.priceinfo;
-            try {
-                var priceinfo = JSON.parse(this.$data.priceinfo);
-                // { "address": "lambdamineroper1g74gwkeq2py5zypv4l223p2s82gqlc28rsp826","price": 1000000 }
-                this.$data.mineraddress = priceinfo.address;
-                this.$data.price = priceinfo.price;
-                if (priceinfo.address == undefined || priceinfo.price == undefined) {
-                    throw new Error('');
-                }
-            } catch (error) {
-                this.$Notice.warning({
-                    title: this.$t('Purchasespace.Priceformaterror'),
-                });
-                return;
-            }
-
+            var amount = parseInt(this.$data.amount);
+            var delegateType = this.$data.delegateType;
             if (this.$data.mineraddress.length !== 54) {
                 this.$Notice.warning({
                     title: this.$t('Purchasespace.action.need_miner_address'),
@@ -129,45 +98,37 @@ export default {
                 return;
             }
 
-            if (isNaN(size) || size <= 0) {
+            if (isNaN(amount) || amount <= 0) {
                 this.$Notice.warning({
-                    title: this.$t('Purchasespace.action.need_miner_size'),
+                    title: this.$t('Pledgepopup.need_amount'),
                 });
                 return;
             }
 
-            if (isNaN(Duration) || Duration <= 0) {
-                this.$Notice.warning({
-                    title: this.$t('Purchasespace.action.need_miner_duration'),
-                });
-                return;
-            }
-
-            this.transfer(AssetName, this.$data.mineraddress, size, Duration);
+            this.transfer(AssetName, this.$data.mineraddress, amount, delegateType);
         },
         openLinkmarket(name) {
             var explorer = DAEMON_CONFIG.explore();
             let url = `${explorer}#/assetMarket/${name}`;
             shell.openExternal(url);
         },
-        async transfer(AssetName, address, Size, Duration) {
+        async transfer(AssetName, address, amount, delegateType) {
             this.$data.transactiondata = null;
 
-            Duration = Duration * this.$data.timeunit + '';
-            Size = String(Size);
+            // Size = String(Size);
 
             try {
-                let res = await ipc.callMain('assertDamCreateBuyOrder', {
+                let res = await ipc.callMain('assertUserdelegate', {
                     AssetName,
                     address,
-                    Size,
-                    Duration,
+                    amount: this.toBigNumStr(amount),
+                    delegateType,
                 });
                 // console.log(res);
 
                 if (res.state) {
                     this.sendcancel();
-                    this.$refs.ConfirmModal.open('assertDamCreateBuyOrder', res.data, {
+                    this.$refs.ConfirmModal.open('assertUserdelegate', res.data, {
                         totalAmount: this.payamount,
                         denom: this.$data.AssetName,
                     });
@@ -218,6 +179,11 @@ export default {
             } else {
                 return result;
             }
+        },
+        tite() {
+            return this.$data.delegateType == 'delegate'
+                ? this.$t('Pledgepopup.pledge')
+                : this.$t('Pledgepopup.redeem');
         },
     },
     watch: {

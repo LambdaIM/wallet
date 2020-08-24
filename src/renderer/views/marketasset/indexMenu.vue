@@ -9,8 +9,11 @@
                 <MenuItem to="/marketindexmenu/marketlist" name="marketlist">
                     {{ $t('assetpage.authorizedMarket') }}
                 </MenuItem>
+                <MenuItem v-if="$role('conlist.pledgelist')" to="/marketindexmenu/pledgelist" name="pledgelist">
+                    {{ $t('assetnewtxt.Pledgelist') }}
+                </MenuItem>
 
-                <MenuItem v-if="$role('conlist.redeem')" to="/marketindexmenu/redeemlist" name="redeemlist">
+                <MenuItem v-if="$role('conlist.redeemlist')" to="/marketindexmenu/redeemlist" name="redeemlist">
                     {{ $t('assetpage.assetsinredemption') }}
                 </MenuItem>
                 <MenuItem

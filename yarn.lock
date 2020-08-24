@@ -679,10 +679,10 @@
     lodash.merge "^4.6.2"
     log-update "^1.0.2"
 
-"@jswebfans/rpcapijs@0.2.48":
-  version "0.2.48"
-  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.2.48.tgz#e6292202e165318d10bf21c278dccb9b15c1eb08"
-  integrity sha512-Xz9z5GMmRTEfXuGnI0IP0XlTOPU57aMwbVmmS9YxaSXbDRMkyWJY7y4HH2ttj/8e82qxx3aDeo8uMMlOZo459Q==
+"@jswebfans/rpcapijs@0.2.49":
+  version "0.2.49"
+  resolved "https://registry.npmjs.org/@jswebfans/rpcapijs/-/rpcapijs-0.2.49.tgz#e4dd5e9ed70ef3e209d3e0aa0717de58d09cef07"
+  integrity sha512-aIIYjS2pY8kO4Bp4a1iggDUPbKqsKaLc0qkbuwdysJzF10cKAX+4Z3eIwJNinpUlz6jlVfmL5CGd/nHXIf7DpQ==
   dependencies:
     "@babel/runtime" "^7.5.4"
 
@@ -9481,6 +9481,11 @@ trim-newlines@^1.0.0:
 trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
+
+trim@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.npmjs.org/trim/-/trim-0.0.1.tgz#5858547f6b290757ee95cccc666fb50084c460dd"
+  integrity sha1-WFhUf2spB1fulczMZm+1AITEYN0=
 
 "true-case-path@^1.0.2":
   version "1.0.3"

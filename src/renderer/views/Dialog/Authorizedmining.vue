@@ -15,16 +15,17 @@
                 </p>
                 <br />
                 <p>
-                    {{ $t('Authorizedminingpop.Authorizedpublickey') }}
-                    <Input :rows="4" type="textarea" v-model="Pubkey"></Input>
+                    <Input v-model="user">
+                        <span slot="prepend">{{ $t('assetnewtxt.lambdaaddress') }}</span>
+                    </Input>
                 </p>
                 <br />
-                <!-- <p>
-            <RadioGroup v-model="pubkeyType">
-                <Radio label="1">{{$t('Authorizedminingpop.Authorizedpublickey')}}</Radio>
-                <Radio label="2">Ed25519的base64格式字符串</Radio>
-            </RadioGroup>
-        </p> -->
+                <p>
+                    <RadioGroup v-model="isAllowed">
+                        <Radio label="1">{{ $t('assetnewtxt.Addauthorization') }}</Radio>
+                        <Radio label="2">{{ $t('assetnewtxt.Cancelauthorization') }}</Radio>
+                    </RadioGroup>
+                </p>
 
                 <br />
             </Form>
@@ -52,6 +53,8 @@ export default {
             AssetName: '',
             Pubkey: '',
             pubkeyType: '1',
+            user: '',
+            isAllowed: '',
         };
     },
     components: {
@@ -69,31 +72,33 @@ export default {
         preSendLAMB() {
             console.log('-----');
             var AssetName = this.$data.AssetName;
-            var Pubkey = this.$data.Pubkey;
+            var user = this.$data.user;
+            var isAllowed = this.$data.isAllowed;
             var jsonObj = {};
 
-            if (Pubkey.length == 0) {
+            if (user.length != 45) {
                 this.$Notice.warning({
-                    title: this.$t('Authorizedminingpop.action.need_public_key'),
+                    title: this.$t('assetnewtxt.need_lambdaaddress'),
                 });
                 return;
             }
-            try {
-                jsonObj = JSON.parse(Pubkey);
-                Pubkey = jsonObj.pub_key.value;
-            } catch (error) {}
+            if (isAllowed == '') {
+                this.$Notice.warning({
+                    title: this.$t('assetnewtxt.need_category'),
+                });
+                return;
+            }
 
-            this.transfer(Pubkey, AssetName);
+            this.transfer(user, AssetName, isAllowed);
         },
-        async transfer(PubKey, AssetName) {
+        async transfer(user, AssetName, isAllowed) {
             this.$data.transactiondata = null;
-            let isdege = this.$data.isdege;
-            let pubkeyType = parseInt(this.$data.pubkeyType);
+
             try {
                 let res = await ipc.callMain('AuthorizeMiningPubKey', {
-                    PubKey,
+                    user,
                     AssetName,
-                    pubkeyType: pubkeyType,
+                    isAllowed,
                 });
                 // console.log(res);
                 if (res.state) {

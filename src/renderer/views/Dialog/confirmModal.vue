@@ -327,6 +327,10 @@
                         <Col span="16" class-name="value">{{ transactiondata.inflation | BlanceValue }}</Col>
                     </Row>
                     <Row v-if="transactiondata.mint_type == '3'" class-name="item">
+                        <Col span="5" class-name="key">{{ $t('assetnewtxt.MiningRatio') }}:</Col>
+                        <Col span="16" class-name="value">{{ transactiondata.mining_ratio }}</Col>
+                    </Row>
+                    <Row v-if="transactiondata.mint_type == '3'" class-name="item">
                         <Col span="5" class-name="key">{{ $t('CreateassetsPop.adjust_rate') }}:</Col>
                         <Col span="16" class-name="value">{{ transactiondata.adjust_rate }}</Col>
                     </Row>
@@ -401,7 +405,7 @@
                 </div>
 
                 <div v-if="txtype == 'AuthorizeMiningPubKey'">
-                    <h2>{{ $t('Authorizedminingpop.Authorization-MinerMining') }}</h2>
+                    <h2>{{ $t('assetnewtxt.authorization') }}</h2>
                     <Row class-name="item">
                         <Col span="3" class-name="key">{{ $t('Authorizedminingpop.AssetName') }}:</Col>
                         <Col span="21">
@@ -409,9 +413,19 @@
                         </Col>
                     </Row>
                     <Row class-name="item">
-                        <Col span="3" class-name="key">{{ $t('Authorizedminingpop.Authorizedpublickey') }}:</Col>
+                        <Col span="7" class-name="key">{{ $t('assetnewtxt.lambdaaddress') }}:</Col>
+                        <Col span="15">
+                            {{ transactiondata.user }}
+                        </Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="3" class-name="key">{{ $t('assetnewtxt.category') }}:</Col>
                         <Col span="21">
-                            <Input readonly :rows="4" type="textarea" v-model="transactiondata.PubKey.value" />
+                            {{
+                                transactiondata.isAllowed
+                                    ? $t('assetnewtxt.Addauthorization')
+                                    : $t('assetnewtxt.Cancelauthorization')
+                            }}
                         </Col>
                     </Row>
                 </div>
@@ -502,6 +516,33 @@
                     <Row class-name="item">
                         <Col span="5" class-name="key">{{ $t('orderrevenue.Number') }}:</Col>
                         <Col span="16" class-name="value">{{ transactiondata.limit }}</Col>
+                    </Row>
+                </div>
+
+                <div v-if="txtype == 'assertUserdelegate'">
+                    <h2>{{ $t('Pledgepopup.title') }}</h2>
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">{{ $t('txPopup.Operator') }}:</Col>
+                        <Col span="20" class-name="value">{{ address }}</Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">{{ $t('Authorizedminingpop.AssetName') }}:</Col>
+                        <Col span="20" class-name="value">{{ transactiondata.assetName | assertdenomformat }}</Col>
+                    </Row>
+
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">{{ $t('Pledgepopup.amount') }}:</Col>
+                        <Col span="20" class-name="value">{{ transactiondata.amount | BlanceValue }}</Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">{{ $t('Pledgepopup.category') }}:</Col>
+                        <Col span="20" class-name="value">
+                            {{
+                                transactiondata.type == 'MsgDigitalAssetDelegate'
+                                    ? this.$t('Pledgepopup.pledge')
+                                    : this.$t('Pledgepopup.redeem')
+                            }}
+                        </Col>
                     </Row>
                 </div>
 
