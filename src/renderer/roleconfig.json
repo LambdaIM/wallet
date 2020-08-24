@@ -36,7 +36,8 @@
       "Buyingspace":["order","miner"],
       "pledgelist":["order","miner"],
       "redeemlist":["order","miner"],
-      "userpledgebtn":["order"]
+      "userpledgebtn":["order"],
+      "reward":["miner"]
 
     }
 }

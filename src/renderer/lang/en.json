@@ -1204,6 +1204,11 @@
       "Marketlist":"Market list",
       "Listusers":"List of authorized users",
       "lambdaaddr":"User lambda address"
+  },
+  "damindex":{
+      "OrderCommission":"Order Commission",
+      "lambdamarketorder":"Withdrawal of lambda market order Commission",
+      "assetmarketorder":"Withdrawal of Commission on asset market orders"
   }
 
 

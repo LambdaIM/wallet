@@ -102,31 +102,66 @@
                         </Col>
                     </Row>
                     <br />
-                    <Row>
-                        <Col span="12">
-                            <h3>{{ $t('Marketnavigation.Miningreward') }}</h3>
-                        </Col>
-                        <Col span="12"></Col>
-                    </Row>
-                    <br />
-                    <Row>
-                        <Col span="24">
-                            <p>
-                                <Tag v-for="item in MinerRewards">{{ bigNumTypeFormat(item.amount, item.denom) }}</Tag>
-                            </p>
+                    <div v-if="$role('conlist.reward')">
+                        <Row>
+                            <Col span="12">
+                                <h3>{{ $t('Marketnavigation.Miningreward') }}</h3>
+                            </Col>
+                            <Col span="12"></Col>
+                        </Row>
+                        <br />
+                        <Row>
+                            <Col span="24">
+                                <p>
+                                    <Tag v-for="item in MinerRewards">
+                                        {{ bigNumTypeFormat(item.amount, item.denom) }}
+                                    </Tag>
+                                </p>
 
-                            <p v-if="MinerRewards.length == 0">
-                                {{ $t('Dialog.com.Nodata') }}
-                            </p>
-                        </Col>
-                    </Row>
+                                <p v-if="MinerRewards.length == 0">
+                                    {{ $t('Dialog.com.Nodata') }}
+                                </p>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Row>
+                            <Col span="12">
+                                <Button @click="Drawreward">{{ $t('somemodel.Extractstorageandmininrewards') }}</Button>
+                            </Col>
+                            <Col span="12"></Col>
+                        </Row>
+                        <br />
+                        <Row>
+                            <Col span="12">
+                                <h3>{{ $t('damindex.OrderCommission') }}</h3>
+                            </Col>
+                            <Col span="12"></Col>
+                        </Row>
+                        <br />
+                        <Row>
+                            <Col span="24">
+                                <p>
+                                    <Tag v-for="item in MinerOrderReward">
+                                        {{ bigNumTypeFormat(item.amount, item.denom) }}
+                                    </Tag>
+                                </p>
+
+                                <p v-if="MinerRewards.length == 0">
+                                    {{ $t('Dialog.com.Nodata') }}
+                                </p>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Row>
+                            <Col span="12">
+                                <Button @click="openMinerOrder">{{ $t('damindex.lambdamarketorder') }}</Button>
+                            </Col>
+                            <Col span="12">
+                                <Button @click="openDamMinerOrder">{{ $t('damindex.assetmarketorder') }}</Button>
+                            </Col>
+                        </Row>
+                    </div>
                     <br />
-                    <Row>
-                        <Col span="12">
-                            <Button @click="Drawreward">{{ $t('somemodel.Extractstorageandmininrewards') }}</Button>
-                        </Col>
-                        <Col span="12"></Col>
-                    </Row>
                 </div>
             </div>
             <br />
@@ -134,23 +169,38 @@
             <br />
         </div>
         <MinerWithdrawalModal ref="MinerWithdrawalModalDialog" />
+        <MinerWithdrawaOrderlModal ref="MinerWithdrawaOrderlModalDialog" />
+        <withdrawalAuthorizedMarketModal ref="withdrawalAuthorizedMarketModalDialog" />
     </div>
 </template>
 <script>
 import MinerWithdrawalModal from '@/views/Dialog/MinerWithdrawalModal.vue';
+import eventhub from '../../common/js/event.js';
+
+import MinerWithdrawaOrderlModal from '@/views/Dialog/MinerWithdrawaOrderlModal.vue';
+import withdrawalAuthorizedMarketModal from '@/views/Dialog/withdrawalAuthorizedMarketModal.vue';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 export default {
     components: {
         MinerWithdrawalModal,
+        MinerWithdrawaOrderlModal,
+        withdrawalAuthorizedMarketModal,
     },
     mounted() {
         this.getMinerRewards();
+        this.getOrderCommission();
+        eventhub.$on('TransactionSuccess', data => {
+            console.log('TransactionSuccess');
+            this.getMinerRewards();
+            this.getOrderCommission();
+        });
     },
     data() {
         return {
             roleselect: this.$store.getters.role || 'simple',
             MinerRewards: [],
+            MinerOrderReward: [],
         };
     },
     methods: {
@@ -191,6 +241,26 @@ export default {
             } catch (ex) {
                 console.log(ex);
             }
+        },
+        async getOrderCommission() {
+            console.log('getOrderCommission');
+            try {
+                let res = await ipc.callMain('damMinerInfo', {});
+                if (res.state && res.data && res.data.data) {
+                    var lamblist = res.data.data['orderReward'] || [];
+                    var result = '';
+                    this.$data.MinerOrderReward = lamblist;
+                    console.log(lamblist);
+                }
+            } catch (ex) {
+                console.log(ex);
+            }
+        },
+        openMinerOrder() {
+            this.$refs.MinerWithdrawaOrderlModalDialog.open();
+        },
+        openDamMinerOrder() {
+            this.$refs.withdrawalAuthorizedMarketModalDialog.open();
         },
         setrole() {
             // var rolelist=['simple','order','miner','validator'];
