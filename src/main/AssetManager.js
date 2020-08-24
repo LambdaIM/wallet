@@ -110,6 +110,16 @@ class AssetManager {
         return { data: result };
     }
 
+    async damMiner_Info() {
+        if (this.defaultAddress == null) {
+            throwErrorCode(errorList.need_address);
+        }
+        console.log('matchorderlist');
+        var result = await this.CosmosAPI().get.damMinerInfo(this.defaultAddress);
+
+        return { data: result };
+    }
+
     async damAssetMintSimulate({
         assetName,
         assetiniti,

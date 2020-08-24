@@ -1205,6 +1205,11 @@
         "Marketlist":"市场列表",
         "Listusers":"授权用户列表",
         "lambdaaddr":"用户lambda地址"
+    },
+    "damindex":{
+        "OrderCommission":"订单佣金",
+        "lambdamarketorder":"提取lambda市场订单佣金",
+        "assetmarketorder":"提取资产市场订单佣金"
     }
 
 }
