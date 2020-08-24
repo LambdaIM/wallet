@@ -515,7 +515,10 @@
     "MsgDamMinerWithDraw": "DamMinerWithDraw",
     "MsgDamMinerWithDrawCount": "DamMinerWithDrawCount",
     "MsgDamCreateBuyOrder": "DamCreateBuyOrder",
-    "MsgTransferOwnership":"TransferOwnership"
+    "MsgTransferOwnership":"TransferOwnership",
+    "MsgAuthorizeUser":"AuthorizeUser",
+    "MsgDigitalAssetDelegate":"DigitalAssetDelegate",
+    "MsgDigitalAssetUndelegate":"DigitalAssetUndelegate"
   },
   "txTable":{
     "action": "Activity",
