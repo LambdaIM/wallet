@@ -1,12 +1,14 @@
 <template>
     <div class="container">
-        <Breadcrumb>
-            <BreadcrumbItem to="/marketindexmenu/matchingOrderslist">
-                {{ $t('Matchorders.Matchorders') }}
-            </BreadcrumbItem>
+        <div style="    margin-left: 25px;">
+            <Breadcrumb>
+                <BreadcrumbItem to="/marketindexmenu/matchingOrderslist">
+                    {{ $t('Matchorders.Matchorders') }}
+                </BreadcrumbItem>
 
-            <BreadcrumbItem>{{ $t('orderinfo.orderdetails') }}</BreadcrumbItem>
-        </Breadcrumb>
+                <BreadcrumbItem>{{ $t('orderinfo.orderdetails') }}</BreadcrumbItem>
+            </Breadcrumb>
+        </div>
         <Mycard :cardtitle="$t('orderinfo.orderdetails')" class="mt20">
             <div v-if="orderinfo != undefined" class="s3Operation" slot="operation">
                 <Button
