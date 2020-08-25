@@ -299,10 +299,14 @@ export default {
             }
             this.$data.pledgerecords.forEach(item => {
                 if (item.assetName == name) {
-                    result = parseFloat(item.power).toFixed(3);
+                    result = parseFloat(item.power);
                 }
             });
-            return result;
+            if (result != '') {
+                return ((result * 32) / 1000).toFixed(2) + 'TB';
+            } else {
+                return result;
+            }
         },
         findminingpledgeAsset(name) {
             var result = 0;
