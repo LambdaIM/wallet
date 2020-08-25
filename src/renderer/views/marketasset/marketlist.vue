@@ -312,10 +312,11 @@ export default {
             }
             this.$data.pledgelist.forEach(item => {
                 if (item.Asset == name) {
-                    result += _this.bigNumTBB(item.Amount);
+                    // result += _this.bigNumTBB(item.Amount);
+                    result = this.bigNumAdd(result, item.Amount);
                 }
             });
-            return result;
+            return this.bigNumTBB(result);
         },
         denomFormart(denom) {
             return denom.substr(1);

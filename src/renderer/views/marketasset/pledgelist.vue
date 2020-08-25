@@ -11,9 +11,9 @@
                     </template>
                 </Table>
                 <br />
-                <div style="text-align: center;">
+                <!-- <div style="text-align: center;">
                     <Page @on-change="orderListPage" :total="allCount" simple />
-                </div>
+                </div> -->
                 <br />
                 <br />
             </div>
