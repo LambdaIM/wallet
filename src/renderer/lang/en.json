@@ -1208,7 +1208,11 @@
   "damindex":{
       "OrderCommission":"Order Commission",
       "lambdamarketorder":"Withdrawal of lambda market order Commission",
-      "assetmarketorder":"Withdrawal of Commission on asset market orders"
+      "assetmarketorder":"Withdrawal of Commission on asset market orders",
+      "Assetpledgereward":"Asset pledge reward",
+      "rewardtip1":"1: Including mining rewards for lambda market miners",
+      "rewardtip2":"2: Contains mining rewards for miners in the asset market",
+      "rewardtip3":"3: Includes asset pledge rewards in the asset market"
   }
 
 

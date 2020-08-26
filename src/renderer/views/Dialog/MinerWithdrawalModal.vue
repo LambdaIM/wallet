@@ -7,12 +7,20 @@
             :styles="{ top: '200px' }"
             @on-cancel="sendcancel"
         >
-            <p>
+            <!-- <p>
                 <Tag v-for="item in MinerRewards">{{ bigNumTypeFormat(item.amount, item.denom) }}</Tag>
             </p>
 
             <p v-if="MinerRewards.length == 0">
                 {{ $t('Dialog.com.Nodata') }}
+            </p> -->
+            <p>
+                {{ $t('damindex.rewardtip1') }}
+                <br />
+                {{ $t('damindex.rewardtip2') }}
+                <br />
+                {{ $t('damindex.rewardtip3') }}
+                <br />
             </p>
             <div slot="footer">
                 <Button type="primary" @click="prewithdrawalLAMB">{{ $t('home.Modal1.Submit') }}</Button>
@@ -44,7 +52,7 @@ export default {
             this.$data.withdrawalModal = true;
             this.$data.confirmModal = false;
 
-            this.getMinerRewards();
+            // this.getMinerRewards();
         },
         prewithdrawalLAMB() {
             console.log('- -');

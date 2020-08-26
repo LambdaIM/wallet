@@ -1209,7 +1209,11 @@
     "damindex":{
         "OrderCommission":"订单佣金",
         "lambdamarketorder":"提取lambda市场订单佣金",
-        "assetmarketorder":"提取资产市场订单佣金"
+        "assetmarketorder":"提取资产市场订单佣金",
+        "Assetpledgereward":"资产质押奖励",
+        "rewardtip1":"1:包含lambda市场矿工挖矿奖励",
+        "rewardtip2":"2:包含资产市场矿工挖矿奖励",
+        "rewardtip3":"3:包含资产市场资产质押奖励"
     }
 
 }
