@@ -790,7 +790,7 @@
        "validator":"Validator",
        "marketmaker":"Market maker"
   },
-  "simpleuserbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward，Market pledge, withdraw market pledge income",
+  "simpleuserbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward，Market pledge, withdraw market pledge income，Pledge assets to miners, redeem assets pledged to miners",
   "orderuserbrief":"View assets, transfer, pledge mining, proposal voting, purchase space, use lambdas3, withdraw pledge reward，Market pledge, withdraw market pledge income,purchase authorization market space",
   "minerbrief":"View assets, transfer, pledge mining, proposal voting, market trading space, mining guide, withdraw pledge reward, withdraw deposit mining reward，Market pledge, withdraw market pledge income,Asset market pledge, Asset market redemption and Asset market activation",
   "validatorbrief":"View assets, transfer, pledge mining, proposal voting, withdraw pledge reward, extract node income，Market pledge, withdraw market pledge income,remove miners from Asset market",
