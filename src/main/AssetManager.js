@@ -120,6 +120,16 @@ class AssetManager {
         return { data: result };
     }
 
+    async damUserDelegatorRewards() {
+        if (this.defaultAddress == null) {
+            throwErrorCode(errorList.need_address);
+        }
+        console.log('matchorderlist');
+        var result = await this.CosmosAPI().get.damUserDelegatorRewards(this.defaultAddress);
+
+        return { data: result };
+    }
+
     async damAssetMintSimulate({
         assetName,
         assetiniti,

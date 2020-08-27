@@ -202,4 +202,15 @@ export default function() {
             return { data: error, state: false };
         }
     });
+
+    eipc.answerRenderer('damUserDelegatorRewards', async query => {
+        try {
+            var M = new AssetManager();
+            var result = await M.damUserDelegatorRewards();
+            return { data: result, state: true };
+        } catch (error) {
+            console.log(error);
+            return { data: error, state: false };
+        }
+    });
 }

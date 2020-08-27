@@ -102,35 +102,56 @@
                         </Col>
                     </Row>
                     <br />
-                    <div v-if="$role('conlist.reward')">
-                        <Row>
-                            <Col span="12">
-                                <h3>{{ $t('Marketnavigation.Miningreward') }}</h3>
-                            </Col>
-                            <Col span="12"></Col>
-                        </Row>
-                        <br />
-                        <Row>
-                            <Col span="24">
-                                <p>
-                                    <Tag v-for="item in MinerRewards">
-                                        {{ bigNumTypeFormat(item.amount, item.denom) }}
-                                    </Tag>
-                                </p>
 
-                                <p v-if="MinerRewards.length == 0">
-                                    {{ $t('Dialog.com.Nodata') }}
-                                </p>
-                            </Col>
-                        </Row>
-                        <br />
-                        <Row>
-                            <Col span="12">
-                                <Button @click="Drawreward">{{ $t('somemodel.Extractstorageandmininrewards') }}</Button>
-                            </Col>
-                            <Col span="12"></Col>
-                        </Row>
-                        <br />
+                    <Row>
+                        <Col span="12">
+                            <h3>{{ $t('Marketnavigation.Miningreward') }}</h3>
+                        </Col>
+                        <Col span="12"></Col>
+                    </Row>
+                    <br />
+                    <Row>
+                        <Col span="24">
+                            <p>
+                                <Tag v-for="item in MinerRewards">
+                                    {{ bigNumTypeFormat(item.amount, item.denom) }}
+                                </Tag>
+                            </p>
+                            <p v-if="MinerRewards.length == 0">
+                                {{ $t('Dialog.com.Nodata') }}
+                            </p>
+                        </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                        <Col span="12">
+                            <h3>{{ $t('damindex.Assetpledgereward') }}</h3>
+                        </Col>
+                        <Col span="12"></Col>
+                    </Row>
+                    <br />
+                    <Row>
+                        <Col span="24">
+                            <p>
+                                <Tag v-for="item in PledgeMinerReward">
+                                    {{ bigNumTypeFormat(item.amount, item.denom) }}
+                                </Tag>
+                            </p>
+
+                            <p v-if="PledgeMinerReward.length == 0">
+                                {{ $t('Dialog.com.Nodata') }}
+                            </p>
+                        </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                        <Col span="12">
+                            <Button @click="Drawreward">{{ $t('somemodel.Extractstorageandmininrewards') }}</Button>
+                        </Col>
+                        <Col span="12"></Col>
+                    </Row>
+                    <br />
+                    <div v-if="$role('conlist.reward')">
                         <Row>
                             <Col span="12">
                                 <h3>{{ $t('damindex.OrderCommission') }}</h3>
@@ -190,10 +211,13 @@ export default {
     mounted() {
         this.getMinerRewards();
         this.getOrderCommission();
+        this.getPledgeMinerRewards();
+
         eventhub.$on('TransactionSuccess', data => {
             console.log('TransactionSuccess');
             this.getMinerRewards();
             this.getOrderCommission();
+            this.getPledgeMinerRewards();
         });
     },
     data() {
@@ -201,6 +225,7 @@ export default {
             roleselect: this.$store.getters.role || 'simple',
             MinerRewards: [],
             MinerOrderReward: [],
+            PledgeMinerReward: [],
         };
     },
     methods: {
@@ -237,6 +262,19 @@ export default {
                     var list = res.data['miner_rewards'] || [];
                     var result = '';
                     this.$data.MinerRewards = list;
+                }
+            } catch (ex) {
+                console.log(ex);
+            }
+        },
+        async getPledgeMinerRewards() {
+            console.log('getPledgeMinerRewards');
+            try {
+                let res = await ipc.callMain('damUserDelegatorRewards', {});
+                if (res.state && res.data) {
+                    var list = res.data.data || [];
+                    var result = '';
+                    this.$data.PledgeMinerReward = list;
                 }
             } catch (ex) {
                 console.log(ex);

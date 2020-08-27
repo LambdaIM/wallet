@@ -33,6 +33,12 @@
                         {{ delegateType == 'delegate' ? this.$t('Pledgepopup.pledge') : this.$t('Pledgepopup.redeem') }}
                     </Col>
                 </Row>
+                <br />
+                <p v-if="delegateType == 'delegate'">
+                    {{ $t('damindex.Pledge1') }}
+                    <br />
+                    {{ $t('damindex.Pledge2') }}
+                </p>
             </Form>
             <div slot="footer">
                 <Button type="primary" @click="preSendLAMB">{{ $t('home.Modal1.Submit') }}</Button>

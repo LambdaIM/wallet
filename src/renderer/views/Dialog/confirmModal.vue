@@ -38,10 +38,10 @@
                         <Col span="4" class-name="key ">{{ $t('txPopup.Operator') }}:</Col>
                         <Col span="20" class-name="value address">{{ address }}</Col>
                     </Row>
-                    <Row class-name="item">
+                    <!-- <Row class-name="item">
                         <Col span="4" class-name="key">{{ $t('home.Modal1.Amount') }}:</Col>
                         <Col span="20" class-name="value">{{ MinerDistributionReward }} LAMB</Col>
-                    </Row>
+                    </Row> -->
                 </div>
                 <div v-if="txtype == 'withdrawalDistribution'">
                     <h2>{{ $t('home.Withdrawprofit') }}</h2>

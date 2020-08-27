@@ -23,7 +23,8 @@
                     {{ txItem.to }}
                 </span>
                 <span v-if="txItem.action == 'MsgDigitalAssetPledge'">
-                    {{ txItem.amount | BlanceValue }}{{ txItem.to | assertdenomformat }} {{ $t('txTable.to') }}
+                    <span class="value">{{ txItem.amount | BlanceValue }}</span>
+                    {{ txItem.to | assertdenomformat }} {{ $t('txTable.to') }}
                     {{ $t('assetpage.authorizedMarket') }}
                 </span>
                 <span v-if="txItem.action == 'MsgAuthorizeMiningPubKey'">

@@ -2,9 +2,6 @@
     <div>
         <div class="customer-container">
             <div class="tableContainer">
-                <div>
-                    <Alert type="warning">{{ $t('assetsotherpage.Unableopendescription') }}</Alert>
-                </div>
                 <Table :columns="columns" :data="list">
                     <template slot-scope="{ row, index }" slot="operation">
                         <Button @click="openS3(row)">{{ $t('assetsotherpage.OpenviaS3') }}</Button>
@@ -82,7 +79,24 @@ export default {
                     this.$data.list = result;
                     if (this.$data.pageCount[page] == undefined) {
                         this.$data.pageCount[page] = 1;
-                        this.$data.allCount += result.length;
+
+                        let resnext = await ipc.callMain('AuthorizefileRceiver', {
+                            page: page + 1,
+                        });
+                        if (resnext.state && resnext.data.data.error == undefined) {
+                            var data2 = resnext.data.data || [];
+                            var result2 = [];
+                            data2.forEach(element => {
+                                result2.push(element.tx.value.msg[0].value);
+                            });
+                            if (result2.length > 0) {
+                                if (result2.length != result.length) {
+                                    this.$data.allCount += result.length;
+                                } else if (result2[0].File != result[0].File) {
+                                    this.$data.allCount += result.length;
+                                }
+                            }
+                        }
                     }
                 }
             } catch (ex) {
