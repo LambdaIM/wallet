@@ -7,11 +7,32 @@
                     <Col span="11">
                         <span v-if="$role('home.guide')" style="    font-size: 15px;">
                             {{ $t('testcoin.miningaward') }}：
-                            <span style="color: #67a7db;">{{ MinerRewards | Lambformat }}</span>
+                            <!-- <span style="color: #67a7db;">{{ MinerRewards | Lambformat }}</span> -->
+                            <span
+                                @click="Drawerstate = true"
+                                v-if="MinerRewards.length"
+                                style="color: #67a7db;cursor: pointer"
+                            >
+                                {{ bigNumTypeFormat(MinerRewards[0].amount, MinerRewards[0].denom) }}
+                                <Icon type="ios-more" />
+                            </span>
+                            <span v-else>
+                                --
+                            </span>
                         </span>
                         <span v-else>
                             &nbsp;
                         </span>
+                        <Drawer
+                            :title="$t('testcoin.miningaward')"
+                            placement="left"
+                            :closable="false"
+                            v-model="Drawerstate"
+                        >
+                            <p v-for="item in MinerRewards" :key="item.denom">
+                                {{ bigNumTypeFormat(item.amount, item.denom) }}
+                            </p>
+                        </Drawer>
                     </Col>
                     <Col span="13" style="    text-align: right;">
                         <a @click="gettestcoin">{{ $t('testcoin.txtbtn') }}</a>
@@ -115,7 +136,7 @@
 </template>
 <script>
 import blancebar from './blancebar.vue';
-import eventhub from '../../common/js/event.js';
+// import eventhub from '../../common/js/event.js';
 
 import SendModelDialog from '@/views/Dialog/sendModel.vue';
 import WithdrawalModalDialog from '@/views/Dialog/withdrawalModal.vue';
@@ -141,6 +162,7 @@ export default {
             activeItem: this.$route.name,
             time: '',
             MinerRewards: 0,
+            Drawerstate: false,
         };
     },
     components: {
@@ -258,15 +280,15 @@ export default {
 
                 if (res.state) {
                     var list = res.data['miner_rewards'] || [];
-                    var result = '';
-                    list.forEach(item => {
-                        if (item.denom == 'ulamb') {
-                            result = item.amount;
-                        }
-                    });
+                    // var result = '';
+                    // list.forEach(item => {
+                    //     if (item.denom == 'ulamb') {
+                    //         result = item.amount;
+                    //     }
+                    // });
 
-                    this.$data.MinerRewards = result;
-                    this.$store.dispatch('setMinerReward', result);
+                    this.$data.MinerRewards = list;
+                    // this.$store.dispatch('setMinerReward', result);
                 }
             } catch (ex) {
                 console.log(ex);
