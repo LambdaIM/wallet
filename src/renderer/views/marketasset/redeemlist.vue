@@ -14,6 +14,10 @@
                         {{ denomFormart(row.asset) }}
                     </template>
                 </Table>
+                <br />
+                <br />
+                <br />
+                <br />
             </div>
         </div>
     </div>

@@ -154,7 +154,7 @@ export default {
             var Price = parseFloat(this.$data.Price);
             var exchangeRatio = parseInt(this.$data.market.exchangeRatio);
 
-            return ((Size * Price * exchangeRatio) / 1000).toFixed(3);
+            return ((Size * exchangeRatio) / 1000).toFixed(3);
         },
     },
 };
