@@ -217,6 +217,7 @@ export default {
             console.log('TransactionSuccess');
             this.getMinerRewards();
             this.getOrderCommission();
+            this.getPledgeMinerRewards();
         });
     },
     data() {
