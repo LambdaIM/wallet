@@ -17,10 +17,21 @@
               <Button v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
             </template>
             <template slot-scope="{ row, index }" slot="pledge">
-              {{findpledgeAsset(row.denom)}}
+              <span v-if="row.denom!='utbb'">
+                {{findpledgeAsset(row.denom)}}
+              </span>
+              <span v-else>
+                {{getPledgetbb}}
+              </span>
             </template>
             <template slot-scope="{ row, index }" slot="pledgereward">
-              {{findpledgereward(row.denom)}}
+              <span v-if="row.denom!='utbb'">
+                {{findpledgereward(row.denom)}}
+              </span>
+              <span v-else>
+                {{DistributionReward| BlanceValue }}
+                 {{DistributionReward=='0'?'':'LAMB'}} 
+              </span>
             </template>
 
 
@@ -147,7 +158,10 @@ export default {
             var result = 0;
             var _this = this;
             if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
-                return;
+                return '...';
+            }
+            if(name=='utbb'){
+              return ;
             }
             this.$data.pledgelist.forEach(item => {
                 if (item.Asset == name) {
@@ -161,7 +175,7 @@ export default {
             var result = 0;
             var _this = this;
             if (this.$data.PledgeMinerReward == null || this.$data.PledgeMinerReward.error != undefined) {
-                return;
+                return '...';
             }
             this.$data.PledgeMinerReward.forEach(item => {
                 if (item.denom == name) {
@@ -226,6 +240,12 @@ export default {
         else if (m.sort > n.sort) return 1;
         else return 0;
       });
+    },
+    DistributionReward: function() {
+            return this.$store.getters.getDistributionReward;
+    },
+    getPledgetbb:function(){
+      return this.$store.getters.getPledgetbb;
     }
   }
 
