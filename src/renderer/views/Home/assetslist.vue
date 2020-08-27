@@ -16,6 +16,15 @@
 
               <Button v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
             </template>
+            <template slot-scope="{ row, index }" slot="pledge">
+              {{findpledgeAsset(row.denom)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="pledgereward">
+              {{findpledgereward(row.denom)}}
+            </template>
+
+
+            
           </Table>
 
         </TabPane>
@@ -52,9 +61,21 @@ export default {
           title: this.$t('home.Token.operation'),
           key: 'action',
           slot: 'action'
+        },
+        {
+          title: "质押金额",
+          key: 'pledge',
+          slot: 'pledge' 
+        },
+        {
+          title: "质押奖励",
+          key: 'pledgereward',
+          slot: 'pledgereward' 
         }
       ],
-      allassert: []
+      allassert: [],
+      pledgerecords:[],
+      PledgeMinerReward:[]
     };
   },
   beforeDestroy() {
@@ -62,6 +83,9 @@ export default {
   },
   async mounted() {
     this.getAssertAll();
+    this.getpledgelist();
+    this.PledgeRewards();
+    
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.getAssertAll();
@@ -94,7 +118,59 @@ export default {
       } catch (ex) {
         console.log(ex);
       }
-    }
+    },
+    async getpledgelist() {
+            console.log('AuthorizedMarketlist');
+            try {
+                let res = await ipc.callMain('Authorizedpledgelist', {});
+                if (res.state) {
+                    this.$data.pledgelist = res.data.data || [];
+                }
+            } catch (ex) {
+                console.log(ex);
+            }
+      },
+      async PledgeRewards() {
+            console.log('getPledgeMinerRewards');
+            try {
+                let res = await ipc.callMain('damUserDelegatorRewards', {});
+                if (res.state && res.data) {
+                    var list = res.data.data || [];
+                    var result = '';
+                    this.$data.PledgeMinerReward = list;
+                }
+            } catch (ex) {
+                console.log(ex);
+            }
+        },
+      findpledgeAsset(name) {
+            var result = 0;
+            var _this = this;
+            if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
+                return;
+            }
+            this.$data.pledgelist.forEach(item => {
+                if (item.Asset == name) {
+                    // result += _this.bigNumTBB(item.Amount);
+                    result = this.bigNumAdd(result, item.Amount);
+                }
+            });
+            return this.bigNumTBB(result);
+        },
+      findpledgereward(name) {
+            var result = 0;
+            var _this = this;
+            if (this.$data.PledgeMinerReward == null || this.$data.PledgeMinerReward.error != undefined) {
+                return;
+            }
+            this.$data.PledgeMinerReward.forEach(item => {
+                if (item.denom == name) {
+                    // result += _this.bigNumTBB(item.Amount);
+                    result = this.bigNumAdd(result, item.amount);
+                }
+            });
+            return this.bigNumTBB(result);
+        }
 
 
   },
