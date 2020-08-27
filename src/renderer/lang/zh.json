@@ -1213,7 +1213,9 @@
         "Assetpledgereward":"资产质押奖励",
         "rewardtip1":"1:包含lambda市场矿工挖矿奖励",
         "rewardtip2":"2:包含资产市场矿工挖矿奖励",
-        "rewardtip3":"3:包含资产市场资产质押奖励"
+        "rewardtip3":"3:包含资产市场资产质押奖励",
+        "Pledge1":"矿工在线挖矿时，质押产生收益",
+        "Pledge2":"矿工维护或下线时，质押不产生收益"
     }
 
 }

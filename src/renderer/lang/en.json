@@ -1212,7 +1212,9 @@
       "Assetpledgereward":"Asset pledge reward",
       "rewardtip1":"1: Including mining rewards for lambda market miners",
       "rewardtip2":"2: Contains mining rewards for miners in the asset market",
-      "rewardtip3":"3: Includes asset pledge rewards in the asset market"
+      "rewardtip3":"3: Includes asset pledge rewards in the asset market",
+      "Pledge1":"When miners mine online, pledge to generate income",
+      "Pledge2":"When the miner maintains or goes offline, the pledge does not generate income"
   }
 
 
