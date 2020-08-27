@@ -29,9 +29,17 @@
                             :closable="false"
                             v-model="Drawerstate"
                         >
-                            <p v-for="item in MinerRewards" :key="item.denom">
+                            <Table :columns="MinerRewardscolumns" :data="MinerRewards">
+                                <template slot-scope="{ row, index }" slot="amount">
+                                    {{ bigNumTypeFormat(row.amount, row.denom) }}
+                                </template>
+                                <template slot-scope="{ row, index }" slot="denom">
+                                    {{ denomFormart(row.denom) }}
+                                </template>
+                            </Table>
+                            <!-- <p v-for="item in MinerRewards" :key="item.denom">
                                 {{ bigNumTypeFormat(item.amount, item.denom) }}
-                            </p>
+                            </p> -->
                         </Drawer>
                     </Col>
                     <Col span="13" style="    text-align: right;">
@@ -161,8 +169,16 @@ export default {
         return {
             activeItem: this.$route.name,
             time: '',
-            MinerRewards: 0,
+            MinerRewards: [],
             Drawerstate: false,
+            MinerRewardscolumns: [
+                { title: this.$t('home.Token.name'), key: 'denom', slot: 'denom' },
+                {
+                    title: this.$t('home.Token.amount'),
+                    key: 'amount',
+                    slot: 'amount',
+                },
+            ],
         };
     },
     components: {
@@ -220,6 +236,9 @@ export default {
         clearInterval(this.$data.Interval);
     },
     methods: {
+        denomFormart(denom) {
+            return denom.substr(1).toUpperCase();
+        },
         transferClick(name) {
             console.log(name);
 
