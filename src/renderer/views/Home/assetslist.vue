@@ -74,12 +74,12 @@ export default {
           slot: 'action'
         },
         {
-          title: "质押金额",
+          title: this.$t('damindex.Pledgeamount'),
           key: 'pledge',
           slot: 'pledge' 
         },
         {
-          title: "质押奖励",
+          title: this.$t('damindex.Pledgereward'),
           key: 'pledgereward',
           slot: 'pledgereward' 
         }
