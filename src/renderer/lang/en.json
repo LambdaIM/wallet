@@ -970,7 +970,7 @@
        "AssetName":"Asset Name",
        "Exchangeratio":"Exchange ratio",
        "helptip1":"The exchange ratio refers to this market, how much currency is exchanged for 1TB of storage space",
-       "helptip2":"For example 3000lamb=1TBB",
+       "helptip2":"For example, the asset abc conversion ratio is 3000, 3000abc=1TBB",
        "helptip3":"Create market using",
        "action":{
            "need_marketName":"Market name cannot be empty",
@@ -1013,7 +1013,7 @@
        }
    },
    "Authorizedminingpop":{
-       "Authorization-MinerMining":"Authorization-Miner Mining",
+       "Authorization-MinerMining":"Authorization-user purchase space",
        "AssetName":"Asset Name",
        "Authorizedpublickey":"Authorized person's public key or exported sub account profile content",
        "action":{
@@ -1024,7 +1024,7 @@
     "Dissolvethemarket":{
         "Dissolutionmarket":"Dissolution of Asset market",
         "AssetName":"Asset Name",
-        "tip":"Without miners' pledge, the market can be dissolved"
+        "tip":"No miner pledge, no user pledge, the market can be dissolved"
       
 
     },
