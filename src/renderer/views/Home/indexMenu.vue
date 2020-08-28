@@ -7,7 +7,7 @@
                     <Col span="11">
                         <span v-if="$role('home.guide')" style="    font-size: 15px;">
                             {{ $t('testcoin.miningaward') }}：
-                            <!-- <span style="color: #67a7db;">{{ MinerRewards | Lambformat }}</span> -->
+
                             <span
                                 @click="Drawerstate = true"
                                 v-if="MinerRewards.length"
@@ -37,9 +37,6 @@
                                     {{ denomFormart(row.denom) }}
                                 </template>
                             </Table>
-                            <!-- <p v-for="item in MinerRewards" :key="item.denom">
-                                {{ bigNumTypeFormat(item.amount, item.denom) }}
-                            </p> -->
                         </Drawer>
                     </Col>
                     <Col span="13" style="    text-align: right;">
