@@ -218,7 +218,11 @@ export default {
             return this.$store.getters.getaddress;
         },
         pledgeAmount: function() {
-            return this.bigNumAdd(this.$data.validatorspledgeAmount, this.$data.partnerpledgeAmount);
+            var result = this.bigNumAdd(this.$data.validatorspledgeAmount, this.$data.partnerpledgeAmount);
+
+            this.$store.dispatch('setPledgetbb', result);
+
+            return result;
         },
     },
 };

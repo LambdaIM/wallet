@@ -97,7 +97,7 @@ export default {
 
             var bigvalue1 = new BigNumber(value);
             bigvalue1 = bigvalue1.div(1e6).toFixed(6);
-            console.log('bigvalue1');
+            // console.log('bigvalue1');
             return new BigNumber(bigvalue1).toNumber();
         };
         Vue.prototype.CalculationMypledge = function(shares, delegator_shares, tokens, notunit) {

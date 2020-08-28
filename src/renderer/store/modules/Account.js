@@ -2,13 +2,13 @@ const state = {
     address: '',
     blance: 0,
     loginState: false,
-
     DistributionReward: 0,
     balanceSto: 0,
     coinList: [],
     Delegation: 0,
     Distribution: 0,
     MinerReward: 0,
+    Pledgetbb: 0,
 };
 
 console.log('--------***************');
@@ -42,6 +42,9 @@ const mutations = {
     setMinerReward: function(state, value) {
         state.MinerReward = value;
     },
+    setPledgetbb: function(state, value) {
+        state.Pledgetbb = value;
+    },
 };
 
 const actions = {
@@ -74,6 +77,9 @@ const actions = {
     setMinerReward: function(context, value) {
         context.commit('setMinerReward', value);
     },
+    setPledgetbb: function(context, value) {
+        context.commit('setPledgetbb', value);
+    },
 };
 const getters = {
     getaddress: state => {
@@ -102,6 +108,9 @@ const getters = {
     },
     getMinerReward(state) {
         return state.MinerReward;
+    },
+    getPledgetbb(state) {
+        return state.Pledgetbb;
     },
 };
 

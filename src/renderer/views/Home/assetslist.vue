@@ -16,6 +16,26 @@
 
               <Button v-if="row.denom=='ulamb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
             </template>
+            <template slot-scope="{ row, index }" slot="pledge">
+              <span v-if="row.denom!='utbb'">
+                {{findpledgeAsset(row.denom)}}
+              </span>
+              <span v-else>
+                {{getPledgetbb}}
+              </span>
+            </template>
+            <template slot-scope="{ row, index }" slot="pledgereward">
+              <span v-if="row.denom!='utbb'">
+                {{findpledgereward(row.denom)}}
+              </span>
+              <span v-else>
+                {{DistributionReward| BlanceValue }}
+                 {{DistributionReward=='0'?'':'LAMB'}} 
+              </span>
+            </template>
+
+
+            
           </Table>
 
         </TabPane>
@@ -52,9 +72,21 @@ export default {
           title: this.$t('home.Token.operation'),
           key: 'action',
           slot: 'action'
+        },
+        {
+          title: this.$t('damindex.Pledgeamount'),
+          key: 'pledge',
+          slot: 'pledge' 
+        },
+        {
+          title: this.$t('damindex.Pledgereward'),
+          key: 'pledgereward',
+          slot: 'pledgereward' 
         }
       ],
-      allassert: []
+      allassert: [],
+      pledgerecords:[],
+      PledgeMinerReward:[]
     };
   },
   beforeDestroy() {
@@ -62,6 +94,9 @@ export default {
   },
   async mounted() {
     this.getAssertAll();
+    this.getpledgelist();
+    this.PledgeRewards();
+    
     eventhub.$on('TransactionSuccess', data => {
       console.log('TransactionSuccess');
       this.getAssertAll();
@@ -94,7 +129,62 @@ export default {
       } catch (ex) {
         console.log(ex);
       }
-    }
+    },
+    async getpledgelist() {
+            console.log('AuthorizedMarketlist');
+            try {
+                let res = await ipc.callMain('Authorizedpledgelist', {});
+                if (res.state) {
+                    this.$data.pledgelist = res.data.data || [];
+                }
+            } catch (ex) {
+                console.log(ex);
+            }
+      },
+      async PledgeRewards() {
+            console.log('getPledgeMinerRewards');
+            try {
+                let res = await ipc.callMain('damUserDelegatorRewards', {});
+                if (res.state && res.data) {
+                    var list = res.data.data || [];
+                    var result = '';
+                    this.$data.PledgeMinerReward = list;
+                }
+            } catch (ex) {
+                console.log(ex);
+            }
+        },
+      findpledgeAsset(name) {
+            var result = 0;
+            var _this = this;
+            if (this.$data.pledgelist == null || this.$data.pledgelist.error != undefined) {
+                return '...';
+            }
+            if(name=='utbb'){
+              return ;
+            }
+            this.$data.pledgelist.forEach(item => {
+                if (item.Asset == name) {
+                    // result += _this.bigNumTBB(item.Amount);
+                    result = this.bigNumAdd(result, item.Amount);
+                }
+            });
+            return this.bigNumTBB(result);
+        },
+      findpledgereward(name) {
+            var result = 0;
+            var _this = this;
+            if (this.$data.PledgeMinerReward == null || this.$data.PledgeMinerReward.error != undefined) {
+                return '...';
+            }
+            this.$data.PledgeMinerReward.forEach(item => {
+                if (item.denom == name) {
+                    // result += _this.bigNumTBB(item.Amount);
+                    result = this.bigNumAdd(result, item.amount);
+                }
+            });
+            return this.bigNumTBB(result);
+        }
 
 
   },
@@ -150,6 +240,12 @@ export default {
         else if (m.sort > n.sort) return 1;
         else return 0;
       });
+    },
+    DistributionReward: function() {
+            return this.$store.getters.getDistributionReward;
+    },
+    getPledgetbb:function(){
+      return this.$store.getters.getPledgetbb;
     }
   }
 
