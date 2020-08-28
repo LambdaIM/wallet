@@ -969,7 +969,7 @@
        "AssetName":"资产名称",
        "Exchangeratio":"兑换比例",
        "helptip1":"兑换比例指的是这个市场，多少币兑换1TB的存储空间",
-       "helptip2":"例如3000lamb=1TBB",
+       "helptip2":"例如 资产abc兑换比例为3000，3000abc=1TBB",
        "helptip3":"创建市场需要",
        "action":{
             "need_marketName":"市场名称不能为空",
@@ -1012,7 +1012,7 @@
        }
    },
    "Authorizedminingpop":{
-       "Authorization-MinerMining":"授权-矿工挖矿",
+       "Authorization-MinerMining":"授权-用户购买空间",
        "AssetName":"资产名称",
        "Authorizedpublickey":"授权人公钥或导出的子账户配置文件内容",
        "action":{
@@ -1023,7 +1023,7 @@
     "Dissolvethemarket":{
         "Dissolutionmarket":"解散资产市场",
         "AssetName":"资产名称",
-        "tip":"没有矿工质押，市场才可以解散"
+        "tip":"没有矿工质押，没有用户质押，市场才可以解散"
       
 
     },
