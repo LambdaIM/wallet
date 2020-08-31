@@ -1216,7 +1216,8 @@
       "Pledge1":"When miners mine online, pledge to generate income",
       "Pledge2":"When the miner maintains or goes offline, the pledge does not generate income",
       "Pledgeamount":"Pledge amount",
-      "Pledgereward":"Pledge reward"
+      "Pledgereward":"Pledge reward",
+      "orderlisttip":"Contains both the user's buy order and the miner's sell order"
   }
 
 

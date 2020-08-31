@@ -2,6 +2,7 @@
     <div>
         <div class="customer-container">
             <div class="tableContainer">
+                <Alert type="warning">{{ $t('damindex.orderlisttip') }}</Alert>
                 <Table :columns="matchordercolumns" :data="matchorderdata">
                     <template slot-scope="{ row, index }" slot="operation">
                         <Button @click="pageto(row)" type="primary" size="small">
