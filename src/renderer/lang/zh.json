@@ -1217,7 +1217,8 @@
         "Pledge1":"矿工在线挖矿时，质押产生收益",
         "Pledge2":"矿工维护或下线时，质押不产生收益",
         "Pledgeamount":"质押金额",
-        "Pledgereward":"质押奖励"
+        "Pledgereward":"质押奖励",
+        "orderlisttip":"既包含用户的买单，也包含矿工的卖单"
     }
 
 }

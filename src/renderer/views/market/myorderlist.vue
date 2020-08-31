@@ -1,7 +1,7 @@
 <template>
     <div class="customer-container">
         <div class="tableContainer">
-            <!-- <div>{{$t('marketpage.last100data')}}</div> -->
+            <Alert type="warning">{{ $t('damindex.orderlisttip') }}</Alert>
             <Table :loading="loading" :columns="UserOrderscolumns" :data="UserOrderslist">
                 <template slot-scope="{ row, index }" slot="action">
                     <Button @click="orderinfo(row)" type="primary" size="small">
