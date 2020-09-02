@@ -1176,7 +1176,7 @@
     "assetnewtxt":{
         "MiningRatio":"矿工奖励占比",
         "MiningRatiodemo":"例如0.5",
-        "MiningRatiohelp":"例如值0.4，矿工存储挖矿奖励为占比为40%，用户质押挖矿的奖励占比为60%",
+        "MiningRatiohelp":"例如值0.4，矿工存储挖矿奖励占比为40%，用户质押挖矿的奖励占比为60%",
         "need_MiningRatio":"矿工挖矿占比大于0小于等于1",
         "lambdaaddress":"用户lambda地址",
         "Addauthorization":"添加授权",
