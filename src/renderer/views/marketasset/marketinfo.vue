@@ -106,7 +106,7 @@ export default {
     .tableContainer {
         width: 94%;
         margin: 0 auto;
-        margin-top: 40px;
+        margin-top: 10px;
     }
 }
 </style>

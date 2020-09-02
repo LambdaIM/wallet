@@ -221,9 +221,10 @@ export default {
             this.$refs.SendModelDialog.open(row.amount || '0', row.asset.denom);
         },
         openLinkassert(name) {
-            var explorer = DAEMON_CONFIG.explore();
-            let url = `${explorer}#/assetDetail/${name}`;
-            shell.openExternal(url);
+            // var explorer = DAEMON_CONFIG.explore();
+            // let url = `${explorer}#/assetDetail/${name}`;
+            // shell.openExternal(url);
+            this.$router.push(`/marketindexmenu/assetinfo/${name}`);
         },
         openLinkmarket(name) {
             var explorer = DAEMON_CONFIG.explore();

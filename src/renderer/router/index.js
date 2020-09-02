@@ -239,6 +239,11 @@ var walletRouter = new Router({
                     name: 'marketinfo',
                     component: () => import('@/views/marketasset/marketinfo.vue'),
                 },
+                {
+                    path: 'assetinfo/:assetName',
+                    name: 'marketinfo',
+                    component: () => import('@/views/marketasset/assetinfo.vue'),
+                },
             ],
         },
         {

@@ -130,6 +130,13 @@ class AssetManager {
         return { data: result };
     }
 
+    async damassetinfo(name) {
+        console.log('damassetinfo');
+        var result = await this.CosmosAPI().get.damassetinfo(name);
+
+        return { data: result };
+    }
+
     async damAssetMintSimulate({
         assetName,
         assetiniti,
