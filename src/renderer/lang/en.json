@@ -1175,7 +1175,7 @@
   "assetnewtxt":{
       "MiningRatio":"Miners reward ratio",
       "MiningRatiodemo":"For example, 0.5",
-      "MiningRatiohelp":"For example, if the value is 0.4, 40% of the mining rewards are stored by miners, and 60% of the mining rewards are pledged by users",
+      "MiningRatiohelp":"For example, if the value is 0.4, the miner's storage mining reward is 40%, and the user pledged mining reward is 60%",
       "need_MiningRatio":"The mining proportion of miners is greater than 0 and less than or equal to 1",
       "lambdaaddress":"User lambda address",
       "Addauthorization":"Add authorization",
