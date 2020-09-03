@@ -29,19 +29,60 @@
                 <p>
                     {{ $t('CreateassetsPop.Issuingtype') }}
                     <RadioGroup v-model="MintType">
-                        <Radio label="1">{{ $t('CreateassetsPop.Non-issueable') }}</Radio>
-                        <Radio label="2">{{ $t('CreateassetsPop.One-timeissuance') }}</Radio>
                         <Radio label="3">{{ $t('CreateassetsPop.Additionalmining') }}</Radio>
+                        <Radio label="1">{{ $t('CreateassetsPop.Non-issueable') }}</Radio>
+                        <!-- <Radio label="2">{{ $t('CreateassetsPop.One-timeissuance') }}</Radio> -->
+                        
                     </RadioGroup>
                 </p>
                 <br />
                 <div v-if="MintType == '3'">
-                    <br />
+                     <Tabs type="card">
+                        <TabPane label="募资">
+                                
                     <p>
                         <Input v-model="total_supply">
                             <span slot="prepend">{{ $t('CreateassetsPop.Totalsupply') }}</span>
                         </Input>
                     </p>
+                    <br />
+                            <p>
+                                募资资产&nbsp; &nbsp; 
+                                    <RadioGroup v-model="fund_asset">
+                                        <Radio label="ulamb">
+                                            
+                                            <span>LAMB</span>
+                                        </Radio>
+                                        <Radio label="utbb">
+                                            
+                                            <span>TBB</span>
+                                        </Radio>
+                                        
+                                    </RadioGroup>
+                            </p>
+                            <br/>
+                            <p>
+                                <Input v-model="fund_amount">
+                                    <span slot="prepend">募资数额</span>
+                                </Input>
+                            </p>
+                            <br/>
+                            <p>
+                                <Input v-model="fund_period">
+                                    <span slot="prepend">募资周期</span>
+                                    <span slot="append">天</span>
+                                </Input>
+                            </p>
+                            <br/>
+                            <p>
+                                <Input v-model="fund_stake">
+                                    <span slot="prepend">募资返还份额</span>
+                                    <span slot="append">{{name}}</span>
+                                </Input>
+                            </p>
+                        </TabPane>
+                        <TabPane label="挖矿">
+                        
                     <br />
                     <p>
                         <Input v-model="inflation">
@@ -85,6 +126,10 @@
                         </Input>
                         <br />
                     </p>
+                        </TabPane>
+                        
+                    </Tabs>
+                    
                     
                 </div>
 
@@ -136,7 +181,7 @@ export default {
             confirmModal: false,
             name: '',
             asset: '',
-            MintType: '1',
+            MintType: '3',
             inflation: '',
             inflation_period: '',
             parameter: {},
@@ -162,7 +207,11 @@ export default {
                     key: 'end_height',
                 },
             ],
-            MiningRatio:''
+            MiningRatio:'',
+            fund_asset:'ulamb',
+            fund_amount:'',
+            fund_period:'',
+            fund_stake:''
         };
     },
     components: {
@@ -197,6 +246,11 @@ export default {
             let remarks = this.trim(this.$data.remarks || '');
             let MiningRatio = parseFloat(this.$data.MiningRatio);
 
+            let fund_amount = parseInt(this.$data.fund_amount);
+            let fund_period = parseInt(this.$data.fund_period);
+            let fund_stake = parseInt(this.$data.fund_stake);
+            let fund_asset = this.$data.fund_asset;
+
             if (name == '') {
                 this.$Notice.warning({
                     title: this.$t('CreateassetsPop.action.need_AssetName'),
@@ -211,6 +265,32 @@ export default {
                 return;
             }
             if (MintType == '3') {
+                if (isNaN(fund_amount) || fund_amount <= 0) {
+                    this.$Notice.warning({
+                        title: '募资数额需要大于0，且为整数',
+                    });
+                    return;
+                }
+                if (isNaN(fund_period) || fund_period <= 0) {
+                    this.$Notice.warning({
+                        title: '募资周期需要大于0，且为整数',
+                    });
+                    return;
+                }
+                if (isNaN(fund_stake) || fund_stake <= 0) {
+                    this.$Notice.warning({
+                        title: '募资返还份额需要大于0，且为整数',
+                    });
+                    return;
+                }
+                if(fund_stake>total_supply){
+                    this.$Notice.warning({
+                        title: '募资返还份不能大于发行总量',
+                    });
+                    return;
+
+                }
+
                 if (isNaN(inflation) || inflation <= 0) {
                     this.$Notice.warning({
                         title: this.$t('CreateassetsPop.action.need_inflation'),
@@ -298,7 +378,11 @@ export default {
                     genesis_height,
                     adjust_period,
                     remarks,
-                    MiningRatio
+                    MiningRatio,
+                    fund_asset,
+                    fund_amount,
+                    fund_period,
+                    fund_stake
                 });
             } else {
                 this.switchtoPreview({
@@ -331,7 +415,11 @@ export default {
                     genesis_height: String(objpra.genesis_height || 0),
                     adjust_period: String(objpra.adjust_period || 0),
                     remarks: objpra.remarks || objpra.name,
-                    MiningRatio:objpra.MiningRatio
+                    MiningRatio:objpra.MiningRatio,
+                    fund_asset:objpra.fund_asset,
+                    fund_amount:this.toBigNumStr(objpra.fund_amount),
+                    fund_period:objpra.fund_period,
+                    fund_stake:this.toBigNumStr(objpra.fund_stake)
                 });
                 // console.log(res);
                 if (res.state) {

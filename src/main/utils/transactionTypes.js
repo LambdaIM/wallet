@@ -33,6 +33,7 @@ const transactionTypes = {
     DamMinerWithDrawCount: 'MsgDamMinerWithDrawCount',
     DigitalAssetDelegate: 'MsgDigitalAssetDelegate',
     DigitalAssetUndelegate: 'MsgDigitalAssetUndelegate',
+    AssetInvest: 'MsgAssetInvest',
 };
 
 export default transactionTypes;

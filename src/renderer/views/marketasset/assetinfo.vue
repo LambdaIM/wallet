@@ -38,10 +38,15 @@
                                     />
                                     <Cell title="我的参与额度" extra="10lamb" />
                                 </CellGroup>
+                                <span v-else>
+                                    loading...
+                                </span>
                             </Card>
                         </Col>
                         <Col span="12">
-                            <Input v-model="value11">
+                         <div v-if="assetState=='prepare'">
+                            <Input v-model="amount">
+                                <span slot="prepend">金额</span>
                                 <span slot="append">LAMB</span>
                             </Input>
                             <br />
@@ -49,15 +54,43 @@
                                 预计挖XXX 1000个
                             </p>
                             <br />
-                            <Button type="success" long>参与挖矿</Button>
+                            <div>
+                                <Button @click="Preparedata" type="success" long>参与预挖</Button>
+                            </div>
+                            <br />
                             <p>
-                                <br />
+                                
                                 在浏览器中查看参与挖矿列
                             </p>
+                            <br />
                             <p>
-                                <br />
-                                规则说明
+                                <ul class="help">
+                                    <li>规则说明
+                                    </li>
+                                    <li>1.*******
+                                    </li>
+                                    <li>2.*******
+                                    </li>
+                                </ul>
+                                
+
                             </p>
+                         </div>
+                         <div v-else>
+                             <div>
+                               <Button type="primary">开启矿工挖矿</Button>
+                             </div>
+                             <br/>
+                               <ul class="help">
+                                    <li>规则说明
+                                    </li>
+                                    <li>1.资产没有关联市场，矿工将无法挖矿，如果需要矿工挖矿，需要创建市场
+                                    </li>
+                                    <li>2.*******
+                                    </li>
+                                </ul>
+
+                         </div>
                         </Col>
                     </Row>
                 </div>
@@ -69,6 +102,7 @@
             <br />
             <br />
         </div>
+        <ConfirmModal  ref="ConfirmModal" />
     </div>
 </template>
 <script>
@@ -77,11 +111,15 @@ import _ from 'underscore';
 import eventhub from '../../common/js/event.js';
 import { DAEMON_CONFIG } from '../../../config.js';
 
+import ConfirmModal from '../Dialog/confirmModal.vue';
+
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 export default {
-    components: {},
+    components: {
+        ConfirmModal
+    },
     mounted() {
         console.log('资产');
         this.$data.assetName = this.$route.params.assetName;
@@ -91,11 +129,53 @@ export default {
         return {
             assetName: '',
             assetinfo: null,
+            amount:'',
+            assetState:"prepare" // prepare
         };
     },
     methods: {
         denomShort: function(denom) {
             return denom.substr(1).toUpperCase();
+        },
+       async Preparedata(){
+            var amount;
+            var assetName =this.$data.assetName;
+
+            try{
+                amount = parseFloat(this.$data.amount);
+            }
+            catch(ex){
+
+            }
+            if(isNaN(amount)){
+                this.$Notice.warning({
+                    title: '金额需要为数字'
+                    });
+                return ;
+            }
+            /// 
+            this.$data.transactiondata = null;
+            try {
+                let res = await ipc.callMain('damAssetInvest', {
+                    AssetName:assetName, 
+                    token:this.toBigNumStr(amount),
+                    tokendenom:'ulamb'
+                });
+                // console.log(res);
+                if (res.state) {
+                    // this.sendcancel();
+                    this.$refs.ConfirmModal.open('damAssetInvest', res.data);
+                }
+
+            } catch (ex) {
+                    this.$Notice.warning({
+                        title: 'error',
+                        desc: ex.errormsg,
+                    });
+                    console.log(ex);
+                }
+            /// 
+
         },
         async getassetinfo() {
             let res = await ipc.callMain('damassetinfo', {
@@ -119,5 +199,13 @@ export default {
         margin: 0 auto;
         margin-top: 10px;
     }
+}
+
+.help{
+    list-style-type:none;
+    li{
+        margin-bottom: 10px;
+    }
+
 }
 </style>

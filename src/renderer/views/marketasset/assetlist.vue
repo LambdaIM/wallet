@@ -9,6 +9,9 @@
                 </div>
                 <br />
                 <Table :columns="columnsToken" :data="coinList">
+                    <template slot-scope="{ row, index }" slot="name">
+                        {{ denomFormart(row.name) }}
+                    </template>
                     <template slot-scope="{ row, index }" slot="amount">
                         <!-- {{row}} -->
 
@@ -70,6 +73,10 @@
                             {{ $t('home.Token.Exchange') }}
                         </Button>
 
+                        <Button class="smallbtn" :to="`/marketindexmenu/assetinfo/${row.denom}`" size="small">
+                            预挖矿
+                        </Button>
+
                         <!--
                <Dropdown v-if="row.denom !='ulamb'&&row.denom !='utbb'  "   class="smallbtn2">
                     <a  href="javascript:void(0)">
@@ -116,6 +123,7 @@ export default {
                 {
                     title: this.$t('assetpage.assetlist.fullname'),
                     key: 'name',
+                    slot: 'name',
                 },
                 {
                     title: this.$t('home.Token.name'),
