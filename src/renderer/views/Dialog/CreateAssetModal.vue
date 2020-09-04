@@ -38,7 +38,7 @@
                 <br />
                 <div v-if="MintType == '3'">
                      <Tabs type="card">
-                        <TabPane label="募资">
+                        <TabPane label="预挖矿">
                                 
                     <p>
                         <Input v-model="total_supply">
@@ -47,7 +47,7 @@
                     </p>
                     <br />
                             <p>
-                                募资资产&nbsp; &nbsp; 
+                                预挖矿资产&nbsp; &nbsp; 
                                     <RadioGroup v-model="fund_asset">
                                         <Radio label="ulamb">
                                             
@@ -63,20 +63,20 @@
                             <br/>
                             <p>
                                 <Input v-model="fund_amount">
-                                    <span slot="prepend">募资数额</span>
+                                    <span slot="prepend">预挖矿额度</span>
                                 </Input>
                             </p>
                             <br/>
                             <p>
                                 <Input v-model="fund_period">
-                                    <span slot="prepend">募资周期</span>
+                                    <span slot="prepend">预挖矿周期</span>
                                     <span slot="append">天</span>
                                 </Input>
                             </p>
                             <br/>
                             <p>
                                 <Input v-model="fund_stake">
-                                    <span slot="prepend">募资返还份额</span>
+                                    <span slot="prepend">预挖矿返还份额</span>
                                     <span slot="append">{{name}}</span>
                                 </Input>
                             </p>

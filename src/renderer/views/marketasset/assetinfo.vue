@@ -14,7 +14,7 @@
                         <Col span="12">
                             <Card title="资产信息" icon="logo-usd" :padding="0" shadow style="width: 300px;">
                                 <CellGroup v-if="assetinfo">
-                                    <Cell title="资产描述" :extra="assetinfo.name" />
+                                    <Cell title="资产全称" :extra="assetinfo.name" />
                                     <Cell title="状态" to="/components/badge">
                                         <Badge count="预挖矿" slot="extra" />
                                     </Cell>
@@ -60,7 +60,7 @@
                             <br />
                             <p>
                                 
-                                在浏览器中查看参与挖矿列
+                                <a @click="openBrowser">在浏览器中查看参与挖矿列</a>
                             </p>
                             <br />
                             <p>
@@ -69,7 +69,11 @@
                                     </li>
                                     <li>1.*******
                                     </li>
-                                    <li>2.*******
+                                    <li>2.预挖矿获取的资产额度，和用于预挖矿的资产占总预挖矿资产占比，成正比
+                                    </li>
+                                    <li>3.预挖结束后，发放资产
+                                    </li>
+                                    <li>4.预挖矿期间，资产不可交易
                                     </li>
                                 </ul>
                                 
@@ -134,6 +138,13 @@ export default {
         };
     },
     methods: {
+        openBrowser(){
+            var explorer = DAEMON_CONFIG.explore();
+            var name = this.$data.assetName;
+            let url = `${explorer}#/assetDetail/${name}`;
+            shell.openExternal(url);
+
+        },
         denomShort: function(denom) {
             return denom.substr(1).toUpperCase();
         },

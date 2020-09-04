@@ -8,7 +8,7 @@
                     </Button>
                 </div>
                 <br />
-                <Table :columns="columnsToken" :data="coinList">
+                <Table :loading="loading" :columns="columnsToken" :data="coinList">
                     <template slot-scope="{ row, index }" slot="name">
                         {{ denomFormart(row.name) }}
                     </template>
@@ -73,7 +73,7 @@
                             {{ $t('home.Token.Exchange') }}
                         </Button>
 
-                        <Button class="smallbtn" :to="`/marketindexmenu/assetinfo/${row.denom}`" size="small">
+                        <Button class="smallbtn" :to="`/marketindexmenu/assetinfo/${row.asset.denom}`" size="small">
                             预挖矿
                         </Button>
 
@@ -119,6 +119,7 @@ const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
     data() {
         return {
+            loading: true,
             columnsToken: [
                 {
                     title: this.$t('assetpage.assetlist.fullname'),
@@ -214,6 +215,7 @@ export default {
                 let res = await ipc.callMain('assetAll', {});
                 if (res.state) {
                     this.$data.allassert = res.data || [];
+                    this.$data.loading = false;
                 }
             } catch (ex) {
                 console.log(ex);

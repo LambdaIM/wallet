@@ -1,7 +1,7 @@
 <template>
     <div class="customer-container">
         <div class="tableContainer">
-            <Table :columns="columnsToken" :data="coinList">
+            <Table :loading="loading" :columns="columnsToken" :data="coinList">
                 <template slot-scope="{ row, index }" slot="amount">
                     {{ bigNumTypeFormat(row.amount, row.denom) }}
                 </template>
@@ -53,6 +53,7 @@ const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
     data() {
         return {
+            loading: true,
             columnsToken: [
                 {
                     title: this.$t('home.Token.name'),
@@ -130,6 +131,7 @@ export default {
             try {
                 let res = await ipc.callMain('assetAll', {});
                 if (res.state) {
+                    this.$data.loading = false;
                     this.$data.allassert = res.data || [];
                 }
             } catch (ex) {
