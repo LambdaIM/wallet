@@ -267,25 +267,25 @@ export default {
             if (MintType == '3') {
                 if (isNaN(fund_amount) || fund_amount <= 0) {
                     this.$Notice.warning({
-                        title: '募资数额需要大于0，且为整数',
+                        title: '预挖矿额度需要大于0，且为整数',
                     });
                     return;
                 }
                 if (isNaN(fund_period) || fund_period <= 0) {
                     this.$Notice.warning({
-                        title: '募资周期需要大于0，且为整数',
+                        title: '预挖矿周期需要大于0，且为整数',
                     });
                     return;
                 }
                 if (isNaN(fund_stake) || fund_stake <= 0) {
                     this.$Notice.warning({
-                        title: '募资返还份额需要大于0，且为整数',
+                        title: '预挖矿返还份额需要大于0，且为整数',
                     });
                     return;
                 }
                 if(fund_stake>total_supply){
                     this.$Notice.warning({
-                        title: '募资返还份不能大于发行总量',
+                        title: '预挖矿返还额度不能大于发行总量',
                     });
                     return;
 
