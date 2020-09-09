@@ -237,6 +237,48 @@ export default function() {
             throw resultView(null, false, ex);
         }
     });
+    eipc.answerRenderer('sontransfer', async query => {
+        var { to, amount, gas, denom, memo, from } = query;
+        // to 需要判断 账号的格式是否合理呵护规则
+        // amount 需要判断  转账金额大小 数据类型
+        // gas 目前默认值位1  转账金额大小 数据类型
+        if (to == undefined) {
+            throw resultView(null, false, errorList.need_to_address);
+        }
+
+        if (from == undefined) {
+            throw resultView(null, false, 'need from');
+        }
+        // 需要寻找新的考验地址格式
+        // if(isAddress(to)==false){
+        //     throw resultView(null,false,'Incorrect address format')
+        // }
+
+        if (amount == undefined) {
+            throw resultView(null, false, errorList.need_amount);
+        }
+        if (isNaN(parseInt(amount))) {
+            throw resultView(null, false, errorList.Incorrect_amount_format);
+        }
+
+        if (gas == undefined) {
+            throw resultView(null, false, errorList.need_to_gas);
+        }
+        if (denom == undefined) {
+            denom = 'lamb';
+        }
+
+        if (isNaN(parseInt(gas))) {
+            throw resultView(null, false, errorList.Incorrect_gas_format);
+        }
+
+        try {
+            var data = await WM.sonTransfer(to, amount, gas, denom, memo, from);
+            return resultView(data, true);
+        } catch (ex) {
+            throw resultView(null, false, ex);
+        }
+    });
 
     eipc.answerRenderer('transferDelegation', async query => {
         var { to, amount, gas, isdege, validatorType } = query;

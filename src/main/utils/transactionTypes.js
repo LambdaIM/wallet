@@ -1,5 +1,6 @@
 const transactionTypes = {
     SEND: `MsgSend`,
+    // SONSEND:`MsgSonSend`,
     DELEGATE: `MsgDelegate`,
     UNDELEGATE: `MsgUndelegate`,
     REDELEGATE: `MsgBeginRedelegate`,

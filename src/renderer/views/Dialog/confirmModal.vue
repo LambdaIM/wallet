@@ -2,6 +2,23 @@
     <Modal v-model="confirmModal" :styles="{ top: '200px' }">
         <div class="modal-header" slot="header">
             <Form @keydown.native.enter.prevent="confirm">
+                <div v-if="txtype == 'sonsend'">
+                    <h2>{{ $t('home.Modal1.Transfer') }}</h2>
+                    <Row class-name="item">
+                        <Col span="4" class-name="key ">{{ $t('home.Modal1.From') }}:</Col>
+                        <Col span="20" class-name="value address">{{ transactiondata.fromAddress }}</Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">{{ $t('home.Modal1.To') }}:</Col>
+                        <Col span="20" class-name="value address Highlight">{{ transactiondata.toAddress }}</Col>
+                    </Row>
+                    <Row class-name="item" v-if="transactiondata.amounts">
+                        <Col span="4" class-name="key">{{ $t('home.Modal1.Amount') }}:</Col>
+                        <Col span="20" class-name="value Highlight">
+                            {{ transactiondata.amounts[0].amount | BlanceValue }} {{ denomShow }}
+                        </Col>
+                    </Row>
+                </div>
                 <div v-if="txtype == 'send'">
                     <h2>{{ $t('home.Modal1.Transfer') }}</h2>
                     <Row class-name="item">
