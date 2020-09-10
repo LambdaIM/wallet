@@ -2,7 +2,7 @@
     <div>
         <div class="customer-container">
             <div class="tableContainer">
-                <Breadcrumb>
+                <Breadcrumb v-if="assetinfo">
                     <BreadcrumbItem to="/marketindexmenu">
                         资产列表
                     </BreadcrumbItem>
@@ -16,10 +16,13 @@
                                 <CellGroup v-if="assetinfo">
                                     <Cell title="资产全称" :extra="assetinfo.name" />
                                     <Cell title="状态" to="/components/badge">
-                                        <Badge count="预挖矿" slot="extra" />
+                                        <Badge v-if="assetinfo.status==0" count="预挖矿" slot="extra" />
+                                        <Badge v-if="assetinfo.status==1" count="预挖矿完成" slot="extra" />
+                                        <Badge v-if="assetinfo.status==2" count="授权增发" slot="extra" />
+                                        <Badge v-if="assetinfo.status==3" count="已增发完成" slot="extra" />
                                     </Cell>
-                                    <Cell title="结束时间" extra="两周" />
-                                    <Cell title="预挖数量" extra="100" />
+                                    <Cell title="结束时间" :extra="assetfund.end_time|formatDate" />
+                                    <Cell title="预挖数量" :extra="bigNumTypeFormat(assetfund.asset.amount, assetfund.asset.denom)" />
 
                                     <Cell
                                         title="总发行量"
@@ -31,12 +34,23 @@
                                         "
                                     />
                                     <Cell
+                                       v-if="assetfund"
                                         title="总参与额度"
                                         :extra="
-                                            bigNumTypeFormat(assetinfo.curr_supply.amount, assetinfo.curr_supply.denom)
+                                            bigNumTypeFormat(assetfund.fund_asset.amount, assetfund.fund_asset.denom)
                                         "
                                     />
-                                    <Cell title="我的参与额度" extra="10lamb" />
+                                    <Cell
+                                        v-if="assetfund"
+                                        title="已完成参与额度"
+                                        :extra="percentage(assetfund.amount/assetfund.fund_asset.amount)"
+                                    />
+                                    <Cell v-if="userfund" title="我的参与额度" 
+                                         :extra="bigNumTypeFormat(userfund.invest.amount, userfund.invest.denom)"
+                                         />
+                                    <Cell v-if="userfund" title="预计挖矿" 
+                                         :extra="bigNumTypeFormat(userfund.stake.amount, userfund.stake.denom)"
+                                         />
                                 </CellGroup>
                                 <span v-else>
                                     loading...
@@ -47,12 +61,9 @@
                          <div v-if="assetState=='prepare'">
                             <Input v-model="amount">
                                 <span slot="prepend">金额</span>
-                                <span slot="append">LAMB</span>
+                                <span slot="append">{{denomShort(assetfund.fund_asset.denom)}}</span>
                             </Input>
-                            <br />
-                            <p>
-                                预计挖XXX 1000个
-                            </p>
+                            
                             <br />
                             <div>
                                 <Button @click="Preparedata" type="success" long>参与预挖</Button>
@@ -121,6 +132,15 @@ const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 export default {
+    computed: {
+        assetState(){
+            if(this.$data.assetinfo.status==0){
+                return "prepare";
+            }else{
+                return "other";
+            }
+        }
+    },
     components: {
         ConfirmModal
     },
@@ -128,16 +148,30 @@ export default {
         console.log('资产');
         this.$data.assetName = this.$route.params.assetName;
         this.getassetinfo();
+        eventhub.$on('TransactionSuccess', data => {
+            console.log('TransactionSuccess');
+            this.getassetinfo();
+        });
     },
     data() {
         return {
             assetName: '',
             assetinfo: null,
             amount:'',
-            assetState:"prepare" // prepare
+            
+            assetfund:null,
+            userfund:null
         };
     },
     methods: {
+        percentage(data){
+           var num= parseFloat(data);
+           if(isNaN(num)){
+               return '--';
+           }
+           return (num*100).toFixed(3)+"%";
+
+        },
         openBrowser(){
             var explorer = DAEMON_CONFIG.explore();
             var name = this.$data.assetName;
@@ -170,9 +204,9 @@ export default {
                 let res = await ipc.callMain('damAssetInvest', {
                     AssetName:assetName, 
                     token:this.toBigNumStr(amount),
-                    tokendenom:'ulamb'
+                    tokendenom:this.$data.assetfund.fund_asset.denom
                 });
-                // console.log(res);
+                console.log(res);
                 if (res.state) {
                     // this.sendcancel();
                     this.$refs.ConfirmModal.open('damAssetInvest', res.data);
@@ -195,7 +229,28 @@ export default {
             if (res.state && res.data.data.error == undefined) {
                 this.$data.assetinfo = res.data.data;
             }
+            this.damassetfund();
+            this.damUserassetfund();
         },
+       async damassetfund() {
+            let res = await ipc.callMain('damassetfund', {
+                name: this.$data.assetName,
+            });
+            if (res.state && res.data.data.error == undefined) {
+                this.$data.assetfund = res.data.data;
+            }
+        },
+       async damUserassetfund() {
+            let res = await ipc.callMain('damUserassetfund', {
+                name: this.$data.assetName,
+            });
+            if (res.state && res.data.data.error == undefined) {
+                this.$data.userfund = res.data.data;
+            }
+        }
+        
+
+        
     },
 };
 </script>

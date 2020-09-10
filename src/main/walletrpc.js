@@ -968,7 +968,7 @@ export default function() {
         }
 
         if (token == undefined) {
-            throw resultView(null, false, errorList.need_AssetName);
+            throw resultView(null, false, errorList.need_token);
         }
 
         try {

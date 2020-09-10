@@ -73,7 +73,12 @@
                             {{ $t('home.Token.Exchange') }}
                         </Button>
 
-                        <Button class="smallbtn" :to="`/marketindexmenu/assetinfo/${row.asset.denom}`" size="small">
+                        <Button
+                            v-if="checkstatus(row)"
+                            class="smallbtn"
+                            :to="`/marketindexmenu/assetinfo/${row.asset.denom}`"
+                            size="small"
+                        >
                             预挖矿
                         </Button>
 
@@ -207,6 +212,13 @@ export default {
                 return this.$t('assetpage.One-timeadditionalissuance');
             } else if (item == 3) {
                 return this.$t('assetpage.Additionalmining');
+            }
+        },
+        checkstatus(row) {
+            if (row.mint_type == '3' && row.status == 0) {
+                return true;
+            } else {
+                return false;
             }
         },
         async getAssertAll() {

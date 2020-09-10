@@ -137,6 +137,26 @@ class AssetManager {
         return { data: result };
     }
 
+    // damassetfund
+    async damassetfund(name) {
+        console.log('damassetfund');
+
+        var result = await this.CosmosAPI().get.damassetfund(name);
+
+        return { data: result };
+    }
+
+    async damUserassetfund(name) {
+        console.log('damassetfund');
+        if (this.defaultAddress == null) {
+            throwErrorCode(errorList.need_address);
+        }
+
+        var result = await this.CosmosAPI().get.damUserassetfund(name, this.defaultAddress);
+
+        return { data: result };
+    }
+
     async damAssetMintSimulate({
         assetName,
         assetiniti,

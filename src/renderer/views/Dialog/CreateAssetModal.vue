@@ -418,7 +418,7 @@ export default {
                     MiningRatio:objpra.MiningRatio,
                     fund_asset:objpra.fund_asset,
                     fund_amount:this.toBigNumStr(objpra.fund_amount),
-                    fund_period:objpra.fund_period,
+                    fund_period:String(objpra.fund_period),
                     fund_stake:this.toBigNumStr(objpra.fund_stake)
                 });
                 // console.log(res);
