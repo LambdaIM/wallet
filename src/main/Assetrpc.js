@@ -213,4 +213,39 @@ export default function() {
             return { data: error, state: false };
         }
     });
+
+    eipc.answerRenderer('damassetinfo', async query => {
+        try {
+            var { name } = query;
+            var M = new AssetManager();
+            var result = await M.damassetinfo(name);
+            return { data: result, state: true };
+        } catch (error) {
+            console.log(error);
+            return { data: error, state: false };
+        }
+    });
+    eipc.answerRenderer('damassetfund', async query => {
+        try {
+            var { name } = query;
+            var M = new AssetManager();
+            var result = await M.damassetfund(name);
+            return { data: result, state: true };
+        } catch (error) {
+            console.log(error);
+            return { data: error, state: false };
+        }
+    });
+
+    eipc.answerRenderer('damUserassetfund', async query => {
+        try {
+            var { name } = query;
+            var M = new AssetManager();
+            var result = await M.damUserassetfund(name);
+            return { data: result, state: true };
+        } catch (error) {
+            console.log(error);
+            return { data: error, state: false };
+        }
+    });
 }

@@ -8,7 +8,10 @@
                     </Button>
                 </div>
                 <br />
-                <Table :columns="columnsToken" :data="coinList">
+                <Table :loading="loading" :columns="columnsToken" :data="coinList">
+                    <template slot-scope="{ row, index }" slot="name">
+                        {{ denomFormart(row.name) }}
+                    </template>
                     <template slot-scope="{ row, index }" slot="amount">
                         <!-- {{row}} -->
 
@@ -70,6 +73,15 @@
                             {{ $t('home.Token.Exchange') }}
                         </Button>
 
+                        <Button
+                            v-if="checkstatus(row)"
+                            class="smallbtn"
+                            :to="`/marketindexmenu/assetinfo/${row.asset.denom}`"
+                            size="small"
+                        >
+                            预挖矿
+                        </Button>
+
                         <!--
                <Dropdown v-if="row.denom !='ulamb'&&row.denom !='utbb'  "   class="smallbtn2">
                     <a  href="javascript:void(0)">
@@ -112,10 +124,12 @@ const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
     data() {
         return {
+            loading: true,
             columnsToken: [
                 {
                     title: this.$t('assetpage.assetlist.fullname'),
                     key: 'name',
+                    slot: 'name',
                 },
                 {
                     title: this.$t('home.Token.name'),
@@ -200,12 +214,20 @@ export default {
                 return this.$t('assetpage.Additionalmining');
             }
         },
+        checkstatus(row) {
+            if (row.mint_type == '3' && row.status == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         async getAssertAll() {
             // assetAll
             try {
                 let res = await ipc.callMain('assetAll', {});
                 if (res.state) {
                     this.$data.allassert = res.data || [];
+                    this.$data.loading = false;
                 }
             } catch (ex) {
                 console.log(ex);
@@ -221,9 +243,10 @@ export default {
             this.$refs.SendModelDialog.open(row.amount || '0', row.asset.denom);
         },
         openLinkassert(name) {
-            var explorer = DAEMON_CONFIG.explore();
-            let url = `${explorer}#/assetDetail/${name}`;
-            shell.openExternal(url);
+            // var explorer = DAEMON_CONFIG.explore();
+            // let url = `${explorer}#/assetDetail/${name}`;
+            // shell.openExternal(url);
+            this.$router.push(`/marketindexmenu/assetinfo/${name}`);
         },
         openLinkmarket(name) {
             var explorer = DAEMON_CONFIG.explore();

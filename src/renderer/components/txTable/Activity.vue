@@ -50,6 +50,10 @@
                 <span v-if="txItem.action == 'MsgAuthorizeUser'">
                     {{ txItem.to }}
                 </span>
+                <span v-if="txItem.action == 'MsgAssetInvest'">
+                    {{ txItem.to | assertdenomformat }}
+                    <span class="value">{{ txItem.amount }}</span>
+                </span>
             </span>
 
             <AddressLink v-if="isAssettx(txItem) == false" :addressLength="addressLength" :to="txItem.to">
@@ -153,7 +157,8 @@ export default {
                 txItem.action !== 'MsgDamOrderRenewal' &&
                 txItem.action !== 'MsgDamMinerWithDrawCount' &&
                 txItem.action !== 'MsgDamMinerWithDraw' &&
-                txItem.action !== 'MsgAuthorizeUser'
+                txItem.action !== 'MsgAuthorizeUser' &&
+                txItem.action !== 'MsgAssetInvest'
             );
         },
         isAssettx(txItem) {
@@ -170,6 +175,7 @@ export default {
                 'MsgDamMinerWithDrawCount',
                 'MsgDamMinerWithDraw',
                 'MsgAuthorizeUser',
+                'MsgAssetInvest',
             ];
             if (list.indexOf(txItem.action) > -1) {
                 return true;

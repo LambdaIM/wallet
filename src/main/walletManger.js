@@ -933,7 +933,9 @@ walletManger.prototype.CreateAsset = async function ( {
   total_supply,
   adjust_rate,adjust_period,max_adjust_count,
   genesis_height,remarks,
-  memo,MiningRatio}) {
+  memo,MiningRatio,
+  fund_asset,fund_amount,fund_period,fund_stake
+}) {
     
    
 
@@ -952,9 +954,28 @@ walletManger.prototype.CreateAsset = async function ( {
     genesis_height:genesis_height,
     adjust_period:adjust_period,
     memo: memo || '',
-    mining_ratio:MiningRatio
-
+    mining_ratio:MiningRatio,
+    fund_asset,
+    fund_amount,
+    fund_period,
+    fund_stake
   };
+  return result;
+};
+
+
+walletManger.prototype.damAssetInvest = async function ( asset, token,tokendenom,memo) {
+
+  var result; 
+  result = {
+    type: transaction.AssetInvest,
+    asset:asset,
+    memo: memo || '',
+    token:token,
+    tokendenom:tokendenom
+  };
+  
+
   return result;
 };
 

@@ -517,7 +517,8 @@
     "MsgTransferOwnership":"转让数据所有权",
     "MsgAuthorizeUser":"授权操作",
     "MsgDigitalAssetDelegate":"质押资产矿工",
-    "MsgDigitalAssetUndelegate":"反质押资产矿工"
+    "MsgDigitalAssetUndelegate":"反质押资产矿工",
+    "MsgAssetInvest":"参与预挖矿"
 
    },
    "txTable":{

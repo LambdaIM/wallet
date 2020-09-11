@@ -346,6 +346,28 @@
                         <Col span="5" class-name="key">{{ $t('CreateassetsPop.genesis_height') }}:</Col>
                         <Col span="16" class-name="value">{{ transactiondata.genesis_height }}</Col>
                     </Row>
+                    <Row class-name="item">
+                        <Col span="5" class-name="key">预挖矿资产:</Col>
+                        <Col span="16" class-name="value">{{ denomShort(transactiondata.fund_asset) }}</Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="5" class-name="key">预挖矿额度:</Col>
+                        <Col span="16" class-name="value">
+                            {{ transactiondata.fund_amount | BlanceValue }}
+                            {{ denomShort(transactiondata.fund_asset) }}
+                        </Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="5" class-name="key">预挖矿周期:</Col>
+                        <Col span="16" class-name="value">{{ transactiondata.fund_period }}天</Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="8" class-name="key">预挖矿返还份额:</Col>
+                        <Col span="13" class-name="value">
+                            {{ transactiondata.fund_stake | BlanceValue }}
+                            {{ transactiondata.name }}
+                        </Col>
+                    </Row>
                 </div>
 
                 <div v-if="txtype == 'CreateDigitalAssetMarket'">
@@ -542,6 +564,23 @@
                                     ? this.$t('Pledgepopup.pledge')
                                     : this.$t('Pledgepopup.redeem')
                             }}
+                        </Col>
+                    </Row>
+                </div>
+                <div v-if="txtype == 'damAssetInvest'">
+                    <h2>参与预挖</h2>
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">{{ $t('txPopup.Operator') }}:</Col>
+                        <Col span="20" class-name="value">{{ address }}</Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">{{ $t('Authorizedminingpop.AssetName') }}:</Col>
+                        <Col span="20" class-name="value">{{ transactiondata.asset | assertdenomformat }}</Col>
+                    </Row>
+                    <Row class-name="item">
+                        <Col span="4" class-name="key">金额:</Col>
+                        <Col span="20" class-name="value">
+                            {{ bigNumTypeFormat(transactiondata.token, transactiondata.tokendenom) }}
                         </Col>
                     </Row>
                 </div>

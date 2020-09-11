@@ -8,7 +8,7 @@
                     </Button>
                 </div>
                 <br />
-                <Table :columns="marketcolumns" :data="marketdata">
+                <Table :loading="loading" :columns="marketcolumns" :data="marketdata">
                     <!-- <template slot-scope="{ row, index }" slot="amount">
               {{bigNumTypeFormat(row.amount,row.denom)}}
             </template> -->
@@ -141,6 +141,7 @@ const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
     data() {
         return {
+            loading: true,
             marketcolumns: [
                 {
                     title: this.$t('assetpage.marketlist.Marketname'),
@@ -225,6 +226,7 @@ export default {
                 let res = await ipc.callMain('Authorizedmarketlist', {});
                 if (res.state && res.data.error == undefined) {
                     this.$data.marketdata = res.data.data || [];
+                    this.$data.loading = false;
                 }
             } catch (ex) {
                 console.log(ex);

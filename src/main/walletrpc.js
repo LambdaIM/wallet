@@ -960,6 +960,26 @@ export default function() {
         }
     });
 
+    eipc.answerRenderer('damAssetInvest', async query => {
+        var { AssetName, token, tokendenom } = query;
+
+        if (AssetName == undefined) {
+            throw resultView(null, false, errorList.need_AssetName);
+        }
+
+        if (token == undefined) {
+            throw resultView(null, false, errorList.need_token);
+        }
+
+        try {
+            var TxMessageload = await WM.damAssetInvest(AssetName, token, tokendenom);
+
+            return resultView(TxMessageload, true);
+        } catch (error) {
+            throw resultView(null, false, error);
+        }
+    });
+
     eipc.answerRenderer('AuthorizeMiningPubKey', async query => {
         var { user, AssetName, isAllowed } = query;
         if (user == undefined) {
@@ -995,6 +1015,10 @@ export default function() {
             adjust_period,
             remarks,
             MiningRatio,
+            fund_asset,
+            fund_amount,
+            fund_period,
+            fund_stake,
         } = query;
 
         console.log(query);
@@ -1047,6 +1071,22 @@ export default function() {
             throw resultView(null, false, 'need MiningRatio');
         }
 
+        if (fund_asset == undefined) {
+            throw resultView(null, false, 'need fund_asset');
+        }
+
+        if (fund_amount == undefined) {
+            throw resultView(null, false, 'need fund_amount');
+        }
+
+        if (fund_period == undefined) {
+            throw resultView(null, false, 'need fund_period');
+        }
+
+        if (fund_stake == undefined) {
+            throw resultView(null, false, 'need fund_stake');
+        }
+
         try {
             var token_amount, token_denom;
 
@@ -1068,6 +1108,10 @@ export default function() {
                 adjust_period,
                 remarks,
                 MiningRatio,
+                fund_asset,
+                fund_amount,
+                fund_period,
+                fund_stake,
             });
 
             return resultView(TxMessageload, true);

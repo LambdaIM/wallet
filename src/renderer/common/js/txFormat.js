@@ -106,6 +106,9 @@ function getToAddress(msg, item, vuethis) {
     if (msg.type === 'lambda/MsgAuthorizeUser') {
         toaddress = msg.value.user;
     }
+    if (msg.type === 'lambda/MsgAssetInvest') {
+        toaddress = msg.value.asset;
+    }
 
     return toaddress;
 }
@@ -151,6 +154,8 @@ function getamount(msg0, item, vueIns, index) {
             // (msg0.value.mintable ? vueIns.$t('Dialog.com.mintabletrue') : vueIns.$t('Dialog.com.mintablefalse'));
         } else if (msg0.type == 'lambda/MsgMintAsset') {
             result = _this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom);
+        } else if (msg0.type == 'lambda/MsgAssetInvest') {
+            result = _this.bigNumTypeFormat(msg0.value.token.amount, msg0.value.token.denom);
         } else if (msg0.type == 'lambda/MsgLockAsset') {
             result =
                 _this.bigNumTypeFormat(msg0.value.asset.amount, msg0.value.asset.denom) +
