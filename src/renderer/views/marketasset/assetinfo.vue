@@ -21,8 +21,9 @@
                                         <Badge v-if="assetinfo.status==2" count="授权增发" slot="extra" />
                                         <Badge v-if="assetinfo.status==3" count="已增发完成" slot="extra" />
                                     </Cell>
-                                    <Cell title="结束时间" :extra="assetfund.end_time|formatDate" />
-                                    <Cell title="预挖数量" :extra="bigNumTypeFormat(assetfund.asset.amount, assetfund.asset.denom)" />
+                                    <Cell v-if="assetfund" title="结束时间" :extra="assetfund.end_time|formatDate" />
+                                    <Cell title="初始发行" :extra="bigNumTypeFormat(assetinfo.asset.amount, assetinfo.asset.denom)" />
+                                    
 
                                     <Cell
                                         title="总发行量"
@@ -33,6 +34,7 @@
                                             )
                                         "
                                     />
+                                    <Cell title="预挖矿数量" :extra="bigNumTypeFormat(assetfund.asset.amount, assetfund.asset.denom)" />
                                     <Cell
                                        v-if="assetfund"
                                         title="总参与额度"
@@ -93,8 +95,10 @@
                          </div>
                          <div v-else>
                              <div>
-                               <Button type="primary">开启矿工挖矿</Button>
+                               <!-- <Button type="primary">开启矿工挖矿</Button> -->
                              </div>
+                             <br/>
+                             <a @click="openBrowser">在浏览器中查看参与挖矿列</a>
                              <br/>
                                <ul class="help">
                                     <li>规则说明

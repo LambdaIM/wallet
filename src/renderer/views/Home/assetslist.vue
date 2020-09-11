@@ -6,7 +6,9 @@
                     {{ bigNumTypeFormat(row.amount, row.denom) }}
                 </template>
                 <template slot-scope="{ row, index }" slot="denom">
-                    {{ denomFormart(row.denom) }}
+                    <a v-if="row.denom != 'ulamb' && row.denom != 'utbb'" @click="openLinkassert(row.denom)">
+                        {{ denomFormart(row.denom) }}
+                    </a>
                 </template>
                 <template slot-scope="{ row, index }" slot="action">
                     <Button @click="cointransaction(row)" type="primary" size="small">
@@ -34,7 +36,7 @@
                         {{ DistributionReward == '0' ? '' : 'LAMB' }}
                     </span>
                 </template>
-                <template slot-scope="{ row, index }" slot="operating">
+                <template v-if="checkstatus(row)" slot-scope="{ row, index }" slot="operating">
                     <Button :to="`/marketindexmenu/assetinfo/${row.denom}`" type="primary" size="small">预挖矿</Button>
                 </template>
             </Table>
@@ -117,6 +119,12 @@ export default {
         AssetlModalDialog,
     },
     methods: {
+        openLinkassert(name) {
+            // var explorer = DAEMON_CONFIG.explore();
+            // let url = `${explorer}#/assetDetail/${name}`;
+            // shell.openExternal(url);
+            this.$router.push(`/marketindexmenu/assetinfo/${name}`);
+        },
         denomFormart(denom) {
             return denom.substr(1).toUpperCase();
         },
@@ -193,6 +201,13 @@ export default {
             });
             return this.bigNumTBB(result);
         },
+        checkstatus(row) {
+            if (row.mint_type == '3' && row.status == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        },
     },
     computed: {
         coinList: function() {
@@ -225,13 +240,31 @@ export default {
                         otherList.push({
                             amount: '0',
                             denom: item.asset.denom,
+                            mint_type: item.asset.mint_type,
+                            status: item.asset.status,
                         });
                     }
                 });
             }
             var listneedtosort = mycoinList.concat(otherList);
-
+            var _this = this;
             listneedtosort.forEach(item => {
+                // var haveitem = _.find(_this.$data.allassert, {
+                //         asset:{
+                //             denom: item.denom,
+                //         }
+                //     });
+                var haveitem = _.find(_this.$data.allassert, one => {
+                    if (one.asset.denom == item.denom) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+                if (haveitem) {
+                    (item.mint_type = haveitem.mint_type), (item.status = haveitem.status);
+                }
+
                 if (item.denom == 'ulamb') {
                     item.sort = 1;
                 } else if (item.denom == 'utbb') {

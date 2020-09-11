@@ -518,7 +518,8 @@
     "MsgTransferOwnership":"TransferOwnership",
     "MsgAuthorizeUser":"AuthorizeUser",
     "MsgDigitalAssetDelegate":"DigitalAssetDelegate",
-    "MsgDigitalAssetUndelegate":"DigitalAssetUndelegate"
+    "MsgDigitalAssetUndelegate":"DigitalAssetUndelegate",
+    "MsgAssetInvest":"AssetInvest"
   },
   "txTable":{
     "action": "Activity",

@@ -64,6 +64,7 @@
                             <p>
                                 <Input v-model="fund_amount">
                                     <span slot="prepend">预挖矿额度</span>
+                                    <span slot="append">{{denomShort(fund_asset)}}</span>
                                 </Input>
                             </p>
                             <br/>
@@ -486,6 +487,9 @@ export default {
             this.sendModal = true;
             this.$refs.ConfirmModal.clase();
         },
+        denomShort: function(denom) {
+            return denom.substr(1).toUpperCase();
+        }
     },
     computed: {
         address: function() {
