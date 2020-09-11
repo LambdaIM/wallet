@@ -15,6 +15,10 @@
                             <Card title="资产信息" icon="logo-usd" :padding="0" shadow style="width: 300px;">
                                 <CellGroup v-if="assetinfo">
                                     <Cell title="资产全称" :extra="assetinfo.name" />
+                                    <Cell  v-if="assetinfo.mint_type==1" title="增发类型" :extra="$t('CreateassetsPop.Non-issueable') " />
+                                    <Cell  v-if="assetinfo.mint_type==2" title="增发类型" :extra="$t('CreateassetsPop.One-timeissuance') " />
+                                    <Cell  v-if="assetinfo.mint_type==3" title="增发类型" :extra=" $t('CreateassetsPop.Additionalmining') " />
+                                    
                                     <Cell title="状态" to="/components/badge">
                                         <Badge v-if="assetinfo.status==0" count="预挖矿" slot="extra" />
                                         <Badge v-if="assetinfo.status==1" count="预挖矿完成" slot="extra" />
@@ -34,7 +38,7 @@
                                             )
                                         "
                                     />
-                                    <Cell title="预挖矿数量" :extra="bigNumTypeFormat(assetfund.asset.amount, assetfund.asset.denom)" />
+                                    <Cell v-if="assetfund" title="预挖矿数量" :extra="bigNumTypeFormat(assetfund.asset.amount, assetfund.asset.denom)" />
                                     <Cell
                                        v-if="assetfund"
                                         title="总参与额度"
@@ -55,7 +59,7 @@
                                          />
                                 </CellGroup>
                                 <span v-else>
-                                    loading...
+                                      <Spin size="large"></Spin>
                                 </span>
                             </Card>
                         </Col>
@@ -63,7 +67,7 @@
                          <div v-if="assetState=='prepare'">
                             <Input v-model="amount">
                                 <span slot="prepend">金额</span>
-                                <span slot="append">{{denomShort(assetfund.fund_asset.denom)}}</span>
+                                <span v-if="assetfund" slot="append">{{denomShort(assetfund.fund_asset.denom)}}</span>
                             </Input>
                             
                             <br />
@@ -71,22 +75,23 @@
                                 <Button @click="Preparedata" type="success" long>参与预挖</Button>
                             </div>
                             <br />
-                            <p>
+                            <div>
                                 
                                 <a @click="openBrowser">在浏览器中查看参与挖矿列</a>
-                            </p>
+                            </div>
                             <br />
+                            <br />
+
                             <p>
                                 <ul class="help">
                                     <li>规则说明
                                     </li>
-                                    <li>1.*******
+                                    
+                                    <li>1.预挖矿获取的资产额度，和用于预挖矿的资产占总预挖矿资产占比，成正比
                                     </li>
-                                    <li>2.预挖矿获取的资产额度，和用于预挖矿的资产占总预挖矿资产占比，成正比
+                                    <li>2.预挖结束后，发放资产
                                     </li>
-                                    <li>3.预挖结束后，发放资产
-                                    </li>
-                                    <li>4.预挖矿期间，资产不可交易
+                                    <li>3.预挖矿期间，资产不可交易
                                     </li>
                                 </ul>
                                 
@@ -96,17 +101,20 @@
                          <div v-else>
                              <div>
                                <!-- <Button type="primary">开启矿工挖矿</Button> -->
+                               <h3 v-if="userfund">我的参与额度:{{bigNumTypeFormat(userfund.invest.amount, userfund.invest.denom)}}</h3>
+                               <h3 v-if="userfund">预计挖矿:{{bigNumTypeFormat(userfund.stake.amount, userfund.stake.denom)}}</h3>
                              </div>
                              <br/>
-                             <a @click="openBrowser">在浏览器中查看参与挖矿列</a>
+                             <div>
+                                <a @click="openBrowser">在浏览器中查看参与挖矿列</a>
+                             </div>
                              <br/>
                                <ul class="help">
                                     <li>规则说明
                                     </li>
                                     <li>1.资产没有关联市场，矿工将无法挖矿，如果需要矿工挖矿，需要创建市场
                                     </li>
-                                    <li>2.*******
-                                    </li>
+                                    
                                 </ul>
 
                          </div>
@@ -138,7 +146,7 @@ const { ipcRenderer: ipc } = require('electron-better-ipc');
 export default {
     computed: {
         assetState(){
-            if(this.$data.assetinfo.status==0){
+            if(this.$data.assetinfo== null||this.$data.assetinfo.status==0){
                 return "prepare";
             }else{
                 return "other";
@@ -179,7 +187,7 @@ export default {
         openBrowser(){
             var explorer = DAEMON_CONFIG.explore();
             var name = this.$data.assetName;
-            let url = `${explorer}#/assetDetail/${name}`;
+            let url = `${explorer}#assetDetail/${name}/fund/1`;
             shell.openExternal(url);
 
         },

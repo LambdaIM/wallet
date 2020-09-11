@@ -29,15 +29,16 @@
                 <p>
                     {{ $t('CreateassetsPop.Issuingtype') }}
                     <RadioGroup v-model="MintType">
-                        <Radio label="3">{{ $t('CreateassetsPop.Additionalmining') }}</Radio>
+                        
                         <Radio label="1">{{ $t('CreateassetsPop.Non-issueable') }}</Radio>
-                        <!-- <Radio label="2">{{ $t('CreateassetsPop.One-timeissuance') }}</Radio> -->
+                        <Radio label="2">{{ $t('CreateassetsPop.One-timeissuance') }}</Radio>
+                        <Radio label="3">{{ $t('CreateassetsPop.Additionalmining') }}</Radio>
                         
                     </RadioGroup>
                 </p>
                 <br />
-                <div v-if="MintType == '3'">
-                     <Tabs type="card">
+                <div >
+                     <Tabs >
                         <TabPane label="预挖矿">
                                 
                     <p>
@@ -82,7 +83,7 @@
                                 </Input>
                             </p>
                         </TabPane>
-                        <TabPane label="挖矿">
+                        <TabPane v-if="MintType == '3'" label="挖矿">
                         
                     <br />
                     <p>
@@ -182,7 +183,7 @@ export default {
             confirmModal: false,
             name: '',
             asset: '',
-            MintType: '3',
+            MintType: '1',
             inflation: '',
             inflation_period: '',
             parameter: {},
@@ -265,8 +266,7 @@ export default {
                 });
                 return;
             }
-            if (MintType == '3') {
-                if (isNaN(fund_amount) || fund_amount <= 0) {
+            if (isNaN(fund_amount) || fund_amount <= 0) {
                     this.$Notice.warning({
                         title: '预挖矿额度需要大于0，且为整数',
                     });
@@ -291,7 +291,8 @@ export default {
                     return;
 
                 }
-
+            if (MintType == '3') {
+                
                 if (isNaN(inflation) || inflation <= 0) {
                     this.$Notice.warning({
                         title: this.$t('CreateassetsPop.action.need_inflation'),

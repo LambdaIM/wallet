@@ -1071,19 +1071,19 @@ export default function() {
             throw resultView(null, false, 'need MiningRatio');
         }
 
-        if (fund_asset == undefined && mint_type == '3') {
+        if (fund_asset == undefined) {
             throw resultView(null, false, 'need fund_asset');
         }
 
-        if (fund_amount == undefined && mint_type == '3') {
+        if (fund_amount == undefined) {
             throw resultView(null, false, 'need fund_amount');
         }
 
-        if (fund_period == undefined && mint_type == '3') {
+        if (fund_period == undefined) {
             throw resultView(null, false, 'need fund_period');
         }
 
-        if (fund_stake == undefined && mint_type == '3') {
+        if (fund_stake == undefined) {
             throw resultView(null, false, 'need fund_stake');
         }
 
