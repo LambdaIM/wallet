@@ -13,11 +13,14 @@
             </div>
             <Table :columns="columns" :data="data">
                 <template slot-scope="{ row, index }" slot="action">
-                    <Button size="small" @click="exportAccount(row)" type="primary">
+                    <Button class="btn" size="small" @click="exportAccount(row)" type="primary">
                         {{ $t('subaccount.export') }}
                     </Button>
-                    <Button size="small" @click="cointransaction(row)" type="primary">
+                    <Button class="btn" size="small" @click="cointransaction(row)" type="primary">
                         {{ $t('subaccount.transaction') }}
+                    </Button>
+                    <Button class="btn" size="small" @click="extractcointransaction(row)" type="primary">
+                        提取
                     </Button>
                 </template>
                 <template slot-scope="{ row, index }" slot="account">
@@ -29,6 +32,8 @@
         <sonAccountExportModelDialog ref="sonAccountExportModel"></sonAccountExportModelDialog>
         <SendModelDialog ref="SendModelDialog" />
         <sonAccountImportModelDialog ref="sonAccountImportModel" />
+
+        <sendsonModelDialog ref="sendsonModel" />
     </div>
 </template>
 
@@ -40,6 +45,7 @@ import eventhub from '../../common/js/event.js';
 import sonAccountModelDialog from '@/views/Dialog/sonAccountModel.vue';
 import sonAccountExportModelDialog from '@/views/Dialog/sonAccountExportModel.vue';
 import SendModelDialog from '@/views/Dialog/sendModel.vue';
+import sendsonModelDialog from '@/views/Dialog/sendsonModel.vue';
 
 import sonAccountImportModelDialog from '@/views/Dialog/sonAccountImportModel.vue';
 
@@ -136,6 +142,9 @@ export default {
         cointransaction(row) {
             this.$refs.SendModelDialog.open(undefined, 'ulamb', row.address);
         },
+        extractcointransaction(row) {
+            this.$refs.sendsonModel.open(undefined, 'ulamb', row.address);
+        },
         importAccount() {
             this.$refs.sonAccountImportModel.open();
         },
@@ -146,6 +155,7 @@ export default {
         sonAccountExportModelDialog,
         SendModelDialog,
         sonAccountImportModelDialog,
+        sendsonModelDialog,
     },
 };
 </script>
@@ -171,5 +181,10 @@ export default {
     .item-value {
         font-size: 14px;
     }
+}
+.btn {
+    margin-bottom: 10px;
+    width: 100%;
+    height: 30px;
 }
 </style>

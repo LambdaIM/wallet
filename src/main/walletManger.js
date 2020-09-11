@@ -758,6 +758,22 @@ walletManger.prototype.Transfer = async function (to, amount, gas, denom, memo) 
   return result;
 };
 
+walletManger.prototype.sonTransfer = async function (to, amount, gas, denom, memo,from) {
+  var result = {
+    type: transaction.SEND,
+    toAddress: to,
+    fromAddress:from,
+    amounts: [
+      {
+        amount: amount,
+        denom: denom || 'ulamb'
+      }
+    ],
+    memo: memo || ''
+  };
+  return result;
+};
+
 
 walletManger.prototype.OrderRenewal = async function (orderId,duration,memo) {
   var result = {
@@ -1044,32 +1060,34 @@ walletManger.prototype.TransferConfirm = async function (password, transactionda
   };
 
 
+  log.info('User input transactiondata');
+  log.info(transactiondata);
+  let signerFn ;
+  if(transactiondata.type=='MsgSend'&&transactiondata.toAddress==this.defaultwallet.address){
+    //子账户给主账户转币
+    var sonaddress = transactiondata.fromAddress;
+    signerFn = this.getsonSigner({}, SIGN_METHODS.LOCAL, {
+      address: sonaddress,
+      password
+    });
+    if (this.actionManager != undefined) {
+      this.actionManager.setContext({ url: DAEMON_CONFIG.LambdaNetwork(), userAddress: sonaddress });
+    }
+  }else{
+     signerFn = this.getSigner({}, SIGN_METHODS.LOCAL, {
+      address: this.defaultwallet.address,
+      password
+    });
+    if (this.actionManager != undefined) {
+      this.actionManager.setContext({ url: DAEMON_CONFIG.LambdaNetwork(), userAddress: this.defaultwallet.address });
+    }
 
-  const signerFn = this.getSigner({}, SIGN_METHODS.LOCAL, {
-    address: this.defaultwallet.address,
-    password
-  });
-  if (this.actionManager != undefined) {
-    this.actionManager.setContext({ url: DAEMON_CONFIG.LambdaNetwork(), userAddress: this.defaultwallet.address });
   }
+
+  
 
 
   this.actionManager.setMessage(type, transactionProperties);
-  // const { included, hash }
-  // 如果出现网络相关的问题  有可能会产生异常，最好是醉解返回hash
-  /*
-  var txhashNative = await this.actionManager.getTxhash(
-    memo,
-    feeProperties,
-    signerFn
-  )
-  
-  log.info('txhashNative');
-  log.info(txhashNative);
-  */
-  
-  
-
   
   const { included, hash } = await this.actionManager.send(
     memo,
@@ -1114,6 +1132,37 @@ walletManger.prototype.getSigner = function (config, submitType = '', { address,
 
   var privatekey = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
   var publicKey = hdkeyjs.publicKey.getBytes(this.defaultwallet.publicKey);
+  log.info('Verify password OK');
+  return signMessage => {
+    log.info('Data signature');
+    log.info(signMessage);
+    const signature = hdkeyjs.crypto.sign(
+      Buffer.from(signMessage),
+      privatekey
+    );
+    return {
+      signature,
+      publicKey: publicKey
+    };
+  };
+};
+
+walletManger.prototype.getsonSigner = function (config, submitType = '', { address, password }) {
+  console.log('getSigner');
+
+  //验证主账户权限，只允许当前主账户把子账户的币提取出来
+  var privatekeyMaster = hdkeyjs.keyStore.checkJson(this.defaultwallet, password);
+
+  var fileResult = this.findSonFile(address);
+  // console.log('读取子账户')
+  // var content = fs.readFileSync(file.fileName,'utf8');
+
+  var keyjson =fileResult.data;  
+  console.log('keyjson',keyjson,fileResult)
+  var privatekey =Buffer.from(keyjson.priv_key.value,'base64') ;
+  var publicKey =Buffer.from(keyjson.pub_key.value,'base64');
+  // var publicKey = hdkeyjs.publicKey.getBytes(this.defaultwallet.publicKey);
+
   log.info('Verify password OK');
   return signMessage => {
     log.info('Data signature');
@@ -1198,6 +1247,8 @@ walletManger.prototype.findSonFile = function (address) {
       var v3file = fs.readFileSync(file, 'utf8');
       try {
         v3file = JSON.parse(v3file);
+        console.log('文件查找')
+        console.log(v3file,address)
         if (v3file.address == address) {
           fileName = file;
           data=v3file;
