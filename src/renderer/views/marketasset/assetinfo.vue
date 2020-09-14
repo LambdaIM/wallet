@@ -87,11 +87,11 @@
                                     <li>{{$t('assetnewpage.Ruledescription')}}
                                     </li>
                                     
-                                    <li>1.预挖矿获取的资产额度，和用于预挖矿的资产占总预挖矿资产占比，成正比
+                                    <li>{{$t('assetnewpage.Ruletip1')}}
                                     </li>
-                                    <li>2.预挖结束后，发放资产
+                                    <li>{{$t('assetnewpage.Ruletip2')}}
                                     </li>
-                                    <li>3.预挖矿期间，资产不可交易
+                                    <li>{{$t('assetnewpage.Ruletip3')}}
                                     </li>
                                 </ul>
                                 
@@ -112,7 +112,7 @@
                                <ul class="help">
                                     <li>{{$t('assetnewpage.Ruledescription')}}
                                     </li>
-                                    <li>1.资产没有关联市场，矿工将无法挖矿，如果需要矿工挖矿，需要创建市场
+                                    <li>{{$t('assetnewpage.Ruletip_1')}}
                                     </li>
                                     
                                 </ul>

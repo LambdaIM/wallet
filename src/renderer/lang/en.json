@@ -1219,7 +1219,51 @@
       "Pledgeamount":"Pledge amount",
       "Pledgereward":"Pledge reward",
       "orderlisttip":"Contains both the user's buy order and the miner's sell order"
-  }
+  },
+    "assetnewpage":{
+        "operation":"Operation",
+        "details":"Details",
+        "premining":"Pre mining",
+        "mining":"Mining",
+        "Useofassets":"Use of assets",
+        "Preminingquota":"Pre mining quota",
+        "Preminingperiod":"Pre mining period",
+        "periodtip":"The shortest is 3 days and the longest is 120 days",
+        "Returnedpremining":"Returned shares of pre mining",
+        "day":"day",
+        "Assetlist":"Asset list",
+        "Assetdetails":"Asset information",
+        "Fullname":"Full name",
+        "Additionaltype":"Additional type",
+        "state":"State",
+        "Completionofpremining":"Completion of pre mining",
+        "Authorizedadditionalissuance":"Authorized additional issue",
+        "Additionalissuancecompleted":"Additional issue completed",
+        "Endtime":"End time",
+        "Initialissue":"Initial issue",
+        "Totalcirculation":"Total circulation",
+        "Quantityofpremining":"Quantity of pre excavation",
+        "Totalparticipation":"Total participation",
+        "Completiondegree":"Degree of completion",
+        "Myparticipationquota":"My participation quota",
+        "Expectedmining":"Expected mining",
+        "amount":"Amount",
+        "Participateinpremining":"Participation in pre mining",
+        "Premininglist":"View the list of participating mines in the browser",
+        "Ruledescription":"Rule description",
+        "Ruletip1":"1. The amount of assets obtained by pre mining is directly proportional to the proportion of assets used for pre mining in the total pre mining assets",
+        "Ruletip2":"2. Release assets after the completion of pre excavation",
+        "Ruletip3":"3. During the pre mining period, the assets can not be traded",
+        "Ruletip_1":"1. If there is no associated market for assets, miners will not be able to mine. If miners need to mine, they need to create a market",
+        "extract":"Extract",
+        "action":{
+            "fund_amount":"The pre mining quota needs to be greater than 0 and an integer",
+            "fund_period":"The pre mining period needs to be greater than 0 and an integer",
+            "fund_stake":"The returned share of pre mining needs to be greater than 0 and an integer",
+            "fund_stake_big":"The amount of return for pre mining shall not be greater than the total amount issued",
+            "amount_limit":"Amount needs to be greater than 0"
+        }
+    }
 
 
 }

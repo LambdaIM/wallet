@@ -215,7 +215,7 @@ export default {
             }
         },
         checkstatus(row) {
-            if (row.mint_type == '3' && row.status == 0) {
+            if (row.mint_type != 1 && row.status == 0) {
                 return true;
             } else {
                 return false;

@@ -54,7 +54,7 @@
                         type="primary"
                         size="small"
                     >
-                        {{ $t('assetnewpage.premining') }}
+                        {{ $t('assetnewpage.details') }}
                     </Button>
                 </template>
             </Table>
@@ -220,7 +220,7 @@ export default {
             return this.bigNumTBB(result);
         },
         checkstatus(row) {
-            if (row.mint_type == '3' && row.status == 0) {
+            if (row.mint_type != 1 && row.status == 0) {
                 return true;
             } else {
                 return false;

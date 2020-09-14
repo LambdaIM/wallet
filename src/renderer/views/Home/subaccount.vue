@@ -20,7 +20,7 @@
                         {{ $t('subaccount.transaction') }}
                     </Button>
                     <Button class="btn" size="small" @click="extractcointransaction(row)" type="primary">
-                        提取
+                        {{ $t('assetnewpage.extract') }}
                     </Button>
                 </template>
                 <template slot-scope="{ row, index }" slot="account">

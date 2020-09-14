@@ -1251,13 +1251,18 @@
         "amount":"金额",
         "Participateinpremining":"参与预挖",
         "Premininglist":"在浏览器中查看参与挖矿列表",
-        
+        "Ruledescription":"规则说明",
+        "Ruletip1":"1.预挖矿获取的资产额度，和用于预挖矿的资产占总预挖矿资产占比，成正比",
+        "Ruletip2":"2.预挖结束后，发放资产",
+        "Ruletip3":"3.预挖矿期间，资产不可交易",
+        "Ruletip_1":"1.资产没有关联市场，矿工将无法挖矿，如果需要矿工挖矿，需要创建市场",
+        "extract":"提取",
         "action":{
             "fund_amount":"预挖矿额度需要大于0，且为整数",
             "fund_period":"预挖矿周期需要大于0，且为整数",
             "fund_stake":"预挖矿返还份额需要大于0，且为整数",
             "fund_stake_big":"预挖矿返还额度不能大于发行总量",
-            "amount_limit":"金额需要为数字"
+            "amount_limit":"金额需要大于0"
         }
     }
 
