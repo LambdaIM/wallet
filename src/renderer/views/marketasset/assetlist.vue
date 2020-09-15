@@ -79,7 +79,7 @@
                             :to="`/marketindexmenu/assetinfo/${row.asset.denom}`"
                             size="small"
                         >
-                            预挖矿
+                            {{ $t('assetnewpage.premining') }}
                         </Button>
 
                         <!--
