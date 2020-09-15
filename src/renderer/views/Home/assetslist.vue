@@ -9,6 +9,9 @@
                     <a v-if="row.denom != 'ulamb' && row.denom != 'utbb'" @click="openLinkassert(row.denom)">
                         {{ denomFormart(row.denom) }}
                     </a>
+                    <span v-else>
+                        {{ denomFormart(row.denom) }}
+                    </span>
                 </template>
                 <template slot-scope="{ row, index }" slot="action">
                     <Button @click="cointransaction(row)" type="primary" size="small">
@@ -36,8 +39,23 @@
                         {{ DistributionReward == '0' ? '' : 'LAMB' }}
                     </span>
                 </template>
-                <template v-if="checkstatus(row)" slot-scope="{ row, index }" slot="operating">
-                    <Button :to="`/marketindexmenu/assetinfo/${row.denom}`" type="primary" size="small">预挖矿</Button>
+                <template slot-scope="{ row, index }" slot="operating">
+                    <Button
+                        v-if="checkstatus(row)"
+                        :to="`/marketindexmenu/assetinfo/${row.denom}`"
+                        type="primary"
+                        size="small"
+                    >
+                        {{ $t('assetnewpage.premining') }}
+                    </Button>
+                    <Button
+                        v-else-if="row.denom != 'ulamb' && row.denom != 'utbb'"
+                        :to="`/marketindexmenu/assetinfo/${row.denom}`"
+                        type="primary"
+                        size="small"
+                    >
+                        {{ $t('assetnewpage.details') }}
+                    </Button>
                 </template>
             </Table>
         </div>
@@ -62,11 +80,11 @@ export default {
                     key: 'denom',
                     slot: 'denom',
                 },
-                {
-                    title: '状态',
-                    key: 'pledgereward',
-                    slot: 'pledgereward',
-                },
+                // {
+                //     title: '状态',
+                //     key: 'pledgereward',
+                //     slot: 'pledgereward',
+                // },
                 {
                     title: this.$t('home.Token.amount'),
                     key: 'amount',
@@ -88,7 +106,7 @@ export default {
                     slot: 'pledgereward',
                 },
                 {
-                    title: 'Defi',
+                    title: this.$t('assetnewpage.operation'),
                     key: 'operating',
                     slot: 'operating',
                 },
@@ -202,7 +220,7 @@ export default {
             return this.bigNumTBB(result);
         },
         checkstatus(row) {
-            if (row.mint_type == '3' && row.status == 0) {
+            if (row.mint_type != 1 && row.status == 0) {
                 return true;
             } else {
                 return false;

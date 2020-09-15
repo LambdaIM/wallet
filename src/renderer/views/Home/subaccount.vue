@@ -20,7 +20,7 @@
                         {{ $t('subaccount.transaction') }}
                     </Button>
                     <Button class="btn" size="small" @click="extractcointransaction(row)" type="primary">
-                        提取
+                        {{ $t('assetnewpage.extract') }}
                     </Button>
                 </template>
                 <template slot-scope="{ row, index }" slot="account">
@@ -87,6 +87,13 @@ export default {
             // 更新余额
             _this.accountList();
         });
+
+        eventhub.$on('TransactionSuccessSon', data => {
+            console.log('TransactionSuccess');
+            // 更新余额
+            _this.accountList();
+        });
+
         eventhub.$on('exportSonConfirm', data => {
             console.log('exportSonConfirm', data);
             // 导出成功

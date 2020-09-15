@@ -10,7 +10,7 @@
                 <br />
                 <Table :loading="loading" :columns="columnsToken" :data="coinList">
                     <template slot-scope="{ row, index }" slot="name">
-                        {{ denomFormart(row.name) }}
+                        {{ row.name }}
                     </template>
                     <template slot-scope="{ row, index }" slot="amount">
                         <!-- {{row}} -->
@@ -215,7 +215,7 @@ export default {
             }
         },
         checkstatus(row) {
-            if (row.mint_type == '3' && row.status == 0) {
+            if (row.mint_type != 1 && row.status == 0) {
                 return true;
             } else {
                 return false;

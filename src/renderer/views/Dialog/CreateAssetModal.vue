@@ -39,16 +39,11 @@
                 <br />
                 <div >
                      <Tabs >
-                        <TabPane label="预挖矿">
+                        <TabPane :label="$t('assetnewpage.premining')">
                                 
-                    <p>
-                        <Input v-model="total_supply">
-                            <span slot="prepend">{{ $t('CreateassetsPop.Totalsupply') }}</span>
-                        </Input>
-                    </p>
-                    <br />
+                    
                             <p>
-                                预挖矿资产&nbsp; &nbsp; 
+                                {{$t('assetnewpage.Useofassets')}}&nbsp; &nbsp; 
                                     <RadioGroup v-model="fund_asset">
                                         <Radio label="ulamb">
                                             
@@ -64,27 +59,36 @@
                             <br/>
                             <p>
                                 <Input v-model="fund_amount">
-                                    <span slot="prepend">预挖矿额度</span>
+                                    <span slot="prepend">{{$t('assetnewpage.Preminingquota')}}</span>
                                     <span slot="append">{{denomShort(fund_asset)}}</span>
                                 </Input>
                             </p>
                             <br/>
                             <p>
                                 <Input v-model="fund_period">
-                                    <span slot="prepend">预挖矿周期</span>
-                                    <span slot="append">天</span>
+                                    <span slot="prepend">{{$t('assetnewpage.Preminingperiod')}}</span>
+                                    <span slot="append">{{$t('assetnewpage.day')}}</span>
                                 </Input>
                             </p>
                             <br/>
                             <p>
+                                {{$t('assetnewpage.periodtip')}}
+                            </p>
+                            <br/>
+                            <p>
                                 <Input v-model="fund_stake">
-                                    <span slot="prepend">预挖矿返还份额</span>
+                                    <span slot="prepend">{{$t('assetnewpage.Returnedpremining')}}</span>
                                     <span slot="append">{{name}}</span>
                                 </Input>
+                                <br/>
                             </p>
                         </TabPane>
-                        <TabPane v-if="MintType == '3'" label="挖矿">
-                        
+                        <TabPane v-if="MintType == '3'" :label="$t('assetnewpage.mining')">
+                    <p>
+                        <Input v-model="total_supply">
+                            <span slot="prepend">{{ $t('CreateassetsPop.Totalsupply') }}</span>
+                        </Input>
+                    </p>    
                     <br />
                     <p>
                         <Input v-model="inflation">
@@ -268,25 +272,31 @@ export default {
             }
             if (isNaN(fund_amount) || fund_amount <= 0) {
                     this.$Notice.warning({
-                        title: '预挖矿额度需要大于0，且为整数',
+                        title: this.$t('assetnewpage.action.fund_amount'),
                     });
                     return;
                 }
                 if (isNaN(fund_period) || fund_period <= 0) {
                     this.$Notice.warning({
-                        title: '预挖矿周期需要大于0，且为整数',
+                        title: this.$t('assetnewpage.action.fund_period'),
+                    });
+                    return;
+                }
+                if(fund_period<3||fund_period>120){
+                    this.$Notice.warning({
+                        title: this.$t('assetnewpage.action.fund_period_limit'),
                     });
                     return;
                 }
                 if (isNaN(fund_stake) || fund_stake <= 0) {
                     this.$Notice.warning({
-                        title: '预挖矿返还份额需要大于0，且为整数',
+                        title: this.$t('assetnewpage.action.fund_stake'),
                     });
                     return;
                 }
                 if(fund_stake>total_supply){
                     this.$Notice.warning({
-                        title: '预挖矿返还额度不能大于发行总量',
+                        title: this.$t('assetnewpage.action.fund_stake_big'),
                     });
                     return;
 
