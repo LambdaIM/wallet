@@ -1261,7 +1261,8 @@
             "fund_period":"The pre mining period needs to be greater than 0 and an integer",
             "fund_stake":"The returned share of pre mining needs to be greater than 0 and an integer",
             "fund_stake_big":"The amount of return for pre mining shall not be greater than the total amount issued",
-            "amount_limit":"Amount needs to be greater than 0"
+            "amount_limit":"Amount needs to be greater than 0",
+            "fund_period_limit":"Pre mining period, the shortest is 3 days, the longest is 120 days"
         }
     }
 

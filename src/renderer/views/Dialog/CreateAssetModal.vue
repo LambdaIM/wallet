@@ -284,7 +284,7 @@ export default {
                 }
                 if(fund_period<3||fund_period>120){
                     this.$Notice.warning({
-                        title: '预挖矿周期,最短为3天，最长为120天',
+                        title: this.$t('assetnewpage.action.fund_period_limit'),
                     });
                     return;
                 }

@@ -1262,7 +1262,8 @@
             "fund_period":"预挖矿周期需要大于0，且为整数",
             "fund_stake":"预挖矿返还份额需要大于0，且为整数",
             "fund_stake_big":"预挖矿返还额度不能大于发行总量",
-            "amount_limit":"金额需要大于0"
+            "amount_limit":"金额需要大于0",
+            "fund_period_limit":"预挖矿周期,最短为3天，最长为120天"
         }
     }
 

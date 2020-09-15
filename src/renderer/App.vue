@@ -207,7 +207,19 @@ export default {
                     okText: 'OK',
                     closable: true,
                 });
-                eventHub.$emit('TransactionSuccess');
+                var isSontx = false;
+                try {
+                    var from_address = txinfo.data.tx.value.msg[0].value.from_address;
+                    var now_address = this.$store.getters.getaddress;
+                    if (from_address != undefined && now_address != from_address) {
+                        isSontx = true;
+                    }
+                } catch (error) {}
+                if (isSontx) {
+                    eventHub.$emit('TransactionSuccessSon');
+                } else {
+                    eventHub.$emit('TransactionSuccess');
+                }
             } catch (err) {
                 // 交易失败了也需要刷新余额
                 this.$data.showTxLoading = false;

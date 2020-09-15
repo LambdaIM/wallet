@@ -87,6 +87,13 @@ export default {
             // 更新余额
             _this.accountList();
         });
+
+        eventhub.$on('TransactionSuccessSon', data => {
+            console.log('TransactionSuccess');
+            // 更新余额
+            _this.accountList();
+        });
+
         eventhub.$on('exportSonConfirm', data => {
             console.log('exportSonConfirm', data);
             // 导出成功
