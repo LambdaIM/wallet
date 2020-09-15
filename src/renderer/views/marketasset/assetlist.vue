@@ -10,7 +10,7 @@
                 <br />
                 <Table :loading="loading" :columns="columnsToken" :data="coinList">
                     <template slot-scope="{ row, index }" slot="name">
-                        {{ denomFormart(row.name) }}
+                        {{ row.name }}
                     </template>
                     <template slot-scope="{ row, index }" slot="amount">
                         <!-- {{row}} -->

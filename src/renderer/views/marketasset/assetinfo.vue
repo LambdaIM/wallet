@@ -19,7 +19,7 @@
                                     <Cell  v-if="assetinfo.mint_type==2" :title="$t('assetnewpage.Additionaltype')" :extra="$t('CreateassetsPop.One-timeissuance') " />
                                     <Cell  v-if="assetinfo.mint_type==3" :title="$t('assetnewpage.Additionaltype')" :extra=" $t('CreateassetsPop.Additionalmining') " />
                                     
-                                    <Cell :title="$t('assetnewpage.state')" to="/components/badge">
+                                    <Cell :title="$t('assetnewpage.state')" >
                                         <Badge v-if="assetinfo.status==0" :count="$t('assetnewpage.premining')" slot="extra" />
                                         <Badge v-if="assetinfo.status==1" :count="$t('assetnewpage.Completionofpremining')" slot="extra" />
                                         <Badge v-if="assetinfo.status==2" :count="$t('assetnewpage.Authorizedadditionalissuance')" slot="extra" />

@@ -41,12 +41,7 @@
                      <Tabs >
                         <TabPane :label="$t('assetnewpage.premining')">
                                 
-                    <p>
-                        <Input v-model="total_supply">
-                            <span slot="prepend">{{ $t('CreateassetsPop.Totalsupply') }}</span>
-                        </Input>
-                    </p>
-                    <br />
+                    
                             <p>
                                 {{$t('assetnewpage.Useofassets')}}&nbsp; &nbsp; 
                                     <RadioGroup v-model="fund_asset">
@@ -89,7 +84,11 @@
                             </p>
                         </TabPane>
                         <TabPane v-if="MintType == '3'" :label="$t('assetnewpage.mining')">
-                        
+                    <p>
+                        <Input v-model="total_supply">
+                            <span slot="prepend">{{ $t('CreateassetsPop.Totalsupply') }}</span>
+                        </Input>
+                    </p>    
                     <br />
                     <p>
                         <Input v-model="inflation">
@@ -280,6 +279,12 @@ export default {
                 if (isNaN(fund_period) || fund_period <= 0) {
                     this.$Notice.warning({
                         title: this.$t('assetnewpage.action.fund_period'),
+                    });
+                    return;
+                }
+                if(fund_period<3||fund_period>120){
+                    this.$Notice.warning({
+                        title: '预挖矿周期,最短为3天，最长为120天',
                     });
                     return;
                 }
