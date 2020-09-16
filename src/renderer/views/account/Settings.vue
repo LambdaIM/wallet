@@ -389,6 +389,9 @@ import Introtip from '../../common/js/Introtip.js';
 
 import CustombrowserModalDialog from '@/views/Dialog/CustombrowserModal.vue';
 import eventhub from '../../common/js/event.js';
+import { locale } from 'iview';
+import locale_en from 'iview/dist/locale/en-US';
+import locale_zh from 'iview/dist/locale/zh-CN';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
@@ -489,9 +492,15 @@ export default {
         selectlang(item) {
             this.$i18n.locale = item;
             this.$data.langnow = item;
+
             settings.set('set', {
                 language: item,
             });
+            if (item == 'en') {
+                locale(locale_en);
+            } else {
+                locale(locale_zh);
+            }
 
             // var _this = this;
             setTimeout(() => {

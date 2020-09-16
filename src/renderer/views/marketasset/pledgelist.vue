@@ -7,7 +7,7 @@
                         {{ bigNumTypeFormat(row.Amount, row.Asset) }}
                     </template>
                     <template slot-scope="{ row, index }" slot="operation">
-                        <Button @click="Redemptionoperation(row)" type="primary">赎回</Button>
+                        <Button @click="Redemptionoperation(row)" type="primary">{{ $t('Pledgepopup.redeem') }}</Button>
                     </template>
                 </Table>
                 <br />
