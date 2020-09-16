@@ -131,7 +131,7 @@ export default {
                     slot: 'status',
                 },
                 {
-                    title: '操作',
+                    title: this.$t('Token.operation'),
                     key: 'operation',
                     slot: 'operation',
                 },

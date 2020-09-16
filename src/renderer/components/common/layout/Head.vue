@@ -178,6 +178,10 @@
 import eventhub from '../../../common/js/event.js';
 import { mapState } from 'vuex';
 import roleModalDialog from '@/views/Dialog/roleModal.vue';
+
+import { locale } from 'iview';
+import locale_en from 'iview/dist/locale/en-US';
+import locale_zh from 'iview/dist/locale/zh-CN';
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
 const { shell } = require('electron');
@@ -308,7 +312,11 @@ export default {
             this.$data.langnow = item;
             settings.set('set', { language: item });
             // window.location.reload();
-            var _this = this;
+            if (item == 'en') {
+                locale(locale_en);
+            } else {
+                locale(locale_zh);
+            }
             setTimeout(() => {
                 // window.location.reload();
             }, 500);

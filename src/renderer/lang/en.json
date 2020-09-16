@@ -1182,7 +1182,7 @@
       "Addauthorization":"Add authorization",
       "Cancelauthorization":"Cancel authorization",
       "category":"category",
-      "authorization":"to grant authorization",
+      "authorization":"Authorization",
       "need_lambdaaddress":"Please fill in the address of lambda",
       "need_category":"Please fill in to select Add authorization or cancel authorization",
       "Pledgelist":"Pledge list",
