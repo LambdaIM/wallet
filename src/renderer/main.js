@@ -53,7 +53,6 @@ const i18n = new VueI18n({
     }, // set locale messages
 });
 
-console.log(locale_zh);
 
 if (language == 'en') {
     Vue.use(iView, { locale: locale_en });
