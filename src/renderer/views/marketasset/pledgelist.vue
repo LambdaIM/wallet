@@ -61,7 +61,7 @@ export default {
                     slot: 'Amount',
                 },
                 {
-                    title: '操作',
+                    title: this.$t('assetnewpage.operation'),
                     key: 'operation',
                     slot: 'operation',
                 },

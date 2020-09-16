@@ -51,7 +51,7 @@ export default {
                     slot: 'completionTime',
                 },
                 {
-                    title: '矿工操作地址',
+                    title: this.$t('syncorderpage.mineraddress'),
                     key: 'miner',
                 },
             ],

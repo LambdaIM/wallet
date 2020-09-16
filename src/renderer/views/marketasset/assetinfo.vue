@@ -12,7 +12,7 @@
                 <div>
                     <Row>
                         <Col span="12">
-                            <Card :title="$t('assetnewpage.Assetdetails')" icon="logo-usd" :padding="0" shadow style="width: 300px;">
+                            <Card :title="$t('assetnewpage.Assetdetails')" icon="logo-usd" :padding="0" shadow style="width: 420px;">
                                 <CellGroup v-if="assetinfo">
                                     <Cell :title="$t('assetnewpage.Fullname')" :extra="assetinfo.name" />
                                     <Cell  v-if="assetinfo.mint_type==1" :title="$t('assetnewpage.Additionaltype')" :extra="$t('CreateassetsPop.Non-issueable') " />

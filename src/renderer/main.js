@@ -44,9 +44,13 @@ var language = settings.get('set.language') || 'en';
 Vue.use(VueI18n);
 const i18n = new VueI18n({
     locale: language, // set locale
-    messages: messages, // set locale messages
+    messages: {
+        en: Object.assign(messages.en, locale_en),
+        zh: Object.assign(messages.zh, locale_zh),
+    }, // set locale messages
 });
 
+console.log(locale_zh);
 if (language == 'en') {
     Vue.use(iView, { locale: locale_en });
 } else {
