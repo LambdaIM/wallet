@@ -30,6 +30,7 @@
                                     
 
                                     <Cell
+                                     v-if="assetinfo.mint_type==3"
                                         :title="$t('assetnewpage.Totalcirculation')"
                                         :extra="
                                             bigNumTypeFormat(
@@ -101,8 +102,15 @@
                          <div v-else>
                              <div>
                                <!-- <Button type="primary">开启矿工挖矿</Button> -->
-                               <h3 v-if="userfund">{{$t('assetnewpage.Myparticipationquota')}}:{{bigNumTypeFormat(userfund.invest.amount, userfund.invest.denom)}}</h3>
-                               <h3 v-if="userfund">{{$t('assetnewpage.Expectedmining')}}:{{bigNumTypeFormat(userfund.stake.amount, userfund.stake.denom)}}</h3>
+                                <CellGroup>
+                
+                                    <Cell v-if="userfund" :title="bigNumTypeFormat(userfund.invest.amount, userfund.invest.denom)" :label="$t('assetnewpage.Myparticipationquota')" />
+                                    <Cell v-if="userfund" :title="bigNumTypeFormat(userfund.stake.amount, userfund.stake.denom)" :label="$t('assetnewpage.Expectedmining')" />
+                                    
+                                </CellGroup>
+                               
+                               
+                               
                              </div>
                              <br/>
                              <div>
