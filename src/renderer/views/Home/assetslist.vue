@@ -220,7 +220,7 @@ export default {
             return this.bigNumTBB(result);
         },
         checkstatus(row) {
-            if (row.mint_type != 1 && row.status == 0) {
+            if (row.status == 0) {
                 return true;
             } else {
                 return false;
