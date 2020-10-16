@@ -250,6 +250,13 @@
                             <Button to="/localtxlist">{{ $t('seting.browselog') }}</Button>
                         </Col>
                     </Row>
+                    <Row class-name="card-item">
+                        <Col span="8" class-name="content-wrapper">
+                            <Button @click="opendeleteuser" type="error">
+                                {{ $t('seting.Deletecurrentaccount') }}
+                            </Button>
+                        </Col>
+                    </Row>
 
                     <!-- <Row class-name="card-item">
             <Col span="20">
@@ -375,6 +382,7 @@
         <roleModalDialog ref="roleModal" />
         <Gasprise ref="Gasprise" />
         <CustombrowserModalDialog ref="CustombrowserModal" />
+        <DeleuserModal ref="DeleuserModal" />
     </div>
 </template>
 
@@ -392,6 +400,7 @@ import eventhub from '../../common/js/event.js';
 import { locale } from 'iview';
 import locale_en from 'iview/dist/locale/en-US';
 import locale_zh from 'iview/dist/locale/zh-CN';
+import DeleuserModal from '@/views/Dialog/DeleuserModal.vue';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 const settings = require('electron-settings');
@@ -425,6 +434,14 @@ export default {
         eventhub.$on('refreshconfiguration', data => {
             console.log('refreshconfiguration');
             this.$data.custombrowserurl = settings.get('custombrowserurl') || this.$t('Custombrowser.notseturl');
+        });
+        var _this = this;
+        eventhub.$on('deleteaccountSuccess', data => {
+            console.log('deleteaccountSuccess');
+            _this.logout();
+            // setTimeout(function(){
+
+            // },2000)
         });
     },
     methods: {
@@ -536,6 +553,13 @@ export default {
             console.log(url);
             shell.openExternal(url);
         },
+        opendeleteuser() {
+            console.log('opendeleteuser');
+            this.$refs.DeleuserModal.open({
+                address: this.$data.walletInfo.address,
+                name: this.$data.walletInfo.name,
+            });
+        },
     },
     computed: {
         // calProgress() {
@@ -586,6 +610,7 @@ export default {
         roleModalDialog,
         Gasprise,
         CustombrowserModalDialog,
+        DeleuserModal,
     },
 };
 </script>

@@ -62,6 +62,7 @@
       "browselog":"browse log",
       "Datasignature":"Data signature",
       "Viewinbrowser":"View in blockchain browser",
+      "Deletecurrentaccount":"Delete currenta ccount",
       "action":{
         "Modified_success":"Modified success",
         "Modification_failed":"Modification failed"
