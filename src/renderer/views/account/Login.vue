@@ -38,9 +38,6 @@
                                     </div>
                                     <div class="address">
                                         {{ item.address }}
-                                        <span @click="opendeleteuser(item)">
-                                            <Icon type="md-close-circle" />
-                                        </span>
                                     </div>
                                 </Option>
                             </Select>

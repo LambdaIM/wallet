@@ -60,6 +60,7 @@
       "browselog":"浏览日志",
       "Datasignature":"数据签名",
       "Viewinbrowser":"在区块链浏览器中查看",
+      "Deletecurrentaccount":"删除当前账户",
       "action": {
           "Modified_success": "修改成功",
           "Modification_failed": "修改失败"
