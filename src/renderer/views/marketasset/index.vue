@@ -42,7 +42,7 @@
         </Row>
         <br/>
         <Row>
-            <Col span="24">
+            <Col span="12">
             <div style="margin: 5px;">
               <ul>
                 <li>{{$t('Marketnavigation.lambdamarket.Note1')}}</li>
@@ -59,24 +59,26 @@
 
             </div>
              </Col>
-            <!-- <Col span="12">
+            <Col span="12">
             <div style="margin: 5px;">
 
             <ul>
-                <li>{{$t('Marketnavigation.Assetmarket.Note1')}}</li>
-                <li>{{$t('Marketnavigation.Assetmarket.Note2')}}</li>
-                <li>{{$t('Marketnavigation.Assetmarket.Note3')}}</li>
-                <li>{{$t('Marketnavigation.Assetmarket.Note4')}}</li>
-                <li>{{$t('Marketnavigation.Assetmarket.Note5')}}</li>
+                <li>质押lamb到借贷市场，获取收益 </li>
+                <li>提供算力到借贷市场，获取收益</li>
+                <li>矿工挖矿不在需要订单保证金</li>
+                <li>暂时不用lamb也可以在借贷市场中获取收益</li>
+                <li>lamb随存随取，收益随时都可以提取</li>
+
+
 
               </ul>
             </div>
             <div style="margin: 5px;">
-              <Button  type="primary" to="/marketindexmenu" long>{{$t('Marketnavigation.Enteringasset')}} </Button>
+              <Button  type="primary" to="/lendingmarket" long>借贷存储市场 </Button>
 
 
             </div>
-            </Col> -->
+            </Col>
         </Row>
         <br>
         <Row>

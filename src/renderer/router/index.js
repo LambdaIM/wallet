@@ -237,7 +237,37 @@ var walletRouter = new Router({
       }
 
     ]
-  }, {
+  },
+  {
+    path: '/lendingmarket',
+    name: 'lendingmarketmenu',
+    component: () => import('@/views/lendingmarket/indexMenu.vue'),
+    children: [
+      {
+        path: '',
+        name: 'poolinfo',
+        component: () => import('@/views/lendingmarket/poolinfo.vue')
+      },
+      {
+        path: 'Deposittoken',
+        name: 'Deposittoken',
+        component: () => import('@/views/lendingmarket/Deposittoken.vue')
+      },
+      {
+        path: 'Depositpower',
+        name: 'Depositpower',
+        component: () => import('@/views/lendingmarket/Depositpower.vue')
+      },
+      {
+        path: 'orderlist',
+        name: 'orderlist',
+        component: () => import('@/views/lendingmarket/orderlist.vue')
+      }
+
+    ]
+
+  },
+  {
     path: '/orderinfo/:id',
     name: 'orderinfo',
     component: () =>
