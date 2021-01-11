@@ -520,6 +520,84 @@ export default function() {
     return result;
   }
 
+  eipc.answerRenderer('loanmarkets', async query => {
+    try {
+      var M = new Manager();
+      var result = await M.loanmarkets();
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('loanmarketsParams', async query => {
+    try {
+      var M = new Manager();
+      var result = await M.loanmarketsParams();
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
+  eipc.answerRenderer('loanmarketsupplierreward', async query => {
+    var {address,islatest_reward} = query;
+    try {
+      if(islatest_reward== undefined){
+        islatest_reward =false
+      }
+      var M = new Manager();
+      var result = await M.loanmarketsupplierreward(address,islatest_reward);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('loanloanee', async query => {
+    var {address} = query;
+    try {
+      
+      var M = new Manager();
+      var result = await M.loanloanee(address);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+  eipc.answerRenderer('loanmatch_order_info', async query => {
+    var {order_id} = query;
+    try {
+      
+      var M = new Manager();
+      var result = await M.loanmatch_order_info(order_id);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
+
+  eipc.answerRenderer('loanmatch_match_orders', async query => {
+    var {address,page,limit} = query;
+    try {
+      
+      var M = new Manager();
+      var result = await M.loanmatch_match_orders(address,page,limit);
+
+      return resultView(result, true);
+    } catch (ex) {
+      throw resultView(null, false, ex);
+    }
+  });
+
 
 
   // getmarketmachineinfo

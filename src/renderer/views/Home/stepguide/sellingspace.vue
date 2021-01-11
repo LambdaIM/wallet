@@ -2,15 +2,31 @@
 <div>
 
  <br/>
- <div>
-      <Select @on-change="selectchange" :placeholder="$t('miningguide.guidepage.selectmarket')" v-model="marketaddress" style="width:200px">
-        <Option v-for="item in marketList" :value="item.marketAddress" :key="item.marketAddress">{{ item.name }}</Option>
-        </Select>
- </div>
- <br/>
- <div>
-     <Button @click="openSellingspace" type="primary">{{$t('miningguide.guidepage.sellingspace')}}</Button>
- </div>
+    <Row>
+        <Col span="12">
+        <h4> 存储市场出售空间</h4>
+        <br/>
+          <div>
+                <Select @on-change="selectchange" :placeholder="$t('miningguide.guidepage.selectmarket')" v-model="marketaddress" style="width:200px">
+                  <Option v-for="item in marketList" :value="item.marketAddress" :key="item.marketAddress">{{ item.name }}</Option>
+                  </Select>
+          </div>
+          <br/>
+          <div>
+              <Button @click="openSellingspace" type="primary">{{$t('miningguide.guidepage.sellingspace')}}</Button>
+          </div>
+        </Col>
+        <Col span="12">
+          <h4> 借贷市场挖矿提供算力 </h4>
+          <br/>
+          <p>通过提供算力获取收益  &nbsp;&nbsp;&nbsp;<Button to="/lendingmarket">进入借贷市场</Button>
+
+          </p>
+
+
+        </Col>
+    </Row>
+
  <SellingspaceModal ref="Sellingspace" />
 </div>
 </template>

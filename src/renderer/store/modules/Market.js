@@ -3,7 +3,8 @@ var select_Market = settings.get('market.address');
 var id;
 const state = {
   statusType: null,
-  selectMarket: select_Market || null
+  selectMarket: select_Market || null,
+  loanmarket: null
 };
 const mutations = {
   setstatusType: function(state, info) {
@@ -17,6 +18,9 @@ const mutations = {
     id = setTimeout(() => {
       settings.set('market.address', info);
     }, 1000 * 5);
+  },
+  setloanmarket: function(state, info) {
+    state.loanmarket = info;
   }
 };
 const actions = {
@@ -27,7 +31,11 @@ const actions = {
   setselectMarket: function(context, info) {
     console.log('actions');
     context.commit('setselectMarket', info);
+  },
+  setloanmarket: function(context, info) {
+    context.commit('setloanmarket', info);
   }
+
 };
 const getters = {
   statusType: state => {
@@ -35,6 +43,9 @@ const getters = {
   },
   getselectMarket: function() {
     return state.selectMarket;
+  },
+  getselectloanmarket: function() {
+    return state.loanmarket;
   }
 };
 

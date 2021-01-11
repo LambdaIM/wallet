@@ -13,6 +13,7 @@
         <span v-else>
           &nbsp;
         </span>
+        <span style="    font-size: 15px;">借贷市场奖励：--</span>
         </Col>
         <Col span="13" style="    text-align: right;">
           <a @click="gettestcoin">{{$t('testcoin.txtbtn')}}</a>
