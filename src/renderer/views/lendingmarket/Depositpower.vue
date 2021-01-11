@@ -5,17 +5,20 @@
       <div class="tableContainer">
         <Table :columns="columns1" :data="data1"></Table>
          <div class="btnholder">
-            <Button class="btn" type="primary" >挖矿声明</Button>
-            <Button class="btn" type="primary">取消挖矿</Button>
-            <Button class="btn" type="primary">提取收益</Button>
+
+
+            <Button @click="openLoaneeWithDraw" class="btn" type="primary">提取收益</Button>
 
           </div>
 
         </div>
     </div>
+    <LoaneeWithDraw ref="loaneeWithDraw" />
 </div>
 </template>
 <script>
+import LoaneeWithDraw from '@/views/Dialog/loan/LoaneeWithDraw.vue';
+
 export default {
   data() {
     return {
@@ -41,6 +44,15 @@ export default {
         }
       ]
     };
+  },
+  components: {
+    LoaneeWithDraw
+  },
+  methods: {
+    openLoaneeWithDraw() {
+      var loanmarket = this.$store.getters.getselectloanmarket;
+      this.$refs.loaneeWithDraw.open(loanmarket);
+    }
   }
 
 };
