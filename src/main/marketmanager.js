@@ -81,35 +81,35 @@ class marketmanager {
     return { data: result };
   }
 
-   async loanmarkets(){
-      var result = await this.CosmosAPI().get.loanmarkets();
-      return { data: result };
-   }
+  async loanmarkets() {
+    var result = await this.CosmosAPI().get.loanmarkets();
+    return { data: result };
+  }
 
-   async loanmarketsParams(){
+  async loanmarketsParams() {
     var result = await this.CosmosAPI().get.loanParams();
     return { data: result };
-   }
+  }
 
-   async loanmarketsupplierreward(address,islatest_reward){
-    var result = await this.CosmosAPI().get.loansupplierreward(address,islatest_reward);
+  async loanmarketsupplierreward(address, islatest_reward) {
+    var result = await this.CosmosAPI().get.loansupplierreward(address, islatest_reward);
     return { data: result };
-   }
+  }
 
-   async loanloanee(address){
+  async loanloanee(address) {
     var result = await this.CosmosAPI().get.loanloanee(address);
     return { data: result };
-   }
+  }
 
-   async loanmatch_order_info(order_id){
+  async loanmatch_order_info(order_id) {
     var result = await this.CosmosAPI().get.loanmatch_order_info(order_id);
     return { data: result };
-   }
+  }
 
-   async loanmatch_match_orders(address,page,limit){
-    var result = await this.CosmosAPI().get.loanmatch_match_orders(address,page,limit);
+  async loanmatch_match_orders(address, page, limit) {
+    var result = await this.CosmosAPI().get.loanmatch_match_orders(address, page, limit);
     return { data: result };
-   }
+  }
 
 
 

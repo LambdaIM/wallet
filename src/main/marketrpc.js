@@ -544,13 +544,13 @@ export default function() {
 
 
   eipc.answerRenderer('loanmarketsupplierreward', async query => {
-    var {address,islatest_reward} = query;
+    var { address, islatest_reward } = query;
     try {
-      if(islatest_reward== undefined){
-        islatest_reward =false
+      if (islatest_reward == undefined) {
+        islatest_reward = false;
       }
       var M = new Manager();
-      var result = await M.loanmarketsupplierreward(address,islatest_reward);
+      var result = await M.loanmarketsupplierreward(address, islatest_reward);
 
       return resultView(result, true);
     } catch (ex) {
@@ -559,9 +559,8 @@ export default function() {
   });
 
   eipc.answerRenderer('loanloanee', async query => {
-    var {address} = query;
+    var { address } = query;
     try {
-      
       var M = new Manager();
       var result = await M.loanloanee(address);
 
@@ -572,9 +571,8 @@ export default function() {
   });
 
   eipc.answerRenderer('loanmatch_order_info', async query => {
-    var {order_id} = query;
+    var { order_id } = query;
     try {
-      
       var M = new Manager();
       var result = await M.loanmatch_order_info(order_id);
 
@@ -586,11 +584,10 @@ export default function() {
 
 
   eipc.answerRenderer('loanmatch_match_orders', async query => {
-    var {address,page,limit} = query;
+    var { address, page, limit } = query;
     try {
-      
       var M = new Manager();
-      var result = await M.loanmatch_match_orders(address,page,limit);
+      var result = await M.loanmatch_match_orders(address, page, limit);
 
       return resultView(result, true);
     } catch (ex) {
