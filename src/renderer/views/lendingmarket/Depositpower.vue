@@ -3,7 +3,15 @@
     <div class="customer-container">
 
       <div class="tableContainer">
-        <Table :columns="columns1" :data="data1"></Table>
+        <Table :columns="columns1" :data="minerdata">
+          <template slot-scope="{ row, index }" slot="power">
+              {{showpower(row.power)}}
+          </template>
+          <template slot-scope="{ row, index }" slot="reward">
+              {{bigNumTypeFormat(row.reward.amount,row.reward.denom)}}
+          </template>
+
+        </Table>
          <div class="btnholder">
 
 
@@ -18,6 +26,8 @@
 </template>
 <script>
 import LoaneeWithDraw from '@/views/Dialog/loan/LoaneeWithDraw.vue';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 
 export default {
   data() {
@@ -25,33 +35,70 @@ export default {
       columns1: [
         {
           title: '我的算力',
-          key: 'Depositpower'
+          key: 'power',
+          slot: 'power'
         },
         {
           title: '未提取的收益',
-          key: 'Undrawnincome'
+          key: 'reward',
+          slot: 'reward'
         },
         {
           title: '年华收益率',
           key: 'Rateofreturn'
         }
       ],
-      data1: [
-        {
-          Depositpower: '1000tb',
-          Undrawnincome: '10lamb',
-          Rateofreturn: '10%'
-        }
+      minerdata: [
+
       ]
     };
   },
   components: {
     LoaneeWithDraw
   },
+  mounted() {
+    this.getminerdata();
+  },
   methods: {
+    showpower(data) {
+      return ((data.power * 8) / 1000).toFixed(3) + 'TB';
+    },
     openLoaneeWithDraw() {
       var loanmarket = this.$store.getters.getselectloanmarket;
       this.$refs.loaneeWithDraw.open(loanmarket);
+    },
+    async getminerdata() {
+      // loanloanee
+      try {
+        var reward, power;
+        var list = [];
+        let res = await ipc.callMain('loanloanee', {});
+        if (res.state) {
+          console.log(res.data.data);
+          try {
+            reward = res.data.data.loaneeRewards[0].withDrawable;
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        let res2 = await ipc.callMain('pdpStoragepower', {});
+        if (res2.state) {
+          console.log(res2.data.data);
+          try {
+            power = res2.data.data.powers[0];
+          } catch (error) {
+
+          }
+        }
+        list.push({
+          power: power,
+          reward: reward
+        });
+
+        this.$data.minerdata = list;
+      } catch (error) {
+
+      }
     }
   }
 

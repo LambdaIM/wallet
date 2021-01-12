@@ -3,7 +3,15 @@
     <div class="customer-container">
 
       <div class="tableContainer">
-         <Table :columns="columns1" :data="data1"></Table>
+         <Table :columns="columns1" :data="supplies">
+           <template slot-scope="{ row, index }" slot="amount">
+
+              {{bigNumTypeFormat(row.amount.amount,row.amount.denom)}}
+            </template>
+            <template slot-scope="{ row, index }" slot="reward">
+              {{bigNumTypeFormat(row.reward.amount,row.reward.denom)}}
+            </template>
+         </Table>
          <div class="btnholder">
             <Button class="btn" @click="openDeposit" type="primary" >存入</Button>
             <Button class="btn" @click="openwithdrawalReward" type="primary">提取收益</Button>
@@ -22,29 +30,29 @@ import Cancelpledge from '@/views/Dialog/loan/Cancelpledge.vue';
 
 import WithdrawalReward from '@/views/Dialog/loan/WithdrawalReward.vue';
 
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 export default {
   data() {
     return {
       columns1: [
         {
           title: '存币',
-          key: 'Deposittoken'
+          key: 'amount',
+          slot: 'amount'
         },
         {
           title: '未提取的收益',
-          key: 'Undrawnincome'
+          key: 'reward',
+          slot: 'reward'
         },
         {
           title: '年华收益率',
           key: 'Rateofreturn'
         }
       ],
-      data1: [
-        {
-          Deposittoken: '1000lamb',
-          Undrawnincome: '10lamb',
-          Rateofreturn: '10%'
-        }
+      supplies: [
+
       ]
     };
   },
@@ -53,7 +61,26 @@ export default {
     Cancelpledge,
     WithdrawalReward
   },
+  mounted() {
+    this.getmydata();
+  },
   methods: {
+    async getmydata() {
+      // loanmarketsupplierreward
+      try {
+        // var loanmarket = this.$store.getters.getselectloanmarket;
+
+        let res = await ipc.callMain('loanmarketsupplierreward', {
+          islatest_reward: true
+        });
+        if (res.state) {
+          console.log(res.data.data);
+          this.$data.supplies = res.data.data.supplies;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
     openDeposit() {
       console.log('openDeposit');
       var loanmarket = this.$store.getters.getselectloanmarket;
@@ -68,6 +95,22 @@ export default {
       this.$refs.withdrawalReward.open(loanmarket);
     }
   }
+  // computed: {
+  //   getselectloanmarket:function(){
+  //     return this.$store.getters.getselectloanmarket;
+  //   }
+  // },
+  // watch:{
+  //   getselectloanmarket:function(){
+  //     console.log('defaultMarket')
+  //     var loanmarket = this.$store.getters.getselectloanmarket;
+  //     if(loanmarket){
+  //       this.getmydata();
+  //     }
+
+  //   }
+
+  // }
 
 };
 </script>

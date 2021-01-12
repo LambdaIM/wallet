@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="customer-container">
-      {{defaultmarket}}
+
       <div class="tableContainer">
           <Row v-if="defaultmarket">
             <Col span="12">

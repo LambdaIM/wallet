@@ -34,7 +34,8 @@ const transactionTypes = {
   Supply: 'MsgSupply',
   SupplierAbort: 'MsgSupplierAbort',
   SupplierWithdraw: 'MsgSupplierWithdraw',
-  LoaneeWithDraw: 'MsgLoaneeWithDraw'
+  LoaneeWithDraw: 'MsgLoaneeWithDraw',
+  LoanOrderRenewal: 'MsgLoanOrderRenewal'
 
 };
 

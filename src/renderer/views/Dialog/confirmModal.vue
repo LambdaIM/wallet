@@ -559,6 +559,51 @@
 
 
           </div>
+          <div v-if="txtype=='loan_SupplierWithdraw'">
+            <h2>提取收益 </h2>
+
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+
+            <Row class-name="item">
+              <Col span="4" class-name="key">借贷市场:</Col>
+              <Col span="20" class-name="value">{{transactiondata.marketName}}</Col>
+            </Row>
+
+
+          </div>
+
+          <div v-if="txtype=='loan_LoaneeWithDraw'">
+            <h2>提取挖矿收益 </h2>
+
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+
+            <Row class-name="item">
+              <Col span="4" class-name="key">借贷市场:</Col>
+              <Col span="20" class-name="value">{{transactiondata.marketName}}</Col>
+            </Row>
+
+
+          </div>
+          <div v-if="txtype=='loan_LoanOrderRenewal'">
+            <h2>订单续期 </h2>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+
+            <Row class-name="item">
+              <Col span="4" class-name="key">订单id:</Col>
+              <Col span="20" class-name="value">{{transactiondata.orderID}}</Col>
+            </Row>
+
+
+          </div>
 
 
 

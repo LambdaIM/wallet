@@ -864,6 +864,19 @@ export default function() {
     }
   });
 
+  // loan_LoanOrderRenewal
+
+  eipc.answerRenderer('loan_LoanOrderRenewal', async query => {
+    var { orderId } = query;
+    try {
+      var TxMessageload = await WM.loan_LoanOrderRenewal(orderId);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
 
   /* loan */
 

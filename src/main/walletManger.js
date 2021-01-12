@@ -942,6 +942,17 @@ walletManger.prototype.loan_LoaneeWithDraw = async function (marketName,memo) {
   };
 };
 
+walletManger.prototype.loan_LoanOrderRenewal = async function (orderID,memo) {
+  return {
+    type: transaction.LoanOrderRenewal,
+    orderID: orderID,
+    memo: memo || ''
+  };
+};
+
+
+
+
 
 
 /* loan */

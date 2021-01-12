@@ -91,13 +91,19 @@ class marketmanager {
     return { data: result };
   }
 
-  async loanmarketsupplierreward(address, islatest_reward) {
-    var result = await this.CosmosAPI().get.loansupplierreward(address, islatest_reward);
+  async loanmarketsupplierreward(islatest_reward) {
+    if (this.defaultAddress == null) {
+      throwErrorCode(errorList.need_address);
+    }
+    var result = await this.CosmosAPI().get.loansupplierreward(this.defaultAddress, islatest_reward);
     return { data: result };
   }
 
   async loanloanee(address) {
-    var result = await this.CosmosAPI().get.loanloanee(address);
+    if (this.defaultAddress == null) {
+      throwErrorCode(errorList.need_address);
+    }
+    var result = await this.CosmosAPI().get.loanloanee(this.defaultAddress);
     return { data: result };
   }
 
@@ -106,10 +112,23 @@ class marketmanager {
     return { data: result };
   }
 
-  async loanmatch_match_orders(address, page, limit) {
-    var result = await this.CosmosAPI().get.loanmatch_match_orders(address, page, limit);
+  async loanmatch_match_orders(page, limit) {
+    if (this.defaultAddress == null) {
+      throwErrorCode(errorList.need_address);
+    }
+    var result = await this.CosmosAPI().get.loanmatch_match_orders(this.defaultAddress, page, limit);
     return { data: result };
   }
+
+  async pdpStoragepower() {
+    if (this.defaultAddress == null) {
+      throwErrorCode(errorList.need_address);
+    }
+    var result = await this.CosmosAPI().get.pdpStoragepower(this.defaultAddress);
+    return { data: result };
+  }
+
+  // marketMinerInfo
 
 
 

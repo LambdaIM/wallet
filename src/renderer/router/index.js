@@ -262,6 +262,10 @@ var walletRouter = new Router({
         path: 'orderlist',
         name: 'orderlist',
         component: () => import('@/views/lendingmarket/orderlist.vue')
+      }, {
+        path: 'orderdetails/:orderid',
+        name: 'orderdetails',
+        component: () => import('@/views/lendingmarket/MatchOrderInfo.vue')
       }
 
     ]

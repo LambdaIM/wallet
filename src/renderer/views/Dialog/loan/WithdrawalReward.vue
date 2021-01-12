@@ -58,7 +58,6 @@ export default {
   },
   methods: {
     open(loanmarket) {
-      this.$data.Tovalue = loanmarket.name;
       this.$data.title = loanmarket.name;
 
       this.sendModal = true;
@@ -68,45 +67,26 @@ export default {
     },
     preSendLAMB() {
       console.log('-----');
-      let from = this.address;
-      let to = this.Tovalue;
-      let value = this.toBigNumStr(this.LAMBvalue);
 
 
-      if (this.bigLess0OrGreater(value, this.balance)) {
-        // need to alert
-        this.$Notice.warning({
-          title: this.$t('home.action.check_balance_amount_transfer')
-        });
-        return;
-      }
-
-
-      if (isNaN(value)) {
-        this.$Notice.warning({
-          title: this.$t('home.action.Check_the_amount')
-        });
-        return;
-      }
-      this.transfer(value);
+      this.transfer();
     },
-    async transfer(amount) {
-      let ProposalID = this.Tovalue;
+    async transfer() {
+      let name = this.$data.title;
       // let amount = this.LAMBvalue;
       let gas = 1;
       // amount = amount * 10000;
       this.$data.transactiondata = null;
 
       try {
-        let res = await ipc.callMain('deposit', {
-          ProposalID,
-          amount,
+        let res = await ipc.callMain('loan_SupplierWithdraw', {
+          name,
           gas
         });
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('deposit', res.data);
+          this.$refs.ConfirmModal.open('loan_SupplierWithdraw', res.data);
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {
