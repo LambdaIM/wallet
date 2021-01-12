@@ -522,6 +522,44 @@
 
           </div>
 
+          <div v-if="txtype=='loan_Supply'">
+            <h2>存入lambda，分享挖矿收益 </h2>
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+
+            <Row class-name="item">
+              <Col span="4" class-name="key">借贷市场:</Col>
+              <Col span="20" class-name="value">{{transactiondata.name}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">存入金额:</Col>
+              <Col span="20" class-name="value">{{transactiondata.token|BlanceValue}} LAMB </Col>
+            </Row>
+
+
+          </div>
+          <div v-if="txtype=='loan_SupplierAbort'">
+            <h2>取出lambda，不再分享挖矿收益 </h2>
+
+            <Row class-name="item">
+              <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
+              <Col span="20" class-name="value">{{address}}</Col>
+            </Row>
+
+            <Row class-name="item">
+              <Col span="4" class-name="key">借贷市场:</Col>
+              <Col span="20" class-name="value">{{transactiondata.marketName}}</Col>
+            </Row>
+            <Row class-name="item">
+              <Col span="4" class-name="key">存入金额:</Col>
+              <Col span="20" class-name="value">{{transactiondata.token|BlanceValue}} LAMB </Col>
+            </Row>
+
+
+          </div>
+
 
 
           <Row class-name="item">

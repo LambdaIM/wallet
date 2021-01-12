@@ -904,6 +904,48 @@ walletManger.prototype.DamMinerWithDrawCount = async function (asset,page,limit,
   };
 };
 
+/* loan */
+walletManger.prototype.loan_Supply = async function (name,token_amount,tokendenom,memo) {
+  return {
+    type: transaction.Supply,
+    name: name,
+    token: token_amount,
+    tokendenom:tokendenom,
+    memo: memo || ''
+  };
+};
+
+
+walletManger.prototype.loan_SupplierAbort = async function (marketName,token_amount,tokendenom,memo) {
+  return {
+    type: transaction.SupplierAbort,
+    marketName: marketName,
+    token: token_amount,
+    tokendenom:tokendenom,
+    memo: memo || ''
+  };
+};
+
+walletManger.prototype.loan_SupplierWithdraw = async function (marketName,memo) {
+  return {
+    type: transaction.SupplierWithdraw,
+    marketName: marketName,
+    memo: memo || ''
+  };
+};
+
+walletManger.prototype.loan_LoaneeWithDraw = async function (marketName,memo) {
+  return {
+    type: transaction.LoaneeWithDraw,
+    marketName: marketName,
+    memo: memo || ''
+  };
+};
+
+
+
+/* loan */
+
 
 
 

@@ -103,22 +103,22 @@ export default {
       this.transfer(value);
     },
     async transfer(amount) {
-      let ProposalID = this.Tovalue;
+      let name = this.Tovalue;
       // let amount = this.LAMBvalue;
       let gas = 1;
       // amount = amount * 10000;
       this.$data.transactiondata = null;
 
       try {
-        let res = await ipc.callMain('deposit', {
-          ProposalID,
+        let res = await ipc.callMain('loan_Supply', {
+          name,
           amount,
           gas
         });
         // console.log(res);
         if (res.state) {
           this.sendcancel();
-          this.$refs.ConfirmModal.open('deposit', res.data);
+          this.$refs.ConfirmModal.open('loan_Supply', res.data);
 
           // let gasres = await ipc.callMain('Simulate', { transactiondata: res.data });
           // if (gasres.state) {

@@ -30,7 +30,11 @@ const transactionTypes = {
   ActivateMiner: 'MsgActivateMiner',
   DamCreateBuyOrder: 'MsgDamCreateBuyOrder',
   DamOrderRenewal: 'MsgDamOrderRenewal',
-  DamMinerWithDrawCount: 'MsgDamMinerWithDrawCount'
+  DamMinerWithDrawCount: 'MsgDamMinerWithDrawCount',
+  Supply: 'MsgSupply',
+  SupplierAbort: 'MsgSupplierAbort',
+  SupplierWithdraw: 'MsgSupplierWithdraw',
+  LoaneeWithDraw: 'MsgLoaneeWithDraw'
 
 };
 

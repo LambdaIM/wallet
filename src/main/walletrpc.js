@@ -784,6 +784,88 @@ export default function() {
       throw resultView(null, false, error);
     }
   });
+  /* loan */
+
+  eipc.answerRenderer('loan_Supply', async query => {
+    var { name, amount } = query;
+
+    if (name == undefined) {
+      throw resultView(null, false, errorList.need_marketName);
+    }
+
+    if (amount == undefined) {
+      throw resultView(null, false, errorList.need_amount);
+    }
+
+
+    try {
+      var TxMessageload = await WM.loan_Supply(name, amount, 'ulamb');
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+  eipc.answerRenderer('loan_SupplierAbort', async query => {
+    var { name, amount } = query;
+
+    if (name == undefined) {
+      throw resultView(null, false, errorList.need_marketName);
+    }
+
+    if (amount == undefined) {
+      throw resultView(null, false, errorList.need_amount);
+    }
+
+
+    try {
+      var TxMessageload = await WM.loan_SupplierAbort(name, amount, 'ulamb');
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+  eipc.answerRenderer('loan_SupplierWithdraw', async query => {
+    var { name } = query;
+
+    if (name == undefined) {
+      throw resultView(null, false, errorList.need_marketName);
+    }
+
+
+    try {
+      var TxMessageload = await WM.loan_SupplierWithdraw(name);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+  eipc.answerRenderer('loan_LoaneeWithDraw', async query => {
+    var { name } = query;
+
+    if (name == undefined) {
+      throw resultView(null, false, errorList.need_marketName);
+    }
+
+
+    try {
+      var TxMessageload = await WM.loan_LoaneeWithDraw(name);
+
+      return resultView(TxMessageload, true);
+    } catch (error) {
+      throw resultView(null, false, error);
+    }
+  });
+
+
+  /* loan */
 
 
 
