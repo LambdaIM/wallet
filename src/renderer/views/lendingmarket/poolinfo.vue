@@ -5,7 +5,7 @@
       <div class="tableContainer">
           <Row v-if="defaultmarket">
             <Col span="12">
-            <div>出借总量</div>
+            <div>存币总量</div>
             <div>
               <span class="numtitle">{{ defaultmarket.supplyPool.amount|BlanceValue}}</span> lamb
             </div>

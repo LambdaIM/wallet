@@ -58,15 +58,7 @@
                 </Col>
 
             </Row>
-            <Row class-name="card-item">
-                <Col span="4" class-name="title-wrapper">
-                    <span class="title">{{$t('Matchorders.list.price')}}:</span>
-                </Col>
-                <Col span="17" class-name="content-wrapper">
-                    {{orderinfo.price|BlanceValue}}
-                </Col>
 
-            </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
                     <span class="title">{{$t('Matchorders.list.Startingtime')}}:</span>
@@ -85,15 +77,7 @@
                 </Col>
 
             </Row>
-            <Row class-name="card-item">
-                <Col span="4" class-name="title-wrapper">
-                    <span class="title">{{$t('Matchorders.list.Paymentamount')}}:</span>
-                </Col>
-                <Col span="17" class-name="content-wrapper">
-                    {{bigNumTypeFormat(orderinfo.userPay.amount,orderinfo.userPay.denom)}}
-                </Col>
 
-            </Row>
             <Row class-name="card-item">
                 <Col span="4" class-name="title-wrapper">
                     <span class="title">{{$t('Matchorders.list.EndTime')}}:</span>

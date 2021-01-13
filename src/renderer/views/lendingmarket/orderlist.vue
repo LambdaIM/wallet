@@ -3,7 +3,7 @@
     <div class="customer-container">
 
       <div class="tableContainer">
-        匹配订单列表
+
         <Table :columns="matchordercolumns" :data="matchorderdata">
 
                  <template slot-scope="{ row, index }" slot="operation">
@@ -19,10 +19,6 @@
                   </template>
 
 
-                  <template slot-scope="{ row, index }" slot="asset">
-                    {{denomFormart(row.asset) }}
-                  </template>
-
 
                   <template slot-scope="{ row, index }" slot="createTime">
                     {{row.createTime|blockFormatDate }}
@@ -31,6 +27,10 @@
 
 
                </Table>
+               <br/>
+               <div style="text-align: center;">
+                     <Page   @on-change="orderListPage" :total="allCount" simple/>
+                    </div>
         </div>
     </div>
 </div>
@@ -47,18 +47,8 @@ export default {
         key: 'orderId'
       },
       {
-        title: this.$t('Matchorders.list.AssetName'),
-        key: 'asset',
-        slot: 'asset'
-      },
-      {
         title: this.$t('Matchorders.list.Size'),
         key: 'size'
-      },
-      {
-        title: this.$t('Matchorders.list.price'),
-        key: 'price',
-        slot: 'price'
       },
       {
         title: this.$t('Matchorders.list.Startingtime'),
@@ -75,7 +65,9 @@ export default {
         key: 'operation',
         slot: 'operation'
       }],
-      matchorderdata: []
+      matchorderdata: [],
+      allCount: 1,
+      pageCount: {}
     };
   },
   mounted() {
@@ -94,6 +86,10 @@ export default {
         if (res.state) {
           console.log(res.data.data);
           this.$data.matchorderdata = res.data.data;
+          if (this.$data.pageCount[page] == undefined) {
+            this.$data.pageCount[page] = 1;
+            this.$data.allCount += this.$data.matchorderdata.length;
+          }
         }
         this.$data.loading = false;
       } catch (error) {
@@ -104,6 +100,17 @@ export default {
     pageto(item) {
       console.log('**************');
       this.$router.push(`/lendingmarket/orderdetails/${item.orderId}`);
+    },
+    orderType(buyaddress) {
+      var address = this.$store.getters.getaddress;
+      if (buyaddress == address) {
+        return this.$t('Matchorders.list.buy');
+      } else {
+        return this.$t('Matchorders.list.sell');
+      }
+    },
+    orderListPage(number) {
+      this.getListdata(number);
     }
   }
 
