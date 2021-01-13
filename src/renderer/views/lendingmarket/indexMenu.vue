@@ -1,7 +1,7 @@
 <template>
     <div class="customer-container">
         <div class="tableContainer">
-            <h3>借贷存储市场</h3>
+            <h3>{{name}}流动性存储市场</h3>
             <Menu mode="horizontal"  :active-name="activeItem">
                 <MenuItem to="/lendingmarket" name="poolinfo">
                     <Icon type="ios-paper" />
@@ -35,7 +35,9 @@ export default {
   data() {
     return {
       markets: [],
-      activeItem: 'poolinfo'
+      activeItem: this.$route.name,
+      name:'',
+
     };
   },
   async mounted() {
@@ -46,6 +48,7 @@ export default {
         console.log(this.$data.markets);
         if (this.$data.markets[0]) {
           this.$store.dispatch('setloanmarket', this.$data.markets[0]);
+          this.$data.name=this.$data.markets[0].name
         } else {
           throw new Error('no loanmarket');
         }

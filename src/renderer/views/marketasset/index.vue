@@ -30,9 +30,9 @@
 
             </RadioGroup>
         </Row>
-      <div v-if="openmarket">
+      <div >
         <br>
-        <Row>
+        <Row >
           <Col span="12"><h3>{{$t('Marketnavigation.Choosemarket')}}</h3>
 
              </Col>
@@ -42,7 +42,7 @@
         </Row>
         <br/>
         <Row>
-            <Col span="12">
+            <Col span="12" v-if="openmarket">
             <div style="margin: 5px;">
               <ul>
                 <li>{{$t('Marketnavigation.lambdamarket.Note1')}}</li>
@@ -63,10 +63,10 @@
             <div style="margin: 5px;">
 
             <ul>
-                <li>质押lamb到借贷市场，获取收益 </li>
-                <li>提供算力到借贷市场，获取收益</li>
+                <li>提供lamb资产流动性，获取收益 </li>
+                <li>提供算力流动性，获取收益</li>
                 <li>矿工挖矿不在需要订单保证金</li>
-                <li>暂时不用lamb也可以在借贷市场中获取收益</li>
+                <li>暂时不用lamb也可以通过提供流动性获取收益</li>
                 <li>lamb随存随取，收益随时都可以提取</li>
 
 
@@ -74,45 +74,47 @@
               </ul>
             </div>
             <div style="margin: 5px;">
-              <Button  type="primary" to="/lendingmarket" long>借贷存储市场 </Button>
+              <Button  type="primary" to="/lendingmarket" long>流动性存储市场 </Button>
 
 
             </div>
             </Col>
         </Row>
         <br>
-        <Row>
-          <Col span="12"><h3>{{$t('Marketnavigation.Miningreward')}}</h3>
+        <div v-if="openmarket">
+            <Row >
+              <Col span="12"><h3>{{$t('Marketnavigation.Miningreward')}}</h3>
 
-             </Col>
-            <Col span="12">
+                </Col>
+                <Col span="12">
 
-            </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col span="24">
-           <p>
-           <Tag v-for="item in MinerRewards">{{bigNumTypeFormat(item.amount,item.denom)}}</Tag>
-      </p>
+                </Col>
+            </Row>
+            <br/>
+            <Row>
+              <Col span="24">
+              <p>
+              <Tag v-for="item in MinerRewards">{{bigNumTypeFormat(item.amount,item.denom)}}</Tag>
+          </p>
 
-      <p v-if="MinerRewards.length==0">
-        {{$t('Dialog.com.Nodata')}}
-      </p>
+          <p v-if="MinerRewards.length==0">
+            {{$t('Dialog.com.Nodata')}}
+          </p>
 
-             </Col>
+                </Col>
 
-        </Row>
-        <br/>
-        <Row>
-          <Col span="12">
-           <Button @click="Drawreward">{{$t('somemodel.Extractstorageandmininrewards')}}</Button>
+            </Row>
+            <br/>
+            <Row>
+              <Col span="12">
+              <Button @click="Drawreward">{{$t('somemodel.Extractstorageandmininrewards')}}</Button>
 
-             </Col>
-            <Col span="12">
+                </Col>
+                <Col span="12">
 
-            </Col>
-        </Row>
+                </Col>
+            </Row>
+        </div>
     </div>
         </div>
         <br/>

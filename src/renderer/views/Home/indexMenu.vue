@@ -13,7 +13,8 @@
         <span v-else>
           &nbsp;
         </span>
-        <span style="    font-size: 15px;">借贷市场奖励：--</span>
+        <span style="    font-size: 15px;">资产流动性奖励：--</span>
+        <span style="    font-size: 15px;">算力流动性奖励：--</span>
         </Col>
         <Col span="13" style="    text-align: right;">
           <a @click="gettestcoin">{{$t('testcoin.txtbtn')}}</a>
@@ -51,6 +52,9 @@
                 <MenuItem v-if="$role('home.tx.Withdrawprofit')" name="openWithdrawprofit">{{$t('home.Withdrawprofit')}}</MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">{{$t('orderrevenue.WithdraworderCommission')}} </MenuItem>
+                <MenuItem  to="/lendingmarket/Deposittoken" > 资产流动性挖矿收益  </MenuItem>
+                <MenuItem  to="/lendingmarket/Depositpower" > 算力流动性挖矿收益  </MenuItem>
+                
 
                 <!-- <MenuItem v-if="$role('home.tx.Minerprofit')" name="openAuthorizedMarket"> {{$t('Assetincomepop.title')}} </MenuItem> -->
             </MenuGroup>
@@ -133,6 +137,7 @@ import Introtip from '../../common/js/Introtip.js';
 
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+
 
 
 export default {

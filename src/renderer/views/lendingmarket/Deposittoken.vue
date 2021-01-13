@@ -5,8 +5,11 @@
       <div class="tableContainer">
         <div class="btnholder">
             <Button class="btn" @click="openDeposit" type="primary" >存入</Button>
-            <Button class="btn" @click="openwithdrawalReward" type="primary">提取收益</Button>
+            
             <Button class="btn" @click="opencancelpledge" type="primary">取出</Button>
+
+
+            <Button class="btn" @click="openwithdrawalReward" type="primary">提取收益</Button>
           </div>
          <Table :columns="columns1" :data="supplies">
            <template slot-scope="{ row, index }" slot="amount">
