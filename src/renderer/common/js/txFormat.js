@@ -87,6 +87,15 @@ function getToAddress(msg, item, vuethis) {
   if (msg.type === 'lambda/MsgDamMinerWithDrawCount') {
     toaddress = msg.value.asset;
   }
+  if (msg.type === 'lambda/MsgSupply') {
+    toaddress = msg.value.name;
+  }
+  if (msg.type === 'lambda/MsgSupplierAbort' ||
+  msg.type === 'lambda/MsgSupplierWithdraw' ||
+  msg.type === 'lambda/MsgDeclareMining' ||
+  msg.type === 'lambda/MsgLoaneeWithDraw') {
+    toaddress = msg.value.marketName;
+  }
 
 
 
@@ -172,6 +181,13 @@ function getamount(msg0, item, vueIns, index) {
           if (indexNative == index) {
             result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
           }
+          indexNative++;
+        }
+        if (item.key == 'reward' && item.value) {
+          if (indexNative == index) {
+            result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
+          }
+
           indexNative++;
         }
       });

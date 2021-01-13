@@ -3,6 +3,9 @@
     <div class="customer-container">
 
       <div class="tableContainer">
+        <div class="btnholder">
+            <Button @click="openLoaneeWithDraw" class="btn" type="primary">提取收益</Button>
+          </div>
         <Table :columns="columns1" :data="minerdata">
           <template slot-scope="{ row, index }" slot="power">
               {{showpower(row.power)}}
@@ -12,12 +15,7 @@
           </template>
 
         </Table>
-         <div class="btnholder">
 
-
-            <Button @click="openLoaneeWithDraw" class="btn" type="primary">提取收益</Button>
-
-          </div>
 
         </div>
     </div>
@@ -119,7 +117,7 @@ export default {
     margin-right: 20px;
   }
   .btnholder{
-    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
 

@@ -54,6 +54,10 @@
 
 
       </span>
+      <span v-if="isLendingmarket(txItem)">
+         {{txItem.name}}
+      </span>
+
 
       <AddressLink v-if="isAssettx(txItem)==false" :addressLength="addressLength" :to="txItem.to">{{ txItem.to }}</AddressLink>
 
@@ -111,7 +115,10 @@ export default {
   },
   methods: {
     getToWord(txItem) {
-      if (txItem.action == 'MsgWithdrawDelegationReward' || txItem.action == 'MsgWithdrawValidatorCommission' || txItem.action == 'MsgUndelegate') {
+      if (txItem.action == 'MsgWithdrawDelegationReward' || txItem.action == 'MsgWithdrawValidatorCommission' || txItem.action == 'MsgUndelegate' ||
+      txItem.action == 'MsgSupplierAbort' || txItem.action == 'MsgSupplierWithdraw' ||
+      txItem.action == 'MsgLoaneeWithDraw'
+      ) {
         return this.$t('txTable.Withdraw');
       } else {
         return this.$t('txTable.to');
@@ -151,7 +158,8 @@ export default {
       txItem.action !== 'MsgDamCreateBuyOrder' &&
       txItem.action !== 'MsgDamOrderRenewal' &&
       txItem.action !== 'MsgDamMinerWithDrawCount' &&
-      txItem.action !== 'MsgDamMinerWithDraw'
+      txItem.action !== 'MsgDamMinerWithDraw' &&
+      txItem.action !== 'MsgDeclareMining'
 
       ;
     },
@@ -159,6 +167,14 @@ export default {
       var list = ['MsgCreateDigitalAssetMarket', 'MsgDigitalAssetPledge', 'MsgAuthorizeMiningPubKey',
         'MsgDigitalAssetRefund', 'MsgDismissDigitalAssetMarket', 'MsgDeactivateMiner', 'MsgActivateMiner',
         'MsgDamCreateBuyOrder', 'MsgDamOrderRenewal', 'MsgDamMinerWithDrawCount', 'MsgDamMinerWithDraw'];
+      if (list.indexOf(txItem.action) > -1) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    isLendingmarket(txItem) {
+      var list = ['MsgSupply'];
       if (list.indexOf(txItem.action) > -1) {
         return true;
       } else {
