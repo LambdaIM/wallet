@@ -519,7 +519,8 @@
     "MsgSupplierWithdraw":"提取存币收益",
     "MsgDeclareMining":"声明挖矿",
     "MsgLoaneeWithDraw":"提取挖矿收益",
-    "MsgAbortMining":"取消挖矿"
+    "MsgAbortMining":"取消挖矿",
+    "MsgPoolOrderRenewal":"订单续期"
 
    },
    "txTable":{

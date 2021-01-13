@@ -97,7 +97,7 @@ function getToAddress(msg, item, vuethis) {
     toaddress = msg.value.marketName;
   }
 
-  if (msg.type === 'lambda/MsgAbortMining') {
+  if (msg.type === 'lambda/MsgAbortMining' || msg.type === 'lambda/MsgPoolOrderRenewal') {
     toaddress = msg.value.orderID;
   }
 

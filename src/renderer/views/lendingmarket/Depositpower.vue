@@ -68,6 +68,7 @@ export default {
     },
     async getminerdata() {
       // loanloanee
+      console.log('getminerdata');
       try {
         var reward, power;
         var list = [];

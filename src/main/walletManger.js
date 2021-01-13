@@ -944,7 +944,7 @@ walletManger.prototype.loan_LoaneeWithDraw = async function (marketName,memo) {
 
 walletManger.prototype.loan_LoanOrderRenewal = async function (orderID,memo) {
   return {
-    type: transaction.LoanOrderRenewal,
+    type: transaction.PoolOrderRenewal,
     orderID: orderID,
     memo: memo || ''
   };
