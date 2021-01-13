@@ -24,8 +24,9 @@
 </template>
 <script>
 import LoaneeWithDraw from '@/views/Dialog/loan/LoaneeWithDraw.vue';
-const { ipcRenderer: ipc } = require('electron-better-ipc');
 
+import eventhub from '../../common/js/event.js';
+const { ipcRenderer: ipc } = require('electron-better-ipc');
 
 export default {
   data() {
@@ -40,10 +41,6 @@ export default {
           title: '未提取的收益',
           key: 'reward',
           slot: 'reward'
-        },
-        {
-          title: '年华收益率',
-          key: 'Rateofreturn'
         }
       ],
       minerdata: [
@@ -56,6 +53,10 @@ export default {
   },
   mounted() {
     this.getminerdata();
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.getminerdata();
+    });
   },
   methods: {
     showpower(data) {

@@ -54,6 +54,7 @@
 
 
       </span>
+      <span v-if="txItem.action == 'MsgAbortMining'"> 订单id </span>
       <span v-if="isLendingmarket(txItem)">
          {{txItem.name}}
       </span>
@@ -159,7 +160,8 @@ export default {
       txItem.action !== 'MsgDamOrderRenewal' &&
       txItem.action !== 'MsgDamMinerWithDrawCount' &&
       txItem.action !== 'MsgDamMinerWithDraw' &&
-      txItem.action !== 'MsgDeclareMining'
+      txItem.action !== 'MsgDeclareMining' &&
+      txItem.action !== 'MsgAbortMining'
 
       ;
     },

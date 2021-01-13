@@ -30,6 +30,7 @@ import DepositModel from '@/views/Dialog/loan/DepositModel.vue';
 import Cancelpledge from '@/views/Dialog/loan/Cancelpledge.vue';
 
 import WithdrawalReward from '@/views/Dialog/loan/WithdrawalReward.vue';
+import eventhub from '../../common/js/event.js';
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
@@ -46,10 +47,6 @@ export default {
           title: '未提取的收益',
           key: 'reward',
           slot: 'reward'
-        },
-        {
-          title: '年华收益率',
-          key: 'Rateofreturn'
         }
       ],
       supplies: [
@@ -64,6 +61,10 @@ export default {
   },
   mounted() {
     this.getmydata();
+    eventhub.$on('TransactionSuccess', data => {
+      console.log('TransactionSuccess');
+      this.getmydata();
+    });
   },
   methods: {
     async getmydata() {

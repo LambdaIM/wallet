@@ -21,13 +21,15 @@
         <br/><br/>
         <div class="help" v-if="defaultmarket">
           <div> 挖矿说明 </div>
-          <p>1**************
+          <p>1:首先借贷池中双方(出借人和矿工)所有的收益来源于挖矿产出的lamb
           </p>
-          <p>2**************
+          <p>2:其次借贷池中矿工借贷的lamb只能用于挖矿，不能用于其他行为
           </p>
-          <p>3 出借lamb的人未提取的收益：{{ defaultmarket.supplierRewardPool.amount|BlanceValue}}lamb
+          <p>3:出借lamb的和借算力的的人的收益是算法根据当前存款和算力根据一定算法进行分配，关于算法的详细说明见相关文档。
           </p>
-          <p>4 出借算力的人未提取的收益：{{ defaultmarket.minerRewardPool.amount|BlanceValue}}lamb
+          <p>4:出借lamb的人未提取的收益：{{ defaultmarket.supplierRewardPool.amount|BlanceValue}}lamb
+          </p>
+          <p>5: 出借算力的人未提取的收益：{{ defaultmarket.minerRewardPool.amount|BlanceValue}}lamb
           </p>
         </div>
 

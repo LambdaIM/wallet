@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        title="取出lambda，取出后不再分享挖矿收益"
+        title="取出资产，取出的部分不再分享挖矿收益"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
@@ -30,9 +30,7 @@
 
         <br />
         <p>
-          1*****<br/>
-          1*****<br/>
-          1*****<br/>
+          1:取出资产，取出的部分不再分享挖矿收益<br/>
         </p>
         </Form >
 

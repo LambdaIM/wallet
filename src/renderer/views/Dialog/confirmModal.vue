@@ -523,7 +523,7 @@
           </div>
 
           <div v-if="txtype=='loan_Supply'">
-            <h2>存入lambda，分享挖矿收益 </h2>
+            <h2>存入资产</h2>
             <Row class-name="item">
               <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
               <Col span="20" class-name="value">{{address}}</Col>
@@ -541,7 +541,7 @@
 
           </div>
           <div v-if="txtype=='loan_SupplierAbort'">
-            <h2>取出lambda，不再分享挖矿收益 </h2>
+            <h2>取出资产 </h2>
 
             <Row class-name="item">
               <Col span="4" class-name="key">{{$t('txPopup.Operator')}}:</Col>
