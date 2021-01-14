@@ -6,17 +6,10 @@
     <div class="testcoin">
 
          <Row>
-        <Col span="11">
-        <span v-if="$role('home.guide')" style="    font-size: 15px;">
-          {{$t('testcoin.miningaward')}}：<span style="color: #67a7db;">{{MinerRewards|Lambformat}}</span>
-        </span>
-        <span v-else>
-          &nbsp;
-        </span>
-        <span style="    font-size: 15px;">资产流动性奖励：--</span>
-        <span style="    font-size: 15px;">算力流动性奖励：--</span>
+        <Col span="19">
+         <Rewardmodule/>
         </Col>
-        <Col span="13" style="    text-align: right;">
+        <Col span="5" style="    text-align: right;">
           <a @click="gettestcoin">{{$t('testcoin.txtbtn')}}</a>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <a @click="getcommunitylink">{{$t('testcoin.community')}} </a>
@@ -53,7 +46,7 @@
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">{{$t('orderrevenue.WithdraworderCommission')}} </MenuItem>
                 <MenuItem  to="/lendingmarket/Deposittoken" > 资产流动性挖矿收益  </MenuItem>
-                <MenuItem  to="/lendingmarket/Depositpower" > 算力流动性挖矿收益  </MenuItem>
+                <MenuItem v-if="$role('home.tx.Minerprofit')" to="/lendingmarket/Depositpower" > 算力流动性挖矿收益  </MenuItem>
 
 
                 <!-- <MenuItem v-if="$role('home.tx.Minerprofit')" name="openAuthorizedMarket"> {{$t('Assetincomepop.title')}} </MenuItem> -->
@@ -97,9 +90,9 @@
             <Icon type="ios-construct" />
             S3
         </MenuItem>
-        <MenuItem   to="/home/Marketoperation" name="Marketoperation">
+        <MenuItem   to="/lendingmarket" name="Marketoperation">
             <Icon type="md-football" />
-            {{$t('home.Marketoperation')}}
+            流动性挖矿
         </MenuItem>
 
     </Menu>
@@ -135,17 +128,18 @@ import introJs from 'intro.js';
 import homesteps from './homesteps.js';
 import Introtip from '../../common/js/Introtip.js';
 
+import Rewardmodule from './Rewardmodule.vue';
+
 const { shell } = require('electron');
 const { ipcRenderer: ipc } = require('electron-better-ipc');
-
 
 
 export default {
   data() {
     return {
       activeItem: this.$route.name,
-      time: '',
-      MinerRewards: 0
+      time: ''
+
     };
   },
   components: {
@@ -156,13 +150,10 @@ export default {
     MinerWithdrawalModal,
     MinerWithdrawaOrderlModal,
     WithdrawalMarketModal,
-    withdrawalAuthorizedMarketModal
+    withdrawalAuthorizedMarketModal,
+    Rewardmodule
   },
   mounted() {
-    this.getMinerRewards();
-    this.$data.Interval = setInterval(async () => {
-      this.getMinerRewards();
-    }, 1000 * 15);
     //= =
     var role = this.$store.getters.role;
     console.log(Introtip);
@@ -229,30 +220,6 @@ export default {
     getcommunitylink() {
       var url = 'https://talk.lambdastorage.com/';
       shell.openExternal(url);
-    },
-    async getMinerRewards() {
-      console.log('getMinerRewards');
-      try {
-        let res = await ipc.callMain('MinerRewards', {});
-
-        console.log(res);
-
-        if (res.state) {
-          var list = res.data['miner_rewards'] || [];
-          var result = '';
-          list.forEach(item => {
-            if (item.denom == 'ulamb') {
-              result = item.amount;
-            }
-          });
-
-          this.$data.MinerRewards = result;
-          this.$store.dispatch('setMinerReward', result);
-        }
-      } catch (ex) {
-        console.log(ex);
-      }
-      console.log('getListDataEnd');
     }
   }
 
