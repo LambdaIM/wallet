@@ -13,7 +13,7 @@
                 </MenuItem>
                 <MenuItem to="/lendingmarket/Depositpower" name="Depositpower">
                     <Icon type="ios-paper" />
-                    存算力
+                    算力
                 </MenuItem>
                 <MenuItem to="/lendingmarket/orderlist" name="orderlist">
                     <Icon type="ios-paper" />

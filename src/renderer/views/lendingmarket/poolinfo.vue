@@ -4,33 +4,46 @@
 
       <div class="tableContainer">
           <Row v-if="defaultmarket">
-            <Col span="12">
+            <Col span="8">
             <div>资产总量</div>
             <div>
               <span class="numtitle">{{ defaultmarket.supplyPool.amount|BlanceValue}}</span> lamb
             </div>
             </Col>
-            <Col span="12">
+            <Col span="8">
             <div> 算力总量 </div>
             <div>
               <span class="numtitle">{{ (defaultmarket.totalPower/1000).toFixed(3)}}</span> TB
             </div>
             </Col>
+            <Col span="8">
+            <div> 状态 </div>
+            <div>
+
+              <span class="numtitle" v-if="Marketstatus==0">均衡</span>
+              <span class="numtitle" v-if="Marketstatus==1">资产收益率较高</span>
+              <span class="numtitle" v-if="Marketstatus==2">算力收益率较高</span>
+            </div>
+            </Col>
+
 
         </Row>
         <br/><br/>
+        <!-- <div>
+            {{tokenp1}} {{powerp1}}
+            </div> -->
         <div class="help" v-if="defaultmarket">
           <div> 挖矿说明 </div>
-          <p>1:首先借贷池中双方(出借人和矿工)所有的收益来源于挖矿产出的lamb
+          <p>1:状态为资产收益率较高时，通过存入资产可以获取较多的收益。
           </p>
-          <p>2:其次借贷池中矿工借贷的lamb只能用于挖矿，不能用于其他行为
+          <p>2:状态为算力收益率较高时，通过提供算力可以获取较多的收益
           </p>
-          <p>3:出借lamb的和借算力的的人的收益是算法根据当前存款和算力根据一定算法进行分配，关于算法的详细说明见相关文档。
+          <p>3:更多收益率信息想见浏览器
           </p>
-          <p>4:出借lamb的人未提取的收益：{{ defaultmarket.supplierRewardPool.amount|BlanceValue}}lamb
+          <!-- <p>3:出借lamb的人未提取的收益：{{ defaultmarket.supplierRewardPool.amount|BlanceValue}}lamb
           </p>
-          <p>5: 出借算力的人未提取的收益：{{ defaultmarket.minerRewardPool.amount|BlanceValue}}lamb
-          </p>
+          <p>4: 出借算力的人未提取的收益：{{ defaultmarket.minerRewardPool.amount|BlanceValue}}lamb
+          </p> -->
         </div>
 
         </div>
@@ -38,18 +51,61 @@
 </div>
 </template>
 <script>
+const { ipcRenderer: ipc } = require('electron-better-ipc');
+
+
 export default {
   data() {
     return {
+      power_ratio: '',
+      tokenp1: '',
+      powerp1: ''
 
     };
+  },
+  mounted() {
+    this.getParams();
   },
   computed: {
     defaultmarket: function() {
       console.log('defaultmarket');
       return this.$store.getters.getselectloanmarket;
+    },
+    Marketstatus: function() {
+      // 市场总供应量：X Lamb
+      // 市场有效算力：Y GB
+      // 市场有效借贷 W = Y * Z  z为power_ratio
+
+      // 总收益：出借人总收益：K * (W / (X + W))
+      // 矿工收益为：   K * (X  / (X + W))
+      var w = this.bigNum(this.$data.power_ratio).times(this.defaultmarket.totalPower);
+      var tokenp1 = w.div(w.plus(this.defaultmarket.supplyPool.amount));
+      console.log(tokenp1.toString());
+      var powerp1 = this.bigNum(this.defaultmarket.supplyPool.amount).div(w.plus(this.defaultmarket.supplyPool.amount));
+      console.log(powerp1);
+      this.$data.tokenp1 = tokenp1;
+      this.$data.powerp1 = powerp1;
+      if (tokenp1.eq(powerp1)) {
+        return 0;
+      }
+
+      if (tokenp1.gt(powerp1)) {
+        return 1;
+      } else {
+        return 2;
+      }
     }
 
+  },
+  methods: {
+    async getParams() {
+      let res = await ipc.callMain('loanmarketsParams', {});
+      if (res.state) {
+        console.log(res.data.data.power_ratio);
+        this.$data.power_ratio = res.data.data.power_ratio;
+        // power_ratio
+      }
+    }
   }
 
 };
