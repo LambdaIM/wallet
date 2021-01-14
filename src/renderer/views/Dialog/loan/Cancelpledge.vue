@@ -30,7 +30,8 @@
 
         <br />
         <p>
-          1:取出资产，取出的部分不再分享挖矿收益<br/>
+          1:取出的最小金额为{{min_supply_amount|Lambformat}}<br/>
+          2:取出资产，取出的部分不再分享挖矿收益<br/>
         </p>
         </Form >
 
@@ -57,18 +58,27 @@ export default {
       Tovalue: '',
       LAMBvalue: '',
       gaseFee: 0,
-      title: ''
+      title: '',
+      min_supply_amount: ''
     };
   },
   components: {
     ConfirmModal
   },
   methods: {
-    open(loanmarket) {
+    async getParams() {
+      let res = await ipc.callMain('loanmarketsParams', {});
+      if (res.state) {
+        console.log(res.data.data);
+        this.$data.min_supply_amount = res.data.data.min_supply_amount;
+      }
+    },
+    async open(loanmarket) {
       this.$data.Tovalue = loanmarket.name;
       this.$data.title = loanmarket.name;
 
       this.sendModal = true;
+      await this.getParams();
     },
     sendcancel() {
       this.sendModal = false;
@@ -79,7 +89,13 @@ export default {
       let to = this.Tovalue;
       let value = this.toBigNumStr(this.LAMBvalue);
 
-
+      if (this.bigLess0OrGreater(this.$data.min_supply_amount, value)) {
+        // need to alert
+        this.$Notice.warning({
+          title: this.$t('home.action.Check_the_amount')
+        });
+        return;
+      }
 
       if (isNaN(value)) {
         this.$Notice.warning({

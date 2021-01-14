@@ -54,7 +54,7 @@
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">{{$t('orderrevenue.WithdraworderCommission')}} </MenuItem>
                 <MenuItem  to="/lendingmarket/Deposittoken" > 资产流动性挖矿收益  </MenuItem>
                 <MenuItem  to="/lendingmarket/Depositpower" > 算力流动性挖矿收益  </MenuItem>
-                
+
 
                 <!-- <MenuItem v-if="$role('home.tx.Minerprofit')" name="openAuthorizedMarket"> {{$t('Assetincomepop.title')}} </MenuItem> -->
             </MenuGroup>

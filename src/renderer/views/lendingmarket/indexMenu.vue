@@ -36,7 +36,7 @@ export default {
     return {
       markets: [],
       activeItem: this.$route.name,
-      name:'',
+      name: ''
 
     };
   },
@@ -48,7 +48,7 @@ export default {
         console.log(this.$data.markets);
         if (this.$data.markets[0]) {
           this.$store.dispatch('setloanmarket', this.$data.markets[0]);
-          this.$data.name=this.$data.markets[0].name
+          this.$data.name = this.$data.markets[0].name;
         } else {
           throw new Error('no loanmarket');
         }

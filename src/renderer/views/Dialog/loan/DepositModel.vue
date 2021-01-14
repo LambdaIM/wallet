@@ -33,7 +33,7 @@
         </p>
         <br />
         <p>
-          1:存入的最小金额为10000lamb<br/>
+          1:存入的最小金额为{{min_supply_amount|Lambformat}}<br/>
           2:随存随取<br/>
           3:存款时间越长，收益越多<br/>
           4:收益来源为接入算力挖矿的收益归属于存款的部分<br/>
@@ -63,18 +63,29 @@ export default {
       Tovalue: '',
       LAMBvalue: '',
       gaseFee: 0,
-      title: ''
+      title: '',
+      min_supply_amount: ''
+
     };
   },
   components: {
     ConfirmModal
   },
   methods: {
-    open(loanmarket) {
+    // loanmarketsParams
+    async getParams() {
+      let res = await ipc.callMain('loanmarketsParams', {});
+      if (res.state) {
+        console.log(res.data.data);
+        this.$data.min_supply_amount = res.data.data.min_supply_amount;
+      }
+    },
+    async open(loanmarket) {
       this.$data.Tovalue = loanmarket.name;
       this.$data.title = loanmarket.name;
 
       this.sendModal = true;
+      await this.getParams();
     },
     sendcancel() {
       this.sendModal = false;
@@ -90,6 +101,13 @@ export default {
         // need to alert
         this.$Notice.warning({
           title: this.$t('home.action.check_balance_amount_transfer')
+        });
+        return;
+      }
+      if (this.bigLess0OrGreater(this.$data.min_supply_amount, value)) {
+        // need to alert
+        this.$Notice.warning({
+          title: this.$t('home.action.Check_the_amount')
         });
         return;
       }
