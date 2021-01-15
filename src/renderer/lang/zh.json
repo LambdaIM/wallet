@@ -1220,7 +1220,7 @@
       "WithdrawalPopup":{
         "title":"取出资产",
         "Marketname":"市场名称",
-        "help1":"存入的最小金额为",
+        "help1":"取出的最小金额为",
         "help2":"取出资产，取出的部分不再分享挖矿收益"
       },
       "WithdrawalincomePopup":{
@@ -1234,6 +1234,16 @@
         "help1":"已经结算的收益可以被取出，未结算的收益下次结算后便可以取出"
 
       }
+    },
+    "poolmarkettx":{
+        "loan_Supply_title":"存入资产",
+        "Marketname":"市场名称",
+        "Amount": "金额",
+        "loan_Withdrawal_title":"取出资产",
+        "loan_Withdrawalincome_title":"提取收益",
+        "loan_powerincome_title":"提取算力挖矿收益",
+        "Orderrenewal":"订单续期",
+        "OrderID":"订单id"
     }
 
 }
