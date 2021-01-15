@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        title="存入lambda，分享挖矿收益"
+        :title="$t('poolmarketinfo.DepositPopup.title')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
@@ -16,7 +16,7 @@
         <br />
         <p>
           <Input readonly v-model="title" :placeholder="$t('home.Modal1.LAMB_address')">
-            <span slot="prepend">借贷市场名称</span>
+            <span slot="prepend">{{$t('poolmarketinfo.DepositPopup.Marketname')}}</span>
           </Input>
         </p>
         <br />
@@ -33,10 +33,10 @@
         </p>
         <br />
         <p>
-          1:存入的最小金额为{{min_supply_amount|Lambformat}}<br/>
-          2:随存随取<br/>
-          3:存款时间越长，收益越多<br/>
-          4:收益来源为接入算力挖矿的收益归属于存款的部分<br/>
+          1:{{$t('poolmarketinfo.DepositPopup.help1')}}{{min_supply_amount|Lambformat}}<br/>
+          2:{{$t('poolmarketinfo.DepositPopup.help2')}}<br/>
+          3:{{$t('poolmarketinfo.DepositPopup.help3')}}<br/>
+          4:{{$t('poolmarketinfo.DepositPopup.help4')}}<br/>
         </p>
         </Form >
 

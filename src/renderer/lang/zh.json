@@ -1208,6 +1208,31 @@
         "Withdrawalincome":"提取收益",
         "mypower":"我的算力",
         "Undrawnincome":"未提取的收益"
+      },
+      "DepositPopup":{
+          "title":"存入资产，分享挖矿收益",
+          "Marketname":"市场名称",
+          "help1":"存入的最小金额为",
+          "help2":"随存随取",
+          "help3":"存款时间越长，收益越多",
+          "help4":"收益来源为接入算力挖矿的收益归属于存款的部分"
+      },
+      "WithdrawalPopup":{
+        "title":"取出资产",
+        "Marketname":"市场名称",
+        "help1":"存入的最小金额为",
+        "help2":"取出资产，取出的部分不再分享挖矿收益"
+      },
+      "WithdrawalincomePopup":{
+        "title":"提取已经结算的收益",
+        "Marketname":"市场名称",
+        "help1":"已经结算的收益可以被取出，未结算的收益下次结算后便可以取出"
+      },
+      "powerincomePopup":{
+        "title":"提取算力挖矿收益",
+        "Marketname":"市场名称",
+        "help1":"已经结算的收益可以被取出，未结算的收益下次结算后便可以取出"
+
       }
     }
 

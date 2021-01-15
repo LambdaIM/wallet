@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        title="取出资产，取出的部分不再分享挖矿收益"
+        :title="$t('poolmarketinfo.WithdrawalPopup.title')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
@@ -16,7 +16,7 @@
         <br />
         <p>
           <Input readonly v-model="title" :placeholder="$t('home.Modal1.LAMB_address')">
-            <span slot="prepend">借贷市场名称</span>
+            <span slot="prepend">{{$t('poolmarketinfo.WithdrawalPopup.Marketname')}}</span>
           </Input>
         </p>
         <br />
@@ -30,8 +30,8 @@
 
         <br />
         <p>
-          1:取出的最小金额为{{min_supply_amount|Lambformat}}<br/>
-          2:取出资产，取出的部分不再分享挖矿收益<br/>
+          1:{{$t('poolmarketinfo.WithdrawalPopup.help1')}}{{min_supply_amount|Lambformat}}<br/>
+          2:{{$t('poolmarketinfo.WithdrawalPopup.help2')}}<br/>
         </p>
         </Form >
 
