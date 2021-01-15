@@ -1167,6 +1167,48 @@
         "Paymentamount":"支付金额",
         "needint":"需要输入整数"
 
+    },
+    "poolmarketinfo":{
+      "Guidancetips":{
+        "tip1":"提供lamb资产流动性，获取收益",
+        "tip2":"提供算力流动性，获取收益",
+        "tip3":"矿工挖矿不在需要订单保证金",
+        "tip4":"暂时不用lamb也可以通过提供流动性获取收益",
+        "tip5":"lamb随存随取，收益随时都可以提取",
+        "tip6":"流动性存储市场"
+      },
+      "menuinfo":{
+          "title":"流动性存储市场",
+          "menu1":"市场信息",
+          "menu2":"存币",
+          "menu3":"算力",
+          "menu4":"订单列表"
+      },
+      "poolinfo":{
+          "title1":"资产总量",
+          "title2":"算力总量",
+          "title3":"状态",
+          "help":"挖矿说明",
+          "help1":"1:状态为资产收益率较高时，通过存入资产可以获取较多的收益。",
+          "help2":"2:状态为算力收益率较高时，通过提供算力可以获取较多的收益。",
+          "help3":"3:更多收益率信息详见浏览器",
+          "tag1":"均衡",
+          "tag2":"资产收益率较高",
+          "tag3":"算力收益率较高"
+      },
+      "depositinfo":{
+          "Deposit":"存入资产",
+          "withdraw":"取出资产",
+          "Withdrawalincome":"提取收益",
+          "Myassets":"我的资产",
+          "Undrawnincome":"未提取的收益"
+
+      },
+      "powerinfo":{
+        "Withdrawalincome":"提取收益",
+        "mypower":"我的算力",
+        "Undrawnincome":"未提取的收益"
+      }
     }
 
 }

@@ -4,7 +4,7 @@
 
       <div class="tableContainer">
         <div class="btnholder">
-            <Button @click="openLoaneeWithDraw" class="btn" type="primary">提取收益</Button>
+            <Button @click="openLoaneeWithDraw" class="btn" type="primary">{{$t('poolmarketinfo.powerinfo.Withdrawalincome')}}</Button>
           </div>
         <Table :columns="columns1" :data="minerdata">
           <template slot-scope="{ row, index }" slot="power">
@@ -33,12 +33,12 @@ export default {
     return {
       columns1: [
         {
-          title: '我的算力',
+          title: this.$t('poolmarketinfo.powerinfo.mypower'),
           key: 'power',
           slot: 'power'
         },
         {
-          title: '未提取的收益',
+          title: this.$t('poolmarketinfo.powerinfo.Undrawnincome'),
           key: 'reward',
           slot: 'reward'
         }
@@ -60,6 +60,9 @@ export default {
   },
   methods: {
     showpower(data) {
+      if (data == undefined) {
+        return '--';
+      }
       return ((data.power * 8) / 1000).toFixed(3) + 'TB';
     },
     openLoaneeWithDraw() {

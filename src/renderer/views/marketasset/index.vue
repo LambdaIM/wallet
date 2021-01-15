@@ -63,18 +63,18 @@
             <div style="margin: 5px;">
 
             <ul>
-                <li>提供lamb资产流动性，获取收益 </li>
-                <li>提供算力流动性，获取收益</li>
-                <li>矿工挖矿不在需要订单保证金</li>
-                <li>暂时不用lamb也可以通过提供流动性获取收益</li>
-                <li>lamb随存随取，收益随时都可以提取</li>
+                <li>{{$t('poolmarketinfo.Guidancetips.tip1')}} </li>
+                <li>{{$t('poolmarketinfo.Guidancetips.tip2')}} </li>
+                <li>{{$t('poolmarketinfo.Guidancetips.tip3')}} </li>
+                <li>{{$t('poolmarketinfo.Guidancetips.tip4')}} </li>
+                <li>{{$t('poolmarketinfo.Guidancetips.tip5')}} </li>
 
 
 
               </ul>
             </div>
             <div style="margin: 5px;">
-              <Button  type="primary" to="/lendingmarket" long>流动性存储市场 </Button>
+              <Button  type="primary" to="/lendingmarket" long>{{$t('poolmarketinfo.Guidancetips.tip6')}} </Button>
 
 
             </div>

@@ -4,12 +4,12 @@
 
       <div class="tableContainer">
         <div class="btnholder">
-            <Button class="btn" @click="openDeposit" type="primary" >存入</Button>
+            <Button class="btn" @click="openDeposit" type="primary" >{{$t('poolmarketinfo.depositinfo.Deposit')}}</Button>
 
-            <Button class="btn" @click="opencancelpledge" type="primary">取出</Button>
+            <Button class="btn" @click="opencancelpledge" type="primary">{{$t('poolmarketinfo.depositinfo.withdraw')}}</Button>
 
 
-            <Button class="btn" @click="openwithdrawalReward" type="primary">提取收益</Button>
+            <Button class="btn" @click="openwithdrawalReward" type="primary">{{$t('poolmarketinfo.depositinfo.Withdrawalincome')}}</Button>
           </div>
          <Table :columns="columns1" :data="supplies">
            <template slot-scope="{ row, index }" slot="amount">
@@ -42,12 +42,12 @@ export default {
     return {
       columns1: [
         {
-          title: '存币',
+          title: this.$t('poolmarketinfo.depositinfo.Myassets'),
           key: 'amount',
           slot: 'amount'
         },
         {
-          title: '未提取的收益',
+          title: this.$t('poolmarketinfo.depositinfo.Undrawnincome'),
           key: 'reward',
           slot: 'reward'
         }

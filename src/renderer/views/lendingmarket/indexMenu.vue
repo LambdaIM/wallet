@@ -1,23 +1,23 @@
 <template>
     <div class="customer-container">
         <div class="tableContainer">
-            <h3>{{name}}流动性存储市场</h3>
+            <h3>{{name}}{{$t('poolmarketinfo.menuinfo.title')}}</h3>
             <Menu mode="horizontal"  :active-name="activeItem">
                 <MenuItem to="/lendingmarket" name="poolinfo">
                     <Icon type="ios-paper" />
-                    市场信息
+                    {{$t('poolmarketinfo.menuinfo.menu1')}}
                 </MenuItem>
                 <MenuItem to="/lendingmarket/Deposittoken" name="Deposittoken">
                     <Icon type="ios-paper" />
-                    存币
+                    {{$t('poolmarketinfo.menuinfo.menu2')}}
                 </MenuItem>
                 <MenuItem to="/lendingmarket/Depositpower" name="Depositpower">
                     <Icon type="ios-paper" />
-                    算力
+                    {{$t('poolmarketinfo.menuinfo.menu3')}}
                 </MenuItem>
                 <MenuItem to="/lendingmarket/orderlist" name="orderlist">
                     <Icon type="ios-paper" />
-                    订单列表
+                    {{$t('poolmarketinfo.menuinfo.menu4')}}
                 </MenuItem>
             </Menu>
         </div>

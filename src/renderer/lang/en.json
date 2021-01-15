@@ -514,7 +514,14 @@
     "MsgDamMinerWithDraw": "DamMinerWithDraw",
     "MsgDamMinerWithDrawCount": "DamMinerWithDrawCount",
     "MsgDamCreateBuyOrder": "DamCreateBuyOrder",
-    "MsgTransferOwnership":"TransferOwnership"
+    "MsgTransferOwnership":"TransferOwnership",
+    "MsgSupply":"Supply",
+    "MsgSupplierAbort":"SupplierAbort",
+    "MsgSupplierWithdraw":"SupplierWithdraw",
+    "MsgDeclareMining":"DeclareMining",
+    "MsgLoaneeWithDraw":"LoaneeWithDraw",
+    "MsgAbortMining":"AbortMining",
+    "MsgPoolOrderRenewal":"PoolOrderRenewal"
   },
   "txTable":{
     "action": "Activity",
@@ -1162,7 +1169,21 @@
       "Paymentamount":"Payment amount",
       "needint":"An integer is required"
 
+  },
+  "poolmarketinfo":{
+    "Guidancetips":{
+      "tip1":""
+
+    },
+    "menuinfo":{
+      "title":"Liquidity storage market",
+      "menu1":"Market information",
+      "menu2":"Deposit money",
+      "menu3":"Storage  power",
+      "menu4":"Order list"
+    }
   }
+  
 
 
 }
