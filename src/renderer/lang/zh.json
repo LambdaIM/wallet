@@ -1180,7 +1180,7 @@
       "menuinfo":{
           "title":"流动性存储市场",
           "menu1":"市场信息",
-          "menu2":"存币",
+          "menu2":"资产",
           "menu3":"算力",
           "menu4":"订单列表"
       },
@@ -1243,7 +1243,11 @@
         "loan_Withdrawalincome_title":"提取收益",
         "loan_powerincome_title":"提取算力挖矿收益",
         "Orderrenewal":"订单续期",
-        "OrderID":"订单id"
+        "OrderID":"订单id",
+        "assetLiquidityminingAward":"资产流动性挖矿奖励",
+        "powerLiquidityminingAward":"算力流动性挖矿奖励",
+        "Liquiditymining":"流动性挖矿",
+        "LiquidityminingAward":"流动性挖矿奖励"
     }
 
 }
