@@ -1197,7 +1197,7 @@
       "help3":"3: More yield information can be found in the browser",
       "tag1":"Equilibrium",
       "tag2":"Higher return on assets",
-      "tag3":"Higher computing power income"
+      "tag3":"Higher power income"
       },
       "depositinfo":{
         "Deposit":"Deposited assets",
@@ -1235,6 +1235,11 @@
       "Marketname":"Market name",
       "help1":"The income that has been settled can be withdrawn, and the unsettled income can be withdrawn after the next settlement"
 
+    },
+    "RenewalPopup":{
+      "help1":"1: Orders that will be due within one month can be renewed",
+      "help2":"2: The renewal period is one month"
+
     }
   },
   "poolmarkettx":{
@@ -1247,7 +1252,7 @@
         "Orderrenewal":"Order renewal",
         "OrderID":"OrderID",
         "assetLiquidityminingAward":"Asset liquidity mining rewards",
-        "powerLiquidityminingAward":"power liquidity mining rewards算力流动性挖矿奖励",
+        "powerLiquidityminingAward":"power liquidity mining rewards",
         "Liquiditymining":"Liquidity mining",
         "LiquidityminingAward":"Liquidity mining rewards"
     }
