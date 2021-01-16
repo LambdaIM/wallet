@@ -1172,17 +1172,85 @@
   },
   "poolmarketinfo":{
     "Guidancetips":{
-      "tip1":""
+      "tip1":"Provide asset liquidity and obtain income",
+      "tip2":"Provide liquidity of computing power and obtain income",
+      "tip3":"Miners no longer need order deposit for mining",
+      "tip4":"You can get income by providing liquidity if you don't need it for the time being",
+      "tip5":"Take as you deposit, and the income can be withdrawn at any time",
+      "tip6":"Liquidity storage market"
 
     },
     "menuinfo":{
       "title":"Liquidity storage market",
       "menu1":"Market information",
-      "menu2":"Deposit money",
-      "menu3":"Storage  power",
+      "menu2":"Deposit assets",
+      "menu3":"Storage power",
       "menu4":"Order list"
+    },
+    "poolinfo":{
+      "title1":"Total assets",
+      "title2":"Total power",
+      "title3":"state",
+      "help":"Mining instructions",
+      "help1":"1: When the return on assets is high, more income can be obtained by depositing assets.",
+      "help2":"2: When the state is the higher rate of return of computing power, more income can be obtained by providing computing power.",
+      "help3":"3: More yield information can be found in the browser",
+      "tag1":"Equilibrium",
+      "tag2":"Higher return on assets",
+      "tag3":"Higher computing power income"
+      },
+      "depositinfo":{
+        "Deposit":"Deposited assets",
+        "withdraw":"Withdrawal of assets",
+        "Withdrawalincome":"Withdrawal of income",
+        "Myassets":"My assets",
+        "Undrawnincome":"Undrawn income"
+    },
+    "powerinfo":{
+      "Withdrawalincome":"Withdrawal of income",
+      "mypower":"My power",
+      "Undrawnincome":"Undrawn income"
+    },
+    "DepositPopup":{
+        "title":"Deposit assets and share mining income",
+        "Marketname":"Market name",
+        "help1":"The minimum amount of deposit is",
+        "help2":"Take as you go",
+        "help3":"The longer you deposit, the more you earn",
+        "help4":"The source of income is the part of the income from the access to the computing power mining that belongs to the deposit"
+    },
+    "WithdrawalPopup":{
+      "title":"Withdraw assets",
+      "Marketname":"Market name",
+      "help1":"The minimum amount to withdraw is",
+      "help2":"Withdrawal of assets, the part withdrawn will not share the mining income"
+    },
+    "WithdrawalincomePopup":{
+      "title":"Withdraw the settled income",
+      "Marketname":"Market name",
+      "help1":"The income that has been settled can be withdrawn, and the unsettled income can be withdrawn after the next settlement"
+    },
+    "powerincomePopup":{
+      "title":"Extract computing power mining revenue",
+      "Marketname":"Market name",
+      "help1":"The income that has been settled can be withdrawn, and the unsettled income can be withdrawn after the next settlement"
+
     }
-  }
+  },
+  "poolmarkettx":{
+        "loan_Supply_title":"Deposit assets",
+        "Marketname":"Market name",
+        "Amount": "Amount",
+        "loan_Withdrawal_title":"Withdraw assets",
+        "loan_Withdrawalincome_title":"Withdrawal income",
+        "loan_powerincome_title":"Withdrawal of  power",
+        "Orderrenewal":"Order renewal",
+        "OrderID":"OrderID",
+        "assetLiquidityminingAward":"Asset liquidity mining rewards",
+        "powerLiquidityminingAward":"power liquidity mining rewards算力流动性挖矿奖励",
+        "Liquiditymining":"Liquidity mining",
+        "LiquidityminingAward":"Liquidity mining rewards"
+    }
   
 
 
