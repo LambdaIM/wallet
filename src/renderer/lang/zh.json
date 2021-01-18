@@ -1167,6 +1167,91 @@
         "Paymentamount":"支付金额",
         "needint":"需要输入整数"
 
+    },
+    "poolmarketinfo":{
+      "Guidancetips":{
+        "tip1":"提供资产流动性，获取收益",
+        "tip2":"提供算力流动性，获取收益",
+        "tip3":"矿工挖矿不在需要订单保证金",
+        "tip4":"暂时不用也可以通过提供流动性获取收益",
+        "tip5":"随存随取，收益随时都可以提取",
+        "tip6":"流动性存储市场"
+      },
+      "menuinfo":{
+          "title":"流动性存储市场",
+          "menu1":"市场信息",
+          "menu2":"资产",
+          "menu3":"算力",
+          "menu4":"订单列表"
+      },
+      "poolinfo":{
+          "title1":"资产总量",
+          "title2":"算力总量",
+          "title3":"状态",
+          "help":"挖矿说明",
+          "help1":"1:状态为资产收益率较高时，通过存入资产可以获取较多的收益。",
+          "help2":"2:状态为算力收益率较高时，通过提供算力可以获取较多的收益。",
+          "help3":"3:更多收益率信息详见浏览器",
+          "tag1":"均衡",
+          "tag2":"资产收益率较高",
+          "tag3":"算力收益率较高"
+      },
+      "depositinfo":{
+          "Deposit":"存入资产",
+          "withdraw":"取出资产",
+          "Withdrawalincome":"提取收益",
+          "Myassets":"我的资产",
+          "Undrawnincome":"未提取的收益"
+
+      },
+      "powerinfo":{
+        "Withdrawalincome":"提取收益",
+        "mypower":"我的算力",
+        "Undrawnincome":"未提取的收益"
+      },
+      "DepositPopup":{
+          "title":"存入资产，分享挖矿收益",
+          "Marketname":"市场名称",
+          "help1":"存入的最小金额为",
+          "help2":"随存随取",
+          "help3":"存款时间越长，收益越多",
+          "help4":"收益来源为接入算力挖矿的收益归属于存款的部分"
+      },
+      "WithdrawalPopup":{
+        "title":"取出资产",
+        "Marketname":"市场名称",
+        "help1":"取出的最小金额为",
+        "help2":"取出资产，取出的部分不再分享挖矿收益"
+      },
+      "WithdrawalincomePopup":{
+        "title":"提取已经结算的收益",
+        "Marketname":"市场名称",
+        "help1":"已经结算的收益可以被取出，未结算的收益下次结算后便可以取出"
+      },
+      "powerincomePopup":{
+        "title":"提取算力挖矿收益",
+        "Marketname":"市场名称",
+        "help1":"已经结算的收益可以被取出，未结算的收益下次结算后便可以取出"
+      },
+      "RenewalPopup":{
+        "help1":"1:对1个月以内将要到期的订单，可以进行续期",
+        "help2":"2:续期时长为一个月"
+
+      }
+    },
+    "poolmarkettx":{
+        "loan_Supply_title":"存入资产",
+        "Marketname":"市场名称",
+        "Amount": "金额",
+        "loan_Withdrawal_title":"取出资产",
+        "loan_Withdrawalincome_title":"提取收益",
+        "loan_powerincome_title":"提取算力挖矿收益",
+        "Orderrenewal":"订单续期",
+        "OrderID":"订单id",
+        "assetLiquidityminingAward":"资产流动性挖矿奖励",
+        "powerLiquidityminingAward":"算力流动性挖矿奖励",
+        "Liquiditymining":"流动性挖矿",
+        "LiquidityminingAward":"流动性挖矿奖励"
     }
 
 }

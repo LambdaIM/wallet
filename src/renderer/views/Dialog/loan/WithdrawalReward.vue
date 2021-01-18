@@ -3,7 +3,7 @@
           <Modal
         loading
         v-model="sendModal"
-        title="提取已结算的收益"
+        :title="$t('poolmarketinfo.WithdrawalincomePopup.title')"
         :styles="{top: '200px'}"
         @on-cancel="sendcancel"
       >
@@ -16,12 +16,12 @@
         <br />
         <p>
           <Input readonly v-model="title" :placeholder="$t('home.Modal1.LAMB_address')">
-            <span slot="prepend">借贷市场名称</span>
+            <span slot="prepend">{{$t('poolmarketinfo.WithdrawalincomePopup.Marketname')}}</span>
           </Input>
         </p>
         <br />
         <p>
-          1：已经结算的收益可以被取出，未结算的收益下次结算后便可以取出<br/>
+          1：{{$t('poolmarketinfo.WithdrawalincomePopup.help1')}}<br/>
         </p>
         </Form >
 

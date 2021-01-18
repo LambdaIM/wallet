@@ -5,24 +5,24 @@
       <div class="tableContainer">
           <Row v-if="defaultmarket">
             <Col span="8">
-            <div>资产总量</div>
+            <div> {{$t('poolmarketinfo.poolinfo.title1')}} </div>
             <div>
               <span class="numtitle">{{ defaultmarket.supplyPool.amount|BlanceValue}}</span> lamb
             </div>
             </Col>
             <Col span="8">
-            <div> 算力总量 </div>
+            <div> {{$t('poolmarketinfo.poolinfo.title2')}} </div>
             <div>
               <span class="numtitle">{{ (defaultmarket.totalPower/1000).toFixed(3)}}</span> TB
             </div>
             </Col>
             <Col span="8">
-            <div> 状态 </div>
+            <div> {{$t('poolmarketinfo.poolinfo.title3')}} </div>
             <div>
 
-              <span class="numtitle" v-if="Marketstatus==0">均衡</span>
-              <span class="numtitle" v-if="Marketstatus==1">资产收益率较高</span>
-              <span class="numtitle" v-if="Marketstatus==2">算力收益率较高</span>
+              <span class="numtitle" v-if="Marketstatus==0">  {{$t('poolmarketinfo.poolinfo.tag1')}}  </span>
+              <span class="numtitle" v-if="Marketstatus==1"> {{$t('poolmarketinfo.poolinfo.tag2')}} </span>
+              <span class="numtitle" v-if="Marketstatus==2"> {{$t('poolmarketinfo.poolinfo.tag3')}} </span>
             </div>
             </Col>
 
@@ -33,12 +33,12 @@
             {{tokenp1}} {{powerp1}}
             </div> -->
         <div class="help" v-if="defaultmarket">
-          <div> 挖矿说明 </div>
-          <p>1:状态为资产收益率较高时，通过存入资产可以获取较多的收益。
+          <div> {{$t('poolmarketinfo.poolinfo.help')}} </div>
+          <p>{{$t('poolmarketinfo.poolinfo.help1')}}
           </p>
-          <p>2:状态为算力收益率较高时，通过提供算力可以获取较多的收益
+          <p>{{$t('poolmarketinfo.poolinfo.help2')}}
           </p>
-          <p>3:更多收益率信息想见浏览器
+          <p>{{$t('poolmarketinfo.poolinfo.help3')}}
           </p>
           <!-- <p>3:出借lamb的人未提取的收益：{{ defaultmarket.supplierRewardPool.amount|BlanceValue}}lamb
           </p>

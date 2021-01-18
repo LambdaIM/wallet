@@ -29,10 +29,10 @@
 
     </Row>
     <p>
-      1:对1个月以内将要到期的订单，可以进行续期
+      {{$t('poolmarketinfo.RenewalPopup.help1')}}
     </p>
     <p>
-      2:续期时长为一个月
+      {{$t('poolmarketinfo.RenewalPopup.help2')}}
     </p>
 
 

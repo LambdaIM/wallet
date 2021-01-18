@@ -45,8 +45,8 @@
                 <MenuItem v-if="$role('home.tx.Withdrawprofit')" name="openWithdrawprofit">{{$t('home.Withdrawprofit')}}</MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerprofit">{{$t('somemodel.Extractstorageandmininrewards')}} </MenuItem>
                 <MenuItem v-if="$role('home.tx.Minerprofit')" name="openMinerOrder">{{$t('orderrevenue.WithdraworderCommission')}} </MenuItem>
-                <MenuItem  to="/lendingmarket/Deposittoken" > 资产流动性挖矿收益  </MenuItem>
-                <MenuItem v-if="$role('home.tx.Minerprofit')" to="/lendingmarket/Depositpower" > 算力流动性挖矿收益  </MenuItem>
+                <MenuItem  to="/lendingmarket/Deposittoken" > {{$t('poolmarkettx.assetLiquidityminingAward')}}  </MenuItem>
+                <MenuItem v-if="$role('home.tx.Minerprofit')" to="/lendingmarket/Depositpower" > {{$t('poolmarkettx.powerLiquidityminingAward')}}  </MenuItem>
 
 
                 <!-- <MenuItem v-if="$role('home.tx.Minerprofit')" name="openAuthorizedMarket"> {{$t('Assetincomepop.title')}} </MenuItem> -->
@@ -92,7 +92,7 @@
         </MenuItem>
         <MenuItem   to="/lendingmarket" name="Marketoperation">
             <Icon type="md-football" />
-            流动性挖矿
+            {{$t('poolmarkettx.Liquiditymining')}}
         </MenuItem>
 
     </Menu>

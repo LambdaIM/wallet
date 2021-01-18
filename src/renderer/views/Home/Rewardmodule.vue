@@ -6,7 +6,7 @@
         <span v-else>
           &nbsp;
         </span>
-        <span style="    font-size: 15px;">流动性挖矿奖励：{{LiquidityReward|Lambformat}}</span>
+        <span style="    font-size: 15px;">{{$t('poolmarkettx.LiquidityminingAward')}}：{{LiquidityReward|Lambformat}}</span>
 
 
     </div>
