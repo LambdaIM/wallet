@@ -530,8 +530,8 @@
             </Row>
 
             <Row class-name="item">
-              <Col span="4" class-name="key">{{$t('poolmarkettx.Marketname')}}:</Col>
-              <Col span="20" class-name="value">{{transactiondata.name}}</Col>
+              <Col span="6" class-name="key">{{$t('poolmarkettx.Marketname')}}:</Col>
+              <Col span="18" class-name="value">{{transactiondata.name}}</Col>
             </Row>
             <Row class-name="item">
               <Col span="4" class-name="key">{{$t('poolmarkettx.Amount')}}:</Col>
@@ -549,8 +549,8 @@
             </Row>
 
             <Row class-name="item">
-              <Col span="4" class-name="key">{{$t('poolmarkettx.Marketname')}}:</Col>
-              <Col span="20" class-name="value">{{transactiondata.marketName}}</Col>
+              <Col span="6" class-name="key">{{$t('poolmarkettx.Marketname')}}:</Col>
+              <Col span="18" class-name="value">{{transactiondata.marketName}}</Col>
             </Row>
             <Row class-name="item">
               <Col span="4" class-name="key">{{$t('poolmarkettx.Amount')}}:</Col>
@@ -568,8 +568,8 @@
             </Row>
 
             <Row class-name="item">
-              <Col span="4" class-name="key">{{$t('poolmarkettx.Marketname')}}:</Col>
-              <Col span="20" class-name="value">{{transactiondata.marketName}}</Col>
+              <Col span="6" class-name="key">{{$t('poolmarkettx.Marketname')}}:</Col>
+              <Col span="18" class-name="value">{{transactiondata.marketName}}</Col>
             </Row>
 
 
@@ -584,8 +584,8 @@
             </Row>
 
             <Row class-name="item">
-              <Col span="4" class-name="key">{{$t('poolmarkettx.Marketname')}}:</Col>
-              <Col span="20" class-name="value">{{transactiondata.marketName}}</Col>
+              <Col span="6" class-name="key">{{$t('poolmarkettx.Marketname')}}:</Col>
+              <Col span="18" class-name="value">{{transactiondata.marketName}}</Col>
             </Row>
 
 

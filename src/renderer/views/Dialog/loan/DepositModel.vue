@@ -100,14 +100,16 @@ export default {
       if (this.bigLess0OrGreater(value, this.balance)) {
         // need to alert
         this.$Notice.warning({
-          title: this.$t('home.action.check_balance_amount_transfer')
+          title: this.$t('home.action.check_balance_amount_transfer'),
+          desc: this.$t('home.action.check_balance_amount_transfer')
         });
         return;
       }
       if (this.bigLess0OrGreater(this.$data.min_supply_amount, value)) {
         // need to alert
         this.$Notice.warning({
-          title: this.$t('home.action.Check_the_amount')
+          title: this.$t('home.action.Check_the_amount'),
+          desc: this.$t('home.action.Check_the_amount')
         });
         return;
       }
