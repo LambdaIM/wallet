@@ -1177,11 +1177,11 @@
       "tip3":"Miners no longer need order deposit for mining",
       "tip4":"You can get income by providing liquidity if you don't need it for the time being",
       "tip5":"Take as you deposit, and the income can be withdrawn at any time",
-      "tip6":"Liquidity storage market"
+      "tip6":"Farming Hub Market"
 
     },
     "menuinfo":{
-      "title":"Liquidity storage market",
+      "title":"Farming Hub Market",
       "menu1":"Market information",
       "menu2":"Deposit assets",
       "menu3":"Storage power",
@@ -1251,10 +1251,10 @@
         "loan_powerincome_title":"Withdrawal of  power",
         "Orderrenewal":"Order renewal",
         "OrderID":"OrderID",
-        "assetLiquidityminingAward":"Asset liquidity mining rewards",
-        "powerLiquidityminingAward":"Power liquidity mining rewards",
-        "Liquiditymining":"Liquidity mining",
-        "LiquidityminingAward":"Liquidity mining rewards"
+        "assetLiquidityminingAward":"Reward of asset in Farming Hub",
+        "powerLiquidityminingAward":"Reward of power in Farming Hub",
+        "Liquiditymining":"Farming Hub Market",
+        "LiquidityminingAward":"Farming Hub Market rewards"
     }
   
 

@@ -1175,10 +1175,10 @@
         "tip3":"矿工挖矿不在需要订单保证金",
         "tip4":"暂时不用也可以通过提供流动性获取收益",
         "tip5":"随存随取，收益随时都可以提取",
-        "tip6":"流动性存储市场"
+        "tip6":"聚合挖矿市场"
       },
       "menuinfo":{
-          "title":"流动性存储市场",
+          "title":"聚合挖矿市场",
           "menu1":"市场信息",
           "menu2":"资产",
           "menu3":"算力",
@@ -1248,10 +1248,10 @@
         "loan_powerincome_title":"提取算力挖矿收益",
         "Orderrenewal":"订单续期",
         "OrderID":"订单id",
-        "assetLiquidityminingAward":"资产流动性挖矿奖励",
-        "powerLiquidityminingAward":"算力流动性挖矿奖励",
-        "Liquiditymining":"流动性挖矿",
-        "LiquidityminingAward":"流动性挖矿奖励"
+        "assetLiquidityminingAward":"聚合挖矿资产奖励",
+        "powerLiquidityminingAward":"聚合挖矿算力奖励",
+        "Liquiditymining":"聚合挖矿",
+        "LiquidityminingAward":"聚合挖矿奖励"
     }
 
 }

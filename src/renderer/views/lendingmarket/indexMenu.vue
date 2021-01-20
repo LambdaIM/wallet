@@ -31,6 +31,8 @@
 
 const { ipcRenderer: ipc } = require('electron-better-ipc');
 
+
+
 export default {
   data() {
     return {
@@ -41,20 +43,29 @@ export default {
     };
   },
   async mounted() {
-    try {
-      let res = await ipc.callMain('loanmarkets', {});
-      if (res.state) {
-        this.$data.markets = res.data.data || [];
-        console.log(this.$data.markets);
-        if (this.$data.markets[0]) {
-          this.$store.dispatch('setloanmarket', this.$data.markets[0]);
-          this.$data.name = this.$data.markets[0].name;
-        } else {
-          throw new Error('no loanmarket');
+    this.loanmarkets();
+    var _this = this;
+    setInterval(() => {
+      _this.loanmarkets();
+    }, 1000 * 15);
+  },
+  methods: {
+    async loanmarkets() {
+      try {
+        let res = await ipc.callMain('loanmarkets', {});
+        if (res.state) {
+          this.$data.markets = res.data.data || [];
+          console.log(this.$data.markets);
+          if (this.$data.markets[0]) {
+            this.$store.dispatch('setloanmarket', this.$data.markets[0]);
+            this.$data.name = this.$data.markets[0].name;
+          } else {
+            throw new Error('no loanmarket');
+          }
         }
+      } catch (ex) {
+        console.log(ex);
       }
-    } catch (ex) {
-      console.log(ex);
     }
   }
 
