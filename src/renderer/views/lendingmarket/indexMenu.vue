@@ -1,7 +1,9 @@
 <template>
     <div class="customer-container">
         <div class="tableContainer">
-            <h3>{{name}}  {{$t('poolmarketinfo.menuinfo.title')}}</h3>
+            <h3>
+              <!-- {{name}} -->
+                {{$t('poolmarketinfo.menuinfo.title')}}</h3>
             <Menu mode="horizontal"  :active-name="activeItem">
                 <MenuItem to="/lendingmarket" name="poolinfo">
                     <Icon type="ios-paper" />

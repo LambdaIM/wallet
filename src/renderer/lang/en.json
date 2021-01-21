@@ -1251,10 +1251,10 @@
         "loan_powerincome_title":"Withdrawal of  power",
         "Orderrenewal":"Order renewal",
         "OrderID":"OrderID",
-        "assetLiquidityminingAward":"Reward of asset in Farming Hub",
-        "powerLiquidityminingAward":"Reward of power in Farming Hub",
-        "Liquiditymining":"Farming Hub Market",
-        "LiquidityminingAward":"Farming Hub Market rewards"
+        "assetLiquidityminingAward":"Asset reward of Farming Hub",
+        "powerLiquidityminingAward":"Power reward of Farming Hub",
+        "Liquiditymining":"Farming",
+        "LiquidityminingAward":"Farming rewards"
     }
   
 
