@@ -514,13 +514,13 @@
     "MsgDamMinerWithDrawCount": "批量提取资产订单收益",
     "MsgDamCreateBuyOrder": "购买资产空间",
     "MsgTransferOwnership":"转让数据所有权",
-    "MsgSupply":"存入",
-    "MsgSupplierAbort":"取出",
-    "MsgSupplierWithdraw":"提取存币收益",
-    "MsgDeclareMining":"声明挖矿",
-    "MsgLoaneeWithDraw":"提取挖矿收益",
-    "MsgAbortMining":"取消挖矿",
-    "MsgPoolOrderRenewal":"订单续期"
+    "MsgSupply": "存入聚合挖矿",
+    "MsgSupplierAbort": "取消存入聚合挖矿",
+    "MsgSupplierWithdraw": "提取聚合挖矿资产收益",
+    "MsgDeclareMining": "声明聚合挖矿",
+    "MsgAbortMining": "中止聚合挖矿",
+    "MsgLoaneeWithDraw": "提取聚合挖矿算力收益",
+    "MsgPoolOrderRenewal": "聚合挖矿订单续期"
 
    },
    "txTable":{
