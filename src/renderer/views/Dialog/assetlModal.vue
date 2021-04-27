@@ -198,7 +198,7 @@ export default {
       return this.$store.getters.getblance;
     },
     coinTypeShow() {
-      return this.$data.coinType.substr(1).toUpperCase();
+      return this.tomLAMB(this.$data.coinType.substr(1).toUpperCase());
     },
     balanceSto: function() {
       return this.$store.getters.getbalanceSto;

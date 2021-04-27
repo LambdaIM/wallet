@@ -37,7 +37,7 @@
                 </Row>
                 <Row class-name="item" >
                     <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-                    <Col span="20" class-name="value">{{MinerDistributionReward }} LAMB</Col>
+                    <Col span="20" class-name="value">{{MinerDistributionReward }} {{tomLAMB('LAMB')}}</Col>
                 </Row>
           </div>
           <div v-if="txtype=='withdrawalDistribution'">
@@ -48,7 +48,7 @@
                 </Row>
                 <Row class-name="item" >
                     <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-                    <Col span="20" class-name="value">{{DistributionReward }} LAMB</Col>
+                    <Col span="20" class-name="value">{{DistributionReward }} {{tomLAMB('LAMB')}}</Col>
                 </Row>
           </div>
           <div v-if="txtype=='transferDelegation'">
@@ -96,11 +96,11 @@
               </Row>
                 <Row v-if="transactiondata.type=='MsgAssetPledge'" class-name="item">
                   <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-                  <Col span="20" class-name="value">{{transactiondata.amounts.amount|BlanceValue}} LAMB {{$t('Dialog.com.to')}}  {{transactiondata.asset.amount|BlanceValue}} TBB</Col>
+                  <Col span="20" class-name="value">{{transactiondata.amounts.amount|BlanceValue}} {{tomLAMB('LAMB')}} {{$t('Dialog.com.to')}}  {{transactiondata.asset.amount|BlanceValue}} TBB</Col>
                 </Row>
                 <Row v-else class-name="item">
                   <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-                  <Col span="20" class-name="value"> {{transactiondata.asset.amount|BlanceValue}} TBB  {{$t('Dialog.com.to')}} {{transactiondata.amounts.amount|BlanceValue}} LAMB</Col>
+                  <Col span="20" class-name="value"> {{transactiondata.asset.amount|BlanceValue}} TBB  {{$t('Dialog.com.to')}} {{transactiondata.amounts.amount|BlanceValue}} {{tomLAMB('LAMB')}}</Col>
                 </Row>
 
           </div>
@@ -535,7 +535,7 @@
             </Row>
             <Row class-name="item">
               <Col span="4" class-name="key">{{$t('poolmarkettx.Amount')}}:</Col>
-              <Col span="20" class-name="value">{{transactiondata.token|BlanceValue}} LAMB </Col>
+              <Col span="20" class-name="value">{{transactiondata.token|BlanceValue}} {{tomLAMB('LAMB')}} </Col>
             </Row>
 
 
@@ -554,7 +554,7 @@
             </Row>
             <Row class-name="item">
               <Col span="4" class-name="key">{{$t('poolmarkettx.Amount')}}:</Col>
-              <Col span="20" class-name="value">{{transactiondata.token|BlanceValue}} LAMB </Col>
+              <Col span="20" class-name="value">{{transactiondata.token|BlanceValue}} {{tomLAMB('LAMB')}} </Col>
             </Row>
 
 
@@ -610,7 +610,7 @@
           <Row class-name="item">
             <Input @on-change="gaseFeechange" ref="gasinput_"  v-model="gaseFee" >
               <span slot="prepend">{{$t('Dialog.com.gasfee')}}</span>
-              <span slot="append">LAMB</span>
+              <span slot="append">{{tomLAMB('LAMB')}}</span>
           </Input>
           <div class="tiptxt">{{$t('Dialog.com.gastip')}}</div>
 
@@ -730,7 +730,7 @@ export default {
       return this.$store.getters.getaddress;
     },
     denomShow: function() {
-      return this.transactiondata.amounts[0].denom.substr(1).toUpperCase();
+      return this.tomLAMB(this.transactiondata.amounts[0].denom.substr(1).toUpperCase());
     },
     MinerDistributionReward() {
       return this.bigNumType(this.$store.getters.getMinerReward);

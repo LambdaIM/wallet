@@ -189,7 +189,7 @@
           "LAMB_address": "lambda 地址",
           "Transfer": "交易",
           "Confirm": "确认",
-          "LAMB": "LAMB"
+          "LAMB": "mLAMB"
       },
       "Token":{
           "name":"名称",

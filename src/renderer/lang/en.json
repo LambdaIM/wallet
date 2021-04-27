@@ -195,7 +195,7 @@
         "LAMB_address":"an LAMB address",
         "Transfer":"Transfer",
         "Confirm":"Confirm",
-        "LAMB":"LAMB"
+        "LAMB":"mLAMB"
       },
       "Token":{
         "name":"Name",

@@ -56,7 +56,7 @@ export default {
       var bigvalue1 = new BigNumber(value).div(1e6).toFixed(6);
       var bigvalue = new BigNumber(bigvalue1);
       if (type == 'ulamb') {
-        return `${bigvalue.toFormat()} LAMB`;
+        return `${bigvalue.toFormat()} mLAMB`;
       } else if (type == 'ulambs') {
         return `${bigvalue.toFormat()} LAMBS`;
       } else if (type == 'utbb') {
@@ -107,6 +107,13 @@ export default {
         bigvalue = new BigNumber(bigvalue);
         bigvalue = bigvalue.div(1e6).toFixed(6);
         return `${new BigNumber(bigvalue).toFormat()} TBB`;
+      }
+    };
+    Vue.prototype.tomLAMB = function (lambname) {
+      if (lambname.toLowerCase() == 'lamb') {
+        return `mLAMB`;
+      } else {
+        return lambname;
       }
     };
 

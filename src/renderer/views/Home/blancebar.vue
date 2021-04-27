@@ -5,7 +5,7 @@
       <Row class-name="account-info-wrapper" type="flex" justify="space-between">
         <Col span="4" class="account-item">
           <div id="accountlambdaBlance" class="item-wrapper">
-            <p class="title">{{$t('home.Balance')}}(LAMB)</p>
+            <p class="title">{{$t('home.Balance')}}({{tomLAMB('LAMB')}})</p>
             <p class="value">{{balance|BlanceValue}} </p>
           </div>
         </Col>
@@ -17,13 +17,13 @@
         </Col>
         <Col span="4" class="account-item">
           <div class="item-wrapper">
-            <p class="title">{{$t('home.Reward')}}(LAMB)</p>
+            <p class="title">{{$t('home.Reward')}}({{tomLAMB('LAMB')}})</p>
             <p class="value">{{DistributionReward|BlanceValue}}</p>
           </div>
         </Col>
         <Col v-if="$role('validatorbalance')"   span="4" class="account-item">
           <div class="item-wrapper">
-            <p class="title">{{$t('home.Validatorprofit')}}(LAMB)</p>
+            <p class="title">{{$t('home.Validatorprofit')}}({{tomLAMB('LAMB')}})</p>
             <p class="value">{{distributionBalance|BlanceValue}}</p>
           </div>
         </Col>
