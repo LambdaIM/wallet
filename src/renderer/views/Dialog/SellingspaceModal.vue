@@ -83,8 +83,8 @@
       </p>
       <br/>
       <p>
-        {{$t('Sellingothers.Compensation')}}：{{Compensation}} LAMB  &nbsp;&nbsp; {{$t('Sellingothers.ServiceCharge')}}：{{Handlingfee}} LAMB  &nbsp;&nbsp;   <br/>
-        {{$t('Sellingothers.Paymentamount')}}：{{allcost}} LAMB
+        {{$t('Sellingothers.Compensation')}}：{{Compensation}} {{tomLAMB('LAMB')}}  &nbsp;&nbsp; {{$t('Sellingothers.ServiceCharge')}}：{{Handlingfee}} {{tomLAMB('LAMB')}}  &nbsp;&nbsp;   <br/>
+        {{$t('Sellingothers.Paymentamount')}}：{{allcost}} {{tomLAMB('LAMB')}}
       </p>
       </Form >
 
