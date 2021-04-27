@@ -162,7 +162,16 @@ function getamount(msg0, item, vueIns, index) {
       item.tags.forEach(item => {
         if (item.key == 'rewards' && item.value) {
           if (indexNative == index) {
-            result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
+            if (item.value.indexOf(',') < 0) {
+              result = _this.bigNumAdd(item.value.replace('ulamb', ''), result);
+            } else {
+              var tempLIst = item.value.split(',');
+              tempLIst.forEach(one => {
+                if (one.indexOf('ulamb') > -1) {
+                  result = _this.bigNumAdd(one.replace('ulamb', ''), result);
+                }
+              });
+            }
           }
 
           indexNative++;
