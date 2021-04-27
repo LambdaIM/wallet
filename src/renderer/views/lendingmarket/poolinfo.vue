@@ -7,7 +7,7 @@
             <Col span="8">
             <div> {{$t('poolmarketinfo.poolinfo.title1')}} </div>
             <div>
-              <span class="numtitle">{{ defaultmarket.supplyPool.amount|BlanceValue}}</span> lamb
+              <span class="numtitle">{{ defaultmarket.supplyPool.amount|BlanceValue}}</span> {{tomLAMB('lamb')}}
             </div>
             </Col>
             <Col span="8">
