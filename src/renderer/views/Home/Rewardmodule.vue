@@ -13,6 +13,7 @@
 </template>
 <script>
 const { ipcRenderer: ipc } = require('electron-better-ipc');
+const BigNumber = require('bignumber.js');
 
 export default {
   data() {
@@ -79,7 +80,7 @@ export default {
         console.log(res.data.data);
         var result = this.bigNum('0');
         try {
-          var dataList = res.data.data.loaneeRewards;
+          var dataList = res.data.data.loaneeRewards || [];
           dataList.forEach(item => {
             result = result.plus(item.withDrawable.amount);
           });
@@ -93,10 +94,15 @@ export default {
   },
   computed: {
     LiquidityReward: function() {
-      if (this.$data.powerReward == 0 || this.$data.pooltokenRewards == 0) {
-        return '';
+      console.log('----');
+      let num;
+      if (this.$data.powerReward == 0) {
+        num = new BigNumber('0');
+      } else {
+        num = this.$data.powerReward;
       }
-      var data = this.$data.powerReward.plus(this.$data.pooltokenRewards);
+
+      var data = num.plus(this.$data.pooltokenRewards);
       return data.toString();
     }
   }
