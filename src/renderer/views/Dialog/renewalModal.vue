@@ -201,7 +201,7 @@ export default {
       return this.$store.getters.getblance;
     },
     denomShow: function() {
-      return this.$data.denom.substr(1).toUpperCase();
+      return this.tomLAMB(this.$data.denom.substr(1).toUpperCase());
     },
     denomtitleShow: function() {
       return this.$t('home.Modal1.Send_LAMB', [this.$data.denom.substr(1).toUpperCase()]);

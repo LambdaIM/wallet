@@ -23,7 +23,7 @@
         <p>
           <Input v-model="LAMBvalue">
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">LAMB</span>
+            <span slot="append">{{tomLAMB('LAMB')}}</span>
           </Input>
         </p>
         <br />

@@ -50,7 +50,7 @@ const formatValue = value => {
   }
   var bigvalue = new BigNumber(value);
 
-  return `${bigvalue.toFormat()} LAMB`;
+  return `${bigvalue.toFormat()} mLAMB`;
 };
 
 const Lambformat = value => {
@@ -59,7 +59,7 @@ const Lambformat = value => {
   }
   var bigvalue1 = new BigNumber(value).div(1e6).toFixed(6);
   var bigvalue = new BigNumber(bigvalue1);
-  return `${bigvalue.toFormat()} LAMB`;
+  return `${bigvalue.toFormat()} mLAMB`;
 };
 const Stoformat = value => {
   if (value == '' || value == undefined || value == null) {
