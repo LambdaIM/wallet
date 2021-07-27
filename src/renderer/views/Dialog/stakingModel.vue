@@ -23,7 +23,8 @@
         <p>
           <Input v-model="LAMBvalue">
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">TBB</span>
+            <span v-if="isdege" slot="append">mLAMB</span>
+            <span v-else slot="append">TB</span>
           </Input>
         </p>
 
@@ -40,7 +41,7 @@
           </ul>
         </p>
         <p v-else>
-          {{$t('home.Balance')}} : {{balance|Stoformat}}
+          {{$t('home.Balance')}} : {{balance|Lambformat}}
 
         </p>
         </Form >
@@ -86,6 +87,11 @@ export default {
       }
       this.stakingParameters();
       this.$data.LAMBvalue = '';
+      if (isdege) {
+        this.$data.denom = 'ulamb';
+      } else {
+        this.$data.denom = 'utbb';
+      }
     },
     sendcancel() {
       this.sendModal = false;
@@ -158,6 +164,7 @@ export default {
       let gas = 1;
       // amount = amount * 10000;
       this.$data.transactiondata = null;
+      var denom = this.$data.denom;
       let isdege = this.$data.isdege;
       try {
         let res = await ipc.callMain('transferDelegation', {
@@ -165,7 +172,8 @@ export default {
           amount,
           gas,
           isdege,
-          validatorType: this.$data.validatorType // 验证节点为1
+          validatorType: this.$data.validatorType, // 验证节点为1
+          denom: denom
         });
         // console.log(res);
         if (res.state) {
@@ -205,7 +213,7 @@ export default {
       return this.$store.getters.getaddress;
     },
     balance: function() {
-      return this.$store.getters.getbalanceSto;
+      return this.$store.getters.getblance;
     },
     balanceLamb: function() {
       return this.$store.getters.getblance;

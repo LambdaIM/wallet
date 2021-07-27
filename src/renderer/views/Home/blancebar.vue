@@ -11,8 +11,8 @@
         </Col>
         <Col span="4" class="account-item">
           <div class="item-wrapper">
-            <p class="title">{{$t('home.pledge')}}(TBB)</p>
-            <p class="value">{{pledgeAmount|Fixed6 }}</p>
+            <p class="title">{{$t('home.pledge')}}</p>
+            <p class="value">{{pledgeAmount|formatStorageSize }}</p>
           </div>
         </Col>
         <Col span="4" class="account-item">

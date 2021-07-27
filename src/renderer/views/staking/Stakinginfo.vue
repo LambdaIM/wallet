@@ -20,7 +20,7 @@
             <span class="title">{{$t('stakinginfo.Mypledge')}}:</span>
           </Col>
           <Col span="14" class-name="content-wrapper">
-            {{myMypledge()}}
+            {{myMypledge()|formatStorageSize}}
           </Col>
           <Col span="3" class-name="title-wrapper">
             <Button @click="openTransferred"  type="info" ghost>{{$t('Dialog.redelegateModel.redelegate')}} </Button>

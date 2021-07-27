@@ -10,9 +10,9 @@
     <Form  @keydown.native.enter.prevent ="preAssetPledge" >
       <p style="text-align: center">
         <RadioGroup v-model="exchangesStatus" type="button">
-          <Radio label="true">
+          <!-- <Radio label="true">
             <span>{{coinTypeShow}} {{$t('Dialog.com.to')}} TBB</span>
-          </Radio>
+          </Radio> -->
           <Radio v-if="coinType!='ulambs'" label="false">
             <span>TBB {{$t('Dialog.com.to')}} {{coinTypeShow}}</span>
           </Radio>
@@ -80,7 +80,7 @@ export default {
     return {
       AssetlModal: false,
       assetConfirmModal: false,
-      exchangesStatus: 'true',
+      exchangesStatus: 'false',
       AssetLAMBvalue: '',
       AssetSTOvalue: '',
       amountBlance: 0,
@@ -96,7 +96,7 @@ export default {
       this.$data.AssetlModal = true;
       this.$data.amountBlance = amountBlance || this.balance;
       this.$data.coinType = coinType || 'ulamb';
-      this.$data.exchangesStatus = 'true';
+      this.$data.exchangesStatus = 'false';
     },
     AssetLAMBvalueChane() {
       console.log('- -');

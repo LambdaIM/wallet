@@ -560,14 +560,14 @@ walletManger.prototype.getMinerRewards = async function () {
 
 
 
-walletManger.prototype.TransferDelegation = async function (to, amount, gas, isdege, validatorType) {
+walletManger.prototype.TransferDelegation = async function (to, amount, gas, isdege, validatorType,denom) {
   if (isdege) {
     // 质押
     return {
       type: transaction.DELEGATE,
       validatorAddress: to,
       amount: amount,
-      denom: 'utbb',
+      denom: denom,
       validatortype: validatorType
     };
   } else {
@@ -576,7 +576,7 @@ walletManger.prototype.TransferDelegation = async function (to, amount, gas, isd
       type: transaction.UNDELEGATE,
       validatorAddress: to,
       amount: amount,
-      denom: 'utbb',
+      denom: denom,
       validatortype: validatorType
     };
   }

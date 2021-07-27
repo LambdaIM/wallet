@@ -1,5 +1,7 @@
 import moment from 'moment';
+import numeral from 'numeral';
 const BigNumber = require('bignumber.js');
+
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_DOWN });
 
 const BlanceValue = value => {
@@ -171,7 +173,7 @@ const formatRelativeDate = value => {
 };
 
 function formatAmount(Amount) {
-  return Amount;
+  return Amount.replace('TBB', 'TB');
 }
 function formatMonth(num) {
   return (num / (1000 * 1000 * 1000 * 60 * 60 * 24 * 30)).toFixed(2);
@@ -193,6 +195,22 @@ function formatDay(num) {
 }
 
 // 1000*1000*1000*60*60*24
+const formatStorageSize = value => {
+  console.log('formatStorageSize', value);
+  if (!value) {
+    return '0 TB';
+  }
+  let unitArr = ['TB', 'PB', 'EB', 'ZB', 'YB'];
+  let index = 0;
+  let srcsize = parseFloat(value);
+  if (srcsize < 1) {
+    return `${value} TB`;
+  }
+  index = Math.floor(Math.log(srcsize) / Math.log(1000));
+  let size = srcsize / Math.pow(1000, index);
+  size = numeral(size).format('0.[00]');
+  return `${size} ${unitArr[index]}`;
+};
 
 export default {
   formatValue,
@@ -217,5 +235,6 @@ export default {
   formatHour,
   denomformat,
   assertdenomformat,
-  formatDay
+  formatDay,
+  formatStorageSize
 };

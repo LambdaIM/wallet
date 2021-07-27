@@ -106,7 +106,7 @@ export default {
       } else {
         bigvalue = new BigNumber(bigvalue);
         bigvalue = bigvalue.div(1e6).toFixed(6);
-        return `${new BigNumber(bigvalue).toFormat()} TBB`;
+        return `${new BigNumber(bigvalue).toFormat()}`;
       }
     };
     Vue.prototype.tomLAMB = function (lambname) {

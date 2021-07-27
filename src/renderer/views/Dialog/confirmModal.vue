@@ -63,8 +63,16 @@
                 <Col span="20" class-name="value">{{transactiondata.validatorAddress}}</Col>
               </Row>
               <Row class-name="item">
+
                 <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-                <Col span="20" class-name="value">{{transactiondata.amount|BlanceValue}} TBB</Col>
+                <Col span="20" class-name="value">{{transactiondata.amount|BlanceValue}}
+                <span v-if="transactiondata.type=='MsgDelegate'">
+                  {{denomShort(transactiondata.denom)}}
+                </span>
+                <span v-else>
+                  TB
+                </span>
+                </Col>
               </Row>
 
           </div>
@@ -84,7 +92,7 @@
               </Row>
               <Row class-name="item">
                 <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-                <Col span="20" class-name="value">{{transactiondata.amount|BlanceValue}} TBB</Col>
+                <Col span="20" class-name="value">{{transactiondata.amount|BlanceValue}} TB</Col>
               </Row>
 
           </div>
@@ -695,7 +703,11 @@ export default {
       }
     },
     denomShort: function(denom) {
-      return denom.substr(1).toUpperCase();
+      let name = denom.substr(1).toUpperCase();
+      if (name == 'LAMB') {
+        name = 'm' + name;
+      }
+      return name;
     },
     gaseFeechange: function() {
       var value = parseFloat(this.$data.gaseFee);

@@ -23,7 +23,7 @@
                     >{{row.operator_address}}</router-link>
                     </template>
                     <template slot-scope="{ row, index }" slot="shares">
-                      {{myMypledge(row)}}
+                      {{myMypledge(row)|formatStorageSize}}
                     </template>
                     <template slot-scope="{ row, index }" slot="reward">
                       {{row.reward|Lambformat}}
@@ -63,7 +63,7 @@
           <ul v-if="dataParameters!=undefined" class="ulpanel">
             <li>{{$t('staking.Explain.unbonding_time')}}:{{(dataParameters.unbonding_time/(1000*1000*1000*60*60*24)).toFixed(2)}}{{$t('staking.Explain.unit')}}</li>
             <li>{{$t('staking.Explain.max_validators')}}:{{dataParameters.max_validators}}</li>
-            <li v-if="dataParameters.bond_denom!=undefined">{{$t('staking.Explain.bond_denom')}}:{{dataParameters.bond_denom.substring(1)}}</li>
+            <li v-if="dataParameters.bond_denom!=undefined">{{$t('staking.Explain.bond_denom')}}:mLAMB</li>
           </ul>
 
 
