@@ -70,13 +70,27 @@ export default {
       LAMBvalue: '',
       isdege: true,
       gaseFee: 0,
-      dataParameters: {}
+      dataParameters: {},
+      exchange_ratio:1
     };
   },
   components: {
     ConfirmModal
   },
   methods: {
+    async getparameter() {
+      console.log('getparameter');
+      let res = await ipc.callMain('Assetparameters', {
+
+      });
+      if (res.state) {
+        this.$data.parameter = res.data.data;
+        console.log(this.$data.parameter);
+        if (res.data.data && res.data.data.exchange_ratio) {
+          this.$data.exchange_ratio = this.$data.parameter.exchange_ratio;
+        }
+      }
+    },
     open(toaddress, isdege, validatorType) {
       this.$data.Tovalue = toaddress;
       this.$data.isdege = isdege || isdege;
@@ -92,6 +106,7 @@ export default {
       } else {
         this.$data.denom = 'utbb';
       }
+      this.getparameter();
     },
     sendcancel() {
       this.sendModal = false;
@@ -103,9 +118,9 @@ export default {
       try {
         var valuenum = parseFloat(this.LAMBvalue);
         if (isNaN(valuenum) == false) {
-          if (valuenum < 1 && this.$data.isdege) {
+          if (valuenum < this.$data.exchange_ratio && this.$data.isdege) {
             this.$Notice.warning({
-              title: this.$t('stakinginfo.Pledgeamountlessthan1')
+              title: this.$t('stakinginfo.Pledgeamountlessthan1')+this.$data.exchange_ratio
             });
             return;
           }

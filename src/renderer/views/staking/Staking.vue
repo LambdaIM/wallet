@@ -213,7 +213,7 @@ export default {
       dataParameters: {},
       searchkey: '',
       tbbreturnlamb: 0,
-      exchange_ratio: 1
+      exchange_ratio: ''
     };
   },
   async mounted() {
