@@ -52,13 +52,13 @@
           > {{$t("head.proposals")}} </router-link>
         </div>
 
-        <div  class="head-menu-item" v-if="$role('home.guide')">
+        <!-- <div  class="head-menu-item" v-if="$role('home.guide')">
           <router-link
             to="/guide"
             class="item">
             <span style="display: inline-block;width: 120px;"> {{$t('home.miningguide')}}</span>
             </router-link>
-        </div>
+        </div> -->
 
 
 

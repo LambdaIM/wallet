@@ -45,16 +45,16 @@
             <span slot="append">TBB</span>
           </Input>
         </p>
-        <br />
+        <!-- <br />
         <p>
           <Input v-model="AssetLAMBvalue" readonly>
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
             <span slot="append">{{coinTypeShow}}</span>
           </Input>
-        </p>
+        </p> -->
         <br />
         <p>
-          {{$t('somemodel.assertTbbTip')}}
+          {{$t('somemodel.assertTbbTip',[exchange_ratio])}}
         </p>
       </div>
       </Form>
@@ -85,7 +85,8 @@ export default {
       AssetSTOvalue: '',
       amountBlance: 0,
       coinType: 'ulamb',
-      gaseFee: 0
+      gaseFee: 0,
+      exchange_ratio: ''
     };
   },
   components: {
@@ -95,8 +96,23 @@ export default {
     open(amountBlance, coinType) {
       this.$data.AssetlModal = true;
       this.$data.amountBlance = amountBlance || this.balance;
-      this.$data.coinType = coinType || 'ulamb';
+      // this.$data.coinType = coinType || 'ulamb';
+      this.$data.coinType = 'ulamb';
       this.$data.exchangesStatus = 'false';
+      this.getparameter();
+    },
+    async getparameter() {
+      console.log('getparameter');
+      let res = await ipc.callMain('Assetparameters', {
+
+      });
+      if (res.state) {
+        this.$data.parameter = res.data.data;
+        console.log(this.$data.parameter);
+        if (res.data.data && res.data.data.exchange_ratio) {
+          this.$data.exchange_ratio = this.$data.parameter.exchange_ratio;
+        }
+      }
     },
     AssetLAMBvalueChane() {
       console.log('- -');

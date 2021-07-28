@@ -309,7 +309,7 @@
     "pledge":"质押",
     "Cancelpledge":"取消质押",
     "Myreward":"我的奖励",
-    "Pledge1tbbmining":"质押1TBB挖矿",
+    "Pledge1tbbmining":"质押{0}mLAMB挖矿",
     "dayacquisition":"1天获取{0}mLAMB",
     "monthacquisition":"1个月获取{0}mLAMB",
     "yearsacquisition":"1年获取{0}mLAMB",
@@ -731,7 +731,7 @@
        "Importminersubaccount":"导入矿工子账户",
        "Select file":"选择文件",
        "Exportsubaccount":"导出子账户",
-       "assertTbbTip":"LAMB兑换生成的TBB是根据您的Lambda钱包私钥确认的，TBB转账无法转移TBB兑回LAMB的权益。",
+       "assertTbbTip":"LAMB兑换生成的TBB是根据您的Lambda钱包私钥确认的，依然按照原有比例兑换，其他的按照1TBB={0}mLAMB兑换。",
        "highquality":"1(优质卖单)",
        "ordinary":"0.5(普通卖单)",
        "action":{

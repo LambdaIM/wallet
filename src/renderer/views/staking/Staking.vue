@@ -1,8 +1,7 @@
 <template>
   <div class="customer-container">
   <div class="tableContainer">
-    <div v-if="isNaN(tbbday)!=true" class="Earningstips" >{{$t('stakinginfo.Pledge1tbbmining')}}，{{$t('stakinginfo.dayacquisition',[tbbday])}}，{{$t('stakinginfo.monthacquisition',[tbbmonth])}}，{{$t('stakinginfo.yearsacquisition',[tbbyear])}}</div>
-
+    <div v-if="isNaN(tbbday)!=true" class="Earningstips" >{{$t('stakinginfo.Pledge1tbbmining',[exchange_ratio])}}，{{$t('stakinginfo.dayacquisition',[tbbday])}}，{{$t('stakinginfo.monthacquisition',[tbbmonth])}}，{{$t('stakinginfo.yearsacquisition',[tbbyear])}}</div>
        <Tabs >
         <TabPane :label="$t('staking.Mypledge')" >
 
@@ -65,6 +64,7 @@
             <li>{{$t('staking.Explain.max_validators')}}:{{dataParameters.max_validators}}</li>
             <li v-if="dataParameters.bond_denom!=undefined">{{$t('staking.Explain.bond_denom')}}:mLAMB</li>
           </ul>
+
 
 
         </TabPane>
@@ -212,7 +212,8 @@ export default {
       ],
       dataParameters: {},
       searchkey: '',
-      tbbreturnlamb: 0
+      tbbreturnlamb: 0,
+      exchange_ratio: 1
     };
   },
   async mounted() {
@@ -221,8 +222,22 @@ export default {
     // this.getmyUnListData();
     this.stakingParameters();
     this.TBBYield();
+    this.getparameter();
   },
   methods: {
+    async getparameter() {
+      console.log('getparameter');
+      let res = await ipc.callMain('Assetparameters', {
+
+      });
+      if (res.state) {
+        this.$data.parameter = res.data.data;
+        console.log(this.$data.parameter);
+        if (res.data.data && res.data.data.exchange_ratio) {
+          this.$data.exchange_ratio = this.$data.parameter.exchange_ratio;
+        }
+      }
+    },
     myMypledge(row) {
       return this.CalculationMypledge(row.shares, row.delegator_shares, row.tokens);
     },
