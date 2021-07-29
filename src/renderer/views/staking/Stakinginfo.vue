@@ -92,7 +92,7 @@
           </Col>
         </Row>
            <Tabs>
-              <TabPane :label="$t('Dialog.redelegateModel.redelegatelist')">
+              <!-- <TabPane :label="$t('Dialog.redelegateModel.redelegatelist')">
                 <Table size="large"  :columns="redelegationcolumns" :data="redelegationlistdata">
                   <template slot-scope="{ row, index }" slot="amount">
                     {{row.entries[0].initial_balance|TbbBlanceValue}}
@@ -101,7 +101,7 @@
                     {{row.entries[0].completion_time|blockFormatDate}}
                   </template>
               </Table>
-              </TabPane>
+              </TabPane> -->
               <TabPane :label="$t('staking.Unpledge')" >
                 <Table size="large" :columns="uncolumns" :data="undelegationlistdata" >
                   <template slot-scope="{ row, index }" slot="completion_time">
