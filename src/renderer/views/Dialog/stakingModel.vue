@@ -71,7 +71,7 @@ export default {
       isdege: true,
       gaseFee: 0,
       dataParameters: {},
-      exchange_ratio:1
+      exchange_ratio: 1
     };
   },
   components: {
@@ -120,7 +120,7 @@ export default {
         if (isNaN(valuenum) == false) {
           if (valuenum < this.$data.exchange_ratio && this.$data.isdege) {
             this.$Notice.warning({
-              title: this.$t('stakinginfo.Pledgeamountlessthan1')+this.$data.exchange_ratio
+              title: this.$t('stakinginfo.Pledgeamountlessthan1') + this.$data.exchange_ratio
             });
             return;
           }
