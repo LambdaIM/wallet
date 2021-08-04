@@ -165,7 +165,7 @@ export default {
 
 
       if (this.$data.exchangesStatus == 'false') {
-        this.transferAsset(AssetLAMBvalue, sto, false);
+        this.transferAsset('0', sto, false);
       } else {
         this.transferAsset(AssetLAMBvalue, sto, true);
       }

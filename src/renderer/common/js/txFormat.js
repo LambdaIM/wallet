@@ -119,12 +119,16 @@ function getamount(msg0, item, vueIns, index) {
         result = _this.bigNumTypeFormat(msg0.value.amount.amount, msg0.value.amount.denom);
       }
     } else if (msg0.type == 'lambda/MsgAssetDrop') {
-      result =
+      try {
+        result =
         _this.bigNumTypeFormat(msg0.value.asset.amount,
           msg0.value.asset.denom) +
         '->' +
-        _this.bigNumTypeFormat(msg0.value.token.amount,
-          msg0.value.token.denom);
+        _this.bigNumTypeFormat(item.tags[3].value.replace('ulamb', ''),
+          'ulamb');
+      } catch (error) {
+
+      }
     } else if (msg0.type == 'lambda/MsgAssetPledge') {
       result =
         _this.bigNumTypeFormat(msg0.value.token.amount,
