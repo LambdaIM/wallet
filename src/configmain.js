@@ -82,33 +82,33 @@ var configData = {
         
     },
     s3client:function(){
-        if (fs.existsSync(`${this.BASE_PATH}/${this.LambdaSfile()}`) == false) {
-            fs.createReadStream(`${__static}/${this.LambdaSfile()}`).pipe(fs.createWriteStream(`${this.BASE_PATH}/${this.LambdaSfile()}`));
-            cmd.run(`chmod 777  ${this.BASE_PATH}/${this.LambdaSfile()} `)
-          }else{
-            const hashlocal =  md5File.sync(`${this.BASE_PATH}/${this.LambdaSfile()}`);
-            const hashstatic =  md5File.sync(`${__static}/${this.LambdaSfile()}`);
+        // if (fs.existsSync(`${this.BASE_PATH}/${this.LambdaSfile()}`) == false) {
+        //     fs.createReadStream(`${__static}/${this.LambdaSfile()}`).pipe(fs.createWriteStream(`${this.BASE_PATH}/${this.LambdaSfile()}`));
+        //     cmd.run(`chmod 777  ${this.BASE_PATH}/${this.LambdaSfile()} `)
+        //   }else{
+        //     const hashlocal =  md5File.sync(`${this.BASE_PATH}/${this.LambdaSfile()}`);
+        //     const hashstatic =  md5File.sync(`${__static}/${this.LambdaSfile()}`);
 
-            console.log(hashlocal)
-            console.log(hashstatic)
+        //     console.log(hashlocal)
+        //     console.log(hashstatic)
             
-            if(hashlocal!=hashstatic){
-                fs.createReadStream(`${__static}/${this.LambdaSfile()}`).pipe(fs.createWriteStream(`${this.BASE_PATH}/${this.LambdaSfile()}`));
-                cmd.run(`chmod 777  ${this.BASE_PATH}/${this.LambdaSfile()} `)
-            }
+        //     if(hashlocal!=hashstatic){
+        //         fs.createReadStream(`${__static}/${this.LambdaSfile()}`).pipe(fs.createWriteStream(`${this.BASE_PATH}/${this.LambdaSfile()}`));
+        //         cmd.run(`chmod 777  ${this.BASE_PATH}/${this.LambdaSfile()} `)
+        //     }
               
-          }
+        //   }
         
-          if (fs.existsSync(`${this.BASE_PATH}/s3.yaml`) == false) {
-            fs.createReadStream(`${__static}/s3.yaml`).pipe(fs.createWriteStream(`${this.BASE_PATH}/s3.yaml`));
+        //   if (fs.existsSync(`${this.BASE_PATH}/s3.yaml`) == false) {
+        //     fs.createReadStream(`${__static}/s3.yaml`).pipe(fs.createWriteStream(`${this.BASE_PATH}/s3.yaml`));
             
-          }
+        //   }
 
-          if (fs.existsSync(`${this.BASE_PATH}/debug.txt`) ==true) {
-            fs.unlinkSync(`${this.BASE_PATH}/debug.txt`)
+        //   if (fs.existsSync(`${this.BASE_PATH}/debug.txt`) ==true) {
+        //     fs.unlinkSync(`${this.BASE_PATH}/debug.txt`)
              
             
-          }
+        //   }
 
         
 
