@@ -107,6 +107,7 @@ function getToAddress(msg, item, vuethis) {
 }
 
 function getamount(msg0, item, vueIns, index) {
+  console.log('-----');
   var result; var _this = vueIns;
   if (msg0.value != undefined) {
     if (msg0.value.amount != undefined) {
