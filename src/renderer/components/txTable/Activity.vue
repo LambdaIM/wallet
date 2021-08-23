@@ -14,7 +14,7 @@
 
       <Tag color="primary">{{$t(`txType.${txItem.action}`)}}</Tag>
       <span v-if="isProposal(txItem)">
-        <span class="value">{{ txItem.amount | formatAmount }}</span>
+        <span class="value">{{ formatAmount(txItem.amount,txItem.action) }}</span>
         <span v-if="txItem.to">
         {{getToWord(txItem)}}
       </span>
@@ -189,6 +189,14 @@ export default {
     },
     denomFormat(denom) {
       return denom.substr(1);
+    },
+    formatAmount(Amount, action) {
+      console.log('formatAmount', action);
+      if (action == 'MsgAssetDrop' || action == 'MsgAssetPledge') {
+        return Amount.replace('TBB', 'SPACE');
+      } else {
+        return Amount.replace('TBB', 'TB');
+      }
     }
   },
   computed: {
