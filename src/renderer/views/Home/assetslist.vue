@@ -12,9 +12,9 @@
               {{denomFormart(row.denom)}}
             </template>
             <template slot-scope="{ row, index }" slot="action">
-              <Button v-if="row.denom!='utbb'" @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
+              <Button v-if="row.denom!='uspace'" @click="cointransaction(row)" type="primary" size="small">{{$t('home.Token.Transfer')}}</Button>
 
-              <Button v-if="row.denom=='utbb'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
+              <Button v-if="row.denom=='uspace'" @click="openAssert(row)" size="small">{{$t('home.Token.Exchange')}}</Button>
             </template>
           </Table>
 
@@ -118,7 +118,16 @@ export default {
       console.log(mycoinList);
 
       if (this.$data.allassert == 0) {
-        return this.$store.getters.getcoinList;
+        var coindata = this.$store.getters.getcoinList;
+        var list = [];
+        coindata.forEach(item => {
+          var obj = _.clone(item);
+          if (obj.denom == 'utbb') {
+            obj.denom = 'uspace';
+          }
+          list.push(obj);
+        });
+        return list;
       } else {
         this.$data.allassert.forEach(item => {
           // mycoinList
@@ -142,6 +151,12 @@ export default {
           item.sort = 0;
         } else {
           item.sort = -1;
+        }
+      });
+
+      listneedtosort.forEach(item => {
+        if (item.denom == 'utbb') {
+          item.denom = 'uspace';
         }
       });
 

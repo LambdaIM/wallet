@@ -731,7 +731,7 @@
        "Importminersubaccount":"导入矿工子账户",
        "Select file":"选择文件",
        "Exportsubaccount":"导出子账户",
-       "assertTbbTip":"LAMB兑换生成的TBB是根据您的Lambda钱包私钥确认的，依然按照原有比例兑换，其他的按照1TBB={0}mLAMB兑换。",
+       "assertTbbTip":"LAMB兑换生成的TBB是根据您的Lambda钱包私钥确认的，依然按照原有比例兑换，其他的按照1SPACE={0}mLAMB兑换。",
        "highquality":"1(优质卖单)",
        "ordinary":"0.5(普通卖单)",
        "action":{
