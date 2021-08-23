@@ -14,7 +14,7 @@
             <span>{{coinTypeShow}} {{$t('Dialog.com.to')}} TBB</span>
           </Radio> -->
           <Radio v-if="coinType!='ulambs'" label="false">
-            <span>TBB {{$t('Dialog.com.to')}} {{coinTypeShow}}</span>
+            <span>SPACE {{$t('Dialog.com.to')}} {{coinTypeShow}}</span>
           </Radio>
         </RadioGroup>
       </p>
@@ -30,7 +30,7 @@
         <p>
           <Input v-model="AssetSTOvalue" readonly>
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">TBB</span>
+            <span slot="append">SPACE</span>
           </Input>
         </p>
         <br />
@@ -42,7 +42,7 @@
         <p>
           <Input @keyup.native="AssetSTOvalueChane" v-model="AssetSTOvalue">
             <span slot="prepend">{{$t('home.Modal1.Amount')}}</span>
-            <span slot="append">TBB</span>
+            <span slot="append">SPACE</span>
           </Input>
         </p>
         <!-- <br />

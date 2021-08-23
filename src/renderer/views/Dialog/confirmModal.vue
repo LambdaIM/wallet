@@ -108,7 +108,7 @@
                 </Row>
                 <Row v-else class-name="item">
                   <Col span="4" class-name="key">{{$t('home.Modal1.Amount')}}:</Col>
-                  <Col span="20" class-name="value"> {{transactiondata.asset.amount|BlanceValue}} TBB  </Col>
+                  <Col span="20" class-name="value"> {{transactiondata.asset.amount|BlanceValue}} SPACE  </Col>
                 </Row>
 
           </div>
