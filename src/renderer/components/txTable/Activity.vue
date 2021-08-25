@@ -192,7 +192,7 @@ export default {
     },
     formatAmount(Amount, action) {
       console.log('formatAmount', action);
-      if (action == 'MsgAssetDrop' || action == 'MsgAssetPledge') {
+      if (action == 'MsgAssetDrop' || action == 'MsgAssetPledge' || action == 'MsgSend') {
         return Amount.replace('TBB', 'SPACE');
       } else {
         return Amount.replace('TBB', 'TB');
