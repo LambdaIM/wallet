@@ -49,6 +49,7 @@
                 <MenuItem v-if="$role('home.tx.Minerprofit')" to="/lendingmarket/Depositpower" > {{$t('poolmarkettx.powerLiquidityminingAward')}}  </MenuItem>
 
 
+
                 <!-- <MenuItem v-if="$role('home.tx.Minerprofit')" name="openAuthorizedMarket"> {{$t('Assetincomepop.title')}} </MenuItem> -->
             </MenuGroup>
 
@@ -93,6 +94,9 @@
         <MenuItem   to="/lendingmarket" name="Marketoperation">
             <Icon type="md-football" />
             {{$t('poolmarkettx.Liquiditymining')}}
+        </MenuItem>
+        <MenuItem   to="/home/subaccount" name="subaccount">
+            {{$t('home.subaccount')}}
         </MenuItem>
 
     </Menu>
